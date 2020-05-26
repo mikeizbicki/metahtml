@@ -299,7 +299,10 @@ def get_timestamp_published(html, url, **kwargs):
         # custom xpaths
         ( 'angrystaffofficer.com',          '//time[contains(@class,"published")]' ),
         ( 'armscontrolwonk.com',            '//span[@class="date published time"]' ),
-        ( 'csis.org',                       '//article[@role="article"]/p' ),
+	( 'bbc.com',			    '(//div[contains(@class, "date date--v2")])[1]' ),
+	( 'bbc.com',			    '//span[contains(@class, "author–unit__date")]' ),
+        #( 'bbc.co.uk',			    '(//div[contains(@class, "date date-v2")])[1]' ),
+	( 'csis.org',                       '//article[@role="article"]/p' ),
         ( 'elperuano.pe',                   '//article[@class="notatexto"]/p/b' ),
         ( 'elnacional.com.do',              '(//time[contains(@class,"entry-date")])[1]' ),
         #( 'foxnews.com',                    '//div[@class="article-date"]/time' ),
@@ -337,6 +340,8 @@ def get_timestamp_modified(html, url, **kwargs):
         # xpaths
         ( 'angrystaffofficer.com',          '//time[contains(@class,"updated")]' ),
         #( 'nytimes.com',                    '//meta[@property="article:modified"]/@content' ),
+	( 'bbc.com',                        '(//div[contains(@class, "date date--v2")])[2]' ),
+        #( 'bbc.co.uk',                      '(//div[contains(@class, "date date-v2")])[2]' ),
         ]
     return get_timestamp(html, url, xpaths, use_url_date=False, **kwargs)
 
