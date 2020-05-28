@@ -311,7 +311,8 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'spiegel.de',                     '//time/@datetime' ),
         ( 'stripes.com',		    '//span[@class="published_date"]' ),
 	( 'thediplomat.com',                '//span[@itemprop="datePublished"]' ),
-        ( 'time.com',                       '//div[contains(@class,"published-date")]' ),
+        ( 'theintercept.com',		    '//span[@class="PostByline-date"]' ),
+	( 'time.com',                       '//div[contains(@class,"published-date")]' ),
         ( 'wsj.com',                        '//time' ),
         ]
 
