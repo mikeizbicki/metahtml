@@ -309,6 +309,13 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'thediplomat.com',                '//span[@itemprop="datePublished"]' ),
         ( 'time.com',                       '//div[contains(@class,"published-date")]' ),
         ( 'wsj.com',                        '//time' ),
+        ( 'appnews.com',                    '//span[@class="Timestamp Component-root-0-2-37 Component-timestamp-0-2-36"]/title'),
+        ('bbc.com',                         '(//div[contains(@class, "date date--v2")])[1]'),
+        ('bbc.com',                         '//span[@class="author-unit_date"]'),
+        ('bbc.co.uk',                       '(//div[contains(@class, "date date--v2")])[1]'),
+        ('carnegieendowment.org',           '//div[@class="post-date col col-25"]/clean-list'),
+        ('stripes.com',                     '//span[@class="published_date"]'),
+        ('theintercept.com',                '//span[@class="PostByline-date"]'),
         ]
 
     return get_timestamp(html, url, xpaths, use_url_date=True, **kwargs)
