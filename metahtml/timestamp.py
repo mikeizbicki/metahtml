@@ -82,7 +82,7 @@ def parse_timestamp_str(timestamp_str, parser=None):
     # if no parser specified, then try them all
     if parser is None:
         result = parse_timestamp_str(timestamp_str, parser='dateutil')
-        if result is None:
+        if result['timestamp_lo'] is None:
             result = parse_timestamp_str(timestamp_str, parser='dateparser')
         return result
 
@@ -111,6 +111,7 @@ def parse_timestamp_str(timestamp_str, parser=None):
         try:
             from dateutil.parser import parse as date_parser
             tzinfos = {
+                'IST' : 5.5*60*60,
                 'CEST' : 2*60*60,
                 'CET' : 1*60*60,
                 'BST' : 1*60*60,
@@ -120,6 +121,20 @@ def parse_timestamp_str(timestamp_str, parser=None):
                 }
             timestamp_lo = date_parser(timestamp_str, fuzzy=True, tzinfos=tzinfos, default=default_lo)
             timestamp_hi = date_parser(timestamp_str, fuzzy=True, tzinfos=tzinfos, default=default_hi)
+
+            # check for common parsing errors that are caused by foreign dates
+            # for example, if date_parser finds an hour but not a day,
+            # then this is almost certainly an error
+            if ((timestamp_lo.year != timestamp_hi.year) or
+                (timestamp_lo.month != timestamp_hi.month and timestamp_lo.day == timestamp_hi.day) or
+                (timestamp_lo.day != timestamp_hi.day and timestamp_lo.hour == timestamp_hi.hour) or
+                (timestamp_lo.hour != timestamp_hi.hour and timestamp_lo.minute == timestamp_hi.minute) or
+                (timestamp_lo.minute != timestamp_hi.minute and timestamp_lo.second == timestamp_hi.second) or
+                (timestamp_lo.second != timestamp_hi.second and timestamp_lo.microsecond == timestamp_hi.microsecond)
+               ):
+                timestamp_lo = None
+                timestamp_hi = None
+
         except (ValueError, OverflowError, AttributeError, TypeError):
             # near all parse failures are due to URL dates without a day
             # specifier, e.g. /2014/04/
@@ -128,6 +143,40 @@ def parse_timestamp_str(timestamp_str, parser=None):
 
     elif parser=='dateparser':
         date_order = 'YMD'
+
+        def remove_prefix(s, prefix):
+            return s[len(prefix):] if s.startswith(prefix) else s
+
+        # cs
+        timestamp_str = re.sub('Zveřejněno dne ', '', timestamp_str)
+        timestamp_str = re.sub(' v ', ' ', timestamp_str)
+        # de
+        timestamp_str = re.sub('Veröffentlicht auf ', '', timestamp_str)
+        timestamp_str = re.sub(' um ', ' ', timestamp_str)
+        # es 
+        timestamp_str = re.sub('Publicado en ', '', timestamp_str)
+        timestamp_str = re.sub(' a las ', ' ', timestamp_str)
+        # it 
+        timestamp_str = re.sub('Pubblicato su', '', timestamp_str)
+        timestamp_str = re.sub(' alle ', ' ', timestamp_str)
+        # fr
+        timestamp_str = re.sub('Publié', '', timestamp_str)
+        timestamp_str = re.sub(' à ', ' ', timestamp_str)
+        # nl
+        timestamp_str = re.sub('Gepubliceerd op', '', timestamp_str)
+        timestamp_str = re.sub(' om ', ' ', timestamp_str)
+        # pl
+        timestamp_str = re.sub('Opublikowano w dniu ', '', timestamp_str)
+        timestamp_str = re.sub(' o ', ' ', timestamp_str)
+        # pt
+        timestamp_str = re.sub('Publicado em', '', timestamp_str)
+        timestamp_str = re.sub(' às ', ' ', timestamp_str)
+        # ro
+        timestamp_str = re.sub('Publicat pe ', '', timestamp_str)
+        timestamp_str = re.sub(' la ', ' ', timestamp_str)
+
+        timestamp_str = timestamp_str.strip()
+        #print("timestamp_str=",timestamp_str)
 
         # see https://dateparser.readthedocs.io/en/latest/#dateparser.parse
         # for details on how to parse dates
@@ -202,7 +251,8 @@ def timestamp2str(timestamp):
     if lo.microsecond == hi.microsecond:
         timestamp_format += '.%f'
     timestamp_format += ' %Z'
-    return lo.strftime(timestamp_format)
+    #print("lo=",lo)
+    return str(lo) #lo.strftime(timestamp_format).strip()
 
 
 def get_best_timestamps(timestamps, require_valid_for_hostname=True):
@@ -299,15 +349,21 @@ def get_timestamp_published(html, url, **kwargs):
         # custom xpaths
         ( 'angrystaffofficer.com',          '//time[contains(@class,"published")]' ),
         ( 'armscontrolwonk.com',            '//span[@class="date published time"]' ),
+        ( 'bbc.com',                        '(//div[@class="date date--v2"])[1]' ),
+        ( 'bbc.co.uk',                      '(//div[@class="date date--v2"])[1]' ),
         ( 'csis.org',                       '//article[@role="article"]/p' ),
         ( 'elperuano.pe',                   '//article[@class="notatexto"]/p/b' ),
         ( 'elnacional.com.do',              '(//time[contains(@class,"entry-date")])[1]' ),
-        #( 'foxnews.com',                    '//div[@class="article-date"]/time' ),
-        #( 'nytimes.com',                    '//meta[@property="article:published"]/@content' ),
+        ( 'foxnews.com',                    '//div[@class="article-date"]/time' ),
+        ( 'nytimes.com',                    '//meta[@property="article:published"]/@content' ),
+        ( 'reuters.com',                    '//time' ),
         ( 'spiegel.de',                     '//span[@class="article-function-date"]/b' ),
         ( 'spiegel.de',                     '//time/@datetime' ),
+        ( 'stripes.com',                    '//span[@class="published_date"]' ),
         ( 'thediplomat.com',                '//span[@itemprop="datePublished"]' ),
+        ( 'theintercept.com',               '//span[@class="PostByline-date"]' ),
         ( 'time.com',                       '//div[contains(@class,"published-date")]' ),
+        ( 'voxeurop.eu',                    '//div[contains(@class,"publish_date_time")]' ),
         ( 'wsj.com',                        '//time' ),
         ]
 
@@ -336,13 +392,16 @@ def get_timestamp_modified(html, url, **kwargs):
 
         # xpaths
         ( 'angrystaffofficer.com',          '//time[contains(@class,"updated")]' ),
-        #( 'nytimes.com',                    '//meta[@property="article:modified"]/@content' ),
+        ( 'foxnews.com',                    '//div[@class="article-updated"]' ),
+        ( 'nytimes.com',                    '//meta[@property="article:modified"]/@content' ),
         ]
     return get_timestamp(html, url, xpaths, use_url_date=False, **kwargs)
 
 
 def get_timestamp(html, url, xpaths, use_url_date=False, require_valid_for_hostname=True, fast=True):
     '''
+    FIXME: make the xpath code faster using
+    https://www.ibm.com/developerworks/xml/library/x-hiperfparse/
     '''
     parser = lxml.html.fromstring(html)
     url_parsed = urlparse(url)
@@ -353,11 +412,11 @@ def get_timestamp(html, url, xpaths, use_url_date=False, require_valid_for_hostn
     # get timestamp from url
     if use_url_date:
         _STRICT_DATE_REGEX_PREFIX = r'(?<=\W)'
-        DATE_REGEX = r'([\./\-_]{0,1}(19|20)\d{2})[\./\-_]{0,1}(([0-3]{0,1}[0-9][\./\-_])|(\w{3,5}[\./\-_]))([0-3]{0,1}[0-9][\./\-]{0,1})?'
+        DATE_REGEX = r'(([\./\-_]{0,1}(19|20)\d{2})[\./\-_]{0,1}(([0-3]{0,1}[0-9][\./\-_])|(\w{3,5}[\./\-_]))([0-3]{0,1}[0-9][\./\-]{0,1})?)...'
         STRICT_DATE_REGEX = _STRICT_DATE_REGEX_PREFIX + DATE_REGEX
         date_match = re.search(STRICT_DATE_REGEX, url)
         if date_match:
-            timestamp_str = date_match.group(0)
+            timestamp_str = date_match.group(1)
             timestamp = parse_timestamp_str(timestamp_str)
             timestamp['is_valid_for_hostname'] = True
             timestamp['pattern'] = ['url']
@@ -365,7 +424,15 @@ def get_timestamp(html, url, xpaths, use_url_date=False, require_valid_for_hostn
 
     # get timestamps from xpaths
     for hostname,xpath in xpaths:
+
+        # if in fast mode, then only search for elements that will apply to the hostname
+        valid_for_hostname = hostname is None or hostname in url_hostname
+        if fast and not valid_for_hostname:
+            continue
+
+        # loop through all elements found by the xpath
         for element in parser.xpath(xpath):
+
             # element can be one of several different types of lxml objects;
             # depending on the type, we need to extract the text in different ways
             if type(element) is lxml.etree._ElementUnicodeResult:
@@ -378,9 +445,16 @@ def get_timestamp(html, url, xpaths, use_url_date=False, require_valid_for_hostn
             # generate the timestamp from text
             timestamp = parse_timestamp_str(timestamp_str)
             if timestamp is not None:
-                timestamp['is_valid_for_hostname'] = hostname is None or hostname in url_hostname
+                timestamp['is_valid_for_hostname'] = valid_for_hostname
                 timestamp['pattern'] = xpath
                 timestamps.append(timestamp)
+
+                # NOTE:
+                # the following check is tempting but wrong;
+                # we need to ensure that pages with many urls 
+                # get treated as categories and not articles
+                #if valid_for_hostname and fast:
+                    #break
 
     # extract the best timestamp from the list of available timestamps
     best_timestamps = get_best_timestamps(timestamps)
@@ -428,73 +502,3 @@ def get_timestamp(html, url, xpaths, use_url_date=False, require_valid_for_hostn
             best_timestamp = None
 
     return best_timestamp, timestamps
-
-
-def parse_timestamp_str_old(timestamp_str):
-    '''
-    Given a string representing a timestamp
-
-    python date libraries:
-    1. dateparser: https://blog.scrapinghub.com/2015/11/09/parse-natural-language-dates-with-dateparser
-    1. natty: https://github.com/eadmundo/python-natty
-    '''
-    try:
-        timestamp = date_parser(timestamp_str, fuzzy=True, tzinfos=None)
-    except (ValueError, OverflowError, AttributeError, TypeError):
-        # near all parse failures are due to URL dates without a day
-        # specifier, e.g. /2014/04/
-        timestamp = None
-
-    # if the there is a string that could be in either MM-DD-YY or DD-MM-YY format
-    # then we need to mark the day_month_format as ambiguous
-    ambiguous_day_month = False
-    match = re.search('[0-9][0-9].?[0-9][0-9].?[0-9][0-9]', timestamp_str)
-    if match:
-        ambiguous_day_month = True
-
-    # return dictionary
-    return {
-        'timestamp' : timestamp,
-        'raw' : timestamp_str,
-        'accuracy' : None,
-        'ambiguous_day_month' : ambiguous_day_month,
-        }
-
-
-
-    return get_timestamp(html, url, xpaths, use_url_date=True)
-    xpaths = [
-        # meta xpaths
-        '//meta[@property="rnews:datePublished"]/@content',
-        '//meta[@property="article:published_time"]/@content',
-        '//meta[@property="og:published_time"]/@content',
-        '//meta[@itemprop="datePublished"]/@datetime',
-        '//meta[@pubdate="pubdate"]/@datetime',
-        '//meta[@name="OriginalPublicationDate"]/@content',
-        '//meta[@name="article_date_original"]/@content',
-        '//meta[@name="publication_date"]/@content',
-        '//meta[@name="sailthru.date"]/@content',
-        '//meta[@name="PublishDate"]/@content',
-        '//meta[@name="all_timestamps"]/@content',
-        '//meta[@name="dc.Date"]/@content',
-
-        # content xpaths
-        '//span[@class="date published time"]' ,                    # armscontrolwonk.com
-        '//div[@class="date date--v2"]',                            # bbc.com
-        '//article[@role="article"]/p' ,                            # csis.org
-        '//div[@class="td-post-author-name"]/a' ,                   # dailynk.com
-        '//article[@class="notatexto"]/p/b' ,                       # elperuano.pe
-        '//time[contains(@class,"entry-date")]',           # elnacional.com.do
-        #'//article//div[class="tdb-block-inner td-fix-index"]/time[contains(@class,"entry-date")]',           # elnacional.com.do
-        '//div[@class="article-date"]/time',                        # foxnews.com
-        #'//p[@class="timestamp"]/time',                             # politico.eu
-        '//span[@class="article-function-date"]/b',                 # speigel.de
-        #'//time[contains(@class,"published")]/@datetime',                                         # speigel.de
-        '//time/@datetime',                                         # speigel.de
-        '//span[@class="published_date"]',                          # stripes.com
-        '//span[@itemprop="datePublished"]',                        # thediplomat.com
-        '//span[@itemprop="dateModified"]/@content',                # thediplomat.com
-        '//span[@class="PostByline-date"]',                         # theintercept.com
-        '//div[contains(@class,"published-date")]',                 # time.com
-        ]
-    return get_timestamp(html, url, xpaths, use_url_date=True)
