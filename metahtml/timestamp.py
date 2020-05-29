@@ -308,9 +308,9 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'nytimes.com',                    '//meta[@property="article:published"]/@content' ),
         ( 'spiegel.de',                     '//span[@class="article-function-date"]/b' ),
         ( 'spiegel.de',                     '//time/@datetime' ),
-        ( 'stripes.com',                    '//span[@class="published_date"]'),
+        ( 'stripes.com',                    '//span[@class="published_date"]' ),
         ( 'thediplomat.com',                '//span[@itemprop="datePublished"]' ),
-        ( 'theintercept.com',               '//span[@class="PostByline-date"]'),
+        ( 'theintercept.com',               '//span[@class="PostByline-date"]' ),
         ( 'time.com',                       '//div[contains(@class,"published-date")]' ),
         ( 'wsj.com',                        '//time' ),
         ]
@@ -340,7 +340,6 @@ def get_timestamp_modified(html, url, **kwargs):
 
         # xpaths
         ( 'angrystaffofficer.com',          '//time[contains(@class,"updated")]' ),
-        ( 'bbc.com',                        '(//script[@type = "application/ld+json"]/text())["dateModified"]'),
         ( 'nytimes.com',                    '//meta[@property="article:modified"]/@content' ),
         ]
     return get_timestamp(html, url, xpaths, use_url_date=False, **kwargs)
