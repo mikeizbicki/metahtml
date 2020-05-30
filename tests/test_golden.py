@@ -243,20 +243,32 @@ def test_golden(test):
     url = test['url']
     date = test['download_date']
     [(date, html)] = get_cached_webpages(url, [date])
-    meta = metahtml.parse(html, url)
-
-    # FIXME: currently skipping test cases that are labelled as not having an article
-    #if test['is_article']=='FALSE':
-        #return
 
     # printing the url makes debugging easier
-    print("test['url']=",test['url'])
-    import pprint
-    pprint.pprint(meta)
+    print('date=',date,'url=',url)
+
+    # optionally print verbose debugging information for test cases;
+    # this significantly slows down the runtime, 
+    # so it is recommended to only enable it when evaluating on a small number of test cases
+    if False:
+        meta, meta_full = metahtml.parse_all(html, url)
+        print('meta_full=')
+        pprint.pprint(meta_full)
+        print('meta=')
+        pprint.pprint(meta)
+    else:
+        meta = metahtml.parse(html, url)
+        print('meta=')
+        pprint.pprint(meta)
 
     print("test['is_article']=",test['is_article'])
-    print("meta['is_article']=",meta['is_article'])
-    assert test['is_article'].lower() == str(meta['is_article']).lower()
+    is_article = meta['article_type']['article_type'] == 'article'
+    if test['is_article'] == 'TRUE':
+        assert is_article
+    elif test['is_article'] == 'FALSE':
+        assert not is_article
+    else:
+        raise ValueError('invalid is_article column; must be TRUE or FALSE')
 
     print("test['timestamp_published']=",test['timestamp_published'],']')
     print("metahtml.timestamp.timestamp2str(meta['timestamp_published'])=",metahtml.timestamp.timestamp2str(meta['timestamp_published']),']')

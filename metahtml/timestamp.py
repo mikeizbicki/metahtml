@@ -459,46 +459,4 @@ def get_timestamp(html, url, xpaths, use_url_date=False, require_valid_for_hostn
     # extract the best timestamp from the list of available timestamps
     best_timestamps = get_best_timestamps(timestamps)
 
-    # calculate the range of timestamps appearing on the page
-    min_lo = None
-    max_hi = None
-    for best in best_timestamps:
-        # modified timestamps include worst case timezones if no timezone specified
-        best_lo_mod = best['timestamp_lo']
-        if best_lo_mod.tzinfo is None:
-            best_lo_mod = copy.copy(best_lo_mod).replace(tzinfo = worst_tz_lo)
-        best_hi_mod = best['timestamp_hi']
-        if best_hi_mod.tzinfo is None:
-            best_hi_mod = copy.copy(best_hi_mod).replace(tzinfo = worst_tz_hi)
-
-        # update min/max
-        if min_lo is None or best_lo_mod < min_lo:
-            min_lo = best_lo_mod
-        if max_hi is None or best_hi_mod > max_hi:
-            max_hi = best_hi_mod
-
-    if min_lo is not None and max_hi is not None:
-        timestamp_range =  max_hi - min_lo
-
-    # If the number of best_timestamps is too big,
-    # then we are *probably* not looking at an article page,
-    # but a "category" page that contains multiple articles within it.
-    # In this case, we should return that there is no timestamp.
-    # FIXME: This needs a lot more testing to understand if it works.
-    if len(best_timestamps) == 1 or (
-       0 < len(best_timestamps) <= 3 and abs(timestamp_range.total_seconds()) < 24*60*60):
-        best_timestamp = best_timestamps[0]
-    else:
-        best_timestamp = None
-
-    # filter special cases based on hostname
-    if url_hostname=='www.cnbc.com':
-        xpath = '//meta[@property="og:type"]/@content'
-        for element in parser.xpath(xpath):
-            if str(element) == 'website':
-                best_timestamp = None
-    if url_hostname=='elnacional.com.do':
-        if url_parsed.path == '' or url_parsed.path == '/' or '/category/' in url_parsed.path:
-            best_timestamp = None
-
-    return best_timestamp, timestamps
+    return best_timestamps, timestamps
