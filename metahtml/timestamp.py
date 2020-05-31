@@ -354,6 +354,7 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'csis.org',                       '//article[@role="article"]/p' ),
         ( 'elperuano.pe',                   '//article[@class="notatexto"]/p/b' ),
         ( 'elnacional.com.do',              '(//time[contains(@class,"entry-date")])[1]' ),
+        ( 'english.khan.co.kr',             '//div[@class="article_date"]' ),
         ( 'foxnews.com',                    '//div[@class="article-date"]/time' ),
         ( 'nytimes.com',                    '//meta[@property="article:published"]/@content' ),
         ( 'reuters.com',                    '//time' ),

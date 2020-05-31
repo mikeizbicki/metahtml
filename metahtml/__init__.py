@@ -16,6 +16,8 @@ def parse_all(html, url, fast=False):
     meta_best = defaultdict(lambda: None)
     meta_all = defaultdict(lambda: None)
 
+    meta_best['url_canonical'], meta_all['url_canonical'] = urls.get_url_canonical(html, url, fast=fast)
+
     meta_best['timestamp_published'], meta_all['timestamp_published'] = timestamp.get_timestamp_published(html, url, fast=fast)
     meta_best['article_type'], meta_all['article_type'] = article_type.get_article_type(html, url, meta_best=meta_best, fast=fast)
     is_article = meta_best['article_type']['article_type'] == 'article'

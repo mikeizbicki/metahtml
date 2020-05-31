@@ -170,9 +170,16 @@ def insert_golden_tests(urls, overwrite=False, verbose=False, insert_altlang_url
 
                 meta = metahtml.parse(html, url)
 
+                # add all alternate language urls as test cases
                 if insert_altlang_urls:
                     for altlang_url in meta['altlang_urls']:
                         new_urls.add(altlang_url['url'])
+
+                # if the url is not the canonical url,
+                # then we need to add the canonical url as a test case instead of this url
+                if meta['url_canonical']['url'] != url:
+                    new_urls.add(meta['url_canonical']['url'])
+                    break
 
                 # simplify hostname for sorting purposes
                 hostname = url_parsed.hostname
