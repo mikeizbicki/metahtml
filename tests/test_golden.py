@@ -155,7 +155,16 @@ def insert_golden_tests(urls, overwrite=False, verbose=False, insert_altlang_url
         
         # process the cached webpages
         if add_url or verbose:
-            cache = get_cached_webpages(url,None)
+
+            # if the url fails to download,
+            # then print a warning and skip it
+            try:
+                cache = get_cached_webpages(url,None)
+            except ValueError:
+                print('WARNING: no html found for url=',url)
+                cache = []
+
+            # loop through each version of the url in the cache
             for (date,html) in cache:
 
                 # calculate meta information;

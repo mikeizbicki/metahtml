@@ -111,6 +111,10 @@ def get_altlang_urls(html, url, fast=False):
     # https://mondediplo.com/2020/05/03covid-ecology
     # https://carnegie-mec.org/diwan/81781
 
+    # direct translations without links:
+    # https://bles.com/mundo/rusia-uso-hidroxicloroquina-medicamento-tratar-virus-pcch-sugerido-trump.html
+    # https://thebl.com/world-news/russia-supports-hydroxychloroquine-drug-ccp-virus-trump.html
+
     return urls
 
 

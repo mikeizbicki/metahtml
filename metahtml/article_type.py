@@ -23,6 +23,7 @@ def get_article_type(html, url, meta_best, fast=False):
             pattern_details = 'len(best_timestamps)==0'
         article_types.append({
             'article_type' : 'unknown',
+            'valid_for_hostname' : True,
             'pattern' : 'meta_best',
             'pattern_details' : pattern_details,
             })
@@ -53,7 +54,7 @@ def get_article_type(html, url, meta_best, fast=False):
         if min_lo is not None and max_hi is not None:
             timestamp_range =  max_hi - min_lo
 
-        if len(best_timestamps) > 3 and abs(timestamp_range.total_seconds()) > 24*60*60:
+        if len(best_timestamps) > 5 and abs(timestamp_range.total_seconds()) > 24*60*60:
             article_types.append({
                 'article_type' : 'catalog',
                 'valid_for_hostname' : True,
@@ -103,6 +104,7 @@ def get_article_type(html, url, meta_best, fast=False):
         # hostname specific regexs
         ( None, r'/(19|20)\d{2}/[a-zA-Z]{3}/\d{2}/?$' ),
         ( 'elnacional.com.do', r'^/category/' ),
+        ( 'cnnespanol.cnn.com', r'^/video/$' ),
         ]
 
     for hostname, regex in regexs:
@@ -121,14 +123,16 @@ def get_article_type(html, url, meta_best, fast=False):
                 })
 
     # return results
-    if len(article_types) == 0:
-        article_types.append({
-            'article_type' : 'article',
-            'pattern' : 'default',
-            'valid_for_hostname' : True,
-            })
+    article_types.append({
+        'article_type' : 'article',
+        'pattern' : 'default',
+        'valid_for_hostname' : True,
+        })
 
-    best_article_type = article_types[0]
+    for article_type in article_types:
+        if article_type['valid_for_hostname']:
+            best_article_type = article_type
+            break
 
     return best_article_type,article_types
 

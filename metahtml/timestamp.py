@@ -337,6 +337,7 @@ def get_timestamp_published(html, url, **kwargs):
         ( None, '//meta[@name="PublishDate"]/@content' ),
         ( None, '//meta[@name="all_timestamps"]/@content' ),
         ( None, '//meta[@name="dc.Date"]/@content' ),
+        ( None, '//meta[@name="cXenseParse:recs:publishtime"]/@content' ),
 
         # microdata paths
         ( None, '//*[@itemprop="datePublished"]/@content' ),
@@ -347,15 +348,22 @@ def get_timestamp_published(html, url, **kwargs):
         #( None, '//*[@property="datePublished"]' ),
 
         # custom xpaths
+        ( 'actualidad.rt.com',              '//div[@class="ArticleView-timestamp"]/time/@datetime' ),
         ( 'angrystaffofficer.com',          '//time[contains(@class,"published")]' ),
         ( 'armscontrolwonk.com',            '//span[@class="date published time"]' ),
         ( 'bbc.com',                        '(//div[@class="date date--v2"])[1]' ),
         ( 'bbc.co.uk',                      '(//div[@class="date date--v2"])[1]' ),
+        ( 'bles.com',                       '(//span[@class="p-time"]/@data-date)[1]' ),
         ( 'csis.org',                       '//article[@role="article"]/p' ),
+        ( 'elheraldo.co',                   '(//div[@class="datos"]/time/@datetime)[1]' ),
         ( 'elperuano.pe',                   '//article[@class="notatexto"]/p/b' ),
         ( 'elnacional.com.do',              '(//time[contains(@class,"entry-date")])[1]' ),
         ( 'english.khan.co.kr',             '//div[@class="article_date"]' ),
         ( 'foxnews.com',                    '//div[@class="article-date"]/time' ),
+        ( 'headtopics.com',                 '//meta[@name="date"]/@content' ), # FIXME: English articles use MDY, but Spanish articles use DMY
+        #( 'headtopics.com',                 '//div[@class="Article-readingTime"]' ), # FIXME: English articles use MDY, but Spanish articles use DMY
+        ( 'laregion.es',                    '//meta[@name="date"]/@content' ),
+        ( 'mundiario.com',                  '//span[@class="content-time"]' ),
         ( 'nytimes.com',                    '//meta[@property="article:published"]/@content' ),
         ( 'reuters.com',                    '//time' ),
         ( 'spiegel.de',                     '//span[@class="article-function-date"]/b' ),
