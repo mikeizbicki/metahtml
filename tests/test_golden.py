@@ -89,6 +89,7 @@ def get_cached_webpages(url, dates=None):
         print('done.')
     if len(paths)==0:
         download_url()
+        return get_cached_webpages(url, dates)
 
     # return the contents of the cache
     ret = []
@@ -152,13 +153,13 @@ def insert_golden_tests(urls, overwrite=False, verbose=False, insert_altlang_url
                     del rows[i]
                     break
         
-        # add the row
+        # process the cached webpages
         if add_url or verbose:
-
-            # calculate meta information;
-            # if not verbose, then do it quickly
             cache = get_cached_webpages(url,None)
             for (date,html) in cache:
+
+                # calculate meta information;
+                # we spend extra time computing the full metainformation if verbose
                 if verbose:
                     meta, meta_full = metahtml.parse_all(html, url)
                     print('--------------------------------------------------------------------------------')
@@ -168,6 +169,10 @@ def insert_golden_tests(urls, overwrite=False, verbose=False, insert_altlang_url
                     print('meta=')
                     pprint.pprint(meta)
 
+                # FIXME:
+                # sometimes, the meta returned by parse can be different 
+                # than the meta returned by parse_all;
+                # therefore, we must repeat this work if verbose
                 meta = metahtml.parse(html, url)
 
                 # add all alternate language urls as test cases
@@ -179,7 +184,7 @@ def insert_golden_tests(urls, overwrite=False, verbose=False, insert_altlang_url
                 # then we need to add the canonical url as a test case instead of this url
                 if meta['url_canonical']['url'] != url:
                     new_urls.add(meta['url_canonical']['url'])
-                    break
+                    add_url = False
 
                 # simplify hostname for sorting purposes
                 hostname = url_parsed.hostname
@@ -188,11 +193,17 @@ def insert_golden_tests(urls, overwrite=False, verbose=False, insert_altlang_url
 
                 # insert row
                 if add_url:
+                    if meta['article_type']['article_type'] == 'article':
+                        is_article = 'TRUE'
+                    else:
+                        is_article = 'FALSE'
+
                     rows.append({
                         'human_annotator' : None ,
                         'hostname' : hostname,
                         'url' : url,
                         'download_date': date,
+                        'is_article' : is_article,
                         'timestamp_published' : metahtml.timestamp.timestamp2str(meta['timestamp_published']),
                         'timestamp_modified' : metahtml.timestamp.timestamp2str(meta['timestamp_modified']),
                         'lang' : metahtml.language.lang2str(meta['lang']),
