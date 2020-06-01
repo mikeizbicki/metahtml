@@ -362,6 +362,7 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'foxnews.com',                    '//div[@class="article-date"]/time' ),
         ( 'headtopics.com',                 '//meta[@name="date"]/@content' ), # FIXME: English articles use MDY, but Spanish articles use DMY
         #( 'headtopics.com',                 '//div[@class="Article-readingTime"]' ), # FIXME: English articles use MDY, but Spanish articles use DMY
+        ( 'heavy.com',                      '//meta[@property="article:published_time"]/@content'),
         ( 'laregion.es',                    '//meta[@name="date"]/@content' ),
         ( 'mundiario.com',                  '//span[@class="content-time"]' ),
         ( 'nytimes.com',                    '//meta[@property="article:published"]/@content' ),
@@ -402,6 +403,7 @@ def get_timestamp_modified(html, url, **kwargs):
         # xpaths
         ( 'angrystaffofficer.com',          '//time[contains(@class,"updated")]' ),
         ( 'foxnews.com',                    '//div[@class="article-updated"]' ),
+        ( 'heavy.com',                      '//meta[@property="article:modified_time"]/@content'),
         ( 'nytimes.com',                    '//meta[@property="article:modified"]/@content' ),
         ]
     return get_timestamp(html, url, xpaths, use_url_date=False, **kwargs)
