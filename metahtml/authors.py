@@ -14,11 +14,10 @@ def parse_authors_str(text):
     return text
 
 
-def get_authors(html, url, fast=False):
+def get_authors(parser, url, fast=False):
     '''
     '''
 
-    parser = lxml.html.fromstring(html)
     url_hostname = urlparse(url).hostname
 
     authors = []

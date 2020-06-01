@@ -407,12 +407,11 @@ def get_timestamp_modified(html, url, **kwargs):
     return get_timestamp(html, url, xpaths, use_url_date=False, **kwargs)
 
 
-def get_timestamp(html, url, xpaths, use_url_date=False, require_valid_for_hostname=True, fast=True):
+def get_timestamp(parser, url, xpaths, use_url_date=False, require_valid_for_hostname=True, fast=True):
     '''
     FIXME: make the xpath code faster using
     https://www.ibm.com/developerworks/xml/library/x-hiperfparse/
     '''
-    parser = lxml.html.fromstring(html)
     url_parsed = urlparse(url)
     url_hostname = url_parsed.hostname
 

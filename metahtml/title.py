@@ -120,11 +120,10 @@ def parse_title_str(text):
     #return text.strip().replace('\n', ' ').replace('\r', '')
 
 
-def get_title(html, url, fast=False):
+def get_title(parser, url, fast=False):
     '''
     '''
 
-    parser = lxml.html.fromstring(html)
     url_hostname = urlparse(url).hostname
 
     title = []

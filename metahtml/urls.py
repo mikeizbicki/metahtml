@@ -5,16 +5,16 @@ import lxml
 from urllib.parse import urlparse
 
 
-def get_url_canonical(html, url, fast=False):
+def get_url_canonical(parser, url, fast=False):
     '''
     '''
-    parser = lxml.html.fromstring(html)
     url_parsed = urlparse(url)
 
     urls = []
 
     xpaths = [
-        ( None, '//link[@rel=canonical]/@href' ),
+        ( None, '//link[@rel="canonical"]/@href' ),
+        #( None, '//meta[@name="og:canoncial"]/@content' ),
         ]
 
     # get timestamps from xpaths
@@ -56,11 +56,10 @@ def get_url_canonical(html, url, fast=False):
     return urls[0], urls
 
 
-def get_altlang_urls(html, url, fast=False):
+def get_altlang_urls(parser, url, fast=False):
     '''
     '''
 
-    parser = lxml.html.fromstring(html)
     url_parsed = urlparse(url)
     urls = []
 

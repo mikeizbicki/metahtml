@@ -7,11 +7,10 @@ import lxml.html
 
 from metahtml.timestamp import worst_tz_lo, worst_tz_hi
 
-def get_article_type(html, url, meta_best, fast=False):
+def get_article_type(parser, url, meta_best, fast=False):
 
     best_timestamps = meta_best['timestamp_published']
     url_parsed = urlparse(url)
-    parser = lxml.html.fromstring(html)
 
     article_types = []
 
