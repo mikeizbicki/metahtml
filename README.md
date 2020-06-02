@@ -113,3 +113,10 @@ Adding support for a new hostname requires taking the following steps.
    ```
    where `hostnameX` are the hostnames added in the commit.
    There should be no punctuation between the hostnames.
+
+
+## Notes
+
+Some websites aggregate from other websites, but appear to be their own news source.
+Should we special case these sites?
+Example: https://headtopics.com/es/est-grave-de-salud-kim-jong-un-12557786

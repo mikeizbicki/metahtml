@@ -58,7 +58,7 @@ def get_cached_webpages(url, dates=None):
     # and so the url_filename variable replaces potentially invalid characters with underscores;
     # an md5 hash is added at the end to prevent name collisions due to the substitution;
     # we don't rely on just the md5 hash because we want the filename to be human readable
-    url_filename = re.sub(r'[/:><"|*]','_',url) + hashlib.md5(url.encode()).hexdigest()[:8]
+    url_filename = re.sub(r'[/:><"|*?&]','_',url) + hashlib.md5(url.encode()).hexdigest()[:8]
 
     # create the cache folder for the url if it doesn't exist
     url_dir = os.path.join(cache_dir,url_filename)
@@ -75,9 +75,10 @@ def get_cached_webpages(url, dates=None):
     def download_url():
         print('downloading url=',url,end=' ... ')
         date = datetime.datetime.now().strftime('%Y-%m-%d')
+        date = dates[0]
         path = os.path.join(url_dir,date)
         paths = [ path ]
-        r = requests.get(url,headers={'User-Agent':'NovichenkoBot'})
+        r = requests.get(url,headers={'User-Agent':'NovichenkoBot'},verify=False)
         if r.status_code != 200:
             print('error: status_code=',r.status_code)
             invalid_urls.add(url)
@@ -94,8 +95,11 @@ def get_cached_webpages(url, dates=None):
     # return the contents of the cache
     ret = []
     for path in paths:
-        with open(path) as f:
-            ret.append((os.path.basename(path),f.read()))
+        try:
+            with open(path) as f:
+                ret.append((os.path.basename(path),f.read()))
+        except FileNotFoundError:
+            download_url()
     return ret
 
 
