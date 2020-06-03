@@ -374,7 +374,6 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'time.com',                       '//div[contains(@class,"published-date")]' ),
         ( 'voxeurop.eu',                    '//div[contains(@class,"publish_date_time")]' ),
         ( 'wsj.com',                        '//time' ),
-        ( 'asia.nikkei.com',                '//span[@class="timestamp timestamp--no-icon article_date timestamp--full"]/datetime' ),
         ]
 
     return get_timestamp(html, url, xpaths, use_url_date=True, **kwargs)
