@@ -348,12 +348,16 @@ def get_timestamp_published(html, url, **kwargs):
         #( None, '//*[@property="datePublished"]' ),
 
         # custom xpaths
+        ( 'america.aljazeera.com',          '//span[@class="date"]' ),
+        ( 'abcnews.go.com',                 '//span[@class="date"]' ),
+        ( '112.international',              '//span[@class="time"]' ),
         ( 'actualidad.rt.com',              '//div[@class="ArticleView-timestamp"]/time/@datetime' ),
         ( 'angrystaffofficer.com',          '//time[contains(@class,"published")]' ),
         ( 'armscontrolwonk.com',            '//span[@class="date published time"]' ),
         ( 'bbc.com',                        '(//div[@class="date date--v2"])[1]' ),
         ( 'bbc.co.uk',                      '(//div[@class="date date--v2"])[1]' ),
         ( 'bles.com',                       '(//span[@class="p-time"]/@data-date)[1]' ),
+        ( 'cnn.com',                        '//div[contains(@class,"cnnBodyText")]' ),
         ( 'csis.org',                       '//article[@role="article"]/p' ),
         ( 'elheraldo.co',                   '(//div[@class="datos"]/time/@datetime)[1]' ),
         ( 'elperuano.pe',                   '//article[@class="notatexto"]/p/b' ),
@@ -403,6 +407,7 @@ def get_timestamp_modified(html, url, **kwargs):
         ( 'angrystaffofficer.com',          '//time[contains(@class,"updated")]' ),
         ( 'foxnews.com',                    '//div[@class="article-updated"]' ),
         ( 'nytimes.com',                    '//meta[@property="article:modified"]/@content' ),
+        ( 'usatoday.com',                   '//div[@class="gnt_ar_dt"]/@content' ),
         ]
     return get_timestamp(html, url, xpaths, use_url_date=False, **kwargs)
 
