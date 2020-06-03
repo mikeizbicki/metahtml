@@ -75,7 +75,6 @@ def get_cached_webpages(url, dates=None):
     def download_url():
         print('downloading url=',url,end=' ... ')
         date = datetime.datetime.now().strftime('%Y-%m-%d')
-        date = dates[0]
         path = os.path.join(url_dir,date)
         paths = [ path ]
         r = requests.get(url,headers={'User-Agent':'NovichenkoBot'},verify=False)
