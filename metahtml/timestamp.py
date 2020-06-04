@@ -351,7 +351,7 @@ def get_timestamp_published(html, url, **kwargs):
         # custom xpaths
         ( 'america.aljazeera.com',          '//span[@class="date"]' ),
         ( 'abcnews.go.com',                 '//span[@class="date"]' ),
-        #( '112.international',              '//meta[@property="article:published"]/@content' ),
+        ( '112.international',              '//meta[@property="article:published"]/@content' ),
         ( 'actualidad.rt.com',              '//div[@class="ArticleView-timestamp"]/time/@datetime' ),
         ( 'angrystaffofficer.com',          '//time[contains(@class,"published")]' ),
         ( 'armscontrolwonk.com',            '//span[@class="date published time"]' ),
@@ -407,7 +407,7 @@ def get_timestamp_modified(html, url, **kwargs):
         ( None, '//*[@property="dateModified"]' ),
 
         # xpaths
-        #( '112.international',              '//meta[@property="og:updated_time"]/@content' )
+        ( '112.international',              '//meta[@property="og:updated_time"]/@content' ),
         ( 'angrystaffofficer.com',          '//time[contains(@class,"updated")]' ),
         ( 'foxnews.com',                    '//div[@class="article-updated"]' ),
         ( 'nytimes.com',                    '//meta[@property="article:modified"]/@content' ),
