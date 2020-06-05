@@ -360,7 +360,7 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'elnacional.com.do',              '(//time[contains(@class,"entry-date")])[1]' ),
         ( 'english.khan.co.kr',             '//div[@class="article_date"]' ),
         ( 'foxnews.com',                    '//div[@class="article-date"]/time' ),
-        ( 'headtopics.com',                 '//meta[@name="date"]/@content' ), # FIXME: English articles use MDY, but Spanish articles use DMY
+        #( 'headtopics.com',                 '//meta[@name="date"]/@content' ), # FIXME: English articles use MDY, but Spanish articles use DMY
         #( 'headtopics.com',                 '//div[@class="Article-readingTime"]' ), # FIXME: English articles use MDY, but Spanish articles use DMY
         ( 'laregion.es',                    '//meta[@name="date"]/@content' ),
         ( 'mundiario.com',                  '//span[@class="content-time"]' ),
@@ -374,6 +374,37 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'time.com',                       '//div[contains(@class,"published-date")]' ),
         ( 'voxeurop.eu',                    '//div[contains(@class,"publish_date_time")]' ),
         ( 'wsj.com',                        '//time' ),
+        ( 'chicagotribune.com',             '//meta[@name="date"]/@content'),
+        ( 'cnbc.com',                       '//div/time[@data-testid="published-timestamp"]'),
+        ( 'cnnphilippines.com',             '//div/p[@class="dateString no-icon"]'),
+        ( 'dailydot.com',                   '//div/p[@class="date-stamp inline-flex"]'),
+        ( 'dailymotion.com',                '//div[@class="RankViewsAndPubDate__videoStats____lrYG"]/span/@title'),
+        ( 'dailysignal.com',                '//p/time[@class="date"]'),
+        ( 'eastcoastdaily.in',              '//div[@class="entry-header"]//span[@class="date meta-item"]'),
+        ( 'enmnews.com',                    '//div[@class="date"]/title'),
+        ( 'forbes.com',                     '//meta[@property="article:published"]/@content'),
+        ( 'forexlive.com',                  '//div[@class="row metahead"]/time'),
+        ( 'france24.com',                   '//span[@class="m-pub-dates__date"]/time'),
+        ( 'freespeechdaily.com',            '//i[@class="fa fa-clock-o"]/a'),
+        ( 'ibtimes.com',                    '//span[@class="author"]/time[itemprop="datePublished"]'),
+        ( 'itv.com',                        '//li[@class="labels__item labels__item--time"]/time/@datetime'),
+        ( 'japantimes.co.jp',               '//li[@class="post_time"]/time/@datetime'),
+        ( 'lucianne.com',                   '//div/p[@class="post-posted-by"]'),
+        ( 'malaymail.com',                  '//div/p[@class="meta mb-0"]'),
+        ( 'marketpulse.com',                '//article/div[@class="postinfo"]/time/@datetime'),
+        ( 'military.com',                   '//meta[@name="article:published_time"]/@content'),
+        ( 'militarytimes.com',              '//meta[@itemprop="datePublished"]/@content'),
+        ( 'nbc12.com',                      '//meta[@name="date"]/@content'),
+        ( 'newsmax.com',                    '//p/span[@class="artPgDate"]'),
+        ( 'nydailynews.com',                '//meta[@name="date"]/@content'),
+        ( 'onenewspage.com',                '//meta[@itemprop="uploadDate"]/@content'),
+        ( 'pmnewsnigera.com',               '//div[@class="col-md-12 post"]/p[@class="time"]'),
+        ( 'politicususa.com',               '//a/time[@class="entry-date published updated"]/@datetime'),
+        ( 'pressherald.com',                '//div[@class="posted"]/time/@datetime'),
+        ( 'rep-am.com',                     '//span/time[@class="td-post-date"]/@datetime'),
+        ( 'ruthfullyyours.com',             '//div/p[@id="single-byline"]'),
+        ( 'salon.com',                      '//meta[@property="article:published_time"]/@content'),
+        ( 'snopes.com',                     '//li/span[@class="date date-published"]')
         ]
 
     return get_timestamp(html, url, xpaths, use_url_date=True, **kwargs)
@@ -403,6 +434,10 @@ def get_timestamp_modified(html, url, **kwargs):
         ( 'angrystaffofficer.com',          '//time[contains(@class,"updated")]' ),
         ( 'foxnews.com',                    '//div[@class="article-updated"]' ),
         ( 'nytimes.com',                    '//meta[@property="article:modified"]/@content' ),
+        ( 'forbes.com',                     '//meta[@property="article:modified"]/@content'),
+        ( 'france24.com',                   '//span[class="m-pub-dates__date"]/time'),
+        ( 'military.com',                   '//meta[@name="article:modified_time"]/@content'),
+        ( 'salon.com',                      '//meta[@property="article:modified_time"]/@content')
         ]
     return get_timestamp(html, url, xpaths, use_url_date=False, **kwargs)
 
