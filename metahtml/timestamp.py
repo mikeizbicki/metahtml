@@ -354,6 +354,7 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'bbc.com',                        '(//div[@class="date date--v2"])[1]' ),
         ( 'bbc.co.uk',                      '(//div[@class="date date--v2"])[1]' ),
         ( 'bles.com',                       '(//span[@class="p-time"]/@data-date)[1]' ),
+        ( 'bloomberg.com',                  '//meta[@name="parsely-pub-date"]/@content' ),
         ( 'csis.org',                       '//article[@role="article"]/p' ),
         ( 'elheraldo.co',                   '(//div[@class="datos"]/time/@datetime)[1]' ),
         ( 'elperuano.pe',                   '//article[@class="notatexto"]/p/b' ),
@@ -362,9 +363,11 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'foxnews.com',                    '//div[@class="article-date"]/time' ),
         ( 'headtopics.com',                 '//meta[@name="date"]/@content' ), # FIXME: English articles use MDY, but Spanish articles use DMY
         #( 'headtopics.com',                 '//div[@class="Article-readingTime"]' ), # FIXME: English articles use MDY, but Spanish articles use DMY
+        ( 'heavy.com',                      '//meta[@property="article:published_time"]/@content'),
         ( 'laregion.es',                    '//meta[@name="date"]/@content' ),
         ( 'mundiario.com',                  '//span[@class="content-time"]' ),
         ( 'nytimes.com',                    '//meta[@property="article:published"]/@content' ),
+        ( 'oluwagbemigapost.com',           '//time[@class="entry-date published updated"]/@datetime'),
         ( 'reuters.com',                    '//time' ),
         ( 'spiegel.de',                     '//span[@class="article-function-date"]/b' ),
         ( 'spiegel.de',                     '//time/@datetime' ),
@@ -372,6 +375,7 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'thediplomat.com',                '//span[@itemprop="datePublished"]' ),
         ( 'theintercept.com',               '//span[@class="PostByline-date"]' ),
         ( 'time.com',                       '//div[contains(@class,"published-date")]' ),
+        ( 'townhall.com',                   '//div[@class="contributor pull-left"][contains(.,"Posted:")]/text()'),
         ( 'voxeurop.eu',                    '//div[contains(@class,"publish_date_time")]' ),
         ( 'wsj.com',                        '//time' ),
         ]
@@ -401,7 +405,9 @@ def get_timestamp_modified(html, url, **kwargs):
 
         # xpaths
         ( 'angrystaffofficer.com',          '//time[contains(@class,"updated")]' ),
+        ( 'bloomberg.com',                  '//time[@itemprop="dateModified"]/@datetime' ),
         ( 'foxnews.com',                    '//div[@class="article-updated"]' ),
+        ( 'heavy.com',                      '//meta[@property="article:modified_time"]/@content' ),
         ( 'nytimes.com',                    '//meta[@property="article:modified"]/@content' ),
         ]
     return get_timestamp(html, url, xpaths, use_url_date=False, **kwargs)
