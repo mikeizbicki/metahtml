@@ -324,6 +324,36 @@ def get_timestamp_published(html, url, **kwargs):
 
     xpaths = [
 
+        # custom xpaths
+        ( 'actualidad.rt.com',              '//div[@class="ArticleView-timestamp"]/time/@datetime' ),
+        ( 'armscontrolwonk.com',            '//span[@class="date published time"]' ),
+        ( 'bbc.com',                        '(//div[@class="date date--v2"])[1]' ),
+        ( 'bbc.co.uk',                      '(//div[@class="date date--v2"])[1]' ),
+        ( 'bles.com',                       '(//span[@class="p-time"]/@data-date)[1]' ),
+        ( 'bloomberg.com',                  '//meta[@name="parsely-pub-date"]/@content' ),
+        ( 'cbsnews.com',                    '//time/@datetime' ),
+        ( 'csis.org',                       '//article[@role="article"]/p' ),
+        ( 'elperuano.pe',                   '//article[@class="notatexto"]/p/b' ),
+        ( 'elnacional.com.do',              '(//time[contains(@class,"entry-date")])[1]' ),
+        ( 'english.khan.co.kr',             '//div[@class="article_date"]' ),
+        ( 'foxnews.com',                    '//div[@class="article-date"]/time' ),
+        ( 'headtopics.com',                 '//meta[@name="date"]/@content' ),
+        ( 'heavy.com',                      '//meta[@property="article:published_time"]/@content'),
+        ( 'heavy.com',                      '//time[@itemprop="datePublished"]/@datetime'),
+        ( 'laregion.es',                    '//meta[@name="date"]/@content' ),
+        ( 'lavozdegalicia.es',              '(//meta[@itemprop="datePublished"]/@content)[1]' ),
+        ( 'mundiario.com',                  '//span[@class="content-time"]' ),
+        ( 'nytimes.com',                    '//meta[@property="article:published"]/@content' ),
+        ( 'oluwagbemigapost.com',           '//time[@class="entry-date published updated"]/@datetime'),
+        ( 'spiegel.de',                     '//span[@class="article-function-date"]/b' ),
+        ( 'spiegel.de',                     '//time/@datetime' ),
+        ( 'stripes.com',                    '//span[@class="published_date"]' ),
+        ( 'thediplomat.com',                '//span[@itemprop="datePublished"]' ),
+        ( 'theintercept.com',               '//span[@class="PostByline-date"]' ),
+        ( 'time.com',                       '//div[contains(@class,"published-date")]' ),
+        ( 'townhall.com',                   '//div[@class="contributor pull-left"][contains(.,"Posted:")]/text()'),
+        ( 'voxeurop.eu',                    '//div[contains(@class,"publish_date_time")]' ),
+
         # universal xpaths
         ( None, '//meta[@property="rnews:datePublished"]/@content' ),
         ( None, '//meta[@property="article:published_time"]/@content' ),
@@ -340,44 +370,10 @@ def get_timestamp_published(html, url, **kwargs):
         ( None, '//meta[@name="cXenseParse:recs:publishtime"]/@content' ),
 
         # microdata paths
-        ( None, '//*[@itemprop="datePublished"]/@content' ),
-        ( None, '//*[@itemprop="datePublished"]/@datetime' ),
-        #( None, '//*[@itemprop="datePublished"]' ),
-        ( None, '//*[@property="datePublished"]/@content' ),
-        ( None, '//*[@property="datePublished"]/@datetime' ),
-        #( None, '//*[@property="datePublished"]' ),
-
-        # custom xpaths
-        ( 'actualidad.rt.com',              '//div[@class="ArticleView-timestamp"]/time/@datetime' ),
-        ( 'angrystaffofficer.com',          '//time[contains(@class,"published")]' ),
-        ( 'armscontrolwonk.com',            '//span[@class="date published time"]' ),
-        ( 'bbc.com',                        '(//div[@class="date date--v2"])[1]' ),
-        ( 'bbc.co.uk',                      '(//div[@class="date date--v2"])[1]' ),
-        ( 'bles.com',                       '(//span[@class="p-time"]/@data-date)[1]' ),
-        ( 'bloomberg.com',                  '//meta[@name="parsely-pub-date"]/@content' ),
-        ( 'csis.org',                       '//article[@role="article"]/p' ),
-        ( 'elheraldo.co',                   '(//div[@class="datos"]/time/@datetime)[1]' ),
-        ( 'elperuano.pe',                   '//article[@class="notatexto"]/p/b' ),
-        ( 'elnacional.com.do',              '(//time[contains(@class,"entry-date")])[1]' ),
-        ( 'english.khan.co.kr',             '//div[@class="article_date"]' ),
-        ( 'foxnews.com',                    '//div[@class="article-date"]/time' ),
-        ( 'headtopics.com',                 '//meta[@name="date"]/@content' ), # FIXME: English articles use MDY, but Spanish articles use DMY
-        #( 'headtopics.com',                 '//div[@class="Article-readingTime"]' ), # FIXME: English articles use MDY, but Spanish articles use DMY
-        ( 'heavy.com',                      '//meta[@property="article:published_time"]/@content'),
-        ( 'laregion.es',                    '//meta[@name="date"]/@content' ),
-        ( 'mundiario.com',                  '//span[@class="content-time"]' ),
-        ( 'nytimes.com',                    '//meta[@property="article:published"]/@content' ),
-        ( 'oluwagbemigapost.com',           '//time[@class="entry-date published updated"]/@datetime'),
-        ( 'reuters.com',                    '//time' ),
-        ( 'spiegel.de',                     '//span[@class="article-function-date"]/b' ),
-        ( 'spiegel.de',                     '//time/@datetime' ),
-        ( 'stripes.com',                    '//span[@class="published_date"]' ),
-        ( 'thediplomat.com',                '//span[@itemprop="datePublished"]' ),
-        ( 'theintercept.com',               '//span[@class="PostByline-date"]' ),
-        ( 'time.com',                       '//div[contains(@class,"published-date")]' ),
-        ( 'townhall.com',                   '//div[@class="contributor pull-left"][contains(.,"Posted:")]/text()'),
-        ( 'voxeurop.eu',                    '//div[contains(@class,"publish_date_time")]' ),
-        ( 'wsj.com',                        '//time' ),
+        ( None, '//meta[@itemprop="datePublished"]/@content' ),
+        ( None, '//meta[@itemprop="datePublished"]/@datetime' ),
+        ( None, '//time[@itemprop="datePublished"]/@content' ),
+        ( None, '//time[@itemprop="datePublished"]/@datetime' ),
         ]
 
     return get_timestamp(html, url, xpaths, use_url_date=True, **kwargs)
@@ -437,10 +433,17 @@ def get_timestamp(parser, url, xpaths, use_url_date=False, require_valid_for_hos
             timestamps.append(timestamp)
 
     # get timestamps from xpaths
+    disable_universal_xpaths = False
     for hostname,xpath in xpaths:
 
+        # determine whether the xpath applies to this hostname
+        if hostname is not None:
+            disable_universal_xpaths = disable_universal_xpaths or (hostname in url_hostname)
+            valid_for_hostname = hostname in url_hostname
+        else:
+            valid_for_hostname = not disable_universal_xpaths
+
         # if in fast mode, then only search for elements that will apply to the hostname
-        valid_for_hostname = hostname is None or hostname in url_hostname
         if fast and not valid_for_hostname:
             continue
 

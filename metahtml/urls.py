@@ -37,10 +37,15 @@ def get_url_canonical(parser, url, fast=False):
             elif type(element) is lxml.html.HtmlElement:
                 text = element.text_content()
 
+            # parse text
+            canonical_url = text
+            if len(canonical_url)>0 and canonical_url[0] == '/':
+                canonical_url = url_parsed.scheme + '://' + url_parsed.hostname + canonical_url
+
             # generate the timestamp from text
             urls.append({
-                'url' : text,
-                'valid_for_hostname' : 'valid_for_hostname',
+                'url' : canonical_url,
+                'valid_for_hostname' : valid_for_hostname,
                 'pattern' : 'xpath',
                 'pattern_details' : xpath
                 })
@@ -49,7 +54,7 @@ def get_url_canonical(parser, url, fast=False):
     if len(urls) == 0:
         urls.append({
             'url' : url,
-            'valid_for_hostname' : 'valid_for_hostname',
+            'valid_for_hostname' : valid_for_hostname,
             'pattern' : 'default',
             })
 
