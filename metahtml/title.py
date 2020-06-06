@@ -126,7 +126,7 @@ def get_title(parser, url, fast=False):
 
     url_hostname = urlparse(url).hostname
 
-    title = []
+    titles = []
 
     xpaths = [
         ( None,                     '//title' ),
@@ -153,7 +153,7 @@ def get_title(parser, url, fast=False):
 
             # register the title
             if text is not None:
-                title.append({
+                titles.append({
                     'title' : parse_title_str(text),
                     'raw' : text,
                     'pattern' : xpath,
@@ -163,11 +163,12 @@ def get_title(parser, url, fast=False):
                     break
 
     # return
-    if len(title)>0:
-        best_title = title[0]
-    else:
-        best_title = None
-    return best_title, title
+    best_title = None
+    for title in titles:
+        if best_title is None or len(best_title['title']) < len(title['title']):
+            best_title = title
+
+    return best_title, titles
 
 
 
