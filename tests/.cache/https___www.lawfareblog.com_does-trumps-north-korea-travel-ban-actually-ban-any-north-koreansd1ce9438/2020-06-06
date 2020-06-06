@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+<meta http-equiv="x-ua-compatible" content="ie=edge" /><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={licenseKey:"NRJS-ff62c96e979e252ef9e",applicationID:"264011223"};window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var i=n[t]={exports:{}};e[t][0].call(i.exports,function(n){var i=e[t][1][n];return r(i||n)},i,i.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var i=0;i<t.length;i++)r(t[i]);return r}({1:[function(e,n,t){function r(){}function i(e,n,t){return function(){return o(e,[u.now()].concat(f(arguments)),n?null:this,t),n?void 0:this}}var o=e("handle"),a=e(4),f=e(5),c=e("ee").get("tracer"),u=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],l="api-",d=l+"ixn-";a(p,function(e,n){s[n]=i(l+n,!0,"api")}),s.addPageAction=i(l+"addPageAction",!0),s.setCurrentRouteName=i(l+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,i="function"==typeof n;return o(d+"tracer",[u.now(),e,t],r),function(){if(c.emit((i?"":"no-")+"fn-start",[u.now(),r,i],t),i)try{return n.apply(this,arguments)}catch(e){throw c.emit("fn-err",[arguments,this,e],t),e}finally{c.emit("fn-end",[u.now()],t)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=i(d+n)}),newrelic.noticeError=function(e,n){"string"==typeof e&&(e=new Error(e)),o("err",[e,u.now(),!1,n])}},{}],2:[function(e,n,t){function r(e,n){var t=e.getEntries();t.forEach(function(e){"first-paint"===e.name?c("timing",["fp",Math.floor(e.startTime)]):"first-contentful-paint"===e.name&&c("timing",["fcp",Math.floor(e.startTime)])})}function i(e,n){var t=e.getEntries();t.length>0&&c("lcp",[t[t.length-1]])}function o(e){if(e instanceof s&&!l){var n,t=Math.round(e.timeStamp);n=t>1e12?Date.now()-t:u.now()-t,l=!0,c("timing",["fi",t,{type:e.type,fid:n}])}}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var a,f,c=e("handle"),u=e("loader"),s=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){a=new PerformanceObserver(r),f=new PerformanceObserver(i);try{a.observe({entryTypes:["paint"]}),f.observe({entryTypes:["largest-contentful-paint"]})}catch(p){}}if("addEventListener"in document){var l=!1,d=["click","keydown","mousedown","pointerdown","touchstart"];d.forEach(function(e){document.addEventListener(e,o,!1)})}}},{}],3:[function(e,n,t){function r(e,n){if(!i)return!1;if(e!==i)return!1;if(!n)return!0;if(!o)return!1;for(var t=o.split("."),r=n.split("."),a=0;a<r.length;a++)if(r[a]!==t[a])return!1;return!0}var i=null,o=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var f=navigator.userAgent,c=f.match(a);c&&f.indexOf("Chrome")===-1&&f.indexOf("Chromium")===-1&&(i="Safari",o=c[1])}n.exports={agent:i,version:o,match:r}},{}],4:[function(e,n,t){function r(e,n){var t=[],r="",o=0;for(r in e)i.call(e,r)&&(t[o]=n(r,e[r]),o+=1);return t}var i=Object.prototype.hasOwnProperty;n.exports=r},{}],5:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,i=t-n||0,o=Array(i<0?0:i);++r<i;)o[r]=e[n+r];return o}n.exports=r},{}],6:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function i(e){function n(e){return e&&e instanceof r?e:e?c(e,f,o):o()}function t(t,r,i,o){if(!l.aborted||o){e&&e(t,r,i);for(var a=n(i),f=v(t),c=f.length,u=0;u<c;u++)f[u].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function d(e,n){h[e]=v(e).concat(n)}function m(e,n){var t=h[e];if(t)for(var r=0;r<t.length;r++)t[r]===n&&t.splice(r,1)}function v(e){return h[e]||[]}function g(e){return p[e]=p[e]||i(t)}function w(e,n){u(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var h={},y={},b={on:d,addEventListener:d,removeEventListener:m,emit:t,get:g,listeners:v,context:n,buffer:w,abort:a,aborted:!1};return b}function o(){return new r}function a(){(s.api||s.feature)&&(l.aborted=!0,s=l.backlog={})}var f="nr@context",c=e("gos"),u=e(4),s={},p={},l=n.exports=i();l.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(i.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(o){}return e[n]=r,r}var i=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){i.buffer([e],r),i.emit(e,n,t)}var i=e("ee").get("handle");n.exports=r,r.ee=i},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,o,function(){return i++})}var i=1,o="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!x++){var e=E.info=NREUM.info,n=d.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();u(y,function(n,t){e[n]||(e[n]=t)}),c("mark",["onload",a()+E.offset],null,"api");var t=d.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function i(){"complete"===d.readyState&&o()}function o(){c("mark",["domContent",a()+E.offset],null,"api")}function a(){return O.exists&&performance.now?Math.round(performance.now()):(f=Math.max((new Date).getTime(),f))-E.offset}var f=(new Date).getTime(),c=e("handle"),u=e(4),s=e("ee"),p=e(3),l=window,d=l.document,m="addEventListener",v="attachEvent",g=l.XMLHttpRequest,w=g&&g.prototype;NREUM.o={ST:setTimeout,SI:l.setImmediate,CT:clearTimeout,XHR:g,REQ:l.Request,EV:l.Event,PR:l.Promise,MO:l.MutationObserver};var h=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1169.min.js"},b=g&&w&&w[m]&&!/CriOS/.test(navigator.userAgent),E=n.exports={offset:f,now:a,origin:h,features:{},xhrWrappable:b,userAgent:p};e(1),e(2),d[m]?(d[m]("DOMContentLoaded",o,!1),l[m]("load",r,!1)):(d[v]("onreadystatechange",i),l[v]("onload",r)),c("mark",["firstbyte",f],null,"api");var x=0,O=e(6)},{}],"wrap-function":[function(e,n,t){function r(e){return!(e&&e instanceof Function&&e.apply&&!e[a])}var i=e("ee"),o=e(5),a="nr@original",f=Object.prototype.hasOwnProperty,c=!1;n.exports=function(e,n){function t(e,n,t,i){function nrWrapper(){var r,a,f,c;try{a=this,r=o(arguments),f="function"==typeof t?t(r,a):t||{}}catch(u){l([u,"",[r,a,i],f])}s(n+"start",[r,a,i],f);try{return c=e.apply(a,r)}catch(p){throw s(n+"err",[r,a,p],f),p}finally{s(n+"end",[r,a,c],f)}}return r(e)?e:(n||(n=""),nrWrapper[a]=e,p(e,nrWrapper),nrWrapper)}function u(e,n,i,o){i||(i="");var a,f,c,u="-"===i.charAt(0);for(c=0;c<n.length;c++)f=n[c],a=e[f],r(a)||(e[f]=t(a,u?f+i:i,o,f))}function s(t,r,i){if(!c||n){var o=c;c=!0;try{e.emit(t,r,i,n)}catch(a){l([a,t,r,i])}c=o}}function p(e,n){if(Object.defineProperty&&Object.keys)try{var t=Object.keys(e);return t.forEach(function(t){Object.defineProperty(n,t,{get:function(){return e[t]},set:function(n){return e[t]=n,n}})}),n}catch(r){l([r])}for(var i in e)f.call(e,i)&&(n[i]=e[i]);return n}function l(n){try{e.emit("internal-error",n)}catch(t){}}return e||(e=i),t.inPlace=u,t.flag=a,t}},{}]},{},["loader"]);</script>
+<link rel="shortcut icon" href="https://www.lawfareblog.com/sites/default/files/favicon_0.ico" type="image/vnd.microsoft.icon" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="fb:app_id" content="327531937288071" />
+<meta name="description" content="The White House’s newest proclamation amending the administration’s travel ban now includes North Korea. The proclamation bans entry of persons from specific countries that would be “detrimental to the interests of the United States” under the premise of protecting the United States from terrorism and national security threats." />
+<meta name="news_keywords" content="politics, law" />
+<link rel="canonical" href="https://www.lawfareblog.com/does-trumps-north-korea-travel-ban-actually-ban-any-north-koreans" />
+<link rel="shortlink" href="https://www.lawfareblog.com/node/13744" />
+<meta property="og:site_name" content="Lawfare" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Does Trump&#039;s North Korea Travel Ban Actually Ban Any North Koreans?" />
+<meta property="og:url" content="https://www.lawfareblog.com/does-trumps-north-korea-travel-ban-actually-ban-any-north-koreans" />
+<meta property="og:description" content="The White House’s newest proclamation amending the administration’s travel ban now includes North Korea. The proclamation bans entry of persons from specific countries that would be “detrimental to the interests of the United States” under the premise of protecting the United States from terrorism and national security threats." />
+<meta property="og:updated_time" content="2019-10-31T07:48:14-04:00" />
+<meta property="og:image:url" content="https://www.lawfareblog.com/sites/default/files/styles/thumbnail/public/pictures/picture-3361-1503518007.jpg?itok=R_sJ-_sf" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="lawfareblog" />
+<meta name="twitter:site:id" content="186755547" />
+<meta name="twitter:url" content="https://www.lawfareblog.com/does-trumps-north-korea-travel-ban-actually-ban-any-north-koreans" />
+<meta name="twitter:title" content="Does Trump&#039;s North Korea Travel Ban Actually Ban Any North Koreans?" />
+<meta name="twitter:description" content="The White House’s newest proclamation amending the administration’s travel ban now includes North Korea. The proclamation bans entry of persons from specific countries that would be “detrimental to" />
+<meta name="twitter:image" content="https://www.lawfareblog.com/lawfare-default.png" />
+<meta property="article:published_time" content="2017-09-26T12:25:03-04:00" />
+<meta property="article:modified_time" content="2019-10-31T07:48:14-04:00" />
+  <title>Does Trump&#039;s North Korea Travel Ban Actually Ban Any North Koreans? - Lawfare</title>
+  <script src="//use.typekit.net/efb6zqr.js"></script>
+  <script>try{Typekit.load();}catch(e){}</script>
+  <style type="text/css" media="all">
+@import url("https://www.lawfareblog.com/modules/system/system.base.css?qbex3x");
+@import url("https://www.lawfareblog.com/modules/system/system.menus.css?qbex3x");
+@import url("https://www.lawfareblog.com/modules/system/system.messages.css?qbex3x");
+@import url("https://www.lawfareblog.com/modules/system/system.theme.css?qbex3x");
+</style>
+<style type="text/css" media="all">
+@import url("https://www.lawfareblog.com/modules/comment/comment.css?qbex3x");
+@import url("https://www.lawfareblog.com/sites/all/modules/date/date_api/date.css?qbex3x");
+@import url("https://www.lawfareblog.com/sites/all/modules/date/date_popup/themes/datepicker.1.7.css?qbex3x");
+@import url("https://www.lawfareblog.com/modules/field/theme/field.css?qbex3x");
+@import url("https://www.lawfareblog.com/modules/node/node.css?qbex3x");
+@import url("https://www.lawfareblog.com/modules/search/search.css?qbex3x");
+@import url("https://www.lawfareblog.com/modules/user/user.css?qbex3x");
+@import url("https://www.lawfareblog.com/sites/all/modules/views/css/views.css?qbex3x");
+@import url("https://www.lawfareblog.com/sites/all/modules/ckeditor/css/ckeditor.css?qbex3x");
+</style>
+<style type="text/css" media="all">
+@import url("https://www.lawfareblog.com/sites/all/modules/ctools/css/ctools.css?qbex3x");
+@import url("https://www.lawfareblog.com/sites/all/modules/panels/css/panels.css?qbex3x");
+@import url("https://www.lawfareblog.com/sites/all/themes/lawfare/layouts/single-sidebar/single-sidebar.css?qbex3x");
+@import url("https://www.lawfareblog.com/sites/all/modules/radioactivity/css/radioactivity.css?qbex3x");
+@import url("https://www.lawfareblog.com/sites/all/libraries/select2/select2.css?qbex3x");
+@import url("https://www.lawfareblog.com/sites/all/modules/select2/css/select2_integration.css?qbex3x");
+</style>
+<style type="text/css" media="all">
+@import url("https://www.lawfareblog.com/sites/all/themes/lawfare/css/styles.css?qbex3x");
+</style>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.lawfareblog.com/misc/jquery-extend-3.4.0.js?v=1.10.2"></script>
+<script type="text/javascript" src="https://www.lawfareblog.com/misc/jquery-html-prefilter-3.5.0-backport.js?v=1.10.2"></script>
+<script type="text/javascript" src="https://www.lawfareblog.com/misc/jquery.once.js?v=1.2"></script>
+<script type="text/javascript" src="https://www.lawfareblog.com/sites/all/modules/jquery_update/replace/ui/external/jquery.cookie.js?v=67fb34f6a866c40d0570"></script>
+</head>
+<body class="html not-front not-logged-in no-sidebars page-node page-node- page-node-13744 node-type-article" >
+  <script src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+      <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=327531937288071"
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    </script>
+      <div id="skip-link">
+    <a href="#main-content" class="element-invisible element-focusable">Skip to main content</a>
+  </div>
+    <header class="l-header l-container">
+
+  <div class="l-header__logo-wrapper">
+    <a href="/" title="Home" rel="home" id="logo">
+      <img class="l-header__logo" src="/sites/all/themes/lawfare/img/lawfare-logo.svg" alt="Home">
+    </a>
+  </div>
+
+    <div class="l-header__slogan">Hard National Security Choices</div>
+  
+
+  <div class="l-header__right">
+      <ul class="social-list">
+          <li class="social-list__item"><a class="social-icon" rel="external" target="_blank" href="http://twitter.com/lawfareblog"><i class="fa fa-twitter"></i></a></li>
+          <li class="social-list__item"><a class="social-icon" rel="external" target="_blank" href="https://www.facebook.com/Lawfareblog"><i class="fa fa-facebook"></i></a></li>
+      </ul>
+      <a href="/support-lawfare" class="button button--primary">Support</a>
+
+      
+      <datetime class="l-header__datetime">
+        Saturday, June 6, 2020      </datetime>
+  </div>
+
+  <div class="l-header__bottom">
+
+    <a class="top-navigation__mobile-menu" href="#">Menu</a>
+    <nav class="top-navigation">
+      <ul class="menu"><li class="first expanded menu-4853"><a href="/topics" title="" class="menu-4853">Topics</a><ul class="menu"><li class="first leaf menu-5244"><a href="/topic/aumf" title="" class="menu-5244">AUMF</a></li>
+<li class="leaf menu-5245"><a href="/topic/covert-action" title="" class="menu-5245">Covert Action</a></li>
+<li class="leaf menu-5246"><a href="/topic/cybersecurity" title="" class="menu-5246">Cybersecurity</a></li>
+<li class="leaf menu-4856"><a href="/topic/detention-guantanamo" title="" class="menu-4856">Detention &amp; Guantanamo</a></li>
+<li class="leaf menu-5247"><a href="/topic/drones" title="" class="menu-5247">Drones</a></li>
+<li class="leaf menu-5248"><a href="/topic/homeland-security" title="" class="menu-5248">Homeland Security</a></li>
+<li class="leaf menu-5256"><a href="/topic/interrogation" title="" class="menu-5256">Interrogation</a></li>
+<li class="leaf menu-5249"><a href="/topic/international-law-loac" title="" class="menu-5249">Laws of War</a></li>
+<li class="leaf menu-5257"><a href="/topic/military-commissions" title="" class="menu-5257">Military Commissions</a></li>
+<li class="leaf menu-5258"><a href="/topic/secrecy-leaks" title="" class="menu-5258">Secrecy</a></li>
+<li class="leaf menu-4855"><a href="https://www.lawfareblog.com/topic/surveillance" title="" class="menu-4855">Surveillance</a></li>
+<li class="leaf menu-5259"><a href="/topic/war-powers" title="" class="menu-5259">War Powers</a></li>
+<li class="last leaf menu-4854"><a href="/topics" title="" class="menu-4854">View All </a></li>
+</ul></li>
+<li class="leaf menu-4961"><a href="/" title="" class="menu-4961">Home</a></li>
+<li class="expanded menu-4482"><a href="/topic/book-reviews" title="" class="menu-4482">Reviews and Essays</a><ul class="menu"><li class="first leaf menu-4487"><a href="/topic/foreign-policy-essay" title="" class="menu-4487">Foreign Policy Essay</a></li>
+<li class="leaf menu-35755"><a href="https://www.lawfareblog.com/topic/book-reviews" title="" class="menu-35755">Book Reviews</a></li>
+<li class="leaf menu-4483"><a href="/topic/brief-reviews" title="" class="menu-4483">Brief Reviews</a></li>
+<li class="leaf menu-4484"><a href="/topic/readings" title="" class="menu-4484">Readings</a></li>
+<li class="leaf menu-4486"><a href="/topic/intelligence-studies-essay" title="" class="menu-4486">Intelligence Studies Essay</a></li>
+<li class="last leaf menu-4485"><a href="/topic/lawfare-research-paper-series" title="" class="menu-4485">Lawfare Research Paper Series</a></li>
+</ul></li>
+<li class="leaf menu-65024"><a href="https://www.lawfareblog.com/coverage/aegis-security-policy-depth" title="National Security Policy in Depth" class="menu-65024">Aegis</a></li>
+<li class="expanded menu-142742"><a href="/" title="" class="menu-142742">Resource Pages</a><ul class="menu"><li class="first leaf menu-142775"><a href="/lawfare-resources-teachers-and-students" class="menu-142775">Lawfare Resources for Teachers and Students</a></li>
+<li class="leaf menu-142688"><a href="/documents-related-mueller-investigation" class="menu-142688">Documents Related to the Mueller Investigation</a></li>
+<li class="leaf menu-142529"><a href="https://www.lawfareblog.com/litigation-documents-resources-related-travel-ban" title="" class="menu-142529">Litigation Documents &amp; Resources Related to the Travel Ban (Inactive)</a></li>
+<li class="leaf menu-142664"><a href="/litigation-documents-resources-related-trump-policies-family-separations-and-asylum" title="" class="menu-142664">Litigation Documents &amp; Resources Related to Trump Executive Order on Family Separations (Inactive)</a></li>
+<li class="leaf menu-142687"><a href="/litigation-documents-related-appointment-matthew-whitaker-acting-attorney-general" title="" class="menu-142687">Litigation Documents Related to the Appointment of Matthew Whitaker as Acting Attorney General (Inactive)</a></li>
+<li class="last leaf menu-142586"><a href="https://lawfareblog.com/realnews-trump-et-laffaire-russe-resource-page" title="" class="menu-142586">#RealNews on Trump et L&#039;Affaire Russe: A Resource Page (Inactive)</a></li>
+</ul></li>
+<li class="expanded menu-771"><a href="/" title="" class="menu-771">Special Features</a><ul class="menu"><li class="first leaf menu-142570"><a href="https://lawfareblog.com/enigma-sanctions-tracker" title="" class="menu-142570">Enigma Sanctions Tracker</a></li>
+<li class="leaf menu-14832"><a href="/snowden-revelations" class="menu-14832">Snowden Revelations</a></li>
+<li class="last leaf menu-118493"><a href="https://www.lawfareblog.com/who-board-unwilling-or-unable" title="" class="menu-118493">Which States Support the &#039;Unwilling and Unable&#039; Test?</a></li>
+</ul></li>
+<li class="last expanded menu-5520"><a href="/about-lawfare-brief-history-term-and-site" title="" class="menu-5520">More</a><ul class="menu"><li class="first leaf menu-3826"><a href="/masthead" class="menu-3826">Masthead</a></li>
+<li class="leaf menu-764"><a href="/about-lawfare-brief-history-term-and-site" class="menu-764">About Lawfare</a></li>
+<li class="leaf menu-4490"><a href="/our-comments-policy" class="menu-4490">Comments Policy</a></li>
+<li class="leaf menu-4491"><a href="/subscribe-lawfare" class="menu-4491">Subscribe to Lawfare</a></li>
+<li class="leaf menu-5518"><a href="/lawfare-job-board" class="menu-5518">The Job Board</a></li>
+<li class="last leaf menu-4489"><a href="/upcoming-events" class="menu-4489">Calendar</a></li>
+</ul></li>
+</ul>    </nav>
+
+    
+    
+  </div>
+
+</header>
+
+
+<main class="l-container">
+
+  
+        <div class="tabs"></div>        <div class="region region-content">
+    <div id="block-system-main" class="block block-system first odd">
+
+    
+  <div class="content">
+    
+
+
+
+<div class="l-container l-single-sidebar" >
+
+    <div class="l-top">
+    <div class="panel-pane pane-views pane-articles"  >
+  
+      
+  
+  <div class="pane-content">
+    <div class="view view-articles view-id-articles view-display-id-block view-dom-id-7ccdcf8a596c82db6de64f23a7396f3a">
+        
+  
+  
+      <div class="view-content">
+        <div class="views-row views-row-1 views-row-odd views-row-first views-row-last">
+    <header class="article-top">
+            <h6 class="article__featured-term"><a href="/topic/travel-ban">Travel Ban</a></h6>
+      
+  <h1 class="title">Does Trump's North Korea Travel Ban Actually Ban Any North Koreans?</h1>
+
+
+
+<div class="article-top__meta">
+  <div class="article_top__meta__inner">
+
+    
+    
+                                                  
+  <div class="article-top__contributors">
+    By <a href="/contributors/vsauter" class="author__link">Vanessa Sauter</a>  </div>
+
+  
+  <datetime>Tuesday, September 26, 2017, 12:25 PM</datetime>
+</div>
+
+
+
+<ul class="share">
+    <li class="share__item">
+        <a target="_blank" href="http://www.twitter.com/share?text=Does+Trump%27s+North+Korea+Travel+Ban+Actually+Ban+Any+North+Koreans%3F&amp;url=http://www.lawfareblog.com/does-trumps-north-korea-travel-ban-actually-ban-any-north-koreans" class="social-icon social-icon--twitter -medium">
+          <i class="fa fa-twitter"></i>
+        </a>
+    </li>
+    <li class="share__item">
+        <a target="_blank" href="http://www.facebook.com/sharer.php?u=http://www.lawfareblog.com/does-trumps-north-korea-travel-ban-actually-ban-any-north-koreans" class="social-icon social-icon--facebook -medium">
+          <i class="fa fa-facebook"></i>
+        </a>
+    </li>
+    <li class="share__item">
+        <a href="/cdn-cgi/l/email-protection#78470b0d1a121d1b0c453c171d0b582c0a0d15085f0b5836170a0c105833170a1d19582c0a190e1d14583a191658391b0c0d19141401583a1916583916015836170a0c105833170a1d19160b475e191508431a171c01455d4a48100c0c084257570f0f0f5614190f1e190a1d1a14171f561b1715571c171d0b550c0a0d15080b5516170a0c105513170a1d19550c0a190e1d14551a191655191b0c0d19141401551a1916551916015516170a0c105513170a1d19160b" class="social-icon -medium -inverse">
+          <i class="fa fa-envelope"></i>
+        </a>
+    </li>
+    <li class="share__item">
+        <a href="#" class="social-icon -medium -inverse" onclick="window.print()">
+          <i class="fa fa-print"></i>
+        </a>
+    </li>
+    <li class="share__item has-dropdown">
+      <a target="_blank" href="#" class="social-icon -medium -inverse">
+        <i class="fa fa-chevron-down"></i>
+      </a>
+      <ul class="share__dropdown">
+        <li class="share__dropdown-item"><a target="_blank" href="https://plus.google.com/share?url=http://www.lawfareblog.com/does-trumps-north-korea-travel-ban-actually-ban-any-north-koreans">Google+</a></li>
+        <li class="share__dropdown-item"><a target="_blank" href="http://reddit.com/submit?url=http://www.lawfareblog.com/does-trumps-north-korea-travel-ban-actually-ban-any-north-koreans&amp;title=Does Trump's North Korea Travel Ban Actually Ban Any North Koreans?">Reddit</a></li>
+        <li class="share__dropdown-item"><a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://www.lawfareblog.com/does-trumps-north-korea-travel-ban-actually-ban-any-north-koreans&amp;title=Does Trump's North Korea Travel Ban Actually Ban Any North Koreans?&amp;summary=&amp;source=http://www.lawfareblog.com">LinkedIn</a></li>
+      </ul>
+    </li>
+  </ul>
+  </div>
+
+</header>
+  </div>
+    </div>
+  
+  
+  
+  
+  
+  
+</div>  </div>
+
+  
+  </div>
+  </div>
+  
+    <div class="l-main">
+    <div class="panel-pane pane-node-body"  >
+  
+      
+  
+  <div class="pane-content">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>The White House’s newest <a href="https://www.whitehouse.gov/the-press-office/2017/09/24/enhancing-vetting-capabilities-and-processes-detecting-attempted-entry">proclamation </a> amending the administration’s travel ban now includes North Korea. The proclamation bans entry of persons from specific countries that would be “detrimental to the interests of the United States” under the premise of protecting the United States from terrorism and national security threats. Citing North Korea’s refusal to cooperate “in any respect” and their failure “to satisfy all information-sharing requirements,” the United States government will suspend entry for nationals of North Korea effective October 18, 2017. The proclamation states explicitly: </p>
+<blockquote><p>(i)   North Korea does not cooperate with the United States Government in any respect and fails to satisfy all information-sharing requirements. </p>
+<p>(ii)  The entry into the United States of nationals of North Korea as immigrants and nonimmigrants is hereby suspended.</p>
+</blockquote>
+<p>The proclamation does include a number of exceptions to this expanded ban, notably for dual nationality, diplomacy, and asylum: </p>
+<blockquote><p dir="ltr"><span id="docs-internal-guid-b99018ee-bef2-241d-4b47-2ea95826c507">(b)  Exceptions. The suspension of entry pursuant to section 2 of this proclamation shall not apply to:</span></p>
+<p style="margin-left:60pt;" dir="ltr"><span id="docs-internal-guid-b99018ee-bef2-241d-4b47-2ea95826c507">(iv)   any dual national of a country designated under section 2 of this proclamation when the individual is traveling on a passport issued by a non-designated country;</span></p>
+<p style="margin-left:60pt;" dir="ltr"><span id="docs-internal-guid-b99018ee-bef2-241d-4b47-2ea95826c507">(v)    any foreign national traveling on a diplomatic or diplomatic-type visa, North Atlantic Treaty Organization visa, C-2 visa for travel to the United Nations, or G-1, G-2, G-3, or G-4 visa; or</span></p>
+<p style="margin-left:60pt;" dir="ltr"><span id="docs-internal-guid-b99018ee-bef2-241d-4b47-2ea95826c507">(vi)   any foreign national who has been granted asylum by the United States; any refugee who has already been admitted to the United States; or any individual who has been granted withholding of removal, advance parole, or protection under the Convention Against Torture.</span></p>
+</blockquote>
+<p>There is, however, a catch. Article 3 South Korea’s <a href="http://english.ccourt.go.kr/cckhome/images/eng/main/Constitution_of_the_Republic_of_Korea.pdf">constitution states </a>that: </p>
+<blockquote><p>The territory of the Republic of Korea shall consist of the Korean peninsula and its adjacent islands. </p>
+</blockquote>
+<div>
+<p>Article 2 of the Nationality Act of the Republic of Korea <a href="http://elaw.klri.re.kr/eng_mobile/viewer.do?hseq=18840&amp;type=part&amp;key=7">extends </a>this: </p>
+<blockquote><p>A person falling under any of the following subparagraphs shall be a national of the Republic of Korea at birth: </p>
+<p>     (1) A person whose father or mother is a national of the Republic of Korea at the time of the person's birth; </p>
+<p>     (2) A person whose father was a national of the Republic of Korea at the time of the father's death, if the person's father died before the person's birth; </p>
+<p>     (3) A person who was born in the Republic of Korea, if both of the person's parents are unknown or have no nationality. </p>
+</blockquote>
+</div>
+<p>Together, the ROK Constitution and the Nationality Act offer ROK nationality to all North Koreans. The <a href="http://elaw.klri.re.kr/eng_mobile/viewer.do?hseq=20154&amp;type=part&amp;key=1">North Korean Refugees Protection and Settlement Support Act of 1997</a> says that: </p>
+<blockquote><p>This Act shall apply to residents escaping from North Korea, who have expressed their intention to be protected by the Republic of Korea.</p>
+</blockquote>
+<p>Any North Korean refugee is eligible for South Korean citizenship and protection as long as he or she willfully seeks it and undergoes an ROK vetting process to exclude serious criminals and those suspected of “disguised escape.”</p>
+<p>If any North Korean who desires it is entitled to South Korean citizenship--and, crucially, a South Korean passport--this does raise a question as to whether the North Korea provisions in the ban are effectively a nullity. Who, if anyone, does it bar?</p>
+<p>Certainly it prevents those individuals travelling to the United States on a North Korean passport. In 2016, the U.S. only issued 100 non-immigrant and nine immigrant U.S. visas to North Korean citizens. The precise nature of those entrants is unclear. It’s possible they were largely North Korean diplomats who would refuse to accept or recognize South Korean status--and thus would be barred. It should be noted, however, that Trump's latest travel ban excludes any foreign nationals traveling on a diplomatic visa. By contrast, new North Korean defectors in South Korea <a href="http://www.dailynk.com/english/read.php?num=14298&amp;cataId=nk00100">numbered </a>more than 1400 last year. Generally speaking, it is <a href="https://www.nknews.org/2014/12/north-koreas-passports-and-how-they-use-them/">nearly impossible</a> for an ordinary North Korean to receive a passport and leave the country. Those that do, often under visas issued to “visit relatives in China,” have the ability to defect through visiting an embassy in China and seek South Korean citizenship.  This process, coined a “passport escape,” offers one of the few ways for North Koreans to defect from the regime under the protection of dual nationality and thereby access the United States. Regardless, any North Korean who<a href="http://www.washingtonpost.com/sf/world/2017/09/09/escaping-north-korea-we-had-already-decided-to-kill-ourselves-rather-than-be-sent-back/?utm_term=.0adde9e9ba6b"> successfully escapes</a> using alternative methods can seek the protection of South Korean citizenship, assuming China does not <a href="http://www.capitalfm.co.ke/news/2017/07/china-defends-repatriation-north-koreans/">forcefully repatriate</a> them despite warnings from the U.N.</p>
+<p>Practically speaking, Trump’s latest travel ban may not actually bar any North Koreans who are capable of entering the United States in the first place.</p>
+
+</div></div></div>  </div>
+
+  
+  </div>
+<div class="panel-separator"></div><div class="panel-pane pane-entity-field pane-node-field-article-topics"  >
+  
+      
+  
+  <div class="pane-content">
+    <div class="field-label">Topics:&nbsp;</div><ul class="field-items"><li><a href="/topic/travel-ban" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Travel Ban</a></li></ul>  </div>
+
+  
+  </div>
+<div class="panel-separator"></div><div class="panel-pane pane-entity-field pane-node-field-article-tags"  >
+  
+      
+  
+  <div class="pane-content">
+    <div class="field-label">Tags:&nbsp;</div><ul class="field-items"><li><a href="/tagged/north-korea" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">North Korea</a>, </li><li><a href="/tagged/travel-ban-0" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Travel Ban</a>, </li><li><a href="/tagged/donald-trump" typeof="skos:Concept" property="rdfs:label skos:prefLabel" datatype="">Donald Trump</a></li></ul>  </div>
+
+  
+  </div>
+<div class="panel-separator"></div><div class="panel-pane pane-block pane-fb-comments-fb-comments"  >
+  
+      
+  
+  <div class="pane-content">
+    <div class="fb-comments" data-href="https://www.lawfareblog.com/does-trumps-north-korea-travel-ban-actually-ban-any-north-koreans" data-numposts="0" data-colorscheme="light" data-width="100%" data-order-by="reverse_time"></div>
+  </div>
+
+  
+  </div>
+  </div>
+  
+    <aside class="l-sidebar">
+    <div class="panel-pane pane-entity-field pane-node-field-article-contributors"  >
+  
+      
+  
+  <div class="pane-content">
+    <div class="field field-name-field-article-contributors field-type-entityreference field-label-hidden">
+
+      
+    
+    <div class="author_info">
+
+    <div class='author_info__picture'><a href="/contributors/vsauter"><img typeof="foaf:Image" src="https://www.lawfareblog.com/sites/default/files/styles/thumbnail/public/pictures/picture-3361-1503518007.jpg?itok=R_sJ-_sf" width="100" height="100" alt="Vanessa Sauter" title="Vanessa Sauter" /></a></div>
+
+    <div class="author_info__content">
+              <div class="author_info__bio">
+        Vanessa Sauter is a program associate in the Cybersecurity & Technology Program at the Aspen Institute. She was previously an associate editor at Lawfare and received her bachelor's degree from Columbia University in 2016.        </div>
+       
+      <ul class="author-info__meta">
+                <li class="author-info__twitter"><a target="_blank" href="http://www.twitter.com/@van_sauter">@van_sauter</a></li>
+              </ul>
+
+        <div class="author-info__view-more">
+      <a class="link--view-more link--with-right-arrow" href="/contributors/vsauter">More Articles</a>
+    </div>
+      </div>
+
+</div>
+
+</div>
+  </div>
+
+  
+  </div>
+<div class="panel-separator"></div><div class="panel-pane pane-block pane-lf-brookings-credit-lf-brookings-credit"  >
+  
+      
+  
+  <div class="pane-content">
+        <div>Published by the Lawfare Institute in Cooperation With</div>
+
+    <a target="_blank"  href="http://www.brookings.edu/" title="Brookings" rel="external">
+      <img class="brookings-credit__logo" src="/sites/all/themes/lawfare/img/brookings-logo.jpg" alt="Brookings">
+    </a>  </div>
+
+  
+  </div>
+<div class="panel-separator"></div><div class="panel-pane pane-block pane-lf-ads-lf-ads"  >
+  
+      
+  
+  <div class="pane-content">
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Sidebar -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:300px;height:250px"
+     data-ad-client="ca-pub-1663851303805097"
+     data-ad-slot="8593894302"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>  </div>
+
+  
+  </div>
+<div class="panel-separator"></div><div class="panel-pane pane-block pane-lf-related-articles-lf-related-articles"  >
+  
+        <h3 class="pane-title">
+      Related Articles    </h3>
+    
+  
+  <div class="pane-content">
+        <ul class="stream__list">
+                <li class="stream-item">
+            <a class="stream-link"  href="/court-denies-motion-dismiss-travel-ban-case">
+                <h3 class="stream-item__title">Court Denies Motion to Dismiss in Travel Ban Case</h3>
+                <span class="stream-item__authors"><strong class="username">Vishnu Kannan</strong></span>
+                <span class="stream-item__date">Wed, Jul 10, 2019, 4:11 PM</span>
+            </a>
+        </li>
+            <li class="stream-item">
+            <a class="stream-link"  href="/winter-2018-supplement-bradley-goldsmith-foreign-relations-law-cases-and-materials">
+                <h3 class="stream-item__title">Winter 2018 Supplement for Bradley & Goldsmith, Foreign Relations Law: Cases and Materials</h3>
+                <span class="stream-item__authors"><strong class="username">Jack Goldsmith</strong></span>
+                <span class="stream-item__date">Tue, Dec 4, 2018, 11:09 AM</span>
+            </a>
+        </li>
+            <li class="stream-item">
+            <a class="stream-link"  href="/our-travel-ban-litigation-resource-post-now-date">
+                <h3 class="stream-item__title">Our Travel Ban Litigation Resource Post is Now Up-to-Date</h3>
+                <span class="stream-item__authors"><strong class="username">Quinta Jurecic</strong></span>
+                <span class="stream-item__date">Mon, Sep 10, 2018, 1:40 PM</span>
+            </a>
+        </li>
+            <li class="stream-item">
+            <a class="stream-link"  href="/reflections-travel-ban-case-and-constitutional-status-pretext">
+                <h3 class="stream-item__title">Reflections on the Travel Ban Case and the Constitutional Status of Pretext </h3>
+                <span class="stream-item__authors"><strong class="username">Benjamin Wittes</strong></span>
+                <span class="stream-item__date">Fri, Jul 6, 2018, 8:18 AM</span>
+            </a>
+        </li>
+            <li class="stream-item">
+            <a class="stream-link"  href="/five-unanswered-questions-trump-v-hawaii">
+                <h3 class="stream-item__title">Five Unanswered Questions From Trump v. Hawaii</h3>
+                <span class="stream-item__authors"><strong class="username">Josh Blackman</strong></span>
+                <span class="stream-item__date">Tue, Jul 3, 2018, 8:02 AM</span>
+            </a>
+        </li>
+        </ul>
+  </div>
+
+  
+  </div>
+<div class="panel-separator"></div><div class="panel-pane pane-block pane-lf-support-lf-support"  >
+  
+      
+  
+  <div class="pane-content">
+    <div class="block-cta -darken">
+    <a href="/support-lawfare" class="block-cta__link">
+        <h3 class="block-cta__title">Support Lawfare</h3>
+    </a>
+</div>  </div>
+
+  
+  </div>
+  </aside>
+  
+</div>  </div>
+</div>
+  </div>
+  
+</main>
+
+  <div class="region region-content-footer">
+    <div id="block-menu-menu-explore" class="block block-menu first odd" role="navigation">
+
+            <h2 class="block-title">Explore</h2>
+      
+  <a href="/topics" class="explore__view-all-link link--with-right-arrow">View all Topics</a>
+
+  <div class="content">
+    <ul class="menu"><li class="first collapsed menu-4303"><a href="/topic/asia-pacific" title="Asia Pacific" class="menu-4303">Asia Pacific</a></li>
+<li class="collapsed menu-4153"><a href="/topic/book-reviews" title="Book Reviews" class="menu-4153">Book Reviews</a></li>
+<li class="leaf menu-4302"><a href="/topic/brief-reviews" title="Brief Reviews" class="menu-4302">Brief Reviews</a></li>
+<li class="collapsed menu-4236"><a href="/topic/civil-liberties-and-constitutional-rights" title="Civil Liberties and Constitutional Rights" class="menu-4236">Civil Liberties and Constitutional Rights</a></li>
+<li class="collapsed menu-4185"><a href="/topic/covert-action" title="Covert Action" class="menu-4185">Covert Action</a></li>
+<li class="collapsed menu-4143"><a href="/topic/targeted-killing" title="Targeted Killing" class="menu-4143">Targeted Killing</a></li>
+<li class="leaf menu-4289"><a href="/topic/bits-and-bytes" title="Bits and Bytes" class="menu-4289">Bits and Bytes</a></li>
+<li class="collapsed menu-4160"><a href="/topic/cybersecurity" title="Cybersecurity" class="menu-4160">Cybersecurity</a></li>
+<li class="collapsed menu-4256"><a href="/topic/drones" title="Drones" class="menu-4256">Drones</a></li>
+<li class="leaf menu-4258"><a href="/topic/international-governance" title="International Governance" class="menu-4258">International Governance</a></li>
+<li class="collapsed menu-4137"><a href="/topic/detention-guantanamo" title="Detention &amp; Guantanamo" class="menu-4137">Detention &amp; Guantanamo</a></li>
+<li class="collapsed menu-4163"><a href="/topic/interrogation" title="Interrogation" class="menu-4163">Interrogation</a></li>
+<li class="leaf menu-4285"><a href="/topic/foreign-policy-essay" title="Foreign Policy Essay" class="menu-4285">Foreign Policy Essay</a></li>
+<li class="collapsed menu-4220"><a href="/topic/homeland-security" title="Homeland Security" class="menu-4220">Homeland Security</a></li>
+<li class="collapsed menu-4148"><a href="/topic/international-law" title="International Law" class="menu-4148">International Law</a></li>
+<li class="leaf menu-4292"><a href="/topic/islamic-state" title="ISIS" class="menu-4292">Islamic State</a></li>
+<li class="collapsed menu-4156"><a href="/topic/terrorism-trials-investigations" title="Terrorism Trials &amp; Investigations" class="menu-4156">Terrorism Trials &amp; Investigations</a></li>
+<li class="collapsed menu-4174"><a href="/topic/fisa" title="FISA" class="menu-4174">FISA</a></li>
+<li class="collapsed menu-4198"><a href="/topic/surveillance" title="Surveillance" class="menu-4198">Surveillance</a></li>
+<li class="collapsed menu-4154"><a href="/topic/aumf" title="AUMF" class="menu-4154">AUMF</a></li>
+<li class="leaf menu-4206"><a href="/topic/al-qaeda" title="Al-Qaeda" class="menu-4206">Al-Qaeda</a></li>
+<li class="collapsed menu-4276"><a href="/topic/war-powers" title="War Powers" class="menu-4276">War Powers</a></li>
+<li class="collapsed menu-4243"><a href="/topic/military-commissions" title="Military Commissions" class="menu-4243">Military Commissions</a></li>
+<li class="leaf menu-4146"><a href="/topic/meaning-lawfare" title="The Meaning of Lawfare" class="menu-4146">The Meaning of Lawfare</a></li>
+<li class="leaf menu-4254"><a href="/topic/iran" title="Iran" class="menu-4254">Iran</a></li>
+<li class="leaf menu-4300"><a href="/topic/middle-east-ticker" title="Middle East Ticker" class="menu-4300">Middle East Ticker</a></li>
+<li class="collapsed menu-4304"><a href="/topic/middle-east-and-north-africa" title="Middle East and North Africa" class="menu-4304">Middle East and North Africa</a></li>
+<li class="leaf menu-4215"><a href="/topic/media-criticism" title="Media Criticism" class="menu-4215">Media Criticism</a></li>
+<li class="collapsed menu-4492"><a href="/topic/podcasts" title="Podcasts" class="menu-4492">Podcasts</a></li>
+<li class="leaf menu-4299"><a href="/topic/rational-security" title="Rational Security" class="menu-4299">Rational Security</a></li>
+<li class="leaf menu-4291"><a href="/topic/cyberlaw-podcast" title="The Cyberlaw Podcast" class="menu-4291">The Cyberlaw Podcast</a></li>
+<li class="leaf menu-4267"><a href="/topic/russia-and-eastern-europe" title="Russia and Eastern Europe" class="menu-4267">Russia and Eastern Europe</a></li>
+<li class="collapsed menu-4175"><a href="/topic/secrecy-leaks" title="Secrecy &amp; Leaks" class="menu-4175">Secrecy &amp; Leaks</a></li>
+<li class="collapsed menu-4269"><a href="/topic/appointments-confirmations-budgets" title="Appointments, Confirmations &amp; Budgets" class="menu-4269">Appointments, Confirmations &amp; Budgets</a></li>
+<li class="collapsed menu-4272"><a href="/topic/politics-national-security" title="Politics &amp; National Security" class="menu-4272">Politics &amp; National Security</a></li>
+<li class="last leaf menu-4226"><a href="/topic/readings" title="Readings" class="menu-4226">Readings</a></li>
+</ul>  </div>
+</div>
+  </div>
+
+<footer class="l-footer">
+  <div class="l-container l-container--inset">
+
+    <div class="l-footer__primary">
+
+      <a href="/" title="Home" rel="home">
+        <img class="l-footer__logo" src="/sites/all/themes/lawfare/img/lawfare-logo.svg" alt="Home">
+      </a>
+
+            <div class="l-footer__slogan">Hard National Security Choices</div>
+    
+    <ul class="social-list">
+      <li class="social-list__item"><a class="social-icon" rel="external" target="_blank" href="http://twitter.com/lawfareblog"><i class="fa fa-twitter"></i></a></li>
+      <li class="social-list__item"><a class="social-icon" rel="external" target="_blank" href="https://www.facebook.com/Lawfareblog"><i class="fa fa-facebook"></i></a></li>
+    </ul>
+
+  </div>
+
+  <div class="l-footer__secondary">
+
+    <nav class="l-footer__nav">
+      <ul class="links"><li class="menu-651 first"><a href="/about-lawfare-brief-history-term-and-site" title="">About Lawfare</a></li>
+<li class="menu-653"><a href="/masthead" title="">Masthead</a></li>
+<li class="menu-654"><a href="/our-comments-policy" title="">Comments Policy</a></li>
+<li class="menu-652"><a href="/lawfare-job-board" title="">Job Board</a></li>
+<li class="menu-655"><a href="/upcoming-events" title="">Upcoming Events</a></li>
+<li class="menu-657"><a href="https://www.lawfareblog.com/topic/book-reviews" title="">Book Reviews</a></li>
+<li class="menu-659"><a href="/subscribe-lawfare" title="">Subscribe</a></li>
+<li class="menu-658 last"><a href="/support-lawfare" title="">Support Lawfare</a></li>
+</ul>    </nav>
+
+
+
+  </div>
+
+  <div class="l-footer__published-by">
+    <div>Published by the Lawfare Institute in Cooperation With</div>
+
+    <a target="_blank" class="l-footer__brookings-logo__link" href="http://www.brookings.edu/" title="Brookings" rel="external">
+      <img class="l-footer__brookings-logo" src="/sites/all/themes/lawfare/img/brookings-logo.jpg" alt="Brookings">
+    </a>
+
+
+  </div>
+
+</div>
+
+<div class="l-footer__copyright">
+  <div class="l-container l-container--inset">
+    <p>&copy; 2020 The Lawfare Institute</p>
+  </div>
+</div>
+
+
+
+</footer>
+
+
+  <script type="text/javascript">
+<!--//--><![CDATA[//><!--
+window.jQuery || document.write("<script src='/sites/all/modules/jquery_update/replace/jquery/1.10/jquery.min.js'>\x3C/script>")
+//--><!]]>
+</script>
+<script type="text/javascript" src="https://www.lawfareblog.com/misc/drupal.js?qbex3x"></script>
+<script type="text/javascript" src="https://www.lawfareblog.com/sites/all/modules/select2/js/Drupal.select2.js?qbex3x"></script>
+<script type="text/javascript" src="https://www.lawfareblog.com/sites/all/modules/google_analytics/googleanalytics.js?qbex3x"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","https://www.google-analytics.com/analytics.js","ga");ga("create", "UA-12939612-2", {"cookieDomain":"auto"});ga("set", "anonymizeIp", true);ga("send", "pageview");
+//--><!]]>
+</script>
+<script type="text/javascript" src="https://www.lawfareblog.com/sites/all/modules/radioactivity/js/radioactivity.js?qbex3x"></script>
+<script type="text/javascript" src="https://www.lawfareblog.com/sites/all/libraries/select2/select2.min.js?qbex3x"></script>
+<script type="text/javascript" src="https://www.lawfareblog.com/sites/all/themes/lawfare/js/scripts.js?qbex3x"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"lawfare","theme_token":"30_QNcyGaHblYTYOOm3cHmd9cdLKAMqWW5KW47H0uTs"},"googleanalytics":{"trackOutbound":1,"trackMailto":1,"trackDownload":1,"trackDownloadExtensions":"7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x|m)?|dot(x|m)?|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt(x|m)?|pot(x|m)?|pps(x|m)?|ppam|sld(x|m)?|thmx|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls(x|m|b)?|xlt(x|m)|xlam|xml|z|zip"},"radioactivity":{"emitters":{"emitDefault":[{"accuracy":"100","bundle":"article","energy":"10","entity_id":"13744","entity_type":"node","field_name":"field_article_trending","language":"und","storage":"Live","type":"none","checksum":"9302c3761cd935b7b5c56ebc92069dbc"}]},"config":{"emitPath":"\/sites\/all\/modules\/radioactivity\/emit.php","fpEnabled":0,"fpTimeout":"15"}},"select_2":{"excludes":{"by_id":{"values":[],"reg_exs":[]},"by_class":[],"by_selectors":[]},"branch":3,"default_settings":{"separator":"\u00b6","jqui_sortable":false,"dropdownAutoWidth":true,"width":"auto","containerCssClass":"","minimumResultsForSearch":"15"},"process_all_selects_on_page":true,"no_version_check":false,"elements":[],"settings_updated":true},"urlIsAjaxTrusted":{"\/search\/node":true}});
+//--><!]]>
+</script>
+
+  <script> (function(h,o,t,j,a,r){ h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)}; h._hjSettings={hjid:721264,hjsv:6}; a=o.getElementsByTagName('head')[0]; r=o.createElement('script');r.async=1; r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv; a.appendChild(r); })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv='); </script>
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"NRJS-ff62c96e979e252ef9e","applicationID":"264011223","transactionName":"blAGZkZZCxZWAkQNClcaJVFAUQoLGBFRAwBmWAVcVV8AF2gPXwAAZkMNV0NnFQRQBA==","queueTime":0,"applicationTime":309,"atts":"QhcFEA5DGBg=","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+</html>
