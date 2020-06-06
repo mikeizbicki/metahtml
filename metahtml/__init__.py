@@ -10,6 +10,7 @@ from . import language
 from . import timestamp
 from . import title
 from . import urls
+from . import content
 
 
 def parse_all(html, url, fast=False):
@@ -43,10 +44,10 @@ def parse_all(html, url, fast=False):
             meta_best['timestamp_modified'] = None
 
         meta_best['lang'], meta_all['lang'] = language.get_language(parser, url, fast=fast)
+        meta_best['content'], meta_all['content'] = content.get_content(parser, url, html, meta_best, fast=fast)
 
         meta_best['authors'], meta_all['authors'] = authors.get_authors(parser, url, fast=fast)
         meta_best['title'], meta_all['title'] = title.get_title(parser, url, fast=fast)
-        meta_best['text'], meta_all['text'] = None, None
 
     altlang_urls = urls.get_altlang_urls(parser, url, fast=fast)
     meta_best['altlang_urls'] = altlang_urls
