@@ -339,6 +339,7 @@ def get_timestamp_published(html, url, **kwargs):
         ( None, '//meta[@name="dc.Date"]/@content' ),
         ( None, '//meta[@name="cXenseParse:recs:publishtime"]/@content' ),
         ( None, '//meta[@property="article:published"]/@content' ),
+        ( None, '//meta[@property="article:published_time"]/@content' ),        
 
         # microdata paths
         ( None, '//*[@itemprop="datePublished"]/@content' ),
@@ -370,7 +371,7 @@ def get_timestamp_published(html, url, **kwargs):
         #( 'headtopics.com',                 '//div[@class="Article-readingTime"]' ), # FIXME: English articles use MDY, but Spanish articles use DMY
         ( 'laregion.es',                    '//meta[@name="date"]/@content' ),
         #( 'lavozdegalicia.es',              '(//meta[@itemprop="datePublished"]/@content)[1]' ),
-        ( 'lavozdegalicia.es',              '//meta[@property="article:published_time"]/@content' ),
+        #( 'lavozdegalicia.es',              '//meta[@property="article:published_time"]/@content' ),
         ( 'mundiario.com',                  '//span[@class="content-time"]' ),
         ( 'nytimes.com',                    '//meta[@property="article:published"]/@content' ),
 	( 'reuters.com',                    '//time' ),
@@ -401,7 +402,8 @@ def get_timestamp_modified(html, url, **kwargs):
         ( None, '//meta[@property="rnews:dateModified"]/@content' ),
         ( None, '//meta[@property="article:modified_time"]/@content' ),
         ( None, '//meta[@property="og:modified_time"]/@content' ),
-	( None, '//meta[@property="og:updated_time"]/@content' ),	
+	( None, '//meta[@property="og:updated_time"]/@content' ),
+        ( None, '//meta[@property="article:modified_time"]/@content' ),	
 
         # microdata paths
         ( None, '//*[@itemprop="dateModified"]/@content' ),
@@ -416,7 +418,7 @@ def get_timestamp_modified(html, url, **kwargs):
         ( 'angrystaffofficer.com',          '//time[contains(@class,"updated")]' ),
         ( 'foxnews.com',                    '//div[@class="article-updated"]' ),
 	( 'heavy.com',                      '//meta[@property="article:modified_time"]/@content' ),
-        ( 'lavozdegalicia.es',              '//meta[@property="article:modified_time"]/@content' ),
+        #( 'lavozdegalicia.es',              '//meta[@property="article:modified_time"]/@content' ),
         ( 'nytimes.com',                    '//meta[@property="article:modified"]/@content' ),
         ( 'usatoday.com',                   '//div[@class="gnt_ar_dt"]/@content' ),
         ]
