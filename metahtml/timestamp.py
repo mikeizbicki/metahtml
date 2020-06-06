@@ -323,7 +323,7 @@ def get_timestamp_published(html, url, **kwargs):
     '''
 
     xpaths = [
-
+        
         # universal xpaths
         ( None, '//meta[@property="rnews:datePublished"]/@content' ),
         ( None, '//meta[@property="article:published_time"]/@content' ),
@@ -338,16 +338,12 @@ def get_timestamp_published(html, url, **kwargs):
         ( None, '//meta[@name="all_timestamps"]/@content' ),
         ( None, '//meta[@name="dc.Date"]/@content' ),
         ( None, '//meta[@name="cXenseParse:recs:publishtime"]/@content' ),
-        ( None, '//meta[@property="article:published"]/@content' ),
-        #( None, '//meta[@property="article:published_time"]/@content' ),        
 
         # microdata paths
-        ( None, '//*[@itemprop="datePublished"]/@content' ),
-        ( None, '//*[@itemprop="datePublished"]/@datetime' ),
-        #( None, '//*[@itemprop="datePublished"]' ),
-        ( None, '//*[@property="datePublished"]/@content' ),
-        ( None, '//*[@property="datePublished"]/@datetime' ),
-        #( None, '//*[@property="datePublished"]' ),
+        ( None, '//meta[@itemprop="datePublished"]/@content' ),
+        ( None, '//meta[@itemprop="datePublished"]/@datetime' ),
+        ( None, '//time[@itemprop="datePublished"]/@content' ),
+        ( None, '//time[@itemprop="datePublished"]/@datetime' ),
 
         # custom xpaths
         ( 'america.aljazeera.com',          '//span[@class="date"]' ),
@@ -370,7 +366,7 @@ def get_timestamp_published(html, url, **kwargs):
         #( 'headtopics.com',                 '//meta[@name="date"]/@content' ), # FIXME: English articles use MDY, but Spanish articles use DMY
         #( 'headtopics.com',                 '//div[@class="Article-readingTime"]' ), # FIXME: English articles use MDY, but Spanish articles use DMY
         ( 'laregion.es',                    '//meta[@name="date"]/@content' ),
-        ( 'lavozdegalicia.es',              '//meta[@itemprop="datePublished"]/@content' ),
+        ( 'lavozdegalicia.es',              '(//meta[@itemprop="datePublished"]/@content)[1]' ),
         #( 'lavozdegalicia.es',              '//meta[@property="article:published_time"]/@content' ),
         ( 'mundiario.com',                  '//span[@class="content-time"]' ),
         ( 'nytimes.com',                    '//meta[@property="article:published"]/@content' ),
@@ -402,8 +398,7 @@ def get_timestamp_modified(html, url, **kwargs):
         ( None, '//meta[@property="rnews:dateModified"]/@content' ),
         ( None, '//meta[@property="article:modified_time"]/@content' ),
         ( None, '//meta[@property="og:modified_time"]/@content' ),
-	( None, '//meta[@property="og:updated_time"]/@content' ),
-        #( None, '//meta[@property="article:modified_time"]/@content' ),	
+	( None, '//meta[@property="og:updated_time"]/@content' ),	
 
         # microdata paths
         ( None, '//*[@itemprop="dateModified"]/@content' ),
@@ -418,7 +413,7 @@ def get_timestamp_modified(html, url, **kwargs):
         ( 'angrystaffofficer.com',          '//time[contains(@class,"updated")]' ),
         ( 'foxnews.com',                    '//div[@class="article-updated"]' ),
 	( 'heavy.com',                      '//meta[@property="article:modified_time"]/@content' ),
-        ( 'lavozdegalicia.es',              '//meta[@property="article:modified_time"]/@content' ),
+        #( 'lavozdegalicia.es',              '//meta[@property="article:modified_time"]/@content' ),
         ( 'nytimes.com',                    '//meta[@property="article:modified"]/@content' ),
         ( 'usatoday.com',                   '//div[@class="gnt_ar_dt"]/@content' ),
         ]
