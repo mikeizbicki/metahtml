@@ -31,13 +31,13 @@ invalid_path = os.path.join(cache_dir,'invalid')
 invalid_urls = set([])
 
 def load_invalid_urls():
-    with open(invalid_path,'r') as f:
+    with open(invalid_path,'r', encoding='utf-8', newline='\n') as f:
         for line in f:
             invalid_urls.add(line.strip())
 load_invalid_urls()
 
 def save_invalid_urls():
-    with open(invalid_path,'w') as f:
+    with open(invalid_path,'w', encoding='utf-8', newline='\n') as f:
         for url in sorted(list(invalid_urls)):
             f.write(url+'\n')
 
@@ -84,7 +84,7 @@ def get_cached_webpages(url, dates=None):
             save_invalid_urls()
             raise ValueError('status=',r.status_code,'for url=',url)
         html = r.text
-        with open(path,'x') as f:
+        with open(path,'x', encoding='utf-8', newline='\n') as f:
             f.write(html)
         print('done.')
     if len(paths)==0:
@@ -95,7 +95,7 @@ def get_cached_webpages(url, dates=None):
     ret = []
     for path in paths:
         try:
-            with open(path) as f:
+            with open(path, encoding='utf-8', newline='\n') as f:
                 ret.append((os.path.basename(path),f.read()))
         except FileNotFoundError:
             download_url()
@@ -119,9 +119,9 @@ def insert_golden_tests(urls, overwrite=False, verbose=False, recursively_added_
     new_urls = set([])
 
     # load the values of the csv file
-    with open(golden_test_file, 'rt') as f:
+    with open(golden_test_file, 'rt', encoding='utf-8', newline='\n') as f:
         fieldnames = csv.reader(f).__next__()
-    with open(golden_test_file, 'rt') as f:
+    with open(golden_test_file, 'rt', encoding='utf-8', newline='\n') as f:
         rows = list(csv.DictReader(f, dialect='excel', strict=True))
 
     # generate the csv rows for inserted urls
@@ -238,7 +238,7 @@ def insert_golden_tests(urls, overwrite=False, verbose=False, recursively_added_
     rows.sort(key = lambda x: (x['hostname'], x['url']))
 
     # write the values to the csv in sorted order
-    with open(golden_test_file, 'wt') as f:
+    with open(golden_test_file, 'wt', encoding='utf-8', newline='\n') as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         for row in rows:
@@ -268,7 +268,7 @@ def get_golden_tests(verified_only=True):
     returns a list of test cases that have the human_verified column set to True
     '''
     tests = []
-    with open(golden_test_file, 'rt') as f:
+    with open(golden_test_file, 'rt', encoding='utf-8', newline='\n') as f:
         for test in csv.DictReader(f, dialect='excel', strict=True):
             # csv files store both the None and '' values in the same format;
             # we assume that we never store '' values, 
@@ -306,6 +306,10 @@ def test_golden(test):
         pprint.pprint(meta)
     else:
         meta = metahtml.parse(html, url)
+        try:
+            del meta['content']
+        except KeyError:
+            pass
         print('meta=')
         pprint.pprint(meta)
 
@@ -354,14 +358,14 @@ if __name__=='__main__':
 
     # strip whitespace from all fields
     if args.strip_whitespace:
-        with open(golden_test_file, 'rt') as f:
+        with open(golden_test_file, 'rt', encoding='utf-8', newline='\n') as f:
             fieldnames = csv.reader(f).__next__()
-        with open(golden_test_file, 'rt') as f:
+        with open(golden_test_file, 'rt', encoding='utf-8', newline='\n') as f:
             rows = list(csv.DictReader(f, dialect='excel', strict=True))
         for row in rows:
             for k in row:
                 row[k] = row[k].strip()
-        with open(golden_test_file, 'wt') as f:
+        with open(golden_test_file, 'wt', encoding='utf-8', newline='\n') as f:
             writer = csv.DictWriter(f, fieldnames=fieldnames)
             writer.writeheader()
             for row in rows:
@@ -370,7 +374,7 @@ if __name__=='__main__':
     # add existing urls if rebuilding tests
     urls = args.insert_urls
     if args.rebuild_all_tests:
-        with open(golden_test_file, 'rt') as f:
+        with open(golden_test_file, 'rt', encoding='utf-8', newline='\n') as f:
             rows = list(csv.DictReader(f, dialect='excel', strict=True))
         for row in rows:
             urls.append(row['url'])
