@@ -358,18 +358,18 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'bbc.com',                        '(//div[@class="date date--v2"])[1]' ),
         ( 'bbc.co.uk',                      '(//div[@class="date date--v2"])[1]' ),
         ( 'bles.com',                       '(//span[@class="p-time"]/@data-date)[1]' ),
-	( 'cbsnews.com',                    '//time/@datetime' ),
+        ( 'cbsnews.com',                    '//time/@datetime' ),
         ( 'cnn.com',                        '//div[contains(@class,"cnnBodyText")]' ),
         ( 'csis.org',                       '//article[@role="article"]/p' ),
         ( 'elperuano.pe',                   '//article[@class="notatexto"]/p/b' ),
         ( 'elnacional.com.do',              '(//time[contains(@class,"entry-date")])[1]' ),
         ( 'english.khan.co.kr',             '//div[@class="article_date"]' ),
         ( 'foxnews.com',                    '//div[@class="article-date"]/time' ),
-	( 'headtopics.com',                 '//meta[@name="date"]/@content' ),
+        ( 'headtopics.com',                 '//meta[@name="date"]/@content' ),
         #( 'headtopics.com',                 '//meta[@name="date"]/@content' ), # FIXME: English articles use MDY, but Spanish articles use DMY
         #( 'headtopics.com',                 '//div[@class="Article-readingTime"]' ), # FIXME: English articles use MDY, but Spanish articles use DMY
         ( 'laregion.es',                    '//meta[@name="date"]/@content' ),
-	( 'lavozdegalicia.es',              '(//meta[@itemprop="datePublished"]/@content)[1]' )
+        ( 'lavozdegalicia.es',              '(//meta[@itemprop="datePublished"]/@content)[1]' ),
         ( 'mundiario.com',                  '//span[@class="content-time"]' ),
         ( 'nytimes.com',                    '//meta[@property="article:published"]/@content' ),
 	( 'reuters.com',                    '//time' ),
