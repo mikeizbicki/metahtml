@@ -326,7 +326,7 @@ def get_timestamp_published(html, url, **kwargs):
         
         # universal xpaths
         ( None, '//meta[@property="rnews:datePublished"]/@content' ),
-        ( None, '//meta[@property="article:published_time"]/@content' ),
+        #( None, '//meta[@property="article:published_time"]/@content' ),
         ( None, '//meta[@property="og:published_time"]/@content' ),
         ( None, '//meta[@itemprop="datePublished"]/@datetime' ),
         ( None, '//meta[@pubdate="pubdate"]/@datetime' ),
