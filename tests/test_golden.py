@@ -102,7 +102,18 @@ def get_cached_webpages(url, dates=None):
     return ret
 
 
-def insert_golden_tests(urls, overwrite=False, verbose=False, insert_altlang_urls=True):
+def insert_golden_tests(urls, overwrite=False, verbose=False, recursively_added_urls=None):
+    '''
+    Args:
+        urls ([str]): an iterable of the urls to be added
+        overwrite (Bool): if False, this function overwrites test cases that have the humman_annotator field set to '',
+            and does not overwrite test cases that have been previously annotated;
+            if True, this function overwrites the test case no matter what
+        verbose (Bool): prints the meta and meta_full variables if True
+        recursively_added_urls: this is an internal parameter that should always be None when calling;
+            it is used to track which urls have already been inserted in recursive calls
+            to prevent urls from being added multiple times and infinite recursions.
+    '''
 
     urls.sort()
     new_urls = set([])
@@ -148,11 +159,10 @@ def insert_golden_tests(urls, overwrite=False, verbose=False, insert_altlang_url
         for i,row in enumerate(rows):
             if row['url']==url or row['url']==url+'/' or row['url']+'/'==url:
                 if not overwrite and row['human_annotator'] != '':
-                    #print('WARNING: url=',url,'already added; not adding again')
                     add_url = False
                     break
                 else:
-                    print('WARNING: url=',url,'already added; overwriting')
+                    print('WARNING: overwriting url=',url)
                     del rows[i]
                     break
         
@@ -188,9 +198,8 @@ def insert_golden_tests(urls, overwrite=False, verbose=False, insert_altlang_url
                 meta = metahtml.parse(html, url)
 
                 # add all alternate language urls as test cases
-                if insert_altlang_urls:
-                    for altlang_url in meta['altlang_urls']:
-                        new_urls.add(altlang_url['url'])
+                for altlang_url in meta['altlang_urls']:
+                    new_urls.add(altlang_url['url'])
 
                 # if the url is not the canonical url,
                 # then we need to add the canonical url as a test case instead of this url
@@ -235,14 +244,23 @@ def insert_golden_tests(urls, overwrite=False, verbose=False, insert_altlang_url
         for row in rows:
             writer.writerow(row)
 
-    # add new_urls that don't already exist
-    existing_urls = set([ row['url'] for row in rows ])
-    new_urls2 = []
+    # add new_urls, but only if we haven't already added the same url on this recursive call
+    if recursively_added_urls is None:
+        recursively_added_urls = set([])
+    recursively_added_urls |= set(urls)
+
+    new_urls_recursive = []
     for url in new_urls:
-        if url not in existing_urls and url+'/' not in existing_urls:
-            new_urls2.append(url)
-    if len(new_urls2)>0:
-        insert_golden_tests(new_urls2, overwrite, verbose=False, insert_altlang_urls=insert_altlang_urls)
+        if url not in recursively_added_urls and url+'/' not in recursively_added_urls:
+            new_urls_recursive.append(url)
+
+    if len(new_urls_recursive)>0:
+        insert_golden_tests(
+            new_urls_recursive, 
+            overwrite, 
+            verbose=False, 
+            recursively_added_urls=recursively_added_urls
+            )
 
 
 def get_golden_tests(verified_only=True):
