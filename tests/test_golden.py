@@ -57,7 +57,7 @@ def get_cached_webpages(url, dates=None):
     # and so the url_filename variable replaces potentially invalid characters with underscores;
     # an md5 hash is added at the end to prevent name collisions due to the substitution;
     # we don't rely on just the md5 hash because we want the filename to be human readable
-    url_filename = re.sub(r'[/:><"|*]','_',url) + hashlib.md5(url.encode()).hexdigest()[:8]
+    url_filename = re.sub(r'[/:><"|*?&]','_',url) + hashlib.md5(url.encode()).hexdigest()[:8]
 
     # create the cache folder for the url if it doesn't exist
     url_dir = os.path.join(cache_dir,url_filename)
@@ -76,7 +76,7 @@ def get_cached_webpages(url, dates=None):
         date = datetime.datetime.now().strftime('%Y-%m-%d')
         path = os.path.join(url_dir,date)
         paths = [ path ]
-        r = requests.get(url,headers={'User-Agent':'NovichenkoBot'}, verify=False)
+        r = requests.get(url,headers={'User-Agent':'NovichenkoBot'},verify=False)
         if r.status_code != 200:
             print('error: status_code=',r.status_code)
             invalid_urls.add(url)
@@ -93,12 +93,26 @@ def get_cached_webpages(url, dates=None):
     # return the contents of the cache
     ret = []
     for path in paths:
-        with open(path) as f:
-            ret.append((os.path.basename(path),f.read()))
+        try:
+            with open(path) as f:
+                ret.append((os.path.basename(path),f.read()))
+        except FileNotFoundError:
+            download_url()
     return ret
 
 
-def insert_golden_tests(urls, overwrite=False, verbose=False, insert_altlang_urls=True):
+def insert_golden_tests(urls, overwrite=False, verbose=False, recursively_added_urls=None):
+    '''
+    Args:
+        urls ([str]): an iterable of the urls to be added
+        overwrite (Bool): if False, this function overwrites test cases that have the humman_annotator field set to '',
+            and does not overwrite test cases that have been previously annotated;
+            if True, this function overwrites the test case no matter what
+        verbose (Bool): prints the meta and meta_full variables if True
+        recursively_added_urls: this is an internal parameter that should always be None when calling;
+            it is used to track which urls have already been inserted in recursive calls
+            to prevent urls from being added multiple times and infinite recursions.
+    '''
 
     urls.sort()
     new_urls = set([])
@@ -144,11 +158,10 @@ def insert_golden_tests(urls, overwrite=False, verbose=False, insert_altlang_url
         for i,row in enumerate(rows):
             if row['url']==url or row['url']==url+'/' or row['url']+'/'==url:
                 if not overwrite and row['human_annotator'] != '':
-                    #print('WARNING: url=',url,'already added; not adding again')
                     add_url = False
                     break
                 else:
-                    print('WARNING: url=',url,'already added; overwriting')
+                    print('WARNING: overwriting url=',url)
                     del rows[i]
                     break
         
@@ -184,9 +197,8 @@ def insert_golden_tests(urls, overwrite=False, verbose=False, insert_altlang_url
                 meta = metahtml.parse(html, url)
 
                 # add all alternate language urls as test cases
-                if insert_altlang_urls:
-                    for altlang_url in meta['altlang_urls']:
-                        new_urls.add(altlang_url['url'])
+                for altlang_url in meta['altlang_urls']:
+                    new_urls.add(altlang_url['url'])
 
                 # if the url is not the canonical url,
                 # then we need to add the canonical url as a test case instead of this url
@@ -231,14 +243,23 @@ def insert_golden_tests(urls, overwrite=False, verbose=False, insert_altlang_url
         for row in rows:
             writer.writerow(row)
 
-    # add new_urls that don't already exist
-    existing_urls = set([ row['url'] for row in rows ])
-    new_urls2 = []
+    # add new_urls, but only if we haven't already added the same url on this recursive call
+    if recursively_added_urls is None:
+        recursively_added_urls = set([])
+    recursively_added_urls |= set(urls)
+
+    new_urls_recursive = []
     for url in new_urls:
-        if url not in existing_urls and url+'/' not in existing_urls:
-            new_urls2.append(url)
-    if len(new_urls2)>0:
-        insert_golden_tests(new_urls2, overwrite, verbose=False, insert_altlang_urls=insert_altlang_urls)
+        if url not in recursively_added_urls and url+'/' not in recursively_added_urls:
+            new_urls_recursive.append(url)
+
+    if len(new_urls_recursive)>0:
+        insert_golden_tests(
+            new_urls_recursive, 
+            overwrite, 
+            verbose=False, 
+            recursively_added_urls=recursively_added_urls
+            )
 
 
 def get_golden_tests(verified_only=True):

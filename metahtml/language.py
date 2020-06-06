@@ -42,11 +42,10 @@ def get_best_langs(langs, require_valid_for_hostname=True):
     return bests
 
 
-def get_language(html, url, fast=False):
+def get_language(parser, url, fast=False):
     '''
     '''
 
-    parser = lxml.html.fromstring(html)
     url_hostname = urlparse(url).hostname
 
     langs = []

@@ -353,14 +353,12 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'abcnews.go.com',                 '//span[@class="date"]' ),
         ( '112.international',              '//meta[@property="article:published"]/@content' ),
         ( 'actualidad.rt.com',              '//div[@class="ArticleView-timestamp"]/time/@datetime' ),
-        ( 'angrystaffofficer.com',          '//time[contains(@class,"published")]' ),
         ( 'armscontrolwonk.com',            '//span[@class="date published time"]' ),
         ( 'bbc.com',                        '(//div[@class="date date--v2"])[1]' ),
         ( 'bbc.co.uk',                      '(//div[@class="date date--v2"])[1]' ),
         ( 'bles.com',                       '(//span[@class="p-time"]/@data-date)[1]' ),
         ( 'cnn.com',                        '//div[contains(@class,"cnnBodyText")]' ),
         ( 'csis.org',                       '//article[@role="article"]/p' ),
-        ( 'elheraldo.co',                   '(//div[@class="datos"]/time/@datetime)[1]' ),
         ( 'elperuano.pe',                   '//article[@class="notatexto"]/p/b' ),
         ( 'elnacional.com.do',              '(//time[contains(@class,"entry-date")])[1]' ),
         ( 'english.khan.co.kr',             '//div[@class="article_date"]' ),
@@ -368,9 +366,10 @@ def get_timestamp_published(html, url, **kwargs):
         #( 'headtopics.com',                 '//meta[@name="date"]/@content' ), # FIXME: English articles use MDY, but Spanish articles use DMY
         #( 'headtopics.com',                 '//div[@class="Article-readingTime"]' ), # FIXME: English articles use MDY, but Spanish articles use DMY
         ( 'laregion.es',                    '//meta[@name="date"]/@content' ),
+        ( 'lavozdegalicia.es',              '(//meta[@itemprop="datePublished"]/@content)[1]' ),
         ( 'mundiario.com',                  '//span[@class="content-time"]' ),
         ( 'nytimes.com',                    '//meta[@property="article:published"]/@content' ),
-        ( 'reuters.com',                    '//time' ),
+        ( 'oluwagbemigapost.com',           '//time[@class="entry-date published updated"]/@datetime'),
         ( 'spiegel.de',                     '//span[@class="article-function-date"]/b' ),
         ( 'spiegel.de',                     '//time/@datetime' ),
         ( 'stripes.com',                    '//span[@class="published_date"]' ),
@@ -378,8 +377,9 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'thediplomat.com',                '//span[@itemprop="datePublished"]' ),
         ( 'theintercept.com',               '//span[@class="PostByline-date"]' ),
         ( 'time.com',                       '//div[contains(@class,"published-date")]' ),
+        ( 'townhall.com',                   '//div[@class="contributor pull-left"][contains(.,"Posted:")]/text()'),
         ( 'voxeurop.eu',                    '//div[contains(@class,"publish_date_time")]' ),
-        ( 'wsj.com',                        '//time' ),
+
         ]
 
     return get_timestamp(html, url, xpaths, use_url_date=True, **kwargs)
@@ -409,19 +409,20 @@ def get_timestamp_modified(html, url, **kwargs):
         # xpaths
         ( '112.international',              '//meta[@property="og:updated_time"]/@content' ),
         ( 'angrystaffofficer.com',          '//time[contains(@class,"updated")]' ),
+        ( 'bloomberg.com',                  '//time[@itemprop="dateModified"]/@datetime' ),
         ( 'foxnews.com',                    '//div[@class="article-updated"]' ),
+        ( 'heavy.com',                      '//meta[@property="article:modified_time"]/@content' ),
         ( 'nytimes.com',                    '//meta[@property="article:modified"]/@content' ),
         ( 'usatoday.com',                   '//div[@class="gnt_ar_dt"]/@content' ),
         ]
     return get_timestamp(html, url, xpaths, use_url_date=False, **kwargs)
 
 
-def get_timestamp(html, url, xpaths, use_url_date=False, require_valid_for_hostname=True, fast=True):
+def get_timestamp(parser, url, xpaths, use_url_date=False, require_valid_for_hostname=True, fast=True):
     '''
     FIXME: make the xpath code faster using
     https://www.ibm.com/developerworks/xml/library/x-hiperfparse/
     '''
-    parser = lxml.html.fromstring(html)
     url_parsed = urlparse(url)
     url_hostname = url_parsed.hostname
 
@@ -441,10 +442,17 @@ def get_timestamp(html, url, xpaths, use_url_date=False, require_valid_for_hostn
             timestamps.append(timestamp)
 
     # get timestamps from xpaths
+    disable_universal_xpaths = False
     for hostname,xpath in xpaths:
 
+        # determine whether the xpath applies to this hostname
+        if hostname is not None:
+            disable_universal_xpaths = disable_universal_xpaths or (hostname in url_hostname)
+            valid_for_hostname = hostname in url_hostname
+        else:
+            valid_for_hostname = not disable_universal_xpaths
+
         # if in fast mode, then only search for elements that will apply to the hostname
-        valid_for_hostname = hostname is None or hostname in url_hostname
         if fast and not valid_for_hostname:
             continue
 

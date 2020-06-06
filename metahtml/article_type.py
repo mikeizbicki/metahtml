@@ -7,11 +7,10 @@ import lxml.html
 
 from metahtml.timestamp import worst_tz_lo, worst_tz_hi
 
-def get_article_type(html, url, meta_best, fast=False):
+def get_article_type(parser, url, meta_best, fast=False):
 
     best_timestamps = meta_best['timestamp_published']
     url_parsed = urlparse(url)
-    parser = lxml.html.fromstring(html)
 
     article_types = []
 
@@ -54,11 +53,15 @@ def get_article_type(html, url, meta_best, fast=False):
         if min_lo is not None and max_hi is not None:
             timestamp_range =  max_hi - min_lo
 
-        if len(best_timestamps) > 5 and abs(timestamp_range.total_seconds()) > 24*60*60:
+        # the webpage is determined to be a catalog if there are 
+        # too many timestamps spaced too far apart
+        # NOTE: the selected range is 1 day if no timezones are given 
+        # FIXME: this check is very heuristic and needs more evaluation
+        if len(best_timestamps) > 5 or abs(timestamp_range.total_seconds()) > 48*60*60:
             article_types.append({
                 'article_type' : 'catalog',
                 'valid_for_hostname' : True,
-                'pattern' : 'len(best_timestamps',
+                'pattern' : 'len(best_timestamps)',
                 'pattern_details' : str(len(best_timestamps)),
                 })
 
