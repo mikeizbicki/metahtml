@@ -358,15 +358,18 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'bbc.com',                        '(//div[@class="date date--v2"])[1]' ),
         ( 'bbc.co.uk',                      '(//div[@class="date date--v2"])[1]' ),
         ( 'bles.com',                       '(//span[@class="p-time"]/@data-date)[1]' ),
+	( 'cbsnews.com',                    '//time/@datetime' ),
         ( 'cnn.com',                        '//div[contains(@class,"cnnBodyText")]' ),
         ( 'csis.org',                       '//article[@role="article"]/p' ),
         ( 'elperuano.pe',                   '//article[@class="notatexto"]/p/b' ),
         ( 'elnacional.com.do',              '(//time[contains(@class,"entry-date")])[1]' ),
         ( 'english.khan.co.kr',             '//div[@class="article_date"]' ),
         ( 'foxnews.com',                    '//div[@class="article-date"]/time' ),
+	( 'headtopics.com',                 '//meta[@name="date"]/@content' ),
         #( 'headtopics.com',                 '//meta[@name="date"]/@content' ), # FIXME: English articles use MDY, but Spanish articles use DMY
         #( 'headtopics.com',                 '//div[@class="Article-readingTime"]' ), # FIXME: English articles use MDY, but Spanish articles use DMY
         ( 'laregion.es',                    '//meta[@name="date"]/@content' ),
+	( 'lavozdegalicia.es',              '(//meta[@itemprop="datePublished"]/@content)[1]' )
         ( 'mundiario.com',                  '//span[@class="content-time"]' ),
         ( 'nytimes.com',                    '//meta[@property="article:published"]/@content' ),
 	( 'reuters.com',                    '//time' ),
@@ -411,6 +414,7 @@ def get_timestamp_modified(html, url, **kwargs):
         #( '112.international',              '//meta[@property="og:updated_time"]/@content' ),
         ( 'angrystaffofficer.com',          '//time[contains(@class,"updated")]' ),
         ( 'foxnews.com',                    '//div[@class="article-updated"]' ),
+	( 'heavy.com',                      '//meta[@property="article:modified_time"]/@content' ),
         ( 'nytimes.com',                    '//meta[@property="article:modified"]/@content' ),
         ( 'usatoday.com',                   '//div[@class="gnt_ar_dt"]/@content' ),
         ]
