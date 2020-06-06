@@ -413,6 +413,7 @@ def get_timestamp_modified(html, url, **kwargs):
 	( 'heavy.com',                      '//meta[@property="article:modified_time"]/@content' ),
         ( 'nytimes.com',                    '//meta[@property="article:modified"]/@content' ),
         ( 'usatoday.com',                   '//div[@class="gnt_ar_dt"]/@content' ),
+
         ]
     return get_timestamp(html, url, xpaths, use_url_date=False, **kwargs)
 
