@@ -375,11 +375,14 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'time.com',                       '//div[contains(@class,"published-date")]' ),
         ( 'voxeurop.eu',                    '//div[contains(@class,"publish_date_time")]' ),
         #( 'wsj.com',                        '//time' ),
-        #( 'asia.nikkei.com',                '//span[@class="timestamp timestamp--no-icon article_date timestamp--full"]/datetime' ),
         ( 'foreignpolicy.com',              '(//div[@class="meta-data"])/time' ),
         ( 'blogs.wsj.com',                  '//meta[@name="article.published"]/@content' ),
-        ( 'reuters.com',                    '//div[@class=ArticleHeader_date"]' ),
-        ( 'smithsonianmag.com',             '//time[contains(@class, "pub-date")]/data-pubdate' ),
+        ( 'smithsonianmag.com',        '//time/@data-pubdate' ),
+        #( 'articles.aplus.com',             '//meta[@property="article:published_time")]/@content' ),
+        ( 'autonewsproo.blogspot.com',      '//span[@class="published updated"]/@title' ),
+        ( 'asia.nikkei.com',                '//meta[@name="date"]/@content' ),
+        ( 'beijingcream.com',               '//time/@datetime' ),
+        ( 'bloomberg.com',                  '(//meta[@name=iso-861-publish-date"]/@content' ),
         ]
 
     return get_timestamp(html, url, xpaths, use_url_date=True, **kwargs)
@@ -410,6 +413,8 @@ def get_timestamp_modified(html, url, **kwargs):
         ( 'foxnews.com',                    '//div[@class="article-updated"]' ),
         ( 'nytimes.com',                    '//meta[@property="article:modified"]/@content' ),
         ( 'blogs.wsj.com',                  '//meta[@name="article.updated"]/@content'),
+        #( 'articles.aplus.com', '//meta[@property="article:modified_time")]/@content' ),
+        ('bloomberg.com',                   '(//time[contains(@class, "article-timestamp")]/@datetime)[2]' ),
         ]
     return get_timestamp(html, url, xpaths, use_url_date=False, **kwargs)
 
