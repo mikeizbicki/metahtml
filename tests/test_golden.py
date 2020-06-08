@@ -58,7 +58,7 @@ def get_cached_webpages(url, dates=None):
     # and so the url_filename variable replaces potentially invalid characters with underscores;
     # an md5 hash is added at the end to prevent name collisions due to the substitution;
     # we don't rely on just the md5 hash because we want the filename to be human readable
-    url_filename = re.sub(r'[/:><"|*?&]','_',url) + hashlib.md5(url.encode()).hexdigest()[:8]
+    url_filename = re.sub(r'[/:><"|*?&]','_',url)[:196] + hashlib.md5(url.encode()).hexdigest()[:8]
 
     # create the cache folder for the url if it doesn't exist
     url_dir = os.path.join(cache_dir,url_filename)
