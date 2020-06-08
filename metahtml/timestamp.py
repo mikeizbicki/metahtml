@@ -328,6 +328,7 @@ def get_timestamp_published(html, url, **kwargs):
         # custom xpaths
 
         ( 'actualidad.rt.com',              '//div[@class="ArticleView-timestamp"]/time/@datetime' ),
+        ( 'america.aljazeera.com',          '//div[contains(@class,"dateTime")]' ),
         ( 'armscontrolwonk.com',            '//span[@class="date published time"]' ),
         ( 'bbc.co.uk',                      '(//div[@class="date date--v2"])[1]' ),
         ( 'bbc.com',                        '(//div[@class="date date--v2"])[1]' ),
