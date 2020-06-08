@@ -119,6 +119,7 @@ def parse_timestamp_str(timestamp_str, parser=None):
                 'ET' : -5*60*60,
                 'EST' : -5*60*60,
                 'EDT' : -4*60*60,
+                'KST' : 9*60*60,
                 }
             timestamp_lo = date_parser(timestamp_str, fuzzy=True, tzinfos=tzinfos, default=default_lo)
             timestamp_hi = date_parser(timestamp_str, fuzzy=True, tzinfos=tzinfos, default=default_hi)
@@ -324,25 +325,28 @@ def get_timestamp_published(html, url, **kwargs):
     '''
 
     xpaths = [
-
         # custom xpaths
-
         ( 'actualidad.rt.com',              '//div[@class="ArticleView-timestamp"]/time/@datetime' ),
         ( 'america.aljazeera.com',          '//div[contains(@class,"dateTime")]' ),
         ( 'armscontrolwonk.com',            '//span[@class="date published time"]' ),
+        ( 'asia.nikkei.com',                '//meta[@name="date"]/@content' ),
+        ( 'autonewsproo.blogspot.com',      '//span[@class="published updated"]/@title' ),
         ( 'bbc.co.uk',                      '(//div[@class="date date--v2"])[1]' ),
         ( 'bbc.com',                        '(//div[@class="date date--v2"])[1]' ),
+        ( 'beijingcream.com',               '//time/@datetime' ),
         ( 'bles.com',                       '(//span[@class="p-time"]/@data-date)[1]' ),
+        ( 'blogs.wsj.com',                  '//meta[@name="article.published"]/@content' ),
         ( 'bloomberg.com',                  '//meta[@name="parsely-pub-date"]/@content' ),
         ( 'cbsnews.com',                    '//time/@datetime' ),
         ( 'chicagotribune.com',             '//meta[@name="date"]/@content'),
         ( 'cnnphilippines.com',             '//div/p[@class="dateString no-icon"]'),
         ( 'csis.org',                       '//article[@role="article"]/p' ),
-        ( 'eastcoastdaily.in',              '//div[@class="entry-header"]//span[@class="date meta-item"]'),
+        ( 'eastcoastdaily.in',              '//div[@class="entry-header"]//span[@class="date meta-item"]' ),
         ( 'elnacional.com.do',              '(//time[contains(@class,"entry-date")])[1]' ),
         ( 'elperuano.pe',                   '//article[@class="notatexto"]/p/b' ),
         ( 'english.khan.co.kr',             '//div[@class="article_date"]' ),
         ( 'forbes.com',                     '//meta[@property="article:published"]/@content'),
+        ( 'foreignpolicy.com',              '(//div[@class="meta-data"])/time' ),
         ( 'foxnews.com',                    '//div[@class="article-date"]/time' ),
         ( 'freespeechdaily.com',            '//i[@class="fa fa-clock-o"]/a'),
         ( 'headtopics.com',                 '//meta[@name="date"]/@content' ),
@@ -361,10 +365,11 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'nytimes.com',                    '//meta[@property="article:published"]/@content' ),
         ( 'oluwagbemigapost.com',           '//time[@class="entry-date published updated"]/@datetime'),
         ( 'onenewspage.com',                '//meta[@itemprop="uploadDate"]/@content'),
-        ( 'pmnewsnigera.com',               '//div[@class="col-md-12 post"]/p[@class="time"]'),#FIXME
+        ( 'pmnewsnigera.com',               '//div[@class="col-md-12 post"]/p[@class="time"]'),
         ( 'politicususa.com',               '//a/time[@class="entry-date published updated"]/@datetime'),
         ( 'ruthfullyyours.com',             '//div/p[@id="single-byline"]'),
         ( 'salon.com',                      '//meta[@property="article:published_time"]/@content'),
+        ( 'smithsonianmag.com',             '//time/@data-pubdate' ),
         ( 'snopes.com',                     '//li/span[@class="date date-published"]'),
         ( 'spiegel.de',                     '//span[@class="article-function-date"]/b' ),
         ( 'spiegel.de',                     '//time/@datetime' ),
@@ -391,10 +396,11 @@ def get_timestamp_published(html, url, **kwargs):
         ( None, '//meta[@name="cXenseParse:recs:publishtime"]/@content' ),
 
         # microdata paths
-        ( None, '//meta[@itemprop="datePublished"]/@content' ),
-        ( None, '//meta[@itemprop="datePublished"]/@datetime' ),
-        ( None, '//time[@itemprop="datePublished"]/@content' ),
-        ( None, '//time[@itemprop="datePublished"]/@datetime' ),
+        ( None, '//*[@itemprop="datePublished"]/@content' ),
+        ( None, '//*[@itemprop="datePublished"]/@datetime' ),
+        ( None, '//*[@property="datePublished"]/@content' ),
+        ( None, '//*[@property="datePublished"]/@datetime' ),
+
         ]
 
     return get_timestamp(html, url, xpaths, use_url_date=True, **kwargs)
@@ -407,6 +413,11 @@ def get_timestamp_modified(html, url, **kwargs):
     See get_timestamp for details about the timestamp dictionary.
     '''
     xpaths = [
+        # xpaths
+        ( 'foxnews.com',                    '//div[@class="article-updated"]' ),
+        ( 'nytimes.com',                    '//meta[@property="article:modified"]/@content' ),
+        ( 'blogs.wsj.com',                  '//meta[@name="article.updated"]/@content'),
+
         # meta xpaths
         ( None, '//meta[@property="rnews:dateModified"]/@content' ),
         ( None, '//meta[@property="article:modified_time"]/@content' ),
@@ -421,16 +432,6 @@ def get_timestamp_modified(html, url, **kwargs):
         ( None, '//*[@property="dateModified"]/@datetime' ),
         ( None, '//*[@property="dateModified"]' ),
 
-        # xpaths
-        ( 'angrystaffofficer.com',          '//time[contains(@class,"updated")]' ),
-        ( 'bloomberg.com',                  '//time[@itemprop="dateModified"]/@datetime' ),
-        ( 'foxnews.com',                    '//div[@class="article-updated"]' ),
-        ( 'heavy.com',                      '//meta[@property="article:modified_time"]/@content' ),
-        ( 'nytimes.com',                    '//meta[@property="article:modified"]/@content' ),
-        ( 'forbes.com',                     '//meta[@property="article:modified"]/@content'),
-        #( 'france24.com',                   '//span[class="m-pub-dates__date"]/time'),
-        ( 'military.com',                   '//meta[@name="article:modified_time"]/@content'),
-        ( 'salon.com',                      '//meta[@property="article:modified_time"]/@content')
         ]
     return get_timestamp(html, url, xpaths, use_url_date=False, **kwargs)
 
@@ -464,7 +465,7 @@ def get_timestamp(parser, url, xpaths, use_url_date=False, require_valid_for_hos
 
         # determine whether the xpath applies to this hostname
         if hostname is not None:
-            disable_universal_xpaths = disable_universal_xpaths or (hostname in url_hostname)
+            disable_universal_xpaths = disable_universal_xpaths or (hostname == url_hostname or 'www.'+hostname == url_hostname)
             valid_for_hostname = hostname in url_hostname
         else:
             valid_for_hostname = not disable_universal_xpaths
