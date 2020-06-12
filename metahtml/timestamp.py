@@ -328,6 +328,8 @@ def get_timestamp_published(html, url, **kwargs):
         # custom xpaths
         ( 'actualidad.rt.com',              '//div[@class="ArticleView-timestamp"]/time/@datetime' ),
         ( 'america.aljazeera.com',          '//div[contains(@class,"dateTime")]' ),
+        ( 'answers.com',                    '//meta[@name="article:published"]/@content'),
+        ( 'arabic.rt.com',                  '//meta[@name="published_time_telegram"]/@content'),
         ( 'armscontrolwonk.com',            '//span[@class="date published time"]' ),
         ( 'asia.nikkei.com',                '//meta[@name="date"]/@content' ),
         ( 'autonewsproo.blogspot.com',      '//span[@class="published updated"]/@title' ),
@@ -335,8 +337,10 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'bbc.com',                        '(//div[@class="date date--v2"])[1]' ),
         ( 'beijingcream.com',               '//time/@datetime' ),
         ( 'bles.com',                       '(//span[@class="p-time"]/@data-date)[1]' ),
+        #( 'blog.konitono.com',              '//meta[@property="article:modified_time"]/@content'),
         ( 'blogs.wsj.com',                  '//meta[@name="article.published"]/@content' ),
         ( 'bloomberg.com',                  '//meta[@name="parsely-pub-date"]/@content' ),
+        #( 'businessinsider.com',            '//div[@class="byline-timestamp js-date-format js-rendered"]/@data-timestamp'),
         ( 'cbsnews.com',                    '//time/@datetime' ),
         ( 'chicagotribune.com',             '//meta[@name="date"]/@content'),
         ( 'cnnphilippines.com',             '//div/p[@class="dateString no-icon"]'),
@@ -358,6 +362,9 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'lavozdegalicia.es',              '(//meta[@itemprop="datePublished"]/@content)[1]' ),
         ( 'lucianne.com',                   '//div/p[@class="post-posted-by"]'),
         ( 'malaymail.com',                  '//div/p[@class="meta mb-0"]'),
+        #( 'medicalxpress.com',              '//div[@class="article__info mb-2"]/p/text()'),
+        ( 'medworm.com',                    '(//time)[1]'),
+        #( 'medworm.com',                    '(//time)[2]'),
         ( 'militarytimes.com',              '//meta[@itemprop="datePublished"]/@content'),
         ( 'mundiario.com',                  '//span[@class="content-time"]' ),
         ( 'nbc12.com',                      '//meta[@name="date"]/@content'),
@@ -376,9 +383,13 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'stripes.com',                    '//span[@class="published_date"]' ),
         ( 'thediplomat.com',                '//span[@itemprop="datePublished"]' ),
         ( 'theintercept.com',               '//span[@class="PostByline-date"]' ),
+        ( 'theworldnews.net',               '//span[@class="news__time"]/text()'),
         ( 'time.com',                       '//div[contains(@class,"published-date")]' ),
         ( 'townhall.com',                   '//div[@class="contributor pull-left"][contains(.,"Posted:")]/text()'),
+        ( 'usatoday.com',                   '//story-timestamp[@id="videoTimestamp"]/text()'),
+        #( 'usatoday.com',                   '//p[@class="header__pubdate svelte-1t1csty"]/text()'),
         ( 'voxeurop.eu',                    '//div[contains(@class,"publish_date_time")]' ),
+        ( 'wuhanupdate.com',                '//time[@class="entry-time"]/@content'),
 
         # universal xpaths
         ( None, '//meta[@property="rnews:datePublished"]/@content' ),
@@ -414,8 +425,10 @@ def get_timestamp_modified(html, url, **kwargs):
     '''
     xpaths = [
         # xpaths
+        ( 'arabic.rt.com',                  '(//time)[3]'),
         ( 'foxnews.com',                    '//div[@class="article-updated"]' ),
         ( 'nytimes.com',                    '//meta[@property="article:modified"]/@content' ),
+        #( 'ovulation-calculators.com',      '//span[@style="font-size: 0.35em;"]/text()'),
         ( 'blogs.wsj.com',                  '//meta[@name="article.updated"]/@content'),
 
         # meta xpaths
