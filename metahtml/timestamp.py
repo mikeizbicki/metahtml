@@ -383,7 +383,7 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'stripes.com',                    '//span[@class="published_date"]' ),
         ( 'thediplomat.com',                '//span[@itemprop="datePublished"]' ),
         ( 'theintercept.com',               '//span[@class="PostByline-date"]' ),
-        ( 'theworldnews.net',               '//span[@class="news__time"]/text()'),
+        #( 'theworldnews.net',               '//span[@class="news__time"]/text()'),
         ( 'time.com',                       '//div[contains(@class,"published-date")]' ),
         ( 'townhall.com',                   '//div[@class="contributor pull-left"][contains(.,"Posted:")]/text()'),
         ( 'usatoday.com',                   '//story-timestamp[@id="videoTimestamp"]/text()'),
