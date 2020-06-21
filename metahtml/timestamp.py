@@ -65,7 +65,6 @@ from dateutil.parser import parse as date_parser
 worst_tz_lo = dateutil.tz.tzoffset('worst_lo',12*60*60)
 worst_tz_hi = dateutil.tz.tzoffset('worst_hi',-12*60*60)
 
-
 def parse_timestamp_str(timestamp_str, parser=None):
     '''
     Given a string representing a timestamp
@@ -85,6 +84,20 @@ def parse_timestamp_str(timestamp_str, parser=None):
         if result['timestamp_lo'] is None:
             result = parse_timestamp_str(timestamp_str, parser='dateparser')
         return result
+
+    # if the string is only numbers, interpret as a unix timestamp
+    # FIXME: and
+    if timestamp_str.isdigit() and len(timestamp_str)!=14:
+        print("len(timestamp_str)=",len(timestamp_str))
+        print("timestamp_str=",timestamp_str)
+        tz_utc = dateutil.tz.tzoffset('UTC',0)
+        timestamp = datetime.datetime.fromtimestamp(float(timestamp_str), tz_utc)
+        return {
+            'timestamp_lo' : timestamp,
+            'timestamp_hi' : timestamp,
+            'raw' : timestamp_str,
+            'parser' : 'unix_epoch',
+            }
 
     # parse the date
     if parser=='dateutil':
@@ -327,6 +340,7 @@ def get_timestamp_published(html, url, **kwargs):
     xpaths = [
         # custom xpaths
         ( 'abc.net.au',                     '//meta[@name="DCTERMS.issued"]/@content'),
+        ( 'abc.net.au',                     '//meta[@property="article:published_time"]/@content'),
         ( 'actualidad.rt.com',              '//div[@class="ArticleView-timestamp"]/time/@datetime' ),
         ( 'actu.orange.fr',                 '//div[@class="player-head"]/meta[@itemprop="uploadDate"]/@content'),
         ( 'aljazeera.com',                  '//div[@class="article-duration"]/time/@datetime'),
@@ -432,6 +446,7 @@ def get_timestamp_modified(html, url, **kwargs):
     xpaths = [
         # xpaths
         ( 'abc.net.au',                     '//meta[@name="DCTERMS.modified"]/@content'),
+        ( 'abc.net.au',                     '//meta[@property="article:modified_time"]/@content'),
         ( 'actu.orange.fr',                 '//meta[@property="dateModified"]/@content'),
         ( 'blogs.wsj.com',                  '//meta[@name="article.updated"]/@content'),
         ( 'buzzfeednews.com',               '//p[@class="news-article-header__timestamps-updated"]'),
