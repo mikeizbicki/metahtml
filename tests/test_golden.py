@@ -278,7 +278,7 @@ def get_golden_tests(verified_only=True):
                     test[k] = None
 
             # filter based on human_verified
-            valid_annotator = test['human_annotator'] is not None and test['human_annotator'] != 'skip'
+            valid_annotator = test['human_annotator'] is not None and test['human_annotator'][:4] != 'skip'
             if not verified_only or valid_annotator:
                 tests.append(test)
     return tests
