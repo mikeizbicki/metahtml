@@ -133,6 +133,9 @@ def parse_timestamp_str(timestamp_str, parser=None):
                 'EST' : -5*60*60,
                 'EDT' : -4*60*60,
                 'KST' : 9*60*60,
+                'PST' : -8*60*60,
+                'PDT' : -7*60*60,
+                'UK' : 0*60*60,
                 }
             timestamp_lo = date_parser(timestamp_str, fuzzy=True, tzinfos=tzinfos, default=default_lo)
             timestamp_hi = date_parser(timestamp_str, fuzzy=True, tzinfos=tzinfos, default=default_hi)
