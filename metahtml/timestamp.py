@@ -338,6 +338,7 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'bles.com',                       '(//span[@class="p-time"]/@data-date)[1]' ),
         ( 'blogs.wsj.com',                  '//meta[@name="article.published"]/@content' ),
         ( 'bloomberg.com',                  '//meta[@name="parsely-pub-date"]/@content' ),
+        ( 'breitbart.com',                  '//div[@class="header_byline"]/time/@datetime' ),
         ( 'breitbart.com',                  '//meta[@name="pubdate"]/@content' ),
         ( 'cbsnews.com',                    '//time/@datetime' ),
         ( 'chicagotribune.com',             '//meta[@name="date"]/@content'),
