@@ -339,7 +339,6 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'blogs.wsj.com',                  '//meta[@name="article.published"]/@content' ),
         ( 'bloomberg.com',                  '//meta[@name="parsely-pub-date"]/@content' ),
         ( 'breitbart.com',                  '//meta[@name="pubdate"]/@content' ),
-        ( 'breitbart.com',                  '//div[@class="header_byline"]/time/@datetime' ),
         ( 'cbsnews.com',                    '//time/@datetime' ),
         ( 'chicagotribune.com',             '//meta[@name="date"]/@content'),
         ( 'cnn.com',                        '//meta[@name="DATE"]/@content' ),
@@ -452,7 +451,7 @@ def get_timestamp_modified(html, url, **kwargs):
         # xpaths
         ( 'breitbart.com',                  '//meta[@name="lastmod"]/@content' ),
         ( 'cnn.com',                        '//meta[@name="lastmod"]/@content' ),
-        ( 'cnn.com',                        '//meta[name="lastmod"]/@content' ),
+        ( 'cnn.com',                        '//meta[@name="lastmod"]/@content' ),
         ( 'donga.com',                      '(//span[@class="date01"])[2]' ),
         ( 'fnad.info',                      '//meta[@property="article:modified_time"]/@content' ),
         ( 'foxnews.com',                    '//div[@class="article-updated"]' ),
