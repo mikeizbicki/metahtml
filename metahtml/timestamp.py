@@ -348,11 +348,6 @@ def get_best_timestamps(timestamps, require_valid_for_hostname=True):
     else:
         bests_filtered = bests
 
-    print("patterns=",patterns)
-    print("bests=",bests)
-
-    #bests = list(filter(lambda x: x['pattern'] != 'url', bests))
-
     # sort and return
     #bests.sort(key=lambda x: x['timestamp_lo'])
 
