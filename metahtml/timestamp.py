@@ -500,6 +500,7 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'thediplomat.com',                '//span[@itemprop="datePublished"]' ),
         ( 'theepochtimes.com',              '//meta[@property="article:published_time"]/@content'),
         ( 'theglobeandmail.com',            '//meta[@property="article:published_time"]/@content'),
+        ( 'thegoldwater.com',               '//meta[@name="pubdate"]/@content'),
         ( 'theintercept.com',               '//span[@class="PostByline-date"]' ),
         ( 'time.com',                       '//div[contains(@class,"published-date")]' ),
         ( 'timesofindia.indiatimes.com',    '//b/@dateval'),
@@ -576,6 +577,7 @@ def get_timestamp_modified(html, url, **kwargs):
         ( 'sedaily.com',                    '//meta[@property="dd:modified_time"]/@content'),
         ( 'theepochtimes.com',              '//meta[@property="article:modified_time"]/@content'),
         ( 'theglobeandmail.com',            '//meta[@property="article:modified_time"]/@content'),
+        ( 'thegoldwater.com',               '//meta[@name="lastmod"]/@content'),
         ( 'vetogate.com',                   '//meta[@property="article:modified_time"]/@content'),
         ( 'washingtonpost.com',             '//meta[@name="last_updated_date"]/@content'),
 
