@@ -65,7 +65,6 @@ from dateutil.parser import parse as date_parser
 worst_tz_lo = dateutil.tz.tzoffset('worst_lo',12*60*60)
 worst_tz_hi = dateutil.tz.tzoffset('worst_hi',-12*60*60)
 
-
 def parse_timestamp_str(timestamp_str, parser=None):
     '''
     Given a string representing a timestamp
@@ -85,6 +84,20 @@ def parse_timestamp_str(timestamp_str, parser=None):
         if result['timestamp_lo'] is None:
             result = parse_timestamp_str(timestamp_str, parser='dateparser')
         return result
+
+    # if the string is only numbers, interpret as a unix timestamp
+    # FIXME: what should the correct and condition be?
+    if timestamp_str.isdigit() and len(timestamp_str)!=14:
+        print("len(timestamp_str)=",len(timestamp_str))
+        print("timestamp_str=",timestamp_str)
+        tz_utc = dateutil.tz.tzoffset('UTC',0)
+        timestamp = datetime.datetime.fromtimestamp(float(timestamp_str), tz_utc)
+        return {
+            'timestamp_lo' : timestamp,
+            'timestamp_hi' : timestamp,
+            'raw' : timestamp_str,
+            'parser' : 'unix_epoch',
+            }
 
     # parse the date
     if parser=='dateutil':
@@ -120,6 +133,9 @@ def parse_timestamp_str(timestamp_str, parser=None):
                 'EST' : -5*60*60,
                 'EDT' : -4*60*60,
                 'KST' : 9*60*60,
+                'PST' : -8*60*60,
+                'PDT' : -7*60*60,
+                'UK' : 0*60*60,
                 }
             timestamp_lo = date_parser(timestamp_str, fuzzy=True, tzinfos=tzinfos, default=default_lo)
             timestamp_hi = date_parser(timestamp_str, fuzzy=True, tzinfos=tzinfos, default=default_hi)
@@ -311,10 +327,31 @@ def get_best_timestamps(timestamps, require_valid_for_hostname=True):
         if not found_match:
             bests.append(timestamp)
 
+
+    # if best_timestamps contains both url and xpaths patterns,
+    # we should ignore the url patterns because they are less accurate
+    patterns = []
+    for best in bests:
+        try:
+            patterns.append(best['pattern'])
+        except:
+            pass
+
+    if len(patterns) > 1:
+        bests_filtered = []
+        for best in bests:
+            try:
+                if best['pattern'] != 'url':
+                    bests_filtered.append(best)
+            except:
+                pass
+    else:
+        bests_filtered = bests
+
     # sort and return
     #bests.sort(key=lambda x: x['timestamp_lo'])
 
-    return bests
+    return bests_filtered
 
 
 def get_timestamp_published(html, url, **kwargs):
@@ -326,95 +363,143 @@ def get_timestamp_published(html, url, **kwargs):
 
     xpaths = [
         # custom xpaths
+        ( 'abc.net.au',                     '//meta[@name="DCTERMS.issued"]/@content'),
+        ( 'abc.net.au',                     '//meta[@property="article:published_time"]/@content'),
+        ( 'accesswdun.com',                 '//div[@class="article-datetime"]'),
+        ( 'actu.fr',                        '//time/@datetime'),
         ( 'actualidad.rt.com',              '//div[@class="ArticleView-timestamp"]/time/@datetime' ),
+        ( 'actu.orange.fr',                 '//div[@class="player-head"]/meta[@itemprop="uploadDate"]/@content'),
+        ( 'aljazeera.com',                  '//div[@class="article-duration"]/time/@datetime'),
         ( 'america.aljazeera.com',          '//div[contains(@class,"dateTime")]' ),
         ( 'armscontrolwonk.com',            '//span[@class="date published time"]' ),
         ( 'article.wn.com',                 '//div[@class="article-source faded"]//span[@class="datestamp"]' ),
         ( 'asia.nikkei.com',                '//meta[@name="date"]/@content' ),
+        ( 'asiae.co.kr',                    '(//div[@class="articleInfo"]/div/em)[1]'),
+        ( 'asiae.co.kr',                    '//meta[@property="article:published_time"]/@content'),
         ( 'autonewsproo.blogspot.com',      '//span[@class="published updated"]/@title' ),
-        ( 'bbc.co.uk',                      '(//div[@class="date date--v2"])[1]' ),
-        ( 'bbc.com',                        '(//div[@class="date date--v2"])[1]' ),
+        ( 'baoquocte.vn',                   '//div[@class="dateUp"]/span[@class="format_time"]'),
+        ( 'baotintuc.vn',                   '//meta[@itemprop="datePublished"]/@content'),
+        #( 'bbc.co.uk',                      '(//div[@class="date date--v2"])[1]' ),
+        #( 'bbc.com',                        '(//div[@class="date date--v2"])[1]' ),
+        ( 'bbc.co.uk',                      '(//div[contains(@class,"date--v2")])[1]' ),
+        ( 'bbc.com',                        '(//div[contains(@class,"date--v2")])[1]' ),
+        ( 'bbc.com',                        '//div[@class="mini-info-list__date vxp-date date date--v2"]/@data-datetime'),
         ( 'beijingcream.com',               '//time/@datetime' ),
         ( 'bles.com',                       '(//span[@class="p-time"]/@data-date)[1]' ),
         ( 'blogs.wsj.com',                  '//meta[@name="article.published"]/@content' ),
         ( 'bloomberg.com',                  '//meta[@name="parsely-pub-date"]/@content' ),
-        ( 'breitbart.com',                  '//div[@class="header_byline"]/time/@datetime' ),
-        ( 'breitbart.com',                  '//meta[@name="pubdate"]/@content' ),
+        ( 'buzzfeednews.com',               '//p[@class="news-article-header__timestamps-posted"]'),
+        ( 'bnews.vn',                       '//div[@style="color:red"]/span[@class="post-time"]'),
+        ( 'businessinsider.com',            '//div[@data-e2e-name="byline-timestamp"]'),
+        ( 'canada-news.org',                '//time[@class="entry-date published updated"]/@datetime'),
+        ( 'cbsnews.com',                    '//p[@class="content__meta content__meta-timestamp"]/time/@datetime'),
         ( 'cbsnews.com',                    '//time/@datetime' ),
         ( 'chicagotribune.com',             '//meta[@name="date"]/@content'),
-        ( 'cnn.com',                        '//meta[@name="DATE"]/@content' ),
-        ( 'cnn.com',                        '//meta[@name="pubdate"]/@content' ),
+        ( 'claremont.today',                '//div[@class="field field--name-field-datetime field--type-datetime field--label-hidden field__items"]/div[@class="field__item"]'),
+        ( 'cnbc.com',                       '//meta[@property="article:published_time"]/@content'),
         ( 'cnnphilippines.com',             '//div/p[@class="dateString no-icon"]'),
+        ( 'coronavirus-realtime.com',       '//meta[@property="article:published_time"]/@content'),
+        ( 'crofsblogs.typepad.com',         '//h2[@class="date-header"]'),
         ( 'csis.org',                       '//article[@role="article"]/p' ),
-        ( 'dailyreadlist.com',              '//time[@itemprop="datePublished"]/@datetime'),
-        ( 'dailyreadlist.com',              '//time/@datetime' ),
+        ( 'dw.com',                         '(//ul[@class="smallList"]/li)[1]'),
+        ( 'ctvnews.ca',                     '//meta[@property="article:published_time"]/@content'),
+        ( 'deal.konitono.com',              '//meta[@property="article:published_time"]/@content'),
+        ( 'devdiscourse.com',               '//meta[@itemprop="datePublished"]/@content'),
         ( 'eastcoastdaily.in',              '//div[@class="entry-header"]//span[@class="date meta-item"]' ),
+        ( 'elcomercio.com',                 '//meta[@name="cXenseParse:recs:publishtime"]/@content'),
         ( 'elnacional.com.do',              '(//time[contains(@class,"entry-date")])[1]' ),
         ( 'elperuano.pe',                   '//article[@class="notatexto"]/p/b' ),
         ( 'english.khan.co.kr',             '//div[@class="article_date"]' ),
-        ( 'fnad.info',                      '//time[@class="entry-time"]/@datetime' ),
+        ( 'finance.yahoo.com',              '//time[@class="date Fz(11px) Mb(4px)  D(ib)"]'),
         ( 'forbes.com',                     '//meta[@property="article:published"]/@content'),
         ( 'foreignpolicy.com',              '(//div[@class="meta-data"])/time' ),
         ( 'foxnews.com',                    '//div[@class="article-date"]/time' ),
-        ( 'foxnews.com',                    '//p[@class="published updated dtstamp"]//span[@class="value-title"]/@title' ),
-        ( 'foxnews.com',                    '//meta[@name="dcterms.created"]/@content' ),
+        ( 'freepressjournal.in',            '//div[@class="story-meta-info-m__date-time__1IiJn"]/time/@datetime'),
+        ( 'freerepublic.com',               '(//b/span[@class="date"])[1]'),
         ( 'freespeechdaily.com',            '//i[@class="fa fa-clock-o"]/a'),
-        ( 'gamemaz.info',                   '//time[@class="entry-time"]/@datetime' ),
-        ( 'gatofuns.com',                   '//meta[@property="article:published_time"]/@content' ),
-        ( 'globalnews.ca',                  '//div[@class="date-and-time"]' ),
-        ( 'globalnews.ca',                  '//div[@class="c-byline__date"]' ),
-        ( 'gooseart.net',                   '//time[@class="entry-time"]/@datetime' ),
-        ( 'hankookilbo.com',                '//div[@class="info"]//p[@class="js-islide-time"]' ),
-        ( 'headtopics.com',                 '//span[@class="Headline Headline--metaline Headline--noPadding Headline--inherit"]' ),
+        ( 'headlines.yahoo.co.jp',          '//p[@class="fss ymuiDate"]'),
         ( 'headtopics.com',                 '//meta[@name="date"]/@content' ),
         ( 'heavy.com',                      '//meta[@property="article:published_time"]/@content'),
         ( 'heavy.com',                      '//time[@itemprop="datePublished"]/@datetime'),
-        ( 'insta.shared.to',                '//p[@class="fs"]' ),
+        ( 'huffpost.com',                   '//meta[@property="article:published_time"]/@content'),
+        ( 'ibtimes.com',                    '//meta[@property="article:published_time"]/@content'),
         ( 'itv.com',                        '//li[@class="labels__item labels__item--time"]/time/@datetime'),
         ( 'japantimes.co.jp',               '//li[@class="post_time"]/time/@datetime'),
+        ( 'jpost.com',                      '//meta[@itemprop="datePublished"]/@content'),
+        ( 'king5.com',                      '//meta[@itemprop="datePublished"]/@content'),
         ( 'laregion.es',                    '//meta[@name="date"]/@content' ),
+        ( 'latestly.com',                   '//span[@class="article_date"]'),
         ( 'lavozdegalicia.es',              '(//meta[@itemprop="datePublished"]/@content)[1]' ),
+        ( 'lci.fr',                         '(//time)[1]'),
+        ( 'leparisien.fr',                  '//meta[@property="article:published_time"]/@content'),
         ( 'lucianne.com',                   '//div/p[@class="post-posted-by"]'),
+        ( 'maghress.com',                   '//span[@class="articlenewspaper"]'),
         ( 'malaymail.com',                  '//div/p[@class="meta mb-0"]'),
+        ( 'mercurynews.com',                '//meta[@property="article:published_time"]/@content'),
         ( 'militarytimes.com',              '//meta[@itemprop="datePublished"]/@content'),
+        ( 'moneys.mt.co.kr',                '//meta[@property="article:published_time"]/@content'),
+        ( 'moneys.mt.co.kr',                '//span[@id="pn_article_date"]'),
         ( 'mundiario.com',                  '//span[@class="content-time"]' ),
         ( 'nbc12.com',                      '//meta[@name="date"]/@content'),
-        ( 'news.un.org',                    '//span[@property="dc:date"]/@content' ),
-        ( 'news.un.org',                    '//meta[@property="article:published_time"]/@content' ),
+        ( 'nbcnews.com',                    '//span[@class="byline___3V_nz"]'),
+        ( 'nbcnews.com',                    '//meta[@itemprop="datePublished"]/@content'),
+        ( 'newindianexpress.com',           '(//p[@class="ArticlePublish margin-bottom-10"]/span)[1]'),
+        ( 'news.com.au',                    '//meta[@itemprop="datePublished"]/@content'),
+        ( 'news.immitate.com',              '//meta[@property="article:published_time"]/@content'),
+        ( 'news.mt.co.kr',                  '//meta[@property="article:published_time"]/@content'),
+        ( 'news.mt.co.kr',                  '//span[@id="pn_article_date"]'),
+        ( 'news.nicovideo.jp',              '//time[@class="article-created-at"]'),
+        ( 'news.sky.com',                   '//p[@class="sdc-article-date__date-time"]'),
+        ( 'newsinfo.inquirer.net',          '//meta[@property="article:published_time"]/@content'),
+        ( 'newslocker.com',                 '//time[@class="entry-time"]/@datetime'),
+        ( 'newsoneplace.com',               '//span[@class="textlogoarticle"]/time/@datetime'),
+        ( 'noticieros.televisa.com',        '//meta[@property="article:published_time"]/@content'),
+        ( 'noticieros.televisa.com',        '//div[@class="video-post-title"]/div[@class="author"]'),
+        ( 'npr.org',                        '//div[@class="dateblock"]/time/@datetime'),
         ( 'nydailynews.com',                '//meta[@name="date"]/@content'),
+        ( 'nypost.com',                     '//meta[@property="article:published_time"]/@content'),
         ( 'nytimes.com',                    '//meta[@property="article:published"]/@content' ),
-        ( 'nytimes.com',                    '//time[@class="css-129k401 e16638kd0"]/@datetime' ),
-        ( 'nytimes.com',                    '//time[@class="css-1sbuyqj e16638kd3"]/@datetime' ),
-        ( 'nzherald.co.nz',                 '//div[@class="video-date"]' ),
-        ( 'nzherald.co.nz',                 '//meta[@name="article:published_time"]/@content' ),
+        ( 'oklahoman.com',                  '//meta[@property="article:published_time"]/@content'),
         ( 'oluwagbemigapost.com',           '//time[@class="entry-date published updated"]/@datetime'),
         ( 'onenewspage.com',                '//meta[@itemprop="uploadDate"]/@content'),
+        ( 'onenewspage.co.uk',              '//span[@class="lhpt"]'),
         ( 'pmnewsnigera.com',               '//div[@class="col-md-12 post"]/p[@class="time"]'),
-        ( 'people.com',                     '//div[@class="timestamp published-date padding-12-left"]' ),
+        ( 'politico.com',                   '//time[@itemprop="datePublished"]/@datetime'),
+        ( 'politico.com',                   '//p[@class="story-meta__timestamp"]/time/@datetime'),
+        ( 'politico.com',                   '//span[@class="timestamp"]'),
+        ( 'politico.eu',                    '//meta[@property="article:published_time"]/@content'),
         ( 'politicususa.com',               '//a/time[@class="entry-date published updated"]/@datetime'),
-        ( 'reuters.com',                    '//time[@class="TextLabel__text-label___3oCVw TextLabel__white___32MyF TextLabel__regular___2X0ym"]' ),
-        ( 'reuters.com',                    '//meta[@property="og:article:published_time"]/@content' ),
+        ( 'rt.com',                         '//meta[@name="published_time_telegram"]/@content'),
         ( 'ruthfullyyours.com',             '//div/p[@id="single-byline"]'),
         ( 'salon.com',                      '//meta[@property="article:published_time"]/@content'),
-        ( 'scmp.com',                       '//time/@datetime' ),
-        ( 'scmp.com',                       '//meta[@property="article:published_time"]/@content' ),
-        ( 'smartprices.org',                '//time[@class="entry-time"]/@datetime' ),
+        ( 'sbs.com.au',                     '//meta[@itemprop="datePublished"]/@content'),
+        ( 'sedaily.com',                    '//li[@class="letter"]'),
+        ( 'sedaily.com',                    '//meta[@property="dd:published_time"]/@content'),
+        ( 'sg.news.yahoo.com',              '//time[@class="date Fz(11px) Mb(4px)  D(ib)"]'),
         ( 'smithsonianmag.com',             '//time/@data-pubdate' ),
+        ( 'shine.cn',                       '//meta[@name="ArticlePublishDate"]/@content'),
         ( 'snopes.com',                     '//li/span[@class="date date-published"]'),
         ( 'spiegel.de',                     '//span[@class="article-function-date"]/b' ),
         ( 'spiegel.de',                     '//time/@datetime' ),
         ( 'sportbreakingnews.com',          '//meta[@property="article:published_time"]/@content' ),
         ( 'straitstimes.com',               '//meta[@property="article:published_time"]/@content' ),
         ( 'stripes.com',                    '//span[@class="published_date"]' ),
+        ( 'telegraph.co.uk',                '//meta[@itemprop="datePublished"]/@content'),
         ( 'thediplomat.com',                '//span[@itemprop="datePublished"]' ),
-        ( 'theguardian.com',                '//meta[@property="article:published_time"]/@content '),
+        ( 'theepochtimes.com',              '//meta[@property="article:published_time"]/@content'),
+        ( 'theglobeandmail.com',            '//meta[@property="article:published_time"]/@content'),
         ( 'theintercept.com',               '//span[@class="PostByline-date"]' ),
         ( 'time.com',                       '//div[contains(@class,"published-date")]' ),
+        ( 'timesofindia.indiatimes.com',    '//b/@dateval'),
+        ( 'thanhnien.vn',                   '//meta[@itemprop="datePublished"]/@content'),
+        ( 'today.it',                       '//time[@class="datestamp"]'),
         ( 'townhall.com',                   '//div[@class="contributor pull-left"][contains(.,"Posted:")]/text()'),
-        ( 'video.foxnews.com',              '//meta[@name="dcterms.created"]/@content' ),
-        ( 'vietnamartnews.com',             '//meta[@property="article:published_time"]/@content' ),
+        ( 'vetogate.com',                   '//meta[@property="article:published_time"]/@content'),
         ( 'voxeurop.eu',                    '//div[contains(@class,"publish_date_time")]' ),
-        ( 'xbuy.info',                      '//time[@class="entry-time"]/@datetime' ),
+        ( 'washingtonpost.com',             '//div[@class="display-date"]'),
+        ( 'washingtonpost.com',             '//div[@class="metaData margin-bottom"]/span[@class="date"]'),
+        ( 'washingtonpost.com',             '//meta[@name="recv_time"]/@content'),
+        ( 'youtube.com',                    '//div[@id="date"]/yt-formatted-string[@class="style-scope ytd-video-primary-info-renderer"]'),
 
         # universal xpaths
         ( None, '//meta[@property="rnews:datePublished"]/@content' ),
@@ -450,30 +535,36 @@ def get_timestamp_modified(html, url, **kwargs):
     '''
     xpaths = [
         # xpaths
-        ( 'breitbart.com',                  '//meta[@name="lastmod"]/@content' ),
-        ( 'cnn.com',                        '//meta[@name="lastmod"]/@content' ),
-        ( 'cnn.com',                        '//meta[@name="lastmod"]/@content' ),
-        ( 'donga.com',                      '(//span[@class="date01"])[2]' ),
-        ( 'fnad.info',                      '//meta[@property="article:modified_time"]/@content' ),
-        ( 'foxnews.com',                    '//div[@class="article-updated"]' ),
-        ( 'gamemaz.info',                   '//meta[@property="article:modified_time"]/@content' ),
-        ( 'gatofuns.com',                   '//meta[@property="article:modified_time"]/@content' ),
-        ( 'gooseart.net',                   '//meta[@property="article:modified_time"]/@content' ),
-        ( 'newsbreak.com',                  '//meta[@itemprop="dateModified"]/@content' ),
-        ( 'newsbreak.com',                  '//meta[@property="article:modified_time"]/@content' ),
-        ( 'news.un.org',                    '//meta[@property="article:modified_time"]/@content' ),
-        ( 'ngong.net',                      '//meta[@property="article:modified_time"]/@content' ),
-        ( 'nytimes.com',                    '//meta[@property="article:modified"]/@content' ),
-        ( 'nytimes.com',                    '//time[@class="css-233int e16638kd4"]/@datetime' ),
+        ( 'abc.net.au',                     '//meta[@name="DCTERMS.modified"]/@content'),
+        ( 'abc.net.au',                     '//meta[@property="article:modified_time"]/@content'),
+        ( 'actu.orange.fr',                 '//meta[@property="dateModified"]/@content'),
+        ( 'asiae.co.kr',                    '(//div[@class="articleInfo"]/div/em)[2]'),
         ( 'blogs.wsj.com',                  '//meta[@name="article.updated"]/@content'),
-        ( 'reuters.com',                    '//meta[@property="og:article:modified_time"]/@content' ),
-        ( 'scmp.com',                       '//meta[@property="article:modified_time"]/@content' ),
-        ( 'smartprices.org',                '//meta[@property="article:modified_time"]/@content' ),
-        ( 'sportbreakingnews.com',          '//meta[@property="article:modified_time"]/@content' ),
-        ( 'straitstimes.com',               '//meta[@property="article:modified_time"]/@content' ),
-        ( 'theguardian.com',                '//meta[@property="article:modified_time"]/@content' ),
-        ( 'vietnamartnews.com',             '//meta[@property="article:modified_time"]/@content' ),
-        ( 'xbuy.info',                      '//meta[@property="article:modified_time"]/@content' ),
+        ( 'buzzfeednews.com',               '//p[@class="news-article-header__timestamps-updated"]'),
+        ( 'cnbc.com',                       '//meta[@property="article:modified_time"]/@content'),
+        ( 'ctvnews.ca',                     '//meta[@property="article:modified_time"]/@content'),
+        ( 'devdiscourse.com',               '//meta[@itemprop="dateModified"]'),
+        ( 'foxnews.com',                    '//div[@class="article-updated"]' ),
+        ( 'huffpost.com',                   '//meta[@property="article:modified_time"]/@content'),
+        ( 'ibtimes.com',                    '//meta[@property="article:modified_time"]/@content'),
+        ( 'jpost.com',                      '//meta[@itemprop="dateModified"]/@content'),
+        ( 'leparisien.fr',                  '//meta[@property="article:modified_time"]/@content'),
+        ( 'mercurynews.com',                '//meta[@property="article:modified_time"]/@content'),
+        ( 'nbcnews.com',                    '//meta[@itemprop="dateModified"]/@content'),
+        ( 'newindianexpress.com',           '(//p[@class="ArticlePublish margin-bottom-10"]/span)[2]'),
+        ( 'news.com.au',                    '//meta[@itemprop="datePublished"]/@content'),
+        ( 'noticieros.televisa.com',        '//meta[@property="article:modified_time"]/@content'),
+        ( 'nypost.com',                     '//meta[@property="article:modified_time"]/@content'),
+        ( 'nytimes.com',                    '//meta[@property="article:modified"]/@content'),
+        ( 'oklahoman.com',                  '//meta[@property="article:modified_time"]/@content'),
+        ( 'politico.com',                   '//p[@class="story-meta__updated"]/time/@datetime'),
+        ( 'politico.com',                   '//span[@class="updated"]'),
+        ( 'politico.eu',                    '//meta[@property="article:modified_time"]/@content'),
+        ( 'sedaily.com',                    '//meta[@property="dd:modified_time"]/@content'),
+        ( 'theepochtimes.com',              '//meta[@property="article:modified_time"]/@content'),
+        ( 'theglobeandmail.com',            '//meta[@property="article:modified_time"]/@content'),
+        ( 'vetogate.com',                   '//meta[@property="article:modified_time"]/@content'),
+        ( 'washingtonpost.com',             '//meta[@name="last_updated_date"]/@content'),
 
         # meta xpaths
         ( None, '//meta[@property="rnews:dateModified"]/@content' ),
@@ -506,14 +597,16 @@ def get_timestamp(parser, url, xpaths, use_url_date=False, require_valid_for_hos
     # get timestamp from url
     if use_url_date:
         _STRICT_DATE_REGEX_PREFIX = r'(?<=\W)'
+        #FIXME: DATE_REGEX = r'(([\./\-_]{0,1}(19|20)\d{2})[\./\-_]{0,1}(([0-3]{0,1}[0-9][\./\-_])|(\w{3,5}[\./\-_]))([0-3]{0,1}[0-9][\./\-]{0,1})?)...'
         DATE_REGEX = r'(([\./\-_]{0,1}(19|20)\d{2})[\./\-_]{0,1}(([0-3]{0,1}[0-9][\./\-_])|(\w{3,5}[\./\-_]))([0-3]{0,1}[0-9][\./\-]{0,1})?)...'
+        #DATE_REGEX = r'(([\./\-_]{0,1}(19|20)\d{2})[\./\-_](([0-3]{0,1}[0-9][\./\-_])|(\w{3,5}[\./\-_]))([0-3]{0,1}[0-9][\./\-])?)...'
         STRICT_DATE_REGEX = _STRICT_DATE_REGEX_PREFIX + DATE_REGEX
         date_match = re.search(STRICT_DATE_REGEX, url)
         if date_match:
             timestamp_str = date_match.group(1)
             timestamp = parse_timestamp_str(timestamp_str)
             timestamp['is_valid_for_hostname'] = True
-            timestamp['pattern'] = ['url']
+            timestamp['pattern'] = 'url'
             timestamps.append(timestamp)
 
     # get timestamps from xpaths

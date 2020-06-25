@@ -29,10 +29,11 @@ def get_article_type(parser, url, meta_best, fast=False):
 
     # pages with too many timestamps are probably not an article, 
     # but instead a "category" page listing many article types;
-    # Some articles have several timestamps close together, however,
-    # possibly due to misconfigured publishing platforms;
-    # therefore we have to calculate the range of the timestamps appearing on the page first
     if best_timestamps is not None and len(best_timestamps) != 0:
+
+        # Some articles have several timestamps close together, however,
+        # possibly due to misconfigured publishing platforms;
+        # therefore we have to calculate the range of the timestamps appearing on the page first
         min_lo = None
         max_hi = None
         for best in best_timestamps:
@@ -88,9 +89,13 @@ def get_article_type(parser, url, meta_best, fast=False):
             elif type(element) is lxml.html.HtmlElement:
                 text = element.text_content()
 
+            # FIXME: this is a hack
+            if text=='video':
+                text = 'article'
+
             # generate the article_type from text
             article_types.append({
-                'article_type' : text.lower(),
+                'article_type' : text,
                 'pattern' : 'xpath',
                 'pattern_details' : xpath,
                 'valid_for_hostname' : valid_for_hostname,
@@ -99,15 +104,18 @@ def get_article_type(parser, url, meta_best, fast=False):
     # url-based patterns
     regexs = [
         # these regexs match webpages that contain only dates
+        ( None, r'/(19|20)\d{2}/[a-zA-Z]{3}/\d{2}/?$' ),
         ( None, r'/(19|20)\d{2}/\d{2}/\d{2}/?$' ),
         ( None, r'/(19|20)\d{2}/\d{2}/?$' ),
         ( None, r'/(19|20)\d{2}/?$' ),
         ( None, r'^/?$' ),
+        ( None, r'^/article/$' ),
 
         # hostname specific regexs
-        ( None, r'/(19|20)\d{2}/[a-zA-Z]{3}/\d{2}/?$' ),
         ( 'elnacional.com.do', r'^/category/' ),
         ( 'cnnespanol.cnn.com', r'^/video/$' ),
+        ( 'lci.fr', r'^/sante/$' ),
+        ( 'lci.fr', r'^/bien-etre/$' ),
         ]
 
     for hostname, regex in regexs:
