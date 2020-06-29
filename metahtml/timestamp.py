@@ -65,7 +65,6 @@ from dateutil.parser import parse as date_parser
 worst_tz_lo = dateutil.tz.tzoffset('worst_lo',12*60*60)
 worst_tz_hi = dateutil.tz.tzoffset('worst_hi',-12*60*60)
 
-
 def parse_timestamp_str(timestamp_str, parser=None):
     '''
     Given a string representing a timestamp
@@ -85,6 +84,20 @@ def parse_timestamp_str(timestamp_str, parser=None):
         if result['timestamp_lo'] is None:
             result = parse_timestamp_str(timestamp_str, parser='dateparser')
         return result
+
+    # if the string is only numbers, interpret as a unix timestamp
+    # FIXME: what should the correct and condition be?
+    if timestamp_str.isdigit() and len(timestamp_str)!=14:
+        print("len(timestamp_str)=",len(timestamp_str))
+        print("timestamp_str=",timestamp_str)
+        tz_utc = dateutil.tz.tzoffset('UTC',0)
+        timestamp = datetime.datetime.fromtimestamp(float(timestamp_str), tz_utc)
+        return {
+            'timestamp_lo' : timestamp,
+            'timestamp_hi' : timestamp,
+            'raw' : timestamp_str,
+            'parser' : 'unix_epoch',
+            }
 
     # parse the date
     if parser=='dateutil':
@@ -120,6 +133,9 @@ def parse_timestamp_str(timestamp_str, parser=None):
                 'EST' : -5*60*60,
                 'EDT' : -4*60*60,
                 'KST' : 9*60*60,
+                'PST' : -8*60*60,
+                'PDT' : -7*60*60,
+                'UK' : 0*60*60,
                 }
             timestamp_lo = date_parser(timestamp_str, fuzzy=True, tzinfos=tzinfos, default=default_lo)
             timestamp_hi = date_parser(timestamp_str, fuzzy=True, tzinfos=tzinfos, default=default_hi)
@@ -311,10 +327,31 @@ def get_best_timestamps(timestamps, require_valid_for_hostname=True):
         if not found_match:
             bests.append(timestamp)
 
+
+    # if best_timestamps contains both url and xpaths patterns,
+    # we should ignore the url patterns because they are less accurate
+    patterns = []
+    for best in bests:
+        try:
+            patterns.append(best['pattern'])
+        except:
+            pass
+
+    if len(patterns) > 1:
+        bests_filtered = []
+        for best in bests:
+            try:
+                if best['pattern'] != 'url':
+                    bests_filtered.append(best)
+            except:
+                pass
+    else:
+        bests_filtered = bests
+
     # sort and return
     #bests.sort(key=lambda x: x['timestamp_lo'])
 
-    return bests
+    return bests_filtered
 
 
 def get_timestamp_published(html, url, **kwargs):
@@ -331,21 +368,26 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'accesswdun.com',                 '//div[@class="article-datetime"]'),
         ( 'actu.fr',                        '//time/@datetime'),
         ( 'actualidad.rt.com',              '//div[@class="ArticleView-timestamp"]/time/@datetime' ),
+        ( 'actu.orange.fr',                 '//div[@class="player-head"]/meta[@itemprop="uploadDate"]/@content'),
+        ( 'aljazeera.com',                  '//div[@class="article-duration"]/time/@datetime'),
         ( 'america.aljazeera.com',          '//div[contains(@class,"dateTime")]' ),
         ( 'armscontrolwonk.com',            '//span[@class="date published time"]' ),
         ( 'asia.nikkei.com',                '//meta[@name="date"]/@content' ),
-        ( 'asiae.co.kr',                    '(//div[@class="articleInfo"]/em)[1]'),
+        ( 'asiae.co.kr',                    '(//div[@class="articleInfo"]/div/em)[1]'),
         ( 'asiae.co.kr',                    '//meta[@property="article:published_time"]/@content'),
         ( 'autonewsproo.blogspot.com',      '//span[@class="published updated"]/@title' ),
         ( 'baoquocte.vn',                   '//div[@class="dateUp"]/span[@class="format_time"]'),
         ( 'baotintuc.vn',                   '//meta[@itemprop="datePublished"]/@content'),
-        ( 'bbc.co.uk',                      '(//div[@class="date date--v2"])[1]' ),
-        ( 'bbc.com',                        '(//div[@class="date date--v2"])[1]' ),
+        #( 'bbc.co.uk',                      '(//div[@class="date date--v2"])[1]' ),
+        #( 'bbc.com',                        '(//div[@class="date date--v2"])[1]' ),
+        ( 'bbc.co.uk',                      '(//div[contains(@class,"date--v2")])[1]' ),
+        ( 'bbc.com',                        '(//div[contains(@class,"date--v2")])[1]' ),
         ( 'bbc.com',                        '//div[@class="mini-info-list__date vxp-date date date--v2"]/@data-datetime'),
         ( 'beijingcream.com',               '//time/@datetime' ),
         ( 'bles.com',                       '(//span[@class="p-time"]/@data-date)[1]' ),
         ( 'blogs.wsj.com',                  '//meta[@name="article.published"]/@content' ),
         ( 'bloomberg.com',                  '//meta[@name="parsely-pub-date"]/@content' ),
+        ( 'buzzfeednews.com',               '//p[@class="news-article-header__timestamps-posted"]'),
         ( 'bnews.vn',                       '//div[@style="color:red"]/span[@class="post-time"]'),
         ( 'businessinsider.com',            '//div[@data-e2e-name="byline-timestamp"]'),
         ( 'canada-news.org',                '//time[@class="entry-date published updated"]/@datetime'),
@@ -358,6 +400,7 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'coronavirus-realtime.com',       '//meta[@property="article:published_time"]/@content'),
         ( 'crofsblogs.typepad.com',         '//h2[@class="date-header"]'),
         ( 'csis.org',                       '//article[@role="article"]/p' ),
+        ( 'dw.com',                         '(//ul[@class="smallList"]/li)[1]'),
         ( 'ctvnews.ca',                     '//meta[@property="article:published_time"]/@content'),
         ( 'deal.konitono.com',              '//meta[@property="article:published_time"]/@content'),
         ( 'devdiscourse.com',               '//meta[@itemprop="datePublished"]/@content'),
@@ -374,7 +417,10 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'fox40.com',                      '//meta[@property="article:published_time"]/@content' ),
         ( 'fox4kc.com',                     '//meta[@property="article:published_time"]/@content' ),
         ( 'foxnews.com',                    '//div[@class="article-date"]/time' ),
+<<<<<<< HEAD
         ( 'freebeacon.com',                 '//meta[@property="article:published_time"]/@content' ),
+=======
+>>>>>>> 8d04223b821aef589d5e561c0b7b2423bd90a2a7
         ( 'freepressjournal.in',            '//div[@class="story-meta-info-m__date-time__1IiJn"]/time/@datetime'),
         ( 'freerepublic.com',               '(//b/span[@class="date"])[1]'),
         ( 'freespeech.org',                 '//div[@class="date"]/p'),
@@ -598,14 +644,16 @@ def get_timestamp(parser, url, xpaths, use_url_date=False, require_valid_for_hos
     # get timestamp from url
     if use_url_date:
         _STRICT_DATE_REGEX_PREFIX = r'(?<=\W)'
+        #FIXME: DATE_REGEX = r'(([\./\-_]{0,1}(19|20)\d{2})[\./\-_]{0,1}(([0-3]{0,1}[0-9][\./\-_])|(\w{3,5}[\./\-_]))([0-3]{0,1}[0-9][\./\-]{0,1})?)...'
         DATE_REGEX = r'(([\./\-_]{0,1}(19|20)\d{2})[\./\-_]{0,1}(([0-3]{0,1}[0-9][\./\-_])|(\w{3,5}[\./\-_]))([0-3]{0,1}[0-9][\./\-]{0,1})?)...'
+        #DATE_REGEX = r'(([\./\-_]{0,1}(19|20)\d{2})[\./\-_](([0-3]{0,1}[0-9][\./\-_])|(\w{3,5}[\./\-_]))([0-3]{0,1}[0-9][\./\-])?)...'
         STRICT_DATE_REGEX = _STRICT_DATE_REGEX_PREFIX + DATE_REGEX
         date_match = re.search(STRICT_DATE_REGEX, url)
         if date_match:
             timestamp_str = date_match.group(1)
             timestamp = parse_timestamp_str(timestamp_str)
             timestamp['is_valid_for_hostname'] = True
-            timestamp['pattern'] = ['url']
+            timestamp['pattern'] = 'url'
             timestamps.append(timestamp)
 
     # get timestamps from xpaths
