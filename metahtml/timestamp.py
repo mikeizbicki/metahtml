@@ -417,10 +417,7 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'fox40.com',                      '//meta[@property="article:published_time"]/@content' ),
         ( 'fox4kc.com',                     '//meta[@property="article:published_time"]/@content' ),
         ( 'foxnews.com',                    '//div[@class="article-date"]/time' ),
-<<<<<<< HEAD
         ( 'freebeacon.com',                 '//meta[@property="article:published_time"]/@content' ),
-=======
->>>>>>> 8d04223b821aef589d5e561c0b7b2423bd90a2a7
         ( 'freepressjournal.in',            '//div[@class="story-meta-info-m__date-time__1IiJn"]/time/@datetime'),
         ( 'freerepublic.com',               '(//b/span[@class="date"])[1]'),
         ( 'freespeech.org',                 '//div[@class="date"]/p'),
