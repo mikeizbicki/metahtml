@@ -109,13 +109,35 @@ def get_article_type(parser, url, meta_best, fast=False):
         ( None, r'/(19|20)\d{2}/\d{2}/?$' ),
         ( None, r'/(19|20)\d{2}/?$' ),
         ( None, r'^/?$' ),
-        ( None, r'^/article/$' ),
+        ( None, r'^/article/?$' ),
+        ( None, r'^/category/?$' ),
+        ( None, r'^/category/uncategorized/?$' ),
+
+        ( None, r'^/en/?$' ),
+        ( None, r'^/pt/?$' ),
+        ( None, r'^/es/?$' ),
+
+        # FIXME:
+        # is everything that ends in a / a category?
 
         # hostname specific regexs
-        ( 'elnacional.com.do', r'^/category/' ),
+        ( 'bbc.co.uk', r'/asia_pacific$' ),
+        ( 'bbc.com', r'/asia_pacific$' ),
+        ( 'breitbart.com', r'^/radio/?$' ),
+        ( 'breitbart.com', r'^/asia/?$' ),
+        ( 'breitbart.com', r'^/national-security/?$' ),
+        ( 'cnn.com', r'^/asia/?$' ),
+        ( 'elmundo.es', r'^/internacional.html$' ),
+        ( 'elmundo.es', r'^/internacional/?$' ),
+        ( 'foxnews.com', r'^/politics/?$' ),
         ( 'cnnespanol.cnn.com', r'^/video/$' ),
+        ( 'elnacional.com.do', r'^/category/' ),
         ( 'lci.fr', r'^/sante/$' ),
         ( 'lci.fr', r'^/bien-etre/$' ),
+        ( 'news.un.org', r'^/es/node?$' ),
+        ( 'sportbreakingnews.com', r'^/category/uncategorized/$' ),
+        ( 'thanhnien.vn', r'^/doi-song/$' ),
+        ( 'vietnamartnews.com', r'^/category/uncategorized/$' ),
         ]
 
     for hostname, regex in regexs:
