@@ -497,7 +497,7 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'freerepublic.com',               '(//b/span[@class="date"])[1]'),
         ( 'freespeechdaily.com',            '//i[@class="fa fa-clock-o"]/a'),
         ( 'gamemaz.info',                   '//time[@class="entry-time"]/@datetime' ),
-        ( 'globalnews.ca',                  '//div[@class="c-byline__date"]' ),
+        ( 'globalnews.ca',                  '//div[contains(@class,"c-byline__date")]' ),
         ( 'globalnews.ca',                  '//div[@class="date-and-time"]' ),
         ( 'globaltimes.cn',                 '//div[@class="span7 text-left"]' ),
         ( 'goldsea.com',                    '//div[@id="credits"]' ),
@@ -590,6 +590,16 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'xbuy.info',                      '//time[@class="entry-time"]/@datetime' ),
         ( 'yahoo.com',                      '//time/@datetime' ),
         ( 'youtube.com',                    '//div[@id="date"]/yt-formatted-string[@class="style-scope ytd-video-primary-info-renderer"]'),
+
+        ( 'indiadying.blogspot.com',        '//h2[@class="date-header"]/span'),
+        ( 'hotair.com',                     '//meta[@property="article:published_time"]/@content'),
+        ( 'hotair.com',                     '(//div[@class="col-xs-12 article-text"]/p)[1]'),
+        ( 'hindi.moneycontrol.com',         '//div[@class="a_10mgry PT5"]'),
+        ( 'guernseypress.com',              '//div[@class=" full pb-feature pb-layout-item pb-f-single-title"]/div/p/time/@datetime'),
+        ( None, '//meta[@*="publish-date"]/@content'),
+        ( 'gawker.com',                     '//div[@class="meta__text"]/time/@datetime'),
+        ( 'funtobebad.blogspot.com',        '//h2[@class="date-header"]/span'),
+        ( 'freespeech.org',                 '//div[@class="date"]/p'),
 
         # universal xpaths
         ( None, '//meta[@*="ArticlePublishDate"]/@content'),
