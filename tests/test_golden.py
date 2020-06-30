@@ -292,6 +292,10 @@ def test_golden(test):
     date = test['download_date']
     [(date, html)] = get_cached_webpages(url, [date])
 
+    # check to ensure that the test case is formatted correctly
+    if len(test)!=9:
+        raise ValueError('there are too many columns in the CSV file; the likely cause of this problem is either that you have added an extra comma (,) in the title of the webpage without putting the title in quotes "like, this"')
+
     # printing the url makes debugging easier
     print('date=',date,'url=',url)
 
