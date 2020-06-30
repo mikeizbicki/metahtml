@@ -128,6 +128,7 @@ def get_article_type(parser, url, meta_best, fast=False):
         ( 'breitbart.com', r'^/asia/?$' ),
         ( 'breitbart.com', r'^/national-security/?$' ),
         ( 'cnn.com', r'^/asia/?$' ),
+        ( 'coronavirus.delaware.gov', r'^/tag/delaware-student-meals/?$' ),
         ( 'elmundo.es', r'^/internacional.html$' ),
         ( 'elmundo.es', r'^/internacional/?$' ),
         ( 'foxnews.com', r'^/politics/?$' ),
