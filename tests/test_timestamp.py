@@ -48,6 +48,14 @@ def test__get_best_timestamps_5():
     best_timestamps = metahtml.timestamp.get_best_timestamps(timestamps, require_valid_for_hostname=False)
     assert len(best_timestamps)==1
 
+def test__get_best_timestamps_6():
+    timestamps = [
+        metahtml.timestamp.parse_timestamp_str('2013/01/'),
+        metahtml.timestamp.parse_timestamp_str('2013-01-27'),
+        ]
+    best_timestamps = metahtml.timestamp.get_best_timestamps(timestamps, require_valid_for_hostname=False)
+    assert len(best_timestamps)==1
+
 
 def test__parse_timestamp_str_1():
     res = metahtml.timestamp.parse_timestamp_str('2019') 
