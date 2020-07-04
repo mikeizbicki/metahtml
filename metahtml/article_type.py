@@ -123,6 +123,7 @@ def get_article_type(parser, url, meta_best, fast=False):
         # hostname specific regexs
         ( 'abc3340.com', r'/news/nation-world$' ),
         ( 'bbc.co.uk', r'/asia_pacific$' ),
+        ( 'bbc.co.uk', r'/history/historic_figures/?$' ),
         ( 'bbc.com', r'/asia_pacific$' ),
         ( 'breitbart.com', r'^/radio/?$' ),
         ( 'breitbart.com', r'^/asia/?$' ),

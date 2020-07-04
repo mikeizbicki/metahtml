@@ -86,25 +86,82 @@ def parse_timestamp_str(timestamp_str, parser=None):
             result = parse_timestamp_str(timestamp_str, parser='dateparser')
         return result
 
-    # if the string is only numbers, interpret as a unix timestamp
-    # FIXME: what should the correct and condition be?
+    # if the string is only numbers, then it should be a unix epoch;
+    # unfortunately, many misconfigured webpages store the date as a number in another format;
+    # fortunately, these other formats don't intersect with reasonable ranges of the unix epoch;
+    # therefore, we first check the alternative formats for matches,
+    # and use the unix epoch format as a default fallback
     if timestamp_str.isdigit() and len(timestamp_str)!=14:
-        try:
-            tz_utc = dateutil.tz.tzoffset('UTC',0)
-            timestamp = datetime.datetime.fromtimestamp(float(timestamp_str), tz_utc)
-            return {
-                'timestamp_lo' : timestamp,
-                'timestamp_hi' : timestamp,
-                'pattern' : 'unknown',
-                'raw' : timestamp_str,
-                'parser' : 'unix_epoch',
-                }
 
-        # fromtimestamp throws ValueError wen the year is out of range 
-        # of what a unix timestamp is allowed to be;
-        # in this case we do nothing and let the next parsers take over
-        except ValueError:
-            pass
+        timestamp_lo = None
+
+        # check non-unix epoch formats
+        if timestamp_lo is None:
+            try:
+                pattern = '%Y%m%d'
+                timestamp_lo = datetime.datetime.strptime(timestamp_str, pattern)
+                timestamp_hi = datetime.datetime(
+                    timestamp_lo.year,
+                    timestamp_lo.month,
+                    timestamp_lo.day,
+                    23,
+                    59,
+                    59,
+                    999999
+                    )
+            except:
+                pass
+
+        if timestamp_lo is None:
+            try:
+                pattern = '%Y%m%d%H%M%S'
+                timestamp_lo = datetime.datetime.strptime(timestamp_str, pattern)
+                timestamp_hi = datetime.datetime(
+                    timestamp_lo.year,
+                    timestamp_lo.month,
+                    timestamp_lo.day,
+                    timestamp_lo.hour,
+                    timestamp_lo.minute,
+                    timestamp_lo.second,
+                    999999
+                    )
+                if timestamp_lo.year < 1980 or timestamp_hi.year > datetime.datetime.now().year+1:
+                    timestamp_lo = None
+                    timestamp_hi = None
+            except:
+                pass
+
+        # check unix epoch
+        if timestamp_lo is None:
+            try:
+                pattern = 'unix_epoch'
+                tz_utc = dateutil.tz.tzoffset('UTC',0)
+                timestamp_lo = datetime.datetime.fromtimestamp(float(timestamp_str), tz_utc)
+                timestamp_hi = datetime.datetime(
+                    timestamp_lo.year,
+                    timestamp_lo.month,
+                    timestamp_lo.day,
+                    timestamp_lo.hour,
+                    timestamp_lo.minute,
+                    timestamp_lo.second,
+                    999999
+                    )
+            # fromtimestamp throws ValueError wen the year is out of range 
+            # of what a unix timestamp is allowed to be;
+            # in this case we do nothing and let the next parsers take over
+            except ValueError:
+                pass
+
+        # if we found a timestamp with one of the patterns above, then return it;
+        # otherwise, let the function continue parsing the integer
+        if timestamp_lo is not None:
+            return {
+                'timestamp_lo' : timestamp_lo,
+                'timestamp_hi' : timestamp_hi,
+                'pattern' : parser,
+                'raw' : timestamp_str,
+                'parser' : 'int',
+                }
 
     # parse the date
     if parser=='dateutil':
@@ -203,7 +260,6 @@ def parse_timestamp_str(timestamp_str, parser=None):
         timestamp_str = re.sub(' la ', ' ', timestamp_str)
 
         timestamp_str = timestamp_str.strip()
-        #print("timestamp_str=",timestamp_str)
 
         # see https://dateparser.readthedocs.io/en/latest/#dateparser.parse
         # for details on how to parse dates
@@ -317,6 +373,7 @@ def get_best_timestamps(timestamps, require_valid_for_hostname=True):
         for i,best in enumerate(bests):
             
             # modified timestamps include worst case timezones if no timezone specified
+            # FIXME: this is mildly inefficient to recalculate these each iteration
             best_lo_mod = best['timestamp_lo']
             if best_lo_mod.tzinfo is None:
                 best_lo_mod = copy.copy(best_lo_mod).replace(tzinfo = worst_tz_lo)
@@ -383,15 +440,18 @@ def get_best_timestamps(timestamps, require_valid_for_hostname=True):
                 bests_filtered.append(best)
         bests = bests_filtered
 
-    # if best_timestamps contains both unix_epoch parsers and another parser,
-    # we should ignore the unix_epoch parser because website admins frequently use unix_epochs wrong
+    # if best_timestamps contains both the int parsers and another parser,
+    # we should ignore the int parser because website admins frequently use int wrong;
+    # (they should be a unix epoch timestamp, but they're not)
+    # FIXME:
+    # is this really necessary if the 'int' parser contains all the edge cases?
     parsers = []
     for best in bests:
         parsers.append(best['parser'])
     if len(parsers) > 1:
         bests_filtered = []
         for best in bests:
-            if best['parser'] != 'unix_epoch':
+            if best['parser'] != 'int':
                 bests_filtered.append(best)
         bests = bests_filtered
 
@@ -466,6 +526,9 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'cbsnews.com',                    '//time/@datetime' ),
         ( 'chicagotribune.com',             '//meta[@name="date"]/@content'),
         ( 'claremont.today',                '//div[@class="field field--name-field-datetime field--type-datetime field--label-hidden field__items"]/div[@class="field__item"]'),
+        ( 'cnn.com',                        '(//p[@class="cnnBodyText"])[1]' ),
+        ( 'cnn.com',                        '//meta[@*="pubdate"]/@content' ),
+        ( 'cnn.com',                        '//meta[@*="DATE"]/@content' ),
         ( 'cnnphilippines.com',             '//div/p[@class="dateString no-icon"]'),
         ( 'crofsblogs.typepad.com',         '//h2[@class="date-header"]'),
         ( 'csis.org',                       '//article[@role="article"]/p' ),
@@ -489,7 +552,6 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'en.paperblog.com',               '//div[@class="article-title"]/em' ),
         ( 'english.khan.co.kr',             '//div[@class="article_date"]' ),
         ( 'english.sina.com',               '//div[@class="t_attr"]/span' ),
-        ( 'fallingrain.com',                '(//body/text())[5]'),
         ( 'findingdulcinea.com',            '//div[@id="article_capsule_date"]/text()'),
         ( 'flags.net',                      '//meta[@name="Date-Creation-yyyymmdd"]/@content'),
         ( 'finance.yahoo.com',              '//time[@class="date Fz(11px) Mb(4px)  D(ib)"]'),
@@ -605,6 +667,7 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'washingtonpost.com',             '//div[@class="metaData margin-bottom"]/span[@class="date"]'),
         ( 'washingtonpost.com',             '//meta[@name="recv_time"]/@content'),
         ( 'wsj.com',                        '//span[@class="published"]/text()'),
+        ( 'wsj.com',                        '//meta[@itemprop="datePublished"]/@content'),
         ( 'wuhanupdate.com',                '//time[@class="entry-time"]/@content'),
         ( 'xbuy.info',                      '//time[@class="entry-time"]/@datetime' ),
         ( 'yahoo.com',                      '//time/@datetime' ),
@@ -662,7 +725,6 @@ def get_timestamp_modified(html, url, **kwargs):
         ( 'bbc.co.uk',                      '//meta[@name="dcterms.modified"]/@content'),
         ( 'buzzfeednews.com',               '//p[@class="news-article-header__timestamps-updated"]'),
         ( 'deagel.com',                     '//div[@id="date"]/text()'),
-        ( 'derechos.org',                   '(//p/text())[13]'),
         ( 'donga.com',                      '(//span[@class="date01"])[2]' ),
         ( 'flags.net',                      '//meta[@name="Date-Revision-yyyymmdd"]/@content'),
         ( 'foxnews.com',                    '//div[@class="article-updated"]' ),
@@ -670,12 +732,11 @@ def get_timestamp_modified(html, url, **kwargs):
         ( 'news.asiantown.net',             '//div[@id="b_by"]/@data-t' ),
         ( 'politico.com',                   '//p[@class="story-meta__updated"]/time/@datetime'),
         ( 'politico.com',                   '//span[@class="updated"]'),
-        ( 'revistamundodiners.com',         '//meta[@property="og:updated_time"]/@content'),
         ( 'rtve.es',                        '//meta[@property="article:modified_time"]/@content'),
         ( 'thedailygrind.news',             '//meta[@name="revised"]/@content'),
         ( 'wiki.arcs.com',                  '//li[@id="lastmod"]/text()'),
         ( 'wiki.islamiccounterterrorism.org', '//li[@id="lastmod"]/text()'),
-        ( 'world-nuclear.org',              '(//em/text())[1])'),
+        ( 'world-nuclear.org',              '(//em/text())[1]'),
         ( 'worldometers.info',              '//div[@style="font-size:13px; color:#999; text-align:center"]/text()'),
 
         # meta xpaths
@@ -764,8 +825,17 @@ def get_timestamp(parser, url, xpaths, use_url_date=False, require_valid_for_hos
             continue
         xpaths_visited.add(xpath)
 
+        # calculate the elements found by the xpath;
+        # this is wrapped in a try/except block so that when an error occurs,
+        # we can see the offending test case;
+        # this aids debugging
+        try:
+            elements = parser.xpath(xpath)
+        except Exception as e:
+            raise ValueError('hostname=',hostname,' xpath=',xpath,' ; e=',e)
+
         # loop through all elements found by the xpath
-        for element in parser.xpath(xpath):
+        for element in elements:
 
             # element can be one of several different types of lxml objects;
             # depending on the type, we need to extract the text in different ways
