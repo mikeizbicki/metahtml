@@ -673,6 +673,29 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'yahoo.com',                      '//time/@datetime' ),
         ( 'youtube.com',                    '//div[@id="date"]/yt-formatted-string[@class="style-scope ytd-video-primary-info-renderer"]'),
         ( 'zdnet.com',                      '(//time/@datetime)[1]'),
+
+
+        ( 'hirhome.com',                    '(//span[@lang="EN-US"])[2]' ),
+        ( 'homelandsecuritynewswire.com',   '//span[@class="published"]' ),
+        ( 'informationclearinghouse.info',  '//div[@class="post-content"]//p/font[@size="5"]' ),
+        ( 'informationclearinghouse.info',  '//font[@face="Times New Roman"]/p' ),
+        ( 'iranchamber.com',                '//td[@class="fontdate"]' ),
+        ( 'jewishworldreview.com',          '//p[@class="simple"]' ),
+        ( 'kake.com',                       '//span[@class="Timestamp-time"]' ),
+        ( 'masjed.ir',                      '//span[@class="head2"]' ),
+        ( 'masjed.ir',                      '//span[@id="ctl00_cphMiddle_Sampa_Web_View_NewsAgencyUI_NANewsDetail00cphMiddle_27244_lblDateTop"]' ),
+        ( 'nbcnews.com',                    '//meta[@property="article:published_time"]/@content' ),
+        ( 'payvand.com',                    '//div[@class="article"]/meta[@content="text/html; charset=utf-8"]' ),
+        ( 'renegadetribune.com',            '//span[@class="posted-on"]/time/@datetime' ),
+        ( 'sana.sy',                        '//meta[@property="article:published_time"]/@content' ),
+        ( 'sinpermiso.info',                '//meta[@name="dcterms.date"]/@content' ),
+        ( 'telemazonas.com',                '(//time[@class="updated"]/@datetime)[1]' ),
+        ( 'thebigwobble.org',               '//div[@class="date-outer"]//h2[@class="date-header"]/span' ),
+        ( 'tiempo.com.mx',                  '//font[@style="vertical-align: inherit;"]//font[@style="vertical-align: inherit;"]' ),
+        ( 'unitypublishing.com',            '//span[@style="font-size:13.5pt"]' ),
+        ( 'universocristiano.com',          '//font[@style="vertical-align: inherit;"]//font[@style="vertical-align: inherit;"]' ),
+        ( 'wluml.org',                      '/div[@class="meta"]/div[@class="submitted"]' ),
+        ( 'wright-house.com',               '//font[@size="+1"]/b' ),
         
         # universal xpaths
         ( None, '//meta[@*="ArticlePublishDate"]/@content'),
@@ -732,12 +755,17 @@ def get_timestamp_modified(html, url, **kwargs):
         ( 'news.asiantown.net',             '//div[@id="b_by"]/@data-t' ),
         ( 'politico.com',                   '//p[@class="story-meta__updated"]/time/@datetime'),
         ( 'politico.com',                   '//span[@class="updated"]'),
-        ( 'rtve.es',                        '//meta[@property="article:modified_time"]/@content'),
+        #( 'rtve.es',                        '//meta[@property="article:modified_time"]/@content'),
         ( 'thedailygrind.news',             '//meta[@name="revised"]/@content'),
         ( 'wiki.arcs.com',                  '//li[@id="lastmod"]/text()'),
         ( 'wiki.islamiccounterterrorism.org', '//li[@id="lastmod"]/text()'),
         ( 'world-nuclear.org',              '(//em/text())[1]'),
         ( 'worldometers.info',              '//div[@style="font-size:13px; color:#999; text-align:center"]/text()'),
+
+        ( 'globalsecurity.org',             '//div[@id="modified"]' ),
+        #( 'nbcnews.com',                    '//meta[@property="article:modified_time"]/@content' ),
+        ( 'renegadetribune.com',            '//span[@class="posted-on"]//time[@class="updated"]/@datetime' ),
+        #( 'sana.sy',                        '//meta[@property="article:modified_time"]/@content' ),
 
         # meta xpaths
         ( None, '//meta[@name="DCTERMS.modified"]/@content'),
