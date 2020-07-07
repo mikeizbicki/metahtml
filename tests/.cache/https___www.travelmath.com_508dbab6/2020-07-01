@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html><head><title>Travelmath trip calculator</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="title" content="Travelmath trip calculator" />
+<meta name="description" content="Calculate the driving distance between cities and flight time to figure out whether it's better to fly or drive." />
+<style>html{background-color:#ECECEC}body{background-color:#FFF;font:13px Tahoma,Helvetica,sans-serif;color:#2D2D2D;line-height:1.5em;margin:0;padding:0;width:100%}#topline{width:100%;height:40px;margin:112px 0 15px;padding:10px 0 5px;background-color:#DDECFF;border-top:solid 3px #1D60B4;border-bottom:solid 1px #CCC}#topbar{margin:auto;padding-top:9px;text-align:center;width:988px;font-size:20px}#wrapper{margin:auto;padding:0;width:988px}#header{position:absolute;top:0;width:988px;height:112px;padding:0}.logo{float:left;padding:21px 0 10px 6px}.headernav{margin-top:-1px;font:bold .9em HelveticaNeue-CondensedBold,'Open Sans Condensed',sans-serif}.headernav a:link,.headernav a:visited{color:#16447C;text-decoration:none;padding:8px 20px}.headernav a:hover{color:#F57E08;border-radius:5px;background-color:#F1F7FF}#leaderboard{float:right;padding:12px 18px 10px 0}#EchoTopic{padding:0 19px 20px 18px;width:951px}#bottom{clear:both;background-color:#ECECEC;margin:0;width:100%;height:190px;padding:10px 0 30px;border-top:solid 1px #AEAEAE}#footer{margin:auto;padding:0;width:951px}.searchbox2{height:24px;width:176px;margin-top:5px;margin-left:0;padding-left:10px;border:solid 1px #AEAEAE;border-radius:5px;font:12px Helvetica,sans-serif;color:#333}input.searchbox3{height:28px;width:186px;margin-top:4px;padding-left:10px;border:solid 1px #AEAEAE;font:12px Helvetica,sans-serif;color:#333}.footernav{padding-top:10px;font:bold 13px Helvetica,sans-serif;color:#666}.footernav a:link,.footernav a:visited{opacity:.9;color:#1D60B4;text-decoration:none;margin:0 7px}.footernav a:hover{opacity:1;color:#F57E08;text-decoration:underline}.footertwo{margin:22px 0 15px;padding:0;font:bold 12px Helvetica,sans-serif;color:#666}.footertwo a:link,.footertwo a:visited{color:#666;font-weight:400;text-decoration:none;margin:0 7px}.footertwo a:hover{color:#F57E08;text-decoration:underline}.leftcolumn{float:left;width:636px;margin:0 0 10px;padding:0}.rightcolumn{float:right;width:300px;margin:0 0 10px;padding:0}.rightcolumn3{float:right;width:615px;margin:0 0 10px;padding:0}.leftcolumn4{float:left;width:320px;margin:0 0 10px;padding:0}.leftcolumn6{float:left;width:775px;margin:0;padding:0}.rightcolumn8{float:right;width:160px;margin:0;padding:0}.leftcolumn9{float:left;width:475px;margin:0;padding:0 10px 0 0}.rightcolumn9{float:right;width:281px;margin:10px 0 0;padding:0}.column1{float:left;width:453px;margin:0 15px 0 0;padding:0 30px 0 3px}.column2{float:left;width:281px;margin:0;padding:0}.column3{float:right;width:162px;margin:0;padding:0}.fullwidth{float:left;width:946px;clear:both;margin:0;padding:0}h1{font-size:22px;font-weight:400;line-height:28px;text-align:left;color:#000;margin:0;padding:4px 0 0}h1.main{margin:0 15px 15px}.h1icon{float:left;font-size:1.2em;color:#5595E3}h2{font-size:18px;font-weight:700;text-align:left;color:#000;margin:0;padding:4px 0 0}h2.white{font:bold 19px "Myriad Pro",Helvetica,sans-serif;text-align:center;color:#FFF;margin:0;padding-top:10px}h2.traveling{font-size:22px;font-weight:400;line-height:28px;text-align:left;color:#000;margin:20px 0 10px;padding:0}h3{font-size:26px;font-weight:700;text-align:center;margin:10px 0 20px;padding:0;color:#1D60B4}.space{font-size:26px;font-weight:700;line-height:26px;text-align:center;margin:0 0 25px 15px;padding:0;width:600px;color:#1D60B4}.slash{font-size:26px;font-weight:400;line-height:26px;text-align:center;margin:10px 5px 20px 9px;padding:0;color:#000}.inline{font-size:26px;font-weight:700;position:relative;top:1px;margin:3px;padding:0;color:#1D60B4}.error{font-size:14px;font-weight:700;text-align:center;padding:0;width:600px;color:#000}h4{font-size:16px;font-weight:700;color:#F57E08;margin:10px 0 5px;padding:0}h5{font:bold 14px Tahoma,Helvetica,sans-serif;color:#F57E08;margin:0;padding:0}.boxbottom5{width:615px;margin:10px 0 20px;padding:10px 0 20px;border:solid 1px #DDD;background:linear-gradient(#fff,#f4f4f4)}.location0{float:left;text-align:left;margin:0 25px 0 15px;padding:0;width:295px}.location1{float:left;text-align:left;margin:7px 0 0;padding:0;width:260px}a:link,a:visited{color:#1D60B4;text-decoration:underline}a:hover{color:#F57E08;text-decoration:none}#travelmap,#majormap,#townsmap{width:615px;height:400px;margin:0 0 20px;padding:0;border:solid 1px #BBB}#hide-directions{width:615px}.drawmap{position:relative;width:615px;height:400px;text-align:center;font-size:1.1em;cursor:pointer;background-color:#CEDAE8;background:radial-gradient(#DFF2FF,#CFD6DE)}.drawmap .fa-globe{font-size:30em;color:#D2DBE4;position:absolute;left:120px;top:-10px;z-index:1}.drawmap .click{position:absolute;top:150px;left:230px;z-index:2}ul.related{list-style:none;line-height:32px;margin:0;padding:0;font-size:1em}ul.related li:before{margin-right:8px;font-size:1.1em;color:#F57E08;content:"\2714"}.smbox5top{width:279px;height:36px;background-color:#2a80d2}.smbox5bottom{width:247px;line-height:19px;padding:12px 10px 12px 18px;margin-bottom:40px;border-left:solid 2px #e9e9e9;border-bottom:solid 2px #e9e9e9;border-right:solid 2px #e9e9e9;background:linear-gradient(#fff,#f4f4f4)}.travel{font-weight:700;color:#000}hr{background-color:#C7C7C7;color:#C7C7C7;border:none;height:1px;text-align:center;margin:0;padding:0}.date{font-size:12px;font-style:italic;color:#F57E08}p.home{margin:10px 0 20px}p.smbox{margin:15px 0}p.mainbox{margin:0;padding:7px 15px;text-align:left}form{margin:0;padding:0}.textbox{width:140px}.orgbtn{background-color:#eda933;background:linear-gradient(#fcc14e,#fb742d);border:none;border-radius:4px;color:#fff;font:bold 11px Tahoma,Helvetica,sans-serif;cursor:pointer;padding:0;height:25px;width:82px}.orgbtn:hover{background:none;background-color:#fc9341}.tablebox{border:solid 1px #DDD}.share{float:left;padding-top:20px;margin-right:10px}.price{font-size:14px;font-weight:700;color:#F57E08}a.price{font-size:14px;font-weight:700;color:#F57E08;text-decoration:none}.advertiser{font-size:10px}a.advertiser{font-size:10px;text-decoration:none}.advertiser a:hover{color:#F57E08}.deal{font-weight:700;font-size:14px}.bbd{font-size:10px;color:#898989}.box2{border:solid 1px #C7C7C7;border-radius:5px;background-color:#F1F7FF}p.home2{font:1.1em 'Open Sans';line-height:1.5em;color:#444}h3.home2{font-weight:300;color:#1D60B4}.tab2on{padding:10px;font-size:1.3em;text-align:center;background-color:#1D60B4;color:#FFF}.smallbutton2{margin:2px 2px 0 0;height:30px;background-color:#F57E08;border:none}.table td.left2{padding:10px;color:#1D60B4;font-size:1em;font-weight:700}.table td.right2{padding:10px;text-align:right}#CalcFromField::-webkit-input-placeholder{color:#AAA}
+</style>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/ui-lightness/jquery-ui.css" />
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" />
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700|Open+Sans+Condensed:700&display=swap" />
+<link rel="shortcut icon" href="//d2nr9bmlv58mpj.cloudfront.net/favicon.ico" type="image/x-icon" />
+<link rel="icon" href="//d2nr9bmlv58mpj.cloudfront.net/favicon.ico" type="image/x-icon" />
+<link rel="canonical" href="https://www.travelmath.com/" />
+<script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={licenseKey:"7643ea0a8f",applicationID:"55496260"};window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var i=n[t]={exports:{}};e[t][0].call(i.exports,function(n){var i=e[t][1][n];return r(i||n)},i,i.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var i=0;i<t.length;i++)r(t[i]);return r}({1:[function(e,n,t){function r(){}function i(e,n,t){return function(){return o(e,[u.now()].concat(f(arguments)),n?null:this,t),n?void 0:this}}var o=e("handle"),a=e(4),f=e(5),c=e("ee").get("tracer"),u=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],l="api-",d=l+"ixn-";a(p,function(e,n){s[n]=i(l+n,!0,"api")}),s.addPageAction=i(l+"addPageAction",!0),s.setCurrentRouteName=i(l+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,i="function"==typeof n;return o(d+"tracer",[u.now(),e,t],r),function(){if(c.emit((i?"":"no-")+"fn-start",[u.now(),r,i],t),i)try{return n.apply(this,arguments)}catch(e){throw c.emit("fn-err",[arguments,this,e],t),e}finally{c.emit("fn-end",[u.now()],t)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=i(d+n)}),newrelic.noticeError=function(e,n){"string"==typeof e&&(e=new Error(e)),o("err",[e,u.now(),!1,n])}},{}],2:[function(e,n,t){function r(e,n){var t=e.getEntries();t.forEach(function(e){"first-paint"===e.name?c("timing",["fp",Math.floor(e.startTime)]):"first-contentful-paint"===e.name&&c("timing",["fcp",Math.floor(e.startTime)])})}function i(e,n){var t=e.getEntries();t.length>0&&c("lcp",[t[t.length-1]])}function o(e){if(e instanceof s&&!l){var n,t=Math.round(e.timeStamp);n=t>1e12?Date.now()-t:u.now()-t,l=!0,c("timing",["fi",t,{type:e.type,fid:n}])}}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var a,f,c=e("handle"),u=e("loader"),s=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){a=new PerformanceObserver(r),f=new PerformanceObserver(i);try{a.observe({entryTypes:["paint"]}),f.observe({entryTypes:["largest-contentful-paint"]})}catch(p){}}if("addEventListener"in document){var l=!1,d=["click","keydown","mousedown","pointerdown","touchstart"];d.forEach(function(e){document.addEventListener(e,o,!1)})}}},{}],3:[function(e,n,t){function r(e,n){if(!i)return!1;if(e!==i)return!1;if(!n)return!0;if(!o)return!1;for(var t=o.split("."),r=n.split("."),a=0;a<r.length;a++)if(r[a]!==t[a])return!1;return!0}var i=null,o=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var f=navigator.userAgent,c=f.match(a);c&&f.indexOf("Chrome")===-1&&f.indexOf("Chromium")===-1&&(i="Safari",o=c[1])}n.exports={agent:i,version:o,match:r}},{}],4:[function(e,n,t){function r(e,n){var t=[],r="",o=0;for(r in e)i.call(e,r)&&(t[o]=n(r,e[r]),o+=1);return t}var i=Object.prototype.hasOwnProperty;n.exports=r},{}],5:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,i=t-n||0,o=Array(i<0?0:i);++r<i;)o[r]=e[n+r];return o}n.exports=r},{}],6:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function i(e){function n(e){return e&&e instanceof r?e:e?c(e,f,o):o()}function t(t,r,i,o){if(!l.aborted||o){e&&e(t,r,i);for(var a=n(i),f=v(t),c=f.length,u=0;u<c;u++)f[u].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function d(e,n){h[e]=v(e).concat(n)}function m(e,n){var t=h[e];if(t)for(var r=0;r<t.length;r++)t[r]===n&&t.splice(r,1)}function v(e){return h[e]||[]}function g(e){return p[e]=p[e]||i(t)}function w(e,n){u(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var h={},y={},b={on:d,addEventListener:d,removeEventListener:m,emit:t,get:g,listeners:v,context:n,buffer:w,abort:a,aborted:!1};return b}function o(){return new r}function a(){(s.api||s.feature)&&(l.aborted=!0,s=l.backlog={})}var f="nr@context",c=e("gos"),u=e(4),s={},p={},l=n.exports=i();l.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(i.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(o){}return e[n]=r,r}var i=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){i.buffer([e],r),i.emit(e,n,t)}var i=e("ee").get("handle");n.exports=r,r.ee=i},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,o,function(){return i++})}var i=1,o="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!x++){var e=E.info=NREUM.info,n=d.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();u(y,function(n,t){e[n]||(e[n]=t)}),c("mark",["onload",a()+E.offset],null,"api");var t=d.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function i(){"complete"===d.readyState&&o()}function o(){c("mark",["domContent",a()+E.offset],null,"api")}function a(){return O.exists&&performance.now?Math.round(performance.now()):(f=Math.max((new Date).getTime(),f))-E.offset}var f=(new Date).getTime(),c=e("handle"),u=e(4),s=e("ee"),p=e(3),l=window,d=l.document,m="addEventListener",v="attachEvent",g=l.XMLHttpRequest,w=g&&g.prototype;NREUM.o={ST:setTimeout,SI:l.setImmediate,CT:clearTimeout,XHR:g,REQ:l.Request,EV:l.Event,PR:l.Promise,MO:l.MutationObserver};var h=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1169.min.js"},b=g&&w&&w[m]&&!/CriOS/.test(navigator.userAgent),E=n.exports={offset:f,now:a,origin:h,features:{},xhrWrappable:b,userAgent:p};e(1),e(2),d[m]?(d[m]("DOMContentLoaded",o,!1),l[m]("load",r,!1)):(d[v]("onreadystatechange",i),l[v]("onload",r)),c("mark",["firstbyte",f],null,"api");var x=0,O=e(6)},{}],"wrap-function":[function(e,n,t){function r(e){return!(e&&e instanceof Function&&e.apply&&!e[a])}var i=e("ee"),o=e(5),a="nr@original",f=Object.prototype.hasOwnProperty,c=!1;n.exports=function(e,n){function t(e,n,t,i){function nrWrapper(){var r,a,f,c;try{a=this,r=o(arguments),f="function"==typeof t?t(r,a):t||{}}catch(u){l([u,"",[r,a,i],f])}s(n+"start",[r,a,i],f);try{return c=e.apply(a,r)}catch(p){throw s(n+"err",[r,a,p],f),p}finally{s(n+"end",[r,a,c],f)}}return r(e)?e:(n||(n=""),nrWrapper[a]=e,p(e,nrWrapper),nrWrapper)}function u(e,n,i,o){i||(i="");var a,f,c,u="-"===i.charAt(0);for(c=0;c<n.length;c++)f=n[c],a=e[f],r(a)||(e[f]=t(a,u?f+i:i,o,f))}function s(t,r,i){if(!c||n){var o=c;c=!0;try{e.emit(t,r,i,n)}catch(a){l([a,t,r,i])}c=o}}function p(e,n){if(Object.defineProperty&&Object.keys)try{var t=Object.keys(e);return t.forEach(function(t){Object.defineProperty(n,t,{get:function(){return e[t]},set:function(n){return e[t]=n,n}})}),n}catch(r){l([r])}for(var i in e)f.call(e,i)&&(n[i]=e[i]);return n}function l(n){try{e.emit("internal-error",n)}catch(t){}}return e||(e=i),t.inPlace=u,t.flag=a,t}},{}]},{},["loader"]);</script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js" type="text/javascript"></script>
+<script>(function(){var gads=document.createElement('script');gads.async=true;gads.type='text/javascript';var useSSL='https:'==document.location.protocol;gads.src=(useSSL?'https:':'http:')+'//www.googletagservices.com/tag/js/gpt.js';var node=document.getElementsByTagName('script')[0];node.parentNode.insertBefore(gads,node);})();</script>
+<script async src="/inc/prebid3.7.0.js"></script>
+<script>!function(a9,a,p,s,t,A,g){if(a[a9])return;function q(c,r){a[a9]._Q.push([c,r])}a[a9]={init:function(){q("i",arguments)},fetchBids:function(){q("f",arguments)},setDisplayBids:function(){},targetingKeys:function(){return[]},_Q:[]};A=p.createElement(s);A.async=!0;A.src=t;g=p.getElementsByTagName(s)[0];g.parentNode.insertBefore(A,g)}("apstag",window,document,"script","//c.amazon-adsystem.com/aax2/apstag.js");apstag.init({pubID:'35fdc73d-61dd-497f-ab58-91868e9566ca',adServer:'googletag'});</script>
+<script>var PREBID_TIMEOUT=850;var FAILSAFE_TIMEOUT=3000;var adUnits=[{code:'div-gpt-ad-1494035372037-8',mediaTypes:{banner:{sizes:[728,90]}},bids:[{bidder:'appnexus',params:{placementId:'11483900'}},{bidder:'rubicon',params:{accountId:'16718',siteId:'143770',zoneId:'670506'}},{bidder:'criteo',params:{zoneId:'982467'}},{bidder:'openx',params:{unit:'539690440',delDomain:'borderblue-d.openx.net'}},{bidder:'ix',params:{siteId:'216845',size:[728,90]}},{bidder:'conversant',params:{site_id:'117772',secure:'1'}},{bidder:'sovrn',params:{tagid:'638996'}}]}
+];
+var pbjs=pbjs||{};pbjs.que=pbjs.que||[];pbjs.que.push(function(){pbjs.addAdUnits(adUnits);pbjs.setConfig({userSync:{filterSettings:{iframe:{bidders:['*'],filter:'include'}}},priceGranularity:"high"});pbjs.bidderSettings={rubicon:{bidCpmAdjustment:function(bidCpm,bid){return bidCpm*.8;}}};});var googletag=googletag||{};googletag.cmd=googletag.cmd||[];var slot728x90_Header,slot728x90_Footer,slot300x600,slot300x250_BTF,slot728x90_Mid;googletag.cmd.push(function(){googletag.pubads().disableInitialLoad();});googletag.cmd.push(function(){slot728x90_Mid=googletag.defineSlot('/1114491/TravelMath_Desktop_728x90_Mid',[728,90],'div-gpt-ad-1494035372037-8').addService(googletag.pubads());
+googletag.pubads().enableSingleRequest();googletag.enableServices();});
+function executeParallelAuctionAlongsidePrebid(){var requestManager={adserverRequestSent:false,aps:false,prebid:false};function biddersBack(){if(requestManager.aps&&requestManager.prebid){sendAdserverRequest();}return;}function sendAdserverRequest(){if(requestManager.adserverRequestSent===true){return;}requestManager.adserverRequestSent=true;googletag.cmd.push(function(){googletag.pubads().refresh();});}function initAdserver(){googletag.cmd.push(function(){pbjs.que.push(function(){pbjs.setTargetingForGPTAsync();requestManager.prebid=true;biddersBack();});});}function requestHeaderBids(){apstag.fetchBids({slots: [{slotID:'div-gpt-ad-1494035372037-8',slotName:'/1114491/TravelMath_Desktop_728x90_Mid',sizes:[728,90]}
+],timeout:850},function(bids){googletag.cmd.push(function(){apstag.setDisplayBids();requestManager.aps=true;biddersBack();});});pbjs.que.push(function(){pbjs.requestBids({bidsBackHandler:initAdserver,timeout:PREBID_TIMEOUT});});}requestHeaderBids();setTimeout(function(){sendAdserverRequest();},FAILSAFE_TIMEOUT);}executeParallelAuctionAlongsidePrebid();function refreshBid(){var rBiddersBack=0;function refreshBiddersBack(){if(rBiddersBack<2)return;googletag.pubads().refresh([slot728x90_Header,slot728x90_Footer,slot300x600,slot300x250_BTF,slot728x90_Mid]);}pbjs.que.push(function(){pbjs.requestBids({timeout:PREBID_TIMEOUT,adUnitCodes:["div-gpt-ad-1494035372037-7","div-gpt-ad-1517961039079-0","div-gpt-ad-1494035372037-6","div-gpt-ad-1504043965128-0","div-gpt-ad-1494035372037-8"],bidsBackHandler:function(){pbjs.setTargetingForGPTAsync(["div-gpt-ad-1494035372037-7","div-gpt-ad-1517961039079-0","div-gpt-ad-1494035372037-6","div-gpt-ad-1504043965128-0","div-gpt-ad-1494035372037-8"]);rBiddersBack++;refreshBiddersBack();}})});apstag.fetchBids({slots: [{slotID:'div-gpt-ad-1494035372037-8',slotName:'/1114491/TravelMath_Desktop_728x90_Mid',sizes:[728,90]}
+],timeout:850},function(bids){googletag.cmd.push(function(){apstag.setDisplayBids();rBiddersBack++;refreshBiddersBack();});});}var refreshTimer=setInterval(function(){refreshBid()},45000);XMLHttpRequest=class extends XMLHttpRequest{send(a){var b=8;this._onreadystatechange=this.onreadystatechange,this.onreadystatechange=()=>{if(0===this.responseURL.indexOf("https://securepubads.g.doubleclick.net/gampad/ads?gdfp")&&4===this.readyState&&(""===this.responseType||"text"==this.responseType))for(var a,c=this.responseText.split(/\r?\n/),d=0;d<c.length;d++){try{a=JSON.parse(c[d])}catch(a){continue}if(a&&"object"==typeof a)for(var e in a)if(Object.prototype.hasOwnProperty.call(a,e)){var f=(a[e]+"").split(","),g=!!(f.length>=b)&&f[b-1]==1;if(g){clearInterval(refreshTimer);break}}}"function"==typeof this._onreadystatechange&&this._onreadystatechange()},super.send(a)}};</script>
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create','UA-246792-33','auto');ga('send','pageview');</script>
+</head><body>
+<div id="wrapper">
+ <div id="EchoTopic">
+<style>.headernav{float:right;margin-top:45px;margin-right:25px;font-size:1.1em}.headernav a:link, .headernav a:visited{padding:8px}#homeimg{position:absolute;top:90px;left:0px;margin-top:10px;background:url('https://travelmath.gumlet.io/img/home/operahouse.jpg') transparent center 0px no-repeat;background-position:bottom;width:100%;height:500px;background-size:cover}#homeform{width:951px;padding-top:80px;margin:auto;line-height:28px;color:#FFF;text-shadow:#333 0px 1px 2px}#planning{font-family:'Open Sans',Helvetica,sans-serif;font-weight:400;font-size:36px;padding-bottom:25px;width:670px;margin:auto}#homeformfields{width:951px;height:62px;clear:both;background:rgba(57,60,61,0.8);border-radius:5px;padding:9px 0 9px 10px}#HomePathMenu{float:left;width:250px;height:44px;line-height:38px;text-indent:5px;font-size:18px;border:solid 1px #333;border-radius:5px}#HomeFromField{float:left;width:293px;height:44px;font-size:18px;margin-left:8px;border:solid 1px #333;border-radius:5px}#HomeToField{float:left;width:293px;height:44px;font-size:18px;margin-left:8px;border:solid 1px #333;border-radius:5px}#HomeFromField::-webkit-input-placeholder,#HomeToField::-webkit-input-placeholder{color:#AAA}#homego{margin:1px 0 0 9px;float:left;font-weight:700;padding:9px 20px;height:42px;width:70px}.homecopy2{float:left;width:600px}.homerightcol2{float:right;width:250px}h3.home2{margin-top:30px;color:#F57E08}.control-label.col-xs-3{padding:4px 0 0}#path,.col-xs-9 input,.col-xs-9 select{width:170px}.calcbutton{opacity:.8;font-weight:700;padding:2px 15px}#featured{opacity:0.7}.dropdown{position:relative;display:inline-block}.dropdown-content{display:none;position:absolute;top:26px;background-color:#FFF;border:solid 1px #DDD;border-radius:5px;z-index:1}.dropdown-content a{text-decoration:none;display:block;white-space:nowrap}.dropdown:hover .dropdown-content{display:block}</style>
+<script type="text/javascript">$(document).ready(function(){$("#CalcFromField").autocomplete({source:"/inc/get-cities",minLength:4,delay:100});$("#CalcToField").autocomplete({source:"/inc/get-cities",minLength:4,delay:100});$("#HomeFromField").autocomplete({source:"/inc/get-cities",minLength:4,delay:100});$("#HomeToField").autocomplete({source:"/inc/get-cities",minLength:4,delay:100,select:function(event,ui){$(this).val(ui.item.value);return redirect2(this.form,this.form.path.value);}});$("#HomeFromField").focus();});var feat=0,featimages=new Array("yahoo-travel.gif","conde-nast-traveler.gif","the-huffington-post.gif","mashable.gif","cnbc.gif","cbs-news.jpg","today.gif","nbc-news.gif","inc.gif","npr.gif","business-insider.gif","cnn.gif","abc-news.jpg","la-times.jpg","late-night-with-seth-meyers.gif","lifehacker.gif","buzzfeed.gif","fast-company.jpg");var featint=window.setInterval(function(){if(feat==featimages.length-1){clearInterval(featint)}else{$("#featured").fadeOut(400,function(){$("#featured").attr("src","https://trip.gumlet.io/img/press/"+featimages[(++feat % featimages.length)]);$("#featured").fadeIn(400);})}},3000);</script>
+
+<div style="width:961px;height:90px;margin-left:-10px">
+<div style="float:left;margin-top:10px"><img border="0" src="https://travelmath.gumlet.io/img/travelmath-animated.gif" width="230" height="80" alt="Travelmath" /></div>
+ <div class="headernav">
+  <div class="dropdown">
+    <a href="/driving/"><i class="fa fa-car"></i> DRIVING</a>
+    <div class="dropdown-content" style="padding:0px">
+    <a style="border-bottom:solid 1px #DDD"
+      href="/drive-distance/">Driving Distance</a>
+    <a style="border-bottom:solid 1px #DDD"
+      href="/driving-time/">Driving Time</a>
+    <a href="/cost-of-driving/">Cost of Driving</a>
+  </div></div> &nbsp;
+  <div class="dropdown">
+    <a href="/distance/"><i class="fa fa-road"></i> DISTANCE</a>
+    <div class="dropdown-content" style="padding:0px">
+    <a style="border-bottom:solid 1px #DDD"
+      href="/cities-near/">Cities Nearby</a>
+    <a style="border-bottom:solid 1px #DDD"
+      href="/halfway/">Halfway Point</a>
+    <a style="border-bottom:solid 1px #DDD"
+      href="/stopping-points/">Stopping Points</a>
+    <a href="/drive-distance/">Driving Distance</a>
+  </div></div> &nbsp;
+  <div class="dropdown">
+    <a href="/flights/"><i class="fa fa-plane"></i> FLYING</a>
+    <div class="dropdown-content" style="padding:0px">
+    <a style="border-bottom:solid 1px #DDD"
+      href="/flying-time/">Flight Time</a>
+    <a style="border-bottom:solid 1px #DDD"
+      href="/nearest-airport/">Closest Airport</a>
+    <a style="border-bottom:solid 1px #DDD"
+      href="/nonstop-flight/">Direct Flights</a>
+    <a href="/airlines-serving/">Major Airlines</a>
+  </div></div> &nbsp;
+  <div class="dropdown">
+    <a href="/time/"><i class="fa fa-clock-o"></i> TIME</a>
+    <div class="dropdown-content" style="padding:0px">
+    <a style="border-bottom:solid 1px #DDD"
+      href="/time-change/">Time Difference</a>
+    <a style="border-bottom:solid 1px #DDD"
+      href="/driving-time/">Driving Time</a>
+    <a href="/flying-time/">Flight Time</a>
+  </div></div> &nbsp;
+  <div class="dropdown">
+    <a href="/cost/"><i class="fa fa-credit-card"></i> COST</a>
+    <div class="dropdown-content" style="padding:0px">
+    <a href="/cost-of-driving/">Cost of Driving</a>
+  </div></div> &nbsp;
+  <div class="dropdown">
+    <a href="/places/"><i class="fa fa-globe"></i> PLACES</a>
+    <div class="dropdown-content" style="padding:0px">
+    <a style="border-bottom:solid 1px #DDD" href="/cities/">Cities</a>
+    <a style="border-bottom:solid 1px #DDD" href="/airport/">Airports</a>
+    <a href="/hotels-near/">Hotels</a>
+  </div></div> &nbsp;
+ </div>
+</div>
+<div style="clear:both"></div>
+
+<div id="homeimg">
+<div id="homeform">
+<form method="get" action="/redirect.php" onsubmit="return redirect2(this,this.path.value)">
+<div id="planning">Planning a trip? Let us do the math.</div>
+<div id="homeformfields"><select name="path" id="HomePathMenu" class="form-control" onchange="changepath2(this.value,'HomeFromField')">
+<option value="from">all calculations</option>
+<option value="distance">distance</option>
+<option value="flying-time">flight time</option>
+<option value="driving-time">driving time</option>
+<option value="nearest-airport">closest airport</option>
+<option value="cost-of-driving">cost of driving</option>
+<option value="halfway">halfway point</option>
+<option value="time-change">time difference</option>
+<option value="cities-near">cities near</option>
+<option value="stopping-points">stopping points</option>
+<option value="nonstop-flight">direct flights</option>
+<option value="airlines-serving">airlines serving</option>
+<option value="hotels-near">hotels in the area</option>
+<option value="lat-long">latitude/longitude</option>
+</select><input type="text" id="HomeFromField" class="form-control" name="from" size="25" maxlength="100" placeholder="From" /><input type="text" id="HomeToField" class="form-control" name="to" size="25" maxlength="100" placeholder="To" /><button id="homego" type="submit" class="btn btn-warning btn-lg">GO</button></div>
+</form>
+</div>
+</div>
+
+<div style="clear:both"></div>
+<div style="margin-top:510px;width:951px">
+
+<div class="homecopy2">
+<h3 class="home2" style="text-align:left">Who uses Travelmath?</h3>
+<p class="home2">Companies like United Airlines, Southwest Airlines, and
+Ryanair use Travelmath to re-route passengers and plan new flight paths.</p>
+</div>
+<div class="homerightcol2">
+<h3 class="home2" style="text-align:left">As Seen On</h3>
+<div style="height:60px"><p class="home2"><a href="/press/"><img id="featured" src="https://trip.gumlet.io/img/press/yahoo-travel.gif" border="0" alt="featured" /></a></p></div>
+</div>
+<div style="clear:both"></div>
+
+<div class="homecopy2">
+<h3 class="home2" style="text-align:left">Dirtiest Public Transit</h3>
+<p class="home2">See the research from our <a href="/feature/public-transportation-hygiene-exposed/">Travelmath study</a> on public transportation hygiene. How does the New York subway rank against Chicago, DC, SF, and Boston? &nbsp;<a href="/feature/public-transportation-hygiene-exposed/">Read the full study!</a></p>
+</div>
+<div class="homerightcol2">
+<br />
+<p class="home2"><a href="/feature/public-transportation-hygiene-exposed/"><img src="/img/home/public-trans-hygiene.gif" width="250" height="131" border="0" alt="public transportation hygiene" /></a></p>
+</div>
+<div style="clear:both"></div>
+
+<div class="homecopy2">
+<h3 class="home2" style="text-align:left">Germiest Hotel Rooms</h3>
+<p class="home2">See even more research from our <a href="/feature/hotel-hygiene-exposed/">Travelmath study</a> on hotel hygiene.
+Spoiler alert: Don't turn on the TV... &nbsp;<a href="/feature/hotel-hygiene-exposed/">Read the full study!</a></p>
+</div>
+<div class="homerightcol2">
+<br />
+<p class="home2"><a href="/feature/hotel-hygiene-exposed/"><img src="/img/home/hotel-hygiene.gif" width="250" height="99" border="0" alt="hotel hygiene" /></a></p>
+</div>
+<div style="clear:both"></div>
+
+<div class="homecopy2">
+<h3 class="home2" style="text-align:left">Celebrities love Travelmath!</h3>
+<a target="_blank" href="https://www.facebook.com/travelmath/photos/a.717015294979890/1170673426280739/?type=1&theater"><img src="/img/home/Drew-Barrymore.gif" width="124" height="175" border="0" alt="Drew Barrymore" style="float:left;margin-right:40px" /></a>
+<p class="home2"><i>"Travelmath is the one app I couldn't live without - it calculates all your journey timings and because I travel a lot, it's essential. <a target="_blank" href="https://www.facebook.com/travelmath/photos/a.717015294979890.1073741826.205407442807347/1170673426280739/">Whoever invented Travelmath, I love you!</a>"</i><br />&ndash; Drew Barrymore</p>
+<br />
+<p class="home2"><i>"There's a website called Travelmath, <a target="_blank" href="https://www.youtube.com/watch?v=Ov67sySm3tg&feature=youtu.be&t=500">it's really good if you're into flight times.</a>"</i> &nbsp;&ndash; Blake Griffin</p>
+<br />
+</div>
+<div class="homerightcol2">
+<p class="home2" style="margin-top:65px"><a target="_blank" href="https://www.youtube.com/watch?v=Ov67sySm3tg&feature=youtu.be&t=500"><img src="https://trip.gumlet.io/img/home/Blake-Griffin.gif" width="250" height="168" border="0" alt="Blake Griffin" /></a></p>
+</div>
+<div style="clear:both"></div>
+
+<div class="homecopy2">
+<h3 class="home2" style="margin-top:20px;text-align:left">What is Travelmath?</h3>
+<p class="home2">Travelmath is an online trip calculator that helps
+you find answers quickly.  If you're planning a trip, you can measure
+things like <a href="/distance/">travel distance</a>
+and <a href="/time/">travel time</a>.
+To keep your budget under control, use the
+<a href="/cost/">travel cost</a> tools.</p>
+<p class="home2">You can also browse information on
+<a href="/flights/">flights</a> including
+the distance and flight time.  Or use the section on
+<a href="/driving/">driving</a> to compare
+the distance by car, or the length of your road trip.</p>
+<p class="home2">Type in any location to search for your exact
+<a href="/places/">destination</a>.</p>
+</div>
+<div class="homerightcol2">
+<h3 class="home2" style="margin-top:20px;text-align:left">Quick Calculator</h3>
+<p class="home2">Select a tool to get a quick answer.</p>
+<form method="get" class="form-horizontal" action="/redirect.php" onsubmit="return redirect2(this,this.path.value)">
+<div class="form-group">
+ <label for="path" class="control-label col-xs-3">Get:</label>
+ <div class="col-xs-9">
+ <select name="path" class="form-control input-sm" onchange="changepath2(this.value,'CalcFromRow','CalcTo')">
+ <option></option>
+ <option value="distance">distance</option>
+ <option value="flying-time">flight time</option>
+ <option value="driving-time">driving time</option>
+ <option value="nearest-airport">closest airport</option>
+ <option value="cost-of-driving">cost of driving</option>
+ <option value="halfway">halfway point</option>
+ <option value="time-change">time difference</option>
+ <option value="cities-near">major cities</option>
+ <option value="stopping-points">stopping points</option>
+ <option value="nonstop-flight">direct flights</option>
+ <option value="airlines-serving">airlines serving</option>
+ <option value="hotels-near">hotels in the area</option>
+ <option value="lat-long">latitude/longitude</option>
+ </select>
+ </div>
+</div>
+<div id="CalcFromRow" class="form-group">
+ <label for="CalcFromField" id="CalcFrom" class="control-label col-xs-3">From:</label>
+ <div class="col-xs-9">
+ <input type="text" class="form-control input-sm"
+  id="CalcFromField" size="30" name="from" maxlength="100" />
+ </div>
+</div>
+<div id="CalcToRow" class="form-group">
+ <label for="CalcToField" id="CalcTo" class="control-label col-xs-3">To:</label>
+ <div class="col-xs-9">
+ <input type="text" class="form-control input-sm"
+  id="CalcToField" name="to" size="30" maxlength="100" />
+ </div>
+</div>
+<div class="form-group">
+ <div class="col-xs-offset-3 col-xs-9">
+ <button class="btn btn-default btn-sm calcbutton" onclick="return redirect2(this.form,this.form.path.value)">Calculate</button>
+ </div>
+</div>
+</form>
+<div id="CalcSwap"></div>
+</div>
+<div style="clear:both"></div>
+<div class="homecopy2">
+<h3 class="home2" style="text-align:left">How do I search?</h3>
+<p class="home2">Travel geeks can get the latitude and longitude
+of any airport,
+<a href="/hotels-near/">hotel</a>, city,
+<a href="/state/">state</a>,
+<a href="/country/">country</a>, or
+<a href="/zip-code/">zip code</a>.
+<p class="home2">To get started, enter your starting point
+and destination into the boxes above.  If you want an
+<a href="/airport/">airport</a>, it's
+best to enter the 3-letter IATA code if you know it.
+For <a href="/cities/">cities</a>,
+include the state or country if possible.</p>
+<p class="home2">You can also enter more general
+locations like a state or
+<a href="/province/">province</a>,
+country,
+<a href="/island/">island</a>,
+zip code, or even some
+<a href="/landmark/">landmarks</a> by name.</p>
+</div>
+<div class="homerightcol2">
+<h3 class="home2" style="text-align:left">Check Prices</h3>
+<p class="home2">Get flights and hotels for your trip.</p>
+<form method="post" class="form-horizontal" action="/booking.php" target="_blank">
+<input type="hidden" name="departure_date" value="07/02/2020" />
+<input type="hidden" name="return_date" value="07/08/2020" />
+<div class="form-group">
+ <label for="path" class="control-label col-xs-3">Get:</label>
+ <div class="col-xs-9">
+  <select name="sm" class="form-control input-sm">
+   <option value="vacation">vacation</option>
+   <option value="air">flight</option>
+   <option value="hotel">hotel</option>
+   <option value="car">car rental</option>
+  </select>
+ </div>
+</div>
+<div id="CalcFromRow" class="form-group">
+ <label for="CalcFromField" class="control-label col-xs-3">From:</label>
+ <div class="col-xs-9">
+ <input type="text" class="form-control input-sm" name="departure_city"
+  id="CalcFromField" size="30" maxlength="100" value="Claremont, CA" />
+ </div>
+</div>
+<div id="CalcToRow" class="form-group">
+ <label for="CalcToField" id="CalcTo" class="control-label col-xs-3">To:</label>
+ <div class="col-xs-9">
+ <input type="text" class="form-control input-sm"
+  id="CalcToField" name="arrival_city" size="30" maxlength="100" />
+ </div>
+</div>
+<div class="form-group">
+ <div class="col-xs-offset-3 col-xs-9">
+ <button class="btn btn-default btn-sm calcbutton"
+  type="submit">Search</button>
+ </div>
+</div>
+</form>
+</div>
+
+</div>
+<div style="clear:both"></div>
+<div id='div-gpt-ad-1494035372037-8' style='height:90px;width:728px;'><script>googletag.cmd.push(function(){googletag.display('div-gpt-ad-1494035372037-8');});</script></div>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Travelmath","url":"/","logo":"https://travelmath.gumlet.io/img/travelmath.jpg","sameAs":["https://www.facebook.com/travelmath","https://twitter.com/travelmath","https://www.pinterest.com/travelmath/","https://www.youtube.com/c/travelmath"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","url":"/","potentialAction":{"@type":"SearchAction","target":"/search.php?cx=partner-pub-6320302300251302%3A4xlca0t3a0v&cof=FORID%3A10&ie=ISO-8859-1&q={search_term}","query-input":"required name=search_term"}}</script>
+
+ </div>
+</div>
+<div id="bottom" style="margin-bottom:50px">
+ <div id="footer">
+  <div class="footernav">
+   <a href="/flying-time/">Flight Time</a> &middot;
+   <a href="/nearest-airport/">Closest Airport</a> &middot;
+   <a href="/driving-time/">Driving Time</a> &middot;
+   <a href="/drive-distance/">Driving Distance</a> &middot;
+   <a href="/cities-near/">Cities</a> &middot;
+   <a href="/halfway/">Halfway</a> &middot;
+   <a href="/time-change/">Time</a>
+  </div>
+  <div class="footertwo">
+   <a href="?mobile=1">Mobile</a> &middot;
+   <a href="https://blog.travelmath.com/">Blog</a> &middot;
+   <a href="/forum/">Forum</a> &middot;
+   <a href="/about/">About</a> &middot;
+   <a href="/press/">Press</a> &middot;
+   <a href="/disclaimer/">Terms</a> &middot;
+   <a href="https://optout.aboutads.info/?c=2&lang=EN">Do Not Sell My Info</a> &middot;
+   <a href="/privacy/">Privacy</a> &middot;
+   <a href="/contact/">Contact</a>
+  </div>
+ </div>
+</div>
+<script type="text/javascript">function urlencode(e){return e.replace(/ /g,"+")}function swap(){var e=document.calculator.from.value;document.calculator.from.value=document.calculator.to.value,document.calculator.to.value=e,ga("send","event","CalculatorForm","swap",window.location.pathname)}function redirect2(e,t){if(t)if("nearest-airport"==t||"airlines-serving"==t||"mileage"==t||"lat-long"==t||"hotels-near"==t||"cities-near"==t||"schools-near"==t)if(0==e.to.value.length)alert("Please enter a location."),e.to.focus();else{var n=t+"/"+urlencode(e.to.value),o=window.location.pathname,l=o.split("/",2);"airports-in"==l[1]?o=o.replace("/airports-in/","/nearest-airport/"):"cities-in"==l[1]?o=o.replace("/cities-in/","/cities-near/"):["cities","airport","country","state","province","continent","island","landmark","zip-code"].indexOf(l[1])>-1&&(o=o.replace("/"+l[1]+"/","/lat-long/")),"/"+n==o?alert("Please select a different calculation or change your current location."):(ga("send","event","CalculatorForm",t,window.location.pathname),window.location="/"+n)}else 0==e.from.value.length?("currency"==t?alert("Please enter a starting currency."):"cities-within"==t?alert("Please enter a distance or time like '100 miles' or '2 hours'."):alert("Please enter a starting location."),e.from.focus()):0==e.to.value.length?("currency"==t?alert("Please enter a second currency."):"cities-within"==t?alert("Please enter a starting location."):alert("Please enter a destination."),e.to.focus()):"from"==t?(ga("send","event","CalculatorForm","from",window.location.pathname),window.location="/from/"+urlencode(e.from.value)+"/to/"+urlencode(e.to.value)):"cities-within"==t?(ga("send","event","CalculatorForm","cities-within",window.location.pathname),window.location="/cities-within/"+urlencode(e.from.value)+"/of/"+urlencode(e.to.value)):"/"+t+"/"+(n="from/"+urlencode(e.from.value)+"/to/"+urlencode(e.to.value))==window.location.pathname?(ga("send","event","CalculatorForm","from",window.location.pathname),window.location="/"+n):(ga("send","event","CalculatorForm",t,window.location.pathname),window.location="/"+t+"/"+n);else alert("Please select which type of calculation you want to get."),e.path.focus();return!1}function changepath2(e,t,n,o){"hotels-near"==e||"nearest-airport"==e||"schools-near"==e||"cities-near"==e||"mileage"==e||"airlines-serving"==e?(document.getElementById(t).style.display="none",n&&(document.getElementById(n).innerHTML="<strong>near/in:</strong>"),o&&(document.getElementById(o).style.display="none"),"HomeFromField"==t&&(document.getElementById("homeform").style.width="650px",document.getElementById("homeformfields").style.width="650px",document.getElementById("HomeToField").placeholder="enter location",$("#HomeToField").autocomplete("enable"))):"lat-long"==e?(document.getElementById(t).style.display="none",n&&(document.getElementById(n).innerHTML="<strong>of:</strong>"),o&&(document.getElementById(o).style.display="none"),"HomeFromField"==t&&(document.getElementById("homeform").style.width="650px",document.getElementById("homeformfields").style.width="650px",document.getElementById("HomeToField").placeholder="enter location",$("#HomeToField").autocomplete("enable"))):(document.getElementById(t).style.display="",n&&(document.getElementById(n).innerHTML="cities-within"==e?"<strong>of:</strong>":"<strong>To:</strong>"),o&&"cities-within"!=e&&(document.getElementById(o).style.display=""),"CalcFromRow"==t?"cities-within"==e?(document.getElementById("CalcFrom").innerHTML="<strong>within:</strong>",document.getElementById("CalcFromField").placeholder="distance or time",document.getElementById("CalcFromField").value=""):"currency"==e?(document.getElementById("CalcFrom").innerHTML="<strong>From:</strong>",document.getElementById("CalcFromField").placeholder="currency unit",document.getElementById("CalcFromField").value="",document.getElementById("CalcToField").value=""):(document.getElementById("CalcFrom").innerHTML="<strong>From:</strong>",document.getElementById("CalcFromField").placeholder=""):"HomeFromField"==t&&(document.getElementById("homeform").style.width="951px",document.getElementById("homeformfields").style.width="951px","cities-within"==e?(document.getElementById("HomeFromField").placeholder="distance or travel time",document.getElementById("HomeFromField").value="",$("#HomeFromField").autocomplete("disable"),$("#HomeToField").autocomplete("enable"),document.getElementById("HomeToField").placeholder="enter location"):"currency"==e?(document.getElementById("HomeFromField").placeholder="from currency unit",document.getElementById("HomeFromField").value="",$("#HomeFromField").autocomplete("disable"),$("#HomeToField").autocomplete("disable"),document.getElementById("HomeToField").placeholder="to currency unit",document.getElementById("HomeToField").value=""):(document.getElementById("HomeFromField").placeholder="From",document.getElementById("HomeToField").placeholder="To",$("#HomeFromField").autocomplete("enable"),$("#HomeToField").autocomplete("enable"))))}function bbnewr(e){0==e?($("#BBfromrow").show(),$("#BBreturnrow").show(),$("#BBroundtrip").val("roundtrip"),$("#BBtocol").html("<strong>To:</strong>"),$("#BBdepartcol").html("<strong>Depart:</strong>"),$("#BBreturncol").html("<strong>Return:</strong>"),$("#BBsearch_type").hide(),$("#BBdepartairtime").hide(),$("#BBdepartcartime").hide(),$("#BBreturnairtime").hide(),$("#BBreturncartime").hide(),$("#arrival_city").autocomplete({source:"/inc/get-airports"})):1==e?($("#BBfromrow").show(),$("#BBtocol").html("<strong>To:</strong>"),$("#BBdepartcol").html("<strong>Depart:</strong>"),$("#BBreturncol").html("<strong>Return:</strong>"),$("#BBsearch_type").show(),$("#BBdepartairtime").show(),$("#BBdepartcartime").hide(),$("#BBreturnairtime").show(),$("#BBreturncartime").hide(),$("#arrival_city").autocomplete({source:"/inc/get-airports"})):2==e?($("#BBfromrow").hide(),$("#BBreturnrow").show(),$("#BBroundtrip").val("roundtrip"),$("#BBtocol").html("<strong>City:</strong>"),$("#BBdepartcol").html("<strong>Check-in:</strong>"),$("#BBreturncol").html("<strong>Check-out:</strong>"),$("#BBsearch_type").hide(),$("#BBdepartairtime").hide(),$("#BBdepartcartime").hide(),$("#BBreturnairtime").hide(),$("#BBreturncartime").hide(),$("#arrival_city").autocomplete({source:"/inc/get-cities"})):3==e&&($("#BBfromrow").hide(),$("#BBreturnrow").show(),$("#BBroundtrip").val("roundtrip"),$("#BBtocol").html("<strong>Location:</strong>"),$("#BBdepartcol").html("<strong>Pick-up:</strong>"),$("#BBreturncol").html("<strong>Return:</strong>"),$("#BBsearch_type").hide(),$("#BBdepartairtime").hide(),$("#BBdepartcartime").show(),$("#BBreturnairtime").hide(),$("#BBreturncartime").show(),$("#arrival_city").autocomplete({source:"/inc/get-cities"}))}
+</script>
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"7643ea0a8f","applicationID":"55496260","transactionName":"ZgZXbRMCW0UDARYMWF9MYEsITFxYBgcaS0dZEw==","queueTime":0,"applicationTime":8,"atts":"SkFUG1sYSEs=","errorBeacon":"bam.nr-data.net","agent":""}</script><script src="/ads.js"></script>
+<script>if(!document.getElementById('showingads'))ga('send','event','AdsBlocked','desktop','/',{nonInteraction:true});</script>
+<script>ga('send','event','VideoAd','desktop','none',{nonInteraction:true});</script>
+</body></html>
