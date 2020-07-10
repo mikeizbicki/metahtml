@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<!-- BEGIN html -->
+<!--[if lt IE 7 ]><html class="no-js ie ie6" lang="fr" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:v="http://rdf.data-vocabulary.org/#"><![endif]-->
+<!--[if IE 7 ]><html class="no-js ie ie7" lang="fr" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:v="http://rdf.data-vocabulary.org/#"><![endif]-->
+<!--[if IE 8 ]><html class="no-js ie ie8" lang="fr" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:v="http://rdf.data-vocabulary.org/#"><![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html class="no-js" lang="fr" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:v="http://rdf.data-vocabulary.org/#">
+<!--<![endif]-->
+<!-- BEGIN head-->
+<head>
+
+<script type="text/javascript">
+    window.gdprAppliesGlobally=true;
+    (function(){function n(){if(!window.frames.__cmpLocator){if(document.body&&document.body.firstChild){var e=document.body;var t=document.createElement("iframe");t.style.display="none";t.name="__cmpLocator";t.title="cmpLocator";e.insertBefore(t,e.firstChild)}else{setTimeout(n,5)}}}function e(e,t,n){if(typeof n!=="function"){return}
+        if(!window.__cmpBuffer){window.__cmpBuffer=[]}if(e==="ping"){n({gdprAppliesGlobally:window.gdprAppliesGlobally,cmpLoaded:false},true)}else{window.__cmpBuffer.push({command:e,parameter:t,callback:n})}}e.stub=true;function t(r){if(!window.__cmp||window.__cmp.stub!==true){return}if(!r.data){return}var a=typeof r.data==="string";var e;try{e=a?JSON.parse(r.data):r.data}catch(t){return}if(e.__cmpCall){var o=e.__cmpCall;window.__cmp(o.command,o.parameter,function(e,t){var n={__cmpReturn:{returnValue:e,success:t,callId:o.callId}};r.source.postMessage(a?JSON.stringify(n):n,"*")})}}if(typeof window.__cmp!=="function"){window.__cmp=e;if(window.addEventListener){window.addEventListener("message",t,false)}else{window.attachEvent("onmessage",t)}}n()})();(function(e){var t=document.createElement("script");t.id="spcloader";t.type="text/javascript";t.async=true;t.src="https://sdk.privacy-center.org/"+e+"/loader.js?target="+document.location.hostname;t.charset="utf-8";var n=document.getElementsByTagName("script")[0];
+        n.parentNode.insertBefore(t,n)})("257d0d56-29d8-4b15-9c61-26d6e013bb68");
+</script>
+<script type="text/javascript">
+    window.didomiOnReady = window.didomiOnReady || [];
+    window.didomiOnReady.push(function cmpDidomiPushOnReady(Didomi) {
+        if(Didomi.notice.isVisible()) {
+            const maxScrollDepth = ((Didomi.getConfig()||{}).custom||{}).scrollDepth;
+            if(!maxScrollDepth)
+                return;
+            const startPositionScroll = window.scrollY;
+            var ticking = false;
+            window.addEventListener('scroll', function cmpDidomiScrollListener(e) {
+                if (!ticking) {
+                    window.requestAnimationFrame(function cmpDidomiCheckScrollDepth() {
+                        if(!Didomi.notice.isVisible()){
+                            window.removeEventListener('scroll', cmpDidomiScrollListener);
+                            return;
+                        }
+                        var lastPositionScroll = window.scrollY;
+                        if (Math.abs(startPositionScroll - lastPositionScroll) >= maxScrollDepth) {
+                            Didomi.setUserAgreeToAll();
+                            window.removeEventListener('scroll', cmpDidomiScrollListener);
+                        }
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+        }
+    });
+
+    window.didomiConfig = {
+        tagManager: {
+            provider: 'gtm',
+            dataLayerName: 'unify_dataSlayer'
+        }
+    };
+</script>
+    <script type="text/javascript">
+    window.unify_dataSlayer = window.unify_dataSlayer || [];
+    var dmpData = [
+    {
+        'event': 'neweb-dmp',
+        "siteInfo": {
+            "sid": 385953,
+            "platform": "zdnet",
+            "lang": "fr"
+        },
+        "pageInfo": {
+            "pageType": "home",
+            "section": "actualités",
+            "subsection": "",
+            "thematic": "",
+            "brands": [],
+            "note": "",
+            "subnotes": [],
+            "tags": [],
+            "ops": "",
+            "additional": "",
+            "filters": []
+        },
+        "campaignInfo": {
+            "utmMedium": "",
+            "utmSource": "",
+            "utmCampaign": ""
+        }
+    }];
+    dmpData[0].userInfo = {
+        "hashedUserId": "",
+        "logged": 0,
+        "referrer": "",
+        "device": "desktop"
+    };
+    dmpData[0].userInfo.referrer = document.referrer;
+
+    unify_dataSlayer.push(dmpData[0]);
+
+    var NewebDmp = function ()
+    {
+        var partner_dil = (typeof(DIL) !== 'undefined') ? DIL.create({
+            partner: 'aufeminin',
+            visitorService: {
+                namespace: '44326DF2572396FB7F000101@AdobeOrg'
+            }
+        }) : null;
+        var crmID = unify_dataSlayer[0].userInfo.hashedUserId;
+        if(crmID&&partner_dil){
+            partner_dil.api.aamIdSync({
+                dpid: unify_dataSlayer[0].siteInfo.sid,
+                dpuuid: crmID
+            });
+        }
+
+        this.dil = partner_dil;
+
+
+        this._cleanDmpData = function (data)
+        {
+            return Array.isArray(data) ? data.join(',') : data;
+        }
+
+        this.send = function ()
+        {
+            var dmpSignals = {
+                c_sid: this._cleanDmpData(unify_dataSlayer[0].siteInfo.sid),
+                c_platform: this._cleanDmpData(unify_dataSlayer[0].siteInfo.platform),
+                c_lang: this._cleanDmpData(unify_dataSlayer[0].siteInfo.lang),
+                c_hashedUserId: this._cleanDmpData(unify_dataSlayer[0].userInfo.hashedUserId),
+                c_logged: this._cleanDmpData(unify_dataSlayer[0].userInfo.logged),
+                c_share: this._cleanDmpData(unify_dataSlayer[0].userInfo.share),
+                c_targeting: this._cleanDmpData(unify_dataSlayer[0].userInfo.targeting),
+                c_referrer: this._cleanDmpData(unify_dataSlayer[0].userInfo.referrer),
+                c_device: this._cleanDmpData(unify_dataSlayer[0].userInfo.device),
+                c_pageType: this._cleanDmpData(unify_dataSlayer[0].pageInfo.pageType),
+                c_section: this._cleanDmpData(unify_dataSlayer[0].pageInfo.section),
+                c_subsection: this._cleanDmpData(unify_dataSlayer[0].pageInfo.subsection),
+                c_thematic: this._cleanDmpData(unify_dataSlayer[0].pageInfo.thematic),
+                c_brands: this._cleanDmpData(unify_dataSlayer[0].pageInfo.brands),
+                c_note: this._cleanDmpData(unify_dataSlayer[0].pageInfo.note),
+                c_subnotes: this._cleanDmpData(unify_dataSlayer[0].pageInfo.subnotes),
+                c_tags: this._cleanDmpData(unify_dataSlayer[0].pageInfo.tags),
+                c_ops: this._cleanDmpData(unify_dataSlayer[0].pageInfo.ops),
+                c_additional: this._cleanDmpData(unify_dataSlayer[0].pageInfo.additional),
+                c_filters: this._cleanDmpData(unify_dataSlayer[0].pageInfo.filters),
+                c_utmMedium: this._cleanDmpData(unify_dataSlayer[0].campaignInfo.utmMedium),
+                c_utmSource: this._cleanDmpData(unify_dataSlayer[0].campaignInfo.utmSource),
+                c_utmCampaign: this._cleanDmpData(unify_dataSlayer[0].campaignInfo.utmCampaign)
+            };
+            this.dil.api.signals(dmpSignals);
+            this.dil.api.submit();
+        }
+    }
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','unify_dataSlayer','GTM-NFRJPMJ');</script>
+<!-- End Google Tag Manager -->
+<title>Dernières news IT, sécurité, transformation numérique et réseaux - ZDNet</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Language" content="fr" />
+<meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+<meta name="description" content="Suivez l&#039;actualité du business et de l&#039;innovation, les dernières tendances du marché et les perspectives de développement pour les métiers et les professionnels de l&#039;IT analysées par nos experts. Retrouvez toutes les clés pour mieux comprendre les opportunités liées à l&#039;univers du numérique et ses enjeux." />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1">
+<!-- Stylesheets -->
+            <link rel="stylesheet" href="/min-css/scaffolding.css?v=202007021400">
+        <link rel="stylesheet" href="/min-css/fr.css?v=202007021400">
+        <!--[if (lt IE 9)&(!IEMobile)]>
+        <link rel="stylesheet" href="/min-css/scaffolding.768.css?v=202007021400" media="screen">
+        <link rel="stylesheet" href="/min-css/scaffolding.1024.css?v=202007021400" media="screen">
+        <![endif]-->
+        <link rel="stylesheet" href="/min-css/scaffolding.768.css?v=202007021400" media="screen and (min-width:768px)">
+        <link rel="stylesheet" href="/min-css/scaffolding.1024.css?v=202007021400" media="screen and (min-width:1024px)">
+                <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+                <link rel="stylesheet" href="/min-css/alert-corner2.css?v=202007021400">
+                <link rel="canonical" href="https://www.zdnet.fr/actualites/">
+                <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+                <script type="text/javascript" src="/min-js/jquery.cookie.1.4.js?v=202007021400"></script>
+                <script type="text/javascript" src="/min-js/modernizr-custom.2.5.3.js"></script>
+                <script type="text/javascript" src="/min-js/alert-corner2.js?v=202007021400"></script>
+    <!-- Icons -->
+<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114.png?v=202007021400">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72.png?v=202007021400">
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon.png?v=202007021400">
+<!-- RSS -->
+<link rel="alternate" type="application/rss+xml" title="RSS ZDNet.fr" href="https://www.zdnet.fr/feeds/rss/">
+<script type="text/javascript">
+    var envDev;
+    envDev = false;    players = [];
+</script>
+<script>
+var sas_dfpPageId = 'section_news';
+var sas_formatIds = 'native_home_dynamic,native_seealso_left,dhtml,banner_btf,banner_atf,300_btf,300_atf,300_mtf';
+var sas_pageId = 1156518;
+var sas_target = 'platform=desktop;content_class=index;contenttype=actualites;section=actualites;subsection=home;ishome=1;new_visitor=1';
+window.afAdQueue = window.afAdQueue || [];
+</script>
+
+<script src='https://aufeminin-zdnet.cupinteractive.com/reloaded/esi/ads?device=desktop&render=js&keywords=platform%3Ddesktop%3Bcontent_class%3Dindex%3Bcontenttype%3Dactualites%3Bsection%3Dactualites%3Bsubsection%3Dhome%3Bishome%3D1%3Bnew_visitor%3D1' type="text/javascript"></script>
+<script type="text/javascript">
+afAdQueue.push(function() {
+var allTimer = setInterval(function(){
+if (!afAd.refreshDisabled) {
+afAd.refreshAds({
+                        formatIds: 'banner_btf,banner_atf,300_btf,300_atf'
+                    });
+}
+},20000);
+});
+</script>
+
+<script type="application/ld+json">
+{  "@context" : "http://schema.org",
+   "@type" : "WebSite",
+   "name" : "ZDNet France",
+   "alternateName" : "L'info biz et tech pour les pros",
+   "url" : "https://www.zdnet.fr"
+}
+</script>
+<script type="application/ld+json">
+{ "@context" : "http://schema.org",
+  "@type" : "Organization",
+  "name" : "ZDNetFR",
+  "url" : "https://www.zdnet.fr/",
+  "logo": "https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/i/logos/fr/2011/ZDnet/zdnet_font_clair.png",
+  "sameAs" : [
+      "https://twitter.com/zdnetfr",
+      "https://www.facebook.com/zdnet.fr",
+      "https://www.youtube.com/user/zdnet",
+      "https://www.linkedin.com/company/zdnet-france/"
+  ]
+}
+</script>
+<!-- END head -->
+</head>
+<!-- BEGIN body -->
+<body id="list">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NFRJPMJ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div id="dhtml-container"></div>
+<script type="text/javascript">
+afAdQueue.push(function() {
+afAd.render('dhtml', {
+                    createParams: {
+                        container: document.getElementById('dhtml-container'),
+                        mode: 'inside',
+                    }
+                });
+});
+</script>
+
+
+
+<header role="banner">
+    <div class="wrapper">
+        <div class="header container">
+            <a href="/" class="siteLogo">ZDNet</a>
+            <div class="lvl-search">
+                <form id="search" class="siteSearch" action="/rechercher/">
+    <fieldset class="box">
+        <input type="text" placeholder="Recherchez sur ZDNet" tabindex="1" name="q" value="" />
+        <input type="submit" value="Search" />
+    </fieldset>
+</form>
+            </div>
+            <div class="lvl-nav">
+                <nav class="secondaryNav">
+                                            <div class="nav expandable siteUtils loggedIn">
+                            <a>Connexion <span class="avatar"><img src="/images/base/avatar-20x20.jpg" alt="" width="20" height="20" /></span> <span class="icon arrow"></span></a>
+                            <nav class="menu">
+                                <ul>
+                                    <li><a href="/membres/connexion.htm" data-modal-ajax="/membres/popup/connexion.htm" data-modal-title="Se connecter sur ZDNet">Se connecter</a></li>
+                                    <li><a href="/membres/creer/" data-modal-ajax="/membres/popup-ajax/inscription.htm" data-modal-title="Devenir membre de ZDNet">Devenir membre</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                                        <ul class="bar">
+                                                    <li>
+                                <a href="/dossier/dossier-mobilite-pour-les-pros-4000238003.htm" alt="Nouvelle mobilité">
+                                                                        Nouvelle mobilité
+                                </a>
+                            </li>
+                                                                                <li>
+                                <a href="/dossier/dossier-securite-et-reseau-4000237999.htm" alt="Réseau et sécurité">
+                                                                        Réseau et sécurité
+                                </a>
+                            </li>
+                                                                                <li>
+                                <a href="/dossier/dossier-sauvegarde-cloud-4000237995.htm" alt="Sauvegarde cloud">
+                                                                        Sauvegarde cloud
+                                </a>
+                            </li>
+                                                                                <li>
+                                <a href="/testeurs-pros/hp-dragonfly/" alt="Testeur Pro">
+                                                                        Testeur Pro
+                                </a>
+                            </li>
+                                                            <li class="expandable">
+                                    <a class="textDrop" href="#">Plus<span class="icon arrow"></span></a>
+                                    <nav class="menu">
+                                        <ul>
+                                                                                <li>
+                                <a href="/livre-blanc/" alt="Livre blanc">
+                                                                        Livre blanc
+                                </a>
+                            </li>
+                                                                    </ul>
+                                    </nav>
+                                </li>
+                                                                        </ul>
+                </nav>
+            </div>
+        </div>
+        <nav class="primaryNav container">
+                        <ul class="bar editions">
+                                        <li class="expandable">
+                <a href="/actualites/poste-de-travail-4000237427q.htm">
+                                        Poste de travail
+                    <span class="icon arrow"></span>                </a>
+                                    <nav class="menu">
+                        <ul>
+                                                        <li><a href="/actualites/windows-10-4000237349q.htm">Windows 10</a></li>
+                                                        <li><a href="/actualites/systeme-d-exploitation-4000002063q.htm">Système d’exploitation</a></li>
+                                                        <li><a href="/actualites/linux-3900046213q.htm">Linux</a></li>
+                                                        <li><a href="/actualites/navigateurs-3900046235q.htm">Navigateur</a></li>
+                                                        <li><a href="/actualites/ordinateur-4000237913q.htm">Ordinateur</a></li>
+                                                    </ul>
+                    </nav>
+                            </li>
+                    <li class="expandable">
+                <a href="/actualites/mobilite-4000237411q.htm">
+                                        Mobilité
+                    <span class="icon arrow"></span>                </a>
+                                    <nav class="menu">
+                        <ul>
+                                                        <li><a href="/actualites/smartphone-4000002598q.htm">Smartphone</a></li>
+                                                        <li><a href="/actualites/android-4000082258q.htm">Android</a></li>
+                                                        <li><a href="/actualites/ios-4000237213q.htm">iOS</a></li>
+                                                        <li><a href="/actualites/wearable-4000237576q.htm">Wearable</a></li>
+                                                    </ul>
+                    </nav>
+                            </li>
+                    <li class="expandable">
+                <a href="/actualites/cybersecurite-3900046206q.htm">
+                                        Cybersécurité
+                    <span class="icon arrow"></span>                </a>
+                                    <nav class="menu">
+                        <ul>
+                                                        <li><a href="/actualites/cyberattaque-4000237415q.htm">Cyberattaque</a></li>
+                                                        <li><a href="/actualites/ransomware-4000237544q.htm">Ransomware</a></li>
+                                                        <li><a href="/actualites/virus-4000001901q.htm">Virus</a></li>
+                                                        <li><a href="/actualites/authentification-4000200576q.htm">Authentification</a></li>
+                                                    </ul>
+                    </nav>
+                            </li>
+                    <li class="expandable">
+                <a href="/actualites/reseaux-et-telecoms-4000000149q.htm">
+                                        Réseaux et télécom
+                    <span class="icon arrow"></span>                </a>
+                                    <nav class="menu">
+                        <ul>
+                                                        <li><a href="/actualites/operateur-telecom-4000143166q.htm">Opérateur télécom</a></li>
+                                                        <li><a href="/actualites/5g-4000237303q.htm">5G</a></li>
+                                                        <li><a href="/actualites/4g-4000085539q.htm">4G</a></li>
+                                                        <li><a href="/actualites/fibre-optique-4000076214q.htm">Fibre optique</a></li>
+                                                        <li><a href="/actualites/wi-fi-4000000166q.htm">Wi-Fi</a></li>
+                                                    </ul>
+                    </nav>
+                            </li>
+                    <li class="expandable">
+                <a href="/actualites/transformation-numerique-4000237526q.htm">
+                                        Transfo numérique
+                    <span class="icon arrow"></span>                </a>
+                                    <nav class="menu">
+                        <ul>
+                                                        <li><a href="/actualites/internet-des-objets-iot-4000237438q.htm">IoT</a></li>
+                                                        <li><a href="/actualites/recherche-et-developpement-r-d-4000002020q.htm">R & D</a></li>
+                                                        <li><a href="/actualites/blockchain-4000237562q.htm">Blockchain</a></li>
+                                                        <li><a href="/actualites/intelligence-artificielle-ia-4000237536q.htm">IA</a></li>
+                                                        <li><a href="/actualites/realite-virtuelle-vr-4000237514q.htm">VR</a></li>
+                                                        <li><a href="/actualites/robotique-4000077666q.htm">Robotique</a></li>
+                                                        <li><a href="/actualites/voiture-autonome-4000237190q.htm">Voiture autonome</a></li>
+                                                    </ul>
+                    </nav>
+                            </li>
+                    <li class="expandable">
+                <a href="/actualites/cloud-computing-4000086220q.htm">
+                                        Cloud Computing
+                    <span class="icon arrow"></span>                </a>
+                                    <nav class="menu">
+                        <ul>
+                                                        <li><a href="/actualites/multicloud-4000237853q.htm">Multicloud</a></li>
+                                                        <li><a href="/actualites/serveur-3900046264q.htm">Serveur</a></li>
+                                                        <li><a href="/actualites/datacenter-4000143119q.htm">Datacenter</a></li>
+                                                    </ul>
+                    </nav>
+                            </li>
+                    <li class="expandable">
+                <a href="/actualites/logiciels-3900046188q.htm">
+                                        Logiciel
+                    <span class="icon arrow"></span>                </a>
+                                    <nav class="menu">
+                        <ul>
+                                                        <li><a href="/actualites/bureautique-3900046247q.htm">Bureautique</a></li>
+                                                        <li><a href="/actualites/open-source-4000001902q.htm">Open source</a></li>
+                                                        <li><a href="/actualites/collaboratif-4000002541q.htm">Collaboratif</a></li>
+                                                        <li><a href="/actualites/progiciel-4000000160q.htm">Progiciel</a></li>
+                                                        <li><a href="/actualites/visioconference-4000080656q.htm">Visioconférence</a></li>
+                                                        <li><a href="/actualites/le-coin-des-dev-4000237708q.htm">Le coin des dev'</a></li>
+                                                    </ul>
+                    </nav>
+                            </li>
+                    <li class="expandable">
+                <a href="/actualites/gestion-de-donnees-4000237197q.htm">
+                                        Gestion des données
+                    <span class="icon arrow"></span>                </a>
+                                    <nav class="menu">
+                        <ul>
+                                                        <li><a href="/actualites/rgpd-4000237614q.htm">RGPD</a></li>
+                                                        <li><a href="/actualites/reseau-social-4000081035q.htm">Réseau social</a></li>
+                                                        <li><a href="/actualites/protection-des-donnees-4000237425q.htm">Protection des données</a></li>
+                                                        <li><a href="/actualites/stockage-3900046218q.htm">Stockage</a></li>
+                                                        <li><a href="/actualites/big-data-4000237198q.htm">Big data</a></li>
+                                                    </ul>
+                    </nav>
+                            </li>
+            <li><a id="pzlink" href="/partenaires/">Partenaires</a></li>            </ul>
+            
+            <ul class="bar mobile ret">
+                                <li class="nav expandable siteUtils"><a>Se connecter<span class="icon arrow"></span></a>
+                    <nav class="menu">
+                        <ul>
+                                                    <li><a href="/membres/connexion.htm" data-modal-ajax="/membres/popup/connexion.htm" data-modal-title="Se connecter sur ZDNet">Se connecter</a></li>
+                            <li><a href="/membres/creer/" data-modal-ajax="/membres/popup-ajax/inscription.htm" data-modal-title="Devenir membre de ZDNet">Devenir membre</a></li>
+                                                </ul>
+                    </nav>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div id="mantle_skin">
+    <div id="page" >
+        <div id="leaderTop" class="leader">
+    <div class="container">
+        <div class="prepend"><b class="caret"></b> publicité <b class="caret"></b></div>
+<div id="banner_atf-container"></div>
+<script type="text/javascript">
+afAdQueue.push(function() {
+afAd.render('banner_atf', {
+                    createParams: {
+                        container: document.getElementById('banner_atf-container'),
+                        mode: 'inside',
+                    }
+                });
+});
+</script>
+
+    </div>
+</div>
+                    <div id="content" class="container">
+                <div class="breakingNews">
+        <span>Agenda:</span> <a href="https://www.zdnet.fr/actualites/agenda-les-evenements-virtuels-it-a-ne-pas-manquer-dans-les-semaines-qui-viennent-39905289.htm">Les &eacute;v&eacute;nements IT virtuels &agrave; ne pas manquer dans les semaines qui viennent</a>
+    </div>
+                    <div id="main">
+                                                                                                                <script type="application/ld+json">
+        {"@context":"http:\/\/schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"\/","name":"Accueil"}},{"@type":"ListItem","position":2,"item":{"@id":"\/actualites\/","name":"News"}}]}
+    </script>
+            <nav id="breadcrumb">
+                            <div class="bc-child">
+                    <a href="/">
+                    <span>Accueil</span>
+                    </a> &gt;                </div>
+                            <div class="bc-child">
+                    <a href="/actualites/">
+                    <span>News</span>
+                    </a>                </div>
+                    </nav>
+        <h1>Dernières news</h1>
+    
+<h2 class="heading"><span class="int">Filtrer</span></h2>    <div class="moduleRiver">
+        <section id="articleRiver" class="module topicsListing">
+            <ul class="tabs nav nav-tabs">
+                                        <li><a href="#storyTypeNews" class="selected" data-load="ajax" data-src="?sort=storyTypeNews">News</a></li>
+                                                            <li><a href="#storyTypeBlogs"  data-load="ajax" data-src="?sort=storyTypeBlogs">Blogs</a></li>
+                                                            <li><a href="#storyTypeDebats"  data-load="ajax" data-src="?sort=storyTypeDebats">Débats</a></li>
+                                                            <li><a href="#storyTypePhotos"  data-load="ajax" data-src="?sort=storyTypePhotos">Photos</a></li>
+                        </ul>             <div class="tabsContent">
+                                                            <div id="storyTypeNews" class="tab">
+                            <div class="river">
+            <article class="item" >
+    <div>
+
+        
+                    <div class="row">
+            <div class="column-2" style="min-height: 10px;">
+                                <h3>
+                    <a href="/blogs/digital-home-revolution/">Digital Home Révolution</a> <br />
+                    <small>876 articles</small>
+                </h3>
+                            </div>
+            <div class="column-6">
+            
+            
+            
+                    <h3 class="">
+
+            <a href="/blogs/digital-home-revolution/directive-sma-l-etat-d-urgence-39906209.htm"  >Directive SMA : l’état d’urgence</a>                     </h3>
+            
+                                                <div>
+                        <a href="/blogs/digital-home-revolution/directive-sma-l-etat-d-urgence-39906209.htm"  class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/authors/pascal-lechevallier__140_105__overflow.png" alt="Directive SMA : l’état d’urgence" width="140" height="105">
+</picture>
+                        </a>
+                    </div>
+                                                <div class="content">
+                                        <p class="summary"><em class="keyword">Business</em> - Alors qu’on attend la nomination du 3ème ministre de la culture d’Emmanuel Macron (le 6ème depuis 2012), la transposition de la Directive Européenne SMA (Services de Médias Audiovisuels) se précise et va occuper le nouveau gouvernement dans les prochains jours et prochaines semaines.</p>
+                                                        <p class="meta">Lundi 06 Juillet 2020  par                     <span>
+                    <a href="/equipe/fr/pascal-lechevallier-39060091.htm"><span>Pascal Lechevallier</span></a>
+                </span>
+    </p>
+                        <p class="options">
+                                                <a href="/blogs/digital-home-revolution/directive-sma-l-etat-d-urgence-39906209.htm#comments"   class="comment">
+                            <span>R&eacute;agissez !</span>
+                            </a>
+                                            </p>
+                                    </div>
+                    <div style="clear: both;"></div>
+        
+        
+            </div>
+                </div>
+    </div>
+        </article>                    <article class="item" >
+    <div>
+
+        
+                    <div class="row">
+            <div class="column-2" style="min-height: 10px;">
+                                                                                                                                                                    <h3>
+                    <a href="/actualites/poste-de-travail-4000237427q.htm">Poste de travail</a>
+                    <small>352 articles</small>                </h3>
+                                                    </div>
+            <div class="column-6">
+            
+            
+            
+                    <h3 class="">
+
+            <a href="/actualites/le-terminal-vendeur-instrument-du-retail-omnicanal-39906061.htm"  >Le terminal vendeur, instrument du retail omnicanal</a>                     </h3>
+            
+                                                <div>
+                        <a href="/actualites/le-terminal-vendeur-instrument-du-retail-omnicanal-39906061.htm"  class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/edit/ne/2020/06/OneStock-140__140_105__overflow.jpg" alt="Le terminal vendeur, instrument du retail omnicanal" width="140" height="105">
+</picture>
+                        </a>
+                    </div>
+                                                <div class="content">
+                                        <p class="summary"><em class="keyword">Technologie</em> - La crise sanitaire met les enseignes sous pression. Pour y faire face, certaines exploitent le numérique. Le ship-from-store permet ainsi la préparation de commandes en boutique. La prise de rendez-vous virtuels propose quant à elle du conseil personnalisé en visioconférence sur tablette.</p>
+                                                        <p class="meta">Lundi 06 Juillet 2020  par                     <span>
+                    <span>APM</span>
+                </span>
+    </p>
+                        <p class="options">
+                                                <a href="/actualites/le-terminal-vendeur-instrument-du-retail-omnicanal-39906061.htm#comments"   class="comment">
+                            <span>R&eacute;agissez !</span>
+                            </a>
+                                            </p>
+                                    </div>
+                    <div style="clear: both;"></div>
+        
+        
+            </div>
+                </div>
+    </div>
+        </article>                                <article id="col-sponsor-1"><div id="native_home_dynamic-container"></div>
+<script type="text/javascript">
+afAdQueue.push(function() {
+afAd.render('native_home_dynamic', {
+                    createParams: {
+                        container: document.getElementById('native_home_dynamic-container'),
+                        mode: 'inside',
+                    }
+                });
+});
+</script>
+</article>                    <article class="item" >
+    <div>
+
+        
+                    <div class="row">
+            <div class="column-2" style="min-height: 10px;">
+                                <h3>
+                    <a href="/blogs/l-esprit-libre/">L&#039;esprit libre</a> <br />
+                    <small>503 articles</small>
+                </h3>
+                            </div>
+            <div class="column-6">
+            
+            
+            
+                    <h3 class="">
+
+            <a href="/blogs/l-esprit-libre/abstract-wikipedia-un-projet-de-traductions-de-l-encyclopedie-depuis-sa-base-de-donnees-39906207.htm"  >Abstract Wikipedia: un projet de traductions de l’encyclopédie depuis sa base de données</a>                     </h3>
+            
+                                                <div>
+                        <a href="/blogs/l-esprit-libre/abstract-wikipedia-un-projet-de-traductions-de-l-encyclopedie-depuis-sa-base-de-donnees-39906207.htm"  class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/authors/thierry-noisette__140_105__overflow.png" alt="Abstract Wikipedia: un projet de traductions de l’encyclopédie depuis sa base de données" width="140" height="105">
+</picture>
+                        </a>
+                    </div>
+                                                <div class="content">
+                                        <p class="summary"><em class="keyword">Les titres</em> - Pour pallier le trop petit nombre de traductions entre articles des 300 langues de l'encyclopédie, Abstract Wikipedia veut convertir des fonctions de sa base de données Wikidata en texte.</p>
+                                                        <p class="meta">Dimanche 05 Juillet 2020  par                     <span>
+                    <a href="/equipe/fr/thierry-noisette-782.htm"><span>Thierry Noisette</span></a>
+                </span>
+    </p>
+                        <p class="options">
+                                                <a href="/blogs/l-esprit-libre/abstract-wikipedia-un-projet-de-traductions-de-l-encyclopedie-depuis-sa-base-de-donnees-39906207.htm#comments"   class="comment">
+                            <span>R&eacute;agissez !</span>
+                            </a>
+                                            </p>
+                                    </div>
+                    <div style="clear: both;"></div>
+        
+        
+            </div>
+                </div>
+    </div>
+        </article>                    <article class="item" >
+    <div>
+
+        
+                    <div class="row">
+            <div class="column-2" style="min-height: 10px;">
+                                <h3>
+                    <a href="/blogs/green-si/">Green SI</a> <br />
+                    <small>399 articles</small>
+                </h3>
+                            </div>
+            <div class="column-6">
+            
+            
+            
+                    <h3 class="">
+
+            <a href="/blogs/green-si/les-plateformes-pour-revisiter-les-processus-de-l-entreprise-numerique-39906203.htm"  >Les plateformes pour revisiter les processus de l&#039;entreprise numérique</a>                     </h3>
+            
+                                                <div>
+                        <a href="/blogs/green-si/les-plateformes-pour-revisiter-les-processus-de-l-entreprise-numerique-39906203.htm"  class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/authors/frederic-charles__140_105__overflow.png" alt="Les plateformes pour revisiter les processus de l'entreprise numérique" width="140" height="105">
+</picture>
+                        </a>
+                    </div>
+                                                <div class="content">
+                                        <p class="summary"><em class="keyword">Prospective</em> - Les impacts de la crise sanitaire, suggèrent que l'époque est à la remise en cause des organisations et des pratiques. C'est donc certainement le bon moment pour revisiter l'automatisation des processus de l'entreprise numérique.</p>
+                                                        <p class="meta">Dimanche 05 Juillet 2020  par                     <span>
+                    <a href="/equipe/fr/frederic-charles-39060093.htm"><span>Frédéric Charles</span></a>
+                </span>
+    </p>
+                        <p class="options">
+                                                <a href="/blogs/green-si/les-plateformes-pour-revisiter-les-processus-de-l-entreprise-numerique-39906203.htm#comments"   class="comment">
+                            <span>R&eacute;agissez !</span>
+                            </a>
+                                            </p>
+                                    </div>
+                    <div style="clear: both;"></div>
+        
+        
+            </div>
+                </div>
+    </div>
+        </article>                    <article class="item" >
+    <div>
+
+        
+                    <div class="row">
+            <div class="column-2" style="min-height: 10px;">
+                                                                                                                                                                    <h3>
+                    <a href="/actualites/android-4000082258q.htm">Android</a>
+                    <small>3116 articles</small>                </h3>
+                                                    </div>
+            <div class="column-6">
+            
+            
+            
+                    <h3 class="">
+
+            <a href="/actualites/android-lance-la-beta-de-son-propre-airdrop-nearby-share-39906197.htm"  >Android lance la bêta de son propre AirDrop, Nearby Share</a>                     </h3>
+            
+                                                <div>
+                        <a href="/actualites/android-lance-la-beta-de-son-propre-airdrop-nearby-share-39906197.htm"  class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/edit/ne/2020/06/SmartphonesAndroid-140__140_105__overflow.jpg" alt="Android lance la bêta de son propre AirDrop, Nearby Share" width="140" height="105">
+</picture>
+                        </a>
+                    </div>
+                                                <div class="content">
+                                        <p class="summary"><em class="keyword">Technologie</em> - Google a déployé une version bêta de Nearby Share, l'équivalent Android du AirDrop d'Apple, permettant le transfert de fichiers sans fil entre plusieurs appareils.</p>
+                                                        <p class="meta">Dimanche 05 Juillet 2020  par                     <span>
+                    <span>Liam Tung</span>
+                </span>
+    </p>
+                        <p class="options">
+                                                <a href="/actualites/android-lance-la-beta-de-son-propre-airdrop-nearby-share-39906197.htm#comments"   class="comment">
+                            <span>R&eacute;agissez !</span>
+                            </a>
+                                            </p>
+                                    </div>
+                    <div style="clear: both;"></div>
+        
+        
+            </div>
+                </div>
+    </div>
+        </article>                    <article class="item" >
+    <div>
+
+        
+                    <div class="row">
+            <div class="column-2" style="min-height: 10px;">
+                                                                                                                                                                    <h3>
+                    <a href="/actualites/ipad-4000143099q.htm">iPad</a>
+                    <small>913 articles</small>                </h3>
+                                                    </div>
+            <div class="column-6">
+            
+            
+            
+                    <h3 class="">
+
+            <a href="/guide-achat/pour-quel-ipad-craquer-en-2020-39906183.htm"  >Pour quel iPad craquer en 2020 ?</a>                     </h3>
+            
+                                                <div>
+                        <a href="/guide-achat/pour-quel-ipad-craquer-en-2020-39906183.htm"  class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/edit/ne/2019/02/iPad%20OS%20140__140_105__overflow.jpg" alt="Pour quel iPad craquer en 2020 ?" width="140" height="105">
+</picture>
+                        </a>
+                    </div>
+                                                <div class="content">
+                                        <p class="summary"><em class="keyword">Technologie</em> - Apple trône sur la galaxie des tablettes grâce ses iPad. L'offre de la marque à la pomme étant aujourd'hui très étoffée, il peut être difficile de s'y retrouver. C'est pourquoi ZDNet vous a préparé un guide d'achat dédié pour vous y retrouver.</p>
+                                                        <p class="meta">Dimanche 05 Juillet 2020  par                     <span>
+                    <a href="/equipe/fr/la-redaction-de-zdnetfr-39060048.htm"><span>La rédaction de ZDNet.fr</span></a>
+                </span>
+    </p>
+                        <p class="options">
+                                                <a href="/guide-achat/pour-quel-ipad-craquer-en-2020-39906183.htm#comments"   class="comment">
+                            <span>R&eacute;agissez !</span>
+                            </a>
+                                            </p>
+                                    </div>
+                    <div style="clear: both;"></div>
+        
+        
+            </div>
+                </div>
+    </div>
+        </article>                    <article id="col-sponsor-2"><div id="native_seealso_left-container"></div>
+<script type="text/javascript">
+afAdQueue.push(function() {
+afAd.render('native_seealso_left', {
+                    createParams: {
+                        container: document.getElementById('native_seealso_left-container'),
+                        mode: 'inside',
+                    }
+                });
+});
+</script>
+</article>                    <article class="item" >
+    <div>
+
+        
+                    <div class="row">
+            <div class="column-2" style="min-height: 10px;">
+                                                                                                                                                                    <h3>
+                    <a href="/actualites/apple-4000000168q.htm">Apple</a>
+                    <small>5595 articles</small>                </h3>
+                                                    </div>
+            <div class="column-6">
+            
+            
+            
+                    <h3 class="">
+
+            <a href="/actualites/watchos-7-suit-votre-sommeil-39906131.htm"  >WatchOS 7 suit votre sommeil</a>                     </h3>
+            
+                                                <div>
+                        <a href="/actualites/watchos-7-suit-votre-sommeil-39906131.htm"  class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/edit/ne/2020/06/WatchOS7-140__140_105__overflow.jpg" alt="WatchOS 7 suit votre sommeil" width="140" height="105">
+</picture>
+                        </a>
+                    </div>
+                                                <div class="content">
+                                        <p class="summary"><em class="keyword">Technologie</em> - Lors de la WWDC 2020, Apple a annoncé une fonctionnalité très attendue pour l'Apple Watch : le suivi de sommeil. S'accompagnera-t-elle d'une amélioration de l'autonomie de la batterie ? Réponse d'ici quelques mois.</p>
+                                                        <p class="meta">Samedi 04 Juillet 2020  par                     <span>
+                    <span>Jason Cipriani</span>
+                </span>
+    </p>
+                        <p class="options">
+                                                <a href="/actualites/watchos-7-suit-votre-sommeil-39906131.htm#comments"   class="comment">
+                            <span>R&eacute;agissez !</span>
+                            </a>
+                                            </p>
+                                    </div>
+                    <div style="clear: both;"></div>
+        
+        
+            </div>
+                </div>
+    </div>
+        </article>                    <article class="item" >
+    <div>
+
+        
+                    <div class="row">
+            <div class="column-2" style="min-height: 10px;">
+                                                                                                                                                                    <h3>
+                    <a href="/actualites/cyberattaque-4000237415q.htm">Cyberattaque</a>
+                    <small>1300 articles</small>                </h3>
+                                                    </div>
+            <div class="column-6">
+            
+            
+            
+                    <h3 class="">
+
+            <a href="/actualites/windows-10-microsoft-defender-atp-evalue-desormais-vos-configurations-de-securite-39906177.htm"  >Windows 10 : Microsoft Defender ATP évalue désormais vos configurations de sécurité </a>                     </h3>
+            
+                                                <div>
+                        <a href="/actualites/windows-10-microsoft-defender-atp-evalue-desormais-vos-configurations-de-securite-39906177.htm"  class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/edit/ne/2020/02/cybersec_140__140_105__overflow.jpg" alt="Windows 10 : Microsoft Defender ATP évalue désormais vos configurations de sécurité " width="140" height="105">
+</picture>
+                        </a>
+                    </div>
+                                                <div class="content">
+                                        <p class="summary"><em class="keyword">Technologie</em> - Le nouveau service Microsoft Defender  ATP aidera à éliminer les comptes d'administrateur inutiles avant que les attaquants ne les trouvent. </p>
+                                                        <p class="meta">Samedi 04 Juillet 2020  par                     <span>
+                    <span>Liam Tung</span>
+                </span>
+    </p>
+                        <p class="options">
+                                                <a href="/actualites/windows-10-microsoft-defender-atp-evalue-desormais-vos-configurations-de-securite-39906177.htm#comments"   class="comment">
+                            <span>1 commentaire</span>
+                            </a>
+                                            </p>
+                                    </div>
+                    <div style="clear: both;"></div>
+        
+        
+            </div>
+                </div>
+    </div>
+        </article>                    <article class="item" >
+    <div>
+
+        
+                    <div class="row">
+            <div class="column-2" style="min-height: 10px;">
+                                                                                                                                                                    <h3>
+                    <a href="/actualites/cyberattaque-4000237415q.htm">Cyberattaque</a>
+                    <small>1300 articles</small>                </h3>
+                                                    </div>
+            <div class="column-6">
+            
+            
+            
+                    <h3 class="">
+
+            <a href="/actualites/une-etude-brosse-l-anatomie-d-une-attaque-au-ransomware-39906123.htm"  >Une étude brosse l&#039;anatomie d&#039;une attaque au ransomware</a>                     </h3>
+            
+                                                <div>
+                        <a href="/actualites/une-etude-brosse-l-anatomie-d-une-attaque-au-ransomware-39906123.htm"  class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/edit/ne/2019/02/Cyberattaques%20Illustration%20C%20140__140_105__overflow.jpg" alt="Une étude brosse l'anatomie d'une attaque au ransomware" width="140" height="105">
+</picture>
+                        </a>
+                    </div>
+                                                <div class="content">
+                                        <p class="summary"><em class="keyword">Technologie</em> - Une étude détaille l'anatomie d'une attaque au ransomware, de l'infection à la demande de rançon. Un exemple à retenir pour les DSI.</p>
+                                                        <p class="meta">Samedi 04 Juillet 2020  par                     <span>
+                    <span>Steve Ranger</span>
+                </span>
+    </p>
+                        <p class="options">
+                                                <a href="/actualites/une-etude-brosse-l-anatomie-d-une-attaque-au-ransomware-39906123.htm#comments"   class="comment">
+                            <span>R&eacute;agissez !</span>
+                            </a>
+                                            </p>
+                                    </div>
+                    <div style="clear: both;"></div>
+        
+        
+            </div>
+                </div>
+    </div>
+        </article>                    <article class="item" >
+    <div>
+
+        
+                    <div class="row">
+            <div class="column-2" style="min-height: 10px;">
+                                                                                                                                                                    <h3>
+                    <a href="/actualites/le-zd-brief-4000237879q.htm">Le ZD Brief</a>
+                    <small>58 articles</small>                </h3>
+                                                    </div>
+            <div class="column-6">
+            
+            
+            
+                    <h3 class="">
+
+            <a href="/actualites/un-plan-de-relance-pour-les-infrastructures-numeriques-les-failles-de-la-reconnaissance-faciale-ios-14-c-est-le-zd-brief-39906175.htm"  >Un plan de relance pour les infrastructures numériques, les failles de la reconnaissance faciale, iOS 14... C&#039;est le ZD Brief !</a>                     </h3>
+            
+                                                <div>
+                        <a href="/actualites/un-plan-de-relance-pour-les-infrastructures-numeriques-les-failles-de-la-reconnaissance-faciale-ios-14-c-est-le-zd-brief-39906175.htm"  class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/edit/ne/2020/01/ZDBrief-140__140_105__overflow.jpg" alt="Un plan de relance pour les infrastructures numériques, les failles de la reconnaissance faciale, iOS 14... C'est le ZD Brief !" width="140" height="105">
+</picture>
+                        </a>
+                    </div>
+                                                <div class="content">
+                                        <p class="summary"><em class="keyword">Podcast</em> - Avec aussi les critères de performance du cloud et le mot de passe le plus utilisé.</p>
+                                                        <p class="meta">Vendredi 03 Juillet 2020  par                     <span>
+                    <a href="/equipe/fr/la-redaction-de-zdnetfr-39060048.htm"><span>La rédaction de ZDNet.fr</span></a>
+                </span>
+    </p>
+                        <p class="options">
+                                                <a href="/actualites/un-plan-de-relance-pour-les-infrastructures-numeriques-les-failles-de-la-reconnaissance-faciale-ios-14-c-est-le-zd-brief-39906175.htm#comments"   class="comment">
+                            <span>R&eacute;agissez !</span>
+                            </a>
+                                            </p>
+                                    </div>
+                    <div style="clear: both;"></div>
+        
+        
+            </div>
+                </div>
+    </div>
+        </article>                    <article class="item" >
+    <div>
+
+        
+                    <div class="row">
+            <div class="column-2" style="min-height: 10px;">
+                                                                                                                                                                    <h3>
+                    <a href="/actualites/visioconference-4000080656q.htm">Visioconférence</a>
+                    <small>128 articles</small>                </h3>
+                                                    </div>
+            <div class="column-6">
+            
+            
+            
+                    <h3 class="">
+
+            <a href="/actualites/jio-platforms-se-lance-a-son-tour-dans-la-visioconference-avec-jiomeet-39906189.htm"  >Jio Platforms se lance à son tour dans la visioconférence avec JioMeet</a>                     </h3>
+            
+                                                <div>
+                        <a href="/actualites/jio-platforms-se-lance-a-son-tour-dans-la-visioconference-avec-jiomeet-39906189.htm"  class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/edit/ne/2019/02/Ordinateur%20magasin%20140__140_105__overflow.jpg" alt="Jio Platforms se lance à son tour dans la visioconférence avec JioMeet" width="140" height="105">
+</picture>
+                        </a>
+                    </div>
+                                                <div class="content">
+                                        <p class="summary"><em class="keyword">Technologie</em> - La plateforme de vidéoconférence de l'un des principaux opérateurs indiens peut prendre en charge des appels jusqu'à 100 participants.</p>
+                                                        <p class="meta">Vendredi 03 Juillet 2020  par                     <span>
+                    <span>Campbell Kwan</span>
+                </span>
+    </p>
+                        <p class="options">
+                                                <a href="/actualites/jio-platforms-se-lance-a-son-tour-dans-la-visioconference-avec-jiomeet-39906189.htm#comments"   class="comment">
+                            <span>R&eacute;agissez !</span>
+                            </a>
+                                            </p>
+                                    </div>
+                    <div style="clear: both;"></div>
+        
+        
+            </div>
+                </div>
+    </div>
+        </article>                    <article class="item" >
+    <div>
+
+        
+                    <div class="row">
+            <div class="column-2" style="min-height: 10px;">
+                                                                                                                                                                    <h3>
+                    <a href="/actualites/mozilla-4000082128q.htm">Mozilla</a>
+                    <small>519 articles</small>                </h3>
+                                                    </div>
+            <div class="column-6">
+            
+            
+            
+                    <h3 class="">
+
+            <a href="/actualites/mozilla-stoppe-le-deploiement-de-firefox-78-puis-le-relance-apres-une-correction-de-bug-sur-les-moteurs-de-recherche-39906185.htm"  > Mozilla stoppe le déploiement de Firefox 78 - puis le relance après une correction de bug sur les moteurs de recherche</a>                     </h3>
+            
+                                                <div>
+                        <a href="/actualites/mozilla-stoppe-le-deploiement-de-firefox-78-puis-le-relance-apres-une-correction-de-bug-sur-les-moteurs-de-recherche-39906185.htm"  class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/edit/ne/2013/08/Firefox23-logo-140x105__140_105__overflow.jpg" alt=" Mozilla stoppe le déploiement de Firefox 78 - puis le relance après une correction de bug sur les moteurs de recherche" width="140" height="105">
+</picture>
+                        </a>
+                    </div>
+                                                <div class="content">
+                                        <p class="summary"><em class="keyword">Technologie</em> - Mozilla reprend progressivement le déploiement de cette version de Firefox qui supprime la prise en charge des anciens protocoles TLS 1.0 et TLS 1.1. </p>
+                                                        <p class="meta">Vendredi 03 Juillet 2020  par                     <span>
+                    <span>Liam Tung</span>
+                </span>
+    </p>
+                        <p class="options">
+                                                <a href="/actualites/mozilla-stoppe-le-deploiement-de-firefox-78-puis-le-relance-apres-une-correction-de-bug-sur-les-moteurs-de-recherche-39906185.htm#comments"   class="comment">
+                            <span>1 commentaire</span>
+                            </a>
+                                            </p>
+                                    </div>
+                    <div style="clear: both;"></div>
+        
+        
+            </div>
+                </div>
+    </div>
+        </article>                    <article class="item" >
+    <div>
+
+        
+                    <div class="row">
+            <div class="column-2" style="min-height: 10px;">
+                                                                                                                                                                    <h3>
+                    <a href="/actualites/facebook-4000085268q.htm">Facebook</a>
+                    <small>2510 articles</small>                </h3>
+                                                    </div>
+            <div class="column-6">
+            
+            
+            
+                    <h3 class="">
+
+            <a href="/actualites/seize-applications-facebook-partagent-vos-donnees-secretement-avec-des-tiers-39906181.htm"  >Seize applications Facebook partagent vos données secrètement avec des tiers</a>                     </h3>
+            
+                                                <div>
+                        <a href="/actualites/seize-applications-facebook-partagent-vos-donnees-secretement-avec-des-tiers-39906181.htm"  class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/edit/ne/2017/09/retrait-contenus-all-140__140_105__overflow.jpg" alt="Seize applications Facebook partagent vos données secrètement avec des tiers" width="140" height="105">
+</picture>
+                        </a>
+                    </div>
+                                                <div class="content">
+                                        <p class="summary"><em class="keyword">Sécurité</em> - Une étude universitaire a utilisé des courriels uniques "honeytoken" pour installer des applications Facebook et voir quelles boîtes de réception recevaient des courriels provenant d'expéditeurs non reconnus.</p>
+                                                        <p class="meta">Vendredi 03 Juillet 2020  par                     <span>
+                    <span>Catalin Cimpanu</span>
+                </span>
+    </p>
+                        <p class="options">
+                                                <a href="/actualites/seize-applications-facebook-partagent-vos-donnees-secretement-avec-des-tiers-39906181.htm#comments"   class="comment">
+                            <span>R&eacute;agissez !</span>
+                            </a>
+                                            </p>
+                                    </div>
+                    <div style="clear: both;"></div>
+        
+        
+            </div>
+                </div>
+    </div>
+        </article>                    <article class="item" >
+    <div>
+
+        
+                    <div class="row">
+            <div class="column-2" style="min-height: 10px;">
+                                                                                                                                                                    <h3>
+                    <a href="/actualites/automobile-4000076991q.htm">Automobile</a>
+                    <small>244 articles</small>                </h3>
+                                                    </div>
+            <div class="column-6">
+            
+            
+            
+                    <h3 class="">
+
+            <a href="/actualites/bmw-veut-offrir-de-nouveaux-services-dans-ses-voitures-39906171.htm"  >BMW veut offrir de nouveaux services dans ses voitures</a>                     </h3>
+            
+                                                <div>
+                        <a href="/actualites/bmw-veut-offrir-de-nouveaux-services-dans-ses-voitures-39906171.htm"  class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/edit/ne/2019/02/BMW%20140__140_105__overflow.jpg" alt="BMW veut offrir de nouveaux services dans ses voitures" width="140" height="105">
+</picture>
+                        </a>
+                    </div>
+                                                <div class="content">
+                                        <p class="summary"><em class="keyword">Technologie</em> - BMW est prêt à offrir des mises à niveau optionnelles aux propriétaires de véhicules intelligents afin de s'offrir des revenus récurrents bienvenus en cette période difficile.</p>
+                                                        <p class="meta">Vendredi 03 Juillet 2020  par                     <span>
+                    <span>Charlie Osborne</span>
+                </span>
+    </p>
+                        <p class="options">
+                                                <a href="/actualites/bmw-veut-offrir-de-nouveaux-services-dans-ses-voitures-39906171.htm#comments"   class="comment">
+                            <span>R&eacute;agissez !</span>
+                            </a>
+                                            </p>
+                                    </div>
+                    <div style="clear: both;"></div>
+        
+        
+            </div>
+                </div>
+    </div>
+        </article>                    <article class="item" >
+    <div>
+
+        
+                    <div class="row">
+            <div class="column-2" style="min-height: 10px;">
+                                                                                                                                                                    <h3>
+                    <a href="/actualites/e-administration-4000015662q.htm">E-administration</a>
+                    <small>167 articles</small>                </h3>
+                                                    </div>
+            <div class="column-6">
+            
+            
+            
+                    <h3 class="">
+
+            <a href="/actualites/algorithmes-les-administrations-forcees-a-plus-de-transparence-39906151.htm"  >Algorithmes : les administrations forcées à plus de transparence</a>                     </h3>
+            
+                                                <div>
+                        <a href="/actualites/algorithmes-les-administrations-forcees-a-plus-de-transparence-39906151.htm"  class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/edit/ne/2015/10/cryptage-securite-140x105__140_105__overflow.jpg" alt="Algorithmes : les administrations forcées à plus de transparence" width="140" height="105">
+</picture>
+                        </a>
+                    </div>
+                                                <div class="content">
+                                        <p class="summary"><em class="keyword">Technologie</em> - Depuis le 1 er  juillet 2020, les internautes sont en droit d'exiger de savoir ce qu'il se passe à l'intérieur des "boîtes noires" des algorithmes publics. Les décisions individuelles entièrement automatisées sont dorénavant déclarées illégales faute de mention explicite.</p>
+                                                        <p class="meta">Vendredi 03 Juillet 2020  par                     <span>
+                    <a href="/equipe/fr/clarisse-treilles-39060191.htm"><span>Clarisse Treilles</span></a>
+                </span>
+    </p>
+                        <p class="options">
+                                                <a href="/actualites/algorithmes-les-administrations-forcees-a-plus-de-transparence-39906151.htm#comments"   class="comment">
+                            <span>R&eacute;agissez !</span>
+                            </a>
+                                            </p>
+                                    </div>
+                    <div style="clear: both;"></div>
+        
+        
+            </div>
+                </div>
+    </div>
+        </article>            </div>
+            <nav class="pagination">
+    <ul>
+                                        <li class="selected">
+                <a href="/actualites/">1</a>
+            </li>
+                                            <li>
+                <a href="/actualites/?p=2">2</a>
+            </li>
+                                            <li>
+                <a href="/actualites/?p=10">10</a>
+            </li>
+                                            <li>
+                <a href="/actualites/?p=100">100</a>
+            </li>
+                                            <li>
+                <a href="/actualites/?p=1000">1000</a>
+            </li>
+                                                <li class="next"><a href="/actualites/?p=2" rel="next"></a></li>    </ul>
+</nav>
+
+                            </div>
+                                                                                <div id="storyTypeBlogs" class="tab" style="display: none;">
+                            <div class="river"></div>
+                        </div>
+                                                                                <div id="storyTypeDebats" class="tab" style="display: none;">
+                            <div class="river"></div>
+                        </div>
+                                                                                <div id="storyTypePhotos" class="tab" style="display: none;">
+                            <div class="river"></div>
+                        </div>
+                                                </div>
+        </section>
+    </div>
+</div>
+<!-- //main -->
+<aside id="secondary">
+                            <section class="module" id="rightcolTicker">
+        <div style="border: 1px solid rgb(230, 230, 230); height: 35px; padding-left: 60px; position: relative;overflow:hidden" id="ticker_ad">
+            <a style="padding-left: 10px; line-height: 35px; text-decoration: none; color: rgb(0, 83, 153);" href="https://www.zdnet.fr/espace-partenaire/inmacwstore/?utm_source=zdnet&utm_medium=ticker&utm_campaign=imws_espace_partenaire">
+                <img style="position: absolute; left: 0px;" src="https://cdn.cupinteractive.com/assets/ticker/logo_60x35_inmac.jpg" alt="Dossiers IT &amp;agrave; d&amp;eacute;couvrir" width="60" height="35">
+                <strong>
+                    Dossiers IT &agrave; d&eacute;couvrir
+                </strong>
+            </a>
+        </div>
+    </section>
+                    <section class="module">
+	<div id="mpuTop">
+		<div class="prepend"><b class="caret"></b> publicité <b class="caret"></b></div>
+<div id="300_atf-container"></div>
+<script type="text/javascript">
+afAdQueue.push(function() {
+afAd.render('300_atf', {
+                    createParams: {
+                        container: document.getElementById('300_atf-container'),
+                        mode: 'inside',
+                    }
+                });
+});
+</script>
+
+	</div>
+</section>
+                    <section class="module">
+    
+<h3 class="heading"><span class="int">Podcast</span></h3>    <div style="text-align:center">
+        <iframe
+            frameborder="0"
+            height="450px"
+            width="285px"
+            src="https://widget.ausha.co/index.html?showId=b2V79u945199&playlist=true&color=%23D11D18&display=vertical&v=2&mode=latest&height=450px">
+        </iframe>
+        <div>Retrouvez nos podcasts sur :</div>
+        <a title="Retrouvez le ZD'brief en podcast sur Ausha" target="_blank" href="https://podcast.ausha.co/le-zd-brief-de-zdnet-fr"><img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/i/podcasts/ausha.png" width="50" height="50"></a>
+        <a title="Retrouvez le ZD'brief en podcast sur Spotify" target="_blank" href="https://open.spotify.com/show/5Wz6XVkMtWYLtAP1StceUB"><img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/i/podcasts/spotify.png" width="50" height="50"></a>
+        <a title="Retrouvez le ZD'brief en podcast sur Apple Podcasts" target="_blank" href="https://podcasts.apple.com/us/podcast/le-zdbrief-de-zdnet-fr/id1455817654"><img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/i/podcasts/apple-podcast.png" width="50" height="50"></a>
+        <a title="Retrouvez le ZD'brief en podcast sur Deezer" target="_blank" href="https://www.deezer.com/fr/show/501802"><img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/i/podcasts/deezer.png" width="50" height="50"></a>
+    </div>
+</section>                    <section class="module">
+    
+<h3 class="heading"><span class="int">Les guides pratiques</span></h3>    <div id="latestNews" class="box">
+    <ul>
+                    <li>
+                                    <div>
+                        <a href="/pratique/salesforce-partenaire-de-siemens-pour-une-nouvelle-gamme-de-technologies-sans-contact-39905659.htm" class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/edit/ne/2014/06/tablette-entreprise-140x105__140_105__overflow.jpg" alt="Salesforce, partenaire de Siemens pour une nouvelle gamme de technologies sans contact" width="60" height="45">
+</picture>
+                        </a>
+                    </div>
+                                <div class="content">
+                                            <p><a href="/pratique/salesforce-partenaire-de-siemens-pour-une-nouvelle-gamme-de-technologies-sans-contact-39905659.htm">Salesforce, partenaire de Siemens pour une nouvelle gamme de technologies sans contact</a></p>
+                                                    <p class="meta">24/06/2020</p>
+                                                            </div>
+            </li>
+                    <li>
+                                    <div>
+                        <a href="/pratique/neobanques-quels-services-pour-les-pros-39905397.htm" class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/edit/ne/2013/04/card-keyboard-140x105__140_105__overflow.jpg" alt="Néobanques : quels services pour les pros ?" width="60" height="45">
+</picture>
+                        </a>
+                    </div>
+                                <div class="content">
+                                            <p><a href="/pratique/neobanques-quels-services-pour-les-pros-39905397.htm">Néobanques : quels services pour les pros ?</a></p>
+                                                    <p class="meta">19/06/2020</p>
+                                                            </div>
+            </li>
+                    <li>
+                                    <div>
+                        <a href="/pratique/ios-une-astuce-pour-vous-faciliter-la-vie-39904845.htm" class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/edit/ne/2020/06/iPhoneFinger-140__60_45__overflow.jpg" alt="iOS : une astuce pour vous faciliter la vie" width="60" height="45">
+</picture>
+                        </a>
+                    </div>
+                                <div class="content">
+                                            <p><a href="/pratique/ios-une-astuce-pour-vous-faciliter-la-vie-39904845.htm">iOS : une astuce pour vous faciliter la vie</a></p>
+                                                    <p class="meta">08/06/2020</p>
+                                                            </div>
+            </li>
+                    <li>
+                                    <div>
+                        <a href="/pratique/zoom-comment-partager-son-ecran-sur-ios-39904547.htm" class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/edit/ne/2020/06/Zoom_iPhone-140__60_45__overflow.jpg" alt="Zoom : comment partager son écran sur iOS ?" width="60" height="45">
+</picture>
+                        </a>
+                    </div>
+                                <div class="content">
+                                            <p><a href="/pratique/zoom-comment-partager-son-ecran-sur-ios-39904547.htm">Zoom : comment partager son écran sur iOS ?</a></p>
+                                                    <p class="meta">02/06/2020</p>
+                                                            </div>
+            </li>
+                    <li>
+                                    <div>
+                        <a href="/pratique/un-nouveau-menu-de-configuration-rapide-sur-gmail-39904449.htm" class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/edit/ne/2020/05/Gmail_29052020-140__60_45__overflow.jpg" alt="Un nouveau menu de configuration rapide sur Gmail" width="60" height="45">
+</picture>
+                        </a>
+                    </div>
+                                <div class="content">
+                                            <p><a href="/pratique/un-nouveau-menu-de-configuration-rapide-sur-gmail-39904449.htm">Un nouveau menu de configuration rapide sur Gmail</a></p>
+                                                    <p class="meta">01/06/2020</p>
+                                                            </div>
+            </li>
+                            <li class="moreLink"><a href="/pratique/">Voir tous les guides</a></li>
+            </ul>
+</div>
+
+</section>
+                    <section class="module">
+	<div id="mpuBottom">
+		<div class="prepend"><b class="caret"></b> publicité <b class="caret"></b></div>
+<div id="300_btf-container"></div>
+<script type="text/javascript">
+afAdQueue.push(function() {
+afAd.render('300_btf', {
+                    createParams: {
+                        container: document.getElementById('300_btf-container'),
+                        mode: 'inside',
+                    }
+                });
+});
+</script>
+
+	</div>
+</section>                    <section class="facebook">
+	<iframe src="//www.facebook.com/plugins/likebox.php?id=6512744217&amp;width=300&amp;connections=5&amp;locale=fr_FR&amp;stream=false&amp;header=true&amp;height=220" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:220px;" allowtransparency="true"></iframe>
+</section>
+                    <section class="keepUp">
+    
+<h3 class="heading"><span class="int">Le meilleur de ZDNet, chez vous</span></h3>    <div class="box">
+        <form name="create_member" id="newsletter" method="post" action="/membres/creer/">
+            <fieldset>
+                <h3>Newsletters ZDNet</h3>
+                <p>
+                    Recevez le meilleur de l'actualité IT Pro chaque jour dans votre boîte mail
+                </p>
+                <p class="mmode-msg">
+                    Nous sommes temporairement en mode de maintenance, ce qui signifie que vous ne serez pas en mesure de s'inscrire à une newsletter. S'il vous plaît vérifier à nouveau peu de temps pour reprendre le processus d'abonnement. Merci pour votre patience.
+                </p>
+                <div class="mmode mmode-nls">
+                                            <input class="prettytextarea" type="text" name="iWantToJoinWithThisEmail" value="E-Mail" onfocus="this.value=''" id="nl_email" />
+                        <button class="button primary" type="submit">
+                            S'abonner
+                        </button>
+                                    </div>
+            </fieldset>
+        </form>
+    </div>
+</section>                    <section id="powercenter" class="module">
+	
+<h3 class="heading"><span class="int">Powercenter</span></h3>	<div class="js-non-interactive-event" 
+    data-track-category="powercenter" 
+    data-track-action="affichage" 
+    data-track-label="powercenter" 
+></div>
+<div class="carousel">
+    <div class="sliderWrapper" style="height:250px">
+                    <article>
+                <figure style="padding-bottom:130px;">
+                                            <a href="https://www.zdnet.fr/dossier/dossier-mobilite-pour-les-pros-4000238003.htm" target="_blank" class="js-track-click" data-track-category="powercenter" data-track-action="click" data-track-label="3">
+                            <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/i/partenaire/samsung/power-center-300x120.jpg" alt="" height="120"/>
+                            <img class="large" style="display:none;" src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/i/partenaire/samsung/power-center-768x125.jpg" alt=""/>
+                        </a>
+                                    </figure>
+
+                <div class="overlay" style="top:120px;">
+                    <div class="content">
+                        <h4><a href="https://www.zdnet.fr/dossier/dossier-mobilite-pour-les-pros-4000238003.htm" target="_blank" class="js-track-click" data-track-category="powercenter" data-track-action="click" data-track-label="3">Mobilité professionnelle : Pensez le monde d'après</a></h4>
+                        <p>
+                            <a href="https://www.zdnet.fr/dossier/dossier-mobilite-pour-les-pros-4000238003.htm" target="_blank" class="js-track-click" data-track-category="powercenter" data-track-action="click" data-track-label="3"><br /><br /> Découvrez notre dossier</a>
+                        </p>
+                    </div>
+                </div>
+            </article>
+                    <article>
+                <figure style="padding-bottom:130px;">
+                                            <a href="https://pubads.g.doubleclick.net/gampad/clk?id=5225276636&amp;iu=/229683329/zdnet_fr/cliccommand" target="_blank" class="js-track-click" data-track-category="powercenter" data-track-action="click" data-track-label="inmac-wstore-1">
+                            <img src="https://creatives.sascdn.com/diff/1045/8462577/pc_300x120.jpg" alt="" height="120"/>
+                            <img class="large" style="display:none;" src="https://creatives.sascdn.com/diff/1045/8462577/pc_300x120.jpg" alt=""/>
+                        </a>
+                                    </figure>
+
+                <div class="overlay" style="top:120px;">
+                    <div class="content">
+                        <h4><a href="https://pubads.g.doubleclick.net/gampad/clk?id=5225276636&amp;iu=/229683329/zdnet_fr/cliccommand" target="_blank" class="js-track-click" data-track-category="powercenter" data-track-action="click" data-track-label="inmac-wstore-1"></a></h4>
+                        <p>Nous accompagnons les PME dans leur développement IT. Nous partageons avec vous nos témoignages clients, webinars, livres blancs...
+                            <a href="https://pubads.g.doubleclick.net/gampad/clk?id=5225276636&amp;iu=/229683329/zdnet_fr/cliccommand" target="_blank" class="js-track-click" data-track-category="powercenter" data-track-action="click" data-track-label="inmac-wstore-1"><br /><br /> 5 dossiers IT à découvrir chaque mois</a>
+                        </p>
+                    </div>
+                </div>
+            </article>
+                    <article>
+                <figure style="padding-bottom:130px;">
+                                            <a href="https://info.dynatrace.com/emea_south_wc_fr_cdiscount_13554_od_fulfillment.html" target="_blank" class="js-track-click" data-track-category="powercenter" data-track-action="click" data-track-label="webinar-cyberark-2">
+                            <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/i/edit/ne/2020/04/300x120%20(1)%20(5).jpg" alt="" height="120"/>
+                            <img class="large" style="display:none;" src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/i/edit/ne/2020/04/768x125-dynatrace%20(2).jpg" alt=""/>
+                        </a>
+                                    </figure>
+
+                <div class="overlay" style="top:120px;">
+                    <div class="content">
+                        <h4><a href="https://info.dynatrace.com/emea_south_wc_fr_cdiscount_13554_od_fulfillment.html" target="_blank" class="js-track-click" data-track-category="powercenter" data-track-action="click" data-track-label="webinar-cyberark-2"></a></h4>
+                        <p>En moins de 10 ans, Cdiscount, leader français du e-commerce, est passé d’une architecture SOA monolithique à un environnement massivement distribué, dans lequel cohabitent plus de vingt technologies différentes
+                            <a href="https://info.dynatrace.com/emea_south_wc_fr_cdiscount_13554_od_fulfillment.html" target="_blank" class="js-track-click" data-track-category="powercenter" data-track-action="click" data-track-label="webinar-cyberark-2"><br /><br /> Accédez au webinar</a>
+                        </p>
+                    </div>
+                </div>
+            </article>
+            </div>
+</div>
+</section>                    <section class="module">
+    
+<h3 class="heading"><span class="int">Sur le même thème</span></h3>    <div id="latestNews" class="box">
+    <ul>
+                    <li>
+                                    <div>
+                        <a href="/actualites/le-terminal-vendeur-instrument-du-retail-omnicanal-39906061.htm" class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/edit/ne/2020/06/OneStock-140__60_45__overflow.jpg" alt="Le terminal vendeur, instrument du retail omnicanal" width="60" height="45">
+</picture>
+                        </a>
+                    </div>
+                                <div class="content">
+                                            <p><a href="/actualites/le-terminal-vendeur-instrument-du-retail-omnicanal-39906061.htm">Le terminal vendeur, instrument du retail omnicanal</a></p>
+                                                    <p class="meta">06/07/2020</p>
+                                                            </div>
+            </li>
+                    <li>
+                                    <div>
+                        <a href="/actualites/watchos-7-suit-votre-sommeil-39906131.htm" class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/edit/ne/2020/06/WatchOS7-140__60_45__overflow.jpg" alt="WatchOS 7 suit votre sommeil" width="60" height="45">
+</picture>
+                        </a>
+                    </div>
+                                <div class="content">
+                                            <p><a href="/actualites/watchos-7-suit-votre-sommeil-39906131.htm">WatchOS 7 suit votre sommeil</a></p>
+                                                    <p class="meta">04/07/2020</p>
+                                                            </div>
+            </li>
+                    <li>
+                                    <div>
+                        <a href="/actualites/windows-10-microsoft-defender-atp-evalue-desormais-vos-configurations-de-securite-39906177.htm" class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/edit/ne/2020/02/cybersec_140__60_45__overflow.jpg" alt="Windows 10 : Microsoft Defender ATP évalue désormais vos configurations de sécurité " width="60" height="45">
+</picture>
+                        </a>
+                    </div>
+                                <div class="content">
+                                            <p><a href="/actualites/windows-10-microsoft-defender-atp-evalue-desormais-vos-configurations-de-securite-39906177.htm">Windows 10 : Microsoft Defender ATP évalue désormais vos configurations de sécurité </a></p>
+                                                    <p class="meta">04/07/2020</p>
+                                                            </div>
+            </li>
+                    <li>
+                                    <div>
+                        <a href="/actualites/un-plan-de-relance-pour-les-infrastructures-numeriques-les-failles-de-la-reconnaissance-faciale-ios-14-c-est-le-zd-brief-39906175.htm" class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/edit/ne/2020/01/ZDBrief-140__60_45__overflow.jpg" alt="Un plan de relance pour les infrastructures numériques, les failles de la reconnaissance faciale, iOS 14... C'est le ZD Brief !" width="60" height="45">
+</picture>
+                        </a>
+                    </div>
+                                <div class="content">
+                                            <p><a href="/actualites/un-plan-de-relance-pour-les-infrastructures-numeriques-les-failles-de-la-reconnaissance-faciale-ios-14-c-est-le-zd-brief-39906175.htm">Un plan de relance pour les infrastructures numériques, les failles de la reconnaissance faciale, iOS 14... C&#039;est le ZD Brief !</a></p>
+                                                    <p class="meta">03/07/2020</p>
+                                                            </div>
+            </li>
+                    <li>
+                                    <div>
+                        <a href="/actualites/seize-applications-facebook-partagent-vos-donnees-secretement-avec-des-tiers-39906181.htm" class="thumb">
+                            <picture>
+        <img src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/optim/i/edit/ne/2017/09/retrait-contenus-all-140__60_45__overflow.jpg" alt="Seize applications Facebook partagent vos données secrètement avec des tiers" width="60" height="45">
+</picture>
+                        </a>
+                    </div>
+                                <div class="content">
+                                            <p><a href="/actualites/seize-applications-facebook-partagent-vos-donnees-secretement-avec-des-tiers-39906181.htm">Seize applications Facebook partagent vos données secrètement avec des tiers</a></p>
+                                                    <p class="meta">03/07/2020</p>
+                                                            </div>
+            </li>
+                    </ul>
+</div>
+
+</section>
+                    <section class="module">
+    
+<h3 class="heading"><span class="int">Les news les plus populaires</span></h3>    <iframe frameborder="0" width="300" height="290" scrolling="no" style="display: block" src="https://51weu4-uwa.netvibes.com/widget/frame?uwaUrl=https%3A%2F%2Fwww.netvibes.com%2Fmodules%2Ftop3%2Ftop3.html&header=0&displayEdit=0&autoLaunch=1&readOnly=1&remote=false&feedUrl=https://www.zdnet.fr/feeds/rss/actualites/"></iframe>
+</section>
+            </aside>                    </div>
+                <a id="stop-alert-corner"></a>
+        <div id="leaderBottom" class="leader">
+    <div class="container">
+        <div class="prepend"><b class="caret"></b> publicité <b class="caret"></b></div>
+<div id="banner_btf-container"></div>
+<script type="text/javascript">
+afAdQueue.push(function() {
+afAd.render('banner_btf', {
+                    createParams: {
+                        container: document.getElementById('banner_btf-container'),
+                        mode: 'inside',
+                    }
+                });
+});
+</script>
+
+    </div>
+</div>
+                    <div id="slidebox" data-alert-corner-id="2" data-alert-corner-caping="1">
+    <span></span>
+    <a class="close">x</a>
+    <a href="https://lesnumeriques1.typeform.com/to/hQqx2U">
+        <img class="slidebox-img" src="https://d1fmx1rbmqrxrr.cloudfront.net/zdnet/i/edit/ne/2020/05/etude-teletravail_140x105.png"/>
+        <p>ZDNet.fr recueille l’avis des salariés sur leur expérience PC durant le confinement</p>
+    </a>
+</div>
+            </div>
+</div>
+    <div id="catfish" data-toggle="fixate" data-window-edge="bottom">
+        <div class="container">
+            <div class="catfishBar">
+                <span class="branding">ZDNET</span>
+                <span class="social twitter"><a href="https://twitter.com/zdnetfr" class="twitter-follow-button pre-render" data-show-count="false" data-show-screen-name="true" data-lang="fr"></a></span>
+                <span class="social facebook">
+                    <fb:like class="facebook-like-button" send="false" layout="button_count" width="83" show_faces="false" font="arial" href="https://www.facebook.com/zdnet.fr"></fb:like>
+                </span>
+                <span class="social linkedin" style="padding-top: 4px;">
+                    <script type="IN/FollowCompany" data-id="3044984"></script>
+                </span>
+                <span class="services">
+                                            <a href="/membres/connexion.htm" data-modal-ajax="/membres/popup/connexion.htm" data-modal-title="Se connecter sur ZDNet">Se connecter</a> | <a href="/membres/creer/" data-modal-ajax="/membres/popup-ajax/inscription.htm" data-modal-title="Devenir membre de ZDNet">Devenir membre</a>
+                                    </span>
+                <a class="close" data-action="close">Close</a>
+            </div>
+        </div>
+    </div>
+<footer role="contentinfo">
+    <div class="container">
+
+        
+                    <div class="row footerNav">
+                <nav class="column-2 footerMap">
+                    <h2>Autour de ZDNet</h2>
+                    <ul>
+                        <li><a href="/membres/">Newsletters</a></li>
+                        <li><a href="/services/rss/">Flux RSS</a></li>
+                        <li><a href="/equipe/">Signaler un contenu</a></li>
+                    </ul>
+                </nav>
+                <nav class="column-2 footerMap">
+                    <h2>Services</h2>
+                    <ul>
+                        <li><a href="/services/test-bande-passante/">Test bande passante</a></li>
+                        <li><a href="/services/4g-monitor/">4G Monitor</a></li>
+                        <li><a href="/livre-blanc/">Livres Blancs</a></li>
+                        <li><a href="/actualites/carrieres-it/">Carrières IT</a></li>
+                        <li><a href="/telecharger/windows/">Télécharger</a></li>
+                    </ul>
+                </nav>
+                <nav class="column-2 footerMap">
+                    <h2>Nous connaître</h2>
+                    <ul>
+                        <li><a href="/equipe/">L'équipe</a></li>
+                        <li><a href="https://twitter.com/zdnetfr" target="_blank">Twitter</a></li>
+                        <li><a href="https://fr-fr.facebook.com/zdnet.fr" target="_blank">Facebook</a></li>
+                        <li><a href="https://www.linkedin.com/company/3044984/" target="_blank">LinkedIn</a></li>
+                    </ul>
+                </nav>
+                <nav class="column-1 footerMap">
+                    <h2>Archives</h2>
+                    <ul>
+                                                                <li><a href="/archives/2019/">2019</a></li>
+                                                                    <li><a href="/archives/2018/">2018</a></li>
+                                                                    <li><a href="/archives/2017/">2017</a></li>
+                                                                    <li><a href="/archives/2016/">2016</a></li>
+                                                                    <li><a href="/archives/2015/">2015</a></li>
+                                                                    <li><a href="/archives/2014/">2014</a></li>
+                                                                    <li><a href="/archives/2013/">2013</a></li>
+                                            </ul>
+                </nav>
+                <nav class="column-1 footerMap">
+                    <h2>&nbsp;</h2>
+                    <ul>
+                                                                    <li><a href="/archives/2012/">2012</a></li>
+                                                                    <li><a href="/archives/2011/">2011</a></li>
+                                                                    <li><a href="/archives/2010/">2010</a></li>
+                                                                    <li><a href="/archives/2009/">2009</a></li>
+                                                                    <li><a href="/archives/2008/">2008</a></li>
+                                                                    <li><a href="/archives/2007/">2007</a></li>
+                                                                    <li><a href="/archives/2006/">2006</a></li>
+                                            </ul>
+                </nav>
+                <nav class="column-1 footerMap">
+                    <h2>&nbsp;</h2>
+                    <ul>
+                                                                    <li><a href="/archives/2005/">2005</a></li>
+                                                                    <li><a href="/archives/2004/">2004</a></li>
+                                                                    <li><a href="/archives/2003/">2003</a></li>
+                                                                    <li><a href="/archives/2002/">2002</a></li>
+                                                                    <li><a href="/archives/2001/">2001</a></li>
+                                                                    <li><a href="/archives/2000/">2000</a></li>
+                                                                    <li><a href="/archives/1999/">1999</a></li>
+                                            </ul>
+                </nav>
+                <nav class="column-1 footerMap">
+                    <h2>&nbsp;</h2>
+                    <ul>
+                                                                </ul>
+                </nav>
+            </div>
+                <p class="copyright">
+            Copyright &copy; 2020 CBS Interactive Inc, CUP Interactive SAS (France). Tous droits réservés. <a href="https://www.cupinteractive.com/mentions-legales.html" rel="nofollow" target="_blank">Mentions légales</a> | <a href="https://www.cupinteractive.com/politique-de-confidentialite.html" rel="nofollow" target="_blank">Confidentialité</a> | <a href="https://www.cupinteractive.com/politique-de-confidentialite/cookies.html" rel="nofollow" target="_blank">Cookies</a> | <a class="js-change-consent" href="#">Paramètres de Gestion de la Confidentialité</a>
+        </p>
+                <div class="networkSites">
+            <form>
+                <label for="siteTarget">Visitez les sites CBS Interactive</label>
+                <ul class="selectdropdown">
+                    <li><a target="_blank" href="#">Select Site</a></li>
+                    <li><a target="_blank" href="https://www.zdnet.com">ZDNet US</a></li>
+                    <li><a target="_blank" href="https://www.zdnet.de">ZDNet DE</a></li>
+                    <li><a target="_blank" href="https://www.cnet.com">CNET.com</a></li>
+                    <li><a target="_blank" href="https://www.gamespot.com">Gamespot.com</a></li>
+                    <li><a target="_blank" href="https://www.techrepublic.com">Techrepublic.com</a></li>
+                </ul>
+            </form>
+        </div>
+    </div>
+</footer>
+
+    <script src="/min-js/build-core.js?v=202007021400"></script>
+
+<script>
+    
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+    
+    </script>
+    <div id="fb-root"></div>
+    <script>
+    
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/fr_FR/all.js#appId=243265768935&xfbml=1";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    
+</script>
+<!-- ZDNetFR Content Checker -->
+</body>
+</html>
