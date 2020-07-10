@@ -817,7 +817,7 @@ def get_timestamp_modified(html, url, **kwargs):
         ( 'valeursactuelles.com',           '//meta[@property="article:modified_time"]/@content'),
         ( 'wiki.arcs.com',                  '//li[@id="lastmod"]/text()'),
         ( 'wiki.islamiccounterterrorism.org', '//li[@id="lastmod"]/text()'),
-        #( 'world-nuclear.org',              '(//em/text())[1]'),
+        ( 'world-nuclear.org',              '(//em/text())[1]'),
         ( 'worldometers.info',              '//div[@style="font-size:13px; color:#999; text-align:center"]/text()'),
 
         # meta xpaths
