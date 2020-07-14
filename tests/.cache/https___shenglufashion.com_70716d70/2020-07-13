@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+		<link rel="pingback" href="https://shenglufashion.com/xmlrpc.php">
+		<script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>
+<title>FASH455 Global Apparel &amp; Textile Trade and Sourcing &#8211; Copyright© 2012-2020 Dr. Sheng Lu, Associate Professor, Department of Fashion &amp; Apparel Studies, University of Delaware</title>
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.remove(); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[i].remove();
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9zaGVuZ2x1ZmFzaGlvbi5jb20%3D"
+		+ "&wpcomid=34656981"
+		+ "&time=1594679615";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='//s2.wp.com' />
+<link rel='dns-prefetch' href='//s1.wp.com' />
+<link rel='dns-prefetch' href='//shenglufashion.wordpress.com' />
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link href='https://fonts.gstatic.com' crossorigin rel='preconnect' />
+<link rel="alternate" type="application/rss+xml" title="FASH455 Global Apparel &amp; Textile Trade and Sourcing &raquo; Feed" href="https://shenglufashion.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="FASH455 Global Apparel &amp; Textile Trade and Sourcing &raquo; Comments Feed" href="https://shenglufashion.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="FASH455 Global Apparel &amp; Textile Trade and Sourcing &raquo; About FASH455 Comments Feed" href="https://shenglufashion.com/about/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s2.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1582709031h&ver=5.4.2"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s2.wp.com/_static/??-eJylkt1ugzAMRl9owcDGBBfTniUJLk2XP8WOGG+/0NJesKqrtEsnPp+ObMMchQ6e0TO4LKLNk/EEc9TBCXLG4rKrKk30AvcxHRIKPqJDKt8uSgaeS89C5psR/S/2Ck65lArTJNYI6KvXqgaVjR1B2aC/hDUqybQA8WLx/zFnxydizhTBCTnKFZdLyCymZManTXYRSbLxE/2BH7K1ggyjwNGswDZiaLq+H7q6HSAmdCa7G/o4UIfNo6nadSijIb49ivvsfrHbRkuHK1YSbZmh50fY5XCUKq5E4mp8OZCV+3QfTTe81W3b1O+nH9CR8rw=?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<style id='global-styles-inline-css'>
+:root {
+	--wp--preset--color--dark-gray: #1a1a1a;
+	--wp--preset--color--medium-gray: #686868;
+	--wp--preset--color--light-gray: #e5e5e5;
+	--wp--preset--color--white: #fff;
+	--wp--preset--color--blue-gray: #4d545c;
+	--wp--preset--color--bright-blue: #007acc;
+	--wp--preset--color--light-blue: #9adffd;
+	--wp--preset--color--dark-brown: #402b30;
+	--wp--preset--color--medium-brown: #774e24;
+	--wp--preset--color--dark-red: #640c1f;
+	--wp--preset--color--bright-red: #ff675f;
+	--wp--preset--color--yellow: #ffef8e;
+	--wp--preset--font-size--small: 13;
+	--wp--preset--font-size--normal: 16;
+	--wp--preset--font-size--medium: 20;
+	--wp--preset--font-size--large: 36;
+	--wp--preset--font-size--huge: 48;
+	--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);
+	--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);
+	--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);
+	--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);
+	--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);
+	--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);
+	--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);
+	--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);
+	--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);
+	--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);
+	--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);
+	--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);
+}
+
+</style>
+<link crossorigin="anonymous" rel='stylesheet' id='twentysixteen-fonts-css'  href='https://fonts.googleapis.com/css?family=Merriweather%3A400%2C700%2C900%2C400italic%2C700italic%2C900italic%7CMontserrat%3A400%2C700%7CInconsolata%3A400&#038;subset=latin%2Clatin-ext' media='all' />
+<link rel='stylesheet' id='all-css-4-1' href='https://s0.wp.com/_static/??-eJyNjcEKgCAQRH8oW6WCLtG/JEtZukm7Uv590qlL0G1484aBMyq7kyAJhKSiT7MjhhkJD1eKj1hb5gpeW1kwIENME8hZQGZ3CSIBS/b4Xy8iTH6323MxhsF0bd8bbRq93nKBQK0=?cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 10]>
+<link rel='stylesheet' id='twentysixteen-ie-css'  href='https://s2.wp.com/wp-content/themes/pub/twentysixteen/css/ie.css?m=1448353951h&#038;ver=20160816' media='all' />
+<![endif]-->
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentysixteen-ie8-css'  href='https://s2.wp.com/wp-content/themes/pub/twentysixteen/css/ie8.css?m=1493067000h&#038;ver=20160816' media='all' />
+<![endif]-->
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='twentysixteen-ie7-css'  href='https://s2.wp.com/wp-content/themes/pub/twentysixteen/css/ie7.css?m=1448353951h&#038;ver=20160816' media='all' />
+<![endif]-->
+<link rel='stylesheet' id='all-css-10-1' href='https://s1.wp.com/_static/??-eJx9jtEOwiAMRX9IrEvckj0YvwWwIgYoWUtwfy8zJtMX3u656Wku1KwsJcEkIA+MyJCLAamtWNm/BDGBZQaWNaCq2VI8Nj7AjxiLyqE4nxiqvzkUBqGsMrF8xZ7ikFQgq8VT+gN1D9ovPXVBE8i16D4bd+xJ2m7PjV72tJ1f42UYp9N5mod5fL4B2B9pLg==?cssminify=yes' type='text/css' media='all' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-12-1' href='https://s2.wp.com/_static/??-eJxti8sKgCAQAH8oW6IHdIi+xcR0Y3XFVfr96NAh6jQMzMCZlOFYbCwQqkpUHUaBxFLUThoziNcZo3vYGpEG/i9hg5oUseO3fKbibbACfgBHvGm6gzUs3Tj3UzcO/XRcZTE30g==?cssminify=yes' type='text/css' media='all' />
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJx9jusOgjAMhV/IMSDOwA/jswiUUbKbayfy9o54+UGMSZMmPd/pOXIJAl1v0gAk5zy3BHF9r2Kmg/wHCIs6XhkKi+4D994xON7Y4IktEF01/FCt79CASAQxA45zzOj3XDBJoyM5JmMEIYOAARmdFi9FVqppWlXWrQwRLCb7td4Rlv07niAXkiF1kpd8WAkfDOC2PhNbo7LhYs+Vao9lXVflaX4CX9ZqHw=='></script>
+<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1530132353h&cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s2.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://shenglufashion.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="https://shenglufashion.com/" />
+<link rel='shortlink' href='https://wp.me/P2lpRz-2' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fshenglufashion.com%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fshenglufashion.com%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="FASH455 Global Apparel &amp; Textile Trade and Sourcing" />
+<meta property="og:description" content="Copyright© 2012-2020 Dr. Sheng Lu, Associate Professor, Department of Fashion &amp; Apparel Studies, University of Delaware" />
+<meta property="og:url" content="https://shenglufashion.com/" />
+<meta property="og:site_name" content="FASH455 Global Apparel &amp; Textile Trade and Sourcing" />
+<meta property="og:image" content="https://shenglufashion.files.wordpress.com/2012/04/cover-picture.jpg" />
+<meta property="og:image:width" content="996" />
+<meta property="og:image:height" content="667" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:creator" content="@shenglu27" />
+<meta name="twitter:site" content="@shenglu27" />
+<meta name="twitter:text:title" content="About FASH455" />
+<meta name="twitter:image" content="https://shenglufashion.files.wordpress.com/2012/04/cover-picture.jpg?w=640" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel='openid.server' href='https://shenglufashion.com/?openidserver=1' />
+<link rel='openid.delegate' href='https://shenglufashion.com/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://shenglufashion.com/osd.xml" title="FASH455 Global Apparel &#38; Textile Trade and Sourcing" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+<meta name="theme-color" content="#f8f8f8" />
+<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><style>
+.milestone-widget {
+	margin-bottom: 1em;
+}
+.milestone-content {
+	line-height: 2;
+	margin-top: 5px;
+	max-width: 17em;
+	padding: 0;
+	text-align: center;
+}
+.milestone-header {
+	background-color: #1a1a1a;
+	color: #ffffff;
+	line-height: 1.3;
+	margin: 0;
+	padding: .8em;
+}
+.milestone-header .event,
+.milestone-header .date {
+	display: block;
+}
+.milestone-header .event {
+	font-size: 120%;
+}
+.milestone-countdown .difference {
+	display: block;
+	font-size: 500%;
+	font-weight: bold;
+	line-height: 1.2;
+}
+.milestone-countdown,
+.milestone-message {
+	background-color: #ffffff;
+	border: 1px solid #d1d1d1;
+	border-top: 0;
+	color: #1a1a1a;
+	padding-bottom: 1em;
+}
+.milestone-message {
+	padding-top: 1em
+}
+</style>
+		<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta name="application-name" content="FASH455 Global Apparel &amp; Textile Trade and Sourcing" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="Copyright© 2012-2020 Dr. Sheng Lu, Associate Professor, Department of Fashion &amp; Apparel Studies, University of Delaware" /><meta name="msapplication-task" content="name=Subscribe;action-uri=https://shenglufashion.com/feed/;icon-uri=https://shenglufashion.files.wordpress.com/2018/08/cropped-sheng.jpg?w=16" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="description" content="FASH455 BlOG ARTICLES https://shenglufashion.com/blog COURSE DESCRIPTION FASH455, which opens to the entire University of Delaware (UD) community, is a university breadth course in the social and behavioral sciences category and a College of Arts and Sciences (CAS) breadth course in Group C (Social and Behavioral Sciences). FASH455 is a department core requirement for B.S. in Fashion Design and Product Innovation,&hellip;" />
+<style type="text/css" id="custom-background-css">
+body.custom-background { background-color: #f8f8f8; }
+</style>
+	<style type="text/css" id="custom-colors-css">input[type=text],input[type=email],input[type=url],input[type=password],input[type=search],input[type=tel],input[type=number],textarea{background:#f7f7f7;color:#686868}input[type=text]:focus,input[type=email]:focus,input[type=url]:focus,input[type=password]:focus,input[type=search]:focus,input[type=tel]:focus,input[type=number]:focus,textarea:focus{background-color:#fff;color:#1a1a1a}body{background-color:#f8f8f8}</style>
+<link rel="icon" href="https://shenglufashion.files.wordpress.com/2018/08/cropped-sheng.jpg?w=32" sizes="32x32" />
+<link rel="icon" href="https://shenglufashion.files.wordpress.com/2018/08/cropped-sheng.jpg?w=192" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://shenglufashion.files.wordpress.com/2018/08/cropped-sheng.jpg?w=180" />
+<meta name="msapplication-TileImage" content="https://shenglufashion.files.wordpress.com/2018/08/cropped-sheng.jpg?w=270" />
+</head>
+
+<body class="home page-template-default page page-id-2 custom-background wp-embed-responsive customizer-styles-applied group-blog highlander-enabled highlander-light">
+<div id="page" class="site">
+	<div class="site-inner">
+		<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+		<header id="masthead" class="site-header" role="banner">
+			<div class="site-header-main">
+				<div class="site-branding">
+					<a href="https://shenglufashion.com/" class="site-logo-link" rel="home" itemprop="url"></a>
+											<p class="site-title"><a href="https://shenglufashion.com/" rel="home">FASH455 Global Apparel &amp; Textile Trade and Sourcing</a></p>
+												<p class="site-description">Copyright© 2012-2020 Dr. Sheng Lu, Associate Professor, Department of Fashion &amp; Apparel Studies, University of Delaware</p>
+									</div><!-- .site-branding -->
+
+									<button id="menu-toggle" class="menu-toggle">Menu</button>
+
+					<div id="site-header-menu" class="site-header-menu">
+													<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Primary Menu">
+								<div class="menu-fash455-container"><ul id="menu-fash455" class="primary-menu"><li id="menu-item-28" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-2 current_page_item menu-item-28"><a href="https://shenglufashion.com/" aria-current="page">About FASH455</a></li>
+<li id="menu-item-3617" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3617"><a href="https://shenglufashion.com/blog/">Blog Articles</a></li>
+<li id="menu-item-3587" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3587"><a href="https://shenglufashion.com/exclusive-interview/">Interview</a></li>
+<li id="menu-item-3585" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3585"><a href="https://shenglufashion.com/term-project/">Project|Event</a></li>
+<li id="menu-item-4991" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4991"><a href="https://shenglufashion.com/publication/">Publication</a></li>
+<li id="menu-item-27" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-27"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/">Travels of a T-shirt</a>
+<ul class="sub-menu">
+	<li id="menu-item-43" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-43"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/part-i-cotton-king/">Part I Cotton King</a></li>
+	<li id="menu-item-3588" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3588"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/part-ii-made-in-china/">Part II Made in China</a></li>
+	<li id="menu-item-3589" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3589"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/part-iii-trouble-at-the-border/">Part III Trouble at the Border</a></li>
+	<li id="menu-item-3590" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3590"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/part-iv-my-t-shirt-finally-encounters-a-free-market/">Part IV My T-shirt Finally Encounters a Free Market</a></li>
+</ul>
+</li>
+<li id="menu-item-26" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26"><a href="https://shenglufashion.com/articles-and-resources/">Useful Resources</a></li>
+<li id="menu-item-3586" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3586"><a href="https://shenglufashion.com/contact/">Contact</a></li>
+</ul></div>							</nav><!-- .main-navigation -->
+						
+													<nav id="social-navigation" class="social-navigation" role="navigation" aria-label="Social Links Menu">
+								<div class="menu-fash455-container"><ul id="menu-fash455-1" class="social-links-menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-2 current_page_item menu-item-28"><a href="https://shenglufashion.com/" aria-current="page"><span class="screen-reader-text">About FASH455</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3617"><a href="https://shenglufashion.com/blog/"><span class="screen-reader-text">Blog Articles</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3587"><a href="https://shenglufashion.com/exclusive-interview/"><span class="screen-reader-text">Interview</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3585"><a href="https://shenglufashion.com/term-project/"><span class="screen-reader-text">Project|Event</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4991"><a href="https://shenglufashion.com/publication/"><span class="screen-reader-text">Publication</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-27"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/"><span class="screen-reader-text">Travels of a T-shirt</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26"><a href="https://shenglufashion.com/articles-and-resources/"><span class="screen-reader-text">Useful Resources</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3586"><a href="https://shenglufashion.com/contact/"><span class="screen-reader-text">Contact</span></a></li>
+</ul></div>							</nav><!-- .social-navigation -->
+											</div><!-- .site-header-menu -->
+							</div><!-- .site-header-main -->
+
+											<div class="header-image">
+					<a href="https://shenglufashion.com/" rel="home">
+						<img src="https://shenglufashion.files.wordpress.com/2016/07/cropped-cq5dam_thumbnail_470_264.png" srcset="" sizes="" width="1200" height="326" alt="FASH455 Global Apparel &amp; Textile Trade and Sourcing">
+					</a>
+				</div><!-- .header-image -->
+					</header><!-- .site-header -->
+
+		<div id="content" class="site-content">
+
+<div id="primary" class="content-area">
+	<main id="main" class="site-main" role="main">
+		
+<article id="post-2" class="post-2 page type-page status-publish hentry">
+	<header class="entry-header">
+		<h1 class="entry-title">About FASH455</h1>	</header><!-- .entry-header -->
+
+	
+	<div class="entry-content">
+		<p><span style="color:#000000;"><img data-attachment-id="4062" data-permalink="https://shenglufashion.com/about/cover-picture/" data-orig-file="https://shenglufashion.files.wordpress.com/2012/04/cover-picture.jpg" data-orig-size="996,667" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="cover picture" data-image-description="" data-medium-file="https://shenglufashion.files.wordpress.com/2012/04/cover-picture.jpg?w=300" data-large-file="https://shenglufashion.files.wordpress.com/2012/04/cover-picture.jpg?w=996" class="  wp-image-4062 aligncenter" src="https://shenglufashion.files.wordpress.com/2012/04/cover-picture.jpg?w=615&#038;h=412" alt="cover picture" width="615" height="412" srcset="https://shenglufashion.files.wordpress.com/2012/04/cover-picture.jpg?w=615&amp;h=412 615w, https://shenglufashion.files.wordpress.com/2012/04/cover-picture.jpg?w=373&amp;h=250 373w, https://shenglufashion.files.wordpress.com/2012/04/cover-picture.jpg?w=300&amp;h=201 300w, https://shenglufashion.files.wordpress.com/2012/04/cover-picture.jpg?w=768&amp;h=514 768w, https://shenglufashion.files.wordpress.com/2012/04/cover-picture.jpg 996w" sizes="(max-width: 615px) 85vw, 615px" /></span></p>
+<p><span style="color:#000000;"><strong>FASH455 BlOG ARTICLES</strong></span></p>
+<p><span style="color:#000000;"><strong><a href="https://shenglufashion.com/blog">https://shenglufashion.com/blog</a></strong></span></p>
+<p><span style="color:#000000;"><strong>COURSE DESCRIPTION</strong></span></p>
+<p><span style="color:#ff0000;"><strong>FASH455, which opens to the </strong><strong>entire University of Delaware (UD) community, </strong><strong>is a university breadth course in the social and behavioral sciences category and </strong><strong>a College of Arts and Sciences (CAS) breadth course in Group C (Social and Behavioral Sciences). </strong></span><span style="color:#000000;">FASH455 is a department core requirement for </span><span style="color:#000000;"><a href="https://www.fashion.udel.edu/prospective-students/bachelor-of-science-in-fashion-design-and-product-innovation">B.S. in Fashion Design and Product Innovation</a>, and B.S. in <a href="https://www.fashion.udel.edu/prospective-students/bachelor-of-science-in-fashion-merchandising-and-management">Fashion Merchandising and Management</a>. The course also fulfills the requirement for <a href="https://www.fashion.udel.edu/undergraduate/majors-and-minors/minor-in-fashion-management">Minor in Fashion Management,</a> <a href="https://www.fashion.udel.edu/undergraduate/majors-and-minors/minor-in-sustainable-apparel-and-textile-innovation1">Minor in Sustainable Apparel and Textile Innovation</a>, and <a href="https://catalog.udel.edu/preview_program.php?catoid=29&amp;poid=20639&amp;returnto=3564">Minor in Global Studies</a>. </span><span style="color:#000000;">The latest FASH455 course schedule can be found <strong><a href="https://udapps.nss.udel.edu/CoursesSearch/search-results.jsp?course_sec=FASH455">HERE</a>.</strong> </span></p>
+<p><span style="color:#000000;">FASH455 will help you understand how international trade and trade policy work in the 21<sup>st</sup>-century world economy, which is important to know for <strong>EVERY college student. </strong></span><span style="color:#000000;">Specifically, the course will explore fashion apparel supply chains and many critical global agendas that are associated with the fashion apparel industry, including:</span></p>
+<ul>
+<li><span style="color:#000000;">Globalization</span></li>
+<li><span style="color:#000000;">Trade and economic development</span></li>
+<li><span style="color:#000000;">Trade and corporate social responsibility</span></li>
+<li><span style="color:#000000;">Debate on trade liberalization and trade protection</span></li>
+<li><span style="color:#000000;">Free trade agreement and trade politics</span></li>
+<li><span style="color:#000000;">International trade and foreign relations</span></li>
+</ul>
+<p style="text-align:left;"><span style="color:#000000;"><strong>REQUIRED TEXTBOOKS AND READINGS</strong></span></p>
+<p style="text-align:left;"><span style="color:#000000;">•FASH455 reading packet</span></p>
+<p><span style="color:#000000;"><strong>RECOMMENDED </strong><strong>SUPPLEMENTARY </strong><strong>READINGS </strong></span></p>
+<p><span style="color:#000000;"><a href="http://www.amazon.com/Textiles-Apparel-Global-Economy/dp/B003LJQ3BW/ref=sr_1_3?ie=UTF8&amp;qid=1344008041&amp;sr=8-3&amp;keywords=textile+and+apparel+in+the+global+economy"><em>Textiles and Apparel in the Global Economy(3rd ed) </em></a>by Kitty Dickerson, Prentice-Hall (1999);</span></p>
+<p><span style="color:#000000;"><a href="http://www.amazon.com/The-Travels-T-Shirt-Global-Economy/dp/1118950143/ref=dp_ob_title_bk"><em>The Travels of a T-Shirt in the Global Economy (2nd ed&#8211;released in December 2014)</em> </a>by P. Rivoli, Wiley;</span></p>
+<p><span style="color:#000000;"><a href="https://www.amazon.com/Global-Sourcing-Textile-Apparel-Industry/dp/1501328360/ref=sr_1_1?ie=UTF8&amp;qid=1513361932&amp;sr=8-1&amp;keywords=global+sourcing+in+the+textile+and+apparel+industry">Global Sourcing in the Textile and Apparel Industry (2nd ed)</a> by Dr. Ha-Brookshire</span></p>
+<p><span style="color:#000000;"><a href="https://www.amazon.com/Going-Global-Textile-Apparel-Industry/dp/1501307304/ref=sr_1_2?ie=UTF8&amp;qid=1507683177&amp;sr=8-2&amp;keywords=going+global">Going Global: The Textile and Apparel Industry (3rd ed)</a> by Grace Kunz and Elena Karpova </span></p>
+<p><span style="color:#000000;"><strong>COURSE </strong><strong>OBJECTIVES</strong></span></p>
+<p><span style="color:#000000;">Upon completion of the course, the student will be able:</span></p>
+<ol>
+<li><span style="color:#000000;"> To comprehend the worldwide importance of the textile and apparel industry (including production, distribution, consumption, and trade) from economic, political and social dimensions;</span></li>
+<li><span style="color:#000000;"> To understand the composition, restructuring, major development trends and the competitive status of the U.S. textile and apparel sectors and to consider the domestic complex within the context of a global economy;</span></li>
+<li><span style="color:#000000;">To understand the textile complex in major regions of the world, including their stages of development, functions in the global apparel value chain and key market conditions;</span></li>
+<li><span style="color:#000000;">To analyze the unique trade policies for textiles and apparel and understand how they affect various segments of the industry (including manufacturers, retailers, and consumers) at multiple levels (including multilateral, regional and bilateral);</span></li>
+<li><span style="color:#000000;">To increase awareness of major cutting-edge issues facing the world today and comprehend their potentials impacts on the future landscape of the textile and apparel sector;</span></li>
+</ol>
+<p><span style="color:#000000;"><strong>IMPORTANCE OF THE SUBJECT</strong></span></p>
+<p><span style="color:#000000;">The textile and apparel industry is a thick textbook study far beyond fiber, yarn, fabric, and clothing.  It is THE industry that triggered the first Industrial Revolution, among those sectors that embraced globalization early and still plays a critical role in the global economy with cross-cutting economic, social and political influences in the 21st century.   Some key facts about this sector today:</span></p>
+<ul>
+<li><span style="color:#000000;"><b>Textiles and apparel remain one of the world’s largest and economically most influential industries in the 21<sup>st</sup> century.</b> Globally, the market value of textiles, apparel and apparel retailing totaled <a href="https://shenglufashion.com/2018/12/18/market-size-of-the-global-textile-and-apparel-industry-2016-to-2021-2022/">$2,000 billion annually</a>. In the United States, the sales of apparel and accessories contributed <a href="https://www.census.gov/econ/currentdata/dbsearch?program=MARTS&amp;startYear=1992&amp;endYear=2019&amp;categories%5B%5D=448&amp;dataType=SM&amp;geoLevel=US&amp;adjusted=1&amp;notAdjusted=1&amp;submit=GET+DATA&amp;releaseScheduleId=">$266 billion </a>to the U.S. economy in 2019.</span></li>
+<li><span style="color:#000000;"><b style="color:#000000;">The textile and apparel industry, </b><span style="color:#000000;"><b>particularly</b></span><b style="color:#000000;"> through international trade and sourcing, plays a uniquely critical role in creating jobs, promoting economic development, enhancing human development and reducing poverty. </b><span style="color:#000000;">Globally, over </span><a style="color:#000000;" href="http://www.odi.org.uk/sites/odi.org.uk/files/odi-assets/publications-opinion-files/3361.pdf">120 Million</a><span style="color:#000000;"> people remain directly employed in the textile and apparel industries today, a good proportion of whom are females living in poor rural areas. Particularly, for most developing countries, the textile and apparel sector accounts for </span><a style="color:#000000;" href="https://shenglufashion.com/2017/02/05/global-textile-and-apparel-exports-by-income-groups-2000-2015/">60%–90%</a><span style="color:#000000;"> of their total merchandise exports and provides one of the very few opportunities for these countries to participate in globalization.</span></span></li>
+<li><span style="color:#000000;"><b>The textile and apparel industry remains a strong presence in the United States in the 21<sup>st</sup> century, although the industry has been critically different from the past because of globalization and advancement of technologies. </b>Across the <a href="https://shenglufashion.com/2018/02/01/global-value-chain-for-apparel-sold-at-target/">supply chain</a>, the U.S. textile and apparel industry directly employs more than <a href="https://shenglufashion.com/2019/09/30/state-of-the-u-s-textile-and-apparel-industry-output-employment-and-trade-updated-september-2019/">1.8 million people</a>, who undertake positions ranging from textile mill workers, warehousing, sourcing managers, wholesalers, retail floor associates, merchandisers, buyers, technical designers, and marketing professionals, just to name a few. According to the World Trade Organization, the United States is still the <a href="http://www.wto.org/english/res_e/statis_e/statis_bis_e.htm?solution=WTO&amp;path=/Dashboards/MAPS&amp;file=Map.wcdf&amp;bookmarkState=%7b%22impl%22:%22client%22,%22params%22:%7b%22langParam%22:%22en%22%7d%7d">fourth largest textile exporter</a> in the world.  The <a href="http://otexa.trade.gov/exports/grp0.htm">U.S. textile and apparel exports in 2019</a> totaled nearly $22.9 billion dollars which destined more than 50 countries around the world. U.S. branded apparel also can be found in almost every corner of the world marketplace.</span></li>
+<li><span style="color:#000000;"><strong>The textile and apparel industry </strong><strong>might be the only sector other than agriculture that is so heavily regulated by <a href="https://shenglufashion.com/textile-and-apparel-trade-policy/">trade policies</a>. </strong>Because of its global presence and the complicated social, economic and political factors associated with the sector, textile and apparel industry actively involves in almost all critical bilateral, regional and multilateral trade policy debates nowadays. This is the case no matter for responding to the  <a href="https://shenglufashion.com/2019/05/10/u-s-apparel-retailers-shifting-sourcing-strategy-for-made-in-china-under-the-shadow-of-the-tariff-war/">U.S.-China tariff war (U.S. section 301 action)</a>, negotiating and ratifying the <a href="https://shenglufashion.com/2019/04/23/usitc-economic-assessment-report-on-usmca-textile-and-apparel-sector-summary/">U.S.-Mexico-Canada Free Trade Agreement</a> (USMCA or NAFTA 2.0), renewing the <a href="https://shenglufashion.com/2020/05/01/usitc-report-u-s-apparel-sourcing-under-african-growth-and-opportunity-act-agoa/">African Growth and Opportunity Act</a>(AGOA), enforcing  labor &amp; environmental standards in trade programs, and </span><span style="color:#000000;">restricting imports in the protection of domestic textile manufacturing sector.  </span></li>
+</ul>
+<div id="jp-post-flair" class="sharedaddy sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-2" class="share-facebook sd-button share-icon" href="https://shenglufashion.com/?share=facebook" target="_blank" title="Click to share on Facebook"><span>Facebook</span></a></li><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-2" class="share-twitter sd-button share-icon" href="https://shenglufashion.com/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-linkedin"><a rel="nofollow noopener noreferrer" data-shared="sharing-linkedin-2" class="share-linkedin sd-button share-icon" href="https://shenglufashion.com/?share=linkedin" target="_blank" title="Click to share on LinkedIn"><span>LinkedIn</span></a></li><li class="share-email"><a rel="nofollow noopener noreferrer" data-shared="" class="share-email sd-button share-icon" href="https://shenglufashion.com/?share=email" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li class="share-pinterest"><a rel="nofollow noopener noreferrer" data-shared="sharing-pinterest-2" class="share-pinterest sd-button share-icon" href="https://shenglufashion.com/?share=pinterest" target="_blank" title="Click to share on Pinterest"><span>Pinterest</span></a></li><li class="share-end"></li></ul></div></div></div></div>	</div><!-- .entry-content -->
+
+	
+</article><!-- #post-## -->
+
+<div id="comments" class="comments-area">
+
+			<h2 class="comments-title">
+			4 thoughts on &ldquo;About FASH455&rdquo;		</h2>
+
+		
+		<ol class="comment-list">
+					<li id="comment-6389" class="comment even thread-even depth-1 highlander-comment">
+			<article id="div-comment-6389" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/ac8a1c195a3e199d8c47ae01301dd458?s=42&#038;d=wavatar&#038;r=G' class='avatar avatar-42' height='42' width='42' />						<b class="fn"><a href='http://www.tc2.com' rel='external nofollow ugc' class='url'>Arturo Rodriguez</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://shenglufashion.com/#comment-6389">
+							<time datetime="2017-07-24T13:22:52-04:00">
+								July 24, 2017 at 1:22 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Dr. Lu, a pleasure reading of you and your course. I have been in the apparel industry for more than 30 years, Latin America is my territory. Having worked as an IE in sewing plants, having sold specialized sewing machines (and 3D scanners) and for the last 15 years as a consultant/conference speaker (mostly with TC2) I appreciate your focus. Maybe we can collaborate?</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://shenglufashion.com/?replytocom=6389#respond' data-commentid="6389" data-postid="2" data-belowelement="div-comment-6389" data-respondelement="respond" aria-label='Reply to Arturo Rodriguez'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-13457" class="comment byuser comment-author-fashionreader212 odd alt thread-odd thread-alt depth-1 highlander-comment">
+			<article id="div-comment-13457" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/f28528e511a7fde8b205ff8ffcbc9e63?s=42&#038;d=wavatar&#038;r=G' class='avatar avatar-42' height='42' width='42' />						<b class="fn">fashionreader212</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://shenglufashion.com/#comment-13457">
+							<time datetime="2018-05-07T20:11:32-04:00">
+								May 7, 2018 at 8:11 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I have learned a lot from taking this course including the global environment of the fashion industry along with a more in depth grasp of trade and policies within the industry.<br />
+As far as the global climate of the industry I was never fully aware of all the unethical practices that happen during the manufacturing process. Without this class, the Rana Plaza incident would have never been brought to my attention, which was an event that killed over 1,000 employees due to the fact that the building had safety and fire hazards that were overlooked. Learning about this event opened my eyes to practices that continue on a daily basis that are not considered ethical by US standards. Along with that, it has taught me to remember these issues as I advance in my career path to fully grasp why companies may be working with certain countries over others. The quickest and cheapest option may not always be the best option due to outside factors such as safety regulations along with ethic practices that are within that certain factory.<br />
+Coming into this class I knew that most garments now a days were produced overseas but I did not understand all the policies that go into that and what makes certain countries more desirable to work with than others. Now after learning about different trade agreements I have learned that countries such as Mexico and ones in Central America are more cost effective to work with in some cases due to the fact that there is less import tariffs than other countries. I also learned the reason that China is so desirable to work with is due to the fact that they have the access to labor that many other countries do not have since they have such a high population rate. China can produce things at a very high volume in comparison to other countries.<br />
+Overall, I have learned a great deal within this class and found it a extremely beneficial course in my University career. The things mentioned above are just a few of the many takeaways that will follow me well beyond this class.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://shenglufashion.com/?replytocom=13457#respond' data-commentid="13457" data-postid="2" data-belowelement="div-comment-13457" data-respondelement="respond" aria-label='Reply to fashionreader212'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-52262" class="comment even thread-even depth-1 highlander-comment">
+			<article id="div-comment-52262" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/6d067fd637ed1c4197ffaef4450f5df1?s=42&#038;d=wavatar&#038;r=G' class='avatar avatar-42' height='42' width='42' />						<b class="fn"><a href='http://appstrophy.com/' rel='external nofollow ugc' class='url'>Appstrophy</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://shenglufashion.com/#comment-52262">
+							<time datetime="2020-04-28T16:19:38-04:00">
+								April 28, 2020 at 4:19 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Amazing post and thanks for sharing.<a href='http://appstrophy.com/' rel="nofollow ugc">Custom Mobile App Demo Video</a></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://shenglufashion.com/?replytocom=52262#respond' data-commentid="52262" data-postid="2" data-belowelement="div-comment-52262" data-respondelement="respond" aria-label='Reply to Appstrophy'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		</ol><!-- .comment-list -->
+
+		
+	
+	
+		<div id="respond" class="comment-respond">
+		<h2 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/#respond" style="display:none;">Cancel reply</a></small></h2><form action="https://shenglufashion.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate><input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="556b40fcef" /><input type="hidden" name="_wp_http_referer" value="/" />
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest" />
+
+<div class="comment-form-field comment-textarea">
+	<label for="comment">Enter your comment here...</label>
+	<div id="comment-form-comment"><textarea id="comment" name="comment" title="Enter your comment here..."></textarea></div>
+</div>
+
+<div id="comment-form-identity">
+	<div id="comment-form-nascar">
+		<p>Fill in your details below or click an icon to log in:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="#comment-form-guest" id="postas-guest" class="nascar-signin-link"
+                   title="Login via Guest">
+									</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:WordPress.com" id="postas-wordpress" class="nascar-signin-link"
+                   title="Login via WordPress.com">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Twitter" id="postas-twitter" class="nascar-signin-link"
+                   title="Login via Twitter">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Facebook" id="postas-facebook" class="nascar-signin-link"
+                   title="Login via Facebook">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg>				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=wavatar&amp;forcedefault=y&amp;r=G" alt="Gravatar" width="25" class="no-grav" />
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">Email <span class="required">(required)</span> <span class="nopublish">(Address never made public)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Name <span class="required">(required)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Website</label>
+					<div class="comment-form-input"><input id="url" name="url" type="url" value="" /></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=wavatar&amp;forcedefault=y&amp;r=G" alt="WordPress.com Logo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="" />
+						<p class="comment-form-posting-as pa-wordpress">
+			<strong></strong>
+			You are commenting using your WordPress.com account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=wavatar&amp;forcedefault=y&amp;r=G" alt="Google photo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="" />
+						<p class="comment-form-posting-as pa-googleplus">
+			<strong></strong>
+			You are commenting using your Google account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" x="0px" y="0px" viewBox="0 0 60 60" ><path fill="#519bf7" d="M56.3,30c0,-1.6 -0.2,-3.4 -0.6,-5h-3.1H42.2H30v10.6h14.8C44,39.3 42,42 39.1,43.9l8.8,6.8C53,46 56.3,39 56.3,30z" /><path fill="#3db366" d="M30,57.5c6.7,0 13.1,-2.4 17.9,-6.8l-8.8,-6.8c-2.5,1.6 -5.6,2.4 -9.1,2.4c-7.2,0 -13.3,-4.7 -15.4,-11.2l-9.3,7.1C9.8,51.3 19.1,57.5 30,57.5z" /><path fill="#fdc600" d="M5.3,42.2l9.3,-7.1c-0.5,-1.6 -0.8,-3.3 -0.8,-5.1s0.3,-3.5 0.8,-5.1l-9.3,-7.1C3.5,21.5 2.5,25.6 2.5,30S3.5,38.5 5.3,42.2z" /><path fill="#f15b44" d="M40.1,17.4l8,-8C43.3,5.1 37,2.5 30,2.5C19.1,2.5 9.8,8.7 5.3,17.8l9.3,7.1c2.1,-6.5 8.2,-11.1 15.4,-11.1C33.9,13.7 37.4,15.1 40.1,17.4z" /></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=wavatar&amp;forcedefault=y&amp;r=G" alt="Twitter picture" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="" />
+						<p class="comment-form-posting-as pa-twitter">
+			<strong></strong>
+			You are commenting using your Twitter account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=wavatar&amp;forcedefault=y&amp;r=G" alt="Facebook photo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="" />
+						<p class="comment-form-posting-as pa-facebook">
+			<strong></strong>
+			You are commenting using your Facebook account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Cancel</a></div>
+		<p>Connecting to %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+
+<div id="comment-form-subscribe">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Notify me of new comments via email.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog"  style="display: inline;">Notify me of new posts via email.</label></p></div>
+
+
+
+
+<p class="form-submit"><input name="submit" type="submit" id="comment-submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='2' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="d562089ed2" /></p>
+<input type="hidden" name="genseq" value="1594679616" />
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="68"/></p></form>	</div><!-- #respond -->
+	<div style="clear: both"></div>
+</div><!-- .comments-area -->
+
+	</main><!-- .site-main -->
+
+	<aside id="content-bottom-widgets" class="content-bottom-widgets" role="complementary">
+			<div class="widget-area">
+			<section id="blog_subscription-3" class="widget widget_blog_subscription jetpack_subscription_widget"><h2 class="widget-title"><label for="subscribe-field">Follow the Site via Email</label></h2>
+			<form
+				action="https://subscribe.wordpress.com"
+				method="post"
+				accept-charset="utf-8"
+				id=""
+			>
+									<p>Enter your email address to follow this blog and receive notifications of new posts by email.</p>
+					<p id="subscribe-email">
+						<input
+								type="text"
+								name="email"
+								
+								style="width: 95%; padding: 1px 10px"
+								placeholder="Enter your email address"
+								value=""
+								id=""
+							/>					</p>
+				
+				<p id="subscribe-submit">
+                    <input type="hidden" name="action" value="subscribe"/>
+                    <input type="hidden" name="blog_id" value="34656981"/>
+                    <input type="hidden" name="source" value="https://shenglufashion.com/"/>
+                    <input type="hidden" name="sub-type" value="widget"/>
+                    <input type="hidden" name="redirect_fragment" value="blog_subscription-3"/>
+					<input type="hidden" id="_wpnonce" name="_wpnonce" value="11a5b607ab" />                    <button type="submit"
+	                    		                	                >
+	                    Follow                    </button>
+                </p>
+            </form>
+			
+</section><section id="search-3" class="widget widget_search"><h2 class="widget-title">SEARCH THE SITE</h2>
+<form role="search" method="get" class="search-form" action="https://shenglufashion.com/">
+	<label>
+		<span class="screen-reader-text">Search for:</span>
+		<input type="search" class="search-field" placeholder="Search &hellip;" value="" name="s" />
+	</label>
+	<button type="submit" class="search-submit"><span class="screen-reader-text">Search</span></button>
+</form>
+</section>		</div><!-- .widget-area -->
+	
+	</aside><!-- .content-bottom-widgets -->
+
+</div><!-- .content-area -->
+
+
+	<aside id="secondary" class="sidebar widget-area" role="complementary">
+		<section id="milestone_widget-2" class="widget milestone-widget"><h2 class="widget-title">Countdown Clock</h2><div class="milestone-content"><div class="milestone-header"><strong class="event">First Day of Class</strong><span class="date">September 2nd, 2020</span></div><div class="milestone-countdown"><span class="difference">51</span> <span class="label">days</span> to go.</div></div><!--milestone-content--></section><section id="blog_subscription-2" class="widget widget_blog_subscription jetpack_subscription_widget"><h2 class="widget-title"><label for="subscribe-field-2">Follow the Site via Email</label></h2>
+			<form
+				action="https://subscribe.wordpress.com"
+				method="post"
+				accept-charset="utf-8"
+				id=""
+			>
+									<p>Enter your email address to follow this blog and receive notifications of new posts by email.</p>
+					<p id="subscribe-email">
+						<input
+								type="text"
+								name="email"
+								
+								style="width: 95%; padding: 1px 10px"
+								placeholder="Enter your email address"
+								value=""
+								id=""
+							/>					</p>
+				
+				<p id="subscribe-submit">
+                    <input type="hidden" name="action" value="subscribe"/>
+                    <input type="hidden" name="blog_id" value="34656981"/>
+                    <input type="hidden" name="source" value="https://shenglufashion.com/"/>
+                    <input type="hidden" name="sub-type" value="widget"/>
+                    <input type="hidden" name="redirect_fragment" value="blog_subscription-2"/>
+					<input type="hidden" id="_wpnonce" name="_wpnonce" value="11a5b607ab" />                    <button type="submit"
+	                    		                	                >
+	                    Follow                    </button>
+                </p>
+            </form>
+			
+</section><section id="search-2" class="widget widget_search"><h2 class="widget-title">SEARCH THE SITE</h2>
+<form role="search" method="get" class="search-form" action="https://shenglufashion.com/">
+	<label>
+		<span class="screen-reader-text">Search for:</span>
+		<input type="search" class="search-field" placeholder="Search &hellip;" value="" name="s" />
+	</label>
+	<button type="submit" class="search-submit"><span class="screen-reader-text">Search</span></button>
+</form>
+</section><section id="pages-2" class="widget widget_pages"><h2 class="widget-title">Recommended Blog Articles by Topics</h2>		<ul>
+			<li class="page_item page-item-5312"><a href="https://shenglufashion.com/recent-crs-reports-on-trade-issues/">CRS Reports on Trade&nbsp;Issues</a></li>
+<li class="page_item page-item-3910"><a href="https://shenglufashion.com/global-sourcing-practices-and-trends/">Global Apparel Sourcing Practices and&nbsp;Trends</a></li>
+<li class="page_item page-item-3920"><a href="https://shenglufashion.com/globalization-and-trade/">Globalization and Trade</a></li>
+<li class="page_item page-item-3915"><a href="https://shenglufashion.com/key-industry-statistics/">Key Textile and Apparel Trade&nbsp;Statistics</a></li>
+<li class="page_item page-item-3908"><a href="https://shenglufashion.com/textile-and-apparel-industry-around-the-world/">Textile &amp; Apparel Industry Around the&nbsp;World</a></li>
+<li class="page_item page-item-3900"><a href="https://shenglufashion.com/textile-and-apparel-trade-policy/">Textile &amp; Apparel Trade&nbsp;Policy</a></li>
+<li class="page_item page-item-5139"><a href="https://shenglufashion.com/timeline-of-trade-policy-in-the-trump-administration/">Timeline of Trade Policy in the Trump&nbsp;Administration</a></li>
+		</ul>
+			</section><section id="top-posts-3" class="widget widget_top-posts"><h2 class="widget-title">Most READ articles</h2><ul>				<li>
+					<a href="https://shenglufashion.com/2019/08/16/wto-reports-world-textile-and-apparel-trade-in-2018/" class="bump-view" data-bump-view="tp">WTO Reports World Textile and Apparel Trade in 2018</a>					</li>
+								<li>
+					<a href="https://shenglufashion.com/2020/04/19/covid-19-and-the-fashion-apparel-industry-updated-april-2020/" class="bump-view" data-bump-view="tp">COVID-19 and the Fashion Apparel Industry (updated April 2020)</a>					</li>
+								<li>
+					<a href="https://shenglufashion.com/2018/12/18/market-size-of-the-global-textile-and-apparel-industry-2016-to-2021-2022/" class="bump-view" data-bump-view="tp">Market Size of the Global Textile and Apparel Industry: 2016 to 2021/2022</a>					</li>
+								<li>
+					<a href="https://shenglufashion.com/2018/03/04/wage-level-for-garment-workers-in-the-world-updated-in-2017/" class="bump-view" data-bump-view="tp">Wage Level for Garment Workers in the World (updated in 2017)</a>					</li>
+								<li>
+					<a href="https://shenglufashion.com/2020/05/06/covid-19-and-u-s-apparel-imports-updated-may-2020/" class="bump-view" data-bump-view="tp">COVID-19 and U.S. Apparel Imports (Updated: May 2020)</a>					</li>
+								<li>
+					<a href="https://shenglufashion.com/" class="bump-view" data-bump-view="tp" aria-current="page">About FASH455</a>					</li>
+								<li>
+					<a href="https://shenglufashion.com/2018/02/18/statistics-global-apparel-market-2018-2022/" class="bump-view" data-bump-view="tp">Statistics: Global Apparel Market 2018-2022</a>					</li>
+								<li>
+					<a href="https://shenglufashion.com/2017/06/06/market-size-of-the-global-textile-and-apparel-industry-2015-to-2020/" class="bump-view" data-bump-view="tp">Market Size of the Global Textile and Apparel Industry: 2015 to 2020</a>					</li>
+								<li>
+					<a href="https://shenglufashion.com/2020/06/12/eu-vietnam-free-trade-agreement-and-outlook-of-vietnams-apparel-export/" class="bump-view" data-bump-view="tp">EU-Vietnam Free Trade Agreement and Outlook of Vietnam’s Apparel Export</a>					</li>
+								<li>
+					<a href="https://shenglufashion.com/2020/05/08/new-reports-time-for-change-state-of-fashion-2020-coronavirus-update/" class="bump-view" data-bump-view="tp">New Reports: Time for Change &amp; State of Fashion 2020 (Coronavirus update)</a>					</li>
+				</ul></section><section id="twitter_timeline-2" class="widget widget_twitter_timeline"><h2 class="widget-title">Twitter</h2><a class="twitter-timeline" data-width="225" data-theme="light" data-border-color="#e8e8e8" data-tweet-limit="7" data-lang="EN" data-partner="jetpack" href="https://twitter.com/shenglu27" href="https://twitter.com/shenglu27">My Tweets</a></section><section id="recent-comments-3" class="widget widget_recent_comments"><h2 class="widget-title">Recent Comments</h2>				<table class="recentcommentsavatar" cellspacing="0" cellpadding="0" border="0">
+					<tr><td title="oberembt" class="recentcommentsavatartop" style="height:48px; width:48px;"><a href="http://misy262business.wordpress.com" rel="nofollow"><img alt='' src='https://0.gravatar.com/avatar/f9c7525c7037e2fe9a65a588ef1d6690?s=48&#038;d=wavatar&#038;r=G' class='avatar avatar-48' height='48' width='48' /></a></td><td class="recentcommentstexttop" style=""><a href="http://misy262business.wordpress.com" rel="nofollow">oberembt</a> on <a href="https://shenglufashion.com/2020/05/30/production-and-export-strategies-of-u-s-textile-and-apparel-manufacturers/#comment-53592">Production and Export Strategi&hellip;</a></td></tr><tr><td title="oberembt" class="recentcommentsavatarend" style="height:48px; width:48px;"><a href="http://misy262business.wordpress.com" rel="nofollow"><img alt='' src='https://0.gravatar.com/avatar/f9c7525c7037e2fe9a65a588ef1d6690?s=48&#038;d=wavatar&#038;r=G' class='avatar avatar-48' height='48' width='48' /></a></td><td class="recentcommentstextend" style=""><a href="http://misy262business.wordpress.com" rel="nofollow">oberembt</a> on <a href="https://shenglufashion.com/2020/06/12/eu-vietnam-free-trade-agreement-and-outlook-of-vietnams-apparel-export/#comment-53591">EU-Vietnam Free Trade Agreemen&hellip;</a></td></tr><tr><td title="oberembt" class="recentcommentsavatarend" style="height:48px; width:48px;"><a href="http://misy262business.wordpress.com" rel="nofollow"><img alt='' src='https://0.gravatar.com/avatar/f9c7525c7037e2fe9a65a588ef1d6690?s=48&#038;d=wavatar&#038;r=G' class='avatar avatar-48' height='48' width='48' /></a></td><td class="recentcommentstextend" style=""><a href="http://misy262business.wordpress.com" rel="nofollow">oberembt</a> on <a href="https://shenglufashion.com/2020/06/18/how-will-eu-trade-curb-affect-cambodias-apparel-industry/#comment-53590">How will EU Trade Curb Affect&hellip;</a></td></tr><tr><td title="laurencarlucci" class="recentcommentsavatarend" style="height:48px; width:48px;"><img alt='' src='https://1.gravatar.com/avatar/d7897456e1d372d877971f114fea74fd?s=48&#038;d=wavatar&#038;r=G' class='avatar avatar-48' height='48' width='48' /></td><td class="recentcommentstextend" style="">laurencarlucci on <a href="https://shenglufashion.com/2020/05/26/explore-canadas-apparel-sourcing-patterns/#comment-53588">Explore Canada’s Apparel Sourc&hellip;</a></td></tr><tr><td title="laurencarlucci" class="recentcommentsavatarend" style="height:48px; width:48px;"><img alt='' src='https://1.gravatar.com/avatar/d7897456e1d372d877971f114fea74fd?s=48&#038;d=wavatar&#038;r=G' class='avatar avatar-48' height='48' width='48' /></td><td class="recentcommentstextend" style="">laurencarlucci on <a href="https://shenglufashion.com/2020/05/26/explore-canadas-apparel-sourcing-patterns/#comment-53587">Explore Canada’s Apparel Sourc&hellip;</a></td></tr><tr><td title="laurencarlucci" class="recentcommentsavatarend" style="height:48px; width:48px;"><img alt='' src='https://1.gravatar.com/avatar/d7897456e1d372d877971f114fea74fd?s=48&#038;d=wavatar&#038;r=G' class='avatar avatar-48' height='48' width='48' /></td><td class="recentcommentstextend" style="">laurencarlucci on <a href="https://shenglufashion.com/2020/05/26/explore-canadas-apparel-sourcing-patterns/#comment-53586">Explore Canada’s Apparel Sourc&hellip;</a></td></tr><tr><td title="laurencarlucci" class="recentcommentsavatarend" style="height:48px; width:48px;"><img alt='' src='https://1.gravatar.com/avatar/d7897456e1d372d877971f114fea74fd?s=48&#038;d=wavatar&#038;r=G' class='avatar avatar-48' height='48' width='48' /></td><td class="recentcommentstextend" style="">laurencarlucci on <a href="https://shenglufashion.com/2020/05/23/ustr-releases-negotiating-objectives-of-the-proposed-u-s-kenya-free-trade-agreement/#comment-53585">USTR Releases Negotiating Obje&hellip;</a></td></tr>				</table>
+				</section>		<section id="recent-posts-2" class="widget widget_recent_entries">		<h2 class="widget-title">Recent Posts</h2>		<ul>
+											<li>
+					<a href="https://shenglufashion.com/2020/07/02/covid-19-and-u-s-apparel-imports-updated-july-2020/">COVID-19 and U.S. Apparel Imports (Updated: July&nbsp;2020)</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/07/01/ustr-factsheet-textiles-and-apparel-and-the-us-mexico-canada-free-trade-agreement-usmca/">USTR Factsheet: Textiles and Apparel and the US-Mexico-Canada Free Trade Agreement&nbsp;(USMCA)</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/06/18/how-will-eu-trade-curb-affect-cambodias-apparel-industry/">How will EU Trade Curb Affect Cambodia&#8217;s Apparel&nbsp;Industry?</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/06/12/eu-vietnam-free-trade-agreement-and-outlook-of-vietnams-apparel-export/">EU-Vietnam Free Trade Agreement and Outlook of Vietnam’s Apparel&nbsp;Export</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/06/05/covid-19-and-u-s-apparel-imports-updated-june-2020/">COVID-19 and U.S. Apparel Imports (Updated: June&nbsp;2020)</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/06/03/north-american-apparel-market-leaders-talk/">North American Apparel Market Leaders&nbsp;Talk</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/05/30/production-and-export-strategies-of-u-s-textile-and-apparel-manufacturers/">Production and Export Strategies of U.S. Textile and Apparel&nbsp;Manufacturers</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/05/26/explore-canadas-apparel-sourcing-patterns/">Explore Canada’s Apparel Sourcing&nbsp;Patterns</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/05/23/ustr-releases-negotiating-objectives-of-the-proposed-u-s-kenya-free-trade-agreement/">USTR Releases Negotiating Objectives of the Proposed U.S.-Kenya Free Trade&nbsp;Agreement</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/05/08/new-reports-time-for-change-state-of-fashion-2020-coronavirus-update/">New Reports: Time for Change &amp; State of Fashion 2020 (Coronavirus&nbsp;update)</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/05/06/what-do-you-take-away-from-fash455-6/">What Do You Take Away from&nbsp;FASH455?</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/05/06/covid-19-and-u-s-apparel-imports-updated-may-2020/">COVID-19 and U.S. Apparel Imports (Updated: May&nbsp;2020)</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/05/01/usitc-report-u-s-apparel-sourcing-under-african-growth-and-opportunity-act-agoa/">USITC Report: U.S. Apparel Sourcing under African Growth and Opportunity Act&nbsp;(AGOA)</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/04/28/the-evolving-apparel-industry-in-asia-discussion-questions-from-fash455/">The Evolving Apparel Industry in Asia—Discussion Questions from&nbsp;FASH455</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/04/19/covid-19-and-the-fashion-apparel-industry-updated-april-2020/">COVID-19 and the Fashion Apparel Industry (updated April&nbsp;2020)</a>
+									</li>
+					</ul>
+		</section><section id="wp_tag_cloud-2" class="widget wp_widget_tag_cloud"><h2 class="widget-title">POPULAR THEMES</h2><div style="overflow:hidden"><ul class='wp-tag-cloud' role='list'>
+	<li><a href="https://shenglufashion.com/tag/3d-printing/" class="tag-cloud-link tag-link-1334084 tag-link-position-1" style="font-size: 1em;">3D printing</a></li>
+	<li><a href="https://shenglufashion.com/tag/africa/" class="tag-cloud-link tag-link-2214 tag-link-position-2" style="font-size: 1em;">Africa</a></li>
+	<li><a href="https://shenglufashion.com/tag/agoa/" class="tag-cloud-link tag-link-1419768 tag-link-position-3" style="font-size: 1em;">AGOA</a></li>
+	<li><a href="https://shenglufashion.com/tag/apparel/" class="tag-cloud-link tag-link-13894 tag-link-position-4" style="font-size: 1em;">apparel</a></li>
+	<li><a href="https://shenglufashion.com/tag/apparel-sourcing/" class="tag-cloud-link tag-link-22736064 tag-link-position-5" style="font-size: 1em;">apparel sourcing</a></li>
+	<li><a href="https://shenglufashion.com/tag/asia/" class="tag-cloud-link tag-link-1612 tag-link-position-6" style="font-size: 1em;">Asia</a></li>
+	<li><a href="https://shenglufashion.com/tag/bangladesh/" class="tag-cloud-link tag-link-29223 tag-link-position-7" style="font-size: 1em;">Bangladesh</a></li>
+	<li><a href="https://shenglufashion.com/tag/cafta/" class="tag-cloud-link tag-link-1019047 tag-link-position-8" style="font-size: 1em;">CAFTA</a></li>
+	<li><a href="https://shenglufashion.com/tag/canada/" class="tag-cloud-link tag-link-2443 tag-link-position-9" style="font-size: 1em;">Canada</a></li>
+	<li><a href="https://shenglufashion.com/tag/china/" class="tag-cloud-link tag-link-1470 tag-link-position-10" style="font-size: 1em;">China</a></li>
+	<li><a href="https://shenglufashion.com/tag/coronavirus/" class="tag-cloud-link tag-link-1899315 tag-link-position-11" style="font-size: 1em;">Coronavirus</a></li>
+	<li><a href="https://shenglufashion.com/tag/corporate-social-responsbility/" class="tag-cloud-link tag-link-5847280 tag-link-position-12" style="font-size: 1em;">corporate social responsbility</a></li>
+	<li><a href="https://shenglufashion.com/tag/covid19/" class="tag-cloud-link tag-link-694480403 tag-link-position-13" style="font-size: 1em;">covid19</a></li>
+	<li><a href="https://shenglufashion.com/tag/development/" class="tag-cloud-link tag-link-780 tag-link-position-14" style="font-size: 1em;">development</a></li>
+	<li><a href="https://shenglufashion.com/tag/education/" class="tag-cloud-link tag-link-1342 tag-link-position-15" style="font-size: 1em;">Education</a></li>
+	<li><a href="https://shenglufashion.com/tag/emerging-markets/" class="tag-cloud-link tag-link-16895 tag-link-position-16" style="font-size: 1em;">emerging markets</a></li>
+	<li><a href="https://shenglufashion.com/tag/employment/" class="tag-cloud-link tag-link-7915 tag-link-position-17" style="font-size: 1em;">employment</a></li>
+	<li><a href="https://shenglufashion.com/tag/eu/" class="tag-cloud-link tag-link-2702 tag-link-position-18" style="font-size: 1em;">EU</a></li>
+	<li><a href="https://shenglufashion.com/tag/europe/" class="tag-cloud-link tag-link-4328 tag-link-position-19" style="font-size: 1em;">Europe</a></li>
+	<li><a href="https://shenglufashion.com/tag/export/" class="tag-cloud-link tag-link-43231 tag-link-position-20" style="font-size: 1em;">export</a></li>
+	<li><a href="https://shenglufashion.com/tag/export-promotion/" class="tag-cloud-link tag-link-539222 tag-link-position-21" style="font-size: 1em;">export promotion</a></li>
+	<li><a href="https://shenglufashion.com/tag/fashion/" class="tag-cloud-link tag-link-3737 tag-link-position-22" style="font-size: 1em;">fashion</a></li>
+	<li><a href="https://shenglufashion.com/tag/fdi/" class="tag-cloud-link tag-link-215607 tag-link-position-23" style="font-size: 1em;">FDI</a></li>
+	<li><a href="https://shenglufashion.com/tag/free-trade-agreement/" class="tag-cloud-link tag-link-292448 tag-link-position-24" style="font-size: 1em;">free trade agreement</a></li>
+	<li><a href="https://shenglufashion.com/tag/future/" class="tag-cloud-link tag-link-2850 tag-link-position-25" style="font-size: 1em;">future</a></li>
+	<li><a href="https://shenglufashion.com/tag/global/" class="tag-cloud-link tag-link-21656 tag-link-position-26" style="font-size: 1em;">Global</a></li>
+	<li><a href="https://shenglufashion.com/tag/globalization/" class="tag-cloud-link tag-link-10767 tag-link-position-27" style="font-size: 1em;">Globalization</a></li>
+	<li><a href="https://shenglufashion.com/tag/global-sourcing/" class="tag-cloud-link tag-link-526470 tag-link-position-28" style="font-size: 1em;">global sourcing</a></li>
+	<li><a href="https://shenglufashion.com/tag/gsp/" class="tag-cloud-link tag-link-748920 tag-link-position-29" style="font-size: 1em;">GSP</a></li>
+	<li><a href="https://shenglufashion.com/tag/import/" class="tag-cloud-link tag-link-43222 tag-link-position-30" style="font-size: 1em;">import</a></li>
+	<li><a href="https://shenglufashion.com/tag/international-market/" class="tag-cloud-link tag-link-202619 tag-link-position-31" style="font-size: 1em;">international market</a></li>
+	<li><a href="https://shenglufashion.com/tag/international-trade-2/" class="tag-cloud-link tag-link-34924412 tag-link-position-32" style="font-size: 1em;">international trade</a></li>
+	<li><a href="https://shenglufashion.com/tag/japan/" class="tag-cloud-link tag-link-2062 tag-link-position-33" style="font-size: 1em;">Japan</a></li>
+	<li><a href="https://shenglufashion.com/tag/job/" class="tag-cloud-link tag-link-1114 tag-link-position-34" style="font-size: 1em;">job</a></li>
+	<li><a href="https://shenglufashion.com/tag/jobs/" class="tag-cloud-link tag-link-3558 tag-link-position-35" style="font-size: 1em;">jobs</a></li>
+	<li><a href="https://shenglufashion.com/tag/labor/" class="tag-cloud-link tag-link-11898 tag-link-position-36" style="font-size: 1em;">labor</a></li>
+	<li><a href="https://shenglufashion.com/tag/labor-cost/" class="tag-cloud-link tag-link-7600813 tag-link-position-37" style="font-size: 1em;">labor cost</a></li>
+	<li><a href="https://shenglufashion.com/tag/made-in-usa/" class="tag-cloud-link tag-link-684915 tag-link-position-38" style="font-size: 1em;">made in USA</a></li>
+	<li><a href="https://shenglufashion.com/tag/manufacturing/" class="tag-cloud-link tag-link-9675 tag-link-position-39" style="font-size: 1em;">manufacturing</a></li>
+	<li><a href="https://shenglufashion.com/tag/mexico/" class="tag-cloud-link tag-link-783 tag-link-position-40" style="font-size: 1em;">Mexico</a></li>
+	<li><a href="https://shenglufashion.com/tag/nafta/" class="tag-cloud-link tag-link-67253 tag-link-position-41" style="font-size: 1em;">NAFTA</a></li>
+	<li><a href="https://shenglufashion.com/tag/politics/" class="tag-cloud-link tag-link-398 tag-link-position-42" style="font-size: 1em;">politics</a></li>
+	<li><a href="https://shenglufashion.com/tag/retail-2/" class="tag-cloud-link tag-link-34923684 tag-link-position-43" style="font-size: 1em;">retail</a></li>
+	<li><a href="https://shenglufashion.com/tag/rules-of-origin/" class="tag-cloud-link tag-link-22561213 tag-link-position-44" style="font-size: 1em;">rules of origin</a></li>
+	<li><a href="https://shenglufashion.com/tag/section301/" class="tag-cloud-link tag-link-642364599 tag-link-position-45" style="font-size: 1em;">section301</a></li>
+	<li><a href="https://shenglufashion.com/tag/skill/" class="tag-cloud-link tag-link-49443 tag-link-position-46" style="font-size: 1em;">skill</a></li>
+	<li><a href="https://shenglufashion.com/tag/sourcing/" class="tag-cloud-link tag-link-203718 tag-link-position-47" style="font-size: 1em;">Sourcing</a></li>
+	<li><a href="https://shenglufashion.com/tag/supply-chain-management/" class="tag-cloud-link tag-link-512533 tag-link-position-48" style="font-size: 1em;">Supply chain management</a></li>
+	<li><a href="https://shenglufashion.com/tag/sustainability/" class="tag-cloud-link tag-link-6877 tag-link-position-49" style="font-size: 1em;">sustainability</a></li>
+	<li><a href="https://shenglufashion.com/tag/tariff/" class="tag-cloud-link tag-link-446914 tag-link-position-50" style="font-size: 1em;">tariff</a></li>
+	<li><a href="https://shenglufashion.com/tag/technology/" class="tag-cloud-link tag-link-6 tag-link-position-51" style="font-size: 1em;">technology</a></li>
+	<li><a href="https://shenglufashion.com/tag/textile/" class="tag-cloud-link tag-link-89104 tag-link-position-52" style="font-size: 1em;">textile</a></li>
+	<li><a href="https://shenglufashion.com/tag/textile-and-apparel/" class="tag-cloud-link tag-link-21851686 tag-link-position-53" style="font-size: 1em;">textile and apparel</a></li>
+	<li><a href="https://shenglufashion.com/tag/textile-industry/" class="tag-cloud-link tag-link-1467364 tag-link-position-54" style="font-size: 1em;">Textile industry</a></li>
+	<li><a href="https://shenglufashion.com/tag/tpl/" class="tag-cloud-link tag-link-2100327 tag-link-position-55" style="font-size: 1em;">TPL</a></li>
+	<li><a href="https://shenglufashion.com/tag/tpp/" class="tag-cloud-link tag-link-79333 tag-link-position-56" style="font-size: 1em;">TPP</a></li>
+	<li><a href="https://shenglufashion.com/tag/trade/" class="tag-cloud-link tag-link-1595 tag-link-position-57" style="font-size: 1em;">trade</a></li>
+	<li><a href="https://shenglufashion.com/tag/trade-barrier/" class="tag-cloud-link tag-link-11494765 tag-link-position-58" style="font-size: 1em;">trade barrier</a></li>
+	<li><a href="https://shenglufashion.com/tag/trade-deficit/" class="tag-cloud-link tag-link-289089 tag-link-position-59" style="font-size: 1em;">trade deficit</a></li>
+	<li><a href="https://shenglufashion.com/tag/trade-policy-2/" class="tag-cloud-link tag-link-75068178 tag-link-position-60" style="font-size: 1em;">trade policy</a></li>
+	<li><a href="https://shenglufashion.com/tag/trade-theory/" class="tag-cloud-link tag-link-8004387 tag-link-position-61" style="font-size: 1em;">trade theory</a></li>
+	<li><a href="https://shenglufashion.com/tag/ttip/" class="tag-cloud-link tag-link-115650698 tag-link-position-62" style="font-size: 1em;">TTIP</a></li>
+	<li><a href="https://shenglufashion.com/tag/used-clothing/" class="tag-cloud-link tag-link-4004509 tag-link-position-63" style="font-size: 1em;">used clothing</a></li>
+	<li><a href="https://shenglufashion.com/tag/usmca/" class="tag-cloud-link tag-link-27949662 tag-link-position-64" style="font-size: 1em;">USMCA</a></li>
+	<li><a href="https://shenglufashion.com/tag/value-chain/" class="tag-cloud-link tag-link-261107 tag-link-position-65" style="font-size: 1em;">value chain</a></li>
+	<li><a href="https://shenglufashion.com/tag/vietnam/" class="tag-cloud-link tag-link-10717 tag-link-position-66" style="font-size: 1em;">Vietnam</a></li>
+	<li><a href="https://shenglufashion.com/tag/western-hemisphere-supply-chain/" class="tag-cloud-link tag-link-584165463 tag-link-position-67" style="font-size: 1em;">western hemisphere supply chain</a></li>
+	<li><a href="https://shenglufashion.com/tag/worker/" class="tag-cloud-link tag-link-89245 tag-link-position-68" style="font-size: 1em;">worker</a></li>
+	<li><a href="https://shenglufashion.com/tag/wto/" class="tag-cloud-link tag-link-35086 tag-link-position-69" style="font-size: 1em;">WTO</a></li>
+	<li><a href="https://shenglufashion.com/tag/yarn-forward/" class="tag-cloud-link tag-link-3095322 tag-link-position-70" style="font-size: 1em;">yarn forward</a></li>
+</ul>
+</div></section><section id="categories-2" class="widget widget_categories"><h2 class="widget-title">CATEGORIES</h2>		<ul>
+				<li class="cat-item cat-item-2214"><a href="https://shenglufashion.com/category/africa/">Africa</a> (16)
+</li>
+	<li class="cat-item cat-item-2363171"><a href="https://shenglufashion.com/category/apparel-industry/">Apparel industry</a> (36)
+</li>
+	<li class="cat-item cat-item-1612"><a href="https://shenglufashion.com/category/asia/">Asia</a> (27)
+</li>
+	<li class="cat-item cat-item-1386608"><a href="https://shenglufashion.com/category/books-and-reports/">Books and reports</a> (9)
+</li>
+	<li class="cat-item cat-item-1470"><a href="https://shenglufashion.com/category/china/">China</a> (28)
+</li>
+	<li class="cat-item cat-item-4328"><a href="https://shenglufashion.com/category/europe/">Europe</a> (9)
+</li>
+	<li class="cat-item cat-item-1776423"><a href="https://shenglufashion.com/category/exclusive-interview/">Exclusive Interview</a> (9)
+</li>
+	<li class="cat-item cat-item-608987894"><a href="https://shenglufashion.com/category/fash455-course-material/">FASH455 course material</a> (63)
+</li>
+	<li class="cat-item cat-item-608987959"><a href="https://shenglufashion.com/category/free-trade-agreement-and-trade-preference-program/">Free trade agreement and trade preference program</a> (28)
+</li>
+	<li class="cat-item cat-item-608987987"><a href="https://shenglufashion.com/category/international-economics-and-trade-theory/">International economics and trade theory</a> (11)
+</li>
+	<li class="cat-item cat-item-33369"><a href="https://shenglufashion.com/category/international-trade/">International Trade</a> (296)
+</li>
+	<li class="cat-item cat-item-9425047"><a href="https://shenglufashion.com/category/original-research/">Original Research</a> (94)
+</li>
+	<li class="cat-item cat-item-13879"><a href="https://shenglufashion.com/category/retail/">Retail</a> (25)
+</li>
+	<li class="cat-item cat-item-203718"><a href="https://shenglufashion.com/category/sourcing/">Sourcing</a> (91)
+</li>
+	<li class="cat-item cat-item-5849"><a href="https://shenglufashion.com/category/statistics/">Statistics</a> (21)
+</li>
+	<li class="cat-item cat-item-512533"><a href="https://shenglufashion.com/category/supply-chain-management/">Supply chain management</a> (12)
+</li>
+	<li class="cat-item cat-item-6543205"><a href="https://shenglufashion.com/category/technology-2/">Technology</a> (16)
+</li>
+	<li class="cat-item cat-item-1467364"><a href="https://shenglufashion.com/category/textile-industry/">Textile industry</a> (80)
+</li>
+	<li class="cat-item cat-item-1033689"><a href="https://shenglufashion.com/category/trade-policy/">Trade policy</a> (125)
+</li>
+	<li class="cat-item cat-item-699"><a href="https://shenglufashion.com/category/usa/">USA</a> (156)
+</li>
+	<li class="cat-item cat-item-294919"><a href="https://shenglufashion.com/category/western-hemisphere/">Western-Hemisphere</a> (16)
+</li>
+		</ul>
+			</section><section id="calendar-2" class="widget widget_calendar"><h2 class="widget-title">Calendar</h2><div id="calendar_wrap" class="calendar_wrap"><table id="wp-calendar" class="wp-calendar-table">
+	<caption>July 2020</caption>
+	<thead>
+	<tr>
+		<th scope="col" title="Monday">M</th>
+		<th scope="col" title="Tuesday">T</th>
+		<th scope="col" title="Wednesday">W</th>
+		<th scope="col" title="Thursday">T</th>
+		<th scope="col" title="Friday">F</th>
+		<th scope="col" title="Saturday">S</th>
+		<th scope="col" title="Sunday">S</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td colspan="2" class="pad">&nbsp;</td><td><a href="https://shenglufashion.com/2020/07/01/" aria-label="Posts published on July 1, 2020">1</a></td><td><a href="https://shenglufashion.com/2020/07/02/" aria-label="Posts published on July 2, 2020">2</a></td><td>3</td><td>4</td><td>5</td>
+	</tr>
+	<tr>
+		<td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td>
+	</tr>
+	<tr>
+		<td id="today">13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td>
+	</tr>
+	<tr>
+		<td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td>
+	</tr>
+	<tr>
+		<td>27</td><td>28</td><td>29</td><td>30</td><td>31</td>
+		<td class="pad" colspan="2">&nbsp;</td>
+	</tr>
+	</tbody>
+	</table><nav aria-label="Previous and next months" class="wp-calendar-nav">
+		<span class="wp-calendar-nav-prev"><a href="https://shenglufashion.com/2020/06/">&laquo; Jun</a></span>
+		<span class="pad">&nbsp;</span>
+		<span class="wp-calendar-nav-next">&nbsp;</span>
+	</nav></div></section><section id="meta-2" class="widget widget_meta"><h2 class="widget-title">Meta</h2>			<ul>
+			<li><a href="https://wordpress.com/start?ref=wplogin">Register</a></li>			<li><a href="https://shenglufashion.wordpress.com/wp-login.php">Log in</a></li>
+			<li><a href="https://shenglufashion.com/feed/">Entries feed</a></li>
+			<li><a href="https://shenglufashion.com/comments/feed/">Comments feed</a></li>
+			<li><a href="https://wordpress.com/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.com</a></li>			</ul>
+			</section>	</aside><!-- .sidebar .widget-area -->
+
+		</div><!-- .site-content -->
+
+		<footer id="colophon" class="site-footer" role="contentinfo">
+							<nav class="main-navigation" role="navigation" aria-label="Footer Primary Menu">
+					<div class="menu-fash455-container"><ul id="menu-fash455-2" class="primary-menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-2 current_page_item menu-item-28"><a href="https://shenglufashion.com/" aria-current="page">About FASH455</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3617"><a href="https://shenglufashion.com/blog/">Blog Articles</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3587"><a href="https://shenglufashion.com/exclusive-interview/">Interview</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3585"><a href="https://shenglufashion.com/term-project/">Project|Event</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4991"><a href="https://shenglufashion.com/publication/">Publication</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-27"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/">Travels of a T-shirt</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-43"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/part-i-cotton-king/">Part I Cotton King</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3588"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/part-ii-made-in-china/">Part II Made in China</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3589"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/part-iii-trouble-at-the-border/">Part III Trouble at the Border</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3590"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/part-iv-my-t-shirt-finally-encounters-a-free-market/">Part IV My T-shirt Finally Encounters a Free Market</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26"><a href="https://shenglufashion.com/articles-and-resources/">Useful Resources</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3586"><a href="https://shenglufashion.com/contact/">Contact</a></li>
+</ul></div>				</nav><!-- .main-navigation -->
+			
+							<nav class="social-navigation" role="navigation" aria-label="Footer Social Links Menu">
+					<div class="menu-fash455-container"><ul id="menu-fash455-3" class="social-links-menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-2 current_page_item menu-item-28"><a href="https://shenglufashion.com/" aria-current="page"><span class="screen-reader-text">About FASH455</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3617"><a href="https://shenglufashion.com/blog/"><span class="screen-reader-text">Blog Articles</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3587"><a href="https://shenglufashion.com/exclusive-interview/"><span class="screen-reader-text">Interview</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3585"><a href="https://shenglufashion.com/term-project/"><span class="screen-reader-text">Project|Event</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4991"><a href="https://shenglufashion.com/publication/"><span class="screen-reader-text">Publication</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-27"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/"><span class="screen-reader-text">Travels of a T-shirt</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26"><a href="https://shenglufashion.com/articles-and-resources/"><span class="screen-reader-text">Useful Resources</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3586"><a href="https://shenglufashion.com/contact/"><span class="screen-reader-text">Contact</span></a></li>
+</ul></div>				</nav><!-- .social-navigation -->
+			
+			<div class="site-info">
+								<span class="site-title"><a href="https://shenglufashion.com/" rel="home">FASH455 Global Apparel &amp; Textile Trade and Sourcing</a></span>
+								<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Blog at WordPress.com.</a>
+			</div><!-- .site-info -->
+		</footer><!-- .site-footer -->
+	</div><!-- .site-inner -->
+</div><!-- .site -->
+
+<!--  -->
+<script src='//0.gravatar.com/js/gprofiles.js?ver=202029y'></script>
+<script>
+var WPGroHo = {"my_hash":""};
+</script>
+<script type='text/javascript' src='https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h'></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	<div class="grofile-hash-map-ac8a1c195a3e199d8c47ae01301dd458">
+	</div>
+	<div class="grofile-hash-map-f28528e511a7fde8b205ff8ffcbc9e63">
+	</div>
+	<div class="grofile-hash-map-6d067fd637ed1c4197ffaef4450f5df1">
+	</div>
+	<div class="grofile-hash-map-f9c7525c7037e2fe9a65a588ef1d6690">
+	</div>
+	<div class="grofile-hash-map-d7897456e1d372d877971f114fea74fd">
+	</div>
+	</div>
+<script>
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"https:\/\/shenglufashion.wordpress.com\/public.api\/connect\/?action=request&domain=shenglufashion.com","logoutURL":"https:\/\/shenglufashion.wordpress.com\/wp-login.php?action=logout&_wpnonce=be2c521b78","homeURL":"https:\/\/shenglufashion.com\/","postID":"2","gravDefault":"wavatar","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1573483029j'></script>
+
+	<div id="carousel-reblog-box">
+		<form action="#" name="carousel-reblog">
+			<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Add your thoughts here... (optional)"></textarea>
+			<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Post to</label>
+			<select name="carousel-reblog-to-blog-id" id="carousel-reblog-to-blog-id">
+						</select>
+
+			<div class="submit">
+				<span class="canceltext"><a href="#" class="cancel">Cancel</a></span>
+				<input type="submit" name="carousel-reblog-submit" class="button" id="carousel-reblog-submit" value="Reblog Post" />
+				<input type="hidden" id="carousel-reblog-blog-id" value="34656981" />
+				<input type="hidden" id="carousel-reblog-blog-url" value="https://shenglufashion.com" />
+				<input type="hidden" id="carousel-reblog-blog-title" value="FASH455 Global Apparel &amp; Textile Trade and Sourcing" />
+				<input type="hidden" id="carousel-reblog-post-url" value="" />
+				<input type="hidden" id="carousel-reblog-post-title" value="" />
+			</div>
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="f7315ac1f4" /><input type="hidden" name="_wp_http_referer" value="/" />		</form>
+
+		<div class="arrow"></div>
+	</div>
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/shenglufashion.com\/":2};
+	</script>
+					<div id="sharing_email" style="display: none;">
+		<form action="/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" title="This field is for validation and should not be changed" />
+			
+			<div
+				class="g-recaptcha"
+				data-sitekey="6LcmyE0UAAAAALID28yVNg7pFCodGaArJzHitez_"
+				data-theme="light"
+				data-type="image"
+				data-tabindex="0"></div>
+			<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?hl=en" async></script>
+			
+			<img style="float: right; display: none" class="loading" src="https://s2.wp.com/wp-content/mu-plugins/post-flair/sharing/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Send Email" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel" role="button">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div>
+		<link rel='stylesheet' id='all-css-0-3' href='https://s0.wp.com/wp-content/mu-plugins/carousel/jetpack-carousel.css?m=1592560282h&cssminify=yes' type='text/css' media='all' />
+<script>
+var screenReaderText = {"expand":"expand child menu","collapse":"collapse child menu"};
+</script>
+<script>
+var MilestoneConfig = {"instances":[{"id":"milestone_widget-2","diff":4374384,"message":""}],"labels":{"year":"year","years":"years","month":"month","months":"months","day":"day","days":"days","hour":"hour","hours":"hours","minute":"minute","minutes":"minutes","second":"second","seconds":"seconds"}};
+</script>
+<script>
+var actionbardata = {"siteID":"34656981","siteName":"FASH455 Global Apparel & Textile Trade and Sourcing","siteURL":"https:\/\/shenglufashion.com","icon":"<img alt='' src='https:\/\/shenglufashion.files.wordpress.com\/2018\/08\/cropped-sheng.jpg?w=50' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/twentysixteen","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fshenglufashion.com%2F&signup_flow=account&domain=shenglufashion.com","themeURL":"https:\/\/wordpress.com\/theme\/twentysixteen\/","xhrURL":"https:\/\/shenglufashion.com\/wp-admin\/admin-ajax.php","nonce":"840a5fa912","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"11a5b607ab\" \/>","referer":"https:\/\/shenglufashion.com\/","canFollow":"1","feedID":"79150889","statusMessage":"","customizeLink":"https:\/\/shenglufashion.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fshenglufashion.wordpress.com%2F","postID":"2","shortlink":"https:\/\/wp.me\/P2lpRz-2","canEditPost":"","editLink":"https:\/\/wordpress.com\/page\/shenglufashion.com\/2","statsLink":"https:\/\/wordpress.com\/stats\/post\/2\/shenglufashion.com","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: Twenty Sixteen","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"Join 1,304 other followers","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fshenglufashion.com%2F&signup_flow=account&domain=shenglufashion.com\">Log in now.<\/a>","stats":"Stats"}};
+</script>
+<script>
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"en","ajaxurl":"https:\/\/shenglufashion.com\/wp-admin\/admin-ajax.php","nonce":"ad819a51ff","display_exif":"1","display_comments":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Comment","post_comment":"Post Comment","write_comment":"Write a Comment...","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/shenglufashion.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fshenglufashion.com%2F","blog_id":"34656981","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<fieldset><label for=\"email\">Email (Required)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Name (Required)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Website<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>","reblog":"Reblog","reblogged":"Reblogged","reblog_add_thoughts":"Add your thoughts here... (optional)","reblogging":"Reblogging...","post_reblog":"Post Reblog","stats_query_args":"blog=34656981&v=wpcom&tz=-4&user_id=0&subd=shenglufashion","is_public":"1","reblog_enabled":""};
+</script>
+<script>
+var sharing_js_options = {"lang":"en","counts":"1","is_stats_active":"1"};
+</script>
+<script type='text/javascript' src='https://s2.wp.com/_static/??-eJyVkN1OwzAMhV8IN6PTEFwgHgVlqdu5zZ9iZ93eHhfUgriotKtYx+eLfWzmDC5FwShmZNPhlRzmWzPyk/nTkgsGZJPr2ciswp3pJohxYXiiDJ7iBH1ylaGnDafofO0UVJtLISgJBbO/N4HiIzP6Gp1QivwfChWyrwNFNjN1AwqbQB5ZUsTfaocaUbJ1k/nUXXUuiWABoYCaaI+znUaAsy0mWFZGK0hXLIWWvJv24A9SdJe9kPb7DAu0VTtuZ0uqjH5NCauwN2EiDihwbA4/R+lTCTv+nFig95aK4YstFIf1VegjvD+f3trTy6F9bccv5ZjplQ=='></script>
+<script type='text/javascript'>
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-linkedin', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomlinkedin', 'menubar=1,resizable=1,width=580,height=450' );
+				return false;
+			});
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script><script src="//stats.wp.com/w.js?61" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'34656981','blog_tz':'-4','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'34656981','v':'wpcom','tz':'-4','user_id':'0','post':'2','subd':'shenglufashion'}]);
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1TaVhzUzFMbjdWNHpwZGhTayxPSUFCMGNrd29+Smw0TDhnZmRTK0hlRi9QSGh6bi9GXVhBJWIlZlR5U1JMLU8/MkNtblkvY1dzK3YrWW0zdnc4U01tSmJHSXwlUC9udls5NFJicTR+QTNbQXNDdng9Z3VpdGJORnE2R3Q5MFRUUS9GY2xSbnlXT3ZheVZ3PX4ybHpIdGozb0NBTzkxR3B3a3BdajR4JTJXQ2gvb3piTzJxW3pDR2hbeDJuUVFxRUNxWG84SS1fVWFJSXYyZVVpQkRHRW1daTZ+MjYvekh0LVFWVlJORmNMZDQzNV04UHFveG40PVV5VjBwai4sP3BNLHFhNFtNQkE4YlkyVHJ8LXFQYiVmcTFdanBaOUo/QUFtVE16dXJaNy9XXTVrQS89YjlONEdySn5CTDVhZixTaEMxSGNJb09lW3xVeFZU'}]);
+_stq.push([ 'clickTrackerInit', '34656981', '2' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script></body>
+</html>
