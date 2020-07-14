@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Kim Jong-Un Survives US Assassination Plot? | thecrimeshop</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="https://crimeshop.org/xmlrpc.php" />
+
+<!--[if lt IE 9]>
+<script src="https://s2.wp.com/wp-content/themes/pub/flounder/js/html5.js" type="text/javascript"></script>
+<script src="https://s2.wp.com/wp-content/themes/pub/flounder/js/fixicons.js" type="text/javascript"></script>
+<![endif]-->
+
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.remove(); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[i].remove();
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9jcmltZXNob3Aub3Jn"
+		+ "&wpcomid=100607289"
+		+ "&time=1592930281";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='//s2.wp.com' />
+<link rel='dns-prefetch' href='//s1.wp.com' />
+<link rel='dns-prefetch' href='//crimeshop.wordpress.com' />
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//wordpress.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel="alternate" type="application/rss+xml" title="thecrimeshop &raquo; Feed" href="https://crimeshop.org/feed/" />
+<link rel="alternate" type="application/rss+xml" title="thecrimeshop &raquo; Comments Feed" href="https://crimeshop.org/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="thecrimeshop &raquo; Kim Jong-Un Survives US Assassination&nbsp;Plot? Comments Feed" href="https://crimeshop.org/2017/10/09/kim-jong-un-survives-us-assassination-plot/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s2.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1582709031h&ver=5.4.2"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s2.wp.com/_static/??-eJyNkdFOwzAMRX+I1M1GBX1AfEuSmpLNaaLY0dS/X1q2gcZUeLzOPc61DaekXJwEJ4FQVKIy+onhlFwMioMnnO9U45if4DGWkYzgoFJkuVNbGPkjMhxQknFHtapf9qt3LFVazGN9yQivzb5pwRZPA1iKK26zyTOwzIT/aLNS379nI34a+Q/8oxAp9oIKB78Al1lAP7dtp/u+g5Qx+BJu6HZDFy85dLNbJho8y62oHrM/NrjsotZDMrI4Qk1lkDBU2xb2dVhra1ZmdU0snxVcL/Ae3nTX77q2f9H7wxmpis60?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<style id='global-styles-inline-css'>
+:root {
+	--wp--preset--color--black: #000000;
+	--wp--preset--color--cyan-bluish-gray: #abb8c3;
+	--wp--preset--color--light-green-cyan: #7bdcb5;
+	--wp--preset--color--luminous-vivid-amber: #fcb900;
+	--wp--preset--color--luminous-vivid-orange: #ff6900;
+	--wp--preset--color--pale-cyan-blue: #8ed1fc;
+	--wp--preset--color--pale-pink: #f78da7;
+	--wp--preset--color--vivid-cyan-blue: #0693e3;
+	--wp--preset--color--vivid-green-cyan: #00d084;
+	--wp--preset--color--vivid-purple: #9b51e0;
+	--wp--preset--color--vivid-red: #cf2e2e;
+	--wp--preset--color--white: #ffffff;
+	--wp--preset--font-size--small: 13;
+	--wp--preset--font-size--normal: 16;
+	--wp--preset--font-size--medium: 20;
+	--wp--preset--font-size--large: 36;
+	--wp--preset--font-size--huge: 48;
+	--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);
+	--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);
+	--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);
+	--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);
+	--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);
+	--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);
+	--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);
+	--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);
+	--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);
+	--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);
+	--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);
+	--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);
+}
+
+</style>
+<link rel='stylesheet' id='all-css-2-1' href='https://s1.wp.com/_static/??-eJyNjM0KwjAQhF/IOCki0oP4LLXd2mh2E9wNxbd3RRDx5G3mmx+sNYxFjMTALdTcLkkUY2F2FHK6kTv9IVsnGyRIseRr/Yh38PVpC7E/1HbGnEuTie4YVMkUs1cU06DL/1O1R6ZX88THbh8PXex3fbw+AT2vSZ8=?cssminify=yes' type='text/css' media='all' />
+<link crossorigin="anonymous" rel='stylesheet' id='flounder-fonts-css'  href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,600,200italic,400italic,600italic&#038;subset=latin,latin-ext' media='all' />
+<link rel='stylesheet' id='all-css-4-1' href='https://s1.wp.com/_static/??-eJx9jEEOwjAMBD+EcQvlwAHxljR1g5ETR3WiqL+niEu59LYjzSy2DF5ToVSwvCiSYa4jzqI1TbQgJ49WViFo2Ws8e7MT7ppYIUsNnAwbT4GKoalnJxBpYge8ifZ7OGoDKYh6V1jTH8AsjpejdKFRNGwz4Gbt8Bs946O/XYauG+799f0BvoZYFQ==?cssminify=yes' type='text/css' media='all' />
+<link rel='stylesheet' id='print-css-5-1' href='https://s2.wp.com/wp-content/mu-plugins/global-print/global-print.css?m=1465851035h&cssminify=yes' type='text/css' media='print' />
+<link rel='stylesheet' id='all-css-6-1' href='https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.css?m=1560469195h&cssminify=yes' type='text/css' media='all' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-8-1' href='https://s0.wp.com/_static/??-eJxti0EKgCAQAD+ULWGJHaK3mJgaqyut0fejQ4eo0zAwA2cRlnJ1uUI6RMHDx8xQiKtY0cQdOJg9Zv+wtcwN/F9MNhoUSJ7e8plqcMkxhB480mLwDuY0dYMepVJaqu0CZXY33g==?cssminify=yes' type='text/css' media='all' />
+<script>
+var related_posts_js_options = {"post_heading":"h4"};
+</script>
+<script type='text/javascript' src='https://s1.wp.com/_static/??-eJx9jFEKwjAMQC9k1lUt0g/xLLplJaNpa9s4vL0VNj/2IQRCwntPLQkoDF5GLGpu8xTM73V1czmofwAwuXyv2DGFDR5iqBjql+X4II8gBfPdtV8LTXHPsUDy4igUldG32Agplrq79tamTOI9FKoIOFKl4NaY0ue+N9pao1JGJuGf+iJcWu7GV23s0fT2ok/zB3F0YMU='></script>
+<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1530132353h&cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s2.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://crimeshop.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='NSA Being Held Accountable for Stolen&nbsp;Secrets?' href='https://crimeshop.org/2017/10/08/nsa-being-held-accountable-for-stolen-secrets/' />
+<link rel='next' title='Iran Nuclear Deal Ending &#8211; and it Could Spell Disaster for&nbsp;America' href='https://crimeshop.org/2017/10/10/iran-nuclear-deal-ending-and-it-could-spell-disaster-for-america/' />
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="https://crimeshop.org/2017/10/09/kim-jong-un-survives-us-assassination-plot/" />
+<link rel='shortlink' href='https://wp.me/p6O8yd-23p' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fcrimeshop.org%2F2017%2F10%2F09%2Fkim-jong-un-survives-us-assassination-plot%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fcrimeshop.org%2F2017%2F10%2F09%2Fkim-jong-un-survives-us-assassination-plot%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Kim Jong-Un Survives US Assassination Plot?" />
+<meta property="og:url" content="https://crimeshop.org/2017/10/09/kim-jong-un-survives-us-assassination-plot/" />
+<meta property="og:description" content="Kim Jong-Un Survives US Assassination Plot? &nbsp; &nbsp; CIA Tries &amp; Fails to Assassinate Kim Jong-Un? &nbsp; &nbsp; The state-run Korea Central News Agency (better known as a propaganda news …" />
+<meta property="article:published_time" content="2017-10-10T01:08:31+00:00" />
+<meta property="article:modified_time" content="2017-10-12T04:28:18+00:00" />
+<meta property="og:site_name" content="thecrimeshop" />
+<meta property="og:image" content="https://crimeshop.files.wordpress.com/2017/10/kim-jong-un-survives-us-assassination-plot-crimeshop.jpg" />
+<meta property="og:image:width" content="960" />
+<meta property="og:image:height" content="648" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:creator" content="@TheCrimeShop" />
+<meta name="twitter:site" content="@The Crime Shop" />
+<meta name="twitter:text:title" content="Kim Jong-Un Survives US Assassination&nbsp;Plot?" />
+<meta name="twitter:image" content="https://crimeshop.files.wordpress.com/2017/10/fox-news-crimeshop.jpg?w=640" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://s1.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="icon" type="image/x-icon" href="https://s1.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="apple-touch-icon" href="https://s2.wp.com/i/webclip.png" />
+<link rel='openid.server' href='https://crimeshop.org/?openidserver=1' />
+<link rel='openid.delegate' href='https://crimeshop.org/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://crimeshop.org/osd.xml" title="thecrimeshop" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>		<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta name="application-name" content="thecrimeshop" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="The Crime Shop" /><meta name="msapplication-task" content="name=Subscribe;action-uri=https://crimeshop.org/feed/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="description" content="Kim Jong-Un Survives US Assassination Plot? &nbsp; &nbsp; CIA Tries &amp; Fails to Assassinate Kim Jong-Un? &nbsp; &nbsp; The state-run Korea Central News Agency (better known as a propaganda news agency for the country’s ruling Workers’ Party, like FoxNews is for Trump here in the US), has laid out a pretty serious accusation here, according&hellip;" />
+<link rel="amphtml" href="https://crimeshop.org/2017/10/09/kim-jong-un-survives-us-assassination-plot/amp/"></head>
+
+<body class="post-template-default single single-post postid-7899 single-format-aside customizer-styles-applied highlander-enabled highlander-light">
+
+	<div class="menu-toggle widgets icon dashicons dashicons-screenoptions" id="toggle-widgets"></div>
+
+<div id="page" class="hfeed site">
+
+	<header id="masthead" class="site-header" role="banner">
+		<a href="https://crimeshop.org/" title="thecrimeshop" rel="home">
+			<div class="site-branding">
+				<h1 class="site-title">thecrimeshop</h1>
+			</div>
+		</a>
+		<nav id="site-navigation" class="navigation-main" role="navigation">
+			<div class="screen-reader-text skip-link"><a href="#content" title="Skip to content">Skip to content</a></div>
+
+			<div class="menu"><ul>
+<li class="page_item page-item-1"><a href="https://crimeshop.org/httpswww-youtube-comwatchvlnwqbosjazg-about-unsolved-crime-fbi-arvada-pd/">About Me</a></li>
+<li class="page_item page-item-4"><a href="https://crimeshop.org/httpswww-youtube-comwatchvlnwqbosjazg-welcome-to-crime-shop/">Have a case that haunts&nbsp;you?</a></li>
+<li class="page_item page-item-19"><a href="https://crimeshop.org/the-disappearance-of-tara-calico/">The Disappearance of Tara&nbsp;Calico</a></li>
+<li class="page_item page-item-55"><a href="https://crimeshop.org/tomorrow-be-sure-to-follow-the-jaye-potter-mintz-murder/">The Murder of Jaye Potter Mintz Feb 23, 1987 Leland&nbsp;N.C.</a></li>
+</ul></div>
+		</nav><!-- #site-navigation -->
+	</header><!-- #masthead -->
+
+	<div id="primary" class="content-area">
+		<div id="content" class="site-content" role="main">
+
+		
+			
+<article id="post-7899" class="post-7899 post type-post status-publish format-aside hentry category-commentary tag-cia tag-foxnews tag-kim-jong-un tag-korean-central-news-agency tag-mikolai-stroinski-commanding-the-fury tag-us-central-intelligence-agency post_format-post-format-aside">
+	<div class="entry-area">
+		
+			<header class="entry-header"><h1 class="entry-title"><a href="https://crimeshop.org/2017/10/09/kim-jong-un-survives-us-assassination-plot/" rel="bookmark">Kim Jong-Un Survives US Assassination&nbsp;Plot?</a></h1></header>
+		
+		<div class="entry-content">
+						<p>Kim Jong-Un Survives US Assassination Plot?</p>
+<p>&nbsp;</p>
+<p><img data-attachment-id="7910" data-permalink="https://crimeshop.org/2017/10/09/kim-jong-un-survives-us-assassination-plot/kim-jong-un-survives-us-assassination-plot-crimeshop/#main" data-orig-file="https://crimeshop.files.wordpress.com/2017/10/kim-jong-un-survives-us-assassination-plot-crimeshop.jpg" data-orig-size="960,648" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="kim-jong-un survives-US assassination-plot-crimeshop" data-image-description="" data-medium-file="https://crimeshop.files.wordpress.com/2017/10/kim-jong-un-survives-us-assassination-plot-crimeshop.jpg?w=300" data-large-file="https://crimeshop.files.wordpress.com/2017/10/kim-jong-un-survives-us-assassination-plot-crimeshop.jpg?w=444" class="alignnone size-full wp-image-7910" src="https://crimeshop.files.wordpress.com/2017/10/kim-jong-un-survives-us-assassination-plot-crimeshop.jpg?w=444" alt="kim-jong-un survives-US assassination-plot-crimeshop.jpg" srcset="https://crimeshop.files.wordpress.com/2017/10/kim-jong-un-survives-us-assassination-plot-crimeshop.jpg?w=444 444w, https://crimeshop.files.wordpress.com/2017/10/kim-jong-un-survives-us-assassination-plot-crimeshop.jpg?w=888 888w, https://crimeshop.files.wordpress.com/2017/10/kim-jong-un-survives-us-assassination-plot-crimeshop.jpg?w=150 150w, https://crimeshop.files.wordpress.com/2017/10/kim-jong-un-survives-us-assassination-plot-crimeshop.jpg?w=300 300w, https://crimeshop.files.wordpress.com/2017/10/kim-jong-un-survives-us-assassination-plot-crimeshop.jpg?w=768 768w" sizes="(max-width: 444px) 100vw, 444px"   /></p>
+<p>&nbsp;</p>
+<p><span style="font-weight:400;">CIA Tries &amp; Fails to Assassinate Kim Jong-Un?</span></p>
+<p>&nbsp;</p>
+<p><img data-attachment-id="7912" data-permalink="https://crimeshop.org/2017/10/09/kim-jong-un-survives-us-assassination-plot/the-korean-central-news-agency-crimeshop/#main" data-orig-file="https://crimeshop.files.wordpress.com/2017/10/the-korean-central-news-agency-crimeshop.png" data-orig-size="800,267" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="the-korean-central-news-agency-crimeshop" data-image-description="" data-medium-file="https://crimeshop.files.wordpress.com/2017/10/the-korean-central-news-agency-crimeshop.png?w=300" data-large-file="https://crimeshop.files.wordpress.com/2017/10/the-korean-central-news-agency-crimeshop.png?w=444" class="alignnone size-full wp-image-7912" src="https://crimeshop.files.wordpress.com/2017/10/the-korean-central-news-agency-crimeshop.png?w=444" alt="the-korean-central-news-agency-crimeshop" srcset="https://crimeshop.files.wordpress.com/2017/10/the-korean-central-news-agency-crimeshop.png?w=444 444w, https://crimeshop.files.wordpress.com/2017/10/the-korean-central-news-agency-crimeshop.png?w=150 150w, https://crimeshop.files.wordpress.com/2017/10/the-korean-central-news-agency-crimeshop.png?w=300 300w, https://crimeshop.files.wordpress.com/2017/10/the-korean-central-news-agency-crimeshop.png?w=768 768w, https://crimeshop.files.wordpress.com/2017/10/the-korean-central-news-agency-crimeshop.png 800w" sizes="(max-width: 444px) 100vw, 444px"   /></p>
+<p>&nbsp;</p>
+<p><span style="font-weight:400;">The state-run Korea Central News Agency (better known as a propaganda news agency for the country’s ruling Workers’ Party, like FoxNews is for Trump here in the US), has laid out a pretty serious accusation here, according to them the CIA tried and failed to assassinate the North Korean leader earlier this year by using a chemical or biological poison to take out the beloved Kim Jong-Un.</span></p>
+<p>&nbsp;</p>
+<p><img data-attachment-id="7914" data-permalink="https://crimeshop.org/2017/10/09/kim-jong-un-survives-us-assassination-plot/fox-news-crimeshop/#main" data-orig-file="https://crimeshop.files.wordpress.com/2017/10/fox-news-crimeshop.jpg" data-orig-size="1000,563" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="fox-news-crimeshop" data-image-description="" data-medium-file="https://crimeshop.files.wordpress.com/2017/10/fox-news-crimeshop.jpg?w=300" data-large-file="https://crimeshop.files.wordpress.com/2017/10/fox-news-crimeshop.jpg?w=444" class="alignnone size-full wp-image-7914" src="https://crimeshop.files.wordpress.com/2017/10/fox-news-crimeshop.jpg?w=444" alt="fox-news-crimeshop" srcset="https://crimeshop.files.wordpress.com/2017/10/fox-news-crimeshop.jpg?w=444 444w, https://crimeshop.files.wordpress.com/2017/10/fox-news-crimeshop.jpg?w=888 888w, https://crimeshop.files.wordpress.com/2017/10/fox-news-crimeshop.jpg?w=150 150w, https://crimeshop.files.wordpress.com/2017/10/fox-news-crimeshop.jpg?w=300 300w, https://crimeshop.files.wordpress.com/2017/10/fox-news-crimeshop.jpg?w=768 768w" sizes="(max-width: 444px) 100vw, 444px"   /></p>
+<p>&nbsp;</p>
+<p><span style="font-weight:400;">This is what they had to say in the newly published report:</span></p>
+<p><i><span style="font-weight:400;">“In May this year, a group of heinous terrorists who infiltrated our country on the orders of the Central Intelligence Agency (CIA) of the US and the South Korean puppet Intelligence Service with the purpose of carrying out state-sponsored terrorism against our supreme headquarters using biological and chemical substance were caught and exposed. This palpably shows the true nature of the US as the main culprit behind terrorism.”</span></i></p>
+<p><span style="font-weight:400;">The North Korean government claims that in fact, back in May that it had foiled a US and South Korean plot to kill its Supreme Leader.</span></p>
+<p><span style="font-weight:400;">They captured a  man  who happened to be going by the name of  “Kim” (I give them a zero for creativity here). They went on to say that “Kim” had been paid to carry out an attack with biological substances.</span></p>
+<p><span style="font-weight:400;">In all honesty, really guys over at the CIA, what did you send ‘heinous’ rookies in to do a man’s job or something?</span></p>
+<p><span style="font-weight:400;">By the way, it should be noted that North Korea has a history of making false statements, accusations and basically just making shit up that cannot be verified. </span></p>
+<p><span style="font-weight:400;">The CIA has basically not comment on this one, no doubt likely due to laughing hysterically over the accusation. </span></p>
+<p><span style="font-weight:400;">All kidding aside, if the CIA had wanted Kim Jong-Un dead (which a lot of people do let’s just be honest here), Kim Jong-Un, would be dead. </span></p>
+<p><span style="font-weight:400;">The CIA does not screw around with assassination attempts, they are pretty serious and if they feel that they need to attempt one, it’s a fairly slim chance that you’d ever know the CIA would have been behind it. </span></p>
+<p><span style="font-weight:400;">And Kim Jong-Un is a fairly easy target. </span></p>
+<p><span style="font-weight:400;">Too many people on the inside can be bought in particular, on the inside of North Korea’s regime many people can be bought for the right price. </span></p>
+<p><span style="font-weight:400;">If Kim is under some misguided delusion that anyone is really loyal to him, he may want to sit down and really think that one through. </span></p>
+<p><span style="font-weight:400;">No one is truly loyal to Kim Jong-Un, no one.</span></p>
+<p><span style="font-weight:400;">Fear of being murdered at the request of your country’s leader and loyalty are two very different things my friend. </span></p>
+<p><span style="font-weight:400;">Cristal M Clark</span></p>
+<p><a href="https://apple.news/TQl7IRxuXQqaBdPnt023HIA"><span style="font-weight:400;">IOS users can find The Crime Shop on Apple News</span></a></p>
+<p><a href="https://twitter.com/thecimeshop"><span style="font-weight:400;">@thecrimeshop on twitter</span></a></p>
+<p><a href="https://gab.ai/thecrimeshop"><span style="font-weight:400;">And https://gab.ai/thecrimeshop</span></a></p>
+<p><span class="embed-youtube" style="text-align:center; display: block;"><iframe class='youtube-player' width='444' height='250' src='https://www.youtube.com/embed/ZR7MM8ztF6I?version=3&#038;rel=1&#038;fs=1&#038;autohide=2&#038;showsearch=0&#038;showinfo=1&#038;iv_load_policy=1&#038;wmode=transparent' allowfullscreen='true' style='border:0;'></iframe></span></p>
+<div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-official sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-url="https://crimeshop.org/2017/10/09/kim-jong-un-survives-us-assassination-plot/" data-text="Kim Jong-Un Survives US Assassination Plot?" data-via="TheCrimeShop" data-related="wordpressdotcom">Tweet</a></li><li class="share-facebook"><div class="fb-share-button" data-href="https://crimeshop.org/2017/10/09/kim-jong-un-survives-us-assassination-plot/" data-layout="button_count"></div></li><li class="share-end"></li></ul></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-100607289-7899-5ef22fe90d536' data-src='//widgets.wp.com/likes/index.html?ver=20190321#blog_id=100607289&amp;post_id=7899&amp;origin=crimeshop.wordpress.com&amp;obj_id=100607289-7899-5ef22fe90d536&amp;domain=crimeshop.org' data-name='like-post-frame-100607289-7899-5ef22fe90d536'><h3 class='sd-title'>Like this:</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>Like</span></span> <span class="loading">Loading...</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div>
+<div id='jp-relatedposts' class='jp-relatedposts' >
+	<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
+</div></div>					</div><!-- .entry-content -->
+
+		
+	<div id="comments" class="comments-area">
+
+	
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">What are your thoughts <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2017/10/09/kim-jong-un-survives-us-assassination-plot/#respond" style="display:none;">Cancel reply</a></small></h3><form action="https://crimeshop.org/wp-comments-post.php" method="post" id="commentform" class="comment-form"><input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="7d16ba7dc1" /><input type="hidden" name="_wp_http_referer" value="/2017/10/09/kim-jong-un-survives-us-assassination-plot/" />
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest" />
+
+<div class="comment-form-field comment-textarea">
+	<label for="comment">Enter your comment here...</label>
+	<div id="comment-form-comment"><textarea id="comment" name="comment" title="Enter your comment here..."></textarea></div>
+</div>
+
+<div id="comment-form-identity">
+	<div id="comment-form-nascar">
+		<p>Fill in your details below or click an icon to log in:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="#comment-form-guest" id="postas-guest" class="nascar-signin-link"
+                   title="Login via Guest">
+									</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:WordPress.com" id="postas-wordpress" class="nascar-signin-link"
+                   title="Login via WordPress.com">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Twitter" id="postas-twitter" class="nascar-signin-link"
+                   title="Login via Twitter">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Facebook" id="postas-facebook" class="nascar-signin-link"
+                   title="Login via Facebook">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg>				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="https://s0.wp.com/i/mu.gif" alt="Gravatar" width="25" class="no-grav" />
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">Email <span class="required">(required)</span> <span class="nopublish">(Address never made public)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Name <span class="required">(required)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Website</label>
+					<div class="comment-form-input"><input id="url" name="url" type="url" value="" /></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://s0.wp.com/i/mu.gif" alt="WordPress.com Logo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="" />
+						<p class="comment-form-posting-as pa-wordpress">
+			<strong></strong>
+			You are commenting using your WordPress.com account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://s0.wp.com/i/mu.gif" alt="Google photo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="" />
+						<p class="comment-form-posting-as pa-googleplus">
+			<strong></strong>
+			You are commenting using your Google account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" x="0px" y="0px" viewBox="0 0 60 60" ><path fill="#519bf7" d="M56.3,30c0,-1.6 -0.2,-3.4 -0.6,-5h-3.1H42.2H30v10.6h14.8C44,39.3 42,42 39.1,43.9l8.8,6.8C53,46 56.3,39 56.3,30z" /><path fill="#3db366" d="M30,57.5c6.7,0 13.1,-2.4 17.9,-6.8l-8.8,-6.8c-2.5,1.6 -5.6,2.4 -9.1,2.4c-7.2,0 -13.3,-4.7 -15.4,-11.2l-9.3,7.1C9.8,51.3 19.1,57.5 30,57.5z" /><path fill="#fdc600" d="M5.3,42.2l9.3,-7.1c-0.5,-1.6 -0.8,-3.3 -0.8,-5.1s0.3,-3.5 0.8,-5.1l-9.3,-7.1C3.5,21.5 2.5,25.6 2.5,30S3.5,38.5 5.3,42.2z" /><path fill="#f15b44" d="M40.1,17.4l8,-8C43.3,5.1 37,2.5 30,2.5C19.1,2.5 9.8,8.7 5.3,17.8l9.3,7.1c2.1,-6.5 8.2,-11.1 15.4,-11.1C33.9,13.7 37.4,15.1 40.1,17.4z" /></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://s0.wp.com/i/mu.gif" alt="Twitter picture" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="" />
+						<p class="comment-form-posting-as pa-twitter">
+			<strong></strong>
+			You are commenting using your Twitter account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://s0.wp.com/i/mu.gif" alt="Facebook photo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="" />
+						<p class="comment-form-posting-as pa-facebook">
+			<strong></strong>
+			You are commenting using your Facebook account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Cancel</a></div>
+		<p>Connecting to %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+
+<div id="comment-form-subscribe">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Notify me of new comments via email.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog"  style="display: inline;">Notify me of new posts via email.</label></p></div>
+
+
+
+
+<p class="form-submit"><input name="submit" type="submit" id="comment-submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='7899' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="e7aa15617c" /></p>
+<input type="hidden" name="genseq" value="1592930281" />
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="206"/></p></form>	</div><!-- #respond -->
+	<div style="clear: both"></div><p class="akismet_comment_form_privacy_notice">This site uses Akismet to reduce spam. <a href="https://akismet.com/privacy/" target="_blank" rel="nofollow noopener">Learn how your comment data is processed</a>.</p>
+</div><!-- #comments -->
+
+	</div><!-- .entry-area -->
+
+	<div class="entry-meta sidebar-bg"></div>
+	<footer class="entry-meta">
+					<a class="entry-format-link" href="https://crimeshop.org/type/aside/" title="All Aside posts">
+				<i class="icon format-icon dashicons dashicons-format-aside"></i>
+					</a>
+							<a href="https://crimeshop.org/2017/10/09/kim-jong-un-survives-us-assassination-plot/" rel="bookmark"><time class="entry-date meta" datetime="2017-10-09T19:08:31-06:00">2017-10-09</time>			<div class="author meta vcard"><a class="url fn n" href="https://crimeshop.org/author/crimeshop/" title="View all posts by crimeshop" rel="author">crimeshop</a></div>						<div class="meta cat-links">
+				<a href="https://crimeshop.org/category/commentary/" rel="category tag">Commentary</a>			</div>
+			
+			<div class="meta tags-links"><a href="https://crimeshop.org/tag/cia/" rel="tag">cia</a>, <a href="https://crimeshop.org/tag/foxnews/" rel="tag">FoxNews</a>, <a href="https://crimeshop.org/tag/kim-jong-un/" rel="tag">Kim Jong Un</a>, <a href="https://crimeshop.org/tag/korean-central-news-agency/" rel="tag">Korean Central News Agency</a>, <a href="https://crimeshop.org/tag/mikolai-stroinski-commanding-the-fury/" rel="tag">Mikolai Stroinski - Commanding the Fury</a>, <a href="https://crimeshop.org/tag/us-central-intelligence-agency/" rel="tag">US Central Intelligence Agency</a></div>
+					
+	</footer><!-- .entry-meta -->
+</article><!-- #post-## -->
+
+				<nav role="navigation" id="nav-below" class="navigation navigation-post clearfix">
+		<h1 class="screen-reader-text">Post navigation</h1>
+
+	
+		<div class="nav-previous"><a href="https://crimeshop.org/2017/10/08/nsa-being-held-accountable-for-stolen-secrets/" rel="prev"><i class="icon inline  dashicons dashicons-arr-left"></i> NSA Being Held Accountable for Stolen&nbsp;Secrets?</a></div>		<div class="nav-next"><a href="https://crimeshop.org/2017/10/10/iran-nuclear-deal-ending-and-it-could-spell-disaster-for-america/" rel="next">Iran Nuclear Deal Ending &#8211; and it Could Spell Disaster for&nbsp;America <i class="icon inline dashicons dashicons-arr-right"></i></a></div>
+	
+	</nav><!-- #nav-below -->
+	
+		
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+	<div id="secondary" class="side-widget-area widget-area" role="complementary">
+
+		<aside id="twitter_timeline-7" class="widget widget_twitter_timeline"><h1 class="widget-title">Recent Tweets</h1><a class="twitter-timeline" data-height="400" data-theme="dark" data-border-color="#e8e8e8" data-tweet-limit="4" data-lang="EN" data-partner="jetpack" data-widget-id="658436078010019840" href="https://twitter.com/658436078010019840">My Tweets</a></aside><aside id="wpcom_social_media_icons_widget-7" class="widget widget_wpcom_social_media_icons_widget"><h1 class="widget-title">Social</h1><ul><li><a href="https://www.facebook.com/cristal.marieclark/" class="genericon genericon-facebook" target="_blank"><span class="screen-reader-text">View cristal.marieclark&#8217;s profile on Facebook</span></a></li><li><a href="https://twitter.com/@thecimeshop/" class="genericon genericon-twitter" target="_blank"><span class="screen-reader-text">View @thecimeshop&#8217;s profile on Twitter</span></a></li></ul></aside>		<aside id="recent-posts-6" class="widget widget_recent_entries">		<h1 class="widget-title">Recent Posts</h1>		<ul>
+											<li>
+					<a href="https://crimeshop.org/2020/06/22/104-shot-14-killed-over-fathers-day-weekend-in-chicago/">104 Shot, 14 Killed Over Father’s Day Weekend in&nbsp;Chicago</a>
+											<span class="post-date">2020-06-22</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/06/18/trump-administration-fucks-up-again-to-the-tune-of-7-3-million/">Trump Administration Fucks Up &#8211; Again to the Tune of $7.3&nbsp;Million</a>
+											<span class="post-date">2020-06-18</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/06/17/disgraced-california-attorney-strangles-woman-throws-her-overboard-cruise-ship/">Disgraced California Attorney Strangles Woman Throws her Overboard Cruise&nbsp;Ship</a>
+											<span class="post-date">2020-06-17</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/06/15/t-mobile-sprint-down-verizon-att-experiencing-issues-because-of-it/">T-Mobile-Sprint Down, Verizon &amp; AT&amp;T Experiencing Issues Because of&nbsp;It</a>
+											<span class="post-date">2020-06-15</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/06/14/coronavirus-infections-surge-across-the-united-states/">Coronavirus Infections Surge Across the United&nbsp;States</a>
+											<span class="post-date">2020-06-14</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/06/11/criminal-justice-reform-how-do-we-tackle-that/">Criminal Justice Reform &#8211; How Do We Tackle&nbsp;That?</a>
+											<span class="post-date">2020-06-11</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/06/10/so-you-want-to-defund-the-police/">So You Want to Defund The&nbsp;Police?</a>
+											<span class="post-date">2020-06-10</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/06/09/operation-warp-speed-unlikely-dangerous-and-irresponsible/">Operation Warp Speed &#8211; Unlikely, Dangerous and&nbsp;Irresponsible</a>
+											<span class="post-date">2020-06-09</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/06/07/trumps-twitter-account-first-when-users-search-the-word-racist/">Trump’s Twitter Account First When Users Search the Word&nbsp;‘Racist’</a>
+											<span class="post-date">2020-06-07</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/06/04/8-minutes-and-46-seconds/">8 Minutes and 46&nbsp;Seconds</a>
+											<span class="post-date">2020-06-04</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/06/02/us-allies-horrified-and-shocked/">US Allies &#8211; Horrified and&nbsp;Shocked</a>
+											<span class="post-date">2020-06-02</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/06/01/donald-trump-fails-the-united-states-again/">Donald Trump Fails the United States &#8211;&nbsp;Again</a>
+											<span class="post-date">2020-06-01</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/05/31/the-united-states-brace-for-more-protests-and-unrest-across-the-nation/">The United States Brace for More Protests and Unrest Across the&nbsp;Nation</a>
+											<span class="post-date">2020-05-31</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/05/26/revil-terrorist-hacking-group-has-dirt-on-donald-trump/">REvil &#8211; Terrorist Hacking Group Has Dirt on Donald&nbsp;Trump</a>
+											<span class="post-date">2020-05-26</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/05/21/beer-networking-app-being-used-to-track-military-and-cia/">Beer Networking App Being Used to Track Military and&nbsp;CIA</a>
+											<span class="post-date">2020-05-21</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/05/20/economic-recovery-could-take-years/">Economic Recovery Could Take&nbsp;Years</a>
+											<span class="post-date">2020-05-20</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/05/19/as-bars-and-restaurants-reopen-owners-face-new-realizations/">As Bars and Restaurants Reopen Owners Face New&nbsp;Realizations</a>
+											<span class="post-date">2020-05-19</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/05/14/donald-trump-and-his-team-dealt-crucial-blows-today/">Donald Trump and His Team Dealt Crucial Blows&nbsp;Today</a>
+											<span class="post-date">2020-05-14</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/05/13/you-survived-covid-19-why-are-you-still-not-well/">You Survived Covid-19 &#8211; Why Are You Still Not&nbsp;Well?</a>
+											<span class="post-date">2020-05-13</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/05/12/coronavirus-contact-tracing-apps-are-coming/">Coronavirus Contact Tracing Apps Are&nbsp;Coming</a>
+											<span class="post-date">2020-05-12</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/05/11/colorado-cafe-shut-down-for-defying-state-safer-at-home-order/">Colorado Cafe Shut Down For Defying State Safer at Home Order </a>
+											<span class="post-date">2020-05-11</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/05/10/coronavirus-heroin-anyone/">Coronavirus Heroin Anyone?</a>
+											<span class="post-date">2020-05-10</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/05/06/bat-shit-crazy-alex-jones-thinks-about-killing-and-eating-his-neighbors/">Bat Shit Crazy Alex Jones &#8211; Thinks About Killing and Eating His&nbsp;Neighbors?</a>
+											<span class="post-date">2020-05-06</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/05/05/no-live-music-until-2021/">No Live Music Until&nbsp;2021?</a>
+											<span class="post-date">2020-05-05</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/05/04/2020-the-year-that-keeps-giving/">2020 &#8211; The Year That Keeps&nbsp;Giving</a>
+											<span class="post-date">2020-05-04</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/05/01/irs-inadvertently-sends-stimulus-payments-to-foreign-workers/">IRS Inadvertently Sends Stimulus Payments to Foreign&nbsp;Workers</a>
+											<span class="post-date">2020-05-01</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/04/30/states-seeking-a-bailout/">States Seeking a&nbsp;Bailout</a>
+											<span class="post-date">2020-04-30</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/04/28/united-states-judicial-system-broken-beyond-repair/">United States Judicial System Broken Beyond Repair </a>
+											<span class="post-date">2020-04-28</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/04/27/meatpacking-industry-falling-to-its-knees-amid-coronavirus/">Meatpacking Industry Falling To Its Knees Amid&nbsp;Coronavirus</a>
+											<span class="post-date">2020-04-27</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/04/23/public-must-wear-face-masks-in-public/">Public Must Wear Face Masks in&nbsp;Public?</a>
+											<span class="post-date">2020-04-23</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/04/23/colorado-unemployment-update-accounts-show-funds-paid/">Colorado Unemployment Update &#8211; Accounts Show Funds Paid </a>
+											<span class="post-date">2020-04-23</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/04/22/las-vegas-mayor-carolyn-goodmans-shitshow-cnn-interview/">Las Vegas Mayor Carolyn Goodman’s Shitshow CNN&nbsp;Interview</a>
+											<span class="post-date">2020-04-22</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/04/21/america-the-land-of-dysfunctional/">America The Land of Dysfunctional </a>
+											<span class="post-date">2020-04-21</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/04/19/trump-urges-protesters-liberate/">Trump Urges Protesters&nbsp;“Liberate”</a>
+											<span class="post-date">2020-04-19</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/04/17/protests-against-stay-at-home-orders/">Protests Against Stay at Home Orders </a>
+											<span class="post-date">2020-04-17</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/04/16/fbi-describes-speed-of-criminal-activity-breathtaking-amid-covid-19/">FBI Describes Speed of Criminal Activity Breathtaking Amid&nbsp;Covid-19</a>
+											<span class="post-date">2020-04-16</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/04/14/donald-trump-unhinged/">Donald Trump Unhinged </a>
+											<span class="post-date">2020-04-14</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/04/13/frustration-mounts-states-looking-at-becoming-less-restrictive/">Frustration Mounts &#8211; States Looking at Becoming Less&nbsp;Restrictive</a>
+											<span class="post-date">2020-04-13</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/04/12/what-americans-want-our-leaders-to-know-during-statewide-lockdown/">What American’s Want Our Leaders to Know During Statewide&nbsp;Lockdown</a>
+											<span class="post-date">2020-04-12</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/04/09/florida-man-who-claimed-to-have-covid-19-spits-in-cops-face/">Florida Man Who Claimed to Have Covid-19 Spits in Cops&nbsp;Face</a>
+											<span class="post-date">2020-04-09</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/04/07/heroin-dealers-business-is-booming-during-forced-lockdown/">Heroin Dealers &#8211; Business is Booming During Forced&nbsp;Lockdown</a>
+											<span class="post-date">2020-04-07</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/04/05/empty-hospital-videos-flood-social-media/">Empty Hospital Video’s Flood Social Media </a>
+											<span class="post-date">2020-04-05</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/04/01/construction-workers-nationwide-being-thrown-to-the-wolves/">Construction Workers Nationwide Being Thrown to the&nbsp;Wolves?</a>
+											<span class="post-date">2020-04-01</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/03/30/white-supremacist-planned-to-blow-up-hospital/">White Supremacist Planned To Blow Up Hospital </a>
+											<span class="post-date">2020-03-30</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/03/28/covid-19-in-us-long-before-march/">Covid-19 in US Long Before&nbsp;March?</a>
+											<span class="post-date">2020-03-28</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/03/24/communities-shut-down-working-class-suffers/">Communities Shut Down, Working Class&nbsp;Suffers</a>
+											<span class="post-date">2020-03-24</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/03/22/covid-19-americas-grade/">Covid-19 &#8211; America’s&nbsp;Grade</a>
+											<span class="post-date">2020-03-22</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/03/17/bars-restaurants-gyms-schools-public-events/">Bars, Restaurants, Gym’s, Schools, Public&nbsp;Events</a>
+											<span class="post-date">2020-03-17</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/03/15/americans-cannot-follow-instructions-amid-covid-19-fears/">American’s Cannot Follow Instructions Amid Covid-19&nbsp;Fears</a>
+											<span class="post-date">2020-03-15</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/03/10/79th-annual-daytona-bike-week-off-to-a-tragic-start/">79th Annual Daytona Bike Week Off to a Tragic Start </a>
+											<span class="post-date">2020-03-10</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/03/09/toilet-paper-soap-hand-sanitizer-shortages/">Toilet Paper, Soap, Hand Sanitizer&nbsp;Shortages?</a>
+											<span class="post-date">2020-03-09</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/03/08/police-used-a-geofence-warrant-collect-info-from-a-fitness-app/">Police Used a Geofence Warrant &#8211; Collect Info From a Fitness&nbsp;App</a>
+											<span class="post-date">2020-03-08</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/03/02/coronavirus-causes-change-in-behaviors/">Coronavirus Causes Change in Behaviors? </a>
+											<span class="post-date">2020-03-02</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/02/27/coronavirus-arrives-in-the-united-states/">Coronavirus Arrives in the United&nbsp;States</a>
+											<span class="post-date">2020-02-27</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/02/26/drug-dealers-delightfully-roaming-streets-thanks-to-ransomware-attack/">Drug Dealers Delightfully Roaming Streets Thanks to Ransomware&nbsp;Attack</a>
+											<span class="post-date">2020-02-26</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/02/25/facebook-users-urge-fellow-users-to-stop-using-facebook-as-a-dating-website/">Facebook Users &#8211; Urge Fellow Users To Stop Using Facebook as a Dating&nbsp;Website</a>
+											<span class="post-date">2020-02-25</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/02/24/us-president-donald-trump-upset-over-coronavirus-patients-being-repatriated/">US President Donald Trump Upset Over Coronavirus Patients Being&nbsp;Repatriated</a>
+											<span class="post-date">2020-02-24</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/02/23/dea-agent-laundering-money-for-the-colombian-drug-cartel/">DEA Agent Laundering Money for the Colombian Drug Cartel </a>
+											<span class="post-date">2020-02-23</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/02/19/anti-government-movement-hits-the-mainstream/">Anti-Government Movement Hits the&nbsp;Mainstream</a>
+											<span class="post-date">2020-02-19</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/02/18/cartels-recruiting-us-children-to-smuggle-drugs/">Cartels Recruiting US Children to Smuggle Drugs </a>
+											<span class="post-date">2020-02-18</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/02/17/elite-border-agents-heading-to-a-sanctuary-city-near-you/">Elite Border Agents Heading to a Sanctuary City Near&nbsp;You</a>
+											<span class="post-date">2020-02-17</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/02/16/thief-proudly-proclaims-bail-reform-its-lit/">Thief Proudly Proclaims “Bail Reform, It’s&nbsp;Lit”</a>
+											<span class="post-date">2020-02-16</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/02/13/drugs-found-in-bag-marked-bag-full-of-drugs/">Drugs Found In Bag Marked “Bag Full of&nbsp;Drugs”</a>
+											<span class="post-date">2020-02-13</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/02/12/online-influencers-look-out-the-ftc-is-coming-for-you/">Online Influencers Look Out The FTC is Coming for&nbsp;You</a>
+											<span class="post-date">2020-02-12</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/02/11/border-agents-nab-bag-of-dead-birds-headed-to-virginia-from-china/">Border Agents Nab Bag of Dead Birds Headed to Virginia from&nbsp;China</a>
+											<span class="post-date">2020-02-11</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/02/10/fbi-expanding-its-domestic-terrorism-focus/">FBI Expanding it’s Domestic Terrorism Focus </a>
+											<span class="post-date">2020-02-10</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/02/09/teacher-tries-to-get-meth-delivered-to-school-during-class/">Teacher Tries To Get Meth Delivered To School During Class </a>
+											<span class="post-date">2020-02-09</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/02/06/drug-dealers-getting-into-the-online-shopping-game/">Drug Dealers Getting into the Online Shopping&nbsp;Game</a>
+											<span class="post-date">2020-02-06</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/02/05/member-of-motorcycle-club-slugs-guy-for-wearing-fake-mc-vest/">Member of Motorcycle Club Slugs Guy for Wearing Fake MC Vest </a>
+											<span class="post-date">2020-02-05</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/02/04/police-impersonator-selling-pcp/">Police Impersonator Selling&nbsp;PCP</a>
+											<span class="post-date">2020-02-04</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/02/03/e-skimming-getting-worse-by-the-day/">E-Skimming Getting Worse by The&nbsp;Day</a>
+											<span class="post-date">2020-02-03</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/01/28/want-to-fight-off-coronavirus-drink-some-bleach/">Want to Fight Off Coronavirus? Drink Some&nbsp;Bleach</a>
+											<span class="post-date">2020-01-28</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/01/27/doj-investigation-of-facebook-heating-up/">DOJ Investigation of Facebook Heating&nbsp;Up</a>
+											<span class="post-date">2020-01-27</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/01/26/armed-8-year-olds-defend-against-violent-drug-cartels/">Armed 8 Year-Olds Defend Against Violent Drug&nbsp;Cartels</a>
+											<span class="post-date">2020-01-26</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/01/20/amazon-plays-with-hand-recognition/">Amazon Plays With Hand Recognition </a>
+											<span class="post-date">2020-01-20</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/01/19/facial-recognition/">Your Images Stolen to Create Facial Recognition Database Unbeknownst to&nbsp;You</a>
+											<span class="post-date">2020-01-19</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/01/14/apple/">Apple vs The&nbsp;FBI</a>
+											<span class="post-date">2020-01-14</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/01/13/portland-oregon/">Oregon Drug Smugglers -Record&nbsp;Kidnapping?</a>
+											<span class="post-date">2020-01-13</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/01/12/suicide/">Police Officers Lie Contributes to Man’s Suicide </a>
+											<span class="post-date">2020-01-12</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/01/05/wwiii/">#WWIII &#8211; Invasion of the Meme Culture </a>
+											<span class="post-date">2020-01-05</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2020/01/03/iran/">Iran Leaders Vow Revenge for Death of Maj. Gen. Qassem&nbsp;Soleimani</a>
+											<span class="post-date">2020-01-03</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/12/31/denver-colorado/">Denver’s Urban Camping Ban Overturned- Now&nbsp;What?</a>
+											<span class="post-date">2019-12-31</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/12/30/car-plant-closures-causing-fatal-opioid-overdoses/">Car Plant Closures Causing Fatal Opioid&nbsp;Overdoses?</a>
+											<span class="post-date">2019-12-30</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/12/29/runit-dome-fails-to-meet-expectations/">Runit Dome Fails to Meet Expectations </a>
+											<span class="post-date">2019-12-29</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/12/26/hells-angels-raid-raises-questions-about-media-law-enforcement-tactics/">Hells Angels Raid Raises Questions About Media/Law Enforcement&nbsp;Tactics</a>
+											<span class="post-date">2019-12-26</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/12/24/a-christmas-murder/">A Christmas Murder </a>
+											<span class="post-date">2019-12-24</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/12/20/harmonys-ink-2/">Body Art Gone Wrong&nbsp;II</a>
+											<span class="post-date">2019-12-20</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/12/20/harmonys-ink/">Body Art Gone&nbsp;Wrong</a>
+											<span class="post-date">2019-12-20</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/12/18/happy-impeachment-day/">Happy Impeachment Day</a>
+											<span class="post-date">2019-12-18</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/12/16/liquor-taxes-to-go-up-400/">Liquor Taxes To Go Up&nbsp;400%?</a>
+											<span class="post-date">2019-12-16</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/12/15/denver-pothole-problems-calling-all-app-developers/">Denver Pothole Problems &#8211; Calling all App Developers </a>
+											<span class="post-date">2019-12-15</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/12/04/north-koreas-holiday-gift-card-to-u-s-comes-with-a-warning/">North Korea’s Holiday Gift Card to U.S. Comes with a&nbsp;Warning</a>
+											<span class="post-date">2019-12-04</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/12/01/pee-causes-evacuation-widespread-panic-and-chaos/">Pee Causes Evacuation, Widespread Panic and Chaos </a>
+											<span class="post-date">2019-12-01</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/11/23/trump-impeachment-total-joke/">Trump Impeachment Total Joke? </a>
+											<span class="post-date">2019-11-23</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/11/19/lawyer-caught-with-hand-in-the-cookie-jar/">Lawyer Caught with Hand in the Cookie&nbsp;Jar</a>
+											<span class="post-date">2019-11-19</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/11/18/disney-and-thrust/">Disney + and Thrust </a>
+											<span class="post-date">2019-11-18</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/11/17/wth-iowa/">WTH Iowa?</a>
+											<span class="post-date">2019-11-17</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/11/14/florida-man-gets-so-pissed-over-loss-he-sets-vehicle-on-fire-with-victim-inside/">Florida Man Gets So Pissed Over Loss – He Sets Vehicle on Fire with Victim&nbsp;Inside</a>
+											<span class="post-date">2019-11-14</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/11/13/black-death-strikes-again/">Black Death Strikes&nbsp;Again</a>
+											<span class="post-date">2019-11-13</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/11/11/political-themed-ransomware-is-finally-here/">Political Themed Ransomware is Finally&nbsp;Here</a>
+											<span class="post-date">2019-11-11</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/11/10/illegally-imprisoned-man-fighting-to-get-released/">Illegally Imprisoned &#8211; Man Fighting to Get Released </a>
+											<span class="post-date">2019-11-10</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/11/03/smugglers-outsmart-trumps-border-wall/">Smugglers Outsmart Trump’s Border&nbsp;Wall</a>
+											<span class="post-date">2019-11-03</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/10/31/the-doll-that-can-visit-your-dreams-and-stop-your-heart/">The Doll That Can Visit Your Dreams and Stop Your&nbsp;Heart</a>
+											<span class="post-date">2019-10-31</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/10/29/mourners-served-hash-cake-at-funeral/">Mourners Served Hash Cake at&nbsp;Funeral?</a>
+											<span class="post-date">2019-10-29</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/10/28/hacking-high-tech-cars/">Hacking High Tech Cars </a>
+											<span class="post-date">2019-10-28</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/10/27/real-life-zombies/">Real Life Zombies </a>
+											<span class="post-date">2019-10-27</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/10/23/law-enforcement-says-goodbye-to-using-dna-website-to-crack-cold-cases/">Law Enforcement Says Goodbye To Using DNA Website to Crack Cold&nbsp;Cases</a>
+											<span class="post-date">2019-10-23</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/10/22/googles-newest-update-pisses-cops-off/">Googles Newest Update Pisses Cops Off </a>
+											<span class="post-date">2019-10-22</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/10/21/denver-traffic-nightmare-about-to-get-worse/">Denver Traffic Nightmare About To Get Worse </a>
+											<span class="post-date">2019-10-21</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/10/20/uber-happy-to-be-your-getaway-car/">Uber Happy to Be Your Getaway&nbsp;Car</a>
+											<span class="post-date">2019-10-20</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/10/16/domestic-violence-hits-home/">Domestic Violence Hits&nbsp;Home</a>
+											<span class="post-date">2019-10-16</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/10/14/the-kurds-deserved-better/">The Kurds Deserved Better </a>
+											<span class="post-date">2019-10-14</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/10/13/former-f-b-i-director-wants-an-end-to-the-trump-presidency/">Former F.B.I. Director Wants an End to the Trump&nbsp;Presidency</a>
+											<span class="post-date">2019-10-13</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/10/09/singapore-most-competitive-nation-in-the-world/">Singapore &#8211; Most Competitive Nation in the&nbsp;World</a>
+											<span class="post-date">2019-10-09</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/10/07/fbi-cracking-down-on-hate-groups/">FBI Cracking Down on Hate&nbsp;Groups</a>
+											<span class="post-date">2019-10-07</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/10/06/hackers-attack-goes-unnoticed-for-3-years/">Hackers Attack Goes Unnoticed for 3-Years </a>
+											<span class="post-date">2019-10-06</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/10/01/ex-yahoo-engineer-busted-for-hacking-accounts/">Ex-Yahoo Engineer Busted for hacking&nbsp;Accounts</a>
+											<span class="post-date">2019-10-01</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/09/30/match-com-sued-by-the-ftc/">Match.com Sued by the&nbsp;FTC</a>
+											<span class="post-date">2019-09-30</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/09/29/dangerous-inmates-escape-now-gleefully-on-the-run/">Dangerous Inmates Escape &#8211; Now Gleefully on the Run </a>
+											<span class="post-date">2019-09-29</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/09/28/joker-movie-draws-a-lot-of-controversy/">Joker Movie Draws a Lot of&nbsp;Controversy</a>
+											<span class="post-date">2019-09-28</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/09/26/rather-unusual-ohio-state-police-chase/">Rather Unusual Ohio State Police&nbsp;Chase</a>
+											<span class="post-date">2019-09-26</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/09/25/please-refrain-from-mailing-ecstasy-pills/">Please Refrain from Mailing Ecstasy&nbsp;Pills</a>
+											<span class="post-date">2019-09-25</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/09/24/cop-tied-to-cartels/">Cop Tied to&nbsp;Cartels?</a>
+											<span class="post-date">2019-09-24</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/09/23/impeaching-donald-trump/">Impeaching Donald Trump</a>
+											<span class="post-date">2019-09-23</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/09/22/cattle-mutilation-on-the-rise-in-eastern-oregon/">Cattle Mutilation on the Rise in Eastern Oregon </a>
+											<span class="post-date">2019-09-22</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/09/17/judge-says-he-became-horny-during-murder-trial/">Judge Says He Became Horny &#8211; During Murder&nbsp;Trial</a>
+											<span class="post-date">2019-09-17</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/09/16/pigeon-shits-on-lawmaker-sending-message-suggesting-lawmaker-shut-it/">Pigeon Shits on Lawmaker Sending Message Suggesting Lawmaker Shut&nbsp;It</a>
+											<span class="post-date">2019-09-16</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/09/15/florida-man-creates-fake-international-court/">Florida Man Creates Fake International&nbsp;Court</a>
+											<span class="post-date">2019-09-15</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/09/10/denver-charge-customers-who-use-plastic-bags/">Denver &#8211; Charge Customers Who Use Plastic&nbsp;Bags</a>
+											<span class="post-date">2019-09-10</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/09/09/millennials-blamed-for-white-claw-shortage-leaving-nation-in-a-panic/">Millennials Blamed for White Claw Shortage &#8211; Leaving Nation in a&nbsp;Panic?</a>
+											<span class="post-date">2019-09-09</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/09/08/digital-textbooks-now-offer-malware-and-viruses/">Digital Textbooks Now Offer Malware and Viruses  </a>
+											<span class="post-date">2019-09-08</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/09/03/ceo-duped-by-scammer/">CEO Duped By Scammer </a>
+											<span class="post-date">2019-09-03</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/09/02/avast-and-police-kill-850000-malware-infections/">Avast and Police Kill 850,000 Malware&nbsp;Infections</a>
+											<span class="post-date">2019-09-02</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/08/27/this-weeks-black-supermoon/">This Week’s Black Supermoon </a>
+											<span class="post-date">2019-08-27</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/08/26/drones-with-flamethrowers/">Drones With Flamethrowers</a>
+											<span class="post-date">2019-08-26</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/08/25/ai-helps-catch-murder-suspect/">AI Helps Catch Murder Suspect </a>
+											<span class="post-date">2019-08-25</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/08/21/castration-fetish-leads-to-botched-castration-surgery/">Castration Fetish Leads to Botched Castration&nbsp;Surgery</a>
+											<span class="post-date">2019-08-21</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/08/19/man-impersonating-a-police-officer-pulls-over-van-full-of-police/">Man Impersonating a Police Officer – Pulls Over Van Full of&nbsp;Police</a>
+											<span class="post-date">2019-08-19</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/08/13/feds-in-hot-seat/">Fed&#8217;s in Hot Seat </a>
+											<span class="post-date">2019-08-13</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/08/12/america-the-land-of-the-free/">America &#8211; The Land of The Free </a>
+											<span class="post-date">2019-08-12</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/08/05/us-citizens-to-lawmakers-stop-sleeping-at-the-wheel/">US Citizens to Lawmakers – Stop Sleeping At the&nbsp;Wheel</a>
+											<span class="post-date">2019-08-05</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/08/01/democratic-national-debate/">Democratic National Debate</a>
+											<span class="post-date">2019-08-01</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/07/31/pilots-and-passengers-behaving-badly/">Pilots and Passengers Behaving&nbsp;Badly</a>
+											<span class="post-date">2019-07-31</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/07/30/tech-industry-watch-out-new-waste-of-time-bill-aimed-at-you/">Tech Industry Watch Out New Waste of Time Bill Aimed at&nbsp;You</a>
+											<span class="post-date">2019-07-30</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/07/23/donald-trump-of-course-iran-didnt-arrest-17-us-spies/">Donald Trump – Of Course Iran Didn’t Arrest 17 US&nbsp;Spies</a>
+											<span class="post-date">2019-07-23</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/07/22/iran-killing-us-spies/">Iran Killing US&nbsp;Spies?</a>
+											<span class="post-date">2019-07-22</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/07/16/trump-tells-congress-women-of-color-to-go-back-home/">Trump Tells Congresswomen of Color to “Go Back&nbsp;Home”</a>
+											<span class="post-date">2019-07-16</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/07/15/us-cracks-down-on-undocumented-immigrants-with-scheduled-raids/">Us Cracks Down on undocumented Immigrants with Scheduled&nbsp;Raids</a>
+											<span class="post-date">2019-07-15</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/06/27/robocallers-beware-us-government-is-coming-for-you/">Robocallers Beware – US Government is Coming for&nbsp;You</a>
+											<span class="post-date">2019-06-27</span>
+									</li>
+											<li>
+					<a href="https://crimeshop.org/2019/06/25/hackers-hack-mobile-carriers-could-shut-down-networks/">Hackers Hack Mobile Carriers – Could Shut Down&nbsp;Networks</a>
+											<span class="post-date">2019-06-25</span>
+									</li>
+					</ul>
+		</aside><aside id="archives-3" class="widget widget_archive"><h1 class="widget-title">Older Cases</h1>		<label class="screen-reader-text" for="archives-dropdown-3">Older Cases</label>
+		<select id="archives-dropdown-3" name="archive-dropdown">
+			
+			<option value="">Select Month</option>
+				<option value='https://crimeshop.org/2020/06/'> June 2020 &nbsp;(12)</option>
+	<option value='https://crimeshop.org/2020/05/'> May 2020 &nbsp;(14)</option>
+	<option value='https://crimeshop.org/2020/04/'> April 2020 &nbsp;(17)</option>
+	<option value='https://crimeshop.org/2020/03/'> March 2020 &nbsp;(10)</option>
+	<option value='https://crimeshop.org/2020/02/'> February 2020 &nbsp;(18)</option>
+	<option value='https://crimeshop.org/2020/01/'> January 2020 &nbsp;(10)</option>
+	<option value='https://crimeshop.org/2019/12/'> December 2019 &nbsp;(12)</option>
+	<option value='https://crimeshop.org/2019/11/'> November 2019 &nbsp;(9)</option>
+	<option value='https://crimeshop.org/2019/10/'> October 2019 &nbsp;(15)</option>
+	<option value='https://crimeshop.org/2019/09/'> September 2019 &nbsp;(16)</option>
+	<option value='https://crimeshop.org/2019/08/'> August 2019 &nbsp;(9)</option>
+	<option value='https://crimeshop.org/2019/07/'> July 2019 &nbsp;(6)</option>
+	<option value='https://crimeshop.org/2019/06/'> June 2019 &nbsp;(12)</option>
+	<option value='https://crimeshop.org/2019/05/'> May 2019 &nbsp;(6)</option>
+	<option value='https://crimeshop.org/2019/04/'> April 2019 &nbsp;(11)</option>
+	<option value='https://crimeshop.org/2019/03/'> March 2019 &nbsp;(27)</option>
+	<option value='https://crimeshop.org/2019/02/'> February 2019 &nbsp;(38)</option>
+	<option value='https://crimeshop.org/2019/01/'> January 2019 &nbsp;(18)</option>
+	<option value='https://crimeshop.org/2018/12/'> December 2018 &nbsp;(15)</option>
+	<option value='https://crimeshop.org/2018/11/'> November 2018 &nbsp;(9)</option>
+	<option value='https://crimeshop.org/2018/10/'> October 2018 &nbsp;(23)</option>
+	<option value='https://crimeshop.org/2018/09/'> September 2018 &nbsp;(16)</option>
+	<option value='https://crimeshop.org/2018/08/'> August 2018 &nbsp;(20)</option>
+	<option value='https://crimeshop.org/2018/07/'> July 2018 &nbsp;(7)</option>
+	<option value='https://crimeshop.org/2018/04/'> April 2018 &nbsp;(6)</option>
+	<option value='https://crimeshop.org/2018/03/'> March 2018 &nbsp;(7)</option>
+	<option value='https://crimeshop.org/2018/02/'> February 2018 &nbsp;(8)</option>
+	<option value='https://crimeshop.org/2018/01/'> January 2018 &nbsp;(20)</option>
+	<option value='https://crimeshop.org/2017/12/'> December 2017 &nbsp;(11)</option>
+	<option value='https://crimeshop.org/2017/11/'> November 2017 &nbsp;(14)</option>
+	<option value='https://crimeshop.org/2017/10/'> October 2017 &nbsp;(20)</option>
+	<option value='https://crimeshop.org/2017/09/'> September 2017 &nbsp;(16)</option>
+	<option value='https://crimeshop.org/2017/08/'> August 2017 &nbsp;(14)</option>
+	<option value='https://crimeshop.org/2017/07/'> July 2017 &nbsp;(21)</option>
+	<option value='https://crimeshop.org/2017/06/'> June 2017 &nbsp;(11)</option>
+	<option value='https://crimeshop.org/2017/05/'> May 2017 &nbsp;(8)</option>
+	<option value='https://crimeshop.org/2017/04/'> April 2017 &nbsp;(3)</option>
+	<option value='https://crimeshop.org/2017/03/'> March 2017 &nbsp;(7)</option>
+	<option value='https://crimeshop.org/2017/02/'> February 2017 &nbsp;(13)</option>
+	<option value='https://crimeshop.org/2017/01/'> January 2017 &nbsp;(17)</option>
+	<option value='https://crimeshop.org/2016/12/'> December 2016 &nbsp;(21)</option>
+	<option value='https://crimeshop.org/2016/11/'> November 2016 &nbsp;(22)</option>
+	<option value='https://crimeshop.org/2016/10/'> October 2016 &nbsp;(23)</option>
+	<option value='https://crimeshop.org/2016/09/'> September 2016 &nbsp;(20)</option>
+	<option value='https://crimeshop.org/2016/08/'> August 2016 &nbsp;(19)</option>
+	<option value='https://crimeshop.org/2016/07/'> July 2016 &nbsp;(12)</option>
+	<option value='https://crimeshop.org/2016/06/'> June 2016 &nbsp;(12)</option>
+	<option value='https://crimeshop.org/2016/05/'> May 2016 &nbsp;(11)</option>
+	<option value='https://crimeshop.org/2016/04/'> April 2016 &nbsp;(7)</option>
+	<option value='https://crimeshop.org/2016/03/'> March 2016 &nbsp;(4)</option>
+	<option value='https://crimeshop.org/2016/02/'> February 2016 &nbsp;(4)</option>
+	<option value='https://crimeshop.org/2016/01/'> January 2016 &nbsp;(6)</option>
+	<option value='https://crimeshop.org/2015/12/'> December 2015 &nbsp;(7)</option>
+	<option value='https://crimeshop.org/2015/11/'> November 2015 &nbsp;(9)</option>
+	<option value='https://crimeshop.org/2015/10/'> October 2015 &nbsp;(11)</option>
+
+		</select>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+	var dropdown = document.getElementById( "archives-dropdown-3" );
+	function onSelectChange() {
+		if ( dropdown.options[ dropdown.selectedIndex ].value !== '' ) {
+			document.location.href = this.options[ this.selectedIndex ].value;
+		}
+	}
+	dropdown.onchange = onSelectChange;
+})();
+/* ]]> */
+</script>
+
+		</aside><aside id="categories-5" class="widget widget_categories"><h1 class="widget-title">Cases</h1><form action="https://crimeshop.org" method="get"><label class="screen-reader-text" for="cat">Cases</label><select  name='cat' id='cat' class='postform' >
+	<option value='-1'>Select Category</option>
+	<option class="level-0" value="6845730">Aurora CO&nbsp;&nbsp;(1)</option>
+	<option class="level-0" value="410134854">Bennett Family Murder&nbsp;&nbsp;(1)</option>
+	<option class="level-0" value="180">Colorado&nbsp;&nbsp;(4)</option>
+	<option class="level-0" value="271">Commentary&nbsp;&nbsp;(643)</option>
+	<option class="level-0" value="610825625">CrimeShop Weekend Edition&nbsp;&nbsp;(1)</option>
+	<option class="level-0" value="406229056">Disappearance of Joseph Keller&nbsp;&nbsp;(1)</option>
+	<option class="level-0" value="79607033">Disposable Kids&nbsp;&nbsp;(1)</option>
+	<option class="level-0" value="18697">Knowledge Base&nbsp;&nbsp;(2)</option>
+	<option class="level-0" value="40286">lost and found&nbsp;&nbsp;(1)</option>
+	<option class="level-0" value="1">Uncategorized&nbsp;&nbsp;(219)</option>
+	<option class="level-1" value="307986">&nbsp;&nbsp;&nbsp;Unsolved Crimes&nbsp;&nbsp;(218)</option>
+	<option class="level-0" value="405182143">Unsolved Murder Tara Calico&nbsp;&nbsp;(1)</option>
+</select>
+</form>
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+	var dropdown = document.getElementById( "cat" );
+	function onCatChange() {
+		if ( dropdown.options[ dropdown.selectedIndex ].value > 0 ) {
+			dropdown.parentNode.submit();
+		}
+	}
+	dropdown.onchange = onCatChange;
+})();
+/* ]]> */
+</script>
+
+			</aside><aside id="search-5" class="widget widget_search">	<form method="get" id="searchform" class="searchform" action="https://crimeshop.org/" role="search">
+		<label for="s" class="screen-reader-text">Search</label>
+		<input type="search" class="field" name="s" value="" id="s" placeholder="Search &hellip;" />
+		<input type="submit" class="submit" id="searchsubmit" value="Search" />
+	</form>
+</aside><aside id="calendar-3" class="widget widget_calendar"><div id="calendar_wrap" class="calendar_wrap"><table id="wp-calendar" class="wp-calendar-table">
+	<caption>October 2017</caption>
+	<thead>
+	<tr>
+		<th scope="col" title="Sunday">S</th>
+		<th scope="col" title="Monday">M</th>
+		<th scope="col" title="Tuesday">T</th>
+		<th scope="col" title="Wednesday">W</th>
+		<th scope="col" title="Thursday">T</th>
+		<th scope="col" title="Friday">F</th>
+		<th scope="col" title="Saturday">S</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr><td><a href="https://crimeshop.org/2017/10/01/" aria-label="Posts published on October 1, 2017">1</a></td><td><a href="https://crimeshop.org/2017/10/02/" aria-label="Posts published on October 2, 2017">2</a></td><td><a href="https://crimeshop.org/2017/10/03/" aria-label="Posts published on October 3, 2017">3</a></td><td><a href="https://crimeshop.org/2017/10/04/" aria-label="Posts published on October 4, 2017">4</a></td><td><a href="https://crimeshop.org/2017/10/05/" aria-label="Posts published on October 5, 2017">5</a></td><td>6</td><td>7</td>
+	</tr>
+	<tr>
+		<td><a href="https://crimeshop.org/2017/10/08/" aria-label="Posts published on October 8, 2017">8</a></td><td><a href="https://crimeshop.org/2017/10/09/" aria-label="Posts published on October 9, 2017">9</a></td><td><a href="https://crimeshop.org/2017/10/10/" aria-label="Posts published on October 10, 2017">10</a></td><td>11</td><td><a href="https://crimeshop.org/2017/10/12/" aria-label="Posts published on October 12, 2017">12</a></td><td>13</td><td>14</td>
+	</tr>
+	<tr>
+		<td><a href="https://crimeshop.org/2017/10/15/" aria-label="Posts published on October 15, 2017">15</a></td><td><a href="https://crimeshop.org/2017/10/16/" aria-label="Posts published on October 16, 2017">16</a></td><td><a href="https://crimeshop.org/2017/10/17/" aria-label="Posts published on October 17, 2017">17</a></td><td><a href="https://crimeshop.org/2017/10/18/" aria-label="Posts published on October 18, 2017">18</a></td><td><a href="https://crimeshop.org/2017/10/19/" aria-label="Posts published on October 19, 2017">19</a></td><td>20</td><td>21</td>
+	</tr>
+	<tr>
+		<td><a href="https://crimeshop.org/2017/10/22/" aria-label="Posts published on October 22, 2017">22</a></td><td>23</td><td><a href="https://crimeshop.org/2017/10/24/" aria-label="Posts published on October 24, 2017">24</a></td><td>25</td><td><a href="https://crimeshop.org/2017/10/26/" aria-label="Posts published on October 26, 2017">26</a></td><td>27</td><td>28</td>
+	</tr>
+	<tr>
+		<td><a href="https://crimeshop.org/2017/10/29/" aria-label="Posts published on October 29, 2017">29</a></td><td><a href="https://crimeshop.org/2017/10/30/" aria-label="Posts published on October 30, 2017">30</a></td><td><a href="https://crimeshop.org/2017/10/31/" aria-label="Posts published on October 31, 2017">31</a></td>
+		<td class="pad" colspan="4">&nbsp;</td>
+	</tr>
+	</tbody>
+	</table><nav aria-label="Previous and next months" class="wp-calendar-nav">
+		<span class="wp-calendar-nav-prev"><a href="https://crimeshop.org/2017/09/">&laquo; Sep</a></span>
+		<span class="pad">&nbsp;</span>
+		<span class="wp-calendar-nav-next"><a href="https://crimeshop.org/2017/11/">Nov &raquo;</a></span>
+	</nav></div></aside><aside id="blog_subscription-3" class="widget widget_blog_subscription jetpack_subscription_widget"><h1 class="widget-title"><label for="subscribe-field">Follow Blog via Email</label></h1>
+			<form
+				action="https://subscribe.wordpress.com"
+				method="post"
+				accept-charset="utf-8"
+				id=""
+			>
+									<p>Enter your email address to follow this blog and receive notifications of new posts by email.</p>
+						<div class="jetpack-subscribe-count">
+							<p>
+							Join 722 other followers							</p>
+						</div>
+											<p id="subscribe-email">
+						<input
+								type="text"
+								name="email"
+								
+								style="width: 95%; padding: 1px 10px"
+								placeholder="Enter your email address"
+								value=""
+								id=""
+							/>					</p>
+				
+				<p id="subscribe-submit">
+                    <input type="hidden" name="action" value="subscribe"/>
+                    <input type="hidden" name="blog_id" value="100607289"/>
+                    <input type="hidden" name="source" value="https://crimeshop.org/2017/10/09/kim-jong-un-survives-us-assassination-plot/"/>
+                    <input type="hidden" name="sub-type" value="widget"/>
+                    <input type="hidden" name="redirect_fragment" value="blog_subscription-3"/>
+					<input type="hidden" id="_wpnonce" name="_wpnonce" value="34f03497d0" />                    <button type="submit"
+	                    		                	                >
+	                    Follow                    </button>
+                </p>
+            </form>
+			
+</aside><aside id="follow_button_widget-4" class="widget widget_follow_button_widget">
+		<a class="wordpress-follow-button" href="https://crimeshop.org" data-blog="100607289" data-lang="en" >Follow thecrimeshop on WordPress.com</a>
+		<script type="text/javascript">(function(d){var f = d.getElementsByTagName('SCRIPT')[0], p = d.createElement('SCRIPT');p.type = 'text/javascript';p.async = true;p.src = '//widgets.wp.com/platform.js';f.parentNode.insertBefore(p,f);}(document));</script>
+
+		</aside>	</div>
+<footer id="colophon" class="site-footer" role="contentinfo">
+		<div class="site-info">
+								<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Blog at WordPress.com.</a>
+				
+						</div><!-- .site-info -->
+</footer><!-- #colophon -->
+
+</div><!-- #page -->
+
+<!--  -->
+<script src='//0.gravatar.com/js/gprofiles.js?ver=202026y'></script>
+<script>
+var WPGroHo = {"my_hash":""};
+</script>
+<script type='text/javascript' src='https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h'></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	</div>
+<script>
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"https:\/\/crimeshop.wordpress.com\/public.api\/connect\/?action=request&domain=crimeshop.org","logoutURL":"https:\/\/crimeshop.wordpress.com\/wp-login.php?action=logout&_wpnonce=db9d486439","homeURL":"https:\/\/crimeshop.org\/","postID":"7899","gravDefault":"blank","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1573483029j'></script>
+
+	<div id="carousel-reblog-box">
+		<form action="#" name="carousel-reblog">
+			<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Add your thoughts here... (optional)"></textarea>
+			<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Post to</label>
+			<select name="carousel-reblog-to-blog-id" id="carousel-reblog-to-blog-id">
+						</select>
+
+			<div class="submit">
+				<span class="canceltext"><a href="#" class="cancel">Cancel</a></span>
+				<input type="submit" name="carousel-reblog-submit" class="button" id="carousel-reblog-submit" value="Reblog Post" />
+				<input type="hidden" id="carousel-reblog-blog-id" value="100607289" />
+				<input type="hidden" id="carousel-reblog-blog-url" value="https://crimeshop.org" />
+				<input type="hidden" id="carousel-reblog-blog-title" value="thecrimeshop" />
+				<input type="hidden" id="carousel-reblog-post-url" value="" />
+				<input type="hidden" id="carousel-reblog-post-title" value="" />
+			</div>
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="112d5327a5" /><input type="hidden" name="_wp_http_referer" value="/2017/10/09/kim-jong-un-survives-us-assassination-plot/" />		</form>
+
+		<div class="arrow"></div>
+	</div>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+			<div id="fb-root"></div>
+			<script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&appId=249643311490&version=v2.3'; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
+			<script>
+			jQuery( document.body ).on( 'post-load', function() {
+				if ( 'undefined' !== typeof FB ) {
+					FB.XFBML.parse();
+				}
+			} );
+			</script>
+			<link rel='stylesheet' id='all-css-0-3' href='https://s2.wp.com/_static/??-eJzTLy/QTc7PK0nNK9HPLdUtyClNz8wr1k9OLMovLU7N0c9KLSlITM7WhQnoJRcX6+hj15SempdalAmUwMEE6bXPtTU0tTQyNTMwsjDKAgDzgS6v?cssminify=yes' type='text/css' media='all' />
+<script>
+var comment_like_text = {"loading":"Loading..."};
+</script>
+<script>
+var actionbardata = {"siteID":"100607289","siteName":"thecrimeshop","siteURL":"https:\/\/crimeshop.org","icon":"<img alt='' src='https:\/\/s2.wp.com\/i\/logo\/wpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/flounder","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fcrimeshop.org%2F2017%2F10%2F09%2Fkim-jong-un-survives-us-assassination-plot%2F&signup_flow=account&domain=crimeshop.org","themeURL":"","xhrURL":"https:\/\/crimeshop.org\/wp-admin\/admin-ajax.php","nonce":"90e9733709","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"34f03497d0\" \/>","referer":"https:\/\/crimeshop.org\/2017\/10\/09\/kim-jong-un-survives-us-assassination-plot\/","canFollow":"1","feedID":"52623004","statusMessage":"","customizeLink":"https:\/\/crimeshop.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fcrimeshop.wordpress.com%2F2017%2F10%2F09%2Fkim-jong-un-survives-us-assassination-plot%2F","postID":"7899","shortlink":"https:\/\/wp.me\/p6O8yd-23p","canEditPost":"","editLink":"https:\/\/wordpress.com\/post\/crimeshop.org\/7899","statsLink":"https:\/\/wordpress.com\/stats\/post\/7899\/crimeshop.org","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: Flounder","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"Join 722 other followers","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fcrimeshop.org%2F2017%2F10%2F09%2Fkim-jong-un-survives-us-assassination-plot%2F&signup_flow=account&domain=crimeshop.org\">Log in now.<\/a>","stats":"Stats"}};
+</script>
+<script>
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"en","ajaxurl":"https:\/\/crimeshop.org\/wp-admin\/admin-ajax.php","nonce":"977768c9f1","display_exif":"1","display_comments":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Comment","post_comment":"Post Comment","write_comment":"Write a Comment...","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/crimeshop.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fcrimeshop.org%2F2017%2F10%2F09%2Fkim-jong-un-survives-us-assassination-plot%2F","blog_id":"100607289","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<fieldset><label for=\"email\">Email (Required)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Name (Required)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Website<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>","reblog":"Reblog","reblogged":"Reblogged","reblog_add_thoughts":"Add your thoughts here... (optional)","reblogging":"Reblogging...","post_reblog":"Post Reblog","stats_query_args":"blog=100607289&v=wpcom&tz=-6&user_id=0&subd=crimeshop","is_public":"1","reblog_enabled":""};
+</script>
+<script>
+var sharing_js_options = {"lang":"en","counts":"1","is_stats_active":"1"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyVkt1OwzAMhV+I1GNoCC4Qj4Ky1m3d5g87WRlPT6qtE6UoiKtYtr9j+ygwBVV7F9FFGAQaPFGN4aMa5A7WpeAlWhTRHf5SHd4T8vn6VOROhNOfbQPGoOtRMQp9blRtUsGkjpyAoREFMpSw164xyIXm2lubU+oCDTN9BJkolCZsoFXiJxh7zFZASEdojU+uQZ6ZJV7aydUmNWs9xmDOlSVXWObqC7xlAYgTxYisIlk05EpH6CbrqqNmsFoykyPlT8hM8xK33D8VIuddNhZ8h+pI3s3QLSo5rdknQbNcqZZEacJIYjGqh2p3MaX1bAv9819VrdHEIL1mct3yZujVvtwfnveHx93+aT98Ab4rIMc='></script>
+<script type='text/javascript'>
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>		<iframe src='https://widgets.wp.com/likes/master.html?ver=20190321#ver=20190321' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+		<div id='likes-other-gravatars'><div class="likes-text"><span>%d</span> bloggers like this:</div><ul class="wpl-avatars sd-like-gravatars"></ul></div>
+<script src="//stats.wp.com/w.js?61" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'100607289','blog_tz':'-6','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'100607289','v':'wpcom','tz':'-6','user_id':'0','post':'7899','subd':'crimeshop'}]);
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1TaVhzUzFMbjdWNHpwZGhTayxPSUFCMGNrd29+Smw0TDhnZmRTK0hlRi9QSGh6bi9GXVhBJWIlZlR5U1JMLU8/MkNtblkvY1c9eXFVOGRfZ3BBSTRzQUI5L0VqL3FpJSYuTF1FQlEmPTF1LVBaWlglVHEmT2owTlV5Ni5JfjNCaEEzeHlxTkwsfk8sWlcscy95ZjBFUzJ3anQuZXBGVz1wQjdjSXRMYTN0SUomOXhFcnolVG4vLDM9OXhzYUlRWS4ycnl0K2ZmTEo/SHZlLC1DZnM5UVB+YmkrW3dOfDdSUnlxOU56JiZzbE9nZkduYy16NXQtZF1bfGd+JWtuVFF5RThkdFZwTmt5TzhXLGl0UUEmRC5Eb1NYMUVpVUhoays/K0J4OGVZazZadjg2P3F0SGtHbk5fQThvayVGdVJFeFI4K0V1RT13LmNGZHYwbl9nZA=='}]);
+_stq.push([ 'clickTrackerInit', '100607289', '7899' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+		<script defer src="data:text/javascript,%21function%28%29%7B%22use%20strict%22%3Bvar%20e%3D%5B%5D%2Ct%3D%22wpcom.simple.ttfb.batcache.%22%3Btry%7Bfor%28var%20n%3Dperformance.getEntriesByType%28%22navigation%22%29%5B0%5D%7C%7C%7B%7D%2Co%3D0%2Cs%3Ddocument.body.childNodes%2Cc%3Ds.length-1%3Bc%3E%3D0%3Bc--%29s%5Bc%5D.nodeType%3D%3D%3DNode.COMMENT_NODE%26%26s%5Bc%5D.textContent.indexOf%28%22served%20from%20batcache%22%29%3E0%26%26%28o%3D1%29%3Bvar%20r%3DMath.round%28n.responseStart%7C%7C0%29%3Bif%28r%3E0%26%26%28o%3Fe.push%28t%2B%22hit%3A%22%2Br%2B%22%7Cms%22%29%3Ae.push%28t%2B%22miss%3A%22%2Br%2B%22%7Cms%22%29%29%2Ce.length%29document.createElement%28%22img%22%29.src%3D%22https%3A%2F%2Fpixel.wp.com%2Fboom.gif%3Fjson%3D%22%2BencodeURIComponent%28JSON.stringify%28%7Bbeacons%3Ae%7D%29%29%7Dcatch%28e%29%7B%7D%7D%28%29%3B"></script>
+		<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>

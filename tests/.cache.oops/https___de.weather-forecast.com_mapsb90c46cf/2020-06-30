@@ -1,0 +1,437 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="utf-8" />
+<script data-ezscrex='false' data-cfasync='false' data-pagespeed-no-defer>var __ez=__ez||{};__ez.stms=Date.now();__ez.evt={};__ez.script={};__ez.ck=__ez.ck||{};__ez.template={};__ez.template.isOrig=true;__ez.queue=(function(){var count=0,incr=0,items=[],timeDelayFired=false,hpItems=[],lpItems=[],allowLoad=true;var obj={func:function(name,funcName,parameters,isBlock,blockedBy,deleteWhenComplete,proceedIfError){var self=this;this.name=name;this.funcName=funcName;this.parameters=parameters===null?null:(parameters instanceof Array)?parameters:[parameters];this.isBlock=isBlock;this.blockedBy=blockedBy;this.deleteWhenComplete=deleteWhenComplete;this.isError=false;this.isComplete=false;this.isInitialized=false;this.proceedIfError=proceedIfError;this.isTimeDelay=false;this.process=function(){log("... func = "+name);self.isInitialized=true;self.isComplete=true;log("... func.apply: "+name);var funcs=self.funcName.split('.');var func=null;if(funcs.length>3){}else if(funcs.length===3){func=window[funcs[0]][funcs[1]][funcs[2]];}else if(funcs.length===2){func=window[funcs[0]][funcs[1]];}else{func=window[self.funcName];}
+if(typeof func!=='undefined'&&func!==null){func.apply(null,this.parameters);}
+if(self.deleteWhenComplete===true)delete items[name];if(self.isBlock===true){log("----- F'D: "+self.name);processAll();}}},file:function(name,path,isBlock,blockedBy,async,defer,proceedIfError){var self=this;this.name=name;this.path=path;this.async=async;this.defer=defer;this.isBlock=isBlock;this.blockedBy=blockedBy;this.isInitialized=false;this.isError=false;this.isComplete=false;this.proceedIfError=proceedIfError;this.isTimeDelay=false;this.process=function(){self.isInitialized=true;log("... file = "+name);var scr=document.createElement('script');scr.src=path;if(async===true)scr.async=true;else if(defer===true)scr.defer=true;scr.onerror=function(){log("----- ERR'D: "+self.name);self.isError=true;if(self.isBlock===true){processAll();}};scr.onreadystatechange=scr.onload=function(){var state=scr.readyState;log("----- F'D: "+self.name);if((!state||/loaded|complete/.test(state))){self.isComplete=true;if(self.isBlock===true){processAll();}}};document.getElementsByTagName('head')[0].appendChild(scr);}}};function init(){window.addEventListener("load",function(){setTimeout(function(){timeDelayFired=true;log('TDELAY -----');processAll();},5000);},false);}
+function addFile(name,path,isBlock,blockedBy,async,defer,proceedIfError,priority){var item=new obj.file(name,path,isBlock,blockedBy,async,defer,proceedIfError);if(priority===true){hpItems[name]=item}else{lpItems[name]=item}
+items[name]=item;checkIfBlocked(item);}
+function setallowLoad(settobool){allowLoad=settobool}
+function addFunc(name,func,parameters,isBlock,blockedBy,autoInc,deleteWhenComplete,proceedIfError,priority){if(autoInc===true)name=name+"_"+incr++;var item=new obj.func(name,func,parameters,isBlock,blockedBy,deleteWhenComplete,proceedIfError);if(priority===true){hpItems[name]=item}else{lpItems[name]=item}
+items[name]=item;checkIfBlocked(item);}
+function addTimeDelayFile(name,path){var item=new obj.file(name,path,false,[],false,false,true);item.isTimeDelay=true;log(name+' ... '+' FILE! TDELAY');lpItems[name]=item;items[name]=item;checkIfBlocked(item);}
+function addTimeDelayFunc(name,func,parameters){var item=new obj.func(name,func,parameters,false,[],true,true);item.isTimeDelay=true;log(name+' ... '+' FUNCTION! TDELAY');lpItems[name]=item;items[name]=item;checkIfBlocked(item);}
+function checkIfBlocked(item){if(isBlocked(item)===true||allowLoad==false)return;item.process();}
+function isBlocked(item){if(item.isTimeDelay===true&&timeDelayFired===false){log(item.name+" blocked = TIME DELAY!");return true;}
+if(item.blockedBy instanceof Array){for(var i=0;i<item.blockedBy.length;i++){var block=item.blockedBy[i];if(items.hasOwnProperty(block)===false){log(item.name+" blocked = "+block);return true;}else if(item.proceedIfError===true&&items[block].isError===true){return false;}else if(items[block].isComplete===false){log(item.name+" blocked = "+block);return true;}}}
+return false;}
+function log(msg){var href=window.location.href;var reg=new RegExp('[?&]ezq=([^&#]*)','i');var string=reg.exec(href);var res=string?string[1]:null;if(res==="1")console.debug(msg);}
+function processAll(){count++;if(count>200)return;log("let's go");processItems(hpItems);processItems(lpItems);}
+function processItems(list){for(var i in list){if(list.hasOwnProperty(i)===false)continue;var item=list[i];if(item.isComplete===true||isBlocked(item)||item.isInitialized===true||item.isError===true){if(item.isError===true){log(item.name+': error')}else if(item.isComplete===true){log(item.name+': complete already')}else if(item.isInitialized===true){log(item.name+': initialized already')}}else{item.process();}}}
+init();return{addFile:addFile,addDelayFile:addTimeDelayFile,addFunc:addFunc,addDelayFunc:addTimeDelayFunc,items:items,processAll:processAll,setallowLoad:setallowLoad};})();__ez.evt.add=function(e,t,n){e.addEventListener?e.addEventListener(t,n,!1):e.attachEvent?e.attachEvent("on"+t,n):e["on"+t]=n()},__ez.evt.remove=function(e,t,n){e.removeEventListener?e.removeEventListener(t,n,!1):e.detachEvent?e.detachEvent("on"+t,n):delete e["on"+t]};__ez.script.add=function(e){var t=document.createElement("script");t.src=e,t.async=!0,t.type="text/javascript",document.getElementsByTagName("head")[0].appendChild(t)};__ez.queue.addFile('/detroitchicago/boise.js', '//ezodn.com/detroitchicago/boise.js?gcb=188-1&cb=1', false, [], true, false, true, false);__ez.dot={};__ez.queue.addFile('/detroitchicago/memphis.js', '//ezodn.com/detroitchicago/memphis.js?gcb=188-1&cb=1', false, [], true, false, true, false);__ez.queue.addFile('/detroitchicago/minneapolis.js', '//ezodn.com/detroitchicago/minneapolis.js?gcb=188-1&cb=1', false, [], true, false, true, false);</script><script data-ezscrex='false' data-cfasync='false' data-pagespeed-no-defer>__ez.pel=(function(){var pixels=[],pxURL="/porpoiseant/army.gif";function AddAndFirePixel(adSlot,pixelData){AddPixel(adSlot,pixelData,0,0,0,0,0);Fire();}
+function GetCurrentPixels(){return pixels;}
+function AddPixel(adSlot,pixelData,revenue,est_revenue,bid_floor_filled,bid_floor_prev,stat_source_id){if(!__ez.dot.isDefined(adSlot)||__ez.dot.isAnyDefined(adSlot.getSlotElementId,adSlot.ElementId)==false){return;}
+var ad_position_id=parseInt(__ez.dot.getTargeting(adSlot,'ap'));var impId=__ez.dot.getSlotIID(adSlot),adUnit=__ez.dot.getAdUnit(adSlot);var compId=parseInt(__ez.dot.getTargeting(adSlot,"compid"));var lineItemId=0;var creativeId=0;var ezimData=getEzimData(adSlot);if(typeof ezimData=='object'){if(ezimData.creative_id!==undefined){creativeId=ezimData.creative_id;}
+if(ezimData.line_item_id!==undefined){lineItemId=ezimData.line_item_id;}}
+if(__ez.dot.isDefined(impId,adUnit)&&__ez.dot.isValid(pixelData)){pixels.push({type:"impression",impression_id:impId,domain_id:__ez.dot.getDID(),unit:adUnit,t_epoch:__ez.dot.getEpoch(0),revenue:revenue,est_revenue:est_revenue,ad_position:ad_position_id,ad_size:"",bid_floor_filled:bid_floor_filled,bid_floor_prev:bid_floor_prev,stat_source_id:stat_source_id,country_code:__ez.dot.getCC(),pageview_id:__ez.dot.getPageviewId(),comp_id:compId,line_item_id:lineItemId,creative_id:creativeId,data:__ez.dot.dataToStr(pixelData)});}}
+function AddPixelById(impFullId,pixelData){var vals=impFullId.split('/');if(__ez.dot.isDefined(impFullId)&&vals.length===3&&__ez.dot.isValid(pixelData)){var adUnit=vals[0],impId=vals[2];pixels.push({type:"impression",impression_id:impId,domain_id:__ez.dot.getDID(),unit:adUnit,t_epoch:__ez.dot.getEpoch(0),pageview_id:__ez.dot.getPageviewId(),data:__ez.dot.dataToStr(pixelData)});}}
+function Fire(){if(typeof document.visibilityState!=='undefined'&&document.visibilityState==="prerender")return;if(__ez.dot.isDefined(pixels)&&pixels.length>0){var pixelURL=__ez.dot.getURL(pxURL)+"?orig="+(__ez.template.isOrig===true?1:0)+"&sts="+btoa(JSON.stringify(pixels));if(typeof window.isAmp!=='undefined'&&isAmp&&typeof window._ezaq!=='undefined'&&_ezaq.hasOwnProperty("domain_id")){pixelURL+="&visit_uuid="+_ezaq['visit_uuid'];}
+(new Image()).src=pixelURL;}
+pixels=[];}
+function getEzimData(adSlot){if(typeof _ezim_d=="undefined"){return false}
+var adUnitName=__ez.dot.getAdUnitPath(adSlot).split('/').pop();if(typeof _ezim_d==='object'&&_ezim_d.hasOwnProperty(adUnitName)){return _ezim_d[adUnitName];}
+for(var ezimKey in _ezim_d){if(ezimKey.split('/').pop()===adUnitName){return _ezim_d[ezimKey];}}
+return false;}
+return{Add:AddPixel,AddAndFire:AddAndFirePixel,AddById:AddPixelById,Fire:Fire,GetPixels:GetCurrentPixels,};})();__ez.queue.addFile('/detroitchicago/raleigh.js', '//ezodn.com/detroitchicago/raleigh.js?gcb=188-1&cb=1', false, [], true, false, true, false);</script>
+<script data-ezscrex="false" data-cfasync="false">(function(){if("function"===typeof window.CustomEvent)return!1;window.CustomEvent=function(c,a){a=a||{bubbles:!1,cancelable:!1,detail:null};var b=document.createEvent("CustomEvent");b.initCustomEvent(c,a.bubbles,a.cancelable,a.detail);return b}})();</script><script data-ezscrex="false" data-cfasync="false">window.requestIdleCallback=window.requestIdleCallback||function(b){var a=Date.now();return setTimeout(function(){b({didTimeout:!1,timeRemaining:function(){return Math.max(0,50-(Date.now()-a))}})},1)};
+	(function(){function b(a,b){for(var d=[],c=0;c<a;c++){for(var e=c*b*Math.random(),l=!0,k=2;k<=Math.sqrt(e);++k)if(0===e%k){l=!1;break}l&&d.push(e)}return d}function a(){var a=this;a.age=0;setInterval(function(){a.age++},1E3)}if("1"==window.ihajsdjhsadhjk){var c=new a;b(6,c);window.ihajsdjhsadhjk=null;window.doezifk="1"}"1"==window.doezifk&&(b(50,1E9),pointlessComputationsButton.disabled=!1,window.doezifk=null,window.ihajsdjhsadhjk="1");if("function"===typeof window.EzoIvent)return!1;window.EzoIvent=
+	function(a,b){b=b||{bubbles:!1,cancelable:!1,detail:null};var d=document.createEvent("EzoIvent");d.initCustomEvent(a,b.bubbles,b.cancelable,b.detail);return d}})();__ez.nap=[];__ez.nap[0]=0;__ez.nap[1]=45;__ez.nap[2]=[];__ez.nap[3]=0;__ez.nap[4]=1;__ez.nap[5]=[];
+	var ezocfol=function(b){b=_findNetworkQuietPeriods(__ez.nap[2],window.ezodomstart,b);b=_findOverlappingQuietPeriods(b,__ez.nap[5]);if("undefined"!=typeof b){var a=0,c=Math.max(b[b.length-1].cpuQuietPeriod.end,b[b.length-1].cpuQuietPeriod.end);b.forEach(function(b){a+=Math.floor(b.quietPeriodLength/55)});(a>=__ez.sswp&&1<a||10<=a||c<Date.now()-5E3)&&clearInterval(window.ezoIint);__ez.nap[0]=a;window.dispatchEvent(new CustomEvent("EzoIvent",{detail:[__ez.nap[0],50]}))}};
+	_findOverlappingQuietPeriods=function(b,a){var c=a.slice(),d=b.slice();c.shift();d.shift();var e=[];c.forEach(function(c){d.forEach(function(d){c.start>=d.start?d.end>=c.start+55&&e.push({cpuQuietPeriod:c,networkQuietPeriod:d,cpuQuietPeriods:a,networkQuietPeriods:b,quietPeriodLength:Math.min(c.duration,d.duration)}):c.end>=d.start+55&&e.push({cpuQuietPeriod:c,networkQuietPeriod:d,cpuQuietPeriods:a,networkQuietPeriods:b,quietPeriodLength:Math.min(c.duration,d.duration)})})});if(0<e.length)return e};
+	var netStartTime=0;_findNetworkQuietPeriods=function(b,a,c){0==netStartTime&&(netStartTime=a-1);a=[];for(var d in b){var e=b[d];0>e.end&&(e.end=99);a.push({time:e.start,isStart:!0});0<e.end&&a.push({time:e.end,isStart:!1})}a.sort(function(b,a){return b.time-a.time});var f=0,g=netStartTime,h=[];a.forEach(function(b){b.isStart?(f===__ez.nap[4]&&h.push({start:g,end:b.time,duration:b.time-g}),f++):(f--,f===__ez.nap[4]&&(g=b.time))});f<=__ez.nap[4]&&h.push({start:g,end:c,duration:c-g});return h};
+	function hashCode(b){for(var a,c=0;c<b.length;c++)a=Math.imul(31,a)+b.charCodeAt(c)|0;return a}
+	var ezogetrqbykey=function(b){for(var a=0,c=__ez.nap[2].length;a<c;a++)if(__ez.nap[2][a].id==b)return a},ezorqs=function(b,a){indexKey=window.ezogetrqbykey(a);"undefined"==typeof indexKey&&(__ez.nap[2].push({start:Date.now(),end:-1,id:a}),__ez.nap[3]++,setTimeout(function(){window.ezorqe(b,a)},2E3))},ezorqe=function(b,a,c){indexKey=window.ezogetrqbykey(a);"undefined"!=typeof indexKey&&-1==__ez.nap[2][indexKey].end?(__ez.nap[2][indexKey].end=Date.now(),__ez.nap[3]--):1==c&&__ez.nap[3]--};
+	(function(){if("undefined"!=typeof window.__ez.ssaf&&-1<window.__ez.ssaf.indexOf(19)){var b=window.setInterval;window.setInterval=function(a,c){var d=c;90>d&&56!=d&&(d=90);if(3>arguments.length)return b(a,d);var e=Array.prototype.slice.call(arguments).slice(2);return b(a.bind(window,e),d)}}})();
+	(function(){if("undefined"!=typeof window.__ez.ssaf&&-1<window.__ez.ssaf.indexOf(19)){var b=window.setTimeout;window.setTimeout=function(a,c){var d=c;90>d&&(d=90);if(3>arguments.length)return b(a,d);var e=this,f=Array.prototype.slice.call(arguments,2);return b(a instanceof Function?function(){a.apply(e,f)}:a,d)}}})();
+	(function(){var b=window.XMLHttpRequest,a=function(){var a=new b;"undefined"!=typeof this.open?a.open=this.open:this.open=b.open;"undefined"!=typeof this.abort?a.abort=this.abort:this.open=b.open;"undefined"!=typeof this.getAllResponseHeaders?a.getAllResponseHeaders=this.getAllResponseHeaders:this.getAllResponseHeaders=b.getAllResponseHeaders;"undefined"!=typeof this.getResponseHeader?a.getResponseHeader=this.getResponseHeader:this.getResponseHeader=b.getResponseHeader;"undefined"!=typeof this.overrideMimeType?
+	a.overrideMimeType=this.overrideMimeType:this.overrideMimeType=b.overrideMimeType;"undefined"!=typeof this.setRequestHeader?a.setRequestHeader=this.setRequestHeader:this.setRequestHeader=b.setRequestHeader;var c=Math.random();a.addEventListener("loadstart",function(a){window.ezorqs(a,c)});a.addEventListener("loadend",function(a){window.ezorqe(a,c)});a.addEventListener("error",function(a){window.ezorqe(a,c)});a.addEventListener("abort",function(a){window.ezorqe(a,c)});return a};a.prototype=b.prototype;
+	for(var c in b)a[c]=b[c];window.XMLHttpRequest=a})();window.ezoFetchConst=window.fetch;window.fetch=function(b){var a=arguments,c=this,d=Math.random();window.ezorqs(b,d);return new Promise(function(b,f){window.ezoFetchConst.apply(c,a).then(function(a){window.ezorqe(a,d);b(a)})["catch"](function(a){window.ezorqe(a,d);f(a)})})};var _fEzDt=function(){return Date.now()};
+	document.addEventListener("DOMContentLoaded",function(){window.ezodomstart=Date.now();if("requestIdleCallback"in window){var b=0;window.ezoIint=setInterval(function(){window.requestIdleCallback(function(a){var c=Date.now();a=a.timeRemaining();var d=_fEzDt();a<d&&(a>__ez.nap[1]?0==b&&(b=c):0!=b&&(a={start:b,end:c-(50-a)},a.duration=a.end-a.start,55<=a.duration&&(__ez.nap[5].push(a),window.ezocfol(c)),b=0))})},56)}else window.dispatchEvent(new CustomEvent("EzoIvent",{detail:[-1,-1]})),clearInterval(window.ezoIint)});
+	"undefined"!=typeof window.__ez.ssaf&&-1<window.__ez.ssaf.indexOf(16)&&(window.addEventListener("load",function(){window.__ez__w_load=!0}),window.addEventListener("DOMContentLoaded",function(){window.__ez__w_dom=!0}),"undefined"!==typeof window.__ez.sshsdef&&!1===window.__ez.sshsdef&&function(){if(Element.prototype.addEventListener){window.__ez__ael=window.addEventListener;window.__ez__ael__proto=window.__ez__ael.prototype;var b=function(){if("domcontentloaded"==arguments[0].toLowerCase()||"load"==
+	arguments[0].toLowerCase())null!=document.currentScript?"true"==document.currentScript.getAttribute("data-ezscrex")&&("domcontentloaded"==arguments[0].toLowerCase()?arguments[0]="EzoicDOMContentLoaded":"load"==arguments[0].toLowerCase()&&(arguments[0]="Ezoicload")):"domcontentloaded"==arguments[0].toLowerCase()?arguments[0]="EzoicDOMContentLoaded":"load"==arguments[0].toLowerCase()&&(arguments[0]="Ezoicload");window.__ez__ael.apply(window,arguments)};window.__ez__ael.prototype=window.__ez__ael__proto;
+	window.addEventListener=b;document.addEventListener=b}}());window.ezorqs=ezorqs;window.ezorqe=ezorqe;window.ezocfol=ezocfol;window.ezogetrqbykey=ezogetrqbykey;__ez.nap=__ez.nap;</script><meta content="width=device-width" name="viewport" /><title>Wetterkarten Finder</title><meta name="description" content="Suchen Sie Ihre Land Wetterkarte aus und passen sie Overlays für Wettervorhersagen und aktuelle Wetterbedingungen an. Alle Karten können animiert werden um die nächsten 10 Tage Wettervorhersagen in 6 stündigen Intervallen abzuspielen." /><meta name="keywords" content="Wetterkarten,interaktive Wetterkarten,Stadt,Städte,aktuelle Wetterkarten,Regenfall,Schnee,Temperatur,Wind,Druck,www.weather-forecast.com" /><meta content="460425463983282" property="fb:app_id" /><link href="https://www.weather-forecast.com/assets/application-0c2649ab1f9c41afc058092f52e20f53.css" media="all" rel="stylesheet" type="text/css" /><link href="https://www.weather-forecast.com/assets/print-5f8bae1e55f6a9a3ba59ab5d00c1c128.css" media="print" rel="stylesheet" type="text/css" /><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KMND7ZB');</script>
+<script src="https://www.weather-forecast.com/assets/vendor/modernizr-7b1a54ed8ea52430183b841d219f4140.js" type="text/javascript"></script><link href="/favicon.ico" rel="shortcut icon" /><link rel="alternate" hreflang="de" href="https://de.weather-forecast.com/maps" />
+<link rel="alternate" hreflang="en" href="https://www.weather-forecast.com/maps" />
+<link rel="alternate" hreflang="es" href="https://es.weather-forecast.com/maps" />
+<link rel="alternate" hreflang="fr" href="https://fr.weather-forecast.com/maps" />
+<link rel="alternate" hreflang="ja" href="https://ja.weather-forecast.com/maps" />
+<link rel="alternate" hreflang="nl" href="https://nl.weather-forecast.com/maps" />
+<link rel="alternate" hreflang="zh" href="https://zh.weather-forecast.com/maps" /><link as="font" href="https://www.weather-forecast.com/assets/fontcustom-54002fef20e762c60b54ceefc88cc33a.woff" rel="preload" type="font/woff2" /><link as="font" href="https://www.weather-forecast.com/assets/fontawesome-webfont-fa136772df5b133553c784c0ff0fa56a.woff2?v=4.4.0" rel="preload" type="font/woff2" /><script data-pagespeed-no-defer>
+  Array.from||(Array.from=function(){var r=Object.prototype.toString,n=function(n){return"function"==typeof n||"[object Function]"===r.call(n)},t=Math.pow(2,53)-1,e=function(r){var n=function(r){var n=Number(r);return isNaN(n)?0:0!==n&&isFinite(n)?(n>0?1:-1)*Math.floor(Math.abs(n)):n}(r);return Math.min(Math.max(n,0),t)};return function(r){var t=Object(r);if(null==r)throw new TypeError("Array.from requires an array-like object - not null or undefined");var o,a=arguments.length>1?arguments[1]:void 0;if(void 0!==a){if(!n(a))throw new TypeError("Array.from: when provided, the second argument must be a function");arguments.length>2&&(o=arguments[2])}for(var i,u=e(t.length),f=n(this)?Object(new this(u)):new Array(u),c=0;c<u;)i=t[c],f[c]=a?void 0===o?a(i,c):a.call(o,i,c):i,c+=1;return f.length=u,f}}());
+  var uj_funcs = [];
+  (function() {
+    window.FCLAYOUT = {};
+    var fclayout = (window.FCLAYOUT || (window.FCLAYOUT = {}));
+    if (window.matchMedia) {
+      fclayout.small = !window.matchMedia('(min-width: 640px)').matches;
+      fclayout.portrait = window.matchMedia("(orientation: portrait)").matches;
+    } else {
+      fclayout.small = (window.innerWidth <= 640);
+    }
+  }).call(this);
+</script><script type="text/javascript">var gptadslots = [];
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];</script><script type="text/javascript">(function() {
+  var fclayout = (window.FCLAYOUT || (window.FCLAYOUT = {}));
+  if (window.matchMedia) {
+    fclayout.largeUp = window.matchMedia('(min-width: 1024px)').matches;
+    fclayout.xLargeUp = window.matchMedia('(min-width: 1310px)').matches;
+  }
+}).call(this);</script><script async="async" src="https://www.googletagservices.com/tag/js/gpt.js"></script><script type="text/javascript">var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];</script><!-- Begin comScore Tag -->
+<script>
+  var _comscore = _comscore || [];
+  _comscore.push({ c1: "2", c2: "28221962" });
+  (function() {
+    var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
+    s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
+    el.parentNode.insertBefore(s, el);
+  })();
+</script>
+<!-- End comScore Tag -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-226744-12', 'auto');  // Replace with your property ID.
+ga('require', 'displayfeatures');
+ga('send', 'pageview');
+
+document.addEventListener("ForecastExpanded", function() {
+  ga('send', 'event', 'forecast', 'expanded');
+});
+</script><script type="text/javascript">var gptCustomAdSlots = [];
+googletag.cmd.push(function() {
+    var mapping = googletag.sizeMapping().
+  addSize([728, 1], [728, 90]).
+addSize([0, 0], [[300, 250], [320, 100]]).
+                      build();
+      googletag.defineSlot('/1013347/WFC_leaderboard_responsive', [300, 250], 'cont_bn_leaderboard_oko').defineSizeMapping(mapping).addService(googletag.pubads());
+  var mappingBanner = googletag.sizeMapping().
+    addSize([501, 0], []).
+addSize([0, 0], [[1, 1], [320, 50], [300, 50]]).
+  build();
+  gptadslots['cont_bn_mob_footer_sticky_horiz1'] = googletag.defineSlot('/1013347/WeatherForecast/UnitO', [320, 50], 'cont_bn_mob_footer_sticky_horiz1').defineSizeMapping(mappingBanner).addService(googletag.pubads());
+  var mapping = googletag.sizeMapping().
+  addSize([1024, 1], [160, 600]).
+addSize([0, 0], []).
+                      build();
+      googletag.defineSlot('/1013347/WFC-Sticky-Sky1', 160, 'cont_bn_sticky_sky').defineSizeMapping(mapping).addService(googletag.pubads());
+
+  googletag.pubads().enableSingleRequest();
+  googletag.enableServices();
+});</script>
+<script data-ezscrex="false" data-cfasync="false" type="text/javascript">window.google_analytics_uacct = "UA-147515467-38";</script>
+<script data-ezscrex="false" data-cfasync="false" type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['e._setAccount', 'UA-147515467-38']);
+_gaq.push(['f._setAccount', 'UA-38339005-1']);
+_gaq.push(['e._setDomainName', 'weather-forecast.com']);
+_gaq.push(['f._setDomainName', 'weather-forecast.com']);
+_gaq.push(['e._setCustomVar',1,'template','old_site_gc',3]);
+_gaq.push(['e._setCustomVar',2,'t','126',3]);
+_gaq.push(['e._setCustomVar',3,'rid','0',2]);
+_gaq.push(['e._setCustomVar',4,'bra','mod4-c',3]);
+_gaq.push(['e._setAllowAnchor',true]);
+_gaq.push(['e._setSiteSpeedSampleRate', 10]);
+_gaq.push(['f._setCustomVar',1,'template','old_site_gc',3]);
+_gaq.push(['f._setCustomVar',2,'domain','weather-forecast.com',3]);
+_gaq.push(['f._setSiteSpeedSampleRate', 20]);
+_gaq.push(['e._trackPageview']);
+_gaq.push(['f._trackPageview']);
+
+
+(function() {
+ var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+<script type="text/javascript">var ezouid = "1";</script><base href="https://de.weather-forecast.com/maps"><script type='text/javascript'>
+var ezoTemplate = 'old_site_gc';
+if(typeof ezouid == 'undefined')
+{
+    var ezouid = 'none';
+}
+var ezoFormfactor = '1';
+var ezo_elements_to_check = Array();
+</script><!-- START EZHEAD -->
+<script data-ezscrex="false" type='text/javascript'>
+var soc_app_id = '0';
+var did = 173208;
+var ezdomain = 'weather-forecast.com';
+var ezoicSearchable = 1;
+</script>
+<!--{jquery}-->
+<!-- END EZHEAD -->
+<script data-ezscrex="false" type="text/javascript" data-cfasync="false">var _ezaq = {"ad_cache_level":0,"ad_lazyload_version":0,"city":"Minneapolis","country":"US","days_since_last_visit":-1,"domain_id":173208,"engaged_time_visit":0,"ezcache_level":1,"forensiq_score":-1,"form_factor_id":1,"framework_id":1,"is_return_visitor":false,"is_sitespeed":0,"last_page_load":"","last_pageview_id":"","lt_cache_level":0,"metro_code":613,"page_ad_positions":"","page_view_count":0,"page_view_id":"07a3809b-02f4-485b-7956-9dd215f7b92b","position_selection_id":0,"postal_code":"55422","pv_event_count":0,"response_time_orig":641,"serverid":"54.162.83.220:28606","state":"MN","t_epoch":1593536251,"template_id":126,"time_on_site_visit":0,"url":"https://de.weather-forecast.com/maps","user_id":0,"word_count":651,"worst_bad_word_level":0};var _ezExtraQueries = "&ez_orig=1";</script><script data-ezscrex='false' data-cfasync='false' type="text/javascript" src="/detroitchicago/rochester.js?cb=188-1&v=9" async></script>
+<script data-ezscrex='false' data-pagespeed-no-defer data-cfasync='false'>
+function create_ezolpl() {
+    var d = new Date();
+    d.setTime(d.getTime() + (365*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    __ez.ck.setByCat("ezux_lpl_173208=" + new Date().getTime() + "|07a3809b-02f4-485b-7956-9dd215f7b92b|false; " + expires, 3);
+}
+function attach_ezolpl() {
+    if(window.attachEvent) {
+        window.attachEvent('onload', create_ezolpl);
+    } else {
+        if(window.onload) {
+            var curronload = window.onload;
+            var newonload = function(evt) {
+                curronload(evt);
+                create_ezolpl();
+            };
+            window.onload = newonload;
+        } else {
+            window.onload = create_ezolpl;
+        }
+    }
+}
+attach_ezolpl();
+</script></head><body class="locale-iso-de js-units-i" data-c-domain=".weather-forecast.com"><!-- Begin comScore Tag -->
+<noscript>
+  <img src="https://sb.scorecardresearch.com/p?c1=2&c2=28221962&cv=2.0&cj=1" alt="" />
+</noscript>
+<!-- End comScore Tag -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KMND7ZB"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="not_in_print" id="header_cont"><div id="head_bg"><div id="bg_right"></div></div><div id="tcont_head"><div id="logo_cont"><a href="/"><img alt="Weather-forecast.com" height="104" src="https://www.weather-forecast.com/img/logo_n.jpg" width="244" /></a></div><div id="header_sky"><div id="flags"><div class="show-for-medium-up"><div class="flag-sprites">
+    <a href="https://www.weather-forecast.com/maps"><img src="https://www.weather-forecast.com/images/blank.gif" class="flag flag-gb" alt="gb"/></a>
+    <a href="https://fr.weather-forecast.com/maps"><img src="https://www.weather-forecast.com/images/blank.gif" class="flag flag-fr" alt="fr"/></a>
+    <a href="https://de.weather-forecast.com/maps"><img src="https://www.weather-forecast.com/images/blank.gif" class="flag flag-de" alt="de"/></a>
+    <a href="https://es.weather-forecast.com/maps"><img src="https://www.weather-forecast.com/images/blank.gif" class="flag flag-es" alt="es"/></a>
+    <a href="https://nl.weather-forecast.com/maps"><img src="https://www.weather-forecast.com/images/blank.gif" class="flag flag-nl" alt="nl"/></a>
+    <a href="https://ja.weather-forecast.com/maps"><img src="https://www.weather-forecast.com/images/blank.gif" class="flag flag-jp" alt="jp"/></a>
+    <a href="https://zh.weather-forecast.com/maps"><img src="https://www.weather-forecast.com/images/blank.gif" class="flag flag-cn" alt="cn"/></a>
+</div>
+</div><div class="show-for-small"><a href="" data-dropdown="flags-drop" class="flags-drop-link flag-sprites" aria-controls="flags-drop" aria-expanded="false"><img src="https://www.weather-forecast.com/images/blank.gif" class="flag-large flag-de" alt="de"/></a>
+<ul id="flags-drop" class="flags-drop-list flag-sprites" data-dropdown-content aria-hidden="true" tabindex="-1">
+    <li><a href="https://www.weather-forecast.com/maps"><div class="flag flag-gb"></div> English</a></li>
+    <li><a href="https://fr.weather-forecast.com/maps"><div class="flag flag-fr"></div> Français</a></li>
+    <li><a href="https://de.weather-forecast.com/maps"><div class="flag flag-de"></div> Deutch</a></li>
+    <li><a href="https://es.weather-forecast.com/maps"><div class="flag flag-es"></div> Español</a></li>
+    <li><a href="https://nl.weather-forecast.com/maps"><div class="flag flag-nl"></div> Nederlands</a></li>
+    <li><a href="https://ja.weather-forecast.com/maps"><div class="flag flag-jp"></div> 日本語</a></li>
+    <li><a href="https://zh.weather-forecast.com/maps"><div class="flag flag-cn"></div> 中文</a></li>
+</ul>
+</div></div><form method="post" id="search-box" class="top-search-box" action="/locations/catch">
+
+  
+  <input class="textinput" id="location" tabindex="1" type="text" name="query" size="26" maxlength="255" value="GEBEN SIE ORT ODER LAND EIN:" autocomplete="off" onfocus="this.value='';"/>
+	<input id="location_loc_id" name="loc_id" type="hidden" />
+  <input id="searchbtn" class="searchbtn" type="submit" value="Suche" /> <input type="hidden" name="action" value="save"/>
+</form>
+</div></div></div><div style="clear:both;"></div><div class="contain-to-grid cont-for-menu sticky"><nav class="top-bar" data-topbar="" role="navigation"><ul class="title-area"><li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li><li class="show-for-small"><form action="/locations/catch" id="menu-search-box" method="post"><input autocomplete="off" class="search-small search-in-menu" id="search-in-menu" name="query" placeholder="GEBEN SIE ORT ODER LAND EIN:" /><input id="search-in-menu-loc-id" name="loc_id" type="hidden" /></form></li></ul><section class="top-bar-section"><ul class="left"><li><a class="active" href="/">Home</a></li><li><a href="/countries">Wettervorhersage</a></li><li><a href="/maps">Wetterkarten</a></li><li><a href="/photos">Fotogalerie</a></li></ul><ul class="right"><li><a href="/sign_in">Login</a></li><li><a href="/sign_up">Anmelden</a></li></ul></section></nav></div><div id="upper-content"><div id="flash">
+</div></div><div class="custom-row"><div class="sidebar show-for-large-up"><div id="midsidebar"><div class="not_in_print" id="innersidebar"><div class="photos-in-sidebar upper">  <div class="img_col leftbsect">
+    <a href="/locations/Kilimanjaro-Airport/photos/1779"><img alt="Furtwangler Glacier, Kilimanjaro International Airport" src="https://www.weather-forecast.com/system/images/1779/thumb_col/Kilimanjaro-Airport.jpg" /></a>
+    <p class="col_link"><a href="/locations/Kilimanjaro-Airport/photos/1779">Kilimanjaro International Airport</a></p>
+  </div>
+</div><div style="clear: both; height: 8px;"></div><div class="about_widget"><h3><a href="/pages/configure_feed">Wettervorhersage Widgets</a></h3><p><a href="/pages/configure_feed"><img alt="Wettervorhersage Widgets" border="0" height="85" src="/images/weather_forecast_widget_2x.png" width="153" /></a></p></div><div style="clear: both; height: 8px;"></div><article class="sticky-ads" id="sticky-ads"><!--Ezoic - sidebar_floating_1 - sidebar_floating_1--><div id="ezoic-pub-ad-placeholder-133">
+<div id="cont_bn_sticky_sky">
+  <script>
+    googletag.cmd.push(function() {
+        var timesBannerRefreshed = 0;
+        var afterViewTimerElapsed = false;
+        var afterRenderTimerElapsed = false;
+
+        var refresher = function(slot) {
+          console.log("Refreshing cont_bn_sticky_sky");
+          timesBannerRefreshed++;
+          afterRenderTimerElapsed = false;
+          afterViewTimerElapsed = false;
+          googletag.cmd.push(function() {
+            googletag.pubads().refresh([slot]);
+          });
+        }
+
+        var checkRefresh = function(slot) {
+          console.log("Checking cont_bn_sticky_sky for refresh");
+          if (afterRenderTimerElapsed && afterRenderTimerElapsed) {
+            if (timesBannerRefreshed >= 5) {
+              console.log("Reached the refresh limit for cont_bn_sticky_sky");
+            } else {
+              refresher(slot);
+            }
+          }
+        }
+
+        var afterRenderTimer = function(slot) {
+          console.log("Timer elapsed");
+          afterRenderTimerElapsed = true;
+          checkRefresh(slot);
+        }
+
+        var afterViewTimer = function(slot) {
+          console.log('Viewed and additional timer elapsed');
+          afterViewTimerElapsed = true;
+          checkRefresh(slot);
+        }
+
+        googletag.pubads().addEventListener('impressionViewable', function(event) {
+          if (event.slot.getSlotElementId() === 'cont_bn_sticky_sky') {
+            setTimeout(afterViewTimer.bind(null, event.slot), 5000);
+          }
+        });
+
+        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
+          if (event.slot.getSlotElementId() === 'cont_bn_sticky_sky') {
+            console.log('Render ended for cont_bn_sticky_sky');
+            console.log(event.slot);
+            setTimeout(afterRenderTimer.bind(null, event.slot), 30000);
+          }
+        });
+      googletag.display('cont_bn_sticky_sky');
+    });
+  </script>
+</div>
+
+
+</div><!--End Ezoic - sidebar_floating_1 - sidebar_floating_1--></article></div></div></div><div class="content"><div class="centered-b b-with-large-whitespace">
+<div id="cont_bn_leaderboard_oko">
+  <script>
+    googletag.cmd.push(function() {
+      googletag.display('cont_bn_leaderboard_oko');
+    });
+  </script>
+</div>
+
+
+</div><div class="map_index_header"><div class="anim_map_sample"><a href="/maps/Minnesota?symbols=none&amp;type=lapse"><img alt="Minnesota Temperature Map" src="https://assets.weather-forecast.com/maps/pda/p_Wisconsin.weather.12.cc23.jpg" /></a><p><a href="/maps/Minnesota?symbols=none&amp;type=lapse">Minnesota Temperature Map</a></p></div><h1 class="newtitle narrow">Wetterkarten Finder</h1><p class="heading1">Suchen Sie eine Wetterkarte aus der Liste der Länder und US Staaten aus. Die 10 Tägige Wettervorhersage Karte kann um Regen, Schnee, Wind, Temperatur, Druck und aktuelles Wetter anzuzeigen animiert werden.</p><div class="static_maps"><div class="map-thumb-cont thumb-lapse"><a href="/maps/Minnesota?symbols=none&amp;type=lapse"><img alt="Minnesota temperature map" src="https://assets.weather-forecast.com/maps/static/t_Wisconsin.lapse.6.cc23.jpg" /></a><p><a href="/maps/Minnesota?symbols=none&amp;type=lapse"> Temperature Map</a></p></div><div class="map-thumb-cont thumb-cloud"><a href="/maps/Minnesota?over=arrows&amp;symbols=none&amp;type=cloud"><img alt="Minnesota cloud map" src="https://assets.weather-forecast.com/maps/static/t_Wisconsin.cloud.6.cc23.jpg" /></a><p><a href="/maps/Minnesota?over=arrows&amp;symbols=none&amp;type=cloud"> Cloud Map</a></p></div><div class="map-thumb-cont thumb-"><a href="/maps/Minnesota"><img alt="Minnesota weather map" src="https://assets.weather-forecast.com/maps/static/t_Wisconsin.weather_pressure.6.cc23.jpg" /></a><p><a href="/maps/Minnesota"> Weather Map</a></p></div><div class="map-thumb-cont thumb-wind"><a href="/maps/Minnesota?over=pressure_arrows&amp;symbols=none&amp;type=wind"><img alt="Minnesota wind map" src="https://assets.weather-forecast.com/maps/static/t_Wisconsin.wind.6.cc23.jpg" /></a><p><a href="/maps/Minnesota?over=pressure_arrows&amp;symbols=none&amp;type=wind"> Wind Map</a></p></div></div></div><br /><hr height="1px" width="85%" /><div class="flag-sprites weather_maps_list"><div class="f32"><h2>North America</h2></div><div class="f32"><h3><div class="flag32 us"></div> United States</h3><div class="static_maps"><div class="map-thumb-cont thumb-lapse"><a href="/maps/United-States?symbols=none&amp;type=lapse"><img alt="United States temperature map" src="https://assets.weather-forecast.com/maps/static/t_UnitedStates.lapse.6.cc23.jpg" /></a><p><a href="/maps/United-States?symbols=none&amp;type=lapse">United States<br/> Temperature Map</a></p></div><div class="map-thumb-cont thumb-cloud"><a href="/maps/United-States?over=arrows&amp;symbols=none&amp;type=cloud"><img alt="United States cloud map" src="https://assets.weather-forecast.com/maps/static/t_UnitedStates.cloud.6.cc23.jpg" /></a><p><a href="/maps/United-States?over=arrows&amp;symbols=none&amp;type=cloud">United States<br/> Cloud Map</a></p></div><div class="map-thumb-cont thumb-"><a href="/maps/United-States"><img alt="United States weather map" src="https://assets.weather-forecast.com/maps/static/t_UnitedStates.weather_pressure.6.cc23.jpg" /></a><p><a href="/maps/United-States">United States<br/> Weather Map</a></p></div><div class="map-thumb-cont thumb-wind"><a href="/maps/United-States?over=pressure_arrows&amp;symbols=none&amp;type=wind"><img alt="United States wind map" src="https://assets.weather-forecast.com/maps/static/t_UnitedStates.wind.6.cc23.jpg" /></a><p><a href="/maps/United-States?over=pressure_arrows&amp;symbols=none&amp;type=wind">United States<br/> Wind Map</a></p></div></div></div><div class="f32"><div class="column-list"><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Alabama">Alabama</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Alaska-United-States">Alaska United States</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Arizona">Arizona</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Arkansas">Arkansas</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/California">California</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Colorado">Colorado</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Connecticut">Connecticut</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Delaware">Delaware</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/District-of-Columbia">District-of-Columbia</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Florida">Florida</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Georgia-USA">Georgia-USA</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Hawaii-United-States">Hawaii, United States</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Idaho">Idaho</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Illinois">Illinois</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Indiana">Indiana</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Iowa">Iowa</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Kansas">Kansas</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Kentucky">Kentucky</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Louisiana">Louisiana</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Maine">Maine</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Maryland">Maryland</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Massachusetts">Massachusetts</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Michigan">Michigan</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Minnesota">Minnesota</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Mississippi">Mississippi</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Missouri">Missouri</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Montana">Montana</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Nebraska">Nebraska</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Nevada">Nevada</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/New-Hampshire">New-Hampshire</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/New-Jersey">New-Jersey</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/New-Mexico">New-Mexico</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/New-York">New-York</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/North-Carolina">North-Carolina</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/North-Dakota">North-Dakota</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Ohio">Ohio</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Oklahoma">Oklahoma</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Oregon">Oregon</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Pennsylvania">Pennsylvania</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Rhode-Island">Rhode-Island</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/South-Carolina">South-Carolina</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/South-Dakota">South-Dakota</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Tennessee">Tennessee</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Texas">Texas</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Utah">Utah</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Vermont">Vermont</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Virginia">Virginia</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Washington">Washington</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/West-Virginia">West-Virginia</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Wisconsin">Wisconsin</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/Wyoming">Wyoming</a></div><div class="entry"><div class="flag flag-us"></div> <a href="/maps/United-States">United States</a></div></div></div><div class="f32"><h3><div class="flag32 ca"></div> Canada</h3><div class="static_maps"><div class="map-thumb-cont thumb-lapse"><a href="/maps/Canada?symbols=none&amp;type=lapse"><img alt="Canada temperature map" src="https://assets.weather-forecast.com/maps/static/t_Canada.lapse.6.cc23.jpg" /></a><p><a href="/maps/Canada?symbols=none&amp;type=lapse">Canada<br/> Temperature Map</a></p></div><div class="map-thumb-cont thumb-cloud"><a href="/maps/Canada?over=arrows&amp;symbols=none&amp;type=cloud"><img alt="Canada cloud map" src="https://assets.weather-forecast.com/maps/static/t_Canada.cloud.6.cc23.jpg" /></a><p><a href="/maps/Canada?over=arrows&amp;symbols=none&amp;type=cloud">Canada<br/> Cloud Map</a></p></div><div class="map-thumb-cont thumb-"><a href="/maps/Canada"><img alt="Canada weather map" src="https://assets.weather-forecast.com/maps/static/t_Canada.weather_pressure.6.cc23.jpg" /></a><p><a href="/maps/Canada">Canada<br/> Weather Map</a></p></div><div class="map-thumb-cont thumb-wind"><a href="/maps/Canada?over=pressure_arrows&amp;symbols=none&amp;type=wind"><img alt="Canada wind map" src="https://assets.weather-forecast.com/maps/static/t_Canada.wind.6.cc23.jpg" /></a><p><a href="/maps/Canada?over=pressure_arrows&amp;symbols=none&amp;type=wind">Canada<br/> Wind Map</a></p></div></div></div><div class="f32"><div class="column-list"><div class="entry"><div class="flag flag-ca"></div> <a href="/maps/Alberta">Alberta</a></div><div class="entry"><div class="flag flag-ca"></div> <a href="/maps/British-Columbia">British-Columbia</a></div><div class="entry"><div class="flag flag-ca"></div> <a href="/maps/Manitoba">Manitoba</a></div><div class="entry"><div class="flag flag-ca"></div> <a href="/maps/New-Brunswick">New-Brunswick</a></div><div class="entry"><div class="flag flag-ca"></div> <a href="/maps/Newfoundland">Newfoundland</a></div><div class="entry"><div class="flag flag-ca"></div> <a href="/maps/Northwest-Territories">Northwest-Territories</a></div><div class="entry"><div class="flag flag-ca"></div> <a href="/maps/Nova-Scotia">Nova-Scotia</a></div><div class="entry"><div class="flag flag-ca"></div> <a href="/maps/Nunavut">Nunavut</a></div><div class="entry"><div class="flag flag-ca"></div> <a href="/maps/Ontario">Ontario</a></div><div class="entry"><div class="flag flag-ca"></div> <a href="/maps/Quebec">Quebec</a></div><div class="entry"><div class="flag flag-ca"></div> <a href="/maps/Saskatchewan">Saskatchewan</a></div><div class="entry"><div class="flag flag-ca"></div> <a href="/maps/Yukon-Territory">Yukon-Territory</a></div><div class="entry"><div class="flag flag-ca"></div> <a href="/maps/Canada">Canada</a></div></div></div><div><h3>Other North America</h3></div><div class="f32"><div class="column-list"><div class="entry"><div class="flag flag-ai"></div> <a href="/maps/Anguilla">Anguilla</a></div><div class="entry"><div class="flag flag-ag"></div> <a href="/maps/Antigua-and-Barbuda">Antigua und Barbuda</a></div><div class="entry"><div class="flag flag-aw"></div> <a href="/maps/Aruba">Aruba</a></div><div class="entry"><div class="flag flag-bb"></div> <a href="/maps/Barbados">Barbados</a></div><div class="entry"><div class="flag flag-bz"></div> <a href="/maps/Belize">Belize</a></div><div class="entry"><div class="flag flag-bm"></div> <a href="/maps/Bermuda">Bermuda</a></div><div class="entry"><div class="flag flag-vg"></div> <a href="/maps/British-Virgin-Islands">Britische Jungferninseln</a></div><div class="entry"><div class="flag flag-ky"></div> <a href="/maps/Cayman-Islands">Kaimaninseln</a></div><div class="entry"> <a href="/maps/ClippertonIsland">Clipperton-Insel</a></div><div class="entry"><div class="flag flag-cr"></div> <a href="/maps/Costa-Rica">Costa Rica</a></div><div class="entry"><div class="flag flag-cu"></div> <a href="/maps/Cuba">Kuba</a></div><div class="entry"><div class="flag flag-dm"></div> <a href="/maps/Dominica">Dominica</a></div><div class="entry"><div class="flag flag-do"></div> <a href="/maps/Dominican-Republic">Dominikanische Republik</a></div><div class="entry"><div class="flag flag-sv"></div> <a href="/maps/El-Salvador">El Salvador</a></div><div class="entry"><div class="flag flag-gl"></div> <a href="/maps/Greenland">Grönland</a></div><div class="entry"><div class="flag flag-gd"></div> <a href="/maps/Grenada">Grenada</a></div><div class="entry"><div class="flag flag-gp"></div> <a href="/maps/Guadeloupe">Guadeloupe</a></div><div class="entry"><div class="flag flag-gt"></div> <a href="/maps/Guatemala">Guatemala</a></div><div class="entry"><div class="flag flag-ht"></div> <a href="/maps/Haiti">Haiti</a></div><div class="entry"><div class="flag flag-hn"></div> <a href="/maps/Honduras">Honduras</a></div><div class="entry"><div class="flag flag-um"></div> <a href="/maps/Howland-Island">Howland Island</a></div><div class="entry"><div class="flag flag-jm"></div> <a href="/maps/Jamaica">Jamaika</a></div><div class="entry"><div class="flag flag-um"></div> <a href="/maps/Jarvis-Island">Jarvis Island</a></div><div class="entry"><div class="flag flag-mq"></div> <a href="/maps/Martinique">Martinique</a></div><div class="entry"><div class="flag flag-mx"></div> <a href="/maps/Mexico">Mexiko</a></div><div class="entry"><div class="flag flag-um"></div> <a href="/maps/Midway-Islands">Midway Islands</a></div><div class="entry"><div class="flag flag-ms"></div> <a href="/maps/Montserrat">Montserrat</a></div><div class="entry"><div class="flag flag-an"></div> <a href="/maps/Netherlands-Antilles">Netherlands Antilles</a></div><div class="entry"><div class="flag flag-ni"></div> <a href="/maps/Nicaragua">Nikaragua</a></div><div class="entry"><div class="flag flag-pa"></div> <a href="/maps/Panama">Panama</a></div><div class="entry"> <a href="/maps/Prince-Edward-Island">Prince-Edward-Island</a></div><div class="entry"><div class="flag flag-pr"></div> <a href="/maps/Puerto-Rico">Puerto Rico</a></div><div class="entry"><div class="flag flag-kn"></div> <a href="/maps/Saint-Kitts-and-Nevis">Saint Kitts und Nevis</a></div><div class="entry"><div class="flag flag-lc"></div> <a href="/maps/Saint-Lucia">St. Lucia</a></div><div class="entry"><div class="flag flag-pm"></div> <a href="/maps/Saint-Pierre-and-Miquelon">St. Pierre und Miquelon</a></div><div class="entry"><div class="flag flag-bs"></div> <a href="/maps/TheBahamas">Bahamas</a></div><div class="entry"><div class="flag flag-tt"></div> <a href="/maps/Trinidad-and-Tobago">Trinidad und Tobago</a></div><div class="entry"><div class="flag flag-tc"></div> <a href="/maps/Turks-and-Caicos-Islands">Turks- und Caicosinseln</a></div><div class="entry"><div class="flag flag-vi"></div> <a href="/maps/US-Virgin-Islands">Amerikanische Jungferninseln</a></div><div class="entry"><div class="flag flag-um"></div> <a href="/maps/Wake-Island">Wake</a></div></div></div><div class="f32"><h2><div class="flag32 _European_Union"></div> Europe</h2><div class="static_maps"><div class="map-thumb-cont thumb-lapse"><a href="/maps/France?symbols=none&amp;type=lapse"><img alt="France temperature map" src="https://assets.weather-forecast.com/maps/static/t_France.lapse.6.cc23.jpg" /></a><p><a href="/maps/France?symbols=none&amp;type=lapse">Europe<br/> Temperature Map</a></p></div><div class="map-thumb-cont thumb-cloud"><a href="/maps/France?over=arrows&amp;symbols=none&amp;type=cloud"><img alt="France cloud map" src="https://assets.weather-forecast.com/maps/static/t_France.cloud.6.cc23.jpg" /></a><p><a href="/maps/France?over=arrows&amp;symbols=none&amp;type=cloud">Europe<br/> Cloud Map</a></p></div><div class="map-thumb-cont thumb-"><a href="/maps/France"><img alt="France weather map" src="https://assets.weather-forecast.com/maps/static/t_France.weather_pressure.6.cc23.jpg" /></a><p><a href="/maps/France">Europe<br/> Weather Map</a></p></div><div class="map-thumb-cont thumb-wind"><a href="/maps/France?over=pressure_arrows&amp;symbols=none&amp;type=wind"><img alt="France wind map" src="https://assets.weather-forecast.com/maps/static/t_France.wind.6.cc23.jpg" /></a><p><a href="/maps/France?over=pressure_arrows&amp;symbols=none&amp;type=wind">Europe<br/> Wind Map</a></p></div></div></div><div class="f32"><div class="column-list"><div class="entry"><div class="flag flag-al"></div> <a href="/maps/Albania">Albanien</a></div><div class="entry"><div class="flag flag-ad"></div> <a href="/maps/Andorra">Andorra</a></div><div class="entry"><div class="flag flag-at"></div> <a href="/maps/Austria">Österreich</a></div><div class="entry"><div class="flag flag-pt"></div> <a href="/maps/Azores-Portugal">Azores Portugal</a></div><div class="entry"><div class="flag flag-by"></div> <a href="/maps/Belarus">Weißrussland</a></div><div class="entry"><div class="flag flag-be"></div> <a href="/maps/Belgium">Königreich Belgien</a></div><div class="entry"><div class="flag flag-ba"></div> <a href="/maps/Bosnia-and-Herzegovina">Bosnien und Herzegowina</a></div><div class="entry"><div class="flag flag-bg"></div> <a href="/maps/Bulgaria">Bulgarien</a></div><div class="entry"><div class="flag flag-es"></div> <a href="/maps/Canary-Islands-Spain">Kanarische Inseln</a></div><div class="entry"><div class="flag flag-hr"></div> <a href="/maps/Croatia">Kroatien</a></div><div class="entry"><div class="flag flag-cy"></div> <a href="/maps/Cyprus">Zypern</a></div><div class="entry"><div class="flag flag-cz"></div> <a href="/maps/Czech-Republic">Tschechische Republik</a></div><div class="entry"><div class="flag flag-dk"></div> <a href="/maps/Denmark">Dänemark</a></div><div class="entry"><div class="flag flag-ee"></div> <a href="/maps/Estonia">Estland</a></div><div class="entry"><div class="flag flag-fo"></div> <a href="/maps/Faroe-Islands">Färöer-Inseln</a></div><div class="entry"><div class="flag flag-fi"></div> <a href="/maps/Finland">Finnland</a></div><div class="entry"><div class="flag flag-fr"></div> <a href="/maps/France">Frankreich</a></div><div class="entry"><div class="flag flag-de"></div> <a href="/maps/Germany">Deutschland</a></div><div class="entry"><div class="flag flag-gi"></div> <a href="/maps/Gibraltar">Gibraltar</a></div><div class="entry"><div class="flag flag-gr"></div> <a href="/maps/Greece">Griechenland</a></div><div class="entry"><div class="flag flag-gg"></div> <a href="/maps/Guernsey">Guernsey</a></div><div class="entry"><div class="flag flag-va"></div> <a href="/maps/Holy-See">Staat der Vatikanstadt</a></div><div class="entry"><div class="flag flag-hu"></div> <a href="/maps/Hungary">Ungarn</a></div><div class="entry"><div class="flag flag-is"></div> <a href="/maps/Iceland">Island</a></div><div class="entry"><div class="flag flag-ie"></div> <a href="/maps/Ireland">Irland</a></div><div class="entry"><div class="flag flag-im"></div> <a href="/maps/Isle-of-Man">Insel Man</a></div><div class="entry"><div class="flag flag-it"></div> <a href="/maps/Italy">Italien</a></div><div class="entry"><div class="flag flag-sj"></div> <a href="/maps/Jan-Mayen">Svalbard und Jan Mayen</a></div><div class="entry"><div class="flag flag-je"></div> <a href="/maps/Jersey">Jersey</a></div><div class="entry"> <a href="/maps/Kosovo">Kosovo</a></div><div class="entry"><div class="flag flag-lv"></div> <a href="/maps/Latvia">Lettland</a></div><div class="entry"><div class="flag flag-li"></div> <a href="/maps/Liechtenstein">Fürstentum Liechtenstein</a></div><div class="entry"><div class="flag flag-lt"></div> <a href="/maps/Lithuania">Litauen</a></div><div class="entry"><div class="flag flag-lu"></div> <a href="/maps/Luxembourg">Großherzogtum Luxemburg</a></div><div class="entry"><div class="flag flag-mk"></div> <a href="/maps/Macedonia">Ehemalige jugoslawische Republik Mazedonien</a></div><div class="entry"> <a href="/maps/Madeira-Portugal">Madeira Portugal</a></div><div class="entry"><div class="flag flag-mt"></div> <a href="/maps/Malta">Malta</a></div><div class="entry"><div class="flag flag-md"></div> <a href="/maps/Moldova">Moldau (Republik Moldau)</a></div><div class="entry"><div class="flag flag-mc"></div> <a href="/maps/Monaco">Monaco</a></div><div class="entry"> <a href="/maps/Montenegro">Montenegro</a></div><div class="entry"><div class="flag flag-nl"></div> <a href="/maps/Netherlands">Niederlande</a></div><div class="entry"><div class="flag flag-no"></div> <a href="/maps/Norway">Norwegen</a></div><div class="entry"><div class="flag flag-pl"></div> <a href="/maps/Poland">Polen</a></div><div class="entry"><div class="flag flag-pt"></div> <a href="/maps/Portugal">Portugal</a></div><div class="entry"><div class="flag flag-ro"></div> <a href="/maps/Romania">Rumänien</a></div><div class="entry"><div class="flag flag-ru"></div> <a href="/maps/Russia">Russland</a></div><div class="entry"><div class="flag flag-sm"></div> <a href="/maps/San-Marino">San Marino</a></div><div class="entry"><div class="flag flag-rs"></div> <a href="/maps/Serbia">Serbien</a></div><div class="entry"><div class="flag flag-sk"></div> <a href="/maps/Slovakia">Slowakei (Slowakische Republik)</a></div><div class="entry"><div class="flag flag-si"></div> <a href="/maps/Slovenia">Slowenien</a></div><div class="entry"><div class="flag flag-es"></div> <a href="/maps/Spain">Spanien</a></div><div class="entry"><div class="flag flag-sj"></div> <a href="/maps/Svalbard">Svalbard und Jan Mayen</a></div><div class="entry"><div class="flag flag-se"></div> <a href="/maps/Sweden">Schweden</a></div><div class="entry"><div class="flag flag-ch"></div> <a href="/maps/Switzerland">Schweiz</a></div><div class="entry"><div class="flag flag-ua"></div> <a href="/maps/Ukraine">Ukraine</a></div><div class="entry"><div class="flag flag-gb"></div> <a href="/maps/United-Kingdom">Vereinigtes Königreich</a></div></div></div><div class="f32"><h2>South America</h2><div class="static_maps"><div class="map-thumb-cont thumb-lapse"><a href="/maps/Argentina?symbols=none&amp;type=lapse"><img alt="Argentina temperature map" src="https://assets.weather-forecast.com/maps/static/t_Argentina.lapse.6.cc23.jpg" /></a><p><a href="/maps/Argentina?symbols=none&amp;type=lapse">South America<br/> Temperature Map</a></p></div><div class="map-thumb-cont thumb-cloud"><a href="/maps/Argentina?over=arrows&amp;symbols=none&amp;type=cloud"><img alt="Argentina cloud map" src="https://assets.weather-forecast.com/maps/static/t_Argentina.cloud.6.cc23.jpg" /></a><p><a href="/maps/Argentina?over=arrows&amp;symbols=none&amp;type=cloud">South America<br/> Cloud Map</a></p></div><div class="map-thumb-cont thumb-"><a href="/maps/Argentina"><img alt="Argentina weather map" src="https://assets.weather-forecast.com/maps/static/t_Argentina.weather_pressure.6.cc23.jpg" /></a><p><a href="/maps/Argentina">South America<br/> Weather Map</a></p></div><div class="map-thumb-cont thumb-wind"><a href="/maps/Argentina?over=pressure_arrows&amp;symbols=none&amp;type=wind"><img alt="Argentina wind map" src="https://assets.weather-forecast.com/maps/static/t_Argentina.wind.6.cc23.jpg" /></a><p><a href="/maps/Argentina?over=pressure_arrows&amp;symbols=none&amp;type=wind">South America<br/> Wind Map</a></p></div></div></div><div class="f32"><div class="column-list"><div class="entry"><div class="flag flag-ar"></div> <a href="/maps/Argentina">Argentinien</a></div><div class="entry"><div class="flag flag-bo"></div> <a href="/maps/Bolivia">Bolivien</a></div><div class="entry"><div class="flag flag-bv"></div> <a href="/maps/Bouvet-Island">Bouvetinsel</a></div><div class="entry"><div class="flag flag-br"></div> <a href="/maps/Brazil">Brasilien</a></div><div class="entry"><div class="flag flag-cl"></div> <a href="/maps/Chile">Chile</a></div><div class="entry"><div class="flag flag-co"></div> <a href="/maps/Colombia">Kolumbien</a></div><div class="entry"><div class="flag flag-ec"></div> <a href="/maps/Ecuador">Ecuador</a></div><div class="entry"><div class="flag flag-fk"></div> <a href="/maps/Falkland-Islands">Falklandinseln</a></div><div class="entry"><div class="flag flag-gf"></div> <a href="/maps/French-Guiana">Französisch-Guayana</a></div><div class="entry"><div class="flag flag-gy"></div> <a href="/maps/Guyana">Guyana</a></div><div class="entry"><div class="flag flag-py"></div> <a href="/maps/Paraguay">Paraguay</a></div><div class="entry"><div class="flag flag-pe"></div> <a href="/maps/Peru">Peru</a></div><div class="entry"><div class="flag flag-sr"></div> <a href="/maps/Suriname">Suriname</a></div><div class="entry"><div class="flag flag-uy"></div> <a href="/maps/Uruguay">Uruguay</a></div><div class="entry"><div class="flag flag-ve"></div> <a href="/maps/Venezuela">Venezuela</a></div></div></div><div class="f32"><h2>Asia</h2><div class="static_maps"><div class="map-thumb-cont thumb-lapse"><a href="/maps/China?symbols=none&amp;type=lapse"><img alt="China temperature map" src="https://assets.weather-forecast.com/maps/static/t_China.lapse.6.cc23.jpg" /></a><p><a href="/maps/China?symbols=none&amp;type=lapse">Asia<br/> Temperature Map</a></p></div><div class="map-thumb-cont thumb-cloud"><a href="/maps/China?over=arrows&amp;symbols=none&amp;type=cloud"><img alt="China cloud map" src="https://assets.weather-forecast.com/maps/static/t_China.cloud.6.cc23.jpg" /></a><p><a href="/maps/China?over=arrows&amp;symbols=none&amp;type=cloud">Asia<br/> Cloud Map</a></p></div><div class="map-thumb-cont thumb-"><a href="/maps/China"><img alt="China weather map" src="https://assets.weather-forecast.com/maps/static/t_China.weather_pressure.6.cc23.jpg" /></a><p><a href="/maps/China">Asia<br/> Weather Map</a></p></div><div class="map-thumb-cont thumb-wind"><a href="/maps/China?over=pressure_arrows&amp;symbols=none&amp;type=wind"><img alt="China wind map" src="https://assets.weather-forecast.com/maps/static/t_China.wind.6.cc23.jpg" /></a><p><a href="/maps/China?over=pressure_arrows&amp;symbols=none&amp;type=wind">Asia<br/> Wind Map</a></p></div></div></div><div class="f32"><div class="column-list"><div class="entry"><div class="flag flag-af"></div> <a href="/maps/Afghanistan">Afghanistan</a></div><div class="entry"><div class="flag flag-am"></div> <a href="/maps/Armenia">Armenien</a></div><div class="entry"><div class="flag flag-az"></div> <a href="/maps/Azerbaijan">Aserbaidschan</a></div><div class="entry"><div class="flag flag-bh"></div> <a href="/maps/Bahrain">Bahrain</a></div><div class="entry"><div class="flag flag-bd"></div> <a href="/maps/Bangladesh">Bangladesch</a></div><div class="entry"><div class="flag flag-bt"></div> <a href="/maps/Bhutan">Bhutan</a></div><div class="entry"> <a href="/maps/British-Indian-Ocean-Territory">Britisches Territorium im Indischen Ozean</a></div><div class="entry"><div class="flag flag-bn"></div> <a href="/maps/Brunei-Darussalam">Brunei</a></div><div class="entry"><div class="flag flag-kh"></div> <a href="/maps/Cambodia">Kambodscha</a></div><div class="entry"><div class="flag flag-cn"></div> <a href="/maps/China">Volksrepublik China</a></div><div class="entry"><div class="flag flag-cx"></div> <a href="/maps/Christmas-Island">Weihnachtsinsel</a></div><div class="entry"><div class="flag flag-cc"></div> <a href="/maps/Cocos-Islands">Kokosinseln</a></div><div class="entry"> <a href="/maps/EastTimor">Timor-Leste</a></div><div class="entry"><div class="flag flag-ge"></div> <a href="/maps/Georgia">Georgien</a></div><div class="entry"> <a href="/maps/Hong-Kong">Hongkong</a></div><div class="entry"><div class="flag flag-in"></div> <a href="/maps/India">Indien</a></div><div class="entry"><div class="flag flag-id"></div> <a href="/maps/Indonesia">Indonesien</a></div><div class="entry"><div class="flag flag-ir"></div> <a href="/maps/Iran">Iran (Islamische Republik)</a></div><div class="entry"><div class="flag flag-iq"></div> <a href="/maps/Iraq">Irak</a></div><div class="entry"><div class="flag flag-il"></div> <a href="/maps/Israel">Israel</a></div><div class="entry"><div class="flag flag-jp"></div> <a href="/maps/Japan">Japan</a></div><div class="entry"><div class="flag flag-jo"></div> <a href="/maps/Jordan">Jordanien</a></div><div class="entry"><div class="flag flag-kz"></div> <a href="/maps/Kazakhstan">Kasachstan</a></div><div class="entry"><div class="flag flag-kw"></div> <a href="/maps/Kuwait">Kuwait</a></div><div class="entry"><div class="flag flag-kg"></div> <a href="/maps/Kyrgyzstan">Kirgistan</a></div><div class="entry"><div class="flag flag-la"></div> <a href="/maps/Laos">Laos</a></div><div class="entry"><div class="flag flag-lb"></div> <a href="/maps/Lebanon">Libanon</a></div><div class="entry"> <a href="/maps/Macau">Macau</a></div><div class="entry"><div class="flag flag-my"></div> <a href="/maps/Malaysia">Malaysien</a></div><div class="entry"><div class="flag flag-mv"></div> <a href="/maps/Maldives">Malediven</a></div><div class="entry"><div class="flag flag-mn"></div> <a href="/maps/Mongolia">Mongolei</a></div><div class="entry"><div class="flag flag-mm"></div> <a href="/maps/Myanmar">Birma (Myanmar)</a></div><div class="entry"><div class="flag flag-np"></div> <a href="/maps/Nepal">Nepal</a></div><div class="entry"><div class="flag flag-kp"></div> <a href="/maps/North-Korea">Nordkorea</a></div><div class="entry"><div class="flag flag-om"></div> <a href="/maps/Oman">Oman</a></div><div class="entry"><div class="flag flag-pk"></div> <a href="/maps/Pakistan">Pakistan</a></div><div class="entry"> <a href="/maps/Paracel-Islands">Paracel Islands</a></div><div class="entry"><div class="flag flag-ph"></div> <a href="/maps/Philippines">Philippinen</a></div><div class="entry"><div class="flag flag-qa"></div> <a href="/maps/Qatar">Katar</a></div><div class="entry"><div class="flag flag-sa"></div> <a href="/maps/Saudi-Arabia">Saudi-Arabien</a></div><div class="entry"><div class="flag flag-sg"></div> <a href="/maps/Singapore">Singapur</a></div><div class="entry"><div class="flag flag-kr"></div> <a href="/maps/South-Korea">Republik Korea</a></div><div class="entry"> <a href="/maps/Spratly-Islands">Spratly Islands</a></div><div class="entry"><div class="flag flag-lk"></div> <a href="/maps/Sri-Lanka">Sri Lanka</a></div><div class="entry"><div class="flag flag-sy"></div> <a href="/maps/Syria">Syrien</a></div><div class="entry"><div class="flag flag-tw"></div> <a href="/maps/Taiwan">Republik China</a></div><div class="entry"><div class="flag flag-tj"></div> <a href="/maps/Tajikistan">Tadschikistan</a></div><div class="entry"><div class="flag flag-th"></div> <a href="/maps/Thailand">Thailand</a></div><div class="entry"> <a href="/maps/Tromelin-Island">Tromelin Island</a></div><div class="entry"><div class="flag flag-tr"></div> <a href="/maps/Turkey">Türkei</a></div><div class="entry"><div class="flag flag-tm"></div> <a href="/maps/Turkmenistan">Turkmenistan</a></div><div class="entry"><div class="flag flag-ae"></div> <a href="/maps/United-Arab-Emirates">Vereinigte Arabische Emirate</a></div><div class="entry"><div class="flag flag-uz"></div> <a href="/maps/Uzbekistan">Usbekistan</a></div><div class="entry"><div class="flag flag-vn"></div> <a href="/maps/VietNam">Vietnam</a></div><div class="entry"><div class="flag flag-ye"></div> <a href="/maps/Yemen">Jemen</a></div></div></div><div class="f32"><h2>Oceania</h2></div><div class="f32"><h3><div class="flag32 au"></div> Australia</h3><div class="static_maps"><div class="map-thumb-cont thumb-lapse"><a href="/maps/Australia?symbols=none&amp;type=lapse"><img alt="Australia temperature map" src="https://assets.weather-forecast.com/maps/static/t_Australia.lapse.6.cc23.jpg" /></a><p><a href="/maps/Australia?symbols=none&amp;type=lapse">Australia<br/> Temperature Map</a></p></div><div class="map-thumb-cont thumb-cloud"><a href="/maps/Australia?over=arrows&amp;symbols=none&amp;type=cloud"><img alt="Australia cloud map" src="https://assets.weather-forecast.com/maps/static/t_Australia.cloud.6.cc23.jpg" /></a><p><a href="/maps/Australia?over=arrows&amp;symbols=none&amp;type=cloud">Australia<br/> Cloud Map</a></p></div><div class="map-thumb-cont thumb-"><a href="/maps/Australia"><img alt="Australia weather map" src="https://assets.weather-forecast.com/maps/static/t_Australia.weather_pressure.6.cc23.jpg" /></a><p><a href="/maps/Australia">Australia<br/> Weather Map</a></p></div><div class="map-thumb-cont thumb-wind"><a href="/maps/Australia?over=pressure_arrows&amp;symbols=none&amp;type=wind"><img alt="Australia wind map" src="https://assets.weather-forecast.com/maps/static/t_Australia.wind.6.cc23.jpg" /></a><p><a href="/maps/Australia?over=pressure_arrows&amp;symbols=none&amp;type=wind">Australia<br/> Wind Map</a></p></div></div></div><div class="f32"><div class="column-list"><div class="entry"><div class="flag flag-au"></div> <a href="/maps/New-South-Wales">New-South-Wales</a></div><div class="entry"><div class="flag flag-au"></div> <a href="/maps/Northern-Territory">Northern-Territory</a></div><div class="entry"><div class="flag flag-au"></div> <a href="/maps/Queensland">Queensland</a></div><div class="entry"><div class="flag flag-au"></div> <a href="/maps/South-Australia">South-Australia</a></div><div class="entry"><div class="flag flag-au"></div> <a href="/maps/Tasmania">Tasmania</a></div><div class="entry"><div class="flag flag-au"></div> <a href="/maps/Victoria">Victoria</a></div><div class="entry"><div class="flag flag-au"></div> <a href="/maps/Western-Australia">Western-Australia</a></div><div class="entry"><div class="flag flag-au"></div> <a href="/maps/Australia">Australia</a></div></div></div><div><h3>Other Oceania</h3></div><div class="f32"><div class="column-list"><div class="entry"><div class="flag flag-as"></div> <a href="/maps/American-Samoa">Amerikanisch-Samoa</a></div><div class="entry"> <a href="/maps/Australian-Capital-Territory">Australian-Capital-Territory</a></div><div class="entry"><div class="flag flag-ck"></div> <a href="/maps/Cook-Islands">Cookinseln</a></div><div class="entry"><div class="flag flag-fj"></div> <a href="/maps/Fiji">Fidschi</a></div><div class="entry"><div class="flag flag-pf"></div> <a href="/maps/French-Polynesia">French Polynesia</a></div><div class="entry"><div class="flag flag-gu"></div> <a href="/maps/Guam">Guam</a></div><div class="entry"><div class="flag flag-ki"></div> <a href="/maps/Kiribati">Kiribati</a></div><div class="entry"><div class="flag flag-mh"></div> <a href="/maps/Marshall-Islands">Marshall-Inseln</a></div><div class="entry"><div class="flag flag-fm"></div> <a href="/maps/Micronesia">Mikronesien</a></div><div class="entry"><div class="flag flag-nr"></div> <a href="/maps/Nauru">Nauru</a></div><div class="entry"><div class="flag flag-nc"></div> <a href="/maps/New-Caledonia">Neukaledonien</a></div><div class="entry"><div class="flag flag-nz"></div> <a href="/maps/New-Zealand">Neuseeland</a></div><div class="entry"> <a href="/maps/Norfolk-Island">Norfolkinsel</a></div><div class="entry"><div class="flag flag-mp"></div> <a href="/maps/Northern-Mariana-Islands">Nördliche Marianen</a></div><div class="entry"><div class="flag flag-pw"></div> <a href="/maps/Palau">Palau</a></div><div class="entry"><div class="flag flag-pg"></div> <a href="/maps/Papua-New-Guinea">Papua-Neuguinea</a></div><div class="entry"><div class="flag flag-pn"></div> <a href="/maps/Pitcairn">Pitcairn</a></div><div class="entry"><div class="flag flag-ws"></div> <a href="/maps/Samoa">Samoa</a></div><div class="entry"><div class="flag flag-sb"></div> <a href="/maps/Solomon-Islands">Solomon-Inseln</a></div><div class="entry"><div class="flag flag-to"></div> <a href="/maps/Tonga">Tonga</a></div><div class="entry"><div class="flag flag-tv"></div> <a href="/maps/Tuvalu">Tuwalu</a></div><div class="entry"><div class="flag flag-vu"></div> <a href="/maps/Vanuatu">Vanuatu</a></div><div class="entry"><div class="flag flag-wf"></div> <a href="/maps/Wallis-and-Futuna">Wallis und Futuna</a></div></div></div><div class="f32"><h2>Africa</h2><div class="static_maps"><div class="map-thumb-cont thumb-lapse"><a href="/maps/Zimbabwe?symbols=none&amp;type=lapse"><img alt="Zimbabwe temperature map" src="https://assets.weather-forecast.com/maps/static/t_Zimbabwe.lapse.6.cc23.jpg" /></a><p><a href="/maps/Zimbabwe?symbols=none&amp;type=lapse">Africa<br/> Temperature Map</a></p></div><div class="map-thumb-cont thumb-cloud"><a href="/maps/Zimbabwe?over=arrows&amp;symbols=none&amp;type=cloud"><img alt="Zimbabwe cloud map" src="https://assets.weather-forecast.com/maps/static/t_Zimbabwe.cloud.6.cc23.jpg" /></a><p><a href="/maps/Zimbabwe?over=arrows&amp;symbols=none&amp;type=cloud">Africa<br/> Cloud Map</a></p></div><div class="map-thumb-cont thumb-"><a href="/maps/Zimbabwe"><img alt="Zimbabwe weather map" src="https://assets.weather-forecast.com/maps/static/t_Zimbabwe.weather_pressure.6.cc23.jpg" /></a><p><a href="/maps/Zimbabwe">Africa<br/> Weather Map</a></p></div><div class="map-thumb-cont thumb-wind"><a href="/maps/Zimbabwe?over=pressure_arrows&amp;symbols=none&amp;type=wind"><img alt="Zimbabwe wind map" src="https://assets.weather-forecast.com/maps/static/t_Zimbabwe.wind.6.cc23.jpg" /></a><p><a href="/maps/Zimbabwe?over=pressure_arrows&amp;symbols=none&amp;type=wind">Africa<br/> Wind Map</a></p></div></div></div><div class="f32"><div class="column-list"><div class="entry"><div class="flag flag-dz"></div> <a href="/maps/Algeria">Algerien</a></div><div class="entry"><div class="flag flag-ao"></div> <a href="/maps/Angola">Angola</a></div><div class="entry"><div class="flag flag-bj"></div> <a href="/maps/Benin">Benin</a></div><div class="entry"><div class="flag flag-bw"></div> <a href="/maps/Botswana">Botswana</a></div><div class="entry"><div class="flag flag-bf"></div> <a href="/maps/BurkinaFaso">Burkina Faso</a></div><div class="entry"><div class="flag flag-bi"></div> <a href="/maps/Burundi">Burundi</a></div><div class="entry"><div class="flag flag-cm"></div> <a href="/maps/Cameroon">Kamerun</a></div><div class="entry"><div class="flag flag-cv"></div> <a href="/maps/Cape-Verde">Kap Verde</a></div><div class="entry"><div class="flag flag-cf"></div> <a href="/maps/Central-African-Republic">Zentralafrikanische Republik</a></div><div class="entry"><div class="flag flag-td"></div> <a href="/maps/Chad">Tschad</a></div><div class="entry"><div class="flag flag-km"></div> <a href="/maps/Comoros">Komoren</a></div><div class="entry"><div class="flag flag-cg"></div> <a href="/maps/Congo">Kongo (Republik Kongo)</a></div><div class="entry"> <a href="/maps/CotedIvoire">Elfenbeinküste</a></div><div class="entry"><div class="flag flag-dj"></div> <a href="/maps/Djibouti">Dschibuti</a></div><div class="entry"><div class="flag flag-cd"></div> <a href="/maps/DR-Congo">Zaire</a></div><div class="entry"><div class="flag flag-eg"></div> <a href="/maps/Egypt">Ägypten</a></div><div class="entry"><div class="flag flag-gq"></div> <a href="/maps/Equatorial-Guinea">Äquatorialguinea</a></div><div class="entry"><div class="flag flag-er"></div> <a href="/maps/Eritrea">Eritrea</a></div><div class="entry"><div class="flag flag-et"></div> <a href="/maps/Ethiopia">Äthiopien</a></div><div class="entry"><div class="flag flag-ga"></div> <a href="/maps/Gabon">Gabun</a></div><div class="entry"><div class="flag flag-gm"></div> <a href="/maps/Gambia">Gambia</a></div><div class="entry"><div class="flag flag-gh"></div> <a href="/maps/Ghana">Ghana</a></div><div class="entry"><div class="flag flag-gn"></div> <a href="/maps/Guinea">Guinea</a></div><div class="entry"><div class="flag flag-gw"></div> <a href="/maps/Guinea-Bissau">Guinea-Bissau</a></div><div class="entry"><div class="flag flag-ke"></div> <a href="/maps/Kenya">Kenia</a></div><div class="entry"><div class="flag flag-ls"></div> <a href="/maps/Lesotho">Lesotho</a></div><div class="entry"><div class="flag flag-lr"></div> <a href="/maps/Liberia">Liberia</a></div><div class="entry"><div class="flag flag-ly"></div> <a href="/maps/Libya">Libysch-Arabische Dschamahirija</a></div><div class="entry"><div class="flag flag-mg"></div> <a href="/maps/Madagascar">Madagaskar</a></div><div class="entry"><div class="flag flag-mw"></div> <a href="/maps/Malawi">Malawi</a></div><div class="entry"><div class="flag flag-ml"></div> <a href="/maps/Mali">Mali</a></div><div class="entry"><div class="flag flag-mr"></div> <a href="/maps/Mauritania">Mauretanien</a></div><div class="entry"><div class="flag flag-mu"></div> <a href="/maps/Mauritius">Mauritius</a></div><div class="entry"><div class="flag flag-yt"></div> <a href="/maps/Mayotte">Mayotte</a></div><div class="entry"><div class="flag flag-ma"></div> <a href="/maps/Morocco">Marokko</a></div><div class="entry"><div class="flag flag-mz"></div> <a href="/maps/Mozambique">Mosambik</a></div><div class="entry"><div class="flag flag-na"></div> <a href="/maps/Namibia">Namibia</a></div><div class="entry"><div class="flag flag-ne"></div> <a href="/maps/Niger">Niger</a></div><div class="entry"><div class="flag flag-ng"></div> <a href="/maps/Nigeria">Nigeria</a></div><div class="entry"> <a href="/maps/Reunion">Réunion</a></div><div class="entry"><div class="flag flag-rw"></div> <a href="/maps/Rwanda">Ruanda</a></div><div class="entry"><div class="flag flag-sh"></div> <a href="/maps/Saint-Helena">St. Helena</a></div><div class="entry"><div class="flag flag-st"></div> <a href="/maps/Sao-Tome-and-Principe">Sao Tomé und Principe</a></div><div class="entry"><div class="flag flag-sn"></div> <a href="/maps/Senegal">Senegal</a></div><div class="entry"><div class="flag flag-sc"></div> <a href="/maps/Seychelles">Seychellen</a></div><div class="entry"><div class="flag flag-sl"></div> <a href="/maps/Sierra-Leone">Sierra Leone</a></div><div class="entry"><div class="flag flag-so"></div> <a href="/maps/Somalia">Somalia</a></div><div class="entry"><div class="flag flag-za"></div> <a href="/maps/South-Africa">Republik Südafrika</a></div><div class="entry"><div class="flag flag-sd"></div> <a href="/maps/Sudan">Sudan</a></div><div class="entry"><div class="flag flag-sz"></div> <a href="/maps/Swaziland">Swasiland</a></div><div class="entry"><div class="flag flag-tz"></div> <a href="/maps/Tanzania">Tansania</a></div><div class="entry"><div class="flag flag-tg"></div> <a href="/maps/Togo">Togo</a></div><div class="entry"><div class="flag flag-tn"></div> <a href="/maps/Tunisia">Tunesien</a></div><div class="entry"><div class="flag flag-ug"></div> <a href="/maps/Uganda">Uganda</a></div><div class="entry"><div class="flag flag-eh"></div> <a href="/maps/Western-Sahara">Westsahara</a></div><div class="entry"><div class="flag flag-zm"></div> <a href="/maps/Zambia">Nordrhodesien</a></div><div class="entry"><div class="flag flag-zw"></div> <a href="/maps/Zimbabwe">Simbabwe</a></div></div></div><div class="f32"><h2>Antarctica</h2><div class="static_maps"><div class="map-thumb-cont thumb-lapse"><a href="/maps/Antarctica?symbols=none&amp;type=lapse"><img alt="Antarctica temperature map" src="https://assets.weather-forecast.com/maps/static/t_Antarctica.lapse.6.cc23.jpg" /></a><p><a href="/maps/Antarctica?symbols=none&amp;type=lapse">Antarctica<br/> Temperature Map</a></p></div><div class="map-thumb-cont thumb-cloud"><a href="/maps/Antarctica?over=arrows&amp;symbols=none&amp;type=cloud"><img alt="Antarctica cloud map" src="https://assets.weather-forecast.com/maps/static/t_Antarctica.cloud.6.cc23.jpg" /></a><p><a href="/maps/Antarctica?over=arrows&amp;symbols=none&amp;type=cloud">Antarctica<br/> Cloud Map</a></p></div><div class="map-thumb-cont thumb-"><a href="/maps/Antarctica"><img alt="Antarctica weather map" src="https://assets.weather-forecast.com/maps/static/t_Antarctica.weather_pressure.6.cc23.jpg" /></a><p><a href="/maps/Antarctica">Antarctica<br/> Weather Map</a></p></div><div class="map-thumb-cont thumb-wind"><a href="/maps/Antarctica?over=pressure_arrows&amp;symbols=none&amp;type=wind"><img alt="Antarctica wind map" src="https://assets.weather-forecast.com/maps/static/t_Antarctica.wind.6.cc23.jpg" /></a><p><a href="/maps/Antarctica?over=pressure_arrows&amp;symbols=none&amp;type=wind">Antarctica<br/> Wind Map</a></p></div></div></div><div class="f32"><div class="column-list"><div class="entry"><div class="flag flag-aq"></div> <a href="/maps/Antarctica">Antarktis</a></div><div class="entry"><div class="flag flag-tf"></div> <a href="/maps/French-Southern-and-Antarctic-Lands">Französische Süd- und Antarktisgebiete</a></div><div class="entry"><div class="flag flag-hm"></div> <a href="/maps/Heard-Island-and-McDonald-Islands">Heard- und McDonald-Inseln</a></div><div class="entry"><div class="flag flag-gs"></div> <a href="/maps/South-Georgia-and-the-South-Sandwich-Islands">Südgeorgien und die Südlichen Sandwichinseln</a></div></div></div><div class="f32"><h2>Other</h2></div><div class="f32"><div class="column-list"><div class="entry"> <a href="/maps/Arctic">Arctic</a></div><div class="entry"> <a href="/maps/Global-Atlantic">Global-Atlantic</a></div><div class="entry"> <a href="/maps/Global-Pacific">Global-Pacific</a></div><div class="entry"> <a href="/maps/Indian-Ocean">Indian-Ocean</a></div><div class="entry"> <a href="/maps/North-Atlantic">North-Atlantic</a></div><div class="entry"> <a href="/maps/Pacific-Ocean">Pacific-Ocean</a></div><div class="entry"> <a href="/maps/South-Atlantic">South-Atlantic</a></div></div></div></div><div class="footerfoot not_in_print"></div></div></div><div id="sfooter">
+  <div class="linear-share show-for-small">
+    <h5 class="show-for-medium-up">Teilen</h5>
+<ul>
+  <li><a href="https://www.facebook.com/wxforecast"><img src="/images/fb.png" alt="facebook" /><span>Like us</span></a></li>
+  <li><a href="https://twitter.com/meteo365"><img src="/images/t.png" alt="twitter" /><span>Folge uns</span></a></li>
+</ul>
+
+  </div>
+
+  <div class="footer-logo-links show-for-large-up">
+    <ul>
+      <li>
+          <img alt="Surf Forecast" height="41" src="https://www.weather-forecast.com/images/surf.png" width="130" />
+      </li>
+      <li>
+          <img alt="Snow Forecast" height="37" src="https://www.weather-forecast.com/images/snow.png" width="130" />
+      </li>
+      <li>
+          <img alt="Mountain Forecast" height="37" src="https://www.weather-forecast.com/images/mountain.png" width="130" />
+      </li>
+      <li>
+          <img alt="Tide Forecast" height="37" src="https://www.weather-forecast.com/images/tide.png" width="130" />
+      </li>
+    </ul>
+  </div>
+
+  <div class="footer-links">
+    <div class="row">
+      <div class="medium-4 columns">
+        <h5>Firma</h5>
+        <ul>
+          <li><a rel="nofollow" href="/pages/contact">Kontaktieren Sie uns</a></li>
+          <li><a rel="nofollow" href="/pages/terms">Hinblick</a></li>
+          <li><a rel="nofollow" href="/pages/privacy">Datenschutz</a></li>
+          <li><a rel="nofollow" href="/pages/cookie_policy">Cookie Policy</a></li>
+        </ul>
+      </div>
+
+
+      <div class="medium-4 columns">
+      <h5>Wetterfotos</h5>
+        <ul>
+          <li><a href="/albums/5/photos">Wolkenformationen</a></li>
+          <li><a href="/albums/18/photos">Herbstfarben</a></li>
+          <li><a href="/albums/3/photos">Blitz</a></li>
+          <li><a href="/albums/12/photos">Regenbögen &amp; Reflexionen</a></li>
+          <li><a href="/albums/1/photos">Schnee, Eis &amp; Frost</a></li>
+          <li><a href="/albums/2/photos">Sonnenaufgang &amp; Sonnenuntergang</a></li>
+          <li><a href="/albums/6/photos">Regen &amp; Fluten</a></li>
+        </ul>
+      </div>
+
+      <div class="medium-4 columns show-for-medium-up">
+        <h5 class="show-for-medium-up">Teilen</h5>
+<ul>
+  <li><a href="https://www.facebook.com/wxforecast"><img src="/images/fb.png" alt="facebook" /><span>Like us</span></a></li>
+  <li><a href="https://twitter.com/meteo365"><img src="/images/t.png" alt="twitter" /><span>Folge uns</span></a></li>
+</ul>
+
+      </div>
+    </div>
+
+
+    <div style="width:100%; text-align:center; clear: both;">
+      <p>&copy; 2020 Meteo365.com</p>
+    </div>
+  </div>
+
+ </div>
+<script src="https://www.weather-forecast.com/assets/application-93ddad4ac6639cb9d1ce02f047b304d8.js" type="text/javascript"></script>
+<div id='cont_bn_mob_footer_sticky_horiz1'>
+  <script type='text/javascript'>
+  googletag.cmd.push(function() {
+    var placeholderDisplayed = false;
+
+    googletag.pubads().addEventListener('slotRenderEnded', function(event) {
+      if (event.slot.getSlotElementId() === 'cont_bn_mob_footer_sticky_horiz1') {
+        if (event.isEmpty) {
+          console.log('Empty result for cont_bn_mob_footer_sticky_horiz1');
+        } else {
+          console.log('Render ended for cont_bn_mob_footer_sticky_horiz1');
+          if (!placeholderDisplayed) {
+            var a = document.getElementById('cont_bn_mob_footer_sticky_horiz1');
+            a.style.backgroundColor = "rgba(237, 237, 237, 0.82)",
+            a.style.position = "fixed",
+            a.style.bottom = "0px",
+            a.style.padding = "4px 0 0 0",
+            a.style.zIndex = "9999",
+            a.style.width = "100%",
+            a.style.textAlign = "center",
+            a.style.transform = "translate(-50%, 0%)",
+            a.style.left = "50%",
+            a.style.display = "";
+            var i = document.createElement("img");
+            i.id = "close-button",
+            i.src = "data:image/svg+xml;utf8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNzQuMjM5IDE3NC4yMzkiPjxnIGZpbGw9IiM2YjZiNmIiPjxwYXRoIGQ9Ik04Ny4xMiAwQzM5LjA4MiAwIDAgMzkuMDgyIDAgODcuMTJzMzkuMDgyIDg3LjEyIDg3LjEyIDg3LjEyIDg3LjEyLTM5LjA4MiA4Ny4xMi04Ny4xMlMxMzUuMTU3IDAgODcuMTIgMHptMCAxNTkuMzA1Yy0zOS44MDIgMC03Mi4xODUtMzIuMzgzLTcyLjE4NS03Mi4xODVTNDcuMzE4IDE0LjkzNSA4Ny4xMiAxNC45MzVzNzIuMTg1IDMyLjM4MyA3Mi4xODUgNzIuMTg1LTMyLjM4NCA3Mi4xODUtNzIuMTg1IDcyLjE4NXoiLz48cGF0aCBkPSJNMTIwLjgzIDUzLjQxNGMtMi45MTctMi45MTctNy42NDctMi45MTctMTAuNTU5IDBMODcuMTIgNzYuNTY4IDYzLjk2OSA1My40MTRjLTIuOTE3LTIuOTE3LTcuNjQyLTIuOTE3LTEwLjU1OSAwcy0yLjkxNyA3LjY0MiAwIDEwLjU1OWwyMy4xNTEgMjMuMTUzLTIzLjE1MiAyMy4xNTRhNy40NjQgNy40NjQgMCAwIDAgMCAxMC41NTkgNy40NDUgNy40NDUgMCAwIDAgNS4yOCAyLjE4OCA3LjQzNyA3LjQzNyAwIDAgMCA1LjI4LTIuMTg4TDg3LjEyIDk3LjY4NmwyMy4xNTEgMjMuMTUzYTcuNDQ1IDcuNDQ1IDAgMCAwIDUuMjggMi4xODggNy40NDIgNy40NDIgMCAwIDAgNS4yOC0yLjE4OCA3LjQ2NCA3LjQ2NCAwIDAgMCAwLTEwLjU1OUw5Ny42NzkgODcuMTI3bDIzLjE1MS0yMy4xNTNhNy40NjUgNy40NjUgMCAwIDAgMC0xMC41NnoiLz48L2c+PC9zdmc+",
+            i.style.position = "absolute",
+            i.style.top = "-12px",
+            i.style.right = "3px",
+            i.style.width = "24px",
+            i.style.height = "24px",
+            i.onclick = function() {
+                a.style.display = "none"
+                bannerClosedByUser = true;
+            },
+            a.appendChild(i);
+            placeholderDisplayed = true;
+          }
+        }
+      }
+    });
+
+    googletag.display('cont_bn_mob_footer_sticky_horiz1');
+  });
+  </script>
+</div>
+
+  <script>
+    $(document).ready(function () {
+      var url_str = '/locations/ac_location_name?query=__VALUE__';
+      var default_text_str = 'GEBEN SIE ORT ODER LAND EIN:';
+      $('#location').auto_complete_loc({url: url_str, default_text: default_text_str, loc_id: 'location_loc_id', prevent_empty_submit: true});
+    });
+  </script>
+<script type="text/javascript">if (typeof init_uj == "function") {
+  init_uj();
+}</script><!-- Generated 2020-06-30 16:57:32 UTC --><script type='text/javascript' style='display:none;' async>
+__ez.queue.addFile('edmonton.php', '/detroitchicago/edmonton.webp?a=a&cb=1&shcb=33', true, ['/detroitchicago/minneapolis.js'], true, false, false, false);
+__ez.queue.addFile('jellyfish.php', '/porpoiseant/jellyfish.webp?a=a&cb=1&shcb=33', false, [], true, false, false, false);
+</script>
+
+<script>var _audins_dom="weather_forecast_com",_audins_did=173208;__ez.queue.addDelayFunc("audins.js","__ez.script.add", "//go.ezoic.net/detroitchicago/audins.js?cb=188-1");</script><noscript><div style="display:none;"><img src="//pixel.quantserve.com/pixel/p-31iz6hfFutd16.gif?labels=Domain.weather_forecast_com,DomainId.173208" border="0" height="1" width="1" alt="Quantcast"/></div></noscript><noscript><img src="https://sb.scorecardresearch.com/p?c1=2&c2=20015427&cv=2.0&cj=1"/></noscript>
+<script type='text/javascript' data-cfasync='false'></script></body></html>
