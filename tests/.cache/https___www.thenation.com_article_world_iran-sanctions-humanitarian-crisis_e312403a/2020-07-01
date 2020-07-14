@@ -1,0 +1,3683 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>	
+		
+	<meta charset="UTF-8">
+	<!-- Always force latest IE rendering engine or request Chrome Frame -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={xpid:"XAEGVF5RGwYEV1dRAgI=",licenseKey:"442438c9d9",applicationID:"5436353"};window.NREUM||(NREUM={}),__nr_require=function(t,n,e){function r(e){if(!n[e]){var o=n[e]={exports:{}};t[e][0].call(o.exports,function(n){var o=t[e][1][n];return r(o||n)},o,o.exports)}return n[e].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<e.length;o++)r(e[o]);return r}({1:[function(t,n,e){function r(t){try{s.console&&console.log(t)}catch(n){}}var o,i=t("ee"),a=t(21),s={};try{o=localStorage.getItem("__nr_flags").split(","),console&&"function"==typeof console.log&&(s.console=!0,o.indexOf("dev")!==-1&&(s.dev=!0),o.indexOf("nr_dev")!==-1&&(s.nrDev=!0))}catch(c){}s.nrDev&&i.on("internal-error",function(t){r(t.stack)}),s.dev&&i.on("fn-err",function(t,n,e){r(e.stack)}),s.dev&&(r("NR AGENT IN DEVELOPMENT MODE"),r("flags: "+a(s,function(t,n){return t}).join(", ")))},{}],2:[function(t,n,e){function r(t,n,e,r,s){try{p?p-=1:o(s||new UncaughtException(t,n,e),!0)}catch(f){try{i("ierr",[f,c.now(),!0])}catch(d){}}return"function"==typeof u&&u.apply(this,a(arguments))}function UncaughtException(t,n,e){this.message=t||"Uncaught error with no additional information",this.sourceURL=n,this.line=e}function o(t,n){var e=n?null:c.now();i("err",[t,e])}var i=t("handle"),a=t(22),s=t("ee"),c=t("loader"),f=t("gos"),u=window.onerror,d=!1,l="nr@seenError",p=0;c.features.err=!0,t(1),window.onerror=r;try{throw new Error}catch(h){"stack"in h&&(t(9),t(8),"addEventListener"in window&&t(5),c.xhrWrappable&&t(10),d=!0)}s.on("fn-start",function(t,n,e){d&&(p+=1)}),s.on("fn-err",function(t,n,e){d&&!e[l]&&(f(e,l,function(){return!0}),this.thrown=!0,o(e))}),s.on("fn-end",function(){d&&!this.thrown&&p>0&&(p-=1)}),s.on("internal-error",function(t){i("ierr",[t,c.now(),!0])})},{}],3:[function(t,n,e){t("loader").features.ins=!0},{}],4:[function(t,n,e){function r(t){}if(window.performance&&window.performance.timing&&window.performance.getEntriesByType){var o=t("ee"),i=t("handle"),a=t(9),s=t(8),c="learResourceTimings",f="addEventListener",u="resourcetimingbufferfull",d="bstResource",l="resource",p="-start",h="-end",m="fn"+p,w="fn"+h,v="bstTimer",g="pushState",y=t("loader");y.features.stn=!0,t(7),"addEventListener"in window&&t(5);var x=NREUM.o.EV;o.on(m,function(t,n){var e=t[0];e instanceof x&&(this.bstStart=y.now())}),o.on(w,function(t,n){var e=t[0];e instanceof x&&i("bst",[e,n,this.bstStart,y.now()])}),a.on(m,function(t,n,e){this.bstStart=y.now(),this.bstType=e}),a.on(w,function(t,n){i(v,[n,this.bstStart,y.now(),this.bstType])}),s.on(m,function(){this.bstStart=y.now()}),s.on(w,function(t,n){i(v,[n,this.bstStart,y.now(),"requestAnimationFrame"])}),o.on(g+p,function(t){this.time=y.now(),this.startPath=location.pathname+location.hash}),o.on(g+h,function(t){i("bstHist",[location.pathname+location.hash,this.startPath,this.time])}),f in window.performance&&(window.performance["c"+c]?window.performance[f](u,function(t){i(d,[window.performance.getEntriesByType(l)]),window.performance["c"+c]()},!1):window.performance[f]("webkit"+u,function(t){i(d,[window.performance.getEntriesByType(l)]),window.performance["webkitC"+c]()},!1)),document[f]("scroll",r,{passive:!0}),document[f]("keypress",r,!1),document[f]("click",r,!1)}},{}],5:[function(t,n,e){function r(t){for(var n=t;n&&!n.hasOwnProperty(u);)n=Object.getPrototypeOf(n);n&&o(n)}function o(t){s.inPlace(t,[u,d],"-",i)}function i(t,n){return t[1]}var a=t("ee").get("events"),s=t("wrap-function")(a,!0),c=t("gos"),f=XMLHttpRequest,u="addEventListener",d="removeEventListener";n.exports=a,"getPrototypeOf"in Object?(r(document),r(window),r(f.prototype)):f.prototype.hasOwnProperty(u)&&(o(window),o(f.prototype)),a.on(u+"-start",function(t,n){var e=t[1],r=c(e,"nr@wrapped",function(){function t(){if("function"==typeof e.handleEvent)return e.handleEvent.apply(e,arguments)}var n={object:t,"function":e}[typeof e];return n?s(n,"fn-",null,n.name||"anonymous"):e});this.wrapped=t[1]=r}),a.on(d+"-start",function(t){t[1]=this.wrapped||t[1]})},{}],6:[function(t,n,e){function r(t,n,e){var r=t[n];"function"==typeof r&&(t[n]=function(){var t=i(arguments),n={};o.emit(e+"before-start",[t],n);var a;n[m]&&n[m].dt&&(a=n[m].dt);var s=r.apply(this,t);return o.emit(e+"start",[t,a],s),s.then(function(t){return o.emit(e+"end",[null,t],s),t},function(t){throw o.emit(e+"end",[t],s),t})})}var o=t("ee").get("fetch"),i=t(22),a=t(21);n.exports=o;var s=window,c="fetch-",f=c+"body-",u=["arrayBuffer","blob","json","text","formData"],d=s.Request,l=s.Response,p=s.fetch,h="prototype",m="nr@context";d&&l&&p&&(a(u,function(t,n){r(d[h],n,f),r(l[h],n,f)}),r(s,"fetch",c),o.on(c+"end",function(t,n){var e=this;if(n){var r=n.headers.get("content-length");null!==r&&(e.rxSize=r),o.emit(c+"done",[null,n],e)}else o.emit(c+"done",[t],e)}))},{}],7:[function(t,n,e){var r=t("ee").get("history"),o=t("wrap-function")(r);n.exports=r;var i=window.history&&window.history.constructor&&window.history.constructor.prototype,a=window.history;i&&i.pushState&&i.replaceState&&(a=i),o.inPlace(a,["pushState","replaceState"],"-")},{}],8:[function(t,n,e){var r=t("ee").get("raf"),o=t("wrap-function")(r),i="equestAnimationFrame";n.exports=r,o.inPlace(window,["r"+i,"mozR"+i,"webkitR"+i,"msR"+i],"raf-"),r.on("raf-start",function(t){t[0]=o(t[0],"fn-")})},{}],9:[function(t,n,e){function r(t,n,e){t[0]=a(t[0],"fn-",null,e)}function o(t,n,e){this.method=e,this.timerDuration=isNaN(t[1])?0:+t[1],t[0]=a(t[0],"fn-",this,e)}var i=t("ee").get("timer"),a=t("wrap-function")(i),s="setTimeout",c="setInterval",f="clearTimeout",u="-start",d="-";n.exports=i,a.inPlace(window,[s,"setImmediate"],s+d),a.inPlace(window,[c],c+d),a.inPlace(window,[f,"clearImmediate"],f+d),i.on(c+u,r),i.on(s+u,o)},{}],10:[function(t,n,e){function r(t,n){d.inPlace(n,["onreadystatechange"],"fn-",s)}function o(){var t=this,n=u.context(t);t.readyState>3&&!n.resolved&&(n.resolved=!0,u.emit("xhr-resolved",[],t)),d.inPlace(t,g,"fn-",s)}function i(t){y.push(t),h&&(b?b.then(a):w?w(a):(E=-E,O.data=E))}function a(){for(var t=0;t<y.length;t++)r([],y[t]);y.length&&(y=[])}function s(t,n){return n}function c(t,n){for(var e in t)n[e]=t[e];return n}t(5);var f=t("ee"),u=f.get("xhr"),d=t("wrap-function")(u),l=NREUM.o,p=l.XHR,h=l.MO,m=l.PR,w=l.SI,v="readystatechange",g=["onload","onerror","onabort","onloadstart","onloadend","onprogress","ontimeout"],y=[];n.exports=u;var x=window.XMLHttpRequest=function(t){var n=new p(t);try{u.emit("new-xhr",[n],n),n.addEventListener(v,o,!1)}catch(e){try{u.emit("internal-error",[e])}catch(r){}}return n};if(c(p,x),x.prototype=p.prototype,d.inPlace(x.prototype,["open","send"],"-xhr-",s),u.on("send-xhr-start",function(t,n){r(t,n),i(n)}),u.on("open-xhr-start",r),h){var b=m&&m.resolve();if(!w&&!m){var E=1,O=document.createTextNode(E);new h(a).observe(O,{characterData:!0})}}else f.on("fn-end",function(t){t[0]&&t[0].type===v||a()})},{}],11:[function(t,n,e){function r(t){if(!i(t))return null;var n=window.NREUM;if(!n.loader_config)return null;var e=(n.loader_config.accountID||"").toString()||null,r=(n.loader_config.agentID||"").toString()||null,s=(n.loader_config.trustKey||"").toString()||null;if(!e||!r)return null;var c=a.generateCatId(),f=a.generateCatId(),u=Date.now(),d=o(c,f,u,e,r,s);return{header:d,guid:c,traceId:f,timestamp:u}}function o(t,n,e,r,o,i){var a="btoa"in window&&"function"==typeof window.btoa;if(!a)return null;var s={v:[0,1],d:{ty:"Browser",ac:r,ap:o,id:t,tr:n,ti:e}};return i&&r!==i&&(s.d.tk=i),btoa(JSON.stringify(s))}function i(t){var n=!1,e=!1,r={};if("init"in NREUM&&"distributed_tracing"in NREUM.init&&(r=NREUM.init.distributed_tracing,e=!!r.enabled),e)if(t.sameOrigin)n=!0;else if(r.allowed_origins instanceof Array)for(var o=0;o<r.allowed_origins.length;o++){var i=s(r.allowed_origins[o]);if(t.hostname===i.hostname&&t.protocol===i.protocol&&t.port===i.port){n=!0;break}}return e&&n}var a=t(19),s=t(13);n.exports={generateTracePayload:r,shouldGenerateTrace:i}},{}],12:[function(t,n,e){function r(t){var n=this.params,e=this.metrics;if(!this.ended){this.ended=!0;for(var r=0;r<l;r++)t.removeEventListener(d[r],this.listener,!1);n.aborted||(e.duration=a.now()-this.startTime,this.loadCaptureCalled||4!==t.readyState?null==n.status&&(n.status=0):i(this,t),e.cbTime=this.cbTime,u.emit("xhr-done",[t],t),s("xhr",[n,e,this.startTime]))}}function o(t,n){var e=c(n),r=t.params;r.host=e.hostname+":"+e.port,r.pathname=e.pathname,t.parsedOrigin=c(n),t.sameOrigin=t.parsedOrigin.sameOrigin}function i(t,n){t.params.status=n.status;var e=w(n,t.lastSize);if(e&&(t.metrics.rxSize=e),t.sameOrigin){var r=n.getResponseHeader("X-NewRelic-App-Data");r&&(t.params.cat=r.split(", ").pop())}t.loadCaptureCalled=!0}var a=t("loader");if(a.xhrWrappable){var s=t("handle"),c=t(13),f=t(11).generateTracePayload,u=t("ee"),d=["load","error","abort","timeout"],l=d.length,p=t("id"),h=t(17),m=t(16),w=t(14),v=window.XMLHttpRequest;a.features.xhr=!0,t(10),t(6),u.on("new-xhr",function(t){var n=this;n.totalCbs=0,n.called=0,n.cbTime=0,n.end=r,n.ended=!1,n.xhrGuids={},n.lastSize=null,n.loadCaptureCalled=!1,t.addEventListener("load",function(e){i(n,t)},!1),h&&(h>34||h<10)||window.opera||t.addEventListener("progress",function(t){n.lastSize=t.loaded},!1)}),u.on("open-xhr-start",function(t){this.params={method:t[0]},o(this,t[1]),this.metrics={}}),u.on("open-xhr-end",function(t,n){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&n.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid);var e=f(this.parsedOrigin);e&&e.header&&(n.setRequestHeader("newrelic",e.header),this.dt=e)}),u.on("send-xhr-start",function(t,n){var e=this.metrics,r=t[0],o=this;if(e&&r){var i=m(r);i&&(e.txSize=i)}this.startTime=a.now(),this.listener=function(t){try{"abort"!==t.type||o.loadCaptureCalled||(o.params.aborted=!0),("load"!==t.type||o.called===o.totalCbs&&(o.onloadCalled||"function"!=typeof n.onload))&&o.end(n)}catch(e){try{u.emit("internal-error",[e])}catch(r){}}};for(var s=0;s<l;s++)n.addEventListener(d[s],this.listener,!1)}),u.on("xhr-cb-time",function(t,n,e){this.cbTime+=t,n?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof e.onload||this.end(e)}),u.on("xhr-load-added",function(t,n){var e=""+p(t)+!!n;this.xhrGuids&&!this.xhrGuids[e]&&(this.xhrGuids[e]=!0,this.totalCbs+=1)}),u.on("xhr-load-removed",function(t,n){var e=""+p(t)+!!n;this.xhrGuids&&this.xhrGuids[e]&&(delete this.xhrGuids[e],this.totalCbs-=1)}),u.on("addEventListener-end",function(t,n){n instanceof v&&"load"===t[0]&&u.emit("xhr-load-added",[t[1],t[2]],n)}),u.on("removeEventListener-end",function(t,n){n instanceof v&&"load"===t[0]&&u.emit("xhr-load-removed",[t[1],t[2]],n)}),u.on("fn-start",function(t,n,e){n instanceof v&&("onload"===e&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=a.now()))}),u.on("fn-end",function(t,n){this.xhrCbStart&&u.emit("xhr-cb-time",[a.now()-this.xhrCbStart,this.onload,n],n)}),u.on("fetch-before-start",function(t){var n,e=t[1]||{};"string"==typeof t[0]?n=t[0]:t[0]&&t[0].url&&(n=t[0].url),n&&(this.parsedOrigin=c(n),this.sameOrigin=this.parsedOrigin.sameOrigin);var r=f(this.parsedOrigin);if(r&&r.header){var o=r.header;if("string"==typeof t[0]){var i={};for(var a in e)i[a]=e[a];i.headers=new Headers(e.headers||{}),i.headers.set("newrelic",o),this.dt=r,t.length>1?t[1]=i:t.push(i)}else t[0]&&t[0].headers&&(t[0].headers.append("newrelic",o),this.dt=r)}})}},{}],13:[function(t,n,e){var r={};n.exports=function(t){if(t in r)return r[t];var n=document.createElement("a"),e=window.location,o={};n.href=t,o.port=n.port;var i=n.href.split("://");!o.port&&i[1]&&(o.port=i[1].split("/")[0].split("@").pop().split(":")[1]),o.port&&"0"!==o.port||(o.port="https"===i[0]?"443":"80"),o.hostname=n.hostname||e.hostname,o.pathname=n.pathname,o.protocol=i[0],"/"!==o.pathname.charAt(0)&&(o.pathname="/"+o.pathname);var a=!n.protocol||":"===n.protocol||n.protocol===e.protocol,s=n.hostname===document.domain&&n.port===e.port;return o.sameOrigin=a&&(!n.hostname||s),"/"===o.pathname&&(r[t]=o),o}},{}],14:[function(t,n,e){function r(t,n){var e=t.responseType;return"json"===e&&null!==n?n:"arraybuffer"===e||"blob"===e||"json"===e?o(t.response):"text"===e||""===e||void 0===e?o(t.responseText):void 0}var o=t(16);n.exports=r},{}],15:[function(t,n,e){function r(){}function o(t,n,e){return function(){return i(t,[f.now()].concat(s(arguments)),n?null:this,e),n?void 0:this}}var i=t("handle"),a=t(21),s=t(22),c=t("ee").get("tracer"),f=t("loader"),u=NREUM;"undefined"==typeof window.newrelic&&(newrelic=u);var d=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],l="api-",p=l+"ixn-";a(d,function(t,n){u[n]=o(l+n,!0,"api")}),u.addPageAction=o(l+"addPageAction",!0),u.setCurrentRouteName=o(l+"routeName",!0),n.exports=newrelic,u.interaction=function(){return(new r).get()};var h=r.prototype={createTracer:function(t,n){var e={},r=this,o="function"==typeof n;return i(p+"tracer",[f.now(),t,e],r),function(){if(c.emit((o?"":"no-")+"fn-start",[f.now(),r,o],e),o)try{return n.apply(this,arguments)}catch(t){throw c.emit("fn-err",[arguments,this,t],e),t}finally{c.emit("fn-end",[f.now()],e)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,n){h[n]=o(p+n)}),newrelic.noticeError=function(t,n){"string"==typeof t&&(t=new Error(t)),i("err",[t,f.now(),!1,n])}},{}],16:[function(t,n,e){n.exports=function(t){if("string"==typeof t&&t.length)return t.length;if("object"==typeof t){if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if(!("undefined"!=typeof FormData&&t instanceof FormData))try{return JSON.stringify(t).length}catch(n){return}}}},{}],17:[function(t,n,e){var r=0,o=navigator.userAgent.match(/Firefox[\/\s](\d+\.\d+)/);o&&(r=+o[1]),n.exports=r},{}],18:[function(t,n,e){function r(t,n){var e=t.getEntries();e.forEach(function(t){"first-paint"===t.name?c("timing",["fp",Math.floor(t.startTime)]):"first-contentful-paint"===t.name&&c("timing",["fcp",Math.floor(t.startTime)])})}function o(t,n){var e=t.getEntries();e.length>0&&c("lcp",[e[e.length-1]])}function i(t){if(t instanceof u&&!l){var n,e=Math.round(t.timeStamp);n=e>1e12?Date.now()-e:f.now()-e,l=!0,c("timing",["fi",e,{type:t.type,fid:n}])}}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var a,s,c=t("handle"),f=t("loader"),u=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){a=new PerformanceObserver(r),s=new PerformanceObserver(o);try{a.observe({entryTypes:["paint"]}),s.observe({entryTypes:["largest-contentful-paint"]})}catch(d){}}if("addEventListener"in document){var l=!1,p=["click","keydown","mousedown","pointerdown","touchstart"];p.forEach(function(t){document.addEventListener(t,i,!1)})}}},{}],19:[function(t,n,e){function r(){function t(){return n?15&n[e++]:16*Math.random()|0}var n=null,e=0,r=window.crypto||window.msCrypto;r&&r.getRandomValues&&(n=r.getRandomValues(new Uint8Array(31)));for(var o,i="xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx",a="",s=0;s<i.length;s++)o=i[s],"x"===o?a+=t().toString(16):"y"===o?(o=3&t()|8,a+=o.toString(16)):a+=o;return a}function o(){function t(){return n?15&n[e++]:16*Math.random()|0}var n=null,e=0,r=window.crypto||window.msCrypto;r&&r.getRandomValues&&Uint8Array&&(n=r.getRandomValues(new Uint8Array(31)));for(var o=[],i=0;i<16;i++)o.push(t().toString(16));return o.join("")}n.exports={generateUuid:r,generateCatId:o}},{}],20:[function(t,n,e){function r(t,n){if(!o)return!1;if(t!==o)return!1;if(!n)return!0;if(!i)return!1;for(var e=i.split("."),r=n.split("."),a=0;a<r.length;a++)if(r[a]!==e[a])return!1;return!0}var o=null,i=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var s=navigator.userAgent,c=s.match(a);c&&s.indexOf("Chrome")===-1&&s.indexOf("Chromium")===-1&&(o="Safari",i=c[1])}n.exports={agent:o,version:i,match:r}},{}],21:[function(t,n,e){function r(t,n){var e=[],r="",i=0;for(r in t)o.call(t,r)&&(e[i]=n(r,t[r]),i+=1);return e}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],22:[function(t,n,e){function r(t,n,e){n||(n=0),"undefined"==typeof e&&(e=t?t.length:0);for(var r=-1,o=e-n||0,i=Array(o<0?0:o);++r<o;)i[r]=t[n+r];return i}n.exports=r},{}],23:[function(t,n,e){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(t,n,e){function r(){}function o(t){function n(t){return t&&t instanceof r?t:t?c(t,s,i):i()}function e(e,r,o,i){if(!l.aborted||i){t&&t(e,r,o);for(var a=n(o),s=m(e),c=s.length,f=0;f<c;f++)s[f].apply(a,r);var d=u[y[e]];return d&&d.push([x,e,r,a]),a}}function p(t,n){g[t]=m(t).concat(n)}function h(t,n){var e=g[t];if(e)for(var r=0;r<e.length;r++)e[r]===n&&e.splice(r,1)}function m(t){return g[t]||[]}function w(t){return d[t]=d[t]||o(e)}function v(t,n){f(t,function(t,e){n=n||"feature",y[e]=n,n in u||(u[n]=[])})}var g={},y={},x={on:p,addEventListener:p,removeEventListener:h,emit:e,get:w,listeners:m,context:n,buffer:v,abort:a,aborted:!1};return x}function i(){return new r}function a(){(u.api||u.feature)&&(l.aborted=!0,u=l.backlog={})}var s="nr@context",c=t("gos"),f=t(21),u={},d={},l=n.exports=o();l.backlog=u},{}],gos:[function(t,n,e){function r(t,n,e){if(o.call(t,n))return t[n];var r=e();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return t[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(t,n,e){function r(t,n,e,r){o.buffer([t],r),o.emit(t,n,e)}var o=t("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(t,n,e){function r(t){var n=typeof t;return!t||"object"!==n&&"function"!==n?-1:t===window?0:a(t,i,function(){return o++})}var o=1,i="nr@id",a=t("gos");n.exports=r},{}],loader:[function(t,n,e){function r(){if(!E++){var t=b.info=NREUM.info,n=p.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&n))return u.abort();f(y,function(n,e){t[n]||(t[n]=e)}),c("mark",["onload",a()+b.offset],null,"api");var e=p.createElement("script");e.src="https://"+t.agent,n.parentNode.insertBefore(e,n)}}function o(){"complete"===p.readyState&&i()}function i(){c("mark",["domContent",a()+b.offset],null,"api")}function a(){return O.exists&&performance.now?Math.round(performance.now()):(s=Math.max((new Date).getTime(),s))-b.offset}var s=(new Date).getTime(),c=t("handle"),f=t(21),u=t("ee"),d=t(20),l=window,p=l.document,h="addEventListener",m="attachEvent",w=l.XMLHttpRequest,v=w&&w.prototype;NREUM.o={ST:setTimeout,SI:l.setImmediate,CT:clearTimeout,XHR:w,REQ:l.Request,EV:l.Event,PR:l.Promise,MO:l.MutationObserver};var g=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1169.min.js"},x=w&&v&&v[h]&&!/CriOS/.test(navigator.userAgent),b=n.exports={offset:s,now:a,origin:g,features:{},xhrWrappable:x,userAgent:d};t(15),t(18),p[h]?(p[h]("DOMContentLoaded",i,!1),l[h]("load",r,!1)):(p[m]("onreadystatechange",o),l[m]("onload",r)),c("mark",["firstbyte",s],null,"api");var E=0,O=t(23)},{}],"wrap-function":[function(t,n,e){function r(t){return!(t&&t instanceof Function&&t.apply&&!t[a])}var o=t("ee"),i=t(22),a="nr@original",s=Object.prototype.hasOwnProperty,c=!1;n.exports=function(t,n){function e(t,n,e,o){function nrWrapper(){var r,a,s,c;try{a=this,r=i(arguments),s="function"==typeof e?e(r,a):e||{}}catch(f){l([f,"",[r,a,o],s])}u(n+"start",[r,a,o],s);try{return c=t.apply(a,r)}catch(d){throw u(n+"err",[r,a,d],s),d}finally{u(n+"end",[r,a,c],s)}}return r(t)?t:(n||(n=""),nrWrapper[a]=t,d(t,nrWrapper),nrWrapper)}function f(t,n,o,i){o||(o="");var a,s,c,f="-"===o.charAt(0);for(c=0;c<n.length;c++)s=n[c],a=t[s],r(a)||(t[s]=e(a,f?s+o:o,i,s))}function u(e,r,o){if(!c||n){var i=c;c=!0;try{t.emit(e,r,o,n)}catch(a){l([a,e,r,o])}c=i}}function d(t,n){if(Object.defineProperty&&Object.keys)try{var e=Object.keys(t);return e.forEach(function(e){Object.defineProperty(n,e,{get:function(){return t[e]},set:function(n){return t[e]=n,n}})}),n}catch(r){l([r])}for(var o in t)s.call(t,o)&&(n[o]=t[o]);return n}function l(n){try{t.emit("internal-error",n)}catch(e){}}return t||(t=o),e.inPlace=f,e.flag=a,e}},{}]},{},["loader",2,12,4,3]);</script>
+	<!-- Use title if it's in the page YAML frontmatter -->		
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>The US Sanctions on Iran Are Causing a Major Humanitarian Crisis | The Nation</title>
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="https://www.thenation.com/xmlrpc.php">			
+	<!-- Fav Icon -->
+	<!-- Fav Icon -->
+	<link rel="shortcut icon" type="image/ico" href="https://www.thenation.com/images/favicon.ico?ver=2.0.1" />
+	<link rel="apple-touch-icon" href="https://www.thenation.com/images/touch-icon-32x32.png?ver=2=2.0.1"/>
+	<link rel="apple-touch-icon" sizes="76x76" href="https://www.thenation.com/images/touch-icon-76x76.png?ver=2=2.0.1">
+	<link rel="apple-touch-icon" sizes="120x120" href="https://www.thenation.com/images/touch-icon-120x120.png?ver=2=2.0.1">
+	<link rel="apple-touch-icon" sizes="152x152" href="https://www.thenation.com/images/touch-icon-152x152.png?ver=2=2.0.1">
+	<!-- Fav Icon -->
+	<meta property="fb:pages" content="7629206115" /> 
+
+		
+			<meta name="sailthru.image.full" content="https://www.thenation.com/wp-content/uploads/2020/01/iran-sanctions-pharmacy-2018-gty-img-680x430.jpg" /> 
+			<meta name="sailthru.image.thumb" content="https://www.thenation.com/wp-content/uploads/2020/01/iran-sanctions-pharmacy-2018-gty-img-275x173.jpg" />
+			<meta name="sailthru.title" content="The US Sanctions on Iran Are Causing a Major Humanitarian Crisis" />
+			<meta name="sailthru.date" content="January 21st, 2020" />
+			<meta name="sailthru.content_id" content="337068" />
+			<meta name="sailthru.description" content="There has been a catastrophic drop in living standards, and the deterioration in public health warrants immediate action by the international community." />	
+						
+			<meta name="sailthru.tags" content="Armed Conflicts,Civil Unrest,Foreign Policy,Health and Disease,Middle East,Regions and Countries,War and Peace,World," />
+			<meta name="keywords" content="Donald Trump,Human rights,Iran,Nuclear Iran,Sanctions" />
+			<meta name="sailthru.author" content="Ahmad Jalalpour" />			
+				
+	<script>		
+		var articlereadbyUser  = 0;
+		var pageCounterPaywall = 0; 
+		var checknc 		   = getCookie('SESSchecknc');
+		var currentUrl 		   = document.URL;
+		var tn_ads_on          = true;
+		var thenationads       = true;
+		
+		function getCookie(name){
+			var re = new RegExp(name + "=([^;]+)");
+			var value = re.exec(document.cookie);
+			return (value != null) ? unescape(value[1]) : null;
+		}		
+		
+		
+		var Base64={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(e){var t="";var n,r,i,s,o,u,a;var f=0;e=Base64._utf8_encode(e);while(f<e.length){n=e.charCodeAt(f++);r=e.charCodeAt(f++);i=e.charCodeAt(f++);s=n>>2;o=(n&3)<<4|r>>4;u=(r&15)<<2|i>>6;a=i&63;if(isNaN(r)){u=a=64}else if(isNaN(i)){a=64}t=t+this._keyStr.charAt(s)+this._keyStr.charAt(o)+this._keyStr.charAt(u)+this._keyStr.charAt(a)}return t},decode:function(e){var t="";var n,r,i;var s,o,u,a;var f=0;e=e.replace(/[^A-Za-z0-9+/=]/g,"");while(f<e.length){s=this._keyStr.indexOf(e.charAt(f++));o=this._keyStr.indexOf(e.charAt(f++));u=this._keyStr.indexOf(e.charAt(f++));a=this._keyStr.indexOf(e.charAt(f++));n=s<<2|o>>4;r=(o&15)<<4|u>>2;i=(u&3)<<6|a;t=t+String.fromCharCode(n);if(u!=64){t=t+String.fromCharCode(r)}if(a!=64){t=t+String.fromCharCode(i)}}t=Base64._utf8_decode(t);return t},_utf8_encode:function(e){e=e.replace(/rn/g,"n");var t="";for(var n=0;n<e.length;n++){var r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r)}else if(r>127&&r<2048){t+=String.fromCharCode(r>>6|192);t+=String.fromCharCode(r&63|128)}else{t+=String.fromCharCode(r>>12|224);t+=String.fromCharCode(r>>6&63|128);t+=String.fromCharCode(r&63|128)}}return t},_utf8_decode:function(e){var t="";var n=0;var r=c1=c2=0;while(n<e.length){r=e.charCodeAt(n);if(r<128){t+=String.fromCharCode(r);n++}else if(r>191&&r<224){c2=e.charCodeAt(n+1);t+=String.fromCharCode((r&31)<<6|c2&63);n+=2}else{c2=e.charCodeAt(n+1);c3=e.charCodeAt(n+2);t+=String.fromCharCode((r&15)<<12|(c2&63)<<6|c3&63);n+=3}}return t}};
+		  
+		var check_user_logged_in = getCookie('SESSname');		
+				
+		//Piano	
+		tp = window["tp"] || [];	
+			
+		// Execute when the page is first loaded
+		if(check_user_logged_in != null){
+			
+			var check_user_info = getCookie('SESSuserinfo');
+			
+			if (check_user_info != null) {
+				check_user_info = Base64.decode(check_user_info);	
+				check_user_info = JSON.parse(check_user_info);
+				var user_roles = check_user_info.roles;
+				
+				if (user_roles.includes('subscriber')) {
+					tp.push(["setCustomVariable", "userType", "Subscriber"]);	
+				}
+				
+				if (user_roles.includes('nation_user') && null == getCookie('SESSexpireduser')) {
+					tp.push(["setCustomVariable", "userType", "nation_user"]);
+				}	
+
+				if (user_roles.includes('nation_user') && null != getCookie('SESSexpireduser')) {
+					tp.push(["setCustomVariable", "userType", "expired_user"]);
+				}	
+				
+				if (user_roles.includes('premium_subscriber')) {
+					tp.push(["setCustomVariable", "userType", "premium_subscriber"]);
+				}
+			} else {
+				tp.push(["setCustomVariable", "userType", "cms_user"]);
+			}	
+		}else{
+			tp.push(["setCustomVariable", "userType", "Anonymous"]);
+		}
+		
+		/* Pass If Request From Maz */
+		if (navigator.userAgent.indexOf("MAZBot") > -1) {
+			tp.push(["setCustomVariable", "mazbot", "true"]);
+		}
+		/* Pass If Request From Maz */
+		
+				
+		tp.push(["setContentSection", "article"]);
+				
+		if(check_user_logged_in != null){						
+			if(currentUrl.indexOf("/login/") > -1){				
+				window.location = document.location.origin;				
+			}
+		}
+			
+		if( check_user_logged_in==null ){
+			if(currentUrl.indexOf("/author-taxonomy/nation-voice/") > -1){			
+				window.location = document.location.origin;			
+			} 
+		}
+
+		if(currentUrl.indexOf("?tnads=0") > -1){
+			thenationads = false;
+		}	
+		  
+		if(checknc!=null){		
+			if(currentUrl.indexOf("?nc=1") == -1){	
+				if(currentUrl.indexOf("?") == -1){		
+					window.location.href = currentUrl+"?nc=1";		
+				}else{		
+					if(currentUrl.indexOf("&nc=1") == -1){			
+						window.location.href = currentUrl+"&nc=1";			
+					}		
+				}
+			}
+		}		  
+	</script>
+	<script >var _sf_startpt=(new Date()).getTime()</script>
+
+				<!-- Google Tag Manager -->
+			<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+			})(window,document,'script','dataLayer','GTM-54LKCF3');</script>
+			<!-- End Google Tag Manager -->
+				<!-- Invisibly Pixel Code -->
+			
+	<!-- Invisibly Pixel Code -->
+		
+	<!--Advertisements-->
+	<script>
+		var googletag = googletag || {};
+		googletag.cmd = googletag.cmd || [];
+		(function() {
+		var gads = document.createElement('script');
+		gads.async = true;
+		gads.type = 'text/javascript';
+		var useSSL = 'https:' == document.location.protocol;
+		gads.src = (useSSL ? 'https:' : 'http:') + 
+		'//www.googletagservices.com/tag/js/gpt.js';
+		var node = document.getElementsByTagName('script')[0];
+		node.parentNode.insertBefore(gads, node);
+		})();
+	</script>
+		
+	<!-- Facebook Pixel Code -->
+		<script>
+		!function(f,b,e,v,n,t,s)
+		{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+		if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+		n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];
+		s.parentNode.insertBefore(t,s)}(window,document,'script', 'https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '233793277040432');
+		fbq('track', 'PageView');
+		</script>
+		<noscript>
+		<img height="1" width="1" src="https://www.facebook.com/tr?id=233793277040432&ev=PageView&noscript=1"/>
+		</noscript>
+	<!-- End Facebook Pixel Code -->
+	
+		
+	<!-- Connatix tag -->
+	<script>!function(n){if(!window.cnxps){window.cnxps={},window.cnxps.cmd=[];var t=n.createElement('iframe');t.display='none',t.onload=function(){var n=t.contentWindow.document,c=n.createElement('script');c.src='//cd.connatix.com/connatix.playspace.js',c.setAttribute('async','1'),c.setAttribute('type','text/javascript'),n.body.appendChild(c)},n.head.appendChild(t)}}(document);	</script><script id="ff883bc1f60748089a4d57e27b61a663"> cnxps.cmd.push(function(){cnxps({playerId: 'a7a6ddc7-2a62-4477-a2d8-4c48d3572c90'}).render('ff883bc1f60748089a4d57e27b61a663');});</script>
+	<!-- Connatix tag -->
+	<style type="text/css">
+.ui-menu .ui-menu-item { font-size: 14px; background: #FFFFFF; color: #333333; font-weight: normal; text-shadow: 0; border: 0; -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0; white-space: nowrap; }
+.ui-menu .ui-menu-item.ui-state-focus, .ui-menu .ui-menu-item.ui-state-hover, .ui-menu .ui-menu-item.ui-state-active { font-size: 14px; background: #EFEFEF; color: #333333; margin: 0; text-shadow: 0; border: 0; }
+.acs_suggesting { background: url(https://www.thenation.com/wp-content/plugins/cloud-search/images/loading.gif) no-repeat 98% 50% !important; }
+#desktop .header-bar.search form input.acs_suggesting{background: url(https://www.thenation.com/wp-content/plugins/cloud-search/images/loading.gif) no-repeat 98% 50% !important;-webkit-transition: unset;transition: unset;}
+</style>
+<!-- This site has installed PayPal for WooCommerce v2.1.16 - https://www.angelleye.com/product/woocommerce-paypal-plugin/ -->
+
+<!-- This site is optimized with the Yoast SEO Premium plugin v13.4.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="There has been a catastrophic drop in living standards, and the deterioration in public health warrants immediate action by the international community."/>
+<meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
+<link rel="canonical" href="https://www.thenation.com/article/world/iran-sanctions-humanitarian-crisis/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="The US Sanctions on Iran Are Causing a Major Humanitarian Crisis" />
+<meta property="og:description" content="There has been a catastrophic drop in living standards, and the deterioration in public health warrants immediate action by the international community." />
+<meta property="og:url" content="https://www.thenation.com/article/world/iran-sanctions-humanitarian-crisis/" />
+<meta property="og:site_name" content="The Nation" />
+<meta property="article:publisher" content="https://www.facebook.com/TheNationMagazine" />
+<meta property="article:author" content="https://www.thenation.com/authors" />
+<meta property="article:published_time" content="2020-01-21T19:13:11+00:00" />
+<meta property="article:modified_time" content="2020-01-22T16:25:08+00:00" />
+<meta property="og:updated_time" content="2020-01-22T16:25:08+00:00" />
+<meta property="fb:app_id" content="711914725636301" />
+<meta property="og:image" content="https://www.thenation.com/wp-content/uploads/2020/01/iran-sanctions-pharmacy-2018-gty-img.jpg" />
+<meta property="og:image:secure_url" content="https://www.thenation.com/wp-content/uploads/2020/01/iran-sanctions-pharmacy-2018-gty-img.jpg" />
+<meta property="og:image:width" content="1440" />
+<meta property="og:image:height" content="907" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:description" content="There has been a catastrophic drop in living standards, and the deterioration in public health warrants immediate action by the international community." />
+<meta name="twitter:title" content="The US Sanctions on Iran Are Causing a Major Humanitarian Crisis" />
+<meta name="twitter:site" content="@TheNation" />
+<meta name="twitter:image" content="https://www.thenation.com/wp-content/uploads/2020/01/iran-sanctions-pharmacy-2018-gty-img.jpg" />
+<meta name="twitter:creator" content="@TheNation" />
+<script type='application/ld+json' class='yoast-schema-graph yoast-schema-graph--main'>{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.thenation.com/#website","url":"https://www.thenation.com/","name":"The Nation","inLanguage":"en-US","description":"The Nation Magazine","potentialAction":[{"@type":"SearchAction","target":"https://www.thenation.com/?s={search_term_string}","query-input":"required name=search_term_string"}]},{"@type":"ImageObject","@id":"https://www.thenation.com/article/world/iran-sanctions-humanitarian-crisis/#primaryimage","inLanguage":"en-US","url":"https://www.thenation.com/wp-content/uploads/2020/01/iran-sanctions-pharmacy-2018-gty-img.jpg","width":1440,"height":907,"caption":"An Iranian man and child in a drugstore, 2018"},{"@type":"WebPage","@id":"https://www.thenation.com/article/world/iran-sanctions-humanitarian-crisis/#webpage","url":"https://www.thenation.com/article/world/iran-sanctions-humanitarian-crisis/","name":"The US Sanctions on Iran Are Causing a Major Humanitarian Crisis | The Nation","isPartOf":{"@id":"https://www.thenation.com/#website"},"inLanguage":"en-US","primaryImageOfPage":{"@id":"https://www.thenation.com/article/world/iran-sanctions-humanitarian-crisis/#primaryimage"},"datePublished":"2020-01-21T19:13:11+00:00","dateModified":"2020-01-22T16:25:08+00:00","description":"There has been a catastrophic drop in living standards, and the deterioration in public health warrants immediate action by the international community.","potentialAction":[{"@type":"ReadAction","target":["https://www.thenation.com/article/world/iran-sanctions-humanitarian-crisis/"]}]},{"@type":["Person"],"@id":"https://www.thenation.com/#/schema/person/12f1caec44559099afc6e6876373890c","name":"roane","image":{"@type":"ImageObject","@id":"https://www.thenation.com/#authorlogo","inLanguage":"en-US","url":"https://secure.gravatar.com/avatar/9c3cefd5a815d058ac2a5e67199444dc?s=96&d=mm&r=g","caption":"roane"},"sameAs":[]}]}</script>
+<!-- / Yoast SEO Premium plugin. -->
+
+<link rel='dns-prefetch' href='//www.thenation.com' />
+<link rel='dns-prefetch' href='//www.google.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="The Nation &raquo; Feed" href="https://www.thenation.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="The Nation &raquo; Comments Feed" href="https://www.thenation.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="The Nation &raquo; The US Sanctions on Iran Are Causing a Major Humanitarian Crisis Comments Feed" href="https://www.thenation.com/article/world/iran-sanctions-humanitarian-crisis/feed/" />
+<link rel='stylesheet' id='defaultbasic-css'  href='https://www.thenation.com/wp-content/themes/thenation/style.css?ver=2.3.3'  media='all' />
+<link rel='stylesheet' id='thenation-stylesheet-all-css'  href='https://www.thenation.com/wp-content/themes/thenation/stylesheets/all.css?ver=1.2.1'  media='all' />
+<link rel='stylesheet' id='basicfonts-css'  href='https://www.thenation.com/wp-content/themes/thenation/stylesheets/fonts.css?ver=1'  media='all' />
+<link rel='stylesheet' id='bxslider-css'  href='https://www.thenation.com/wp-content/themes/thenation/stylesheets/jquery.bxslider.css?ver=1'  media='all' />
+<link rel='stylesheet' id='wp-block-library-css'  href='https://www.thenation.com/wp-includes/css/dist/block-library/style.min.css?ver=5.4'  media='all' />
+<link rel='stylesheet' id='wc-block-style-css'  href='https://www.thenation.com/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/style.css?ver=2.5.14'  media='all' />
+<link rel='stylesheet' id='paranum-style-css'  href='https://www.thenation.com/wp-content/plugins/paranum/paranum.css?ver=5.4'  media='all' />
+<style id='woocommerce-inline-inline-css' type='text/css'>
+.woocommerce form .form-row .required { visibility: visible; }
+</style>
+<link rel='stylesheet' id='acs_style_suggest-css'  href='https://www.thenation.com/wp-content/plugins/cloud-search/css/dist/cloud-search-suggest.min.css?ver=1.0.0'  media='all' />
+<link rel='stylesheet' id='angelleye-cc-ui-css'  href='https://www.thenation.com/wp-content/plugins/paypal-woocommerce-release/assets/css/angelleye-cc-ui.css?ver=2.1.16'  media='all' />
+<script  src='https://www.thenation.com/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp'></script>
+<script  src='https://www.thenation.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script  src='https://www.thenation.com/wp-content/plugins/tn-customeditor//tinymce-dropcap.js?ver=5.4'></script>
+<script  src='https://www.thenation.com/wp-content/themes/thenation/js/history.js?ver=5.4'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var SafeCommentsAjax = {"ajaxurl":"https:\/\/www.thenation.com\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script  src='https://www.thenation.com/wp-content/plugins/safe-report-comments/js/ajax.js?ver=5.4'></script>
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.thenation.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.4" />
+<meta name="generator" content="WooCommerce 4.0.1" />
+<link rel='shortlink' href='https://www.thenation.com/?p=337068' />
+<link rel="alternate" type="application/json+oembed" href="https://www.thenation.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.thenation.com%2Farticle%2Fworld%2Firan-sanctions-humanitarian-crisis%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.thenation.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.thenation.com%2Farticle%2Fworld%2Firan-sanctions-humanitarian-crisis%2F&#038;format=xml" />
+			<meta property="fb:pages" content="7629206115" />
+							<meta property="ia:markup_url" content="https://www.thenation.com/article/world/iran-sanctions-humanitarian-crisis/?ia_markup=1" />
+				    <script>
+        jQuery(document).ready(function($) {
+          //  $("#s").suggest("?method=autocomplete", {});
+          //  $("#search-value").suggest("?method=autocomplete", {});
+        });
+    </script>
+    <style>
+		
+		.drop_c{margin-top:34px !important}
+			.wpsdc-drop-cap {
+				float : left;
+				font-family: "Knockout 49 A", "Knockout 49 B";
+				font-weight: bold;
+				font-style: normal;
+				padding-right : 8px;				
+				font-size : 60px;
+				line-height : 60px;}
+		</style>	<noscript><style>.woocommerce-product-gallery{ opacity: 1 !important; }</style></noscript>
+	<link rel="amphtml" href="https://www.thenation.com/article/world/iran-sanctions-humanitarian-crisis/tnamp/" /><link rel="icon" href="https://www.thenation.com/wp-content/uploads/2020/04/touch-icon-32x32-1.png" sizes="32x32" />
+<link rel="icon" href="https://www.thenation.com/wp-content/uploads/2020/04/touch-icon-32x32-1.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://www.thenation.com/wp-content/uploads/2020/04/touch-icon-32x32-1.png" />
+<meta name="msapplication-TileImage" content="https://www.thenation.com/wp-content/uploads/2020/04/touch-icon-32x32-1.png" />
+	
+	<script>
+	jQuery(document).ready(function(){
+		jQuery('#search').submit(function(event){
+			if (jQuery('#search input:text').eq(0).val().length<1){
+				return false;
+			}
+		});
+		jQuery('#searchbox').submit(function(event){
+			if (jQuery('#searchbox input:text').eq(0).val().length<1){
+				return false;
+			}
+		});
+		
+		if (check_user_logged_in == null) {
+			jQuery('.subscribe').css('display', 'block');
+		}
+	});
+	</script>
+	
+	<!-- Common script in header -->
+	<meta name="pocket-site-verification" content="2d34058c2bfe851f973948e31f4362" />
+<!-- One Signal -->
+<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+<script>var OneSignal=window.OneSignal || [];OneSignal.push(function() {OneSignal.init({appId: "b4af9095-5e41-43f2-a459-8ff89f335115",autoResubscribe: true,notifyButton: {enable: false,},welcomeNotification: {"title": "Welcome to The Nation!","message": "Follow us on Twitter @thenation.","url": ""}});OneSignal.showNativePrompt();});</script>
+<!-- One Signal --><script src="https://cdn.yieldpass.com/mcso1g.js"></script><script>
+				var pbjs = pbjs || {};                                
+				pbjs.que = pbjs.que || [];
+				pbjs.que.push(function() {                              
+				pbjs.enableAnalytics([
+							{
+								provider: "invisiblyAnalytics",      
+								options: {
+									account: "invisibly"
+								}
+							}
+							]);
+						});
+				</script><script  src="https://www.thenation.com/wp-content/themes/thenation/js/prebid3.3.0.js"></script>	</head>
+	
+		
+	<body  class="sticky-ads">
+
+					<!-- Google Tag Manager (noscript) -->
+			<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-54LKCF3"
+			height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+			<!-- End Google Tag Manager (noscript) -->
+					
+				
+		<!-- Chartbeat code starts here -->
+		<script>
+			
+			var _sf_async_config   = _sf_async_config || {};
+			var _sf_async_config   = { uid: 7841, domain: 'thenation.com', useCanonical: true };
+			_sf_async_config.title = "The US Sanctions on Iran Are Causing a Major Humanitarian Crisis";
+			
+			 
+					_sf_async_config.sections = "Armed Conflicts,Civil Unrest,Foreign Policy,Health and Disease,Middle East,Regions and Countries,War and Peace,World";
+					_sf_async_config.authors  = "Ahmad Jalalpour";
+					  
+			var _cbq = window._cbq = (window._cbq || []);		
+								
+					if(check_user_logged_in != null){
+						_cbq.push(['_acct', 'paid']);   
+					}else{
+						_cbq.push(['_acct', 'anon']);    
+					}
+							
+			(function() {
+				function loadChartbeat() {
+					var e = document.createElement('script');
+					var n = document.getElementsByTagName('script')[0];
+					e.type = 'text/javascript';
+					e.async = true;
+					e.src = '//static.chartbeat.com/js/chartbeat.js';
+					n.parentNode.insertBefore(e, n);
+				}
+				loadChartbeat();
+			 })();
+		</script>
+		<!-- Chartbeat code ends here -->
+		
+			
+		
+		<!-- Data Layer Event -->
+		<script>
+								dataLayer.push({
+						'event': 'gaPageViewEvent',
+						'gaEventCategory': 'article',
+						'gaEventAction': 'The US Sanctions on Iran Are Causing a Major Humanitarian Crisis',
+						'gaEventLabel': '337068',
+					});
+							</script>
+		<!-- Data Layer Event -->
+
+		<script >
+			var pageCounterPaywall ;
+			var isMobile = {
+			Android: function() {
+				return navigator.userAgent.match(/Android/i);
+			},
+			BlackBerry: function() {
+				return navigator.userAgent.match(/BlackBerry/i);
+			},
+			iOS: function() {
+				return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+			},
+			Opera: function() {
+				return navigator.userAgent.match(/Opera Mini/i);
+			},
+			Windows: function() {
+				return navigator.userAgent.match(/IEMobile/i);
+			},
+			any: function() {
+				return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+			}
+		};
+		</script>
+		<!-- Function to call Advertisements on entire website-->
+		
+				<script>		
+			function call_ad_new(ad_type,ad_name,ad_div_id,ad_name_sno,targeting_var){	
+												if (tn_ads_on === true && thenationads === true) {
+					var w=h=w1=h1=w2=h2=0;	
+					googletag.cmd.push(function(){
+						var ad_slot = null;
+						switch(ad_type){
+							case 'leaderboard':									
+								w = !isMobile.any() ? 728 : 320;
+								h = !isMobile.any() ? 90 : 50;
+								w1 = !isMobile.any() ? 970 : 320;
+								h1 = !isMobile.any() ? 90 : 50;
+								w2 = !isMobile.any() ? 970 : 320 ;
+								h2 = !isMobile.any() ? 250 : 50;										
+								ad_slot = googletag.defineSlot('/1004953/'+ad_name, [[w, h],[w1,h1],[w2,h2]], ad_div_id);
+								break;
+							case 'halfpage':
+								w = !isMobile.any() ? 300 : 300;
+								h = !isMobile.any() ? 250 : 250;
+								w1 = !isMobile.any() ? 300 : 300;
+								h1 = !isMobile.any() ? 600 : 250;									
+								ad_slot = googletag.defineSlot('/1004953/'+ad_name, [[w, h],[w1,h1]], ad_div_id);
+								break;	
+							case 'halfpage250':
+								w = !isMobile.any() ? 300 : 300;
+								h = !isMobile.any() ? 250 : 250;
+								ad_slot = googletag.defineSlot('/1004953/'+ad_name, [w, h], ad_div_id);
+								break;
+							case 'pixel':
+								w = !isMobile.any() ? 1 : 1;
+								h = !isMobile.any() ? 1 : 2;
+								ad_slot = googletag.defineSlot('/1004953/'+ad_name, [w, h], ad_div_id);
+								break;
+							default:
+								ad_slot = googletag.defineSlot('/1004953/'+ad_name, [w, h], ad_div_id);
+								break;
+						}
+						
+						ad_slot.setTargeting('tn_pos', [ad_name_sno]).setTargeting('tn_loc', ['atf']).addService(googletag.pubads());
+						googletag.pubads().enableSingleRequest();
+						if (Object.keys(targeting_var).length > 0) {
+							for (var key in targeting_var){
+								googletag.pubads().setTargeting(key, targeting_var[key]);
+							}
+							googletag.enableServices();
+						}
+					});
+					googletag.cmd.push(function() {
+						googletag.display(ad_div_id);		
+					});
+				}		
+						
+			}
+		</script>
+		
+					
+			<div id="ad-pixel"></div>			
+						<div id="ad-pixel-2"></div>
+						<div id="ad-pixel-3"></div>
+					
+		<a href="http://www.thenation.com/advertising-policy" class="top-ad-policy">Ad Policy</a>
+		
+		<div id="page" class="hfeed site">
+			<a class="skip-link screen-reader-text" href="#content">Skip to content</a>	
+			<header id="desktop">
+				<div class="header-bar utility">
+					<div class="row">
+						<div class="small-12 columns">
+							<ul class="actions">
+								<li>
+									<a class="social-link fb" href="https://www.facebook.com/TheNationMagazine" target="_blank">
+										<span>Facebook</span>
+									</a>
+								</li>
+								<li>
+									<a class="social-link tw" href="https://twitter.com/thenation" target="_blank">
+										<span>Twitter</span>
+									</a>
+								</li>
+								<li>
+									<a class="social-link tn_ins" href="https://www.instagram.com/nationmag/" target="_blank">
+										<span>Instagram</span>
+									</a>
+								</li>	
+																	<li>
+										<a href="https://www.thenation.com/donate-website/?sourceid=1020082" class="btn btn-yellow donate">
+											Donate										</a>
+									</li>
+																		
+									<li id="login_status">
+									<a href="https://www.thenation.com/login/" class="btn btn-yellow login">Log In</a>									</li>			
+							</ul>
+							
+							<!-- /.actions -->
+							<nav  class="trending">
+								<div class="menu-keyword-menu-container"><ul id="menu-keyword-menu" class="menu"><li id="menu-item-352419" class="menu-item menu-item-type-taxonomy menu-item-object-keyword menu-item-352419"><a href="https://www.thenation.com/keyword/george-floyd/">George Floyd Protests</a></li>
+<li id="menu-item-343662" class="menu-item menu-item-type-taxonomy menu-item-object-keyword menu-item-343662"><a href="https://www.thenation.com/keyword/coronavirus/">Coronavirus</a></li>
+<li id="menu-item-348955" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-348955"><a href="https://www.thenation.com/climate-change/">Climate</a></li>
+<li id="menu-item-335223" class="menu-item menu-item-type-taxonomy menu-item-object-admin-taxonomy menu-item-335223"><a href="https://www.thenation.com/content/oppart/">Opp-Art</a></li>
+<li id="menu-item-235579" class="menu-item menu-item-type-taxonomy menu-item-object-admin-taxonomy menu-item-235579"><a href="https://www.thenation.com/content/podcasts/">Podcasts</a></li>
+</ul></div>							</nav>
+						</div>
+					</div>
+					<!-- /.trending -->
+				</div>
+				<!-- /.header-bar.utility -->
+
+				<div class="header-bar main" id="'navbar'">
+					<div class="row">
+						<nav  class="primary small-12 columns">
+							<ul>
+								<li class="home">
+									<h1 class="logo">
+										<a href="https://www.thenation.com">
+											<img src="https://www.thenation.com/wp-content/themes/thenation/images/logo-260x571.svg" alt="The Nation" class="non-sticky">
+											<img src="https://www.thenation.com/wp-content/uploads/2015/07/m-logo.png" alt="The Nation" class="sticky"/>
+										</a>
+									</h1>
+								</li>
+								
+								<li class="news-links">
+								<ul id="menu-subject-menu" class="menu"><li id="menu-item-266341" class="menu-item menu-item-type-taxonomy menu-item-object-subject menu-item-266341"><a href="https://www.thenation.com/subject/politics/">Politics</a></li>
+<li id="menu-item-201145" class="menu-item menu-item-type-taxonomy menu-item-object-subject current-article-ancestor current-menu-parent current-article-parent menu-item-201145"><a href="https://www.thenation.com/subject/world/">World</a></li>
+<li id="menu-item-116709" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-116709"><a href="https://www.thenation.com/culture/">Culture</a></li>
+<li id="menu-item-348956" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-348956"><a href="https://www.thenation.com/events/">Events</a></li>
+<li id="menu-item-298573" class="shop-header menu-item menu-item-type-custom menu-item-object-custom menu-item-298573"><a href="https://shop.thenation.com/">Shop</a></li>
+</ul>								</li>
+				
+								 				
+									<li class="article-meta">
+																						<h3 class="tophead_subject">
+														<a href="https://www.thenation.com/subject/foreign-policy/">
+														Foreign Policy														</a>
+													</h3>
+																							<h2>The US Sanctions on Iran Are Causing a Major Humanitarian Crisis</h2>
+									</li>
+																	
+								<li class="quick-links">
+									<ul>
+																					<li class="current-issue">
+													<a href="https://www.thenation.com/issue/july-13-20-2020-issue/">Current Issue</a>
+												</li>
+												<li class="current-issue"><a href="https://www.thenation.com/newsletter/">Newsletters</a></li>										
+										<li class="subscribe" style="display: none;">
+										<a href="https://subscribe.thenation.com/flex/NA/key/G0ENCB9/" class="header_subscribe">Subscribe</a>										</li>
+																				<li class="search-toggle"><a href="#">Search</a></li>
+									</ul>
+								</li>
+								
+								 
+									<li class="article-social">
+										<ul>
+											<li><a href="javascript:void(0)" class="social-article social-share fb"><span>Facebook</span></a></li>
+											<li><a href="javascript:void(0)" class="social-article social-share tw"><span>Twitter</span></a></li>
+											<li><a href="javascript:void(0)" class="social-article social-share email"><span>Email</span></a></li>
+										</ul>
+									</li>
+																</ul>
+						</nav>
+					</div>
+					<!-- /.primary -->
+				</div>
+
+				<!-- /.header-bar.main -->
+								<div class="header-bar search searchbardrop">
+					<div class="row">
+						<form action="https://www.thenation.com/" role="search" method="get" id="search" name="search">
+							<input type="text" placeholder="Search" name="s">
+							<input type="hidden" name="post_type" value="article" />
+							<span id="closeSearch"></span>
+						</form>
+					</div>
+				</div>
+			</header>
+			
+			<script >
+				jQuery( document ).ready(function($) {
+					$(".landing ul>li.news-links, .landing ul>li.quick-links").attr('style','display:inline !important');
+					$("#closeSearch").click(function(){						
+						$("#desktop .header-bar.search").slideToggle();						
+					});	
+				});
+			</script>
+			<!-- /#desktop -->
+			
+			<header id="mobile" class="push">
+				<div class="header-bar">
+					<a href="#mobile-menu" class="nav-toggle">
+						<span>Toggle Menu</span>
+					</a>
+					<h1 class="logo">
+						<a href="https://www.thenation.com">
+							<img src="https://www.thenation.com/wp-content/uploads/2015/07/m-logo.png" alt="The Nation"/>
+						</a>
+					</h1>
+			
+											<a href="javascript:void(0)" class="social-sharing social-share-icon">
+							<span>Share</span>
+						</a>
+									
+					<div class="share-icons">
+						<ul>
+							<li>
+								<a href="javascript:void(0)" class="social-share fb" data-article-title="The US Sanctions on Iran Are Causing a Major Humanitarian Crisis">
+									<span>fb</span>
+								</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)" class="social-share tw" data-article-title="The US Sanctions on Iran Are Causing a Major Humanitarian Crisis">
+									<span>tw</span>
+								</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)" class="social-share mail email" data-article-title="The US Sanctions on Iran Are Causing a Major Humanitarian Crisis">
+									<span>mail</span>
+								</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)" class="social-share msg" data-article-title="The US Sanctions on Iran Are Causing a Major Humanitarian Crisis">
+									<span>msg</span>
+								</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)" class="social-share wa" data-article-title="The US Sanctions on Iran Are Causing a Major Humanitarian Crisis">
+									<span>wa</span>
+								</a>
+							</li>
+							<li>
+								<a href="javascript:void(0)" class="social-share sms" data-article-title="The US Sanctions on Iran Are Causing a Major Humanitarian Crisis">
+									<span>sms</span>
+								</a>
+							</li>
+						</ul>
+					</div> 				
+				</div>
+				<!-- /.header-bar -->
+				
+				<div id="mobile-menu" >
+					<div class="mobile-scroll">	
+						<nav  class="primary">
+							<ul id="menu-subject-menu-1" class="menu"><li class="menu-item menu-item-type-taxonomy menu-item-object-subject menu-item-266341"><a href="https://www.thenation.com/subject/politics/">Politics</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-subject current-article-ancestor current-menu-parent current-article-parent menu-item-201145"><a href="https://www.thenation.com/subject/world/">World</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-116709"><a href="https://www.thenation.com/culture/">Culture</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-348956"><a href="https://www.thenation.com/events/">Events</a></li>
+<li class="shop-header menu-item menu-item-type-custom menu-item-object-custom menu-item-298573"><a href="https://shop.thenation.com/">Shop</a></li>
+</ul>						</nav>
+						
+						<nav class="utility">
+							<ul>
+																<li class="subscribe" style="display: none;">
+								<a class="alert header_subscribe" href="https://subscribe.thenation.com/flex/NA/key/G0ENCB9/">Subscribe</a>								</li>
+																		<li class="current-issue"><a href="https://www.thenation.com/issue/july-13-20-2020-issue/">Current Issue</a></li>
+										<li class="current-issue"><a href="https://www.thenation.com/newsletter/">Newsletters</a></li>								<li class="subscribe">
+																</li>
+																<li>
+									<a href="https://www.thenation.com/donate-website/?sourceid=1020082">Donate</a>
+								</li>
+																<!-- Login/Logout -->
+								<li id="login_mob_status">
+								<a href="https://www.thenation.com/login/" class="login">Log In</a>								</li>	
+							</ul>
+						</nav>
+						<div class="social">
+							<a class="social-icon icon-fb" target="_blank" href="https://www.facebook.com/TheNationMagazine">
+								<span>Facebook</span>
+							</a>
+							<a class="social-icon icon-tw" target="_blank" href="https://twitter.com/thenation">
+								<span>Twitter</span>
+							</a>							
+							<a class="social-icon icon-ins" href="https://www.instagram.com/nationmag/" target="_blank">
+								<span>Instagram</span>
+							</a>							
+						</div>
+						<div class="search">
+							<form id="mobile-search" action="https://www.thenation.com/" role="search" method="get" name="search">
+								<!--<input type="text" placeholder="Search" class="clearable" name="s">-->
+								<input required type="text" id="q" class="clearable" name="s" placeholder="Search">
+								<input type="hidden" name="post_type" value="article" />
+								<input type="submit" name="submit" class="search_sub">
+							</form>
+						
+						</div>
+					</div>
+				</div>
+				<!-- /#mobile-menu -->
+			</header>
+			
+								<div id="cookies-policy" style="">
+						<p>By using this website, you consent to our use of cookies. For more information, visit our <a href="https://www.thenation.com/privacy-policy/" target="_blank"><strong>Privacy Policy</strong></a><button id="cookies-policy-continue-button" class="close-btn" type="button">X</button></p>
+					</div>
+					
+			<div id="ad-leaderboard" class="push ad full-width leaderboard new-article-leaderboard"></div>
+			<div id="login-content-id-pcd_login" style="display:none;">									
+				<!-- Light box form start here -->
+
+<div class="lightbox-form">
+
+	<!-- Light box inner start here -->
+
+	<div class="lightbox-inner login_popup">
+	
+		<div class="listing__hero row">
+		
+			<div class="listing_form small-12 columns">
+			
+				<!-- Login pop up message start here-->
+			
+								
+				<!-- Login pop up message end here -->
+				
+				<h1>Log In</h1>
+				
+				<!-- Login pop up error message start here-->
+				
+				<div class="row primaryError" id="primaryError"  style="display: none">
+				
+					<div class="field form-field text-field small-12 columns error">
+					
+						<p class="errormsg"></p>
+						
+					</div>
+					
+				</div>
+				
+				<!-- Login pop up error message end here-->
+				
+				<!-- Login pop up form start here -->
+				
+				<form action="index.html" class="search__form" onsubmit="return trigClick();"  name="lightboxform" id="lightboxform">
+					
+					<div class="row">
+						
+						<div class="field form-field e_mail_field_con text-field small-12 columns valid">
+							
+							<input type="text" tabindex="1" name="e_mail" class="pcd_email" value="" id="e_mail" placeholder="">
+							
+							<label for="e_mail">Email *</label>
+													
+						</div>
+						
+					</div>
+					
+					<div class="row">
+					
+						<div class="field form-field text-field pwd_field_con small-12 columns error">
+						
+							<input type="password" tabindex="2" name="pwd" class="pcd_pwd" value="" id="pwd" placeholder="" minlength="2">
+							
+							<label for="pwd">Password *</label>
+										 
+						</div>
+						
+					</div>					
+					
+					<div class="row checkbox-row">
+					
+						<!-- Remember me start here -->
+					
+						<div class="field form-field checkbox-field small-7 partsec columns">
+						
+							<div class="checkbox">
+								<input type="checkbox"  checked="checked" tabindex="4" value="None" id="checkbox3" class="check_input" name="checkbox3">
+								
+								<label for="checkbox3"></label>
+								
+							</div>
+							
+							<label for="checkbox3">Remember Me</label>
+							
+						</div>
+						
+						<!-- Remember me end here -->
+						
+						<!-- Forget password start here  -->
+						
+						<div class="field form-field checkbox-field small-5 partsec columns pull-right"> 
+							
+							<a tabindex="5" href="https://ssl.drgnetwork.com/ecom/nat/app/live/web_user_maint?pagemode=c&org=NAT" style="padding: 0px !Important;">
+							
+								Forgot Your Password?							
+							</a>
+							
+						</div>
+						
+						<!-- Forget password end here  -->
+						
+					</div>
+
+					<div class="row">
+					
+						<div class="field form-field small-12 medium-6 partsec columns">
+						
+							<!-- loader start here  -->
+						
+							<div class="form-button" id="form-loading">
+							
+								<button class="primary-button pcdLoginButton" tabindex="3" type="button" id="loginBut">Log In</button>
+								
+								<img class="loaderImg" src='https://www.thenation.com/wp-content/themes/thenation/images/loader_40x40.GIF' style="display: none" id="loader" alt="loader">
+								
+							</div>
+							
+							<!-- loader end here  -->
+							
+						</div>
+						
+					</div>					
+					
+					<div class="row">
+					
+						<div class="field form-field small-12 medium-12 columns Subscriber_btn">	
+						
+							New to <em>The Nation</em>? <a href="https://subscribe.thenation.com/flex/NA/key/G0ENCB9/" target="_blank">Subscribe</a><br />Print subscriber? <a href="https://ssl.drgnetwork.com/ecom/nat/app/live/web_user_maint?pagemode=a&#038;org=NAT" target="_blank">Activate</a> your online access			
+				
+						</div>
+						
+					</div>
+					
+				</form>
+				
+				<!-- Login pop up form end here -->
+				
+			</div>
+			
+		</div>
+		
+	</div>
+	
+	<!-- Light box inner end here -->
+	
+</div>
+
+<!-- Light box form end here -->			</div>			
+								<script>
+						if(check_user_logged_in != null){			  
+							username = Base64.decode(check_user_logged_in);  
+							
+							if(!isMobile.any()){			
+								var html = '';
+								html += '<a class="header_subscribe" href="https://subscribe.thenation.com/flex/NA/key/G0ENCB9/">'+username;
+								html += '</a>';		
+								html += '<a href="https://www.thenation.com/logout.php" class="logout_status">Logout';
+								html += '</a>';				
+								document.getElementById("login_status").innerHTML = html;		
+							}else{					
+								jQuery('#login_mob_status').next().remove();		
+								var html = '';						
+								html += '<a class="header_subscribe" href="https://subscribe.thenation.com/flex/NA/key/G0ENCB9/">'+username;
+									html += '</a>';
+								html += '</li>';		
+								html += '<li>';
+									html += '<a href="https://www.thenation.com/logout.php" class="logout_status">Logout';
+								html += '</a>';		
+								document.getElementById("login_mob_status").innerHTML = html;		
+							}  
+						}
+						  
+						jQuery( document ).ready(function($) { 
+							$(document).on("click",".logout_status",function(e){		  
+							  document.cookie = "SESSname=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/";		  
+							});
+						});	  
+					</script>
+								
+			<div class="container push"><div class="article-wrap article-page " id="wrap">
+	
+		
+	<!-- Advertisement Script -->
+	<script >
+		
+		var key = [];
+		var values = [];
+		var paragraph_module = [];
+		
+						key.push("tn_keyword");
+				values.push("'donald-tru', 'human-righ', 'iran', 'nuclear-ir', 'sanctions'");
+								key.push("tn_author");
+				values.push("'ahmad-j'");
+						
+	</script>
+		
+	
+	<div class="postid-337068 scrolltrace textContainer_Truncate" articlelisttitle="The US Sanctions on Iran Are Causing a Major Humanitarian Crisis" articlelistlinks="https://www.thenation.com/article/world/iran-sanctions-humanitarian-crisis/" article-post-id="337068" article-keyword="'donald-tru', 'human-righ', 'iran', 'nuclear-ir', 'sanctions'" article-subject="'armed-conf', 'civil-unre', 'foreign-po', 'health-and', 'middle-eas', 'regions-an', 'war-and-pe', 'world'" article-authors="'ahmad-j'">
+	
+		<article id="url-title">
+		
+			<header class="article-header">	
+	<div class="article-header-content">		
+		<ul class="article-info"><li class="category"><a href="https://www.thenation.com/subject/foreign-policy/" class="anchor_subject" subjectlink="https://www.thenation.com/subject/foreign-policy/">Foreign Policy</a></li><li class="subcategory"><a href="https://www.thenation.com/keyword/iran/">Iran</a></li><li class="subcategory"><a href="https://www.thenation.com/keyword/sanctions/">Sanctions</a></li></ul><h1 class="article_title hide">The US Sanctions on Iran Are Causing a Major Humanitarian Crisis</h1><h1 class="title">The US Sanctions on Iran Are Causing a Major Humanitarian Crisis</h1><h2 class='subtitle'>There has been a catastrophic drop in living standards, and the deterioration in public health warrants immediate action by the international community.</h2>		
+		
+		<div class="byline">
+			<h2 class="author_name">By <a class="author" href="https://www.thenation.com/authors/ahmad-jalalpour/">Ahmad Jalalpour</a></h2>	
+					<h4 class="time is_date article_pub_time">
+						January 21, 2020											
+					</h4>
+					</div>
+		
+		<!--<ul class="article-share">
+			<li><a class="social-share fb" href="javascript:void(0)"><span>Facebook</span></a></li>
+			<li><a class="social-share tw" href="javascript:void(0)"><span>Twitter</span></a></li>
+			<li><a class="social-share email" href="javascript:void(0)"><span>Email</span></a></li>
+			<li><a class="social-share tn_print" href="javascript:void(0)" onclick="tn_print_fn()"><span>Print</span></a></li>
+		</ul>-->
+		
+		<ul class="article-share">
+			<li><a href="javascript:void(0)" class="social-share fb"><span>fb</span></a></li>
+			<li><a href="javascript:void(0)" class="social-share tw"><span>tw</span></a></li>
+			<li><a href="javascript:void(0)" class="social-share mail email"><span>mail</span></a></li>
+			<li><a href="javascript:void(0)" class="social-share tn_print" onclick="tn_print_fn()"><span>Print</span></a></li>
+			<li><a href="javascript:void(0)" class="social-share msg"><span>msg</span></a></li>
+			<li><a href="javascript:void(0)" class="social-share wa"><span>wa</span></a></li>
+			<li><a href="javascript:void(0)" class="social-share sms"><span>sms</span></a></li>
+								<li><a href="javascript:void(0)" class="social-share bookmark tn-sfg-add-to-list hide" onclick="tnAddToReadingList(this, 337068)"><span>Bookmark</span></a></li> 	
+							</ul>
+		
+	</div>
+</header>
+
+<section class="article-body  abody-337068  ">
+	<div class="article-body-inner">
+	<aside class="left full-width-mobile image wide indent">
+										<a class="gallery imgHover" href="https://www.thenation.com/wp-content/uploads/2020/01/iran-sanctions-pharmacy-2018-gty-img.jpg" title="A man shops at a drugstore at the Nikan hospital in Tehran on September 11, 2018. Iran’s dwindling foreign exchange income has led to severe scarcity and black markets. (Strringer / AFP via Getty Images)"><img src="https://www.thenation.com/wp-content/uploads/2020/01/iran-sanctions-pharmacy-2018-gty-img.jpg?scale=896&compress=80" alt="An Iranian man and child in a drugstore, 2018"></a>
+										<p class="caption">A man shops at a drugstore at the Nikan hospital in Tehran on September 11, 2018. Iran’s dwindling foreign exchange income has led to severe scarcity and black markets. <span class="credits">(Strringer / AFP via Getty Images)</span></p>
+							</aside>
+							<div style="clear:both"></div>				<aside class="left indent indents email-signup-module para-one-1" style="display: none;" data-section="0">
+					<div class="emailetext-blocks">
+						<h4>Ready to fight back?</h4>
+Sign up for Take Action Now and get three actions in your inbox every week.								<input type="email" name="email" placeholder="Enter Email" class="email-signup-input" id="para-one-email-input-0">
+																	<input type="hidden" name="email-sailthru-list" value="master_promotions,master_travel,new-article-top-module,take_action_now" class="email-sailthru-list" id="para-one-sailthru-list-0">
+										
+						<div class="cta">
+																<input type="button" class="btn btn_5000b2 para_one_button_email" name="submit_sailthru" value="SIGN UP" style="
+									background-color:#1fab00;color:#ffffff;">
+									<p class="Message errormsg footer_email_error"></p>
+									<p><p style="font-size: 0.9rem; color: #85827e;">You will receive occasional promotional offers for programs that support <em>The Nation’s</em> journalism. You can read our <a style="font-style: normal; text-decoration: underline !important; font-size: inherit;" href="https://www.thenation.com/privacy-policy/" target="_blank" rel="noopener"><strong>Privacy Policy</strong></a> here.</p></p>						</div>	
+					</div>
+				</aside>
+									<aside class="left indent indents email-signup-module thanks para-one-thankyou" style="display: none;" id="para-one-thankyou-337068">
+						<div class="emailetext-blocks thanks">
+							Thank you for signing up. For more from <em>The Nation</em>, check out our <a class="textred-highlighted" href="https://www.thenation.com/issue">latest issue</a>.				
+						</div>		   
+					</aside>
+									<aside class="left indent indents email-signup-module para-one-2" style="display: none;" data-section="1">
+					<div class="emailetext-blocks">
+						<p>Subscribe now for as little as $2 a month!</p>	
+						<div class="cta">
+																	<a href="https://subscribe.thenation.com/flex/NA/key/CEM/">
+											<input type="button" class="btn btn_5000b2 para_one_button" name="submit_sailthru" value="Subscribe" style="
+											background-color:#dd3333;color:#ffffff;">
+										</a>
+																</div>	
+					</div>
+				</aside>
+								<aside class="left indent indents email-signup-module para-one-3" style="display: none;" data-section="2">
+					<div class="emailetext-blocks">
+						<h4>Support Progressive Journalism</h4>
+<em>The Nation</em> is reader supported: Chip in $10 or more to help us continue to write about the issues that matter.	
+						<div class="cta">
+																	<a href="https://www.thenation.com/donate-website/?sourceid=1020085">
+											<input type="button" class="btn btn_5000b2 para_one_button" name="submit_sailthru" value="Donate" style="
+											background-color:#dd9933;color:#000000;">
+										</a>
+																</div>	
+					</div>
+				</aside>
+								<aside class="left indent indents email-signup-module para-one-4" style="display: none;" data-section="3">
+					<div class="emailetext-blocks">
+						<h4>Fight Back!</h4>
+Sign up for <em>Take Action Now</em> and we’ll send you three meaningful actions you can take each week.								<input type="email" name="email" placeholder="Enter Email" class="email-signup-input" id="para-one-email-input-3">
+																	<input type="hidden" name="email-sailthru-list" value="master_promotions,master_travel,new-article-top-module,take_action_now,take_action_now_module" class="email-sailthru-list" id="para-one-sailthru-list-3">
+										
+						<div class="cta">
+																<input type="button" class="btn btn_5000b2 para_one_button_email" name="submit_sailthru" value="TAKE ACTION" style="
+									background-color:#81d742;color:#ffffff;">
+									<p class="Message errormsg footer_email_error"></p>
+									<p><p style="font-size: 0.9rem; color: #85827e;">You will receive occasional promotional offers for programs that support <em>The Nation’s</em> journalism. You can read our <a style="font-style: normal; text-decoration: underline !important; font-size: inherit;" href="https://www.thenation.com/privacy-policy/" target="_blank" rel="noopener"><strong>Privacy Policy</strong></a> here.</p></p>						</div>	
+					</div>
+				</aside>
+									<aside class="left indent indents email-signup-module thanks para-one-thankyou" style="display: none;" id="para-one-thankyou-337068">
+						<div class="emailetext-blocks thanks">
+							Thank you for signing up. For more from <em>The Nation</em>, check out our <a class="textred-highlighted" href="https://www.thenation.com/issue">latest issue</a>.				
+						</div>		   
+					</aside>
+									<aside class="left indent indents email-signup-module para-one-5" style="display: none;" data-section="4">
+					<div class="emailetext-blocks">
+						<h4>Travel With <em>The Nation</em></h4>
+Be the first to hear about Nation Travels destinations, and explore the world with kindred spirits.	
+						<div class="cta">
+																	<a href="https://www.thenation.com/travels">
+											<input type="button" class="btn btn_5000b2 para_one_button" name="submit_sailthru" value="Travel" style="
+											background-color:#dd3333;color:#ffffff;">
+										</a>
+																</div>	
+					</div>
+				</aside>
+								<aside class="left indent indents email-signup-module para-one-6" style="display: none;" data-section="5">
+					<div class="emailetext-blocks">
+						<h4>Sign up for our Wine Club today.</h4>
+<span data-sheets-value="{" data-sheets-userformat="{">Did you know you can support <em>The Nation</em> by drinking wine? </span>	
+						<div class="cta">
+																	<a href="https://www.thenationwineclub.com">
+											<input type="button" class="btn btn_5000b2 para_one_button" name="submit_sailthru" value="LEARN MORE" style="
+											background-color:#dd3333;color:#ffffff;">
+										</a>
+																</div>	
+					</div>
+				</aside>
+				<script>paragraph_module[337068] = [{"order":"1","event_name":"paragraph-1-email-signup","user_logged_in":"1"},{"order":"2","event_name":"paragraph-1-subscribe","user_logged_in":"1"},{"order":"3","event_name":"paragraph-1-donate","user_logged_in":""},{"order":"4","event_name":"paragraph-1-takeaction","user_logged_in":""},{"order":"5","event_name":"paragraph-1-travel","user_logged_in":""},{"order":"6","event_name":"paragraph-1-wineclub","user_logged_in":""}];</script> <p>Iran seems to be constantly in the news. First, it was bloody protests last November against a hike in petroleum prices. Next, it was the assassination of a hugely popular warlord, whose killing was mourned by 1.5 million Iranians, with crowds so enormous that 56 were trampled to death in a stampede at his funeral. Then, it was the possibility of a hot war between the United States and Iran in one of the most sensitive regions in the world. Yet another day, a civilian plane was shot down by the country’s own air defense system. If you follow events more closely, you may have heard of a couple of major floods, a train derailment, and two buses crashing and killing most of their passengers. Finally, there was an earthquake not long ago. All this in a just a little over two months.<aside class="ad right most-popular-plus-ad grey_back">
+		<div id="ad-halfpage-337068-0" class="sailthru_class_form"></div>
+		<a href="http://www.thenation.com/advertising-policy" class="ad-policy" target="_blank">Ad Policy</a>
+	</aside>		<script >				
+			function load_article_ads(){
+				if( jQuery("#ad-halfpage-337068-0").is(":empty") ){call_ad_new('halfpage','tn_article','ad-halfpage-337068-0','rectangle_1',{"tn_author":"'ahmad-j'","tn_articleid":337068,"tn_ptype":"article","tn_keyword":"'donald-tru', 'human-righ', 'iran', 'nuclear-ir', 'sanctions'","tn_subject":"'armed-conf', 'civil-unre', 'foreign-po', 'health-and', 'middle-eas', 'regions-an', 'war-and-pe', 'world'","tn_slp":""});}					
+			}	
+	
+			jQuery('#expand-reduce-337068').click(function(){
+				if( isMobile.any() ){
+					call_ad_new('halfpage','tn_article','ad-halfpage-337068-0','rectangle_1',{"tn_author":"'ahmad-j'","tn_articleid":337068,"tn_ptype":"article","tn_keyword":"'donald-tru', 'human-righ', 'iran', 'nuclear-ir', 'sanctions'","tn_subject":"'armed-conf', 'civil-unre', 'foreign-po', 'health-and', 'middle-eas', 'regions-an', 'war-and-pe', 'world'","tn_slp":""});	
+				}				
+			});	
+		</script> 
+		
+<p>There is, however, another story, the story of ordinary people’s lives caught in the maelstrom; of tens of millions of people seeing their savings evaporating overnight or having their business go belly up or seeing their dreams dashed. The reality of life here under the devastating impact of the US “maximum pressure” sanctions campaign is the one big story from Iran that’s mostly missing in the headlines.
+<p>If you haven’t heard about this, you are not alone. Nobody, certainly not the main protagonists, seems the least bit interested in talking about the devastation of human life in Iran today. It is as if a conspiracy of silence has been cast over the whole issue.<div id="ConnatixPlaceholder"></div>
+<p>Trump administration officials are understandably indisposed to discuss the topic because it is bad PR. The rather large Iranian expatriate community in North America is reluctant to broach the issue because many of its members believe the suffering visited upon their sometime compatriots is worth the price of shortening or ending the life of a state they have come to loathe. As for the government of Iran itself, all its multitudinous factions are united in diverting attention from the human toll the sanctions are exacting on ordinary people.	<aside class="left indent indents related-newarticle related-multi">
+		<h4>Related Articles</h4>						<div class="newrelated-blocks">
+							<a href="https://www.thenation.com/article/archive/sanctions-iraq-economic-warfare/" class="related-multi-click">
+								<h5>Sanctions Are Economic Warfare</h5>
+							</a>  
+							<p class="author"><a href="https://www.thenation.com/authors/john-nichols/">John Nichols</a></p>						</div>
+												<div class="newrelated-blocks">
+							<a href="https://www.thenation.com/article/world/trump-iran-iraq-isis/" class="related-multi-click">
+								<h5>The Long-Term Consequences of Trump’s Middle East Blundering</h5>
+							</a>  
+							<p class="author"><a href="https://www.thenation.com/authors/mohamad-bazzi/">Mohamad Bazzi</a></p>						</div>
+								
+	</aside>		
+	
+<p>This is bizarre, to put it mildly. During the period of Iraq sanctions, from 1990 to 2003—another comparably harsh sanctions regime—the Baghdad government had every reason to exaggerate the human toll on its citizens. Today the Iranian government has every reason to underreport the human impact of the sanctions. Why is that? One would think the leaders in Tehran could only gain from adverse publicity about the effects of the US sanctions.
+<p>There seem to be two main governing factions in Iran, the moderate-reformists and the radical-conservatives—the first represented by President Hassan Rouhani, the second by Supreme Leader Ali Khamenei. Each of these has its own parochial reasons for not publicizing the plight of ordinary people. Rouhani’s circle, who run the executive branch and hence control what passes for economic policy, is fearful that if the true dimensions of the sanctions’ impact were revealed, mass panic and/or loss of morale would ensue, and the entire governing edifice might be destabilized, opening the way for takeover by the radicals.<div class="inline-counter"></div>
+<p>The radicals’ reasons seem more complicated. First, their mantra for the past four decades has been that no adversity can divert the will of the faithful from building a religious utopia in Iran, not even comprehensive financial and economic sanctions. Second, admitting the harrowing success of the sanctions wouldn’t just show weakness against their mortal enemy, it would also focus the mind of the person in the street on a nagging question: Why is Iran—that is, no other country, but Iran alone—the target of the most onerous and punitive sanctions in recent memory? Naturally the mind moves to the next question: What on earth is the regime doing in the region and throughout the world to justify the Trump administration’s cruel and inhumane sanctions—and to allow the administration to get away with it with little global outrage? This is the question that the radicals prefer not to be asked, under any circumstances.<aside class="right hidden-on-mobile most-popular-plus-ad"><div class="most-popular hover_b_remove thenation-single-article-most-popular"></div></aside>		<aside class="left indent indents current-issue">
+			<h4>Current Issue</h4><div class="current-blocks">
+								<a href="https://www.thenation.com/issue/july-13-20-2020-issue/" class="no-target-blank">
+									<img src="https://www.thenation.com/wp-content/uploads/2020/06/cover0713.jpg" alt=""/>
+								</a>	
+							</div>					<div class="current-blocks">
+						<a href="https://www.thenation.com/issue/july-13-20-2020-issue/" class="textred-highlighted">View our current issue</a>	
+						<div class="magazine_text" id="magazine_text_337068"></div>
+						<div class="cta magazine_button" id="magazine_button_337068"></div>
+					</div>
+								
+		</aside>		
+		<script >
+			
+			var magazine_text_337068            = '';
+			var magazine_button_text_337068     = '';
+			var magazine_button_url_337068      = '';
+			var magazine_button_bg_color_337068 = '';
+			
+			var is_user_logged_in = getCookie('SESSname');				if( is_user_logged_in != null ){
+					
+						
+						magazine_text_337068 = '<p><span id="\\\"\\\\\"\\\\\\\\\"\\\\\\\\\\\\\\\\\"socialHighlighted\\\\\\\\\\\\\\\\\"\\\\\\\\\"\\\\\"\\\""><span id="\\\"\\\\\"\\\\\\\\\"\\\\\\\\\\\\\\\\\"tweetButton\\\\\\\\\\\\\\\\\"\\\\\\\\\"\\\\\"\\\"" class="\\\"\\\\\"\\\\\\\\\"\\\\\\\\\\\\\\\\\"socialButtonHighlight\\\\\\\\\"\\\\\"\\\""><span class="\\\"\\\\\"\\\\\\\\\"\\\\\\\\\\\\\\\\\"clickheresocial\\\\\\\\\\\\\\\\\"\\\\\\\\\"\\\\\"\\\""></span></span> <span id="\\\"\\\\\"\\\\\\\\\"\\\\\\\\\\\\\\\\\"emailButton\\\\\\\\\\\\\\\\\"\\\\\\\\\"\\\\\"\\\"" class="\\\"\\\\\"\\\\\\\\\"\\\\\\\\\\\\\\\\\"socialButtonHighlight\\\\\\\\\"\\\\\"\\\""><span class="\\\"\\\\\"\\\\\\\\\"\\\\\\\\\\\\\\\\\"clickheresocial\\\\\\\\\\\\\\\\\"\\\\\\\\\"\\\\\"\\\""></span></span></span>If you like this article, please give today to help fund <em>The Nation</em>’s work.</p>';	
+												magazine_button_text_337068 = '<a href="javascript:void(0)"><input type="button" class="btn btn_ffcf0d" name="submit_sailthru" value="Donate"></a>';	
+												magazine_button_url_337068 = 'https://www.thenation.com/email-signup-module-donate/';
+												magazine_button_bg_color_337068 = '#ffcf0d';
+								
+					
+				}else{
+					
+						
+						magazine_text_337068 = '<p>Subscribe today and Save up to $129.</p>';	
+												magazine_button_text_337068 = '<a href="javascript:void(0)"><input type="button" class="btn btn_d41d00" name="submit_sailthru" value="Subscribe"></a>';				
+												magazine_button_url_337068 = 'https://subscribe.thenation.com/flex/NA/key/G0EECAT/';
+												magazine_button_bg_color_337068 = '#dd3333';
+								
+					
+				}
+			
+						
+			if( magazine_text_337068 !='' ){				
+				jQuery("#magazine_text_337068").html(magazine_text_337068);				
+			}
+			
+			if( magazine_button_text_337068 !='' ){				
+				jQuery("#magazine_button_337068").html(magazine_button_text_337068);				
+			}
+			
+			if( magazine_button_url_337068 !='' ){				
+				jQuery("#magazine_button_337068 a").attr("href",magazine_button_url_337068);				
+			}
+			
+			if( magazine_button_bg_color_337068 !='' ){			
+				jQuery("#magazine_button_337068 a input").css("background",magazine_button_bg_color_337068);				
+			}
+			
+		</script>
+			
+		
+<p>Mass starvation—as was widely reported during the sanctions regime imposed against Iraq—has so far not materialized in Iran for the simple reason that, unlike Iraq, Iran is an agriculturally rich country. However, because of Iran’s closer integration into the global economy in the past few years, everything from soy for animal feed to spare parts for trucks and tractors to pesticides has partly or wholly disappeared from the market, causing skyrocketing prices for foodstuffs. Even though the official inflation rate stands at 41 percent, inflation for foodstuffs is running at 74 percent. In addition, the rent for housing units increased last year by more than 95 percent in Iran’s major cities. Meanwhile, the government has proposed raising wages by a meager 15 percent this coming fiscal year. This yawning discrepancy between wages and the cost of living has led to a catastrophic drop in living standards across the board, but especially for the more than 60 percent of the population categorized as poor or in the lower income brackets.
+<p>The plight of those sliding into the category known as “absolute poverty” is even more tragic. According to the Iranian Parliament’s Research Center, in fiscal year 2016–17 (calculated in the Iranian calendar), 16 percent of the population lived in absolute poverty, defined as living on or less than $1.08 a day. In 2017–18, the figure increased by an average of 30 percent. That figure must have risen even higher in the past year. This means at least another 10 percent of the population has fallen into absolute poverty in just two years.
+<p>All you have to do to see the impact of the sanctions is observe buyers’ behavior in municipal stores reserved for fruits and vegetables. “Before, except for the homeless people, you would hardly ever see anyone asking for rotting produce from us,” said a manager at one of these stores. “We just threw them into giant bins to be picked up by garbage trucks the next day. Today, for every individual buying our ‘normal’ produce, twice, sometimes three times as many people could be seen scurrying about until the closing hours when we offer our rejected produce at reduced rates.” He said the competition to grab this rejected produce could get quite fierce. “They just need to feed themselves and their family no matter what, pride be damned,” he added wryly.
+<p>Available data for the economy are hard to come by, but from what is published, the emerging picture is of a society on the brink. For instance, according to the Central Bank of Iran, after a 12 percent growth in GDP in 2016, the first year after the conclusion of the multilateral nuclear agreement (officially, the Joint Comprehensive Plan of Action), it dropped to 3 percent growth in 2017, followed by a 4 percent contraction in 2018 and a further projected 10 percent contraction in 2019, showing the effect of the new sanctions imposed after Trump’s 2018 withdrawal from the JCPOA. This is a cumulative contraction of nearly 14 percent in just two years, which, when combined with the impact of the previous sanctions regime, easily surpasses the Great Depression in its severity and devastating consequences (this year’s conditions are expected to be worse than those of the previous two years).		<aside id="inline_cta_1_module_337068" class="inline-cta-1">
+			<div class="inline-cta-blocks" id="inline_cta_337068"></div>
+			<div class="cta" id="inline_cta_btn_337068"></div>
+		</aside>	
+		
+		<script >
+			
+			var inline_cta_text_337068            = '';
+			var inline_cta_button_text_337068     = '';
+			var inline_cta_url_337068             = '';
+			var inline_cta_bg_color_337068        = '';
+			var inline_cta_font_color_337068      = '';
+			var cta_1_check_337068  = false;  
+			var is_user_logged_in = getCookie('SESSname');				
+				if( is_user_logged_in != null ){
+					
+											
+						inline_cta_text_337068 = '<h4><strong>Support Progressive Journalism</strong></h4><p>If you like this article, please give today to help fund <em>The Nation</em>’s work.</p>';
+													inline_cta_font_color_337068 = '#000000';
+													
+						inline_cta_button_text_337068 = '<a href="javascript:void(0)"><input type="button" class="btn btn_ffcf0d" name="submit_sailthru" value="Donate"></a>';
+												
+						inline_cta_url_337068 = 'https://www.thenation.com/donate-website/?sourceid=1020084';
+												
+						inline_cta_bg_color_337068 = '#ffcf0d';
+											
+				}else{
+					
+											
+						inline_cta_text_337068 = '<h4><strong>Support Progressive Journalism</strong></h4><p>If you like this article, please give today to help fund <em>The Nation</em>’s work.</p>';
+													inline_cta_font_color_337068 = '#000000';
+													
+						inline_cta_button_text_337068 = '<a href="javascript:void(0)"><input type="button" class="btn" name="submit_sailthru" value="Donate"></a>';
+												
+						inline_cta_url_337068 = 'https://www.thenation.com/donate-website/?sourceid=1020084';
+												
+						inline_cta_bg_color_337068 = '#ffcf0d';
+										}
+				
+							
+			if( inline_cta_text_337068 !='' ){
+				jQuery("#inline_cta_337068").html(inline_cta_text_337068);
+				cta_1_check_337068 = true;
+			}
+			
+			if( inline_cta_button_text_337068 !='' ){
+				jQuery("#inline_cta_btn_337068").html(inline_cta_button_text_337068);
+				cta_1_check_337068 = true;
+			}
+			
+			if( inline_cta_url_337068 !='' ){
+				jQuery("#inline_cta_btn_337068 a").attr("href",inline_cta_url_337068);
+				cta_1_check_337068 = true;
+			}
+			
+			if( inline_cta_bg_color_337068 !='' ){
+				jQuery("#inline_cta_btn_337068 a input").css("background",inline_cta_bg_color_337068);
+				cta_1_check_337068 = true;
+			}
+			
+			if( inline_cta_font_color_337068 !='' ){
+				jQuery("#inline_cta_btn_337068 a input").css("color",inline_cta_font_color_337068);
+				cta_1_check_337068 = true;
+			}
+
+			if( cta_1_check_337068 ){
+				jQuery("#inline_cta_1_module_337068").addClass("tn-inline-cta-module");
+			}	
+			
+		</script>
+	
+<p>It seems that, for once, Trump is not exaggerating when he describes the sanctions against Iran as “the most severe ever imposed on a country.” Indeed, the situation is uniformly bleak for all social and economic indicators. From suicide rates to divorce rates to substance abuse to air and water quality to crime rates, the story is the same.
+<p><span class="wpsdc-drop-cap">T</span>he public health situation is particularly shocking, warranting immediate action by the international community. Technically, medicine and medical supplies are exempted from US sanctions. However, sanctions on Iranian banks as well as on all forms of financial transactions have meant that even if Iran were to buy imported items with its now-meager petrodollars, it can no longer reimburse importers for their sales. Of course, the government can resort to clandestine means to do so, but the purchased items in that case would be far more expensive. The end result is the same: It is as if there is a near-total sanction placed on medicine and medical supplies for Iran.				<aside class="ad-300">
+				<div class="ad full-width-mobile inline_ad_300x250_337068" id="inline_ad_300x250_337068"></div>
+			</aside>
+				
+	<script >
+		/*
+		 * Article Inline Ads Calling
+		 */
+		var art_inline_ad_337068 = true; 
+		function inline_ad( articlePostId ){
+			if( art_inline_ad_337068 && thenationads === true){
+				art_inline_ad_337068 = false;
+				var targetingArray              = new Array();
+				targetingArray['tn_author']     = ['ahmad-j'];
+				targetingArray['tn_articleid']  = [337068];
+				targetingArray['tn_ptype']      = ['article'];
+				targetingArray['tn_keyword']    = ['donald-tru', 'human-righ', 'iran', 'nuclear-ir', 'sanctions'];
+				targetingArray['tn_subject']    = ['armed-conf', 'civil-unre', 'foreign-po', 'health-and', 'middle-eas', 'regions-an', 'war-and-pe', 'world'];
+				targetingArray['tn_slp']        = []; 
+				call_ad_new('halfpage250','tn_article','inline_ad_300x250_'+articlePostId+'','rectangle_4',targetingArray);						
+			}			
+		} 		
+	</script>
+	
+<p>While Iran produces many drugs domestically, on average some 40 percent of chemicals used in the ingredients are imported. That may not seem like a terribly high figure, except that even with just 2 percent of its chemicals missing or tainted, a drug is usually rendered practically useless. This means that the government must either devote its dwindling foreign exchange income to buying from international suppliers at much higher rates, or else use shoddy sources instead. Both options have been disastrous. The first has led to severe scarcity and black markets, while the second has led to a shocking toll in human lives and general health.
+<p>If the intention of the “maximum pressure” campaign was to inflict maximum pressure and pain on the populace (no doubt in the hope of inciting it into revolting against the government), the result has been fabulously successful, as the appalling case of public health indicates, a situation worsened by the rampant factionalism now plaguing the ruling establishment.
+<p>The case of H1N1, a not particularly dangerous strain of swine flu that ravaged Iran last fall, provides a telling example of how all these dynamics can play themselves out on a voiceless population in a most frightful and chilling manner.
+<p>H1N1 can generally be prevented by a flu vaccine. Once you catch it, it can be successfully treated by several antiviral drugs. One of these is called Oseltamivir, known in Iran by its brand name Tamiflu.
+<p>Recently the Rouhani government granted, or rather was asked to grant, exclusive rights for nationwide distribution of Tamiflu to a large Iranian pharmaceutical firm located in western Iran. As it happens, two of the company’s chief shareholders happen to be connected to the conservative clergy. Once the first outbreak of H1N1 was reported last September, the firm simply announced that it was no longer able to honor its end of the bargain. In other words, it couldn’t distribute <em>any</em> of the consignments of Tamiflu it had pledged in its contract with the government. The firm said in its legal brief that the government had failed to deliver most of its requested raw materials in a timely fashion, or at economically feasible rates. The firm had a point: In the past two years, the government-regulated prices for drugs have increased half as fast as the prices of the raw materials that go into them. However, it is also true that these are not normal times, by any stretch of the imagination. No economic enterprise is operating as before. Of course, the company in question did not have to wait until the last moment to announce its intentions, and, according to subsequent published reports, it was getting preferential treatment by getting cheaper inputs, compared with other pharmaceutical companies or pharmacies.
+<p>At first, the government tried to address the public health threat by distributing limited medicine from alternate sources. However, by November the disease was spreading rapidly to every corner of the country and infecting hundreds of thousands. It was clear the infection rate was accelerating and could become a major pandemic. At this time, government officials went on national TV warning the public of the serious health hazards. Schools were ordered closed for a few days at numerous localities and people were urged to stay home if they could.
+<p>In tandem with this, the government imported huge quantities of Tamiflu from international networks, no doubt at several times the normal price. However, according to a report by the website Aftabnews, which is close to the government, something unexpected happened. The firm originally assigned the task of distributing the drug sued the government for breach of contract and, astonishingly, won a temporary injunction (the judiciary is aligned with the conservative clerical faction) to stop the distribution of Tamiflu for a few days; this, while patients were dying in record numbers in hospitals throughout Iran.		
+		<aside id="inline_cta_2_module_337068" class="inline-cta-2">
+			<div class="inline-cta-blocks" id="inline_cta_2_337068"></div>
+			<div class="cta" id="inline_cta_2_btn_337068"></div>
+		</aside>
+		
+		<script >
+			
+			var inline_cta_2_text_337068            = '';
+			var inline_cta_2_button_text_337068     = '';
+			var inline_cta_2_url_337068             = '';
+			var inline_cta_2_bg_color_337068        = '';
+			var inline_cta_2_font_color_337068      = '';
+			var cta_2_check_337068  = false;  
+			var is_user_logged_in = getCookie('SESSname');				
+				if( is_user_logged_in != null ){
+					
+											
+						inline_cta_2_text_337068 = '<h4><strong>Give a gift subscription today!</strong></h4><p>Know someone who would like <em>The Nation</em>?</p>';
+													inline_cta_2_font_color_337068 = '#ffffff';
+													
+						inline_cta_2_button_text_337068 = '<a href="javascript:void(0)"><input type="button" class="btn" name="submit_sailthru" value="GIVE A GIFT"></a>';
+												
+						inline_cta_2_url_337068 = 'https://ssl.drgnetwork.com/ecom/NAT/app/live/subscriptions?org=NAT&publ=NA&key_code=68F1CGS&type=S';
+												
+						inline_cta_2_bg_color_337068 = '#cc0e0e';
+											
+				}else{
+					
+											
+						inline_cta_2_text_337068 = '<h4><strong>Support our work with a digital subscription.</strong></h4><p>Get unlimited access: $9.50 for six months.</p>';
+													inline_cta_2_font_color_337068 = '#ffffff';
+													
+						inline_cta_2_button_text_337068 = '<a href="javascript:void(0)"><input type="button" class="btn btn_ffcf0d" name="submit_sailthru" value="Subscribe"></a>';
+												
+						inline_cta_2_url_337068 = 'https://subscribe.thenation.com/flex/NA/key/G0E1CTA/';
+												
+						inline_cta_2_bg_color_337068 = '#cc0e0e';
+										}
+				
+							
+			if( inline_cta_2_text_337068 !='' ){
+				jQuery("#inline_cta_2_337068").html(inline_cta_2_text_337068);
+				cta_2_check_337068 = true;
+			}
+			
+			if( inline_cta_2_button_text_337068 !='' ){
+				jQuery("#inline_cta_2_btn_337068").html(inline_cta_2_button_text_337068);
+				cta_2_check_337068 = true;
+			}
+			
+			if( inline_cta_2_url_337068 !='' ){
+				jQuery("#inline_cta_2_btn_337068 a").attr("href",inline_cta_2_url_337068);
+				cta_2_check_337068 = true;
+			}
+			
+			if( inline_cta_2_bg_color_337068 !='' ){
+				jQuery("#inline_cta_2_btn_337068 a input").css("background",inline_cta_2_bg_color_337068);
+				cta_2_check_337068 = true;
+			}	
+			
+			if( inline_cta_2_font_color_337068 !='' ){
+				jQuery("#inline_cta_2_btn_337068 a input").css("color",inline_cta_2_font_color_337068);
+				cta_2_check_337068 = true;
+			}
+			
+			if( cta_2_check_337068 ){
+				jQuery("#inline_cta_2_module_337068").addClass("tn-inline-cta-module");
+			}
+			
+		</script>
+		
+	
+<p>This wasn’t the end of the story. The public announcements did help prevent further spread of the disease, but it also caused panic, with the result that those who didn’t need the vaccine (influenza mostly strikes old and very young people) rushed to the nearest pharmacy to buy up as much of the vaccine and antiviral drug they could lay their hands on. The resulting shortages caused needless deaths and a thriving black market, in which Tamiflu fetched 10 times its regular price.
+<p>A simple extrapolation of death tolls compiled for two hospitals in two medium-sized towns indicates that a combination of punitive economic sanctions, mismanagement, and political machination may have caused the death of at least 1,600 people last fall. The official death toll is placed at 81.
+<p>In today’s world, 1,600 may not appear to approach the threshold of a calamitous national crisis, but unfortunately, the case of H1N1 exemplifies the whole health system, from preventable diseases like measles to other afflictions like diabetes, cancer, heart disease, respiratory ailments, etc. Last year, for example, several thousand cancer patients died because their regular medication was either no longer available on the market or had quadrupled in price. Technically, insurance agencies must cover 70 percent of the cost of the drugs, but nowadays they don’t approve of brands that are new to the market, which means if you are not well off, you can forget about being able to get that kind of drug. For this and a variety of other reasons, many cancer patients last year resorted to using inferior substitutes, which for some had dire consequences in the form of deadly allergic reactions.
+<p>Doctors in Iran’s hospitals tell countless horror stories about making do with fewer drugs, fewer spare parts for their medical equipment, and a much larger pool of people with serious medical conditions. “It really seems like I’m in a field hospital in a war zone at times,” said a surgeon working in a midsize town in southwestern Iran. “We have daily quotas of how much anesthesia we can administer each day. At the same time, there are days when you just can’t turn away many patients. So what do you do? You become creative and do a lot of praying.” According to this surgeon, it is not unusual at his hospital for an ob-gyn to perform a C-section delivery with localized anesthesia.
+<p><span class="wpsdc-drop-cap">Q</span>uite apart from the dire humanitarian consequences, anyone moderately familiar with the politics of Iran and the region can see that the sanctions campaign is detrimental to long-term US interests in the Middle East on purely strategic and geopolitical grounds, for multiple reasons:
+<p>1) It is alleged that the policy isolates Iran diplomatically. So far, the campaign has not isolated Iran at all. If anything, it has created a major diplomatic rift between the United States and its European allies. Moreover, in recent months, Saudi Arabia and the United Arab Emirates, two major regional adversaries, have moved to reduce tensions by reestablishing contact with Iran.
+<p>2) As for the containment argument, Iran’s aggressive activities in the region have not abated. If anything, as can be seen from attacks on marine shipping or the recent missile attacks on US bases or Saudi refineries, there has been a dramatic uptick in these activities.
+<p>3) Some claim that the campaign reduces the chances of Iran reaching the so-called nuclear breakout threshold. In fact, in the past year Iran has stepped up its nuclear enrichment, not reduced or stopped it.
+<p>4) While it is true that Iran’s financial prowess has suffered serious blows, leaving fewer funds for its allies in the region, this has not meant a smaller budget for the Islamic Revolutionary Guard Corps (IRGC), nor has it diminished the war-fighting posture or militancy of one of Iran’s key regional allies, Lebanon’s Hezbollah. This is also true for Iran’s other regional allies.
+<p>5) Some people in the Trump administration apparently believe this is the perfect time for payback for the seizure of hostages at the US embassy 40 years ago, the suicide attacks on the US Embassy and Marine Corps barracks in Beirut during the Reagan administration, and the use of IEDs in Iraq against US military personnel during the US occupation of that country. The problem with this argument is that while devising such policy might serve a cathartic purpose for its designers and the victims, substituting sentiment for sound policy is not a wise strategy.
+<p>6) It is sometimes alleged that no sensible leader of a country the size of Iran could possibly go to war against a superpower when his country’s economy is in a tailspin. Unfortunately, the opposite seems to be the more likely scenario, especially since neither the United States nor Iran can afford a prolonged hot war at present. Usually in such confrontations, the country in question is unified, economic woes are temporarily forgotten, and a new political or economic course can be set.
+<p>7) Those who support the “maximum pressure” campaign fervently hope it will weaken the regime from within, perhaps leading to its violent overthrow by mass revolt. Such Boltonian pipe dreams gained new adherents after last November’s petroleum protests, and the ongoing sporadic protests after the recent downing of the Ukrainian jetliner near Tehran.
+<p>Individuals advocating this line of argument clearly know nothing about the nature of the Iranian regime or Islamic radicalism in general. The Iranian regime has a more or less fixed number of religiously inspired core supporters that is several million strong. They would never, under any circumstances, abandon the regime and the leader they love and revere. The only conceivable scenario for this imbecilic model of regime change is not a successful revolution along the lines of what occurred in the USSR or Eastern Europe but a terrifying civil war that would, according to most experts, make the just-concluded Syrian civil war look like a picnic.
+<p>8) Finally, the chief rationale behind the maximum pressure campaign—to bring Iran to the negotiating table—is as elusive today as it was back in 2018, when it was first announced. Supreme Leader Ali Khamenei has been quite explicit on the issue, and he is not about to change his tune now. That is not what supreme leaders do. The ayatollah has set at least two conditions for a resumption of talks, neither of which Trump is disposed to accept. Last September Khamenei told a group of clerics, “If the US abjures and recants, and returns to the nuclear agreement which it has abrogated, it may be able to participate within the framework of the group of members countries [of JCPOA]. Otherwise, no negotiation is to take place between the officials of Iran and the United States at any level, either in New York or elsewhere.” Now, with the assassination of Qassim Suleimani, the chances of Iran going back to negotiations are remote.
+<p>While the people of Iran deserve any help they can get—just as, in many cases, Iran’s foreign policy needs to be confronted—the recent anti-government protests unfortunately have zero chance of toppling this regime on their own. Short of a military invasion and an occupation involving hundreds of thousands of ground troops, this regime cannot be dislodged from power.
+<p><span class="wpsdc-drop-cap">T</span>here are also several downsides to the maximum pressure campaign that are seldom discussed by the media. To start with, for the first time in a generation, the campaign is leading to the departure of reformists from the political scene, perhaps on a permanent basis. The Rouhani government’s economic travails are failing with the electorate—every poll in Iran indicates that the public intends to punish the reformists at the polls by boycotting the parliamentary elections scheduled for late February, thus opening the way for a complete takeover of that body by radicals. The next speaker of the Parliament will almost certainly be the former hard-line IRGC general and former Tehran mayor Mohammad Bagher Ghalibaf. And one of the first legislative acts the new Parliament is expected to undertake is to pressure the government to speed up its nuclear enrichment activities. With the sanctions firmly in place, this same scenario will play itself out again in the same fashion next year for the much more important presidential elections. Once a radical takes the helm and all branches of government are held by the hard-liners, nothing will stop Iran from reaching nuclear breakout capacity in short order.
+<p>Secondly, small-scale civic and workplace-related actions by ordinary people—important steps in the course of building an indigenous democracy—are generally tolerated by the regime. Last year saw a dramatic <em>decrease</em> in such associations and activities compared to the year before. Severe social and economic deterioration is apparently not conducive to more social activism.
+<p>Regardless of the merits of Trump’s maximum pressure campaign on geopolitical grounds, there is a major humanitarian crisis in Iran today, one that is certain to deteriorate in the following months. At a minimum, the Trump administration must ease the suffering of ordinary Iranians by facilitating the shipment of much-needed medicine and medical supplies to Iran by third parties and/or ease the restrictions on financial transactions. At the very least, an oil-for-medicine program, modeled on the UN’s oil-for-food program for Iraq in the 1990s, could be established by the UN with tacit US support.
+<p>On January 12, some 1,300 protesting students staged a rally at the Shahid Beheshti University in Tehran. Angry at the death of their fellow students on the ill-fated Ukrainian Airlines flight from Tehran, they pointedly refused to walk over a huge US flag that was spread on the campus grounds by marching around it rather than over it. The march was captured on video. This is an important and welcome development that should not be squandered by misguided doctrines and policies.
+<p>While at present most Iranians blame the government for their misfortunes, sooner or later, the truth about the sanctions will come out. In 1953, perhaps no more than 10 percent of Iran’s population were incensed or directly affected by the US-engineered coup that toppled their democratically elected government. It took less than two decades, but when the truth finally came out for the average Iranian, it outraged millions, a development that is still bedeviling the US government.
+	</div>
+</section>
+
+<section class="aside-wrap"></section><div id="tp-meter" class="meerkat"></div> 
+<footer class="article-footer narrow new-article-footer" id="article-footer-337068">
+
+	<div class="footer-module narrow author-bio">
+		
+		<p><span><a href="https://www.thenation.com/authors/ahmad-jalalpour/"> Ahmad Jalalpour</a></span>Ahmad Jalalpour is a journalist in Iran.</p><br/>		
+	</div>
+
+					<div class="footer-module narrow contact-us">
+					<p>
+						To submit a correction for our consideration, click <a target="_blank" href="/corrections?title=The+US+Sanctions+on+Iran+Are+Causing+a+Major+Humanitarian+Crisis&url=https%3A%2F%2Fwww.thenation.com%2Farticle%2Fworld%2Firan-sanctions-humanitarian-crisis%2F">here.</a>					</p>
+					<p>For Reprints and Permissions, click <a target="_blank" href="http://www.thenationreprints.com/services/reprints/">here.</a></p>
+				</div>
+						<div class="footer-module comments">
+				<a class="click_comment" href="" article-post-id="337068">
+					<abbr class="open">&nbsp;</abbr> 
+					<abbr class="title">Comments (3)</abbr>					
+				</a>				
+			</div>
+			<div id="comments_337068" class="commentContainer" style="display:none">
+				<div id="comments" class="comments-area">
+
+	<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">
+			Leave a Comment		</h3>
+		
+		<p class="must-log-in" style="display:none;">			
+			In order to comment, you must be logged in as a paid subscriber.&nbsp;<a href="#TB_inlinepcd_login?width=600&height=550&inlineId=login-content-id-pcd_login" class="thickbox comment_login_link">Click here to log in</a>&nbsp;or subscribe.		</p>
+		
+		<form action="https://www.thenation.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate="" style="display:none;">
+		
+			<div class="comment-status"></div>	
+			
+			<p class="logged-in-as">
+				Logged in as&nbsp;
+				<a href="https://subscribe.thenation.com/flex/NA/key/G0ENCB9/" class="login_user">
+								</a>&nbsp;
+				<a href="https://www.thenation.com/logout.php" title="Log out of this account" class="logout_status">Log out?</a>
+			</p>
+			
+			<p class="comment-form-comment">
+				<label for="comment">Comment</label>
+				<textarea id="comment" name="comment" cols="45" rows="8" aria-describedby="form-allowed-tags" aria-required="true" required="required"></textarea>
+			</p>
+			
+			<p class="form-submit">
+				<input name="submit" type="submit" id="submit" class="submit" value="Post Comment">
+				<input type="hidden" name="comment_post_ID" value="337068" id="comment_post_ID">
+				<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+			</p>
+			
+		</form>
+	</div>
+	
+	<div class="post_comment_list"></div>
+	
+	<div class="post_comment_list_loader">
+		<img src="https://www.thenation.com/wp-content/themes/thenation/images/infi_loader.gif"/>
+	</div>
+</div>
+
+
+			</div>	
+				
+				
+	<input type="hidden" name="tpContentAuthor" value="Ahmad Jalalpour" />
+	<input type="hidden" name="tpTags" value="armed-conflicts,civil-unrest,foreign-policy,health-and-disease,middle-east,regions-and-countries,war-and-peace,world,donald-trump,human-rights,iran,nuclear-iran,sanctions" />
+	<script>	
+		function pushDataPianoOnInfinite_337068() {
+			// The content published date
+			tp.push(["setContentCreated", "2020-01-21T14:13:11-05:00"]);
+								// The content author
+					tp.push(["setContentAuthor", "Ahmad Jalalpour" ]);
+								// The content section
+			tp.push(["setContentSection", "article"]);
+			// The content tags
+			tp.push(["setTags", ["armed-conflicts","civil-unrest","foreign-policy","health-and-disease","middle-east","regions-and-countries","war-and-peace","world","donald-trump","human-rights","iran","nuclear-iran","sanctions","ahmad-jalalpour"] ]);					
+			// Add custom variables as any key-value pair. The first parameter is the key; second is the value		
+		}	
+	</script>
+	
+</footer>
+<div class="tabola-block" id="tabola-block-337068">
+   		   <div id="rcjsload_286cf7_337068" class="tabola-body"></div>
+		   <script>
+				if (thenationads === true) {
+					(function () {
+						var referer = "";
+						try {
+							if (referer = document.referrer, "undefined" == typeof referer)
+								throw"undefined"
+						} catch (exception) {
+							referer = document.location.href, ("" == referer || "undefined" == typeof referer) && (referer = document.URL)
+						}
+						referer = referer.substr(0, 700);
+						var rcel = document.createElement("script");
+						rcel.id = 'rc_' + Math.floor(Math.random() * 1000);
+						rcel.type = 'text/javascript';
+						rcel.src = "https://trends.revcontent.com/serve.js.php?w=51170&t=" + rcel.id + "&c=" + (new Date()).getTime() + "&width=" + (window.outerWidth || document.documentElement.clientWidth) + "&referer=" + referer;
+						rcel.async = true;
+						var rcds = document.getElementById("rcjsload_286cf7_337068");
+						rcds.appendChild(rcel);
+					})();
+				}				
+		   </script>
+		   	
+</div>		
+		</article>
+
+		<div class="expand-reduce tn-first-expand" id="expand-reduce-337068">
+			<div class="article-wrap">
+				<span class="overlap-div"></span>
+			</div>
+								<a href="#" article-id="337068" class="expand-reduce-keep">Keep Reading</a>
+								
+		</div>
+			
+		<div class="expand-reduce-casual"></div>	
+				
+		<div id="slot-337068" class="ad full-width interarticle position-relative">
+			<a href="http://www.thenation.com/advertising-policy" class="top-ad-policy">Ad Policy</a>
+			<div id="div-gpt-ad-1428494597034-0" class="tn_article_leaderboard"></div>
+		</div>
+	
+		<a class="inifiniteLoader"><img src="https://www.thenation.com/wp-content/themes/thenation/images/infi_loader.gif" alt="" /></a>
+	
+	</div>	
+	
+		
+</div>
+
+<script >
+	var targetingArray = new Array();
+	targetingArray['tn_author']    = ['ahmad-j'];
+	targetingArray['tn_articleid'] = [337068];
+	targetingArray['tn_ptype']     = ['article'];
+	targetingArray['tn_keyword']   = ['donald-tru', 'human-righ', 'iran', 'nuclear-ir', 'sanctions'];
+	targetingArray['tn_subject']   = ['armed-conf', 'civil-unre', 'foreign-po', 'health-and', 'middle-eas', 'regions-an', 'war-and-pe', 'world'];
+	targetingArray['tn_slp']       = [];
+
+				call_ad_new('pixel','tn_article','ad-pixel','pixel_1',targetingArray);
+					call_ad_new('pixel','tn_article','ad-pixel-2','pixel_2',targetingArray);
+		call_ad_new('pixel','tn_article','ad-pixel-3','pixel_3',targetingArray);
+			
+</script>
+
+
+<script>
+	
+	var nextSlotId     = 1;
+	var nextSlotIdSide = 1;
+	var check_comment  = false;
+	
+	var is_user_logged_in = getCookie('SESSname');	
+	/* 
+	 * @function leader board ads
+	 */
+	 
+	function call_ad_leaderboard(){		
+		
+		var targetingArray             = new Array();
+		targetingArray['tn_author']    = ['ahmad-j'];
+		targetingArray['tn_articleid'] = [337068];
+		targetingArray['tn_ptype']     = ['article'];
+		targetingArray['tn_keyword']   = ['donald-tru', 'human-righ', 'iran', 'nuclear-ir', 'sanctions'];
+		targetingArray['tn_subject']   = ['armed-conf', 'civil-unre', 'foreign-po', 'health-and', 'middle-eas', 'regions-an', 'war-and-pe', 'world'];
+		targetingArray['tn_slp']       = []; 		
+		call_ad_new('leaderboard', 'tn_article', 'div-gpt-ad-1428494597034-0', 'leaderboard_2', targetingArray);
+	} 	
+	
+	/* 
+	 * @function generate ad slot name
+	 */	
+	
+	function generateNextSlotName() {
+		var id = nextSlotId++;
+		return 'adslot' + id;
+	}
+	
+	/* 
+	 * @function generate ad slot name side
+	 */	
+	
+	function generateNextSlotNameSide() {
+		var idSide = nextSlotIdSide++;
+		return 'slotSide' + idSide;
+	}
+	
+	/*
+	 * @function Body content image in  gallery
+	 */
+	 
+	function runSlider(ele){   
+		ele.bxSlider({
+			adaptiveHeight: true,
+			adaptiveHeightSpeed: 500,
+			infiniteLoop: false,
+			hideControlOnEnd: false,
+			pager: false
+		});
+		return false;
+	}
+	
+	/*
+	 * Print Article
+	 */
+	
+	/*
+	 * @function for print article
+	 */
+	 
+	function tn_print_fn(){
+		
+		var tn_current_url=window.location.href;
+		if(check_comment == true){
+		   window.open(tn_current_url+'?print=1&comment=1','_blank');
+		}else{
+		   window.open(tn_current_url+'?print=1','_blank');
+		}		
+		return false;
+	}
+	
+	/*
+	 * @function sailthru action tout
+	 */
+		
+	function add_action_tout_sailthru(post_id){
+		
+		var ajaxurl=ajax_object.ajax_url;
+		var sailthru_email_take_action = document.getElementById('take_action_sailthru_email_'+post_id).value;
+		if(sailthru_email_take_action!=''){
+			var take_action_sailthru_list_final = document.getElementById('take_action_sailthru_list_final_'+post_id).value;
+			var action_tout_sailthru='action_tout_sailthru';
+			jQuery.ajax({
+				url  :ajaxurl,
+				type :"POST",
+				data :"sailthru_email_take_action="+sailthru_email_take_action+"&take_action_sailthru_list_final="+take_action_sailthru_list_final+"&action="+action_tout_sailthru,
+				success : function(data){				
+					document.getElementById('action_tout_response_'+post_id).innerHTML=data;
+					document.getElementById('take_action_sailthru_email_'+post_id).value='';
+				}
+			});
+		}else{
+			var error_msg='<span style="color:#cc0e0e">Please Enter Email</span>';
+			document.getElementById('action_tout_response_'+post_id).innerHTML=error_msg;
+		}
+	}
+	
+	/*
+	 * Check for logged in user 
+	 */
+	function getParaOneNextStep( articlePostId, step ){		
+		if( typeof articlePostId !== typeof undefined && is_user_logged_in!=null && typeof paragraph_module!=typeof undefined && paragraph_module[articlePostId][step].user_logged_in==1 ){			
+			step = parseInt(step)+1;	
+			step = ( step > 5 )? 0 : step;
+			step = getParaOneNextStep( articlePostId, step );
+		}
+		return step;
+	}
+	
+	/*
+	 * @function Email Sign Up Logic
+	 */
+	function email_signup_module( articlePostId ){
+		
+		/*
+		 * Check For Email Sign Up Cookie
+		 */
+		if( typeof paragraph_module[articlePostId] !== typeof undefined ){	 			
+			
+			/* Hide All */
+			$(".abody-"+articlePostId+" .email-signup-module").hide();
+			/* Hide All */
+			
+			var TNstep = getCookie('TNstep');
+			if( TNstep!=null ){	
+
+				var step = getParaOneNextStep(articlePostId, TNstep);			
+				$(".abody-"+articlePostId+" .email-signup-module.para-one-"+paragraph_module[articlePostId][step].order+"").show();
+				
+				/* show event tracking */
+				paragraphOneShowEvent(articlePostId, step);
+				/* show event tracking */	
+			}else{
+				var TNlifetime = getCookie('TNlifetime');
+				if( TNlifetime!=null ){
+					nextTNstep = parseInt(TNlifetime)+1;				
+					nextTNstep = ( nextTNstep > 5 )? 0 : nextTNstep;
+					
+					var step = getParaOneNextStep(articlePostId, nextTNstep);				
+					var cookieDateTNstep = new Date();
+					cookieDateTNstep.setTime(cookieDateTNstep.getTime() + (30*24*60*60*1000));
+					document.cookie = "TNstep="+step+";expires="+cookieDateTNstep.toUTCString()+";path=/";
+					
+					var cookieDateTNlifetime = new Date();
+					cookieDateTNlifetime.setTime(cookieDateTNlifetime.getTime() + (10*365*24*60*60*1000));
+					document.cookie = "TNlifetime="+step+";expires="+cookieDateTNlifetime.toUTCString()+";path=/";
+					
+					$(".abody-"+articlePostId+" .email-signup-module.para-one-"+paragraph_module[articlePostId][step].order+"").show();	
+
+					/* show event tracking */
+					paragraphOneShowEvent(articlePostId,step);
+					/* show event tracking */	
+				}else{				
+					var step = getParaOneNextStep(articlePostId, 0);				
+					var cookieDateTNstep = new Date();
+					cookieDateTNstep.setTime(cookieDateTNstep.getTime() + (30*24*60*60*1000));
+					document.cookie = "TNstep="+step+";expires="+cookieDateTNstep.toUTCString()+";path=/";
+					
+					var cookieDateTNlifetime = new Date();
+					cookieDateTNlifetime.setTime(cookieDateTNlifetime.getTime() + (10*365*24*60*60*1000));
+					document.cookie = "TNlifetime="+step+";expires="+cookieDateTNlifetime.toUTCString()+";path=/";
+					
+					$(".abody-"+articlePostId+" .email-signup-module.para-one-"+paragraph_module[articlePostId][step].order+"").show();	
+						
+					/* show event tracking */
+					paragraphOneShowEvent(articlePostId, step);
+					/* show event tracking */	
+				}
+			}
+		}
+	} 
+	
+	/*
+	 * Event Tracking Functions
+	 */
+	 
+	/* Paragraph One Show Event Trigger */ 
+	function paragraphOneShowEvent( articlePostId, step ){
+		
+		if( typeof articlePostId !== typeof undefined && typeof step !== typeof undefined && (typeof paragraph_module[articlePostId] !== typeof undefined) && (paragraph_module[articlePostId][step].event_name!="") ){			
+			/*
+			 * Track Views paragraph one module GTM
+			 */
+			dataLayer.push({
+				'event': 'gaParagraphOneShowEvent',
+				'gaEventCategory': ''+ paragraph_module[articlePostId][step].event_name +'',
+				'gaEventAction': ''+ paragraph_module[articlePostId][step].event_name +'-show',
+				'gaEventLabel': document.URL,
+			});
+		}		
+	}
+	
+	/* Paragraph One Click Event Trigger */
+	function paragraphOneClickEvent( articlePostId, step ){
+	
+		if( typeof articlePostId !== typeof undefined && typeof step !== typeof undefined && (typeof paragraph_module[articlePostId] !== typeof undefined) && (paragraph_module[articlePostId][step].event_name!="") ){
+			dataLayer.push({
+				'event': 'gaParagraphOneEvent',
+				'gaEventCategory': ''+ paragraph_module[articlePostId][step].event_name +'',
+				'gaEventAction': ''+ paragraph_module[articlePostId][step].event_name +'-click',
+				'gaEventLabel': document.URL,
+			});	
+		}
+	}
+		
+	/*
+	 * Event Tracking Functions
+	 */
+	 
+	/* Related Single Article */ 
+	function relatedSingleArticle( articlePostId ){
+		
+		if( jQuery(".postid-"+articlePostId+" .expand-reduce").length ==0 || jQuery(".postid-"+articlePostId+" .expand-close").length !=0 ){
+			
+			if( jQuery(".postid-"+articlePostId+" aside.related-oneup").length > 0 ){
+				
+				var count = jQuery(".postid-"+articlePostId+" aside.related-oneup").length;
+				for( i=0; i < count; i++ ){
+					/*
+					 * Track Views Related Single Article GTM
+					 */
+					dataLayer.push({
+						'event': 'gaRelatedSingleArticleShowEvent',
+						'gaEventCategory': 'related-single-article',
+						'gaEventAction': 'related-single-article-show',
+						'gaEventLabel': document.URL,
+					});
+				}
+			}				
+		}		
+	} 
+	
+	/* Related Multi Article */ 
+	function relatedMultiArticle( articlePostId ){
+		
+		if( jQuery(".postid-"+articlePostId+" .expand-reduce").length ==0 || jQuery(".postid-"+articlePostId+" .expand-close").length !=0 ){
+			
+			if( jQuery(".postid-"+articlePostId+" aside.related-multi").length > 0 ){
+				
+				var count = jQuery(".postid-"+articlePostId+" aside.related-multi").length;
+				for( i=0; i < count; i++ ){
+					/*
+					 * Track Views Related Single Article GTM
+					 */
+					dataLayer.push({
+						'event': 'gaRelatedMultiArticleShowEvent',
+						'gaEventCategory': 'related-multi-article',
+						'gaEventAction': 'related-multi-article-show',
+						'gaEventLabel': document.URL,
+					});
+				}
+			}				
+		}		
+	} 
+	
+	/* Current Issue Module */ 
+	function currentIssueModule( articlePostId ){
+		
+		if( jQuery(".postid-"+articlePostId+" .expand-reduce").length ==0 || jQuery(".postid-"+articlePostId+" .expand-close").length !=0 ){
+			
+			if( jQuery(".postid-"+articlePostId+" aside.current-issue").length > 0 ){
+				/*
+				 * Track Views Current Issue Module GTM
+				 */
+				dataLayer.push({
+					'event': 'gaCurrentIssueModuleShowEvent',
+					'gaEventCategory': 'current-issue-module',
+					'gaEventAction': 'current-issue-module-show',
+					'gaEventLabel': document.URL,
+				});
+			}				
+		}		
+	}	
+	
+	/* Inline CTA 1 Views */ 
+	function inlineCtaOne( articlePostId ){
+		
+		if( jQuery(".postid-"+articlePostId+" .expand-reduce").length ==0 || jQuery(".postid-"+articlePostId+" .expand-close").length !=0 ){
+			
+			if( jQuery(".postid-"+articlePostId+" aside.inline-cta-1").length > 0 ){
+				/*
+				 * Track Views Current Issue Module GTM
+				 */
+				dataLayer.push({
+					'event': 'gaInlineCtaOneShowEvent',
+					'gaEventCategory': 'inline-cta-1',
+					'gaEventAction': 'inline-cta-1-show',
+					'gaEventLabel': document.URL,
+				});
+			}				
+		}		
+	}
+	
+	/* Inline CTA 2 Views */ 
+	function inlineCtaTwo( articlePostId ){
+		
+		if( jQuery(".postid-"+articlePostId+" .expand-reduce").length ==0 || jQuery(".postid-"+articlePostId+" .expand-close").length !=0 ){
+			
+			if( jQuery(".postid-"+articlePostId+" aside.inline-cta-2").length > 0 ){
+				/*
+				 * Track Views Current Issue Module GTM
+				 */
+				dataLayer.push({
+					'event': 'gaInlineCtaTwoShowEvent',
+					'gaEventCategory': 'inline-cta-2',
+					'gaEventAction': 'inline-cta-2-show',
+					'gaEventLabel': document.URL,
+				});
+			}				
+		}		
+	}
+	
+	/* Author Highlight Views */ 
+	function authorHighlight( articlePostId ){
+		
+		if( jQuery(".postid-"+articlePostId+" .expand-reduce").length ==0 || jQuery(".postid-"+articlePostId+" .expand-close").length !=0 ){
+			
+			if( jQuery(".postid-"+articlePostId+" aside.author-modules").length > 0 ){
+				/*
+				 * Track Views Author Highlight GTM
+				 */
+				dataLayer.push({
+					'event': 'gaAuthorHighlightShowEvent',
+					'gaEventCategory': 'author-Highlight',
+					'gaEventAction': 'author-Highlight-show',
+					'gaEventLabel': document.URL,
+				});
+			}				
+		}		
+	}
+	
+	/* Series Module Views */ 
+	function seriesModule( articlePostId ){
+		
+		if( jQuery(".postid-"+articlePostId+" .expand-reduce").length ==0 || jQuery(".postid-"+articlePostId+" .expand-close").length !=0 ){
+			
+			if( jQuery(".postid-"+articlePostId+" aside.series-modules").length > 0 ){
+				/*
+				 * Track Views Series Module GTM
+				 */
+				dataLayer.push({
+					'event': 'gaSeriesModuleShowEvent',
+					'gaEventCategory': 'series-module',
+					'gaEventAction': 'series-module-show',
+					'gaEventLabel': document.URL,
+				});
+			}				
+		}		
+	}
+	
+	/* Comment Module Views */ 
+	function commentModule( articlePostId ){
+		
+		if( jQuery(".postid-"+articlePostId+" .expand-reduce").length ==0 || jQuery(".postid-"+articlePostId+" .expand-close").length !=0 ){
+			
+			if( jQuery(".postid-"+articlePostId+" aside.comment-module").length > 0 ){
+				/*
+				 * Track Views Comment Module GTM
+				 */
+				dataLayer.push({
+					'event': 'gaCommentsModuleShowEvent',
+					'gaEventCategory': 'comments-module',
+					'gaEventAction': 'comments-module-show',
+					'gaEventLabel': document.URL,
+				});
+			}				
+		}		
+	}
+	
+	/* Books Salad Views */ 
+	function booksSalad( articlePostId ){
+		
+		if( jQuery(".postid-"+articlePostId+" .expand-reduce").length ==0 || jQuery(".postid-"+articlePostId+" .expand-close").length !=0 ){
+			
+			if( jQuery(".postid-"+articlePostId+" aside.book-module").length > 0 ){
+				/*
+				 * Track Views Books Salad GTM
+				 */
+				dataLayer.push({
+					'event': 'gaBooksSaladShowEvent',
+					'gaEventCategory': 'books-salad',
+					'gaEventAction': 'books-salad-show',
+					'gaEventLabel': document.URL,
+				});
+			}				
+		}		
+	}
+	
+	/* Action Tout Module Views */ 
+	function actionToutModule( articlePostId ){
+		
+		if( jQuery(".postid-"+articlePostId+" .expand-reduce").length ==0 || jQuery(".postid-"+articlePostId+" .expand-close").length !=0 ){
+			
+			if( jQuery(".postid-"+articlePostId+" aside.takeaction").length > 0 ){
+				/*
+				 * Track Views Action Tout Module GTM
+				 */
+				dataLayer.push({
+					'event': 'gaActionToutModuleShowEvent',
+					'gaEventCategory': 'action-tout-module',
+					'gaEventAction': 'action-tout-module-show',
+					'gaEventLabel': document.URL,
+				});
+			}				
+		}		
+	}
+	
+	/* Sidebar Community Module Views */ 
+	function sidebarCommunityModule( articlePostId ){
+		
+		if( jQuery(".postid-"+articlePostId+" .expand-reduce").length ==0 || jQuery(".postid-"+articlePostId+" .expand-close").length !=0 ){
+			
+			if( jQuery(".postid-"+articlePostId+" aside.n-community").length > 0 ){
+				/*
+				 * Track Views Sidebar Community Module GTM
+				 */
+				dataLayer.push({
+					'event': 'gaSidebarShowEvent',
+					'gaEventCategory': 'sidebar-community',
+					'gaEventAction': 'sidebar-community-show',
+					'gaEventLabel': document.URL,
+				});
+			}				
+		}		
+	}
+	
+	/* Taxnonomy and Author GA Event on single article page */
+	function gaTaxonomyAuthor( gaEventCategory, gaEventAction, gaEventLabel ){
+		dataLayer.push({
+			"event": 			"gaglobaltaxonomyauthor", 
+			"gaEventCategory": 	gaEventCategory, 
+			"gaEventAction":	gaEventAction,
+			"gaEventLabel":		gaEventLabel
+		});
+	}
+	
+	jQuery( document ).ready(function($) {
+		
+		/*============== Variables ==================*/
+		
+		var preventLoad_article = false;		
+		var flag              = false;
+		var $e                = $('.article-body').children().last();   
+		var $t                = $e.prop("tagName");
+		var tagsArray         = ['FORM','ASIDE'];
+		var anothertagsArray  = {'UL':'li','OL':'li','BLOCKQUOTE':'p'};
+		var url_id            = window.location.hash.substr(1);
+		var pageChange        = 1;
+		var articlePostId     = 337068;
+		var count             = 1;
+		var article_divider   = 1;
+		var loagAgn           = false;
+		var scroll_art_recric = true;
+		var list;		
+		var first_art_lead 	  = true;
+		
+		/*============== Variables ==================*/			
+		
+		/*Call Piano Data Push*/	
+		pushDataPianoOnInfinite_337068();
+		
+		/* Taxnonomy and Author GA Event on single article page */
+		var allSubject 			= $('.postid-'+articlePostId+' input[name="tpTags"]').val();							
+		var allAuthor  			= $('.postid-'+articlePostId+' input[name="tpContentAuthor"]').val();
+		var first_article_title = $('.postid-'+articlePostId).attr('articlelisttitle');
+		var first_article_path 	= $('.postid-'+articlePostId).attr('articlelistlinks');
+				
+		var allSubject = allSubject.split(',');
+		$.each( allSubject, function( i, allsubval ) {
+			gaTaxonomyAuthor( allsubval, first_article_title, first_article_path );
+		});
+		
+		var allAuthor = allAuthor.split(',');
+		$.each( allAuthor, function( i, allautval ) {
+			gaTaxonomyAuthor( allautval, first_article_title, first_article_path );
+		});
+		
+		
+		/*
+		 * Body content image in  gallery
+		 */
+		
+		$('section.article-body img').each(function() {			
+			if($(this).parent("a").parent("figure").hasClass('bx-item')){
+				flag = true;
+			}else{				
+				var href_val = $(this).parent("a").attr('href');
+				var img_src  = $(this).attr('src');
+				
+				if( href_val === img_src && !$(this).parents().hasClass("email-signup-module") ){
+					$(this).parent("a").addClass("gallery");
+				}else{
+					if( !$(this).parent("a").hasClass("no-target-blank") ){
+						$(this).parent("a").attr('target','_blank');	
+					}					
+				}
+			}
+		});
+		
+		/*
+		 * Run image slider
+		 */
+		
+		if(flag){
+			runSlider(jQuery('.gallery-2'));
+		}
+		
+		/*
+		 * Email Sign Up
+         */	
+		if(!flag){	
+			email_signup_module( 337068 );
+		}
+		 
+		/*
+		 * Related Single Article Track
+		 */
+		relatedSingleArticle( 337068 );
+		
+		/*
+		 * Related Multiple Article Track
+		 */
+		relatedMultiArticle( 337068 ); 
+		
+		/*
+		 * Current Issue Module Track
+		 */
+		currentIssueModule( 337068 );
+		 
+		/*
+         * Inline CTA One Track
+		 */
+		inlineCtaOne( 337068 ); 
+		
+		/*
+         * Inline CTA Two Track
+		 */
+		inlineCtaTwo( 337068 );
+		
+		/*
+         * Author Highlight Track
+		 */
+		authorHighlight( 337068 ); 
+		
+		/*
+         * Series Module Track
+		 */
+		seriesModule( 337068 );
+		
+		/*
+         * Comment Module Track
+		 */
+		commentModule( 337068 );
+		
+		/*
+         * Books Salad Track
+		 */
+		booksSalad( 337068 );
+		
+		/*
+         *  Action Tout Module Track
+		 */
+		actionToutModule( 337068 );
+		
+		/*
+         *  Sidebar Community Module Track
+		 */
+		sidebarCommunityModule( 337068 );
+		 		
+		/*
+		 * @function for print article
+		 */
+				
+		/* 
+		 * Calling Header, Footer Pixel Ads
+		 */
+		
+		custom_targeting = false;
+		if (key.length > 0 && values.length > 0) {
+			custom_targeting = true;
+		}
+		
+		var targetingArray             = new Array();
+		targetingArray['tn_author']    = ['ahmad-j'];
+		targetingArray['tn_articleid'] = [337068];
+		targetingArray['tn_ptype']     = ['article'];
+		targetingArray['tn_keyword']   = ['donald-tru', 'human-righ', 'iran', 'nuclear-ir', 'sanctions'];
+		targetingArray['tn_subject']   = ['armed-conf', 'civil-unre', 'foreign-po', 'health-and', 'middle-eas', 'regions-an', 'war-and-pe', 'world'];
+		targetingArray['tn_slp']       = []; 
+		
+					call_ad_new('leaderboard','tn_article','ad-leaderboard','leaderboard_1',targetingArray);		
+				
+		
+		/*
+		 * Call Right Sidebar Half Page Ad
+		 */
+				
+			if ( typeof load_article_ads == 'function' && typeof load_article_ads != typeof undefined) { 
+				if( !isMobile.any() || ( isMobile.any() &&  $('.abody-337068').length > 0 && !$('.abody-337068').hasClass('tn-live-blog')) ){
+					//function_name is a function
+					load_article_ads(); 	
+				}			
+			} 	 
+					
+		
+		/*
+		 * Check for video
+		 */
+		
+				
+		/*
+		 * Red dot after article content
+		 */
+		
+		if(jQuery.inArray($t, tagsArray )!='-1'){			
+		}else{    
+			if($t in anothertagsArray){
+				$('.article-body > p:last-of-type').toggleClass('changed');
+				$e.find(anothertagsArray[$t]+':last').addClass('redotclass');         
+			}	    
+		}
+		
+		/*
+		 * this wrapped in jQuery will give us the current .letter-q div
+		 */
+		
+		$('figure').each(function(){			
+			if( $(this).hasClass('alignright')||$(this).hasClass('alignleft') || $(this).hasClass('aligncenter') ){ 
+				$(this).after('<div class="clear"></div>');
+			}
+		});	
+
+		/*
+		 * Scroll IF # id exist in URL
+		 */
+		if(url_id!=''){
+			var s = url_id;
+			var n = s.indexOf('/');
+			if(n!=''&& typeof n!= 'undefined'){
+				var id_var = s.substring(0, n != -1 ? n : s.length);
+				$('html, body').animate({
+					scrollTop: $('#'+id_var).offset().top
+				},2000);
+				return false;				
+			}
+		}
+		
+		/*
+		 * Check for audio
+		 */
+		
+				
+		/*
+		 * script to handle Back Button Event
+		 */
+		
+		if(window.attachEvent){
+			window.attachEvent('onpopstate', datHash);
+		}	
+		
+		function datHash(event){
+			var str = $('#goback').val();
+			if(str==''){
+				window.history.go(-Math.abs(pageChange));
+			}else{
+				window.history.go(-Math.abs(pageChange));
+			}
+			return false;
+		}
+		
+		/*
+		 *
+		 */
+		$('.post-edit-link').attr('href', function( _, action){
+			return action.replace('https', 'http');
+		}); 
+		
+		/*
+		 * @function for load article in infinite scroll
+		 */
+		 
+		$('a.inifiniteLoader').hide(); 
+		 
+		function loadArticle(pageNumber){			
+			
+			$('a.inifiniteLoader').show('fast');
+			
+			$.ajax({
+				
+				url      : "https://www.thenation.com/wp-admin/admin-ajax.php",
+				type     : 'POST',
+				cache    : false,
+				dataType : 'json',
+				data     : {action:'infinite_scroll',page_no: pageNumber,loop_file: 'articleload',slug:'armed-conflicts,civil-unrest,foreign-policy,health-and-disease,middle-east,regions-and-countries,war-and-peace,world',curr_post_id:'337068'},							
+				success  : function(receivedHTML){	
+				
+					if ( typeof receivedHTML == 'object' && receivedHTML!=null ){
+						if(typeof receivedHTML.html!=='undefined' && receivedHTML.html!=''){
+							html = receivedHTML.html;
+						}
+					}else{
+						$('a.inifiniteLoader').hide();
+						$("#single_article_footer").show();
+					}
+				
+					$('a.inifiniteLoader').hide('1000');
+					
+					
+					if ( typeof receivedHTML == 'object' && receivedHTML!=null ){
+						
+						$("#wrap").append(html);    // This will be the div where our content will be loaded
+						
+											
+						var postID = $($.parseHTML(html)).filter(".scrolltrace").attr('article-post-id');
+					
+						$('.abody-'+postID+' .article-body-inner').children('p:first-of-type').html(function (i, html) {
+							if ( $('.abody-'+postID).children('img').length == "0" ){
+								var text = $('.abody-'+postID+' .article-body-inner').children('p:first-of-type').html();
+								$('.abody-'+postID+' .article-body-inner').children('p:first-of-type').html(text.replace(/^(<.?>)?([A-Za-z0-9])/g,'$1<span class="dropcap">$2</span>'));
+							}
+						});   
+						
+						if( !$('.abody-' + postID +'').parent().parent().hasClass('textContainer_Truncate') ){
+							$('<section class="aside-wrap"></section>').insertAfter('.abody-' + postID);	
+						}		
+
+						/*
+						 * Article Divider Count
+						 */
+						article_divider = article_divider+1; 
+						$('.abody-'+postID+'').attr("article-number",article_divider);	
+						
+						/*for hiding meterpaywall popups when pixel ads call starts here*/
+						var hidePixelBool = false;
+						var meetkatstep1 = jQuery('#paywall .step.one');
+						var meetkatstep2 = jQuery('#paywall .step.two');
+						var meetkatstep3 = jQuery('#paywall .step.three');
+						var meetkatstep4 = jQuery('#paywall .step.four');
+						if( typeof meetkatstep1!='undefined' && meetkatstep1.is(':visible') ){
+							hidePixelBool = true;
+						}
+						if ( typeof meetkatstep2!='undefined' && meetkatstep2.is(':visible') ){
+							hidePixelBool = true;
+						}
+						if( typeof meetkatstep3!='undefined' && meetkatstep3.is(':visible') ){
+							hidePixelBool = true;
+						}
+						if( typeof meetkatstep4!='undefined' && meetkatstep4.is(':visible') ){
+							hidePixelBool = true;
+						}
+						if( hidePixelBool===false ){		  
+							/*for hiding meterpaywall popups when pixel ads call ends here*/
+							/****Alternate Popup code start*********/
+							var enable_alterpopup_check;
+							enable_alterpopup_check ='';
+							if( typeof(enable_alterpopup_check) != "undefined" && enable_alterpopup_check == 1 ){ 
+								var alternate_article_no;
+								alternate_article_no = '';
+								if( pageCounterPaywall % alternate_article_no == 0 && pageCounterPaywall!=0 ){
+									show_lightbox('','');
+								}
+							}
+							/******Alternate Popup code End********/
+						}
+						
+						pageCounterPaywall++;
+						ajaxCarousel(postID);
+						ajaxGallery(postID);
+						
+						/** Slider Content **/
+						flag = false;
+						$('section.article-body:last img').each(function(){
+							if($(this).parent("a").parent("figure").hasClass('bx-item')){ 
+								flag = true;
+							}else{
+								$(this).parent("a").addClass("gallery");
+							}
+						});
+
+						if(flag){
+							var k = $('section.article-body:last').find('.gallery-2').bxSlider({
+										adaptiveHeight: true,
+										adaptiveHeightSpeed: 500,
+										infiniteLoop: false,
+										hideControlOnEnd: false,
+										pager: false
+									});
+							k.reloadSlider();
+						}
+						/* Slider Content End */
+					 
+					 
+						var usera = navigator.userAgent.toLowerCase(); 
+						if ( $('.article-page').length ) { 
+							var slickWidth = $('.article-list.slick-slide').width(); 
+						
+							if ($('.ie9').length){ 
+								slickWidth = $('.recirc-carousel.slick-initialized.slick-slider').width(); 
+							} 
+							$('.slick-list.draggable').css({'width' : slickWidth}); 
+							if( !/android|webos|iphone|ipad|ipod|blackberry/i.test(usera) ){ 
+								$('.article-list.slick-slide').children('li').css({'width' : slickWidth}); 
+								$('.slick-list').css({'width' : slickWidth}); 
+							} 
+						} 
+						
+						var $newArticles = $(html);
+						var imagesLoading = [];
+
+						$newArticles.find('img').each(function() {
+							
+							// For each image, create a new deferred object that resolves when the
+							// image has loaded and add that to an array of deferred objects.
+							
+							var loadingImage = $.Deferred();
+							imagesLoading.push(loadingImage);
+
+							// "this" is the image element here and should have a complete property.
+							// See http://stackoverflow.com/a/24201249
+							
+							if (this.complete){
+								loadingImage.resolve();
+							}else{
+								var adTimeout = window.setTimeout(function() {
+									loadingImage.resolve();
+								}, 3000);
+							
+								this.addEventListener('load', function() {
+									loadingImage.resolve();
+									window.clearTimeout(adTimeout);								
+								});
+								
+								this.addEventListener('error', function() {
+									// We really don't care if the image never loads, but we still need
+									// to resolve the promise so that we can reset the waypoints.
+									loadingImage.resolve();
+									window.clearTimeout(adTimeout);								
+								});	
+
+								// Clean up event listeners
+								this.removeEventListener('load', function() {
+									loadingImage.resolve();
+									window.clearTimeout(adTimeout);								
+								});
+								this.removeEventListener('error', function() {
+									loadingImage.resolve();
+									window.clearTimeout(adTimeout);								
+								});	
+							}
+						});
+						
+						$.when.apply(this, imagesLoading).then(function() {          
+							fixedAds($('.postid-' + postID).children('article'));
+						}, function() {
+							console.log(arguments);
+						});	
+					}	
+				}
+			});
+			return false;
+		}		
+		
+		/*
+		 * Load second article on scroll
+		 */
+		
+		$(window).bind('scroll', function(){			
+			
+			$('.scrolltrace').each(function(){
+				
+				var post = $(this);
+				var topp = post.position().top;
+				var bott = post.position().top + post.height();
+				var pos  = $(window).scrollTop();				
+			   
+				if ( pos>=topp && pos<=bott ){
+					
+				   $(this).removeClass('currentScr');
+			       $(this).addClass('currentScr');
+				   
+					if($('.currentScr').attr("articlelistlinks")!=window.location.href){
+					   
+						var ua   = window.navigator.userAgent;
+						var msie = ua.indexOf("MSIE");
+
+						if (msie > 0){ 
+							
+						}else{
+							window.history.pushState({}, "", $('.currentScr').attr('articlelistlinks'));
+
+							/*
+							 * Call Right Sidebar Ads
+							 */
+							if( !isMobile.any() && typeof load_article_ads != typeof undefined){ 
+								load_article_ads();						
+							}	
+							articlePostId = $('.currentScr').attr("article-post-id");		
+
+							/*New non subscriber For Infinite Scroll*/								
+							if (null != is_user_logged_in) {								
+								var tn_sfg_local = localStorage.getItem("tn_sfg_local");
+								if (null != tn_sfg_local && undefined != tn_sfg_local && '' != tn_sfg_local) {
+									tn_sfg_local = JSON.parse(tn_sfg_local);
+									if (tn_sfg_local.includes(parseInt(articlePostId))) {		
+										$('.currentScr').find('.tn-sfg-add-to-list').addClass('selected');
+										$('.currentScr').find('.tn-sfg-add-to-list').removeClass('hide');
+									}else {
+										$('.currentScr').find('.tn-sfg-add-to-list').removeClass('hide');
+									}
+								} else {
+									$('.currentScr').find('.tn-sfg-add-to-list').removeClass('hide');
+								}	
+							}
+							/*New non subscriber For Infinite Scroll*/
+							<!--- Update Chartbeat info--->
+						
+							var allSubject 		= $('.postid-'+articlePostId+'.currentScr input[name="tpTags"]').val();							
+							var allAuthor  		= $('.postid-'+articlePostId+'.currentScr input[name="tpContentAuthor"]').val();		
+							
+																	
+									var username = getCookie('SESSname');
+									if(username != null){
+										_cbq.push(['_acct', 'paid']);   
+									}else{
+										_cbq.push(['_acct', 'anon']);    
+									}
+									
+							console.log("Chartbeat");
+							pSUPERFLY.virtualPage({
+								sections: allSubject,
+								authors	: allAuthor,
+								path	: window.location.pathname,
+								title	: $('.currentScr').attr('articlelisttitle')
+							});
+						}
+						
+						/* Taxonomy and Author Trigger in GA Event Start */
+						var allSubject = allSubject.split(',');
+						$.each( allSubject, function( i, allsubval ) {
+							gaTaxonomyAuthor( allsubval, $('.currentScr').attr('articlelisttitle'), $('.currentScr').attr('articlelistlinks') ); 
+						});
+						
+						var allAuthor = allAuthor.split(',');
+						$.each( allAuthor, function( i, allautval ) {
+							gaTaxonomyAuthor( allautval, $('.currentScr').attr('articlelisttitle'), $('.currentScr').attr('articlelistlinks') );
+						});
+						/* Taxonomy and Author Trigger in GA Event End */
+						
+						/*
+						 * Call Email Signup for infinite scroll 
+						 */
+						if( !$('.postid-'+articlePostId+' .article-body img').parent("a").parent("figure").hasClass('bx-item') ){
+							
+							if( !$(".abody-"+articlePostId+"").hasClass("email-signup-visited") ){
+								email_signup_module( articlePostId );	
+							}							
+						}						 
+						
+						/* Content Page View Event */
+						dataLayer.push({
+							'event': 'gaPageViewEvent',
+							'gaEventCategory': 'article',
+							'gaEventAction': $('.currentScr').attr('articlelisttitle'),
+							'gaEventLabel': articlePostId,
+						});
+						/* Content Page View Event */
+						
+						/*
+						 * Article Divider Scrolled Over Total Count
+						 */
+						dataLayer.push({
+							'event': 'gaRecirculationEvent',
+							'gaEventCategory': 'recirculation',
+							'gaEventAction': 'article-divider-scrolled-over',
+							'gaEventLabel': $('.currentScr').attr('articlelistlinks'),
+						});
+						
+						/*
+						 * Article Divider Scrolled Over Individual Count
+						 */
+						article_number = $('.abody-'+articlePostId+'').attr("article-number");
+						if (typeof article_number !== typeof undefined && article_number !== false) {
+							dataLayer.push({
+								'event': 'gaRecirculationEvent',
+								'gaEventCategory': 'recirculation',
+								'gaEventAction': 'article-divider-scrolled-over-'+article_number+'',
+								'gaEventLabel': $('.currentScr').attr('articlelistlinks'),
+							});
+						}	
+						
+						// Google Analytics  for Infinite Scroll
+					    /*ga('send', 'pageview', {
+							'page': $('.currentScr').attr('articlelistlinks'),
+							'title': $('.currentScr').attr('articlelisttitle')
+						});*/
+						console.log("Google");
+						ga('send', 'pageview', {
+							'page': window.location.pathname,
+							'title': $('.currentScr').attr('articlelisttitle')
+						});						
+
+						<!--- Page View Hit --->
+							
+						dataLayer.push({
+							'event':'InfiniteScrollPageView',
+							'virtualPageURL': window.location.pathname,
+							'virtualPageTitle' : $('.currentScr').attr('articlelisttitle')
+						});	
+							
+						<!--- Page View Hit --->
+						
+						$("nav.primary ul li.article-meta h2").html($('.currentScr').attr('articlelisttitle').substring(0,100));
+						$("title").html($('.currentScr').attr('articlelisttitle'));
+												 
+						var linktext = $('.currentScr').find(".anchor_subject").html();
+						if ( linktext!='' ){
+							
+							var linkredirectval =$('.currentScr').find(".anchor_subject").attr('subjectlink');
+							
+							if(typeof linkredirectval!='undefined'){
+								var subject_head_link = "<a href='"+linkredirectval+"'>"+linktext+"</a>";
+								$('.tophead_subject').html(subject_head_link);
+							}else{
+								var subject_head_link = "";
+								$('.tophead_subject').html(subject_head_link);
+							}
+							
+						}
+			       
+						pageChange = parseInt(pageChange) + 1;
+					}
+				  
+				}else{
+			       $(this).removeClass('currentScr');
+				}
+		    });
+			
+			$current_article = $('.scrolltrace.currentScr');
+			// Load next leaderboard ad on reach to bottom action tout 			
+			if($current_article.hasClass('currentScr')){
+				
+				articlePostId = $('.currentScr').attr("article-post-id");
+				
+				var art_recirc_bot = '';				
+				var windowTop = $(window).scrollTop();
+				
+				var inline_ad_300x250 = $('.currentScr .inline_ad_300x250_'+articlePostId+'');
+				if( inline_ad_300x250.length > 0 ){
+					inline_ad_300x250_pos = inline_ad_300x250.offset().top - window.innerHeight;
+				
+					if( windowTop >= inline_ad_300x250_pos ){
+						inline_ad( articlePostId );
+					}					
+				}
+				
+				if( $current_article.find('.expand-reduce').length != 0 ){								
+						
+					if( !$('#expand-reduce-'+articlePostId+'').hasClass('expand-close') && !$('#expand-reduce-'+articlePostId+'').hasClass('tn-first-expand')){
+						
+						if( $('.abody-'+articlePostId+'').hasClass('keep-reading') ){
+
+							/* Overflow Hidden Parent Div */
+							$('.abody-'+articlePostId+'').parent().addClass("keep-reading-parent");
+						
+							/* Hide Article Footer */
+							$('#article-footer-'+articlePostId+'').hide();
+							
+							/* Hide Rev Content Block */
+							$('#tabola-block-'+articlePostId+'').hide();
+							
+							/* Hide aside wrap modules */
+							$('.scrolltrace.currentScr .aside-wrap .ad-wrap').not(':eq(0)').hide();	
+							
+							/* Show expand Reduce */
+							$('#expand-reduce-'+articlePostId+'').show();		
+						}else{
+							<!--- Piano --->												
+							// Execute when the page loaded
+							eval("pushDataPianoOnInfinite_"+articlePostId+"()");	
+							tp.experience.execute();
+							<!--- Piano --->
+						}							
+					}
+					
+					var art_recirc_bot = $('.currentScr .article-share');
+					var art_recric_pos = art_recirc_bot.last().offset().top - window.innerHeight;	//article bottom action tout					
+					if( windowTop >= art_recric_pos ){		
+						if( first_art_lead ){							
+							call_ad_leaderboard();					
+							first_art_lead = false;
+						} else{
+							if( $('#slot-' + articlePostId).children('div').length ==0 ){
+								var slotName = generateNextSlotName();
+								autoload_article_ads( slotName, articlePostId );		
+							}	
+						}						
+					}
+					
+				}else{
+					
+					var art_recirc_bot = $('.currentScr .new-article-footer');
+					var art_recric_pos = art_recirc_bot.last().offset().top - window.innerHeight;	//article bottom action tout					
+					if( windowTop >= art_recric_pos ){	
+						if( first_art_lead ){							
+							call_ad_leaderboard();					
+							first_art_lead = false;
+						}								
+					}					
+				} 											
+			}
+			
+			var loadPoint = $('.article-body:last').offset().top - 68;
+			
+			if  (loadPoint!=false && $(window).scrollTop() >= loadPoint){ 
+				if( $('.scrolltrace').length==count ){ 
+				
+					loagAgn = true;
+				
+					if(loagAgn){
+						count++;
+						
+						if(count < 6){
+							
+							if(preventLoad_article==false){
+								
+															
+								loadArticle(count);//code
+								
+							
+							}		
+						}
+						
+						if (count==6) {
+							$('a.inifiniteLoader').hide();
+							$("#article-footer-last").show();
+							$("#single_article_footer").show();
+							
+							/*
+							 * Track views of article footer last 
+							 */
+							 
+							/* 
+							 * Latest form the nation
+							 */			 
+							dataLayer.push({
+								'event': 'gaInfiniteScrollfooterShowEvent',
+								'gaEventCategory': 'infinite-scroll-footer-latest-articles',
+								'gaEventAction': 'infinite-scroll-footer-latest-articles-show',
+								'gaEventLabel': document.URL,
+							});
+							
+							/* 
+							 * Editor Picks
+							 */			 
+							dataLayer.push({
+								'event': 'gaInfiniteScrollfooterShowEvent',
+								'gaEventCategory': 'infinite-scroll-footer-editor-picks',
+								'gaEventAction': 'infinite-scroll-footer-editor-picks-show',
+								'gaEventLabel': document.URL,
+							});
+						}
+						
+						loagAgn = false;
+					}
+				}
+			}				
+			
+			$(".wpsdc-drop-cap").parent("p").addClass("drop_c");
+		});
+		
+		/*
+		 * Change Height & Text Expand Reduce 
+		 */
+		$(document).on('click', '.expand-reduce .expand-reduce-full, .expand-reduce .expand-reduce-keep', function(event){
+			
+			event.preventDefault();
+			
+			/**
+ 			 * Most Popular	
+			 */			
+			if ( undefined !== thenationmp ) {
+				let thenation_infinite_article_most_popular = jQuery(".thenation-single-article-most-popular");
+				if ( null !== thenation_infinite_article_most_popular ) {
+					thenation_infinite_article_most_popular.each(function(){
+						thenationmp.getSingleArticleMostPopular( jQuery(this) );
+					});	
+				}				
+			} 
+			
+			$(this).parents('.expand-reduce').toggleClass('expand-close');
+			
+			var $article_id = $(this).attr('article-id');
+			
+			<!--- Piano --->				
+			eval("pushDataPianoOnInfinite_"+$article_id+"()");	
+			// Execute when the page loaded			
+			tp.experience.execute();
+			<!--- Piano --->
+			
+			$('.abody-'+$article_id+'').removeClass('keep-reading');			
+
+			$('.abody-'+$article_id+'').removeClass('no-reading');	
+			
+			/* Overflow Visible Parent */
+			$('.abody-'+$article_id+'').parent().removeClass("keep-reading-parent");
+			
+			/* Show Article Footer */
+			$('#article-footer-'+$article_id+'').show();
+			
+			/* Show Rev Content Block */
+			$('#tabola-block-'+$article_id+'').show();
+			
+			/* Show aside wrap modules */
+			$('.postid-'+$article_id+' .aside-wrap .ad-wrap').not(':eq(0)').show();	
+			
+			/* Hide expand Reduce */
+			$('#expand-reduce-'+$article_id+'').hide();	
+
+			/*
+			 * Related Single Article Track
+			 */
+			relatedSingleArticle( $article_id );
+			
+			/*
+			 * Related Multiple Article Track
+			 */
+			relatedMultiArticle( $article_id );
+			
+			/*
+			 * Current Issue Module Track
+			 */
+			currentIssueModule( $article_id );
+			 
+			/*
+			 * Inline CTA One Track
+			 */
+			inlineCtaOne( $article_id ); 
+			
+			/*
+			 * Inline CTA Two Track
+			 */
+			inlineCtaTwo( $article_id ); 
+			
+			/*
+			 * Author Highlight Track
+			 */
+			authorHighlight( $article_id ); 
+			
+			/*
+			 * Series Module Track
+			 */
+			seriesModule( $article_id );
+			
+			/*
+			 * Comment Module Track
+			 */
+			commentModule( $article_id );
+			
+			/*
+			 * Books Salad Track
+			 */
+			booksSalad( $article_id );
+			
+			/*
+			 * Action Tout Module Track
+			 */
+			actionToutModule( $article_id );
+			
+			/*
+			 *  Sidebar Community Module Track
+			 */
+			sidebarCommunityModule( $article_id );
+			
+		}); 
+		
+		$('body').on('click','.click_comment',function(event){
+			
+			event.preventDefault();
+			
+			/* Basic Data */
+			var article_id 			= $(this).attr("article-post-id");
+			var comment_container   = $(this).closest('.article-footer').find('.commentContainer');
+			var post_comment_list 	= comment_container.find('.post_comment_list');
+			var _loader				= comment_container.find('.post_comment_list_loader');		
+			var _count				= $(this).find('.title');	
+			
+			/* Check if user logged_in */
+			$is_user_logged_in = false;
+			$username = getCookie('SESSname');
+			if( $username != null ){
+				$is_user_logged_in = true;
+				$username = Base64.decode($username);
+				comment_container.find('.logged-in-as').find('.login_user').html($username);
+			}
+			
+						
+			if( $is_user_logged_in ){
+				comment_container.find('form').show();
+			}else{
+				comment_container.find('.must-log-in').show();
+			}
+			/* Check if user logged_in */			
+			
+			/* Open commnet section */
+			comment_container.slideToggle('slow');		
+
+			/* Add close class */	
+			$(this).find('.open').toggleClass('close');
+						
+			/* Check for ajax call */			
+			if( post_comment_list.html().length == 0){	
+
+				/* Change Focus */
+				try{
+					comment_container.find('textarea').focus();
+				}catch(e){}
+
+				/* post_comment_list_loader */
+				_loader.show();
+				
+				$.ajax({
+					url :ajax_object.ajax_url,
+					data:{
+						'action' 	 : 'article_comment_list',
+						'article_id' : 	article_id
+					},
+					type:'POST',
+					success:function( response ){						
+						if( typeof response == 'string' ){
+							response = JSON.parse( response );
+							if( response.status == 'success' ){
+								_loader.hide();
+								post_comment_list.before(response.sorting);
+								post_comment_list.append(response.comment_list);
+								_count.html('Comments ('+response.count+')');
+							}else if( response.status == 'fail' ){
+								_loader.hide();
+							}
+						}
+					}
+				});
+			}		
+		});
+		
+		jQuery( ".action_tout_remove_gallery a" ).removeClass( "gallery imgHover" ).delay( 1000 );
+		
+		$(document).on('click','.nation_convsersation',function(event){
+			
+			event.preventDefault();
+			
+			/* Basic Data */
+			var article_id 			= $(this).attr("article-id");
+			var _click_comment      = $('.postid-'+article_id+' .click_comment');			
+			var comment_container   = _click_comment.closest('.article-footer').find('.commentContainer');
+			var post_comment_list 	= comment_container.find('.post_comment_list');
+			var _loader				= comment_container.find('.post_comment_list_loader');		
+			var _count				= _click_comment.find('.title');	
+			
+			/* Check if user logged_in */
+			$is_user_logged_in = false;
+			$username = getCookie('SESSname');
+			if( $username != null ){
+				$is_user_logged_in = true;
+				$username = Base64.decode($username);
+				comment_container.find('.logged-in-as').find('.login_user').html($username);
+			}
+			
+						
+			if( $is_user_logged_in ){
+				comment_container.find('form').show();
+			}else{
+				comment_container.find('.must-log-in').show();
+			}
+			/* Check if user logged_in */			
+			
+			/* Open commnet section */
+			comment_container.slideToggle('slow');		
+
+			/* Add close class */
+			$('html, body').animate({scrollTop: _click_comment.offset().top},2000);	
+			_click_comment.find('.open').toggleClass('close');
+						
+			/* Check for ajax call */			
+			if( post_comment_list.html().length == 0){	
+
+				/* Change Focus */
+				try{
+					comment_container.find('textarea').focus();
+				}catch(e){}
+
+				/* post_comment_list_loader */
+				_loader.show();
+				
+				$.ajax({
+					url :ajax_object.ajax_url,
+					data:{
+						'action' 	 : 'article_comment_list',
+						'article_id' : 	article_id
+					},
+					type:'POST',
+					success:function( response ){						
+						if( typeof response == 'string' ){
+							response = JSON.parse( response );
+							if( response.status == 'success' ){
+								_loader.hide();
+								post_comment_list.before(response.sorting);
+								post_comment_list.append(response.comment_list);
+								_count.html('Comments ('+response.count+')');
+							}else if( response.status == 'fail' ){
+								_loader.hide();
+							}
+						}
+					}
+				});
+			}	
+			
+		});
+		
+		$(".social-share-icon").click(function(){
+			$(".nav-toggle, .logo").toggleClass("hidden");
+			$(".share-icons").toggleClass("slide-share");
+			$(".header-bar a.social-sharing").toggleClass("share-icons-close");            
+		});
+		
+		/* 
+		 * Click Event Tracking for Related Single Article
+		 */
+		 
+		$(document).on('click', '.related-oneup-click',function(){
+			/* 
+			 * Click Event
+			 */			 
+			dataLayer.push({
+				'event': 'gaRelatedSingleArticleEvent',
+				'gaEventCategory': 'related-single-article',
+				'gaEventAction': 'related-single-article-click',
+				'gaEventLabel': $(this).attr('href'),
+			});
+		}); 
+		
+		/* 
+		 * Click Event Tracking for Related Multi Article
+		 */
+		 
+		$(document).on('click', '.related-multi-click',function(){
+			/* 
+			 * Click Event
+			 */			 
+			dataLayer.push({
+				'event': 'gaRelatedMultiArticleEvent',
+				'gaEventCategory': 'related-multi-article',
+				'gaEventAction': 'related-multi-article-click',
+				'gaEventLabel': $(this).attr('href'),
+			});
+		}); 
+		
+		/* 
+		 * Click Event Tracking for Current Issue
+		 */
+		 
+		$(document).on('click', '.magazine_button a',function(){
+			/* 
+			 * Click Event
+			 */			 
+			dataLayer.push({
+				'event': 'gaCurrentIssueModuleEvent',
+				'gaEventCategory': 'current-issue-module',
+				'gaEventAction': 'current-issue-module-click',
+				'gaEventLabel': $(this).find('input').val(),
+			});
+		}); 
+		
+		/* 
+		 * Click Event Tracking for In-line CTA 1
+		 */
+		 
+		$(document).on('click', '.inline-cta-1 .cta a',function(){
+			/* 
+			 * Click Event
+			 */			 
+			dataLayer.push({
+				'event': 'gaInlineCtaOneEvent',
+				'gaEventCategory': 'inline-cta-1',
+				'gaEventAction': 'inline-cta-1-click',
+				'gaEventLabel': $(this).find('input').val(),
+			});
+		}); 
+		
+		/* 
+		 * Click Event Tracking for In-line CTA 2
+		 */
+		 
+		$(document).on('click', '.inline-cta-2 .cta a',function(){
+			/* 
+			 * Click Event
+			 */			 
+			dataLayer.push({
+				'event': 'gaInlineCtaTwoEvent',
+				'gaEventCategory': 'inline-cta-2',
+				'gaEventAction': 'inline-cta-2-click',
+				'gaEventLabel': $(this).find('input').val(),
+			});
+		});
+		
+		/* 
+		 * Click Event Tracking for Footer Last Latest From NAtion 
+		 */
+		 
+		$(document).on('click', '#article-footer-last .latest-from h3 a',function(){
+			/* 
+			 * Click Event
+			 */			 
+			dataLayer.push({
+				'event': 'gaInfiniteScrollfooterEvent',
+				'gaEventCategory': 'infinite-scroll-footer-latest-articles',
+				'gaEventAction': 'infinite-scroll-footer-latest-articles-click',
+				'gaEventLabel': $(this).attr('href'),
+			});
+		});
+		
+		/* 
+		 * Click Event Tracking for Footer Last Editor Picks
+		 */
+		 
+		$(document).on('click', '#article-footer-last .editors-picks h3 a, #article-footer-last .editors-picks .story a',function(){
+			/* 
+			 * Click Event
+			 */			 
+			dataLayer.push({
+				'event': 'gaInfiniteScrollfooterEvent',
+				'gaEventCategory': 'infinite-scroll-footer-editor-picks',
+				'gaEventAction': 'infinite-scroll-footer-editor-picks-click',
+				'gaEventLabel': $(this).attr('href'),
+			});
+		});
+		
+		/* 
+		 * Click Event Tracking for Author Highlight
+		 */
+		 
+		$(document).on('click', '.author-modules .newrelated-blocks > a',function(){
+			/* 
+			 * Click Event
+			 */			 
+			dataLayer.push({
+				'event': 'gaAuthorHighlight',
+				'gaEventCategory': 'author-Highlight',
+				'gaEventAction': 'author-Highlight-click',
+				'gaEventLabel': $(this).attr('href'),
+			});
+		});
+		
+		/* 
+		 * Click Event Tracking for Series Module
+		 */
+		 
+		$(document).on('click', '.series-modules .series-modules-blocks .series-blocks > a',function(){
+			/* 
+			 * Click Event
+			 */			 
+			dataLayer.push({
+				'event': 'gaSeriesModule',
+				'gaEventCategory': 'series-module',
+				'gaEventAction': 'series-module-click',
+				'gaEventLabel': $(this).attr('href'),
+			});
+		});
+		
+		/* 
+		 * Click Event Tracking for Comment Module
+		 */
+		 
+		$(document).on('click', '.comment-module .comment-blocks .cta input',function(){
+			/* 
+			 * Click Event
+			 */			 
+			dataLayer.push({
+				'event': 'gaCommentsModule',
+				'gaEventCategory': 'comments-module',
+				'gaEventAction': 'comments-module-click',
+				'gaEventLabel': $(this).val(),
+			});
+		});
+		
+		/* 
+		 * Click Event Tracking for Books Salad
+		 */
+		 
+		$(document).on('click', '.book-module .newrelated-blocks a',function(){
+			/* 
+			 * Click Event
+			 */			 
+			dataLayer.push({
+				'event': 'gaBooksSalad',
+				'gaEventCategory': 'books-salad',
+				'gaEventAction': 'books-salad-click',
+				'gaEventLabel': $(this).parent().parent().find('h5').text(),
+			});
+			
+		});
+		
+		/* 
+		 * Click Event Tracking for Action Tout Module
+		 */
+		 
+		$(document).on('click', 'aside.takeaction .cta input',function(){
+			/* 
+			 * Click Event
+			 */			 
+			dataLayer.push({
+				'event': 'gaActionToutModule',
+				'gaEventCategory': 'action-tout-module',
+				'gaEventAction': 'action-tout-module-click',
+				'gaEventLabel': document.URL,
+			});
+		});
+		
+		/* 
+		 * Click Event Tracking for Keep Reading 2/3/4/5
+		 */
+		 
+		$(document).on('click', '.expand-reduce a',function(){
+			
+			var article_number = $(this).parents('.scrolltrace').find('.article-body').attr('article-number');
+			
+			if (typeof article_number !== typeof undefined && article_number !== false) {
+				/* 
+				 * Click Event
+				 */			
+				dataLayer.push({
+					'event': 'gaKeepReading',
+					'gaEventCategory': 'keep-reading',
+					'gaEventAction': 'keep-reading-'+article_number+'-click',
+					'gaEventLabel': document.URL,
+				});	
+			}			
+		});		
+		
+		/*
+		 * Article Email Sign Up 
+		 */
+
+		$(document).on('click','.para_one_button_email',function(){
+			/*
+			 * Track Click On Sign Up Button GTM
+			 */		
+			var current_email_signup = $(this).parents(".email-signup-module");  
+			var current_step = current_email_signup.attr("data-section");	
+			var article_id   =  $(this).parents("#url-title").parent().attr("article-post-id");	
+			paragraphOneClickEvent(article_id, current_step);
+			
+			var email = current_email_signup.find("#para-one-email-input-"+current_step+"").val();			
+			var sailthru_list = current_email_signup.find("#para-one-sailthru-list-"+current_step+"").val();
+			var current_parent = $(this).parent();
+			
+			if( email!='' && typeof email!==typeof undefined){
+				jQuery.ajax({
+					url  :ajax_object.ajax_url,
+					type :"POST",
+					data :"sailthru_email_take_action="+email+"&take_action_sailthru_list_final="+sailthru_list+"&action=action_tout_sailthru",
+					success : function(data){
+						if( data.indexOf('errormsg') > 0 ){
+							current_parent.find('.footer_email_error').html(data);
+						}else{
+							/*
+							 * Track Successful Sign Up GTM
+							 */	
+
+							if( typeof article_id !== typeof undefined && typeof current_step !== typeof undefined && (typeof paragraph_module !== typeof undefined) && (paragraph_module[article_id][current_step].event_name!="") ){
+								dataLayer.push({
+									'event': 'gaParagraphOneEvent',
+									'gaEventCategory': ''+ paragraph_module[article_id][current_step].event_name +'',
+									'gaEventAction': ''+ paragraph_module[article_id][current_step].event_name +'-list',
+									'gaEventLabel': email,
+								});	
+							}
+							
+							var nextTNstep = parseInt(current_step)+1;	
+							nextTNstep = ( nextTNstep > 5 )? 0 : nextTNstep;
+							var step = getParaOneNextStep(article_id, nextTNstep);
+							
+							var cookieDateTNstep = new Date();
+							cookieDateTNstep.setTime(cookieDateTNstep.getTime() + (30*24*60*60*1000));
+							document.cookie = "TNstep="+step+";expires="+cookieDateTNstep.toUTCString()+";path=/";
+							
+							var cookieDateTNlifetime = new Date();
+							cookieDateTNlifetime.setTime(cookieDateTNlifetime.getTime() + (10*365*24*60*60*1000));
+							document.cookie = "TNlifetime="+step+";expires="+cookieDateTNlifetime.toUTCString()+";path=/";
+							
+							$(".abody-"+article_id+" .email-signup-module").hide();
+							current_email_signup.next("#para-one-thankyou-"+article_id+"").show();
+						}
+					}
+				});
+			}else{
+				current_parent.find('.footer_email_error').html('Please Enter Email');
+			}
+		});
+		
+		/*
+		 * Paragraph one other module
+		 */
+
+		$(document).on('click','.para_one_button',function(){
+			/*
+			 * Track Click On Sign Up Button GTM
+			 */		
+			var current_step = $(this).parents(".email-signup-module").attr("data-section");
+			var article_id   =  $(this).parents("#url-title").parent().attr("article-post-id");	
+			var nextTNstep = parseInt(current_step)+1;
+			
+			nextTNstep = ( nextTNstep > 5 )? 0 : nextTNstep;			
+			var step = getParaOneNextStep(article_id, nextTNstep);	
+				
+			var cookieDateTNstep = new Date();
+			cookieDateTNstep.setTime(cookieDateTNstep.getTime() + (30*24*60*60*1000));
+			document.cookie = "TNstep="+step+";expires="+cookieDateTNstep.toUTCString()+";path=/";
+			
+			var cookieDateTNlifetime = new Date();
+			cookieDateTNlifetime.setTime(cookieDateTNlifetime.getTime() + (10*365*24*60*60*1000));
+			document.cookie = "TNlifetime="+step+";expires="+cookieDateTNlifetime.toUTCString()+";path=/";
+			
+			paragraphOneClickEvent(article_id, current_step);
+		});	
+		
+	});		
+</script> 
+			<div id="show_light_box"></div>
+			<!-- Sailthru Popup -->
+			
+			<div class="tn-show-sfg-subs-popup hide">						
+				<div class="tn-sfg-subs-popup">
+					<a href="javascript:void(0)" class="tn-sfg-subs-close">x</a>
+					<iframe style="width:100%;height: 100%;" id="sfgIframe" src="" allowfullscreen></iframe>
+				</div>
+				<div class="tn-sfg-subs-overlay"></div>
+			</div>
+			<script>
+				jQuery(document).ready(function(){
+					jQuery(document).on('click', '.tn-iframe-subscribe a', function(e){	
+						e.preventDefault();
+						if (typeof thenation_globals != typeof undefined && thenation_globals.tn_paywall_sfgiframe != '') {
+							if (jQuery("#sfgIframe").attr("src") ==  '') {
+								jQuery("#sfgIframe").attr("src", thenation_globals.tn_paywall_sfgiframe);		
+							}							
+							jQuery(".tn-show-sfg-subs-popup").toggleClass("hide");
+							jQuery("body").css({"overflow":"hidden"});
+						}						
+					});
+					
+					jQuery(document).on('click', '.tn-sfg-subs-close', function(e){
+						e.preventDefault();
+						jQuery(".tn-show-sfg-subs-popup").toggleClass("hide");
+						jQuery("body").css({"overflow":"unset"});
+					});
+				});
+			</script>
+			<!-- Sailthru Popup -->
+
+								<section class="stories custom article-stories" id="article-footer-last">		
+												<div class="row even-split" data-equalizer="">
+																	<div class="most-popular latest-from small-12 medium-6 columns" data-equalizer-watch="" style="height: 794px;">
+											<h2 class="section-title">
+												<span>Latest from the nation</span>
+											</h2>
+											
+																								<div class="story">
+														<span class="date">Today 3:12 pm</span><h3>
+																		<a href="https://www.thenation.com/article/society/supreme-court-abortion/">A Small Victory for Reproductive Rights</a>
+																	</h3><h2 class="author_name"> <a class="author" href="https://www.thenation.com/authors/katha-pollitt/">Katha Pollitt</a><a class="author-twitter" href="https://twitter.com/@kathapollitt" target="_blank"><span>Twitter</span></a></h2>	
+													</div>	
+																										<div class="story">
+														<span class="date">Today 1:16 pm</span><h3>
+																		<a href="https://www.thenation.com/article/environment/climate-emergency-election-2020/">The Climate Emergency Won’t Wait for the Press to Play Catch-up Again</a>
+																	</h3><h2 class="author_name"> <a class="author" href="https://www.thenation.com/authors/mark-hertsgaard/">Mark Hertsgaard</a> and <a class="author" href="https://www.thenation.com/authors/kyle-pope/">Kyle Pope</a></h2>	
+													</div>	
+																										<div class="story">
+														<span class="date">Today 11:27 am</span><h3>
+																		<a href="https://www.thenation.com/article/politics/lincoln-project-trump-militarism/">Trolling Trump, the Lincoln Project Also Peddles Militarism</a>
+																	</h3><h2 class="author_name"> <a class="author" href="https://www.thenation.com/authors/jeet-heer/">Jeet Heer</a></h2>	
+													</div>	
+																										<div class="story">
+														<span class="date">Today 8:30 am</span><h3>
+																		<a href="https://www.thenation.com/article/activism/black-lives-matter-walking-forward/">Black Lives Matter: Walking Forward</a>
+																	</h3><h2 class="author_name"> <a class="author" href="https://www.thenation.com/authors/chris-schiavo/">Chris Schiavo</a></h2>	
+													</div>	
+																										<div class="story">
+														<span class="date">Today 5:56 am</span><h3>
+																		<a href="https://www.thenation.com/article/culture/future-of-galleries/">What Are Art Galleries For?</a>
+																	</h3><h2 class="author_name"> <a class="author" href="https://www.thenation.com/authors/barry-schwabsky/">Barry Schwabsky</a></h2>	
+													</div>	
+																									   
+										</div>
+																		<div class="editors-picks small-12 medium-6 columns" data-equalizer-watch="" style="height: 794px;">
+										<h2 class="section-title">
+											<span>editor's picks</span>
+										</h2>
+																				
+												<div class="story">							 
+													<a href="https://www.thenation.com/article/archive/video-people-in-denmark-are-a-lot-happier-than-people-in-the-united-states-heres-why/">
+																<img src="https://www.thenation.com/wp-content/uploads/2017/07/denmark-sg-img.jpg?scale=340&compress=60" alt="">           
+															</a><h3>
+																	<a href="https://www.thenation.com/article/archive/video-people-in-denmark-are-a-lot-happier-than-people-in-the-united-states-heres-why/">VIDEO: People in Denmark Are a Lot Happier Than People in the United States. Here’s Why.</a>
+																</h3><h2 class="author_name"> <a class="author" href="https://www.thenation.com/authors/the-nation/">The Nation</a><a class="author-twitter" href="https://twitter.com/@thenation" target="_blank"><span>Twitter</span></a></h2>																			  					   
+												</div>	
+																						
+												<div class="story">							 
+													<a href="https://www.thenation.com/article/archive/historical-amnesia-about-slavery-is-a-tool-of-white-supremacy/">
+																<img src="https://www.thenation.com/wp-content/uploads/2017/08/charlottesville-torches-rtr-img.jpg?scale=340&compress=60" alt="">           
+															</a><h3>
+																	<a href="https://www.thenation.com/article/archive/historical-amnesia-about-slavery-is-a-tool-of-white-supremacy/">Historical Amnesia About Slavery Is a Tool of White Supremacy</a>
+																</h3><h2 class="author_name"> <a class="author" href="https://www.thenation.com/authors/mychal-denzel-smith/">Mychal Denzel Smith</a><a class="author-twitter" href="https://twitter.com/@mychalsmith" target="_blank"><span>Twitter</span></a></h2>																			  					   
+												</div>	
+																											   
+									</div>
+															
+						</div>
+					</section>	
+							
+			
+		</div>
+		
+		<!-- container end here -->
+
+	</div>
+	
+	<!-- #page end here -->	
+
+	<div id="single_article_footer" style="display: none">	
+	<!-- footer start here -->
+
+	<footer class="push">		
+
+		<div class="row">
+			
+			<div class="sitemap small-12 columns">
+			
+				<!-- logo block start here-->
+				
+				<div class="block home">
+				
+					<h1 class="logo">
+					
+						<a href="https://www.thenation.com"><img src="https://www.thenation.com/wp-content/themes/thenation/images/logo-260x571.svg" alt="The Nation"></a>
+						
+					</h1>
+					
+				</div>
+				
+				<!-- logo block end here-->
+				
+				<!-- social block start here-->
+				
+				<div class="block social">
+				
+					<h2>Follow The Nation</h2>
+					
+					<ul>
+					
+						<li><a class="fb" href="https://www.facebook.com/TheNationMagazine" target="_blank"></a></li>
+						
+						<li><a class="tw" href="https://twitter.com/thenation" target="_blank"></a></li>
+						
+						<li><a class="instagram" href="https://www.instagram.com/nationmag/" target="_blank"></a></li>
+						
+						<li><a class="rs" href="http://www.thenation.com/feed/?post_type=article" target="_blank"></a></li>
+						
+					</ul>
+					
+					<h2>Get Email Updates</h2>
+					
+					<p>
+					
+						Sign up for our free daily newsletter, along with occasional offers for programs that support our journalism. By signing up to receive emails, you agree to receive occasional promotional offers for programs that support <em>The Nation</em>'s journalism. You may unsubscribe or adjust your preferences at any time. You can read our <a href="https://www.thenation.com/privacy-policy" style="font-style: normal;text-decoration: underline !important;font-size: inherit;" target="_blank"><strong>Privacy Policy</strong></a> here. 
+					
+					</p>
+					
+					<!-- newsletter start here-->
+					
+					<div class="newsletter-signup">					
+						<input type="email" class="newsletter-signup__email" id="newsletter_email" name="newsletter_email" required="required" placeholder="Email address">		
+						<input type="hidden" id="footer-recaptcha-verify">	
+						<input type="button" id="newsletter_footer" value="submit" class="newsletter-signup__submit" />
+					</div>
+					<div id="footer-recaptcha" style="transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;"></div>
+					<div id="subscribe_newsletter"></div>
+					
+					<!-- newsletter end here-->
+					
+				</div>
+				
+				<!-- social block end here-->
+				
+				<!-- footer-1 sidebar start here -->
+				
+				<div class="">
+				
+					<aside id="nav_menu-5" class="widget widget_nav_menu block nation nav"><h2  class="expander"><a href="#">Sections</a></h2><div class="menu-footer-sections-container"><ul id="menu-footer-sections" class="menu"><li id="menu-item-119851" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-119851"><a href="https://www.thenation.com/politics/">Politics</a></li>
+<li id="menu-item-342760" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-342760"><a href="https://www.thenation.com/subject/world/">World</a></li>
+<li id="menu-item-342759" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-342759"><a href="https://www.thenation.com/subject/economy/">Economy</a></li>
+<li id="menu-item-349020" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-349020"><a href="https://www.thenation.com/climate-change/">Climate Change</a></li>
+<li id="menu-item-119850" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-119850"><a href="https://www.thenation.com/culture/">Culture</a></li>
+<li id="menu-item-115792" class="menu-item menu-item-type-taxonomy menu-item-object-subject current-article-ancestor menu-item-115792"><a href="https://www.thenation.com/subject/society/">Society</a></li>
+<li id="menu-item-298725" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-298725"><a href="https://www.thenation.com/admin-taxonomy/take-action/">Take Action</a></li>
+</ul></div></aside>					
+				</div>
+				
+				<!-- footer-1 sidebar end here -->
+				
+				<!-- footer-2 sidebar start here -->
+				
+				<div class="">
+			   
+					<aside id="nav_menu-4" class="widget widget_nav_menu block nation nav"><h2 class="expander"><a href="#">The Nation</a></h2><div class="menu-footer-the-nation-container"><ul id="menu-footer-the-nation" class="menu"><li id="menu-item-116578" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-116578"><a href="https://www.thenation.com/about-us-and-contact/">About</a></li>
+<li id="menu-item-281007" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-281007"><a href="https://www.thenation.com/privacy-policy/">Privacy Policy</a></li>
+<li id="menu-item-178918" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-178918"><a href="https://www.thenation.com/advertise/">Advertise</a></li>
+<li id="menu-item-116581" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-116581"><a href="https://www.thenation.com/community-guidelines/">Comments Policy</a></li>
+<li id="menu-item-131108" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-131108"><a href="https://www.thenation.com/contact-us/">Contact Us</a></li>
+<li id="menu-item-116583" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-116583"><a href="https://www.thenation.com/help/">Help</a></li>
+<li id="menu-item-178899" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-178899"><a href="https://www.thenation.com/jobs/">Jobs and Internships</a></li>
+<li id="menu-item-284517" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-284517"><a href="https://www.thenation.com/donation">Support The Nation</a></li>
+<li id="menu-item-347795" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-347795"><a href="https://www.thenation.com/events">Nation Events</a></li>
+<li id="menu-item-290196" class="shop-footer menu-item menu-item-type-custom menu-item-object-custom menu-item-290196"><a href="https://shop.thenation.com">Nation Shop</a></li>
+<li id="menu-item-179840" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-179840"><a href="https://www.thenation.com/travels">Nation Travels</a></li>
+<li id="menu-item-319016" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-319016"><a href="http://nationcruise.com/">Nation Cruise</a></li>
+<li id="menu-item-272170" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-272170"><a href="https://www.thenationwineclub.com">Nation Wine Club</a></li>
+<li id="menu-item-278809" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-278809"><a href="https://www.thenation.com/classroom/">Nation Classroom</a></li>
+</ul></div></aside>					
+				</div>
+				
+				<!-- footer-2 sidebar end here -->
+				
+				<!-- footer-3 sidebar start here -->
+				
+				<div class="">
+				
+					<aside id="nav_menu-3" class="widget widget_nav_menu block nation nav"><h2 class="expander"><a href="#">Magazine</a></h2><div class="menu-footer-magazine-container"><ul id="menu-footer-magazine" class="menu"><li id="menu-item-134664" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-134664"><a href="http://www.thenation.com/issue/">Current Issue</a></li>
+<li id="menu-item-134728" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-134728"><a href="https://www.thenation.com/masthead/">Masthead</a></li>
+<li id="menu-item-116587" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-116587"><a href="https://www.thenation.com/archive/">Archive</a></li>
+<li id="menu-item-134847" class="tn-subscribe-click menu-item menu-item-type-custom menu-item-object-custom menu-item-134847"><a href="https://subscribe.thenation.com/flex/NA/key/G0E1CF1/">Subscribe</a></li>
+<li id="menu-item-327168" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-327168"><a href="https://subscribe.thenation.com/flex/NA/key/F0E1CFW/">Gift Subscriptions</a></li>
+<li id="menu-item-321842" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-321842"><a href="https://subscribe.thenation.com/flex/NA/key/G0EWCAR/">Academic Rate</a></li>
+<li id="menu-item-134727" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-134727"><a href="https://www.thenation.com/subscription-services/">Subscription Services</a></li>
+<li id="menu-item-179839" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-179839"><a href="http://www.thenationreprints.com/">Reprints</a></li>
+</ul></div></aside>					
+				</div>
+				
+				<!-- footer-3 sidebar end here -->
+				
+			</div>
+			
+						
+					<!-- copyright start here -->
+					
+					<div class="copyright">
+					
+						<div class="small-12 columns">
+
+							<p>Copyright (c) 2020 The Nation Company LLC</p>
+							
+						</div>
+						
+					</div>
+					
+					<!-- copyright end here -->
+			
+					</div>	
+	</footer>
+	
+	<!-- footer end here -->
+	<!-- Remove nc=1  starts here -->
+	<script>
+		
+		jQuery(document).ready(function(){
+			
+						
+			/*
+			 * Initailize Piano
+			 */
+			
+			tp.push(["init", function() {
+				tp.enableGACrossDomainLinking();
+				tp.experience.init();
+			}]);
+			
+									
+			var currentUrl = document.URL;
+			if(currentUrl.indexOf("?nc=1") > -1){
+				currentUrl = currentUrl.replace("?nc=1","");
+				window.history.pushState({}, null, currentUrl);
+				
+			}
+			
+			if(currentUrl.indexOf("&nc=1") > -1){
+				currentUrl = currentUrl.replace("&nc=1","");
+				window.history.pushState({}, null, currentUrl);
+				
+			}
+			
+			jQuery(".wpsdc-drop-cap").parent("p").addClass("drop_c");	
+			
+			
+			var tn_c_policy = getCookie('TNcpolicy');	
+			if( tn_c_policy==null ){
+				jQuery("#cookies-policy").slideDown();	
+			}				
+			
+			var isIE = /*@cc_on!@*/false || !!document.documentMode;
+			if (isIE){ // If Internet Explorer, return version number
+				document.cookie = "TNpolicy=1;path=/";
+			}else{
+				document.cookie = "TNcpolicy=1;expires=0;path=/";
+			}
+			
+			jQuery("#cookies-policy-continue-button").click(function(){
+				jQuery("#cookies-policy").slideUp();								
+			});
+		});		
+	</script>
+	<!-- Remove nc=1 ends here -->
+	</div><link rel='stylesheet' id='dashicons-css'  href='https://www.thenation.com/wp-includes/css/dashicons.min.css?ver=5.4'  media='all' />
+<link rel='stylesheet' id='thickbox-css'  href='https://www.thenation.com/wp-includes/js/thickbox/thickbox.css?ver=5.4'  media='all' />
+<script  src='https://www.thenation.com/wp-includes/js/jquery/suggest.min.js?ver=1.1-20110113'></script>
+<script  src='https://www.thenation.com/wp-includes/js/underscore.min.js?ver=1.8.3'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var _wpUtilSettings = {"ajax":{"url":"\/wp-admin\/admin-ajax.php"}};
+/* ]]> */
+</script>
+<script  src='https://www.thenation.com/wp-includes/js/wp-util.min.js?ver=5.4'></script>
+<script  src='https://www.thenation.com/wp-content/plugins/ajax-password-protected-master/ajax-password-protected.js?ver=0.0.1'></script>
+<script  src='https://www.thenation.com/wp-includes/js/jquery/ui/core.min.js?ver=1.11.4'></script>
+<script  src='https://www.thenation.com/wp-includes/js/jquery/ui/widget.min.js?ver=1.11.4'></script>
+<script  src='https://www.thenation.com/wp-includes/js/jquery/ui/position.min.js?ver=1.11.4'></script>
+<script  src='https://www.thenation.com/wp-includes/js/jquery/ui/menu.min.js?ver=1.11.4'></script>
+<script  src='https://www.thenation.com/wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=7.4.4'></script>
+<script >
+( 'fetch' in window ) || document.write( '<script src="https://www.thenation.com/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?ver=3.0.0"></scr' + 'ipt>' );( document.contains ) || document.write( '<script src="https://www.thenation.com/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?ver=3.42.0"></scr' + 'ipt>' );( window.DOMRect ) || document.write( '<script src="https://www.thenation.com/wp-includes/js/dist/vendor/wp-polyfill-dom-rect.min.js?ver=3.42.0"></scr' + 'ipt>' );( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://www.thenation.com/wp-includes/js/dist/vendor/wp-polyfill-url.min.js?ver=3.6.4"></scr' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="https://www.thenation.com/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?ver=3.0.12"></scr' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="https://www.thenation.com/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?ver=2.0.2"></scr' + 'ipt>' );
+</script>
+<script  src='https://www.thenation.com/wp-includes/js/dist/dom-ready.min.js?ver=91fc8f05178d5c6365aec778f840ae17'></script>
+<script  src='https://www.thenation.com/wp-includes/js/dist/a11y.min.js?ver=45f739d280d1244f6cb498ed8f1bf042'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var uiAutocompleteL10n = {"noResults":"No results found.","oneResult":"1 result found. Use up and down arrow keys to navigate.","manyResults":"%d results found. Use up and down arrow keys to navigate.","itemSelected":"Item selected."};
+/* ]]> */
+</script>
+<script  src='https://www.thenation.com/wp-includes/js/jquery/ui/autocomplete.min.js?ver=1.11.4'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var acs_config_suggest = {"ajax_url":"https:\/\/www.thenation.com\/wp-json\/cloud-search\/v1\/suggest","acs_suggest_selector":"input[name='s']","acs_suggest_trigger":"3","acs_suggest_results":"20","acs_suggest_click":"goto"};
+/* ]]> */
+</script>
+<script  src='https://www.thenation.com/wp-content/themes/thenation/inc/aws-cloudsearch/js/min/aws-cloud-search-local.min.js?ver=1.1.6'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var ajax_object = {"ajax_url":"https:\/\/www.thenation.com\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script  src='https://www.thenation.com/wp-content/themes/thenation/js/Magzine_issue_ajax.js?ver=1.0.3'></script>
+<script  src='https://www.thenation.com/wp-content/themes/thenation/js/light_box.js'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var tn_recaptcha_details = {"site_key":"6Le4-ygTAAAAAI1jbX9-SMd8gHR0NJUW5wwK5Gjg"};
+/* ]]> */
+</script>
+<script  src='https://www.google.com/recaptcha/api.js?onload=tnOnloadCallback&#038;render=explicit'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var thenation_globals = {"tn_paywall_sfgiframe":"https:\/\/subscribe.thenation.com\/flex\/na\/key\/G0A1TSA\/","tn_incognito_sub":"https:\/\/subscribe.thenation.com\/flex\/NA\/key\/G0EWCPM\/"};
+/* ]]> */
+</script>
+<script  src='https://www.thenation.com/wp-content/themes/thenation/js/javascripts/all.js?ver=2.1.5'></script>
+<script  src='https://www.thenation.com/wp-content/themes/thenation/js/min/modernizr.min.js'></script>
+<script  src='https://www.thenation.com/wp-content/themes/thenation/js/jquery.bxslider.js'></script>
+<script  src='https://www.thenation.com/wp-content/themes/thenation/js/comments_js.js'></script>
+<script  src='https://www.thenation.com/wp-content/themes/thenation/js/tn-ing-detect.js?ver=1.0.6'></script>
+<script  src='https://www.thenation.com/wp-content/themes/thenation/js/min/tn-piano.min.js?ver=3.0.6'></script>
+<script  src='https://www.thenation.com/wp-content/themes/thenation/js/min/thenation-mostpopular.min.js?ver=1.1.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var sfg_options = {"enable_dash_options":"1"};
+/* ]]> */
+</script>
+<script  src='https://www.thenation.com/wp-content/themes/thenation/inc/sfg-subscription/assets/sfg.min.js?ver=2.8.9'></script>
+<script  src='https://www.thenation.com/wp-includes/js/wp-embed.min.js?ver=5.4'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var thickboxL10n = {"next":"Next >","prev":"< Prev","image":"Image","of":"of","close":"Close","noiframes":"This feature requires inline frames. You have iframes disabled or your browser does not support them.","loadingAnimation":"https:\/\/www.thenation.com\/wp-includes\/js\/thickbox\/loadingAnimation.gif"};
+/* ]]> */
+</script>
+<script  src='https://www.thenation.com/wp-includes/js/thickbox/thickbox.js?ver=3.1-20121105'></script>
+
+	<script>
+	
+		/*subscribe sailthru function start*/
+	
+		function susbcribe_sailthru(form_value){
+			
+			var newsletterArray = new Array();
+
+			var firstname ='';
+
+			var lastname ='';
+
+			var zippostal ='';
+
+			var user_email ='';
+		   
+			jQuery(form_value).closest("form").find("input[name^='sft_variables']").each(function() {
+			   
+				if (jQuery(this).attr("id")=="first_name") {
+				  
+					firstname = jQuery(this).val();
+				 
+				}
+				
+				if (jQuery(this).attr("id")=="last_name") {
+				
+					lastname = jQuery(this).val();
+				
+				}
+				
+				if (jQuery(this).attr("id")=="zip_postal-code") {
+				
+					zippostal = jQuery(this).val();
+				
+				}
+				
+				if (jQuery(this).attr("id")=="email") {
+				
+					user_email = jQuery(this).val();
+				
+				}
+				
+		    });
+		   
+			jQuery(form_value).closest("form").find("input[name^='sft_newssletter_variables']").each(function() {
+			   
+				newsletterArray.push(jQuery(this).attr("id"));         
+			  
+			});  
+			
+			var newsletter_variable=newsletterArray.join(",");
+			
+			var origin_host=document.location.origin;
+			
+			/*call popCenter*/
+			
+			PopupCenter(origin_host+"/submit.php?form_value_fname_val="+firstname+"&form_value_lname_val="+lastname+"&form_value_zip_val="+zippostal+"&form_value_email_val="+user_email+"&email_newsletter="+newsletter_variable,'xtf','300','300');			
+		   
+			jQuery(form_value).closest("form").find("input[name^='sft_variables']").each(function() {
+				
+				if (jQuery(this).attr("id")=="first_name") {
+				
+					jQuery(this).val('');
+				
+				}
+				
+				if (jQuery(this).attr("id")=="last_name") {
+					
+					jQuery(this).val('');
+					
+				}
+				
+				if (jQuery(this).attr("id")=="zip_postal-code") {
+					
+					jQuery(this).val('');
+					
+				}
+				
+				if (jQuery(this).attr("id")=="email") {
+				
+					jQuery(this).val('');
+				
+				}
+				
+			});
+			
+		}  
+		
+		/*subscribe sailthru function end*/
+
+		/*pop up function start*/
+		
+		function PopupCenter(url, title, w, h) {
+			
+			/* Fixes dual-screen position                         Most browsers      Firefox    */
+
+			var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+
+			var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+
+			var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+
+			var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+			var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+
+			var top = ((height / 2) - (h / 2)) + dualScreenTop;
+			
+			var newWindow = window.open(url, title, 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+			
+			/* Puts focus on the newWindow */
+
+			if (window.focus) {
+
+				newWindow.focus();
+
+			}
+
+			setTimeout(function () { newWindow.close();}, 5000);
+
+		}
+		
+		/*pop up function end*/		
+	</script>
+	
+		<!-- Piano Script -->		
+	<script>		
+		(function(src) {
+			var a = document.createElement("script");
+			a.type = "text/javascript";
+			a.async = true;
+			a.src = src;
+			var b = document.getElementsByTagName("script")[0];
+			b.parentNode.insertBefore(a, b)
+		})("//experience.tinypass.com/xbuilder/experience/load?aid=NmGa4IzWHL");
+	</script>
+		 
+
+		<script   src="https://www.thenation.com/wp-content/themes/thenation/js/jquery.bxslider.js"></script>
+
+		<!-- Donation Footer -->
+		<div id="tn-donation-footer"></div>
+	<!-- Donation Footer -->
+		<!-- Alert Me -->
+	<script> (function (d) { var src = 'https://app.alertme.news/build/'; var publisher = '111'; var head = d.getElementsByTagName('head')[0]; var script = d.createElement('script'); script.type = 'text/javascript'; script.src = src + 'button.js'; head.appendChild(script); script.onload = function () { AlertMeGlobalVariableNamespace.run(src, publisher); } })(document); </script>
+	<!-- Alert Me -->
+		<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"442438c9d9","applicationID":"5436353","transactionName":"Z1JSYkYACEsAV0cKXV4YcVVACAlWTkdaDVVcUh1XRhUPWw1R","queueTime":0,"applicationTime":1015,"atts":"SxVRFA4aG0U=","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+	
+	<!-- body end here -->
+</html>
