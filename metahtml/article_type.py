@@ -108,6 +108,10 @@ def get_article_type(parser, url, meta_best, fast=False):
         ( None, r'/(19|20)\d{2}/\d{2}/\d{2}/?$' ),
         ( None, r'/(19|20)\d{2}/\d{2}/?$' ),
         ( None, r'/(19|20)\d{2}/?$' ),
+        ( None, r'^/(19|20)\d{2}-[a-zA-Z]{3}-\d{2}/?$' ),
+        ( None, r'^/(19|20)\d{2}-\d{2}-\d{2}/?$' ),
+        ( None, r'^/(19|20)\d{2}-\d{2}/?$' ),
+
         ( None, r'^/?$' ),
         ( None, r'^/article/?$' ),
         ( None, r'^/category/?$' ),
@@ -151,6 +155,8 @@ def get_article_type(parser, url, meta_best, fast=False):
         ( 'viaouest.com', r'^/actualite-daesh.html' ),
         ( 'vietnamartnews.com', r'^/category/uncategorized/$' ),
         ( 'whitehouse.gov', r'^/briefings-statements/?$' ),
+
+        ( 'tehrantimes.com', r'^/tag/' ),
         ]
 
     for hostname, regex in regexs:

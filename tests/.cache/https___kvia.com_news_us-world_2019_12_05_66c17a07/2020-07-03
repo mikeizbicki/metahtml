@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8"><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={licenseKey:"cba0b95abf",applicationID:"611645299"};window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var i=n[t]={exports:{}};e[t][0].call(i.exports,function(n){var i=e[t][1][n];return r(i||n)},i,i.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var i=0;i<t.length;i++)r(t[i]);return r}({1:[function(e,n,t){function r(){}function i(e,n,t){return function(){return o(e,[u.now()].concat(f(arguments)),n?null:this,t),n?void 0:this}}var o=e("handle"),a=e(4),f=e(5),c=e("ee").get("tracer"),u=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],l="api-",d=l+"ixn-";a(p,function(e,n){s[n]=i(l+n,!0,"api")}),s.addPageAction=i(l+"addPageAction",!0),s.setCurrentRouteName=i(l+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,i="function"==typeof n;return o(d+"tracer",[u.now(),e,t],r),function(){if(c.emit((i?"":"no-")+"fn-start",[u.now(),r,i],t),i)try{return n.apply(this,arguments)}catch(e){throw c.emit("fn-err",[arguments,this,e],t),e}finally{c.emit("fn-end",[u.now()],t)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=i(d+n)}),newrelic.noticeError=function(e,n){"string"==typeof e&&(e=new Error(e)),o("err",[e,u.now(),!1,n])}},{}],2:[function(e,n,t){function r(e,n){var t=e.getEntries();t.forEach(function(e){"first-paint"===e.name?c("timing",["fp",Math.floor(e.startTime)]):"first-contentful-paint"===e.name&&c("timing",["fcp",Math.floor(e.startTime)])})}function i(e,n){var t=e.getEntries();t.length>0&&c("lcp",[t[t.length-1]])}function o(e){if(e instanceof s&&!l){var n,t=Math.round(e.timeStamp);n=t>1e12?Date.now()-t:u.now()-t,l=!0,c("timing",["fi",t,{type:e.type,fid:n}])}}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var a,f,c=e("handle"),u=e("loader"),s=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){a=new PerformanceObserver(r),f=new PerformanceObserver(i);try{a.observe({entryTypes:["paint"]}),f.observe({entryTypes:["largest-contentful-paint"]})}catch(p){}}if("addEventListener"in document){var l=!1,d=["click","keydown","mousedown","pointerdown","touchstart"];d.forEach(function(e){document.addEventListener(e,o,!1)})}}},{}],3:[function(e,n,t){function r(e,n){if(!i)return!1;if(e!==i)return!1;if(!n)return!0;if(!o)return!1;for(var t=o.split("."),r=n.split("."),a=0;a<r.length;a++)if(r[a]!==t[a])return!1;return!0}var i=null,o=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var f=navigator.userAgent,c=f.match(a);c&&f.indexOf("Chrome")===-1&&f.indexOf("Chromium")===-1&&(i="Safari",o=c[1])}n.exports={agent:i,version:o,match:r}},{}],4:[function(e,n,t){function r(e,n){var t=[],r="",o=0;for(r in e)i.call(e,r)&&(t[o]=n(r,e[r]),o+=1);return t}var i=Object.prototype.hasOwnProperty;n.exports=r},{}],5:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,i=t-n||0,o=Array(i<0?0:i);++r<i;)o[r]=e[n+r];return o}n.exports=r},{}],6:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function i(e){function n(e){return e&&e instanceof r?e:e?c(e,f,o):o()}function t(t,r,i,o){if(!l.aborted||o){e&&e(t,r,i);for(var a=n(i),f=v(t),c=f.length,u=0;u<c;u++)f[u].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function d(e,n){h[e]=v(e).concat(n)}function m(e,n){var t=h[e];if(t)for(var r=0;r<t.length;r++)t[r]===n&&t.splice(r,1)}function v(e){return h[e]||[]}function g(e){return p[e]=p[e]||i(t)}function w(e,n){u(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var h={},y={},b={on:d,addEventListener:d,removeEventListener:m,emit:t,get:g,listeners:v,context:n,buffer:w,abort:a,aborted:!1};return b}function o(){return new r}function a(){(s.api||s.feature)&&(l.aborted=!0,s=l.backlog={})}var f="nr@context",c=e("gos"),u=e(4),s={},p={},l=n.exports=i();l.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(i.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(o){}return e[n]=r,r}var i=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){i.buffer([e],r),i.emit(e,n,t)}var i=e("ee").get("handle");n.exports=r,r.ee=i},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,o,function(){return i++})}var i=1,o="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!x++){var e=E.info=NREUM.info,n=d.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();u(y,function(n,t){e[n]||(e[n]=t)}),c("mark",["onload",a()+E.offset],null,"api");var t=d.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function i(){"complete"===d.readyState&&o()}function o(){c("mark",["domContent",a()+E.offset],null,"api")}function a(){return O.exists&&performance.now?Math.round(performance.now()):(f=Math.max((new Date).getTime(),f))-E.offset}var f=(new Date).getTime(),c=e("handle"),u=e(4),s=e("ee"),p=e(3),l=window,d=l.document,m="addEventListener",v="attachEvent",g=l.XMLHttpRequest,w=g&&g.prototype;NREUM.o={ST:setTimeout,SI:l.setImmediate,CT:clearTimeout,XHR:g,REQ:l.Request,EV:l.Event,PR:l.Promise,MO:l.MutationObserver};var h=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1169.min.js"},b=g&&w&&w[m]&&!/CriOS/.test(navigator.userAgent),E=n.exports={offset:f,now:a,origin:h,features:{},xhrWrappable:b,userAgent:p};e(1),e(2),d[m]?(d[m]("DOMContentLoaded",o,!1),l[m]("load",r,!1)):(d[v]("onreadystatechange",i),l[v]("onload",r)),c("mark",["firstbyte",f],null,"api");var x=0,O=e(6)},{}],"wrap-function":[function(e,n,t){function r(e){return!(e&&e instanceof Function&&e.apply&&!e[a])}var i=e("ee"),o=e(5),a="nr@original",f=Object.prototype.hasOwnProperty,c=!1;n.exports=function(e,n){function t(e,n,t,i){function nrWrapper(){var r,a,f,c;try{a=this,r=o(arguments),f="function"==typeof t?t(r,a):t||{}}catch(u){l([u,"",[r,a,i],f])}s(n+"start",[r,a,i],f);try{return c=e.apply(a,r)}catch(p){throw s(n+"err",[r,a,p],f),p}finally{s(n+"end",[r,a,c],f)}}return r(e)?e:(n||(n=""),nrWrapper[a]=e,p(e,nrWrapper),nrWrapper)}function u(e,n,i,o){i||(i="");var a,f,c,u="-"===i.charAt(0);for(c=0;c<n.length;c++)f=n[c],a=e[f],r(a)||(e[f]=t(a,u?f+i:i,o,f))}function s(t,r,i){if(!c||n){var o=c;c=!0;try{e.emit(t,r,i,n)}catch(a){l([a,t,r,i])}c=o}}function p(e,n){if(Object.defineProperty&&Object.keys)try{var t=Object.keys(e);return t.forEach(function(t){Object.defineProperty(n,t,{get:function(){return e[t]},set:function(n){return e[t]=n,n}})}),n}catch(r){l([r])}for(var i in e)f.call(e,i)&&(n[i]=e[i]);return n}function l(n){try{e.emit("internal-error",n)}catch(t){}}return e||(e=i),t.inPlace=u,t.flag=a,t}},{}]},{},["loader"]);</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="profile" href="http://gmpg.org/xfn/11">
+
+    <title>US &amp; World Archives - KVIA</title>
+
+<!-- This site is optimized with the Yoast SEO plugin v12.9.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
+<link rel="canonical" href="https://kvia.com/category/news/us-world/" />
+<link rel="next" href="https://kvia.com/category/news/us-world/page/2/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="object" />
+<meta property="og:title" content="US &amp; World Archives - KVIA" />
+<meta property="og:url" content="https://kvia.com/category/news/us-world/" />
+<meta property="og:site_name" content="KVIA" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="US &amp; World Archives - KVIA" />
+<script type='application/ld+json' class='yoast-schema-graph yoast-schema-graph--main'>{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://kvia.com/#website","url":"https://kvia.com/","name":"KVIA","description":"Where News Comes First","potentialAction":{"@type":"SearchAction","target":"https://kvia.com/?s={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"CollectionPage","@id":"https://kvia.com/category/news/us-world/#webpage","url":"https://kvia.com/category/news/us-world/","inLanguage":"en-US","name":"US &amp; World Archives - KVIA","isPartOf":{"@id":"https://kvia.com/#website"}}]}</script>
+<!-- / Yoast SEO plugin. -->
+
+<link rel='dns-prefetch' href='//cdnjs.cloudflare.com' />
+<link rel='dns-prefetch' href='//www.googletagservices.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="KVIA &raquo; Feed" href="https://kvia.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="KVIA &raquo; Comments Feed" href="https://kvia.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="KVIA &raquo; US &amp; World Category Feed" href="https://kvia.com/category/news/us-world/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/kvia.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.4.2"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css'  href='https://kvia.com/wp-includes/css/dist/block-library/style.min.css?ver=5.4.2' type='text/css' media='all' />
+<link rel='stylesheet' id='npg-styles-css'  href='https://kvia.com/wp-content/themes/storymate-npg/build/css/theme.min.css?ver=1.4.5' type='text/css' media='all' />
+<link rel='stylesheet' id='ad-styles-css'  href='https://kvia.com/wp-content/themes/storymate-theme/build/css/theme.min.css?ver=1.4.5' type='text/css' media='all' />
+        <!-- Invisibly Pixel Code -->
+        <script>window.ia = window.ia || function() {
+            (window.ia.q = window.ia.q || []).push(arguments);
+          };
+          ia('track', 'PAGE_VIEW');</script>
+        <script src="https://pymx5.com/scripts/ready.js"></script>
+        <script src='https://pymx5.com/scripts/ims.js'></script>
+        <script async src='https://pymx5.com/scripts/load_tags.js'></script>
+        <noscript><img height="1" width="1" style="display:none"
+                       src="https://api.pymx5.com/v1/sites/track?event_type=PAGE_VIEW&noscript=1"/></noscript>
+        <script>docReady(function() {
+            ims.startServices();
+          });</script>
+        <script type='text/javascript' src='https://kvia.com/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp'></script>
+<script type='text/javascript' src='https://kvia.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script type='text/javascript' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
+<link rel='https://api.w.org/' href='https://kvia.com/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://kvia.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://kvia.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.4.2" />
+<meta property="og:image" content="https://kvia.b-cdn.net/2019/12/hypatia-h_ec8697c7afde5c966c9a5b31c6c07383-h_86a71abcb837b2370c8d9b8c1069f089_preview-1.jpg">
+                <meta property="og:image:secure_url" content="https://kvia.b-cdn.net/2019/12/hypatia-h_ec8697c7afde5c966c9a5b31c6c07383-h_86a71abcb837b2370c8d9b8c1069f089_preview-1.jpg">
+                <meta property="og:image:width" content="500">
+                <meta property="og:image:height" content="375"><link rel="icon" href="https://kvia.b-cdn.net/2019/10/kvia-favicon.ico" sizes="32x32" />
+<link rel="icon" href="https://kvia.b-cdn.net/2019/10/kvia-favicon.ico" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://kvia.b-cdn.net/2019/10/kvia-favicon.ico" />
+<meta name="msapplication-TileImage" content="https://kvia.b-cdn.net/2019/10/kvia-favicon.ico" />
+        <script>
+          var googletag = googletag || {cmd: []};
+
+          // Empty ad behavior
+          googletag.pubads().addEventListener('slotRenderEnded', function(event) {
+            var elementId         = event.slot.getSlotElementId();
+            var el                = document.getElementById(elementId);
+            var targetParentClass = 'elementor-widget-wp-widget-ad_placement';
+
+            if (event.isEmpty && el.classList.contains('div-gpt-widget')) {
+              // Find parent element with targetParentClass
+              while ((el = el.parentElement) && !el.classList.contains(targetParentClass)) ;
+              if (el) {
+                el.classList.add("no-ad");
+              }
+            }
+          });
+
+
+          googletag.cmd.push(function() {
+                googletag.pubads().setTargeting("wp_category", ["us-world"]);
+        var mapping1 = googletag.sizeMapping().
+        addSize([1024,0],[728, 90]). //desktop 
+addSize([0,0],[320, 50]). //mobile 
+build();                    googletag.defineSlot('/6123/KVIA', [[320,50],[728,90]], 'div-gpt-ad-1')
+            .defineSizeMapping(mapping1)
+        .setTargeting("pos", "atf")
+.setTargeting("wp_unit", "Leaderboard 1")
+        .setCollapseEmptyDiv(true)
+        .addService(googletag.pubads());
+        
+
+        var mapping2 = googletag.sizeMapping().
+        addSize([1024,0],[300, 250]). //desktop 
+addSize([0,0],[300, 250]). //mobile 
+build();                    googletag.defineSlot('/6123/KVIA', [300,250], 'div-gpt-ad-2')
+            .defineSizeMapping(mapping2)
+        .setTargeting("pos", "atf")
+.setTargeting("wp_unit", "Medium Rectangle 1")
+        .setCollapseEmptyDiv(true)
+        .addService(googletag.pubads());
+        
+
+        var mapping3 = googletag.sizeMapping().
+        addSize([1024,0],[728, 90]). //desktop 
+addSize([0,0],[320, 50]). //mobile 
+build();                    googletag.defineSlot('/6123/KVIA', [[728,90],[320,50]], 'div-gpt-ad-3')
+            .defineSizeMapping(mapping3)
+        .setTargeting("wp_unit", "Leaderboard 2")
+        .setCollapseEmptyDiv(true)
+        .addService(googletag.pubads());
+        
+
+        var mapping4 = googletag.sizeMapping().
+        addSize([1024,0],[300, 250]). //desktop 
+addSize([0,0],[300, 250]). //mobile 
+build();                    googletag.defineSlot('/6123/KVIA', [300,250], 'div-gpt-ad-4')
+            .defineSizeMapping(mapping4)
+        .setTargeting("wp_unit", "Medium Rectangle 2")
+        .setCollapseEmptyDiv(true)
+        .addService(googletag.pubads());
+        
+
+        var mapping5 = googletag.sizeMapping().
+        addSize([1024,0],[728, 90]). //desktop 
+addSize([0,0],[320, 50]). //mobile 
+build();                    googletag.defineSlot('/6123/KVIA', [[728,90],[320,50]], 'div-gpt-ad-5')
+            .defineSizeMapping(mapping5)
+        .setTargeting("wp_unit", "Leaderboard 3")
+        .setCollapseEmptyDiv(true)
+        .addService(googletag.pubads());
+        
+
+        var mapping6 = googletag.sizeMapping().
+        addSize([1024,0],[1, 1]). //desktop 
+addSize([0,0],[1, 1]). //mobile 
+build();                    googletag.defineSlot('/6123/KVIA', [1,1], 'div-gpt-ad-6')
+            .defineSizeMapping(mapping6)
+        .setTargeting("wp_unit", "Out of Page")
+        .setCollapseEmptyDiv(true)
+        .addService(googletag.pubads());
+        
+
+        var mapping7 = googletag.sizeMapping().
+        addSize([1024,0],[2, 1]). //desktop 
+addSize([0,0],[2, 1]). //mobile 
+build();                    googletag.defineSlot('/6123/KVIA', [2,1], 'div-gpt-ad-7')
+            .defineSizeMapping(mapping7)
+        .setTargeting("wp_unit", "In Article")
+        .setCollapseEmptyDiv(true)
+        .addService(googletag.pubads());
+        
+
+        var mapping8 = googletag.sizeMapping().
+        addSize([1024,0],[300, 250]). //desktop 
+addSize([0,0],[300, 250]). //mobile 
+build();                    googletag.defineSlot('/6123/KVIA', [300,250], 'div-gpt-ad-8')
+            .defineSizeMapping(mapping8)
+        .setTargeting("wp_unit", "Medium Rectangle 3")
+        .setCollapseEmptyDiv(true)
+        .addService(googletag.pubads());
+        
+
+        var mapping9 = googletag.sizeMapping().
+        addSize([1024,0],[300, 250]). //desktop 
+addSize([0,0],[300, 250]). //mobile 
+build();                    googletag.defineSlot('/6123/KVIA', [300,250], 'div-gpt-ad-9')
+            .defineSizeMapping(mapping9)
+        .setTargeting("wp_unit", "Medium Rectangle SB")
+        .setCollapseEmptyDiv(true)
+        .addService(googletag.pubads());
+        
+
+            googletag.pubads().enableLazyLoad();
+            googletag.enableServices();
+          });
+        </script>
+        <!-- Google Tag Manager -->
+            <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({"gtm.start":
+            new Date().getTime(),event:"gtm.js"});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src=
+            "https://www.googletagmanager.com/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,"script","dataLayer","GTM-PJ5DXFS");</script>
+            <!-- End Google Tag Manager --><!--NATIVO-->
+<script type="text/javascript" src="//s.ntv.io/serve/load.js"></script>
+
+<!--MINUTE.LY-->
+<script src="//apv-launcher.minute.ly/api/launcher/MIN-30480.js" async></script>
+
+<!--BLUECONIC-->
+<!--BLUECONIC-->
+    <script src="//cdn.blueconic.net/npgco.js"></script>
+
+<script>
+       if (typeof Storage !== "undefined") {
+  var targetingParamStr = localStorage.getItem("bcDFPTargetingParams");
+
+  if (targetingParamStr) {
+    var targetingParameters = JSON.parse(targetingParamStr);
+
+    // set page-level targeting parameters
+    jQuery.each(targetingParameters, function (index, param) {
+      window.googletag.pubads().setTargeting(param.key, param.value);
+    });
+            googletag.enableServices();
+  }
+}
+    </script>
+<!--DATASPHERE-->
+<script type="text/javascript">
+setTimeout(function() { var s = "kvia", a = document.getElementsByTagName("head")[0] || document.documentElement, c = document.createElement("script"), b = document.createElement("link"); c.type = "text/javascript"; c.async = true; c.src = "https://s3.amazonaws.com/content.secondspace.com/" + s + "/widgets" + (window.__dsns_.GetCookie('dsnswidgetversion') || '') + ".js"; b.rel = "stylesheet"; b.type = "text/css"; b.href = "https://s3.amazonaws.com/content.secondspace.com/" + s + "/widgets" + (window.__dsns_.GetCookie('dsnswidgetversion') || '') + ".css"; a.insertBefore(b, a.firstChild); a.insertBefore(c, a.firstChild); }, 200); if (typeof window.__dsns_ == "undefined") window.__dsns_ = {}; window.__dsns_.GetCookie = function(a) { a += "="; for (var c = document.cookie.split(";"), b = 0; b < c.length; b++) { for (var d = c[b]; d.charAt(0) == " "; ) d = d.substring(1, d.length); if (d.indexOf(a) == 0) return d.substring(a.length, d.length) } return null }; document.write('<style type="text/css">#dsnsevents, #dsnscommunityevents {display:none}</style>');
+</script>
+
+<!-- DATASPHERE ADS-->
+<script>
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+</script>
+
+<script>
+    var comm = '';
+    try {
+        window.__dsns_ = window.__dsns_ || {};
+        window.__dsns_.GetCookie = function(g) {
+            g += "=";
+            for (var i = document.cookie.split(";"), f = 0; f < i.length; f++) {
+                for (var h = i[f]; h.charAt(0) == " ";) {
+                    h = h.substring(1, h.length)
+                }
+                if (h.indexOf(g) == 0) {
+                    return h.substring(g.length, h.length)
+                }
+            }
+            return null
+        };
+        comm = window.__dsns_.GetCookie("dsnscomm");
+    } catch (e) {
+        comm = ""
+    }
+    if (comm && comm.length > 0) {
+      googletag.cmd.push(function() {
+        googletag
+          .defineSlot('/1067779/kvia_hp_300x250', [300, 250], 'div-gpt-ad-1569537023845-0')
+          .setTargeting('KVIA_COMMUNITY', [comm])
+          .addService(googletag.pubads());
+          googletag.pubads().enableSingleRequest();
+          googletag.enableServices();
+      });
+    }
+    else{
+      googletag.cmd.push(function() {
+        googletag
+          .defineSlot('/1067779/kvia_hp_300x250', [300, 250], 'div-gpt-ad-1569537023845-0')
+          .addService(googletag.pubads());
+          googletag.pubads().enableSingleRequest();
+          googletag.enableServices();
+      });
+    }
+</script>
+<script>
+              var googletag = googletag || {};
+              googletag.cmd = googletag.cmd || [];
+          </script>
+                    
+          <script>
+              var comm = '';
+              try {
+                  window.__dsns_ = window.__dsns_ || {};
+                  window.__dsns_.GetCookie = function(g) {
+                      g += "=";
+                      for (var i = document.cookie.split(";"), f = 0; f < i.length; f++) {
+                          for (var h = i[f]; h.charAt(0) == " ";) {
+                              h = h.substring(1, h.length)
+                          }
+                          if (h.indexOf(g) == 0) {
+                              return h.substring(g.length, h.length)
+                          }
+                      }
+                      return null
+                  };
+                  comm = window.__dsns_.GetCookie("dsnscomm");
+              } catch (e) {
+                  comm = ""
+              }
+              if (comm && comm.length > 0) {
+                googletag.cmd.push(function() {
+                  googletag.defineSlot('/1067779/kvia_ap_300x250', [300, 250], 'div-gpt-ad-1569536984624-0')
+                  .setTargeting('KVIA_COMMUNITY', [comm])
+                  .addService(googletag.pubads());
+                  googletag.pubads().enableSingleRequest();
+                  googletag.enableServices();
+                });
+              }
+              else{
+                googletag.cmd.push(function() {
+                  googletag.defineSlot('/1067779/kvia_ap_300x250', [300, 250], 'div-gpt-ad-1569536984624-0')
+                  .addService(googletag.pubads());
+                  googletag.pubads().enableSingleRequest();
+                  googletag.enableServices();
+                });
+              }
+          </script>
+
+
+
+<!--Amazon-->
+<!-- Global Site Tag (gtag.js) - Google Analytics -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-19607988-2"></script>
+            <script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'UA-19607988-2');
+            </script><style type="text/css">.story__category-tag {
+                background-color: #282861;
+                color: #FFFFFF;
+            }.header .navbar .menu-livestream-button a {
+                background-color: #b2b2b2;
+                color: #000000;
+            }
+            .header .navbar .menu-livestream-button.active a {
+                background-color: #dd3333;
+                color: #FFFFFF;
+            }</style><style type="text/css">body { font-family: Verdana; }
+            .hdg { font-family: Verdana; }.header { background-color: #ffffff; }
+            .header, .navbar-brand, .navbar__menu a, .header .navbar a { color: #000000; }
+            @media only screen and (min-width: 960px) {
+                .header .dropdown__menu > li { background-color: #FFFFFF; }
+                .header .dropdown__menu > li:hover { background-color: #f5f5f5; }
+                .header .dropdown__menu a { color: #000000; }
+            }
+            .header__utility { background-color: #000000; }
+            .header__utility a { color: #FFFFFF; }
+            .header__search { background-color: #E4E4E4; }
+            .header__search .icon { color: #000000; }
+            .header__search input { color: #000000; }
+            .header__search input::placeholder { color: #999999 }.footer { background-color: #ebebeb; }
+            .footer, .footer__widgets a { color: #000000; }.primary h1, .primary h1 a, .sidebar h1, .sidebar h1 a { color: #000000; }
+            .primary h2, .primary h2 a, .sidebar h2, .sidebar h2 a { color: #000000; }
+            .primary h3, .primary h3 a, .sidebar h3, .sidebar h3 a { color: #000000; }
+            .primary h4, .primary h4 a, .sidebar h4, .sidebar h4 a { color: #000000; }
+            .primary h5, .primary h5 a, .sidebar h5, .sidebar h5 a { color: #000000; }
+            .primary h6, .primary h6 a, .sidebar h6, .sidebar h6 a { color: #000000; }
+            .primary, .sidebar { color: #000000; }.btn.btn-primary { background-color: #777777; }
+            .btn.btn-primary:hover { background-color: #595959; }
+            .btn.btn-primary { color: #FFFFFF; }
+            .btn.btn-secondary { background-color: #777777; }
+            .btn.btn-secondary:hover { background-color: #595959; }
+            .btn.btn-secondary { color: #FFFFFF; }</style></head>
+
+<body class="archive date category category-us-world category-79">
+
+<!-- Google Tag Manager (noscript) -->
+            <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PJ5DXFS"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+            <!-- End Google Tag Manager (noscript) -->
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
+     style="position: absolute; width: 0; height: 0; overflow: hidden;"
+     version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <symbol id="icon-circle-arrow" viewBox="0 0 40 40">
+          <title>circle-arrow</title>
+          <path fill="#FFF" fill-rule="nonzero" d="M0 20C0 8.953 8.953 0 20 0s20 8.953 20 20-8.953 20-20 20S0 31.047 0 20zm16.526 9.204l12.367-9.402L16.526 10.4v6.392H11.2v6.021h5.326v6.392-.001z"/>
+        </symbol>
+        <symbol id="icon-play" viewBox="0 0 32 32">
+            <title>Play Button</title>
+            <path fill="#fff" fill-rule="nonzero" d="M6 4l20 12-20 12z"/>
+        </symbol>
+        <symbol id="icon-stop" viewBox="0 0 32 32">
+            <title>Stop Button</title>
+            <path fill="#fff" fill-rule="nonzero" d="M4 4h24v24h-24z"/>
+        </symbol>
+    </defs>
+</svg>
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
+     style="position: absolute; width: 0; height: 0; overflow: hidden;"
+     version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <symbol id="icon-chevron-right" viewBox="0 0 19 28">
+            <title>chevron-right</title>
+            <path d="M17.297 13.703l-11.594 11.594c-0.391 0.391-1.016 0.391-1.406 0l-2.594-2.594c-0.391-0.391-0.391-1.016 0-1.406l8.297-8.297-8.297-8.297c-0.391-0.391-0.391-1.016 0-1.406l2.594-2.594c0.391-0.391 1.016-0.391 1.406 0l11.594 11.594c0.391 0.391 0.391 1.016 0 1.406z"></path>
+        </symbol>
+        <symbol id="icon-chevron-left" viewBox="0 0 21 28">
+            <title>chevron-left</title>
+            <path d="M18.297 4.703l-8.297 8.297 8.297 8.297c0.391 0.391 0.391 1.016 0 1.406l-2.594 2.594c-0.391 0.391-1.016 0.391-1.406 0l-11.594-11.594c-0.391-0.391-0.391-1.016 0-1.406l11.594-11.594c0.391-0.391 1.016-0.391 1.406 0l2.594 2.594c0.391 0.391 0.391 1.016 0 1.406z"></path>
+        </symbol>
+        <symbol id="icon-chevron-up" viewBox="0 0 20 20">
+            <title>chevron-up</title>
+            <path d="M15.825 12.82c-.104.113-.25.18-.397.18-.145 0-.292-.067-.396-.18l-5.03-5.392L4.95 12.82c-.104.113-.25.18-.397.18-.145 0-.292-.067-.396-.18-.21-.222-.21-.6 0-.846L9.584 6.18C9.688 6.066 9.856 6 10 6c.147 0 .294.044.42.18l5.426 5.794c.21.224.21.602-.02.847z"></path>
+        </symbol>
+        <symbol id="icon-search" viewBox="0 0 32 32">
+            <title>search</title>
+            <path d="M31.008 27.231l-7.58-6.447c-0.784-0.705-1.622-1.029-2.299-0.998 1.789-2.096 2.87-4.815 2.87-7.787 0-6.627-5.373-12-12-12s-12 5.373-12 12 5.373 12 12 12c2.972 0 5.691-1.081 7.787-2.87-0.031 0.677 0.293 1.515 0.998 2.299l6.447 7.58c1.104 1.226 2.907 1.33 4.007 0.23s0.997-2.903-0.23-4.007zM12 20c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8z"></path>
+        </symbol>
+        <symbol id="icon-warning" viewBox="0 0 12 10">
+            <title>warning</title>
+            <path fill="#FFF" fill-rule="nonzero"
+                  d="M11.912 9.328L6.378.227A.455.455 0 0 0 6 0a.448.448 0 0 0-.377.227L.089 9.328c-.075.13-.129.339-.051.466.078.128.22.206.375.206h11.172a.437.437 0 0 0 .375-.206c.08-.127.027-.338-.048-.466zM6.857 8.75H5.143V7.5h1.714v1.25zm0-2.083H5.143v-3.75h1.714v3.75z"/>
+        </symbol>
+        <symbol id="icon-chevron-left-skinny" viewBox="0 0 24 24">
+            <title>chevron-left-skinny</title>
+            <path d="M15.707 17.293l-5.293-5.293 5.293-5.293c0.391-0.391 0.391-1.024 0-1.414s-1.024-0.391-1.414 0l-6 6c-0.391 0.391-0.391 1.024 0 1.414l6 6c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414z"></path>
+        </symbol>
+        <symbol id="icon-chevron-right-skinny" viewBox="0 0 24 24">
+            <title>chevron-right-skinny</title>
+            <path d="M9.707 18.707l6-6c0.391-0.391 0.391-1.024 0-1.414l-6-6c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414l5.293 5.293-5.293 5.293c-0.391 0.391-0.391 1.024 0 1.414s1.024 0.391 1.414 0z"></path>
+        </symbol>
+        <symbol id="icon-x" viewBox="0 0 24 24">
+            <title>x</title>
+            <path d="M5.293 6.707l5.293 5.293-5.293 5.293c-0.391 0.391-0.391 1.024 0 1.414s1.024 0.391 1.414 0l5.293-5.293 5.293 5.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-5.293-5.293 5.293-5.293c0.391-0.391 0.391-1.024 0-1.414s-1.024-0.391-1.414 0l-5.293 5.293-5.293-5.293c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414z"></path>
+        </symbol>
+        <symbol id="icon-clock" viewBox="0 0 32 32">
+            <title>clock</title>
+            <path d="M17.44 16.32v1.76h-8.64v-1.76h6.88v-10.56h1.76v10.56zM16 32c-8.837 0-16-7.163-16-16s7.163-16 16-16c8.837 0 16 7.163 16 16s-7.163 16-16 16zM16 28.8c7.069 0 12.8-5.731 12.8-12.8s-5.731-12.8-12.8-12.8c-7.069 0-12.8 5.731-12.8 12.8s5.731 12.8 12.8 12.8z"></path>
+        </symbol>
+        <symbol id="icon-calendar" viewBox="0 0 32 32">
+            <title>calendar</title>
+            <path d="M18.982 7.19v-5.958c0-0.68 0.548-1.232 1.225-1.232h3.674c0.676 0 1.225 0.552 1.225 1.232v3.388h5.455c0.707 0 1.28 0.573 1.28 1.28v24.255c0 1.019-0.822 1.845-1.837 1.845h-28.166c-1.014 0-1.837-0.826-1.837-1.845v-24.255c0-0.707 0.573-1.28 1.28-1.28h5.455v1.285-4.673c0-0.68 0.548-1.232 1.225-1.232h3.674c0.676 0 1.225 0.552 1.225 1.232v3.388h6.123v2.57zM12.32 30.77v-5.090h-5.12v5.090h5.12zM13.28 30.77h5.28v-5.090h-5.28v5.090zM19.52 30.77h5.12v-5.090h-5.12v5.090zM25.6 30.77h4.403c0.338 0 0.612-0.275 0.612-0.615v-4.475h-5.015v5.090zM30.615 24.72v-5.28h-5.015v5.28h5.015zM30.615 18.48v-4.93h-5.015v4.93h5.015zM24.64 13.55h-5.12v4.93h5.12v-4.93zM18.56 13.55h-5.28v4.93h5.28v-4.93zM12.32 13.55h-5.12v4.93h5.12v-4.93zM6.24 13.55h-5.015v4.93h5.015v-4.93zM1.225 19.44v5.28h5.015v-5.28h-5.015zM1.225 25.68v4.475c0 0.34 0.274 0.615 0.612 0.615h4.403v-5.090h-5.015zM7.2 24.72h5.12v-5.28h-5.12v5.28zM24.64 19.44h-5.12v5.28h5.12v-5.28zM18.56 19.44h-5.28v5.28h5.28v-5.28zM8.113 1.386v6.468h3.368v-6.468h-3.368zM20.359 1.386v6.468h3.368v-6.468h-3.368z"></path>
+        </symbol>
+        <symbol id="icon-play-button" viewBox="0 0 32 32">
+            <title>play-button</title>
+            <path d="M16 32c-8.837 0-16-7.163-16-16s7.163-16 16-16c8.837 0 16 7.163 16 16s-7.163 16-16 16zM22.88 16l-11.2-7.040v14.080l11.2-7.040z"></path>
+        </symbol>
+        <symbol id="icon-cancel-circle" viewBox="0 0 32 32">
+            <title>cancel-circle</title>
+            <path d="M16 0c-8.837 0-16 7.163-16 16s7.163 16 16 16 16-7.163 16-16-7.163-16-16-16zM16 29c-7.18 0-13-5.82-13-13s5.82-13 13-13 13 5.82 13 13-5.82 13-13 13z"></path>
+            <path d="M21 8l-5 5-5-5-3 3 5 5-5 5 3 3 5-5 5 5 3-3-5-5 5-5z"></path>
+        </symbol>
+        <symbol id="icon-user" viewBox="0 0 32 32">
+            <title>user</title>
+            <path d="M18 22.082v-1.649c2.203-1.241 4-4.337 4-7.432 0-4.971 0-9-6-9s-6 4.029-6 9c0 3.096 1.797 6.191 4 7.432v1.649c-6.784 0.555-12 3.888-12 7.918h28c0-4.030-5.216-7.364-12-7.918z"></path>
+        </symbol>
+    </defs>
+</svg>
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;"
+     version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <symbol id="icon-twitter" viewBox="0 0 26 28">
+            <title>twitter</title>
+            <path d="M25.312 6.375c-0.688 1-1.547 1.891-2.531 2.609 0.016 0.219 0.016 0.438 0.016 0.656 0 6.672-5.078 14.359-14.359 14.359-2.859 0-5.516-0.828-7.75-2.266 0.406 0.047 0.797 0.063 1.219 0.063 2.359 0 4.531-0.797 6.266-2.156-2.219-0.047-4.078-1.5-4.719-3.5 0.313 0.047 0.625 0.078 0.953 0.078 0.453 0 0.906-0.063 1.328-0.172-2.312-0.469-4.047-2.5-4.047-4.953v-0.063c0.672 0.375 1.453 0.609 2.281 0.641-1.359-0.906-2.25-2.453-2.25-4.203 0-0.938 0.25-1.797 0.688-2.547 2.484 3.062 6.219 5.063 10.406 5.281-0.078-0.375-0.125-0.766-0.125-1.156 0-2.781 2.25-5.047 5.047-5.047 1.453 0 2.766 0.609 3.687 1.594 1.141-0.219 2.234-0.641 3.203-1.219-0.375 1.172-1.172 2.156-2.219 2.781 1.016-0.109 2-0.391 2.906-0.781z"></path>
+        </symbol>
+        <symbol id="icon-facebook" viewBox="0 0 16 28">
+            <title>facebook</title>
+            <path d="M14.984 0.187v4.125h-2.453c-1.922 0-2.281 0.922-2.281 2.25v2.953h4.578l-0.609 4.625h-3.969v11.859h-4.781v-11.859h-3.984v-4.625h3.984v-3.406c0-3.953 2.422-6.109 5.953-6.109 1.687 0 3.141 0.125 3.563 0.187z"></path>
+        </symbol>
+        <symbol id="icon-youtube" viewBox="0 0 28 28">
+            <title>youtube</title>
+            <path d="M11.109 17.625l7.562-3.906-7.562-3.953v7.859zM14 4.156c5.891 0 9.797 0.281 9.797 0.281 0.547 0.063 1.75 0.063 2.812 1.188 0 0 0.859 0.844 1.109 2.781 0.297 2.266 0.281 4.531 0.281 4.531v2.125s0.016 2.266-0.281 4.531c-0.25 1.922-1.109 2.781-1.109 2.781-1.062 1.109-2.266 1.109-2.812 1.172 0 0-3.906 0.297-9.797 0.297v0c-7.281-0.063-9.516-0.281-9.516-0.281-0.625-0.109-2.031-0.078-3.094-1.188 0 0-0.859-0.859-1.109-2.781-0.297-2.266-0.281-4.531-0.281-4.531v-2.125s-0.016-2.266 0.281-4.531c0.25-1.937 1.109-2.781 1.109-2.781 1.062-1.125 2.266-1.125 2.812-1.188 0 0 3.906-0.281 9.797-0.281v0z"></path>
+        </symbol>
+        <symbol id="icon-instagram" viewBox="0 0 24 28">
+            <title>instagram</title>
+            <path d="M16 14c0-2.203-1.797-4-4-4s-4 1.797-4 4 1.797 4 4 4 4-1.797 4-4zM18.156 14c0 3.406-2.75 6.156-6.156 6.156s-6.156-2.75-6.156-6.156 2.75-6.156 6.156-6.156 6.156 2.75 6.156 6.156zM19.844 7.594c0 0.797-0.641 1.437-1.437 1.437s-1.437-0.641-1.437-1.437 0.641-1.437 1.437-1.437 1.437 0.641 1.437 1.437zM12 4.156c-1.75 0-5.5-0.141-7.078 0.484-0.547 0.219-0.953 0.484-1.375 0.906s-0.688 0.828-0.906 1.375c-0.625 1.578-0.484 5.328-0.484 7.078s-0.141 5.5 0.484 7.078c0.219 0.547 0.484 0.953 0.906 1.375s0.828 0.688 1.375 0.906c1.578 0.625 5.328 0.484 7.078 0.484s5.5 0.141 7.078-0.484c0.547-0.219 0.953-0.484 1.375-0.906s0.688-0.828 0.906-1.375c0.625-1.578 0.484-5.328 0.484-7.078s0.141-5.5-0.484-7.078c-0.219-0.547-0.484-0.953-0.906-1.375s-0.828-0.688-1.375-0.906c-1.578-0.625-5.328-0.484-7.078-0.484zM24 14c0 1.656 0.016 3.297-0.078 4.953-0.094 1.922-0.531 3.625-1.937 5.031s-3.109 1.844-5.031 1.937c-1.656 0.094-3.297 0.078-4.953 0.078s-3.297 0.016-4.953-0.078c-1.922-0.094-3.625-0.531-5.031-1.937s-1.844-3.109-1.937-5.031c-0.094-1.656-0.078-3.297-0.078-4.953s-0.016-3.297 0.078-4.953c0.094-1.922 0.531-3.625 1.937-5.031s3.109-1.844 5.031-1.937c1.656-0.094 3.297-0.078 4.953-0.078s3.297-0.016 4.953 0.078c1.922 0.094 3.625 0.531 5.031 1.937s1.844 3.109 1.937 5.031c0.094 1.656 0.078 3.297 0.078 4.953z"></path>
+        </symbol>
+        <symbol id="icon-email" viewBox="0 0 28 28">
+            <title>email</title>
+            <path d="M28 11.094v12.406c0 1.375-1.125 2.5-2.5 2.5h-23c-1.375 0-2.5-1.125-2.5-2.5v-12.406c0.469 0.516 1 0.969 1.578 1.359 2.594 1.766 5.219 3.531 7.766 5.391 1.313 0.969 2.938 2.156 4.641 2.156h0.031c1.703 0 3.328-1.188 4.641-2.156 2.547-1.844 5.172-3.625 7.781-5.391 0.562-0.391 1.094-0.844 1.563-1.359zM28 6.5c0 1.75-1.297 3.328-2.672 4.281-2.438 1.687-4.891 3.375-7.313 5.078-1.016 0.703-2.734 2.141-4 2.141h-0.031c-1.266 0-2.984-1.437-4-2.141-2.422-1.703-4.875-3.391-7.297-5.078-1.109-0.75-2.688-2.516-2.688-3.938 0-1.531 0.828-2.844 2.5-2.844h23c1.359 0 2.5 1.125 2.5 2.5z"></path>
+        </symbol>
+        <symbol id="icon-linkedin" viewBox="0 0 382 382">
+            <title>linkedin</title>
+            <path d="M347.445 0H34.555C15.471 0 0 15.471 0 34.555v312.889C0 366.529 15.471 382 34.555 382h312.889C366.529 382 382 366.529 382 347.444V34.555C382 15.471 366.529 0 347.445 0zM118.207 329.844c0 5.554-4.502 10.056-10.056 10.056H65.345c-5.554 0-10.056-4.502-10.056-10.056V150.403c0-5.554 4.502-10.056 10.056-10.056h42.806c5.554 0 10.056 4.502 10.056 10.056v179.441zM86.748 123.432c-22.459 0-40.666-18.207-40.666-40.666S64.289 42.1 86.748 42.1s40.666 18.207 40.666 40.666-18.206 40.666-40.666 40.666zM341.91 330.654a9.247 9.247 0 01-9.246 9.246H286.73a9.247 9.247 0 01-9.246-9.246v-84.168c0-12.556 3.683-55.021-32.813-55.021-28.309 0-34.051 29.066-35.204 42.11v97.079a9.246 9.246 0 01-9.246 9.246h-44.426a9.247 9.247 0 01-9.246-9.246V149.593a9.247 9.247 0 019.246-9.246h44.426a9.247 9.247 0 019.246 9.246v15.655c10.497-15.753 26.097-27.912 59.312-27.912 73.552 0 73.131 68.716 73.131 106.472v86.846z" fill="#0077b7"/>
+        </symbol>
+    </defs>
+</svg>
+
+<div id="secondary-menu" class="navbar-collapse navbar__off-canvas"><ul id="menu-hamburger-menu" class="navbar__menu"><li id="menu-item-3509" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-3509 nav-item"><a href="https://kvia.com/">Home</a></li>
+<li id="menu-item-7783" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-7783 nav-item dropdown"><a href="https://kvia.com/news/">News</a><button class="dropdown__submenu-toggle btn btn--default" data-toggle="off-canvas-submenu-dropdown" role="button" aria-haspopup="true" aria-expanded="true"><svg class="icon icon-chevron-up"><use xlink:href="#icon-chevron-up"></use></svg></button>
+<ul role="menu" class="dropdown__menu ">
+	<li id="menu-item-5677" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-5677 nav-item"><a href="https://kvia.com/category/news/el-paso/">El Paso</a></li>
+	<li id="menu-item-5678" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-5678 nav-item"><a href="https://kvia.com/category/news/new-mexico/">New Mexico</a></li>
+	<li id="menu-item-5679" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-5679 nav-item"><a href="https://kvia.com/category/news/texas/">Texas</a></li>
+	<li id="menu-item-5686" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-5686 nav-item"><a href="https://kvia.com/category/news/border/">Border/Mexico</a></li>
+	<li id="menu-item-5687" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-5687 nav-item"><a href="https://kvia.com/category/news/us-world/">US/World</a></li>
+	<li id="menu-item-379014" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-379014 nav-item"><a href="https://kvia.com/category/your-voice-your-vote/politics/">Politics</a></li>
+	<li id="menu-item-379015" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-379015 nav-item"><a href="https://kvia.com/category/news/business-technology/">Biz/Tech</a></li>
+	<li id="menu-item-5689" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-5689 nav-item"><a href="https://kvia.com/category/news/crime/">Crime</a></li>
+	<li id="menu-item-5690" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-5690 nav-item"><a href="https://kvia.com/category/news/education/">Education</a></li>
+	<li id="menu-item-5691" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-5691 nav-item"><a href="https://kvia.com/category/news/military/">Military-Fort Bliss</a></li>
+	<li id="menu-item-379018" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-379018 nav-item"><a href="https://kvia.com/category/entertainment/">Entertainment</a></li>
+	<li id="menu-item-5688" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-5688 nav-item"><a href="https://kvia.com/category/news/abc-7-xtra/">ABC-7 Xtra</a></li>
+	<li id="menu-item-379011" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-379011 nav-item"><a href="https://kvia.com/category/news/noticias/">Noticias</a></li>
+</ul>
+</li>
+<li id="menu-item-3506" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-3506 nav-item dropdown"><a href="https://kvia.com/weather/">Weather</a><button class="dropdown__submenu-toggle btn btn--default" data-toggle="off-canvas-submenu-dropdown" role="button" aria-haspopup="true" aria-expanded="true"><svg class="icon icon-chevron-up"><use xlink:href="#icon-chevron-up"></use></svg></button>
+<ul role="menu" class="dropdown__menu ">
+	<li id="menu-item-11345" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11345 nav-item"><a href="https://kvia.com/weather/abc-7-stormtrack-doppler/">ABC-7 StormTrack Doppler</a></li>
+</ul>
+</li>
+<li id="menu-item-3505" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-3505 nav-item dropdown"><a href="https://kvia.com/traffic/">Traffic</a><button class="dropdown__submenu-toggle btn btn--default" data-toggle="off-canvas-submenu-dropdown" role="button" aria-haspopup="true" aria-expanded="true"><svg class="icon icon-chevron-up"><use xlink:href="#icon-chevron-up"></use></svg></button>
+<ul role="menu" class="dropdown__menu ">
+	<li id="menu-item-9327" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-9327 nav-item"><a href="https://kvia.com/traffic/bridge-wait-times/">Bridge Wait Times</a></li>
+	<li id="menu-item-9325" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-9325 nav-item"><a href="https://kvia.com/traffic/cameras/">Cameras</a></li>
+	<li id="menu-item-9326" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-9326 nav-item"><a href="https://kvia.com/traffic/gas-prices/">Gas Prices</a></li>
+</ul>
+</li>
+<li id="menu-item-384294" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-384294 nav-item dropdown"><a href="https://kvia.com/sports/">Sports</a><button class="dropdown__submenu-toggle btn btn--default" data-toggle="off-canvas-submenu-dropdown" role="button" aria-haspopup="true" aria-expanded="true"><svg class="icon icon-chevron-up"><use xlink:href="#icon-chevron-up"></use></svg></button>
+<ul role="menu" class="dropdown__menu ">
+	<li id="menu-item-5693" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-5693 nav-item"><a href="https://kvia.com/category/sports/borderland-blitz/">Borderland Blitz</a></li>
+	<li id="menu-item-5695" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-5695 nav-item"><a href="https://kvia.com/category/sports/utep/">UTEP</a></li>
+	<li id="menu-item-5694" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-5694 nav-item"><a href="https://kvia.com/category/sports/nmsu/">NMSU</a></li>
+	<li id="menu-item-19338" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-19338 nav-item"><a href="https://kvia.com/category/sports/el-paso-chihuahuas/">El Paso Chihuahuas</a></li>
+	<li id="menu-item-19339" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-19339 nav-item"><a href="https://kvia.com/category/sports/locomotive-fc/">Locomotive FC</a></li>
+	<li id="menu-item-19336" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-19336 nav-item"><a href="https://kvia.com/category/sports/texas-sports/">Texas Sports</a></li>
+	<li id="menu-item-19337" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-19337 nav-item"><a href="https://kvia.com/category/sports/new-mexico-sports/">New Mexico Sports</a></li>
+</ul>
+</li>
+<li id="menu-item-9723" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-9723 nav-item dropdown"><a href="https://kvia.com/your-voice-your-vote/">Your Voice, Your Vote</a><button class="dropdown__submenu-toggle btn btn--default" data-toggle="off-canvas-submenu-dropdown" role="button" aria-haspopup="true" aria-expanded="true"><svg class="icon icon-chevron-up"><use xlink:href="#icon-chevron-up"></use></svg></button>
+<ul role="menu" class="dropdown__menu ">
+	<li id="menu-item-5697" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-5697 nav-item"><a href="https://kvia.com/category/your-voice-your-vote/politics/">Politics</a></li>
+	<li id="menu-item-5698" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-5698 nav-item"><a href="https://kvia.com/category/your-voice-your-vote/campaign-2020/">Campaign 2020</a></li>
+	<li id="menu-item-19342" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-19342 nav-item"><a href="https://kvia.com/category/your-voice-your-vote/texas-politics/">Texas Politics</a></li>
+	<li id="menu-item-19343" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-19343 nav-item"><a href="https://kvia.com/category/your-voice-your-vote/new-mexico-politics/">New Mexico Politics</a></li>
+</ul>
+</li>
+<li id="menu-item-14057" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-14057 nav-item dropdown"><a href="https://kvia.com/video-galleries/">Video &#038; Galleries</a><button class="dropdown__submenu-toggle btn btn--default" data-toggle="off-canvas-submenu-dropdown" role="button" aria-haspopup="true" aria-expanded="true"><svg class="icon icon-chevron-up"><use xlink:href="#icon-chevron-up"></use></svg></button>
+<ul role="menu" class="dropdown__menu ">
+	<li id="menu-item-10786" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10786 nav-item"><a href="https://kvia.com/livestream-newscasts/">Livestream Newscasts</a></li>
+	<li id="menu-item-10785" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10785 nav-item"><a href="https://kvia.com/livestream-events/">Livestream Events</a></li>
+	<li id="menu-item-379013" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-379013 nav-item"><a href="https://kvia.com/abc-news-live/">ABC News LIVE</a></li>
+	<li id="menu-item-379012" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-379012 nav-item"><a href="https://kvia.com/category/news/abc-7-xtra/">ABC-7 Xtra</a></li>
+	<li id="menu-item-92732" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-92732 nav-item"><a href="https://kvia.com/el-paso-mugshot-photos/">El Paso Mugshot Photos</a></li>
+</ul>
+</li>
+<li id="menu-item-10115" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-10115 nav-item dropdown"><a href="https://kvia.com/health/">Health</a><button class="dropdown__submenu-toggle btn btn--default" data-toggle="off-canvas-submenu-dropdown" role="button" aria-haspopup="true" aria-expanded="true"><svg class="icon icon-chevron-up"><use xlink:href="#icon-chevron-up"></use></svg></button>
+<ul role="menu" class="dropdown__menu ">
+	<li id="menu-item-9738" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9738 nav-item"><a href="https://kvia.com/category/health/">Health Headlines</a></li>
+	<li id="menu-item-14065" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-14065 nav-item"><a href="https://kvia.com/health/keepabreast/">Keep Abreast</a></li>
+	<li id="menu-item-9366" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-9366 nav-item"><a href="https://kvia.com/las-palmas-del-sol-healthcare/">Las Palmas del Sol Healthcare</a></li>
+	<li id="menu-item-256084" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-256084 nav-item"><a href="https://kvia.com/el-paso-cosmetic-surgery/">El Paso Cosmetic Surgery</a></li>
+</ul>
+</li>
+<li id="menu-item-3503" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-3503 nav-item dropdown"><a href="https://kvia.com/life/">Life</a><button class="dropdown__submenu-toggle btn btn--default" data-toggle="off-canvas-submenu-dropdown" role="button" aria-haspopup="true" aria-expanded="true"><svg class="icon icon-chevron-up"><use xlink:href="#icon-chevron-up"></use></svg></button>
+<ul role="menu" class="dropdown__menu ">
+	<li id="menu-item-401625" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-401625 nav-item"><a href="https://kvia.com/business-matters/">Business Matters</a></li>
+	<li id="menu-item-396403" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-396403 nav-item"><a href="https://kvia.com/house-home/">House &#038; Home</a></li>
+	<li id="menu-item-391595" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-391595 nav-item"><a href="https://kvia.com/your-money/">Your Money</a></li>
+	<li id="menu-item-374063" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-374063 nav-item"><a href="https://kvia.com/seniorssalute2020/">Seniors Salute 2020</a></li>
+	<li id="menu-item-5701" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-5701 nav-item"><a href="https://kvia.com/category/entertainment/">Entertainment</a></li>
+	<li id="menu-item-342888" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-342888 nav-item"><a href="https://kvia.com/safe-at-home/">Safe at Home</a></li>
+	<li id="menu-item-369354" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-369354 nav-item"><a href="https://kvia.com/life/mothers-day/">Mother&#8217;s Day</a></li>
+	<li id="menu-item-204031" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-204031 nav-item"><a href="https://kvia.com/local-focus/">Local Focus</a></li>
+	<li id="menu-item-412954" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-412954 nav-item"><a href="https://kvia.com/local-focus/budweiser-legacies/">Budweiser Legacies</a></li>
+	<li id="menu-item-9741" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9741 nav-item"><a href="https://kvia.com/category/lifestyle/community-champions/">Community Champions</a></li>
+	<li id="menu-item-9239" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-9239 nav-item"><a href="http://events.kvia.com">Events Calendar</a></li>
+	<li id="menu-item-110596" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-110596 nav-item"><a href="https://kvia.com/category/lifestyle/sunday-funday/">Sunday Funday</a></li>
+</ul>
+</li>
+<li id="menu-item-12730" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-12730 nav-item dropdown"><a href="https://kvia.com/shop/">Shop</a><button class="dropdown__submenu-toggle btn btn--default" data-toggle="off-canvas-submenu-dropdown" role="button" aria-haspopup="true" aria-expanded="true"><svg class="icon icon-chevron-up"><use xlink:href="#icon-chevron-up"></use></svg></button>
+<ul role="menu" class="dropdown__menu ">
+	<li id="menu-item-323951" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-323951 nav-item"><a href="https://elpaso.open4biz.us/">Open4Biz</a></li>
+	<li id="menu-item-12745" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-12745 nav-item"><a href="https://kvia.com/ask-the-expert/">Ask The Expert</a></li>
+</ul>
+</li>
+<li id="menu-item-3502" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-3502 nav-item dropdown"><a href="https://kvia.com/play/">Play</a><button class="dropdown__submenu-toggle btn btn--default" data-toggle="off-canvas-submenu-dropdown" role="button" aria-haspopup="true" aria-expanded="true"><svg class="icon icon-chevron-up"><use xlink:href="#icon-chevron-up"></use></svg></button>
+<ul role="menu" class="dropdown__menu ">
+	<li id="menu-item-9719" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9719 nav-item"><a href="https://kvia.com/category/entertainment/">Entertainment</a></li>
+</ul>
+</li>
+<li id="menu-item-3501" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-3501 nav-item dropdown"><a href="https://kvia.com/share/">Share</a><button class="dropdown__submenu-toggle btn btn--default" data-toggle="off-canvas-submenu-dropdown" role="button" aria-haspopup="true" aria-expanded="true"><svg class="icon icon-chevron-up"><use xlink:href="#icon-chevron-up"></use></svg></button>
+<ul role="menu" class="dropdown__menu ">
+	<li id="menu-item-9264" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-9264 nav-item"><a href="/share/">Submit Tips, Pics and Video</a></li>
+</ul>
+</li>
+<li id="menu-item-6828" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-6828 nav-item dropdown"><a href="https://kvia.com/about-us/">About Us</a><button class="dropdown__submenu-toggle btn btn--default" data-toggle="off-canvas-submenu-dropdown" role="button" aria-haspopup="true" aria-expanded="true"><svg class="icon icon-chevron-up"><use xlink:href="#icon-chevron-up"></use></svg></button>
+<ul role="menu" class="dropdown__menu ">
+	<li id="menu-item-6834" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6834 nav-item"><a href="https://kvia.com/about-us/contact-kvia/">Contact KVIA</a></li>
+	<li id="menu-item-20717" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-20717 nav-item"><a href="https://kvia.com/about-us/people-of-abc-7/">People of ABC-7</a></li>
+	<li id="menu-item-6833" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6833 nav-item"><a href="https://kvia.com/about-us/report-programming-technical-closed-captioning-issues/">Closed Captioning</a></li>
+	<li id="menu-item-9718" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-9718 nav-item"><a href="https://s3.us-east-1.wasabisys.com/kvia.com/2020/04/2020-fcc-eeo-annual-report-20200401-152053686-pdf.pdf">EEO Public Filing</a></li>
+	<li id="menu-item-6847" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6847 nav-item"><a href="https://publicfiles.fcc.gov/tv-profile/kvia-tv">FCC Public File</a></li>
+	<li id="menu-item-6848" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6848 nav-item"><a href="https://recruiting.adp.com/srccar/public/RTI.home?c=1059541&#038;d=External-Corporate&#038;city=%22El%20Paso%22">KVIA Jobs and Internships</a></li>
+	<li id="menu-item-6832" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6832 nav-item"><a href="https://kvia.com/about-us/download-our-apps/">Download Our Apps</a></li>
+	<li id="menu-item-6829" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6829 nav-item"><a href="https://kvia.com/about-us/history-of-kvia-abc-7/">History of KVIA ABC-7</a></li>
+	<li id="menu-item-9263" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-9263 nav-item"><a href="https://kvia.com/about-us/tv-listings/">TV Listings</a></li>
+</ul>
+</li>
+</ul></div>
+<a href="#primary" class="screen-reader-text">Skip to Content</a>
+
+<header id="masthead" class="header header--default" role="banner">
+        <div class="header__wrapper">
+        <div class="container">
+            <nav class="navbar navbar--with-current-conditions">
+                <div class="navbar__wrapper">
+                    <button class="navbar__toggle off-canvas-toggle hamburger hamburger--slider" type="button"
+                            aria-label="Secondary Menu" aria-controls="navigation"
+                            data-toggle="off-canvas-menu">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
+                    </button>
+                    <a class="navbar__brand" href="https://kvia.com/" title="KVIA">
+                        <img src="https://kvia.com/wp-content/uploads/2020/05/kvia-header.png" alt="kvia-header" width="120" height="100" class="navbar__logo">                    </a>
+                    <button class="navbar__toggle hamburger hamburger--slider" type="button"
+                            aria-label="Menu" aria-controls="navigation"
+                            data-toggle="mobile-menu">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
+                    </button>
+                    <div id="primary-menu" class="navbar__menu-wrapper"><ul id="menu-main-menu" class="navbar__menu navbar__menu--has-search"><li id="menu-item-8181" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8181 nav-item"><a href="https://kvia.com/news/">News</a></li>
+<li id="menu-item-395" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-395 nav-item"><a href="https://kvia.com/weather/">Weather</a></li>
+<li id="menu-item-394" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-394 nav-item"><a href="https://kvia.com/traffic/">Traffic</a></li>
+<li id="menu-item-329558" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-329558 nav-item"><a href="https://elpaso.open4biz.us/">Open4Biz</a></li>
+<li id="menu-item-392" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-392 nav-item"><a href="https://kvia.com/life/">Life</a></li>
+<li id="menu-item-12746" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-12746 nav-item"><a href="https://kvia.com/shop/">Shop</a></li>
+<li id="menu-item-391" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-391 nav-item"><a href="https://kvia.com/play/">Play</a></li>
+<li id="menu-item-390" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-390 nav-item"><a href="https://kvia.com/share/">Share</a></li>
+<li class="menu-item menu-livestream-button menu-livestream-button--not-live">
+                <a href="https://kvia.com/livestream-newscasts/">Watch</a>
+            </li></ul></div>                    
+<div class="current-conditions current-conditions--header">
+    <div class="current-conditions__slides">
+
+                    <a href="https://kvia.com/weather" target="_blank" class="current-conditions__location">
+                <div class="current-conditions__content" data-slide-number="0" data-location-id="kelp">
+                    <div class="current-conditions__condition">
+
+                                                                                <div class="current-conditions__condition-icon">
+                               <img src="https://kvia.com/wp-content/themes/storymate-npg/assets/images/weather-icons/9002_mostly%20clear_day.png" alt="mostly clear"> 
+                            </div>
+                        
+                    </div>
+                    <div class="current-conditions__title" style="color:#212121">
+                        El Paso                    </div>
+                                            <div class="current-conditions__temperature" style="color:#212121">
+                            92&deg;
+                        </div>
+                                    </div>
+            </a>
+        
+    </div>
+</div>
+
+                    <div class="menu-user-search-wrapper">
+                                                <div class="menu-search">
+                            <a href="#" id="search-btn" class="search__button"><svg class="icon icon-search"><use xlink:href="#icon-search"></use></svg><svg class="icon icon-x"><use xlink:href="#icon-x"></use></svg></a>                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="header__search" id="search-form">
+    <div class="container">
+        
+<form role="search" method="get" id="searchform" class="searchform" action="https://kvia.com">
+    <div class="form-group">
+        <div class="searchform__input-group input-group">
+            <input type="text" class="form-control text--weight-bold"
+                   placeholder="Search…"
+                   value="" name="s"
+                   title="Search for:"/>
+            <div class="searchform__submit input-group-btn">
+                <button class="btn btn--search" type="submit">
+                    <svg class="icon icon-search"><use xlink:href="#icon-search"></use></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</form>    </div>
+</div>
+    </div>
+</header><!-- .header -->
+
+
+    <div class="container">
+        <div class="row">
+            <div id="primary" class="primary panel col-lg-8">
+                <div class="panel__heading">
+                    <h1 class="panel__title hdg hdg--3">
+                        US &amp; World                    </h1>
+                </div>
+                <div class="stories stories--row">
+                    
+<article id="post-98456" class="story story--row post-98456 post type-post status-publish format-image has-post-thumbnail hentry category-us-world post_format-post-format-image">
+
+            <a href="https://kvia.com/news/us-world/2019/12/05/a-5-year-old-boys-entire-kindergarten-class-showed-up-for-his-adoption-hearing/" class="story__thumb-link">
+            <div class="story__thumb">
+                <img width="500" height="375" src="https://kvia.b-cdn.net/2019/12/hypatia-h_ec8697c7afde5c966c9a5b31c6c07383-h_86a71abcb837b2370c8d9b8c1069f089_preview-1.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" />            </div>
+        </a>
+    
+    <div class="story__content">
+        
+        <header class="story__header">
+            <h3 class="story__title hdg hdg--4">
+                <a href="https://kvia.com/news/us-world/2019/12/05/a-5-year-old-boys-entire-kindergarten-class-showed-up-for-his-adoption-hearing/" rel="bookmark">
+                    A 5-year-old boy&#8217;s entire kindergarten class showed up for his adoption hearing                </a>
+            </h3>
+
+                    </header>
+
+        
+        <div class="story__meta meta">
+                                            <span class="meta__date">
+                    <time datetime="2019-12-05" class="meta__date">
+                        <a href="https://kvia.com/2019/12/">
+                            December 5, 2019                        </a>
+                    </time>
+                </span>
+                <span class="meta__time">
+                    10:34 pm                </span>
+                <span class="meta__user vcard author">
+                    <a href="https://kvia.com/author/cnn/" title="Posts by CNN" rel="author">CNN</a>                </span>
+            
+                    </div>
+
+        <div class="story__excerpt">
+            <p>A boy in Michigan showed up at the courthouse in Grand Rapids, Michigan, on Thursday for an adoption hearing with his foster parents, and he had a&hellip;</p>
+            <a class="story__continue" href="https://kvia.com/news/us-world/2019/12/05/a-5-year-old-boys-entire-kindergarten-class-showed-up-for-his-adoption-hearing/"
+               rel="bookmark">Continue Reading</a>
+        </div>
+    </div>
+
+</article><!-- #post-## -->
+
+<article id="post-98560" class="story story--row post-98560 post type-post status-publish format-standard has-post-thumbnail hentry category-us-world">
+
+            <a href="https://kvia.com/news/us-world/2019/12/05/a-clash-between-two-giants-each-carving-their-name-in-history/" class="story__thumb-link">
+            <div class="story__thumb">
+                <img width="1024" height="576" src="https://kvia.b-cdn.net/2019/10/featured-us-world.jpeg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" />            </div>
+        </a>
+    
+    <div class="story__content">
+        
+        <header class="story__header">
+            <h3 class="story__title hdg hdg--4">
+                <a href="https://kvia.com/news/us-world/2019/12/05/a-clash-between-two-giants-each-carving-their-name-in-history/" rel="bookmark">
+                    A clash between two giants, each carving their name in history                </a>
+            </h3>
+
+                    </header>
+
+        
+        <div class="story__meta meta">
+                                            <span class="meta__date">
+                    <time datetime="2019-12-05" class="meta__date">
+                        <a href="https://kvia.com/2019/12/">
+                            December 5, 2019                        </a>
+                    </time>
+                </span>
+                <span class="meta__time">
+                    10:21 pm                </span>
+                <span class="meta__user vcard author">
+                    <a href="https://kvia.com/author/cnn/" title="Posts by CNN" rel="author">CNN</a>                </span>
+            
+                    </div>
+
+        <div class="story__excerpt">
+            <p>At the center of the US impeachment imbroglio is a clash between two giants, each carving their name in history. On one end of Pennsylvania Avenue is&hellip;</p>
+            <a class="story__continue" href="https://kvia.com/news/us-world/2019/12/05/a-clash-between-two-giants-each-carving-their-name-in-history/"
+               rel="bookmark">Continue Reading</a>
+        </div>
+    </div>
+
+</article><!-- #post-## -->
+
+<article id="post-97145" class="story story--row post-97145 post type-post status-publish format-image has-post-thumbnail hentry category-us-world post_format-post-format-image">
+
+            <a href="https://kvia.com/news/us-world/2019/12/05/another-tennessee-murderer-chooses-electric-chair-over-lethal-injection/" class="story__thumb-link">
+            <div class="story__thumb">
+                <img width="500" height="345" src="https://kvia.b-cdn.net/2019/12/hypatia-h_36b595b7e88ebc1caa0b297a6f7b6e00-h_0bef5baa72d6698f4e8cd59126f70626_preview-4.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" />            </div>
+        </a>
+    
+    <div class="story__content">
+        
+        <header class="story__header">
+            <h3 class="story__title hdg hdg--4">
+                <a href="https://kvia.com/news/us-world/2019/12/05/another-tennessee-murderer-chooses-electric-chair-over-lethal-injection/" rel="bookmark">
+                    Tennessee murderer Lee Hall put to death by electric chair                </a>
+            </h3>
+
+                    </header>
+
+        
+        <div class="story__meta meta">
+                                            <span class="meta__date">
+                    <time datetime="2019-12-05" class="meta__date">
+                        <a href="https://kvia.com/2019/12/">
+                            December 5, 2019                        </a>
+                    </time>
+                </span>
+                <span class="meta__time">
+                    8:43 pm                </span>
+                <span class="meta__user vcard author">
+                    <a href="https://kvia.com/author/cnn/" title="Posts by CNN" rel="author">CNN</a>                </span>
+            
+                    </div>
+
+        <div class="story__excerpt">
+            <p>Lee Hall, convicted of killing his ex-girlfriend nearly three decades ago, was executed by the state of Tennessee on Thursday night, the Department&hellip;</p>
+            <a class="story__continue" href="https://kvia.com/news/us-world/2019/12/05/another-tennessee-murderer-chooses-electric-chair-over-lethal-injection/"
+               rel="bookmark">Continue Reading</a>
+        </div>
+    </div>
+
+</article><!-- #post-## -->
+
+<article id="post-98468" class="story story--row post-98468 post type-post status-publish format-standard has-post-thumbnail hentry category-us-world">
+
+            <a href="https://kvia.com/news/us-world/2019/12/05/r-kellys-girlfriend-joycelyn-savage-says-patreon-account-denouncing-him-was-fake/" class="story__thumb-link">
+            <div class="story__thumb">
+                <img width="1024" height="576" src="https://kvia.b-cdn.net/2019/10/featured-us-world.jpeg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" />            </div>
+        </a>
+    
+    <div class="story__content">
+        
+        <header class="story__header">
+            <h3 class="story__title hdg hdg--4">
+                <a href="https://kvia.com/news/us-world/2019/12/05/r-kellys-girlfriend-joycelyn-savage-says-patreon-account-denouncing-him-was-fake/" rel="bookmark">
+                    R. Kelly&#8217;s girlfriend Joycelyn Savage says Patreon account denouncing him was fake                </a>
+            </h3>
+
+                    </header>
+
+        
+        <div class="story__meta meta">
+                                            <span class="meta__date">
+                    <time datetime="2019-12-05" class="meta__date">
+                        <a href="https://kvia.com/2019/12/">
+                            December 5, 2019                        </a>
+                    </time>
+                </span>
+                <span class="meta__time">
+                    7:57 pm                </span>
+                <span class="meta__user vcard author">
+                    <a href="https://kvia.com/author/cnn/" title="Posts by CNN" rel="author">CNN</a>                </span>
+            
+                    </div>
+
+        <div class="story__excerpt">
+            <p>Joycelyn Savage, a girlfriend of R. Kelly, says that the online accounts in her name that attacked the singer are fake. &#8220;I am truly tired of&hellip;</p>
+            <a class="story__continue" href="https://kvia.com/news/us-world/2019/12/05/r-kellys-girlfriend-joycelyn-savage-says-patreon-account-denouncing-him-was-fake/"
+               rel="bookmark">Continue Reading</a>
+        </div>
+    </div>
+
+</article><!-- #post-## -->
+
+<article id="post-98210" class="story story--row post-98210 post type-post status-publish format-image has-post-thumbnail hentry category-us-world post_format-post-format-image">
+
+            <a href="https://kvia.com/news/us-world/2019/12/05/hijacked-ups-truck-leads-florida-police-on-massive-chase-that-ended-in-a-shootout/" class="story__thumb-link">
+            <div class="story__thumb">
+                <img width="500" height="281" src="https://kvia.b-cdn.net/2019/12/hypatia-h_22af331373b2337ef32cef0a0799070f-h_fe08b0c03e53d79de4759f490f1be572_preview-1.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" />            </div>
+        </a>
+    
+    <div class="story__content">
+        
+        <header class="story__header">
+            <h3 class="story__title hdg hdg--4">
+                <a href="https://kvia.com/news/us-world/2019/12/05/hijacked-ups-truck-leads-florida-police-on-massive-chase-that-ended-in-a-shootout/" rel="bookmark">
+                    Hijacked UPS truck led Florida police on a massive chase that ended in a fatal shootout                </a>
+            </h3>
+
+                    </header>
+
+        
+        <div class="story__meta meta">
+                                            <span class="meta__date">
+                    <time datetime="2019-12-05" class="meta__date">
+                        <a href="https://kvia.com/2019/12/">
+                            December 5, 2019                        </a>
+                    </time>
+                </span>
+                <span class="meta__time">
+                    7:32 pm                </span>
+                <span class="meta__user vcard author">
+                    <a href="https://kvia.com/author/cnn/" title="Posts by CNN" rel="author">CNN</a>                </span>
+            
+                    </div>
+
+        <div class="story__excerpt">
+            <p>An armed robbery at a Florida jewelry store Thursday led to the hijacking of a UPS truck and a massive police chase that ended in a fatal shootout in&hellip;</p>
+            <a class="story__continue" href="https://kvia.com/news/us-world/2019/12/05/hijacked-ups-truck-leads-florida-police-on-massive-chase-that-ended-in-a-shootout/"
+               rel="bookmark">Continue Reading</a>
+        </div>
+    </div>
+
+</article><!-- #post-## -->
+
+<article id="post-98143" class="story story--row post-98143 post type-post status-publish format-image has-post-thumbnail hentry category-us-world post_format-post-format-image">
+
+            <a href="https://kvia.com/news/us-world/2019/12/05/a-seasonal-ups-employee-confessed-to-stealing-more-than-1000-worth-of-packages/" class="story__thumb-link">
+            <div class="story__thumb">
+                <img width="500" height="281" src="https://kvia.b-cdn.net/2019/12/hypatia-h_04bb8d777e021baba2eca306a14fd6cb-h_2b1a717dedb8e30590bd4bdad12a53de_preview.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" />            </div>
+        </a>
+    
+    <div class="story__content">
+        
+        <header class="story__header">
+            <h3 class="story__title hdg hdg--4">
+                <a href="https://kvia.com/news/us-world/2019/12/05/a-seasonal-ups-employee-confessed-to-stealing-more-than-1000-worth-of-packages/" rel="bookmark">
+                    A seasonal UPS employee confessed to stealing more than $1,000 worth of packages                </a>
+            </h3>
+
+                    </header>
+
+        
+        <div class="story__meta meta">
+                                            <span class="meta__date">
+                    <time datetime="2019-12-05" class="meta__date">
+                        <a href="https://kvia.com/2019/12/">
+                            December 5, 2019                        </a>
+                    </time>
+                </span>
+                <span class="meta__time">
+                    7:23 pm                </span>
+                <span class="meta__user vcard author">
+                    <a href="https://kvia.com/author/cnn/" title="Posts by CNN" rel="author">CNN</a>                </span>
+            
+                    </div>
+
+        <div class="story__excerpt">
+            <p>A seasonal worker for UPS has been arrested following accusations of package theft. Emmanuel Lamont Reggin Jr. has been charged with third-degree&hellip;</p>
+            <a class="story__continue" href="https://kvia.com/news/us-world/2019/12/05/a-seasonal-ups-employee-confessed-to-stealing-more-than-1000-worth-of-packages/"
+               rel="bookmark">Continue Reading</a>
+        </div>
+    </div>
+
+</article><!-- #post-## -->
+
+<article id="post-98399" class="story story--row post-98399 post type-post status-publish format-standard has-post-thumbnail hentry category-us-world">
+
+            <a href="https://kvia.com/news/us-world/2019/12/05/new-york-city-announces-new-cargo-bike-program-to-ease-traffic-congestion/" class="story__thumb-link">
+            <div class="story__thumb">
+                <img width="1024" height="576" src="https://kvia.b-cdn.net/2019/10/featured-us-world.jpeg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" />            </div>
+        </a>
+    
+    <div class="story__content">
+        
+        <header class="story__header">
+            <h3 class="story__title hdg hdg--4">
+                <a href="https://kvia.com/news/us-world/2019/12/05/new-york-city-announces-new-cargo-bike-program-to-ease-traffic-congestion/" rel="bookmark">
+                    New York City announces new cargo bike program to ease traffic congestion                </a>
+            </h3>
+
+                    </header>
+
+        
+        <div class="story__meta meta">
+                                            <span class="meta__date">
+                    <time datetime="2019-12-05" class="meta__date">
+                        <a href="https://kvia.com/2019/12/">
+                            December 5, 2019                        </a>
+                    </time>
+                </span>
+                <span class="meta__time">
+                    6:54 pm                </span>
+                <span class="meta__user vcard author">
+                    <a href="https://kvia.com/author/cnn/" title="Posts by CNN" rel="author">CNN</a>                </span>
+            
+                    </div>
+
+        <div class="story__excerpt">
+            <p>UPS, Amazon and DHL will be allowed to make deliveries with cargo bikes in lower Manhattan, Mayor Bill de Blasio announced, in a move that&#8217;s&hellip;</p>
+            <a class="story__continue" href="https://kvia.com/news/us-world/2019/12/05/new-york-city-announces-new-cargo-bike-program-to-ease-traffic-congestion/"
+               rel="bookmark">Continue Reading</a>
+        </div>
+    </div>
+
+</article><!-- #post-## -->
+
+<article id="post-98350" class="story story--row post-98350 post type-post status-publish format-standard has-post-thumbnail hentry category-us-world">
+
+            <a href="https://kvia.com/news/us-world/2019/12/05/a-plumber-returning-home-from-work-talked-a-man-off-the-brooklyn-bridge-in-a-snowstorm/" class="story__thumb-link">
+            <div class="story__thumb">
+                <img width="1024" height="576" src="https://kvia.b-cdn.net/2019/10/featured-us-world.jpeg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" />            </div>
+        </a>
+    
+    <div class="story__content">
+        
+        <header class="story__header">
+            <h3 class="story__title hdg hdg--4">
+                <a href="https://kvia.com/news/us-world/2019/12/05/a-plumber-returning-home-from-work-talked-a-man-off-the-brooklyn-bridge-in-a-snowstorm/" rel="bookmark">
+                    A plumber returning home from work talked a man off the Brooklyn Bridge in a snowstorm                </a>
+            </h3>
+
+                    </header>
+
+        
+        <div class="story__meta meta">
+                                            <span class="meta__date">
+                    <time datetime="2019-12-05" class="meta__date">
+                        <a href="https://kvia.com/2019/12/">
+                            December 5, 2019                        </a>
+                    </time>
+                </span>
+                <span class="meta__time">
+                    6:21 pm                </span>
+                <span class="meta__user vcard author">
+                    <a href="https://kvia.com/author/cnn/" title="Posts by CNN" rel="author">CNN</a>                </span>
+            
+                    </div>
+
+        <div class="story__excerpt">
+            <p>A New York plumber was on his way home from work in the middle of a snowstorm Monday afternoon when he saw someone standing on top of one of the&hellip;</p>
+            <a class="story__continue" href="https://kvia.com/news/us-world/2019/12/05/a-plumber-returning-home-from-work-talked-a-man-off-the-brooklyn-bridge-in-a-snowstorm/"
+               rel="bookmark">Continue Reading</a>
+        </div>
+    </div>
+
+</article><!-- #post-## -->
+
+<article id="post-97231" class="story story--row post-97231 post type-post status-publish format-image has-post-thumbnail hentry category-us-world post_format-post-format-image">
+
+            <a href="https://kvia.com/news/us-world/2019/12/05/police-are-searching-for-1-year-old-after-finding-a-woman-dead-in-an-ansonia-connecticut-home/" class="story__thumb-link">
+            <div class="story__thumb">
+                <img width="500" height="282" src="https://kvia.b-cdn.net/2019/12/hypatia-h_5eb59c0ccaff65b16828fb6b7b16a9b1-h_855fcc8cd8fcbfecf71797e4ffb81e60_preview.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" />            </div>
+        </a>
+    
+    <div class="story__content">
+        
+        <header class="story__header">
+            <h3 class="story__title hdg hdg--4">
+                <a href="https://kvia.com/news/us-world/2019/12/05/police-are-searching-for-1-year-old-after-finding-a-woman-dead-in-an-ansonia-connecticut-home/" rel="bookmark">
+                    Police are searching for 1-year-old after finding mother dead in an Ansonia, Connecticut, home                </a>
+            </h3>
+
+                    </header>
+
+        
+        <div class="story__meta meta">
+                                            <span class="meta__date">
+                    <time datetime="2019-12-05" class="meta__date">
+                        <a href="https://kvia.com/2019/12/">
+                            December 5, 2019                        </a>
+                    </time>
+                </span>
+                <span class="meta__time">
+                    5:24 pm                </span>
+                <span class="meta__user vcard author">
+                    <a href="https://kvia.com/author/cnn/" title="Posts by CNN" rel="author">CNN</a>                </span>
+            
+                    </div>
+
+        <div class="story__excerpt">
+            <p>Police have identified the woman found dead in an Ansonia, Connecticut, home as the mother of a 1-year-old gild who remains missing. The woman, who&hellip;</p>
+            <a class="story__continue" href="https://kvia.com/news/us-world/2019/12/05/police-are-searching-for-1-year-old-after-finding-a-woman-dead-in-an-ansonia-connecticut-home/"
+               rel="bookmark">Continue Reading</a>
+        </div>
+    </div>
+
+</article><!-- #post-## -->
+
+<article id="post-98140" class="story story--row post-98140 post type-post status-publish format-image has-post-thumbnail hentry category-us-world post_format-post-format-image">
+
+            <a href="https://kvia.com/news/us-world/2019/12/05/aj-freund-was-found-in-a-shallow-grave-near-chicago-his-mother-just-pleaded-guilty-to-the-boys-murder/" class="story__thumb-link">
+            <div class="story__thumb">
+                <img width="500" height="375" src="https://kvia.b-cdn.net/2019/12/hypatia-h_c88353d753cd4e4886c5bf0bb769606a-h_8d56d95f711d63e6f8f8473eb0fd2a7b_preview.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" />            </div>
+        </a>
+    
+    <div class="story__content">
+        
+        <header class="story__header">
+            <h3 class="story__title hdg hdg--4">
+                <a href="https://kvia.com/news/us-world/2019/12/05/aj-freund-was-found-in-a-shallow-grave-near-chicago-his-mother-just-pleaded-guilty-to-the-boys-murder/" rel="bookmark">
+                    AJ Freund was found in a shallow grave near Chicago. His mother just pleaded guilty to the boy&#8217;s murder                </a>
+            </h3>
+
+                    </header>
+
+        
+        <div class="story__meta meta">
+                                            <span class="meta__date">
+                    <time datetime="2019-12-05" class="meta__date">
+                        <a href="https://kvia.com/2019/12/">
+                            December 5, 2019                        </a>
+                    </time>
+                </span>
+                <span class="meta__time">
+                    5:03 pm                </span>
+                <span class="meta__user vcard author">
+                    <a href="https://kvia.com/author/cnn/" title="Posts by CNN" rel="author">CNN</a>                </span>
+            
+                    </div>
+
+        <div class="story__excerpt">
+            <p>JoAnn Cunningham has pleaded guilty to the murder of her 5-year-old son, AJ Freund, months after his body was found in a shallow grave in suburban&hellip;</p>
+            <a class="story__continue" href="https://kvia.com/news/us-world/2019/12/05/aj-freund-was-found-in-a-shallow-grave-near-chicago-his-mother-just-pleaded-guilty-to-the-boys-murder/"
+               rel="bookmark">Continue Reading</a>
+        </div>
+    </div>
+
+</article><!-- #post-## -->
+
+<article id="post-96890" class="story story--row post-96890 post type-post status-publish format-image has-post-thumbnail hentry category-us-world post_format-post-format-image">
+
+            <a href="https://kvia.com/news/us-world/2019/12/05/a-us-sailor-killed-2-civilian-workers-and-injured-1-before-fatally-shooting-himself-at-pearl-harbor-shipyard/" class="story__thumb-link">
+            <div class="story__thumb">
+                <img width="500" height="333" src="https://kvia.b-cdn.net/2019/12/hypatia-h_d9b1e7960741a6ec3215c61294903e95-h_6d57564c575c67dcead3c35486fd9f18_preview-3.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" />            </div>
+        </a>
+    
+    <div class="story__content">
+        
+        <header class="story__header">
+            <h3 class="story__title hdg hdg--4">
+                <a href="https://kvia.com/news/us-world/2019/12/05/a-us-sailor-killed-2-civilian-workers-and-injured-1-before-fatally-shooting-himself-at-pearl-harbor-shipyard/" rel="bookmark">
+                    A US sailor opens fire at a Pearl Harbor shipyard days before the anniversary of historic attack                </a>
+            </h3>
+
+                    </header>
+
+        
+        <div class="story__meta meta">
+                                            <span class="meta__date">
+                    <time datetime="2019-12-05" class="meta__date">
+                        <a href="https://kvia.com/2019/12/">
+                            December 5, 2019                        </a>
+                    </time>
+                </span>
+                <span class="meta__time">
+                    4:59 pm                </span>
+                <span class="meta__user vcard author">
+                    <a href="https://kvia.com/author/cnn/" title="Posts by CNN" rel="author">CNN</a>                </span>
+            
+                    </div>
+
+        <div class="story__excerpt">
+            <p>Multiple agencies are investigating Wednesday&#8217;s shooting at Pearl Harbor Naval Shipyard in Hawaii, where authorities say a US sailor killed two&hellip;</p>
+            <a class="story__continue" href="https://kvia.com/news/us-world/2019/12/05/a-us-sailor-killed-2-civilian-workers-and-injured-1-before-fatally-shooting-himself-at-pearl-harbor-shipyard/"
+               rel="bookmark">Continue Reading</a>
+        </div>
+    </div>
+
+</article><!-- #post-## -->
+
+<article id="post-97196" class="story story--row post-97196 post type-post status-publish format-standard has-post-thumbnail hentry category-us-world">
+
+            <a href="https://kvia.com/news/us-world/2019/12/05/a-news-helicopter-was-struck-by-a-suspected-drone-over-los-angeles-causing-substantial-damage/" class="story__thumb-link">
+            <div class="story__thumb">
+                <img width="1024" height="576" src="https://kvia.b-cdn.net/2019/10/featured-us-world.jpeg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" />            </div>
+        </a>
+    
+    <div class="story__content">
+        
+        <header class="story__header">
+            <h3 class="story__title hdg hdg--4">
+                <a href="https://kvia.com/news/us-world/2019/12/05/a-news-helicopter-was-struck-by-a-suspected-drone-over-los-angeles-causing-substantial-damage/" rel="bookmark">
+                    A news helicopter was struck by a suspected drone over Los Angeles, causing substantial damage                </a>
+            </h3>
+
+                    </header>
+
+        
+        <div class="story__meta meta">
+                                            <span class="meta__date">
+                    <time datetime="2019-12-05" class="meta__date">
+                        <a href="https://kvia.com/2019/12/">
+                            December 5, 2019                        </a>
+                    </time>
+                </span>
+                <span class="meta__time">
+                    3:58 pm                </span>
+                <span class="meta__user vcard author">
+                    <a href="https://kvia.com/author/cnn/" title="Posts by CNN" rel="author">CNN</a>                </span>
+            
+                    </div>
+
+        <div class="story__excerpt">
+            <p>A Los Angeles news helicopter made an emergency landing when an object struck its tail, and crew on board believe it was a drone. KABC&#8217;s Air7&hellip;</p>
+            <a class="story__continue" href="https://kvia.com/news/us-world/2019/12/05/a-news-helicopter-was-struck-by-a-suspected-drone-over-los-angeles-causing-substantial-damage/"
+               rel="bookmark">Continue Reading</a>
+        </div>
+    </div>
+
+</article><!-- #post-## -->
+
+<article id="post-98136" class="story story--row post-98136 post type-post status-publish format-standard has-post-thumbnail hentry category-business-technology category-border category-news category-top-stories category-us-world">
+
+            <a href="https://kvia.com/news/border/2019/12/05/customs-and-border-protection-reverses-course-on-mandatory-facial-recognition-program/" class="story__thumb-link">
+            <div class="story__thumb">
+                <img width="2682" height="1504" src="https://kvia.b-cdn.net/2019/11/Screen-Shot-2019-11-22-at-10.57.39-AM.png" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="CBP facial recognition" />            </div>
+        </a>
+    
+    <div class="story__content">
+        
+        <header class="story__header">
+            <h3 class="story__title hdg hdg--4">
+                <a href="https://kvia.com/news/border/2019/12/05/customs-and-border-protection-reverses-course-on-mandatory-facial-recognition-program/" rel="bookmark">
+                    Customs and Border Protection reverses course on mandatory facial recognition program                </a>
+            </h3>
+
+                    </header>
+
+        
+        <div class="story__meta meta">
+                                            <span class="meta__date">
+                    <time datetime="2019-12-05" class="meta__date">
+                        <a href="https://kvia.com/2019/12/">
+                            December 5, 2019                        </a>
+                    </time>
+                </span>
+                <span class="meta__time">
+                    3:52 pm                </span>
+                <span class="meta__user vcard author">
+                    <a href="https://kvia.com/author/abc-news/" title="Posts by ABC News" rel="author">ABC News</a>                </span>
+            
+                    </div>
+
+        <div class="story__excerpt">
+            <p>WASHINGTON, DC &#8212; U.S. Customs and Border Protection announced Thursday it no longer plans to move forward with a facial recognition program that&hellip;</p>
+            <a class="story__continue" href="https://kvia.com/news/border/2019/12/05/customs-and-border-protection-reverses-course-on-mandatory-facial-recognition-program/"
+               rel="bookmark">Continue Reading</a>
+        </div>
+    </div>
+
+</article><!-- #post-## -->
+
+<article id="post-98058" class="story story--row post-98058 post type-post status-publish format-image has-post-thumbnail hentry category-us-world post_format-post-format-image">
+
+            <a href="https://kvia.com/news/us-world/2019/12/05/they-matched-on-a-dating-site-and-got-married-he-needed-a-kidney-and-they-matched-again/" class="story__thumb-link">
+            <div class="story__thumb">
+                <img width="500" height="281" src="https://kvia.b-cdn.net/2019/12/hypatia-h_e8c14c1c733db598613d9c1c9b081140-h_538f1eca8e971252788afafbc01727f8_preview.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" />            </div>
+        </a>
+    
+    <div class="story__content">
+        
+        <header class="story__header">
+            <h3 class="story__title hdg hdg--4">
+                <a href="https://kvia.com/news/us-world/2019/12/05/they-matched-on-a-dating-site-and-got-married-he-needed-a-kidney-and-they-matched-again/" rel="bookmark">
+                    They matched on a dating site and got married. He needed a kidney, and they matched again                </a>
+            </h3>
+
+                    </header>
+
+        
+        <div class="story__meta meta">
+                                            <span class="meta__date">
+                    <time datetime="2019-12-05" class="meta__date">
+                        <a href="https://kvia.com/2019/12/">
+                            December 5, 2019                        </a>
+                    </time>
+                </span>
+                <span class="meta__time">
+                    3:50 pm                </span>
+                <span class="meta__user vcard author">
+                    <a href="https://kvia.com/author/cnn/" title="Posts by CNN" rel="author">CNN</a>                </span>
+            
+                    </div>
+
+        <div class="story__excerpt">
+            <p>It was a match made in heaven, or at least eharmony told them so. But Lisa and Dan Summers didn&#8217;t know how compatible they really were. Before&hellip;</p>
+            <a class="story__continue" href="https://kvia.com/news/us-world/2019/12/05/they-matched-on-a-dating-site-and-got-married-he-needed-a-kidney-and-they-matched-again/"
+               rel="bookmark">Continue Reading</a>
+        </div>
+    </div>
+
+</article><!-- #post-## -->
+
+<article id="post-96508" class="story story--row post-96508 post type-post status-publish format-image has-post-thumbnail hentry category-us-world post_format-post-format-image">
+
+            <a href="https://kvia.com/news/us-world/2019/12/05/france-looks-to-1995-as-it-braces-for-pension-reform-strikes-and-protests/" class="story__thumb-link">
+            <div class="story__thumb">
+                <img width="500" height="333" src="https://kvia.b-cdn.net/2019/12/hypatia-h_f191c068ff3ac45e21b758a2e5ae1583-h_820aeef204d268aa3c8e1971d677b24d_preview-2.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" />            </div>
+        </a>
+    
+    <div class="story__content">
+        
+        <header class="story__header">
+            <h3 class="story__title hdg hdg--4">
+                <a href="https://kvia.com/news/us-world/2019/12/05/france-looks-to-1995-as-it-braces-for-pension-reform-strikes-and-protests/" rel="bookmark">
+                    France looks to 1995 as it braces for pension reform strikes and protests                </a>
+            </h3>
+
+                    </header>
+
+        
+        <div class="story__meta meta">
+                                            <span class="meta__date">
+                    <time datetime="2019-12-05" class="meta__date">
+                        <a href="https://kvia.com/2019/12/">
+                            December 5, 2019                        </a>
+                    </time>
+                </span>
+                <span class="meta__time">
+                    3:03 pm                </span>
+                <span class="meta__user vcard author">
+                    <a href="https://kvia.com/author/cnn/" title="Posts by CNN" rel="author">CNN</a>                </span>
+            
+                    </div>
+
+        <div class="story__excerpt">
+            <p>The last time France reached for a universal pension system, Jacques Chirac was president, Alain Juppe was his prime minister and, like today, a wave&hellip;</p>
+            <a class="story__continue" href="https://kvia.com/news/us-world/2019/12/05/france-looks-to-1995-as-it-braces-for-pension-reform-strikes-and-protests/"
+               rel="bookmark">Continue Reading</a>
+        </div>
+    </div>
+
+</article><!-- #post-## -->
+
+<article id="post-97832" class="story story--row post-97832 post type-post status-publish format-image has-post-thumbnail hentry category-us-world post_format-post-format-image">
+
+            <a href="https://kvia.com/news/us-world/2019/12/05/as-a-school-shooting-unfolded-a-teen-opened-her-mosque-doors-to-shelter-fleeing-students/" class="story__thumb-link">
+            <div class="story__thumb">
+                <img width="500" height="279" src="https://kvia.b-cdn.net/2019/12/hypatia-h_8373bc18526f408dbb18bde848d38df4-h_8a9daf9cc30c5aa84d11ee844cb440f4_preview.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" />            </div>
+        </a>
+    
+    <div class="story__content">
+        
+        <header class="story__header">
+            <h3 class="story__title hdg hdg--4">
+                <a href="https://kvia.com/news/us-world/2019/12/05/as-a-school-shooting-unfolded-a-teen-opened-her-mosque-doors-to-shelter-fleeing-students/" rel="bookmark">
+                    As a school shooting unfolded, a teen opened her mosque doors to shelter fleeing students                </a>
+            </h3>
+
+                    </header>
+
+        
+        <div class="story__meta meta">
+                                            <span class="meta__date">
+                    <time datetime="2019-12-05" class="meta__date">
+                        <a href="https://kvia.com/2019/12/">
+                            December 5, 2019                        </a>
+                    </time>
+                </span>
+                <span class="meta__time">
+                    2:34 pm                </span>
+                <span class="meta__user vcard author">
+                    <a href="https://kvia.com/author/cnn/" title="Posts by CNN" rel="author">CNN</a>                </span>
+            
+                    </div>
+
+        <div class="story__excerpt">
+            <p>Thanks to a Wisconsin student&#8217;s quick thinking, about 100 students were able to take shelter at her mosque during a school stabbing and&hellip;</p>
+            <a class="story__continue" href="https://kvia.com/news/us-world/2019/12/05/as-a-school-shooting-unfolded-a-teen-opened-her-mosque-doors-to-shelter-fleeing-students/"
+               rel="bookmark">Continue Reading</a>
+        </div>
+    </div>
+
+</article><!-- #post-## -->
+
+<article id="post-96304" class="story story--row post-96304 post type-post status-publish format-image has-post-thumbnail hentry category-us-world post_format-post-format-image">
+
+            <a href="https://kvia.com/news/us-world/2019/12/05/cruise-line-sexual-assault-reports-for-third-quarter-jump-by-67-percent-from-2018/" class="story__thumb-link">
+            <div class="story__thumb">
+                <img width="500" height="349" src="https://kvia.b-cdn.net/2019/12/hypatia-h_4b602b6c397456b98015f6f0ef778ca5-h_3292fbccaae838b2adbd5564fee0ffaf_preview.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" />            </div>
+        </a>
+    
+    <div class="story__content">
+        
+        <header class="story__header">
+            <h3 class="story__title hdg hdg--4">
+                <a href="https://kvia.com/news/us-world/2019/12/05/cruise-line-sexual-assault-reports-for-third-quarter-jump-by-67-percent-from-2018/" rel="bookmark">
+                    Cruise line sexual assault reports for third quarter jump by 67 percent from 2018                </a>
+            </h3>
+
+                    </header>
+
+        
+        <div class="story__meta meta">
+                                            <span class="meta__date">
+                    <time datetime="2019-12-05" class="meta__date">
+                        <a href="https://kvia.com/2019/12/">
+                            December 5, 2019                        </a>
+                    </time>
+                </span>
+                <span class="meta__time">
+                    2:12 pm                </span>
+                <span class="meta__user vcard author">
+                    <a href="https://kvia.com/author/cnn/" title="Posts by CNN" rel="author">CNN</a>                </span>
+            
+                    </div>
+
+        <div class="story__excerpt">
+            <p>Cruise lines sailing from US ports reported 35 alleged sexual assaults in the third quarter of this year, an increase of 67% from the same period a&hellip;</p>
+            <a class="story__continue" href="https://kvia.com/news/us-world/2019/12/05/cruise-line-sexual-assault-reports-for-third-quarter-jump-by-67-percent-from-2018/"
+               rel="bookmark">Continue Reading</a>
+        </div>
+    </div>
+
+</article><!-- #post-## -->
+
+<article id="post-97931" class="story story--row post-97931 post type-post status-publish format-standard has-post-thumbnail hentry category-us-world">
+
+            <a href="https://kvia.com/news/us-world/2019/12/05/nypd-appoints-first-black-chief-of-detectives/" class="story__thumb-link">
+            <div class="story__thumb">
+                <img width="1024" height="576" src="https://kvia.b-cdn.net/2019/10/featured-us-world.jpeg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" />            </div>
+        </a>
+    
+    <div class="story__content">
+        
+        <header class="story__header">
+            <h3 class="story__title hdg hdg--4">
+                <a href="https://kvia.com/news/us-world/2019/12/05/nypd-appoints-first-black-chief-of-detectives/" rel="bookmark">
+                    NYPD appoints first black chief of detectives                </a>
+            </h3>
+
+                    </header>
+
+        
+        <div class="story__meta meta">
+                                            <span class="meta__date">
+                    <time datetime="2019-12-05" class="meta__date">
+                        <a href="https://kvia.com/2019/12/">
+                            December 5, 2019                        </a>
+                    </time>
+                </span>
+                <span class="meta__time">
+                    1:59 pm                </span>
+                <span class="meta__user vcard author">
+                    <a href="https://kvia.com/author/cnn/" title="Posts by CNN" rel="author">CNN</a>                </span>
+            
+                    </div>
+
+        <div class="story__excerpt">
+            <p>The New York City Police Department got a new chief of detectives this week &#8212; the first black person to hold the role since the force&#8217;s&hellip;</p>
+            <a class="story__continue" href="https://kvia.com/news/us-world/2019/12/05/nypd-appoints-first-black-chief-of-detectives/"
+               rel="bookmark">Continue Reading</a>
+        </div>
+    </div>
+
+</article><!-- #post-## -->
+
+<article id="post-97828" class="story story--row post-97828 post type-post status-publish format-standard has-post-thumbnail hentry category-us-world">
+
+            <a href="https://kvia.com/news/us-world/2019/12/05/the-family-of-a-caribbean-resort-worker-is-suing-an-american-tourist-charged-in-his-death/" class="story__thumb-link">
+            <div class="story__thumb">
+                <img width="1024" height="576" src="https://kvia.b-cdn.net/2019/10/featured-us-world.jpeg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" />            </div>
+        </a>
+    
+    <div class="story__content">
+        
+        <header class="story__header">
+            <h3 class="story__title hdg hdg--4">
+                <a href="https://kvia.com/news/us-world/2019/12/05/the-family-of-a-caribbean-resort-worker-is-suing-an-american-tourist-charged-in-his-death/" rel="bookmark">
+                    The family of a Caribbean resort worker is suing an American tourist charged in his death                </a>
+            </h3>
+
+                    </header>
+
+        
+        <div class="story__meta meta">
+                                            <span class="meta__date">
+                    <time datetime="2019-12-05" class="meta__date">
+                        <a href="https://kvia.com/2019/12/">
+                            December 5, 2019                        </a>
+                    </time>
+                </span>
+                <span class="meta__time">
+                    1:16 pm                </span>
+                <span class="meta__user vcard author">
+                    <a href="https://kvia.com/author/cnn/" title="Posts by CNN" rel="author">CNN</a>                </span>
+            
+                    </div>
+
+        <div class="story__excerpt">
+            <p>The family of a Caribbean resort employee is suing an American tourist accused of manslaughter in the worker&#8217;s death. The estate of 27-year-old&hellip;</p>
+            <a class="story__continue" href="https://kvia.com/news/us-world/2019/12/05/the-family-of-a-caribbean-resort-worker-is-suing-an-american-tourist-charged-in-his-death/"
+               rel="bookmark">Continue Reading</a>
+        </div>
+    </div>
+
+</article><!-- #post-## -->
+
+<article id="post-96945" class="story story--row post-96945 post type-post status-publish format-standard has-post-thumbnail hentry category-us-world">
+
+            <a href="https://kvia.com/news/us-world/2019/12/05/hermit-crabs-are-confusing-plastic-for-shells-and-its-killing-them/" class="story__thumb-link">
+            <div class="story__thumb">
+                <img width="1024" height="576" src="https://kvia.b-cdn.net/2019/10/featured-us-world.jpeg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" />            </div>
+        </a>
+    
+    <div class="story__content">
+        
+        <header class="story__header">
+            <h3 class="story__title hdg hdg--4">
+                <a href="https://kvia.com/news/us-world/2019/12/05/hermit-crabs-are-confusing-plastic-for-shells-and-its-killing-them/" rel="bookmark">
+                    Hermit crabs are confusing plastic for shells and it&#8217;s killing them                </a>
+            </h3>
+
+                    </header>
+
+        
+        <div class="story__meta meta">
+                                            <span class="meta__date">
+                    <time datetime="2019-12-05" class="meta__date">
+                        <a href="https://kvia.com/2019/12/">
+                            December 5, 2019                        </a>
+                    </time>
+                </span>
+                <span class="meta__time">
+                    1:07 pm                </span>
+                <span class="meta__user vcard author">
+                    <a href="https://kvia.com/author/cnn/" title="Posts by CNN" rel="author">CNN</a>                </span>
+            
+                    </div>
+
+        <div class="story__excerpt">
+            <p>More than half a million hermit crabs have been killed after becoming trapped by plastic pollution on two remote islands, a new study from the&hellip;</p>
+            <a class="story__continue" href="https://kvia.com/news/us-world/2019/12/05/hermit-crabs-are-confusing-plastic-for-shells-and-its-killing-them/"
+               rel="bookmark">Continue Reading</a>
+        </div>
+    </div>
+
+</article><!-- #post-## -->
+                </div>
+                
+	<nav class="navigation pagination" role="navigation" aria-label="Posts">
+		<h2 class="screen-reader-text">Posts navigation</h2>
+		<div class="nav-links"><span aria-current="page" class="page-numbers current">1</span>
+<a class="page-numbers" href="https://kvia.com/news/us-world/2019/12/05/page/2/">2</a>
+<a class="page-numbers" href="https://kvia.com/news/us-world/2019/12/05/page/3/">3</a>
+<a class="next page-numbers" href="https://kvia.com/news/us-world/2019/12/05/page/2/">Next</a></div>
+	</nav>            </div><!-- /#primary -->
+
+            
+<aside id="secondary" class="sidebar col-lg-4" role="complementary">
+            <div id="div-gpt-ad-2" class="sidebar__widget-item div-gpt-ad div-gpt-widget"></div>
+        <script>
+          googletag.cmd.push(function () {
+            googletag.display('div-gpt-ad-2');
+          });
+        </script>
+        </aside><!-- #secondary -->
+                    </div>
+    </div>
+
+
+<footer class="footer panel-group" role="contentinfo">
+    <div class="container">
+                    <aside class="row footer__widgets footer__widgets--4" role="complementary">
+                <div id="media_image-2" class="footer__widget-item widget_media_image"><img width="300" height="150" src="https://kvia.b-cdn.net/2019/10/KVIA-Logo-for-Footer.png" class="image wp-image-15757  attachment-full size-full" alt="" style="max-width: 100%; height: auto;" /></div><div id="text-2" class="footer__widget-item widget_text">			<div class="textwidget"><p><a href="/terms-of-service/">Terms of Service</a> | <a href="/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a> |</p>
+<p><a href="https://publicfiles.fcc.gov/tv-profile/kvia-tv" target="_blank" rel="noopener noreferrer">KVIA-TV FCC Public File</a> |</p>
+<p><a href="https://donotsell.npg.digital/">Do Not Sell My Personal Information</a></p>
+</div>
+		</div><div id="text-3" class="footer__widget-item widget_text"><h3 class="footer__widget-title hdg hdg--6">Subscribe to our Email Newsletters</h3>			<div class="textwidget"><p><a href="/email-alerts/">Breaking News<br />
+Severe Weather<br />
+Daily News Updates<br />
+Daily Weather Forecast<br />
+Entertainment<br />
+Contests &amp; Promotions</a></p>
+</div>
+		</div><div id="custom_html-2" class="widget_text footer__widget-item widget_custom_html"><h3 class="footer__widget-title hdg hdg--6">Download Our Apps</h3><div class="textwidget custom-html-widget"><div align="center">
+	Available for iOS and Android <br>
+<a href="/about-us/download-our-apps/"><img src="https://s3.us-east-1.wasabisys.com/kvia.com/2019/10/kvia-news-app-icon.jpg" width="80" alt="KVIA News App">
+&#160; &#160; 
+<img src="https://s3.us-east-1.wasabisys.com/kvia.com/2019/10/kvia-weather-app-icon.jpg" width="80" alt="KVIA Weather App">
+</a>
+</div></div></div>            </aside><!-- #secondary -->
+        
+        <div class="footer__socials socials">
+                    </div>
+
+        <div class="footer__copyright">
+            © 2020, NPG of Texas, L.P. El Paso, TX USA        </div>
+    </div>
+</footer>
+
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js?ver=2.24.0'></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.26/moment-timezone-with-data.min.js?ver=0.5.26'></script>
+<script type='text/javascript' src='https://kvia.com/wp-includes/js/underscore.min.js?ver=1.8.3'></script>
+<script type='text/javascript' src='https://kvia.com/wp-includes/js/backbone.min.js?ver=1.4.0'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wpApiSettings = {"root":"https:\/\/kvia.com\/wp-json\/","nonce":"a9cc9a27c7","versionString":"wp\/v2\/"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://kvia.com/wp-includes/js/api-request.min.js?ver=5.4.2'></script>
+<script type='text/javascript' src='https://kvia.com/wp-includes/js/wp-api.min.js?ver=5.4.2'></script>
+<script type='text/javascript' src='https://kvia.com/wp-content/themes/storymate-npg/build/js/theme.min.js?ver=1.4.5'></script>
+<script type='text/javascript' src='https://kvia.com/wp-content/themes/storymate-theme/build/js/vendor.min.js?ver=1.4.5'></script>
+<script type='text/javascript' src='https://kvia.com/wp-content/themes/storymate-theme/build/js/theme.min.js?ver=1.4.5'></script>
+<script type='text/javascript' src='https://kvia.com/wp-includes/js/wp-embed.min.js?ver=5.4.2'></script>
+
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"cba0b95abf","applicationID":"611645299","transactionName":"bldSNkACCEdTBUMIXVcdcQFGCglaHQdFAlpQRFU=","queueTime":0,"applicationTime":528,"atts":"QhBRQAgYG0k=","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+</html>

@@ -1,0 +1,258 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+<link rel="shortcut icon" href="https://www.iconj.com/ico/w/j/wjvcaa98f8.ico" type="image/x-icon" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={licenseKey:"8c66ac5a08",applicationID:"206695550"};window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var i=n[t]={exports:{}};e[t][0].call(i.exports,function(n){var i=e[t][1][n];return r(i||n)},i,i.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var i=0;i<t.length;i++)r(t[i]);return r}({1:[function(e,n,t){function r(){}function i(e,n,t){return function(){return o(e,[u.now()].concat(f(arguments)),n?null:this,t),n?void 0:this}}var o=e("handle"),a=e(4),f=e(5),c=e("ee").get("tracer"),u=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],l="api-",d=l+"ixn-";a(p,function(e,n){s[n]=i(l+n,!0,"api")}),s.addPageAction=i(l+"addPageAction",!0),s.setCurrentRouteName=i(l+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,i="function"==typeof n;return o(d+"tracer",[u.now(),e,t],r),function(){if(c.emit((i?"":"no-")+"fn-start",[u.now(),r,i],t),i)try{return n.apply(this,arguments)}catch(e){throw c.emit("fn-err",[arguments,this,e],t),e}finally{c.emit("fn-end",[u.now()],t)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=i(d+n)}),newrelic.noticeError=function(e,n){"string"==typeof e&&(e=new Error(e)),o("err",[e,u.now(),!1,n])}},{}],2:[function(e,n,t){function r(e,n){var t=e.getEntries();t.forEach(function(e){"first-paint"===e.name?c("timing",["fp",Math.floor(e.startTime)]):"first-contentful-paint"===e.name&&c("timing",["fcp",Math.floor(e.startTime)])})}function i(e,n){var t=e.getEntries();t.length>0&&c("lcp",[t[t.length-1]])}function o(e){if(e instanceof s&&!l){var n,t=Math.round(e.timeStamp);n=t>1e12?Date.now()-t:u.now()-t,l=!0,c("timing",["fi",t,{type:e.type,fid:n}])}}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var a,f,c=e("handle"),u=e("loader"),s=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){a=new PerformanceObserver(r),f=new PerformanceObserver(i);try{a.observe({entryTypes:["paint"]}),f.observe({entryTypes:["largest-contentful-paint"]})}catch(p){}}if("addEventListener"in document){var l=!1,d=["click","keydown","mousedown","pointerdown","touchstart"];d.forEach(function(e){document.addEventListener(e,o,!1)})}}},{}],3:[function(e,n,t){function r(e,n){if(!i)return!1;if(e!==i)return!1;if(!n)return!0;if(!o)return!1;for(var t=o.split("."),r=n.split("."),a=0;a<r.length;a++)if(r[a]!==t[a])return!1;return!0}var i=null,o=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var f=navigator.userAgent,c=f.match(a);c&&f.indexOf("Chrome")===-1&&f.indexOf("Chromium")===-1&&(i="Safari",o=c[1])}n.exports={agent:i,version:o,match:r}},{}],4:[function(e,n,t){function r(e,n){var t=[],r="",o=0;for(r in e)i.call(e,r)&&(t[o]=n(r,e[r]),o+=1);return t}var i=Object.prototype.hasOwnProperty;n.exports=r},{}],5:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,i=t-n||0,o=Array(i<0?0:i);++r<i;)o[r]=e[n+r];return o}n.exports=r},{}],6:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function i(e){function n(e){return e&&e instanceof r?e:e?c(e,f,o):o()}function t(t,r,i,o){if(!l.aborted||o){e&&e(t,r,i);for(var a=n(i),f=v(t),c=f.length,u=0;u<c;u++)f[u].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function d(e,n){h[e]=v(e).concat(n)}function m(e,n){var t=h[e];if(t)for(var r=0;r<t.length;r++)t[r]===n&&t.splice(r,1)}function v(e){return h[e]||[]}function g(e){return p[e]=p[e]||i(t)}function w(e,n){u(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var h={},y={},b={on:d,addEventListener:d,removeEventListener:m,emit:t,get:g,listeners:v,context:n,buffer:w,abort:a,aborted:!1};return b}function o(){return new r}function a(){(s.api||s.feature)&&(l.aborted=!0,s=l.backlog={})}var f="nr@context",c=e("gos"),u=e(4),s={},p={},l=n.exports=i();l.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(i.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(o){}return e[n]=r,r}var i=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){i.buffer([e],r),i.emit(e,n,t)}var i=e("ee").get("handle");n.exports=r,r.ee=i},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,o,function(){return i++})}var i=1,o="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!x++){var e=E.info=NREUM.info,n=d.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();u(y,function(n,t){e[n]||(e[n]=t)}),c("mark",["onload",a()+E.offset],null,"api");var t=d.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function i(){"complete"===d.readyState&&o()}function o(){c("mark",["domContent",a()+E.offset],null,"api")}function a(){return O.exists&&performance.now?Math.round(performance.now()):(f=Math.max((new Date).getTime(),f))-E.offset}var f=(new Date).getTime(),c=e("handle"),u=e(4),s=e("ee"),p=e(3),l=window,d=l.document,m="addEventListener",v="attachEvent",g=l.XMLHttpRequest,w=g&&g.prototype;NREUM.o={ST:setTimeout,SI:l.setImmediate,CT:clearTimeout,XHR:g,REQ:l.Request,EV:l.Event,PR:l.Promise,MO:l.MutationObserver};var h=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1169.min.js"},b=g&&w&&w[m]&&!/CriOS/.test(navigator.userAgent),E=n.exports={offset:f,now:a,origin:h,features:{},xhrWrappable:b,userAgent:p};e(1),e(2),d[m]?(d[m]("DOMContentLoaded",o,!1),l[m]("load",r,!1)):(d[v]("onreadystatechange",i),l[v]("onload",r)),c("mark",["firstbyte",f],null,"api");var x=0,O=e(6)},{}],"wrap-function":[function(e,n,t){function r(e){return!(e&&e instanceof Function&&e.apply&&!e[a])}var i=e("ee"),o=e(5),a="nr@original",f=Object.prototype.hasOwnProperty,c=!1;n.exports=function(e,n){function t(e,n,t,i){function nrWrapper(){var r,a,f,c;try{a=this,r=o(arguments),f="function"==typeof t?t(r,a):t||{}}catch(u){l([u,"",[r,a,i],f])}s(n+"start",[r,a,i],f);try{return c=e.apply(a,r)}catch(p){throw s(n+"err",[r,a,p],f),p}finally{s(n+"end",[r,a,c],f)}}return r(e)?e:(n||(n=""),nrWrapper[a]=e,p(e,nrWrapper),nrWrapper)}function u(e,n,i,o){i||(i="");var a,f,c,u="-"===i.charAt(0);for(c=0;c<n.length;c++)f=n[c],a=e[f],r(a)||(e[f]=t(a,u?f+i:i,o,f))}function s(t,r,i){if(!c||n){var o=c;c=!0;try{e.emit(t,r,i,n)}catch(a){l([a,t,r,i])}c=o}}function p(e,n){if(Object.defineProperty&&Object.keys)try{var t=Object.keys(e);return t.forEach(function(t){Object.defineProperty(n,t,{get:function(){return e[t]},set:function(n){return e[t]=n,n}})}),n}catch(r){l([r])}for(var i in e)f.call(e,i)&&(n[i]=e[i]);return n}function l(n){try{e.emit("internal-error",n)}catch(t){}}return e||(e=i),t.inPlace=u,t.flag=a,t}},{}]},{},["loader"]);</script><script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"errorBeacon":"bam.nr-data.net","beacon":"bam.nr-data.net","agent":"","transactionName":"ZwRUbERQDUsHVkJdWV5OcE1YUhdRCVsZVUZAT15dV1UPUQhQVF1CQ09AUVNGEAIHR0JdVVwE","queueTime":0,"applicationTime":238,"applicationID":"206695550","licenseKey":"8c66ac5a08"}</script>
+<title>Bringing you just the headlines</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="_mg-domain-verification" content="ba2f54d70a92dc8d076a63bc745e0108" />
+<meta property="og:description" content="" />
+<meta property="og:url" content="http://headlinebits.com/2020-04-22/banksy-s-the-girl-with-the-pierced-eardrum-adorned-with-giant-face-mask-amid-coronavirus-pandemic.AgdSVAVSUVtRBABSU1NSAwBWAl9XDAVX" />
+<meta property="og:title" content="Bringing you just the headlines" />
+<meta property="og:site_name" content="Headline Bits">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Bringing you just the headlines" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:url" content="http://headlinebits.com/2020-04-22/banksy-s-the-girl-with-the-pierced-eardrum-adorned-with-giant-face-mask-amid-coronavirus-pandemic.AgdSVAVSUVtRBABSU1NSAwBWAl9XDAVX" />
+<meta name="twitter:site" content="@headlinebits" />
+<link rel="stylesheet" href="https://headlinebits.s3.dualstack.us-east-1.amazonaws.com/static/css/09iujio9iu.css?eb5d35c8">
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+</head>
+<body>
+<nav class="navbar">
+<div class="container-fluid">
+<div class="row main-head">
+<div id="bg-left" class="gradient"></div>
+<div id="bg-right" class="gradient"></div>
+<div id="bg-bottom"></div>
+<header>
+<a href="/" title="Home page"><img src="https://headlinebits.s3.dualstack.us-east-1.amazonaws.com/static/images/hlb-logo-name.png" alt="Headline Bits" class="logo"></a>
+</header>
+</div>
+<div class="navbar-header text-center">
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+</div>
+<div id="navbar" class="navbar-collapse collapse">
+<ul class="nav navbar-nav">
+<li><a href="/" title="Home page">Home</a></li>
+<li><a href="/today/" title="Today's Headlines">Today</a></li>
+<li><a href="/yesterday/" title="Yesterday's Headlines">Yesterday</a></li>
+<li><a href="/last-week/" title="Last Week's Headlines">Last Week</a></li>
+<li><a href="/oldest/" title="Oldest Headlines">Oldest</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<div class="container-fluid">
+<div class="row">
+<div class="full col-md-12">
+<header>
+<h1>Bringing you just the headlines</h1>
+</header>
+</div>
+</div>
+</div>
+<div class="container-fluid main">
+<div class="row">
+<div class="left-column col-md-8">
+<ul class="row list-unstyled">
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-05-26/hes-an-absolute-fool-biden-blasts-trump-for-mocking-face-mask-usage-as-u-s-coronavirus-death-to.AgdQAFBdU1tQAFFTVwVSAwBWVg8FDgZQ" title="'He’s an absolute fool’: Biden blasts Trump for mocking face mask usage as U.S. coronavirus death toll nears 100,000">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.nydailynews.com/resizer/PQs7-tI2D8d1O05PQwQ9QfaRnSE=/1200x0/top/cloudfront-us-east-1.images.arcpublishing.com/tronc/P254QBJG6QKXDOQZPN3WHOVTNE.jpg')"></div>
+</div>
+<h4 class="limited">
+'He’s an absolute fool’: Biden blasts Trump for mocking face mask usage as U.S. coronavirus death toll nears 100,000
+</h4>
+</a>
+<p class="limited">The gloves are off in the face mask beef between Joe Biden and President Trump.</p>
+<small>nydailynews.com</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-11/researchers-urge-widespread-wearing-of-face-masks-to-slow-coronavirus-pandemic.AgdWVgJWUV1SAQFUBVBSAwBWBl8BCgdT" title="Researchers urge 'widespread' wearing of face masks to slow coronavirus pandemic">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://static.foxnews.com/foxnews.com/content/uploads/2020/04/Facemask-iStock-2.jpg')"></div>
+</div>
+<h4 class="limited">
+Researchers urge 'widespread' wearing of face masks to slow coronavirus pandemic
+</h4>
+</a>
+<p class="limited">As concerns about an expansion of the first wave of the coronavirus pandemic crop up, a new study notes the "universal adoption" of face masks could help bring down the number of infections and prevent additional waves.</p>
+<small>Fox News</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-08/as-casinos-reopen-heres-what-pandemic-mask-requirements-mean-for-poker-faces.AgdXAQIAUw4BUAdVA1RSAwBWVl9WDAAI" title="As Casinos Reopen, Here’s What Pandemic Mask Requirements Mean For Poker Faces">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://thumbor.forbes.com/thumbor/fit-in/1200x0/filters:format(jpg)/https://specials-images.forbesimg.com/imageserve/1ecb3280356b4a5dbaa5f28b0dcf088a/0x0.jpg')"></div>
+</div>
+<h4 class="limited">
+As Casinos Reopen, Here’s What Pandemic Mask Requirements Mean For Poker Faces
+</h4>
+</a>
+<p class="limited">Properly worn, a mask covers much of a person’s face, including the entire mouth as well as much of the nose and cheeks. This raises a big question for live poker play: what does it mean to have a poker face in the age of Covid-19? Mask requirements may impact live play in unexpected ways.</p>
+<small>Forbes</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-05-30/developers-face-challenges-building-in-vancouver-canada-amid-coronavirus-pandemic.AgdXVgdXBltcC1YCVwNSAwBWBVsBClBS" title="Developers face challenges building in Vancouver, Canada amid coronavirus pandemic">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://content.fortune.com/wp-content/uploads/2020/05/Catalyst-Proejct.jpg?resize=1200,600')"></div>
+</div>
+<h4 class="limited">
+Developers face challenges building in Vancouver, Canada amid coronavirus pandemic
+</h4>
+</a>
+<p class="limited">Local developers are making hard decisions to keep their businesses moving forward at a time when the municipality is blocking every housing development that comes before them.</p>
+<small>Fortune</small>
+</div>
+</li>
+</ul>
+<div id="ad1"></div>
+<ul class="row list-unstyled">
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-05/a-quarter-of-americans-are-facing-food-insecurity-amid-coronavirus-pandemic-survey-suggests.AgdXBQRTXF0GCgFWAQpSAwBWV1gAXQEB" title="A quarter of Americans are facing food insecurity amid coronavirus pandemic, survey suggests">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://static.foxnews.com/foxnews.com/content/uploads/2020/06/FoodInsecurityIstock.jpg')"></div>
+</div>
+<h4 class="limited">
+A quarter of Americans are facing food insecurity amid coronavirus pandemic, survey suggests
+</h4>
+</a>
+<p class="limited">Twenty-six percent of Americans said they or someone in their household had skipped meals, relied on food banks, or signed up for government assistance.</p>
+<small>Fox News</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-05-26/the-10-best-u-s-cities-for-jobs-even-amid-the-coronavirus-pandemic.AgdQAARQUw5QAFFTVwVSAwBWVg8GXAcE" title="The 10 best U.S. cities for jobs, even amid the coronavirus pandemic">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://image.cnbcfm.com/api/v1/image/106488178-1586886051538work-and-distance-learning_t20_7yp2by.jpg?v=1586886121')"></div>
+</div>
+<h4 class="limited">
+The 10 best U.S. cities for jobs, even amid the coronavirus pandemic
+</h4>
+</a>
+<p class="limited">Online learning site FutureLearn recently released its list of the best cities for jobs for 2020. Here are the top U.S. cities that made the list.</p>
+<small>CNBC</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-08/iran-urges-people-to-wear-face-masks-amid-fears-of-new-coronavirus-wave.AgdXAQRWUQgBUAdVA1RSAwBWVl9WDgIE" title="Iran urges people to wear face masks amid fears of new coronavirus wave">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://s4.reutersmedia.net/resources/r/?m=02&d=20200608&t=2&i=1521515413&w=1200&r=LYNXMPEG57139')"></div>
+</div>
+<h4 class="limited">
+Iran urges people to wear face masks amid fears of new coronavirus wave
+</h4>
+</a>
+<p class="limited">Iran's health ministry urged people on Monday to wear face masks in public areas, state television reported, following warnings that the Islamic Republic could face a new wave of coronavirus infections.</p>
+<small>IN</small>
+</div>
+</li>
+</ul>
+</div>
+<div class="right-column col-md-4">
+<div id="ad2"></div>
+<h3>More Headlines</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-line">
+<a href="/2020-06-08/iran-urges-people-to-wear-face-masks-amid-fears-of-new-coronavirus-wave.AgdXAQUCVA8BUAdVA1RSAwBWVl9WD1QF" title="Iran urges people to wear face masks amid fears of new coronavirus wave">
+<h4 class="limited">
+Iran urges people to wear face masks amid fears of new coronavirus wave
+<small>U.S.</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-08/iran-urges-people-to-wear-face-masks-amid-fears-of-new-coronavirus-wave.AgdXAQdUAV8BUAdVA1RSAwBWVl9WAVJT" title="Iran urges people to wear face masks amid fears of new coronavirus wave">
+<h4 class="limited">
+Iran urges people to wear face masks amid fears of new coronavirus wave
+<small>in.reuters.com</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-06/brian-austin-green-wears-a-face-mask-to-get-a-coffee-amid-the-coronavirus-crisis.AgdXBgRcBg5UAlQHBFZSAwBWAg4CWgMF" title="Brian Austin Green wears a face mask to get a coffee amid the coronavirus crisis">
+<h4 class="limited">
+Brian Austin Green wears a face mask to get a coffee amid the coronavirus crisis
+<small>Mail Online</small>
+</h4>
+</a>
+</div>
+</li>
+</ul>
+<h3>Other Headlines</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-thumb">
+<a href="/2020-06-02/in-person-voting-open-for-howard-countys-primary-election-amid-coronavirus-pandemic.AgdXUghTAQsFAVEFDldSAwBWAQ4CX1IJ" title="In-person voting open for Howard County’s primary election amid coronavirus pandemic">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://www.baltimoresun.com/resizer/Mph0HIiaIV1g1F7u3xuLvq6xIWc=/1200x0/top/cloudfront-us-east-1.images.arcpublishing.com/tronc/GCJ5KROFT5A5DO2R4RJ4YMRZ24.jpg')"></div>
+</div>
+<h4 class="limited">
+In-person voting open for Howard County’s primary election amid coronavirus pandemic
+</h4>
+<small>baltimoresun.com</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-05-27/biden-calls-trump-a-fool-for-appearing-to-mock-mask-use-amid-coronavirus-pandemic.AgdQAFRcVQ1QAFFTVwVSAwBWVg8FWwIF" title="Biden calls Trump ‘a fool’ for appearing to mock mask use amid coronavirus pandemic">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://shawglobalnews.files.wordpress.com/2020/05/deps122-525_2020_153216-2.jpg?quality=70&strip=all&w=720&h=379&crop=1')"></div>
+</div>
+<h4 class="limited">
+Biden calls Trump ‘a fool’ for appearing to mock mask use amid coronavirus pandemic
+</h4>
+<small>Global News</small>
+</a>
+</div>
+</li>
+</ul>
+<div id="ad3"></div>
+</div>
+</div>
+</div>
+<div class="container-fluid foot">
+<footer>
+<p><strong>Copyright &copy; Headline Bits</strong>. All trademarks are the property of their respective owners, authors and source websites. By using this website, you agree to our <a href="/about/terms-of-service" rel="nofollow" title="Terms of Use">terms of use</a> and <a href="/about/privacy-policy" rel="nofollow" title="Privacy Policy">privacy policy</a>.</p>
+</footer>
+</div>
+<script type="text/javascript" src="https://headlinebits.s3.dualstack.us-east-1.amazonaws.com/static/js/09iujio9iu.js?b8dab7c6"></script>
+<script type="application/ld+json">
+        {
+          "@context": "http://schema.org",
+          "@type": "WebSite",
+          "url": "https://headlinebits.com/",
+          "name": "Headline Bits",
+          "author": {
+            "@type": "Organization",
+            "name": "Headline Bits"
+          },
+          "description": "Bringing you just the headlines",
+          "publisher": "Headline Bits",
+        }
+        </script>
+</body>
+</html>

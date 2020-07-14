@@ -1,0 +1,687 @@
+ï»¿<!DOCTYPE html>
+		
+<html lang="es">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="icon" href="/images/favicon.ico" />
+	<meta http-equiv="expires" content="" />
+
+	<title>Circuitos por TurquÃ­a, Oriente Medio, Asia y AmÃ©rica</title><meta name="description" content="Los mejores circuitos por TurquÃ­a, Oriente Medio, China, India, JapÃ³n, CanadÃ¡ y Estados Unidos, siempre con un guÃ­a acompaÃ±ante de habla hispana." /><meta name="title" content="Circuitos por TurquÃ­a, Oriente Medio, Asia y AmÃ©rica" /><meta name="language" content="es" /><meta name="content-language" content="ES" />
+	<meta name="author" content="Panavision-Tours" />
+	<meta name="publisher" content="" />
+	<meta name="copyright" content="" />
+	<meta name="page-type" content="" />
+	<meta name="page-topic" content="" />
+	<meta name="audience" content="" />
+	<meta name="language" content="es" />
+	<meta name="content-language" content="ES" />
+	<meta name="robots" content="" />
+	<meta name="revisits-after" content="2 Days" />
+
+	<link rel="icon" href="/images/favicon.ico" />
+
+	<!--Estilos por dominio-->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css' />
+	<!-- Bootstrap core CSS -->
+	<link href="/css/bootstrap.css" rel="stylesheet" />
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+	<!-- Custom styles for this template -->
+    <link rel='stylesheet' type="text/css" href='/css/fullcalendar.css' rel="stylesheet" media="screen" />		
+	<link rel="stylesheet" type="text/css" href="/css/jslider.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap-select.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=2.1.5" media="screen" />
+
+	<link rel="stylesheet" type="text/css" href="/css/custom.css" media="screen" />
+
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap-datetimepicker.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="/css/galeria_fotos.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="/css/font-awesome.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap-multiselect.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="/css/calendar/jquery-ui.css" media="screen" />
+
+
+
+	<!-- Mobile/PDA Versions  -->
+	<!-- iPhone4 --><!--<link rel="stylesheet" type="text/css" href="/css/common_iphone4.css" media="only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ration: 1.5)" />-->
+	<!-- iPhone5 --><!--<link rel="stylesheet" type="text/css" href="/css/common_iphone5.css" media="only screen and (max-device-width: 960px), only screen and (-webkit-min-device-pixel-ratio: 2)" />
+	<!-- iPad(s) --><!--<link rel="stylesheet" type="text/css" href="/css/common_ipad.css" media="only screen and (min-device-width: 481px) and (max-device-width: 1024px)" />-->
+	<!-- For other mobiles (Breakpoints) layouts --><!--<link rel="stylesheet" type="text/css" href="/css/common_mobile.css" media="only screen and (max-width: 480px)" />-->
+		
+	<!-- Google Analytics ... please place here the tracking-code -->
+	
+				<script>
+					(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+					(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+					m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+					})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+					ga('create', 'UA-7840492-1', 'auto');
+					ga('send', 'pageview');
+
+				</script>
+
+			
+	<script type="text/javascript" src="/js/jquery-2.1.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/js/tab.js"></script>
+	<script type="text/javascript" src="/js/calendar/jquery-ui.js"></script>
+
+</head>
+<body class="secundaria">
+<script type="text/javascript" src="/js/mapaProvincias.js"></script>
+<script type="text/javascript">
+
+	$( document ).ready(function() {
+		
+		var dom = "es";
+					if(readCookie('panaNombreProvincia') != null && readCookie('panaNombreProvincia') != ''
+				&& readCookie('panaCodProvincia') != null && readCookie('panaCodProvincia') != ''){
+				existeCookieProvincia(readCookie('panaNombreProvincia'));
+				cambiarOfertasProvincia(readCookie('panaCodProvincia'));
+			}
+			
+	
+	
+		$("#compositor-logo").click(function(){
+			var usuarioCookie = readCookie('panausuario');
+			if(usuarioCookie != null && usuarioCookie != ''){
+				var usuario = usuarioCookie.split("#");
+				$("#userAutologin").val(usuario[0]);
+				$("#passwordAutologin").val(usuario[1]);
+				$("#autologin").click();
+			}
+			else {
+				window.open("https://compositor.panavision-tours.es/");
+			}
+			
+		});
+		
+		
+	});
+	
+	
+	
+	
+	function cambiarOfertasProvincia(codProvincia){
+		
+		if(codProvincia == 28){
+			$("a#oferta").attr('href', '/ofertas/madrid/'); //'Madrid';
+		} else if(codProvincia == 2 || codProvincia == 02){
+			$("a#oferta").attr('href', '/ofertas/valencia/'); //'Albacete';
+		} else if(codProvincia == 3 || codProvincia == 03){
+			$("a#oferta").attr('href', '/ofertas/valencia/'); //'Alicante';
+		} else if(codProvincia == 4 || codProvincia == 04){
+			$("a#oferta").attr('href', '/ofertas/andalucia-badajoz/'); //'Almeria';
+		} else if(codProvincia == 1 || codProvincia == 01){
+			$("a#oferta").attr('href', '/ofertas/bilbao/'); //'Ãlava';
+		} else if(codProvincia == 33){
+			$("a#oferta").attr('href', '/ofertas/bilbao/'); //'Asturias';
+		} else if(codProvincia == 5 || codProvincia == 05){
+			$("a#oferta").attr('href', '/ofertas/madrid/'); //'Ãvila';
+		} else if(codProvincia == 6 || codProvincia == 06){
+			$("a#oferta").attr('href', '/ofertas/andalucia-badajoz/'); //'Badajoz';
+		} else if(codProvincia == 7 || codProvincia == 07){
+			$("a#oferta").attr('href', '/ofertas/cataluna-baleares/'); //'Islas Baleares';
+		} else if(codProvincia == 8 || codProvincia == 08){
+			$("a#oferta").attr('href', '/ofertas/cataluna-baleares/'); //'Barcelona';
+		} else if(codProvincia == 48){
+			$("a#oferta").attr('href', '/ofertas/bilbao/'); //'Bizkaia';
+		} else if(codProvincia == 9 || codProvincia == 09){
+			$("a#oferta").attr('href', '/ofertas/madrid/'); //'Burgos';
+		} else if(codProvincia == 10){
+			$("a#oferta").attr('href', '/ofertas/madrid/'); //'CÃ¡ceres';
+		} else if(codProvincia == 11){
+			$("a#oferta").attr('href', '/ofertas/andalucia-badajoz/'); //'CÃ¡diz';
+		} else if(codProvincia == 39){
+			$("a#oferta").attr('href', '/ofertas/bilbao/'); //'Cantabria';
+		} else if(codProvincia == 12){
+			$("a#oferta").attr('href', '/ofertas/valencia/'); //'CastellÃ³n';
+		} else if(codProvincia == 13){
+			$("a#oferta").attr('href', '/ofertas/madrid/'); //'Ciudad Real';
+		} else if(codProvincia == 14){
+			$("a#oferta").attr('href', '/ofertas/andalucia-badajoz/'); //'CÃ³rdoba';
+		} else if(codProvincia == 15){
+			$("a#oferta").attr('href', '/ofertas/galicia/'); //'A CoruÃ±a';
+		} else if(codProvincia == 16){
+			$("a#oferta").attr('href', '/ofertas/valencia/'); //'Cuenca';
+		} else if(codProvincia == 20){
+			$("a#oferta").attr('href', '/ofertas/bilbao/'); //'Gipuzkoa';
+		} else if(codProvincia == 17){
+			$("a#oferta").attr('href', '/ofertas/cataluna-baleares/'); //'Girona';
+		} else if(codProvincia == 18){
+			$("a#oferta").attr('href', '/ofertas/andalucia-badajoz/'); //'Granada';
+		} else if(codProvincia == 19){
+			$("a#oferta").attr('href', '/ofertas/madrid/'); //'Guadalajara';
+		} else if(codProvincia == 21){
+			$("a#oferta").attr('href', '/ofertas/andalucia-badajoz/'); //'Huelva';
+		} else if(codProvincia == 22){
+			$("a#oferta").attr('href', '/ofertas/cataluna-baleares/'); //'Huesca';
+		} else if(codProvincia == 23){
+			$("a#oferta").attr('href', '/ofertas/andalucia-badajoz/'); //'JaÃ©n';
+		} else if(codProvincia == 24){
+			$("a#oferta").attr('href', '/ofertas/madrid/'); //'LeÃ³n';
+		} else if(codProvincia == 25){
+			$("a#oferta").attr('href', '/ofertas/cataluna-baleares/'); //'Lleida';
+		} else if(codProvincia == 27){
+			$("a#oferta").attr('href', '/ofertas/galicia/'); //'Lugo';
+		} else if(codProvincia == 29){
+			$("a#oferta").attr('href', '/ofertas/andalucia-badajoz/'); //'MÃ¡laga';
+		} else if(codProvincia == 30){
+			$("a#oferta").attr('href', '/ofertas/valencia/'); //'Murcia';
+		} else if(codProvincia == 31){
+			$("a#oferta").attr('href', '/ofertas/bilbao/'); //'Navarra';
+		} else if(codProvincia == 32){
+			$("a#oferta").attr('href', '/ofertas/galicia/'); //'Ourense';
+		} else if(codProvincia == 34){
+			$("a#oferta").attr('href', '/ofertas/madrid/'); //'Palencia';
+		} else if(codProvincia == 35){
+			$("a#oferta").attr('href', '/ofertas/canarias/'); //'Las Palmas';
+		} else if(codProvincia == 36){
+			$("a#oferta").attr('href', '/ofertas/galicia/'); //'Pontevedra';
+		} else if(codProvincia == 26){
+			$("a#oferta").attr('href', '/ofertas/bilbao/'); //'La Rioja';
+		} else if(codProvincia == 37){
+			$("a#oferta").attr('href', '/ofertas/madrid/'); //'Salamanca';
+		} else if(codProvincia == 38){
+			$("a#oferta").attr('href', '/ofertas/canarias/'); //'Santa Cruz de Tenerife';
+		} else if(codProvincia == 40){
+			$("a#oferta").attr('href', '/ofertas/madrid/'); //'Segovia';
+		} else if(codProvincia == 41){
+			$("a#oferta").attr('href', '/ofertas/andalucia-badajoz/'); //'Sevilla';
+		} else if(codProvincia == 42){
+			$("a#oferta").attr('href', '/ofertas/madrid/'); //'Soria';
+		} else if(codProvincia == 43){
+			$("a#oferta").attr('href', '/ofertas/cataluna-baleares/'); //'Tarragona';
+		} else if(codProvincia == 44){
+			$("a#oferta").attr('href', '/ofertas/valencia/'); //'Teruel';
+		} else if(codProvincia == 45){
+			$("a#oferta").attr('href', '/ofertas/madrid/'); //'Toledo';
+		} else if(codProvincia == 46){
+			$("a#oferta").attr('href', '/ofertas/valencia/'); //'Valencia';
+		} else if(codProvincia == 47){
+			$("a#oferta").attr('href', '/ofertas/madrid/'); //'Valladolid';
+		} else if(codProvincia == 49){
+			$("a#oferta").attr('href', '/ofertas/madrid/'); //'Zamora';
+		} else if(codProvincia == 50){
+			$("a#oferta").attr('href', '/ofertas/madrid/'); //'Zaragoza';
+		} else if(codProvincia == 51){
+			$("a#oferta").attr('href', '/ofertas/andalucia-badajoz/'); //'Ceuta';
+		} else if(codProvincia == 52){
+			$("a#oferta").attr('href', '/ofertas/andalucia-badajoz/'); //'Melilla';
+		} 
+	}
+	
+</script>		
+
+	<div class="container">
+		<header class="navbar navbar-static-top" id="top" role="banner">
+			
+			<div class="header-corporativo">
+								
+				 <a title="Acceso agencias" href="/rol2/fwdAgencias.do">Acceso agencias</a>  | <a target="_self" title="Qui&eacute;nes somos" href="/compania/">Qui&eacute;nes somos</a>  | <a target="_self" title="Gu&iacute;as de Viaje" href="/viajes/">Gu&iacute;as de Viaje</a>  | <a target="_self" title="Contacto" href="/contacto/">Contacto</a>  | <a target="_self" title="Nuestros folletos" href="/folletos/">Nuestros folletos</a> 
+			</div>
+			
+			<div class="logos">
+				<div class="col-md-8"><a href="http://www.panavision-tours.es/" title="Panavision Tours"><img src="/images/logo.jpg" class="img-responsive"></a></div>
+				<div class="col-xs-10 col-md-4 dynamic-logo"><a title="Panavision Compositor"><img id="compositor-logo" src="/images/panavision-tours-compositor.png" class="img-responsive"></a></div>
+			</div>
+			
+			<div class="navbar-header">
+			  <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			  </button>
+			</div>
+
+			<!-- NAVIGATION -->
+			<nav class="collapse navbar-collapse bs-navbar-collapse">
+				<ul class="nav nav-justified menu-sup" role="menu">
+					<li class="c1 dropdown-submenu"><a tabindex="-1" href="/circuitos/europa/">Europa</a>
+						<ul class="dropdown-menu">
+							<li><a tabindex="-1" href="/circuitos/alemania/">Alemania</a></li>
+							<li><a href="/circuitos/austria-suiza/">Austria y Suiza</a></li>
+							<li><a href="/circuitos/croacia/">Croacia</a></li>
+							<li class="dropdown-submenu"><a href="#">Escandinavia</a>
+							<ul class="dropdown-menu">
+									<li><a href="/circuitos/noruega/">Noruega, Suecia y Dinamarca</a></li>
+									<li><a href="/circuitos/republicas-balticas/">Rep&uacute;blicas B&aacute;lticas</a></li>
+									<li><a href="/circuitos/cabo-norte-islandia/">Cabo Norte e Islandia</a></li>
+							</ul>
+							</li>
+							<li><a href="/circuitos/grecia/">Grecia</a></li>
+							<li><a href="/circuitos/inglaterra-gales/">Inglaterra y Gales</a></li>	
+							<li><a href="/circuitos/irlanda-escocia/">Irlanda y Escocia</a></li>
+							<li><a href="/circuitos/italia/">Italia</a></li>									
+							<li><a href="/circuitos/paris-paises-bajos/">Par&iacute;s, Pa&iacute;ses Bajos</a></li>
+							<li><a href="/circuitos/polonia/">Polonia</a></li>
+							<li><a href="/circuitos/rumania-bulgaria/">Ruman&iacute;a y Bulgaria</a></li>
+							<li><a href="/circuitos/praga-viena-budapest/">Praga, Viena y Budapest</a></li>
+							<li><a href="/circuitos/rusia/">Rusia</a></li>
+							<li><a href="/circuitos/sicilia-malta/">Sicilia y Malta</a></li>						
+						</ul>
+					</li>
+
+					<li class="c2 dropdown-submenu"><span>Turqu&iacute;a y Oriente Medio</span>
+						<ul class="dropdown-menu">
+							<li><a tabindex="-1" href="/circuitos/dubai-maldivas/">Dub&aacute;i y Maldivas</a></li>
+							<li><a tabindex="-1" href="/circuitos/egipto/">Egipto</a></li>
+							<li><a tabindex="-1" href="/circuitos/viajes-iran/">Ir&aacute;n</a></li>
+							<li><a tabindex="-1" href="/circuitos/israel/">Israel</a></li>
+							<li><a tabindex="-1" href="/circuitos/jordania/">Jordania</a></li>
+							<li><a tabindex="-1" href="/circuitos/turquia/">Turqu&iacute;a</a></li>
+							<li><a tabindex="-1" href="/circuitos/uzbekistan/">Uzbekist&aacute;n</a></li>
+						</ul>				
+					</li>
+
+					
+					<li class="c4 dropdown-submenu"><span>Am&eacute;rica</span>
+						<ul class="dropdown-menu">
+							<li><a tabindex="-1" href="/circuitos/combinados-canada-usa/">Canad&aacute; - USA</a></li>
+							<li><a tabindex="-1" href="/circuitos/argentina/">Argentina</a></li>
+							<li><a tabindex="-1" href="/circuitos/peru/">Per&uacute;</a></li>
+
+							
+						</ul>
+					</li>
+					
+					
+					<!--li class="c3"><a href="/circuitos/combinados-canada-usa/">Canad&aacute; - USA</a></li-->
+
+					<li class="c4 dropdown-submenu"><span>Asia</span>
+						<ul class="dropdown-menu">
+							<li><a tabindex="-1" href="/circuitos/india/">India, Nepal y Sri Lanka</a></li>
+							<li><a tabindex="-1" href="/circuitos/combinados-asia/">Vietnam, Camboya y Tailandia</a></li>
+							<li><a tabindex="-1" href="/circuitos/china/">China</a></li>
+							<li><a tabindex="-1" href="/circuitos/japon/">Jap&oacute;n</a></li>
+							<li><a tabindex="-1" href="/circuitos/maldivas/">Islas Maldivas y Bali</a></li>
+							<li><a tabindex="-1" href="/circuitos/armenia/">Armenia y Azerbaiy&aacute;n</a></li>
+						</ul>
+					</li>
+
+					<!--li class="c5"><a href="">&Aacute;frica</a></li-->
+					<li class="c4 dropdown-submenu"><span>&Aacute;frica</span>
+						<ul class="dropdown-menu">
+							<li><a tabindex="-1" href="/circuitos/combinados-africa/">Kenia y Tanzania</a></li>
+							<li><a tabindex="-1" href="/circuitos/marruecos/">Marruecos</a></li>	
+							<li><a tabindex="-1" href="/circuitos/sudafrica-cataratas-victoria/">Sud&aacute;frica y Cataratas</a></li>
+							<li><a tabindex="-1" href="/circuitos/zanzibar-mauricio-seychelles/">Zanz&iacute;bar, Mauricio y Seychelles</a></li>								
+						</ul>
+					</li>					
+
+					<!--li class="c6"><a href="/circuitos/turismo-religioso/">Turismo <br /> Religioso</a></li-->					
+					<li class="c9"><a href="/folletos/viajes-dorados-2020-2021/">Viajes Dorados</a></li>	
+					
+					
+					<li class="c7 dropdown-submenu"><a href="/cruceros-fluviales/">Cruceros<br />Fluviales</a>
+						<ul class="dropdown-menu">
+							<li><a tabindex="-1" href="/cruceros-fluviales/adriatico/">Mar Adri&aacute;tico</a></li>
+							<li><a tabindex="-1" href="/cruceros-fluviales/danubio/">Danubio</a></li>
+							<li><a tabindex="-1" href="/cruceros-fluviales/rhin/">Rhin</a></li>
+							<li><a tabindex="-1" href="/cruceros-fluviales/rodano/">R&oacute;dano</a></li>
+							<li><a tabindex="-1" href="/cruceros-fluviales/sena/">Sena</a></li>
+							<li><a tabindex="-1" href="/cruceros-fluviales/volga/">Volga</a></li>
+							<!--<li><a tabindex="-1" href="/cruceros-fluviales/yangtze/">Yangtz&eacute;</a></li>-->
+							
+						</ul>
+					</li>
+
+					<li class="c8"><a href="/ofertas/madrid/" id="oferta">Ofertas</a></li>
+
+
+					<!--<li class="c9 dropdown-submenu"><a href="/folletos/cruceros-navidad-2016/">Cruceros Diciembre 2016</a>
+						<ul class="dropdown-menu" style="background: #cf0515 none repeat scroll 0 0">
+							<div class="red">
+								<li><a tabindex="-1" href="/buscador/Puente-de-la-Constitucion">Puente Constituci&oacute;n</a></li>
+								<li><a tabindex="-1" href="/buscador/Puente-de-la-Inmaculada">Puente Inmaculada</a></li>
+								<li><a tabindex="-1" href="/buscador/Navidad">Navidad</a></li>
+								<li><a tabindex="-1" href="/buscador/Fin-de-Ano">Fin de a&ntilde;o</a></li>
+							</div>
+						</ul>
+					</li>-->
+
+
+					<!--li class="c9"><a href="/folletos/ofertas-circuitos/">OFERTONES <br /> <span style="font-size:11px">"los mejores precios"</span></a></li-->
+
+				</ul>
+			</nav>
+
+			<div id="avisoCookie" style="display:none; position:fixed; left:0px; right:0px; top:25px; width:100%; min-height:30px; background:#EFBF18; color:#000000; z-index:99999;">
+			    <div id="avisoCookieDiv" style="text-align:center; width:100%; position:absolute; padding-left:5px; top:15%;">
+			    </div>
+			</div>
+
+		</header>
+	</div>
+			
+	
+<div class="corp">
+
+	<div class="container hidden-xs">
+		<div class="bg_blanco">
+			<ol class="breadcrumb">
+			  <li><a href="/">Inicio</a></li>
+			  <li class="active">Circuitos</li>
+			</ol>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="bg_cabecera_agencias">
+
+            <div class="col-md-8">
+                <p class="tit-ficha">Circuitos</p>
+            </div>
+ 
+		</div><!-- /.bg_cabecera_agencias -->
+        
+        <div class="reserva_marcador"></div>
+        <div class="bg_blanco">
+   		  <img src="/img/Circuitos-por-el-mundo.jpg" alt="Circuitos por el Mundo" width="100%">   
+            <div class="col-md-12 caja">
+            	<h1 style="color:#015ec8;font-size: 36px;font-weight: 700;">Circuitos Destacados</h1>
+				<p class="entradilla"></p>     
+
+			</div>
+
+            <div class="clearfix">&nbsp;</div>            
+        </div>
+        
+	</div>	
+
+	<div class="container">
+
+     	<div class="col-md-12 bg_blanco">
+            <div class="bg_listado">    
+                <p class="entradilla">
+	Panavisi&oacute;n Tours le ofrece una amplia gama de viajes exclusivos por Turqu&iacute;a, Oriente Medio, China, India, Jap&oacute;n, Canad&aacute; o Estados Unidos. En todos nuestros viajes siempre tendr&aacute; a su disposici&oacute;n un gu&iacute;a acompa&ntilde;ante de habla hispana que le asistir&aacute; desde el momento de la llegada al aeropuerto de su destino hasta el final de su viaje.
+	</p>
+                             
+    			<div class="clearfix">&nbsp;</div>
+                <div class="listado">
+
+					<br clear="all" />
+		<div class="caja_descada"> 
+			<div class="col-sm-4 col-md-5"> <img width="182" height="141" border="0" title="Turqu&iacute;a " alt="Turqu&iacute;a " src="/images/turquia.jpg" > 
+			</div> 
+			<div class="col-sm-8 col-md-7">
+			 <a href="/circuitos/turquia/" ><p class="tit">Turqu&iacute;a (21 Itinerarios)</p></a>
+				<p class="itinerario">Estambul, Ãfeso, Konya y la Capadocia, entre otras visitas</p>
+				<div class="bloque-precio">
+					<div class="col-md-3">
+					</div>
+					<div class="col-sm-4 col-md-5">
+						<a href="/circuitos/turquia/" class="btn btn btn-reservar">Ver Itinerarios</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="caja_descada"> 
+			<div class="col-sm-4 col-md-5"> <img width="182" height="141" border="0" title="Uzbekist&aacute;n " alt="Uzbekist&aacute;n " src="/images/uzbekistan.jpg" > 
+			</div> 
+			<div class="col-sm-8 col-md-7">
+			 <a href="/circuitos/uzbekistan/" ><p class="tit">Uzbekist&aacute;n (Sin Itinerarios)</p></a>
+				<p class="itinerario">La Ruta de la Seda a travÃ©s de Tashkent, Samarkanda, Bukhara o Khiva.</p>
+				<div class="bloque-precio">
+					<div class="col-md-3">
+					</div>
+					<div class="col-sm-4 col-md-5">
+						<a href="/circuitos/uzbekistan/" class="btn btn btn-reservar">Ver Itinerarios</a>
+					</div>
+				</div>
+			</div>
+		</div><br clear="all" />
+		<div class="caja_descada"> 
+			<div class="col-sm-4 col-md-5"> <img width="182" height="141" border="0" title="Jordania " alt="Jordania " src="/images/jordania.jpg" > 
+			</div> 
+			<div class="col-sm-8 col-md-7">
+			 <a href="/circuitos/jordania/" ><p class="tit">Jordania (5 Itinerarios)</p></a>
+				<p class="itinerario">AmmÃ¡n, el desierto de Wadi Rum, las ruinas de Petra y mucho mÃ¡s</p>
+				<div class="bloque-precio">
+					<div class="col-md-3">
+					</div>
+					<div class="col-sm-4 col-md-5">
+						<a href="/circuitos/jordania/" class="btn btn btn-reservar">Ver Itinerarios</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="caja_descada"> 
+			<div class="col-sm-4 col-md-5"> <img width="182" height="141" border="0" title="Israel " alt="Israel " src="/images/israel.jpg" > 
+			</div> 
+			<div class="col-sm-8 col-md-7">
+			 <a href="/circuitos/israel/" ><p class="tit">Israel (3 Itinerarios)</p></a>
+				<p class="itinerario">Tel Aviv, JerusalÃ©n, Galilea, BelÃ©n o Ein Karem, entre otras ciudades</p>
+				<div class="bloque-precio">
+					<div class="col-md-3">
+					</div>
+					<div class="col-sm-4 col-md-5">
+						<a href="/circuitos/israel/" class="btn btn btn-reservar">Ver Itinerarios</a>
+					</div>
+				</div>
+			</div>
+		</div><br clear="all" />
+		<div class="caja_descada"> 
+			<div class="col-sm-4 col-md-5"> <img width="182" height="141" border="0" title="Egipto " alt="Egipto " src="/images/egipto.jpg" > 
+			</div> 
+			<div class="col-sm-8 col-md-7">
+			 <a href="/circuitos/egipto/" ><p class="tit">Egipto (3 Itinerarios)</p></a>
+				<p class="itinerario">El Cairo, Assuan, Kom Ombo y las grandes pirÃ¡mides</p>
+				<div class="bloque-precio">
+					<div class="col-md-3">
+					</div>
+					<div class="col-sm-4 col-md-5">
+						<a href="/circuitos/egipto/" class="btn btn btn-reservar">Ver Itinerarios</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="caja_descada"> 
+			<div class="col-sm-4 col-md-5"> <img width="182" height="141" border="0" title="Dubái y Maldivas " alt="Dubái y Maldivas " src="/images/dubai-maldivas.jpg" > 
+			</div> 
+			<div class="col-sm-8 col-md-7">
+			 <a href="/circuitos/dubai-maldivas/" ><p class="tit">DubÃ¡i y Maldivas (1 Itinerario)</p></a>
+				<p class="itinerario">DubÃ¡i, Abu Dhabi y el desierto, entre otras joyas</p>
+				<div class="bloque-precio">
+					<div class="col-md-3">
+					</div>
+					<div class="col-sm-4 col-md-5">
+						<a href="/circuitos/dubai-maldivas/" class="btn btn btn-reservar">Ver Itinerarios</a>
+					</div>
+				</div>
+			</div>
+		</div><br clear="all" />
+		<div class="caja_descada"> 
+			<div class="col-sm-4 col-md-5"> <img width="182" height="141" border="0" title="India y Nepal " alt="India y Nepal " src="/images/india.jpg" > 
+			</div> 
+			<div class="col-sm-8 col-md-7">
+			 <a href="/circuitos/india/" ><p class="tit">Circuitos por India y Tailandia (14 Itinerarios)</p></a>
+				<p class="itinerario">Nueva Delhi, el Taj Majal, Jaipur, Bangkok y mucho mÃ¡s</p>
+				<div class="bloque-precio">
+					<div class="col-md-3">
+					</div>
+					<div class="col-sm-4 col-md-5">
+						<a href="/circuitos/india/" class="btn btn btn-reservar">Ver Itinerarios</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="caja_descada"> 
+			<div class="col-sm-4 col-md-5"> <img width="182" height="141" border="0" title="China, Jap&oacute;n, Vietnam y Camboya " alt="China, Jap&oacute;n, Vietnam y Camboya " src="/images/combinados-asia.jpg" > 
+			</div> 
+			<div class="col-sm-8 col-md-7">
+			 <a href="/circuitos/combinados-asia/" ><p class="tit">China, Jap&oacute;n, Vietnam y Camboya (10 Itinerarios)</p></a>
+				<p class="itinerario">PekÃ­n, ShanghÃ¡i, Xi'an, Tokio, Hiroshima,  Ho Chi Minh, la bahÃ­a de Halong y mucho mÃ¡s</p>
+				<div class="bloque-precio">
+					<div class="col-md-3">
+					</div>
+					<div class="col-sm-4 col-md-5">
+						<a href="/circuitos/combinados-asia/" class="btn btn btn-reservar">Ver Itinerarios</a>
+					</div>
+				</div>
+			</div>
+		</div><br clear="all" />
+		<div class="caja_descada"> 
+			<div class="col-sm-4 col-md-5"> <img width="182" height="141" border="0" title="Kenia, Tanzania y Sud&aacute;frica " alt="Kenia, Tanzania y Sud&aacute;frica " src="/images/combinados-africa.jpg" > 
+			</div> 
+			<div class="col-sm-8 col-md-7">
+			 <a href="/circuitos/combinados-africa/" ><p class="tit">Kenia, Tanzania y Sud&aacute;frica (1 Itinerario)</p></a>
+				<p class="itinerario">Safari y parques naturales, entre otras propuestas</p>
+				<div class="bloque-precio">
+					<div class="col-md-3">
+					</div>
+					<div class="col-sm-4 col-md-5">
+						<a href="/circuitos/combinados-africa/" class="btn btn btn-reservar">Ver Itinerarios</a>
+					</div>
+				</div>
+			</div>
+		</div>				
+					<div class="clearfix">&nbsp;</div> 
+                </div> <!-- /.listado -->
+    
+            </div> <!-- /.bg_listado -->
+        </div> <!-- /.bg_blanco -->       
+
+	</div><!-- /.container -->
+
+</div>	
+	
+
+	<!-- FOOTER Link Directory -->
+	<div class="container"><!--<div class="container">-->
+		<footer>
+			<div class="row">
+		
+		
+					<div class="pull-left">
+						<h3>Panavisi&oacute;n Tours</h3>
+						<ul><li><a href="/compania/" title="Qui&eacute;nes somos">Qui&eacute;nes somos</a></li><li><a href="/notas-prensa/" title="Notas prensa">Notas prensa</a></li><li><a href="" title=""></a></li><li><a href="" title=""></a></li>  </ul>
+					</div>
+					<div class="pull-left">
+						<h3>Viaja con Nosotros</h3>
+						<ul><li><a href="/viajes/" title="Gu&iacute;as de Viaje">Gu&iacute;as de Viaje</a></li><li><a href="/enlaces-interes/" title="Enlaces de Inter&eacute;s">Enlaces de Inter&eacute;s</a></li><li><a href="http://www.xe.com/es/" title="Cambio de Divisas">Cambio de Divisas</a></li><li><a href="" title=""></a></li><li><a href="" title=""></a></li><li><a href="" title=""></a></li>  </ul>
+					</div>
+					<div class="pull-left">
+						<h3>Contacto</h3>
+						<ul><li><a href="/contacto/" title="Contacte con nosotros">Contacte con nosotros</a></li><li><a href="" title=""></a></li><li><a href="/contacto-ayuda-en-destino/" title="Ayudas en destino">Ayudas en destino</a></li><li><a href="http://www.panavision-tours.es/larga-distancia/" title="Larga Distancia">Larga Distancia</a></li><li><a href="" title=""></a></li>  </ul>
+					</div>
+					<div class="pull-left">
+						<h3>Legal</h3>
+						<ul><li><a href="/condiciones-generales/" title="Condiciones generales">Condiciones generales</a></li><li><a href="/aviso-legal/" title="Aviso Legal">Aviso Legal</a></li><li><a href="/documentacion-y-seguros/" title="Documentaci&oacute;n y Seguros">Documentaci&oacute;n y Seguros</a></li><li><a href="" title=""></a></li><li><a href="" title=""></a></li>  </ul>
+					</div>
+			    <div class="pull-right text-right">
+					<h3>
+					    <a href="http://es-es.facebook.com/pages/Panavision-Tours/267560496160" target="_blank"><img width="25px" src="/images/facebook.png" border="0" alt="Facebook" title="Facebook"/></a>
+					    <a href="https://twitter.com/panavisiontours" target="_blank"><img width="25px" src="/images/twitter.png" border="0" alt="Twitter" title="Twitter"/></a>
+					    <a href="https://plus.google.com/+panavisiontours" target="_blank"><img width="25px" src="/images/google-plus.png" border="0" alt="Google+" title="Google+"/></a>
+					    <a href="http://www.linkedin.com/company/2783293" target="_blank"><img width="25px" src="/images/linkedin.png" border="0" alt="LinkedIn" title="LinkedIn"/></a>
+					    <a href="https://es.pinterest.com/panavisiontours/" target="_blank"><img width="25px" src="/images/pinterest.png" border="0" alt="Pinterest" title="Pinterest"/></a>
+					    <a href="http://www.youtube.com/user/PanavisionTours" target="_blank"><img width="25px" src="/images/youtube.png" border="0" alt="YouTube" title="YouTube"/></a>
+					    <a href="http://blog.panavision-tours.es/" target="_blank"><img width="25px" src="/images/blog.png" border="0" alt="Blog" title="Blog"/></a>
+					</h3>
+				</div>
+
+
+
+				<div class="clearfix">&nbsp;</div>
+
+				<div class="col-md-12">
+					<p class="text-right"><a href="/aviso-legal/">Aviso legal y pol&iacute;tica de privacidad</a> | &#169; 2020 PANAVISI&Oacute;N TOURS<font color="#337AB7"> | Server 4  </font> <a href="#" class="go_up"><img src="/images/up.png" alt="Top" title="Top"/></a></p>
+				</div>
+				
+				<form method="post" target="_blank" action="https://compositor.panavision-tours.es/login.xhtml">
+					<input type="hidden" name="user" id="userAutologin" value=""/>
+					<input type="hidden" name="password" id="passwordAutologin" value=""/>
+					<input type="submit" name="autologin" id="autologin" value="autologin" style="display:none;">
+				</form>
+								
+			</div>				
+		</footer>
+	</div><!-- /.container -->
+
+
+
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>	
+<script type="text/javascript" src="/js/RecargaCombosBuscador.js"></script>
+<script type="text/javascript" src="/js/jquery.simplemodal-1.4.4.js"></script>
+<script type="text/javascript" src="/js/simplemodal_osx.js"></script>
+
+<script type="text/javascript" src="/js/gestion-cookies.js"></script>
+
+<script type="text/javascript" src="/js/mapper/mapper.js"></script>
+<script type="text/javascript" src="/js/cvi_tip_lib.js"></script>
+<script type="text/javascript" src="/js/jquery.customSelect-master/jquery.customSelect.min.js"></script>
+
+<!-- Bootstrap core JavaScript    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="/js/bootstrap.js"></script>
+<script type="text/javascript" src="/js/moment-with-locales.js"></script>
+<script type="text/javascript" src="/js/bootstrap-datetimepicker.js"></script>
+<!-- <script type="text/javascript" src="/js/docs.min.js"></script> -->
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script type="text/javascript" src="/js/ie10-viewport-bug-workaround.js"></script>
+<script type="text/javascript" src="/js/jquery.scrollTo.js"></script>
+
+<script type="text/javascript" src="/js/tmpl.js"></script>
+<script type="text/javascript" src="/js/jquery.dependClass-0.1.js"></script>
+<script type="text/javascript" src="/js/draggable-0.1.js"></script>
+<script type="text/javascript" src="/js/jquery.fancybox.js?v=2.1.5"></script>
+<script type="text/javascript" src="/js/bootstrap-select.js"></script>
+<script type="text/javascript" src="/js/bootstrap-multiselect.js"></script>
+
+
+
+<!-- end -->
+
+<script type="text/javascript" src="/js/comun.js"></script>
+
+<script type="text/javascript">
+
+	$( document ).ready(function() {
+		var inicio = 0;var dom = "es";		
+		if(inicio == '0'){
+			var check_cookie = getCookie('random_cookie');
+			if(check_cookie == null){
+				setCookie('random_cookie','random_value',1);
+			}else{ // no mostramos la capa
+				return; 
+			}
+		}
+		
+	});
+
+	$(document).ready(function(){
+		var f = new Date();
+		if (document.domain.toUpperCase().indexOf("US")!=-1){
+			$("#oferta")[0].innerHTML="Offers <br />"+(f.getMonth() +1) + "/" + f.getDate() + "/" + f.getFullYear();
+		}else{
+			$("#oferta")[0].innerHTML="Ofertas <br />"+f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear();
+		}
+	});
+
+	/*
+	$( document ).ready(function() {
+		$( "#avisoCookieDiv" ).html("Usamos cookies propias y de terceros para mejorar nuestros servicios en base al analisis de la navegacion. Si continua navegando consideramos que acepta su uso. <a href='javascript:void(0);' style='margin-left:10px; padding:4px; background:#52B8E4; text-decoration:none; color:#ffffff;' onclick='PonerCookie();'><b>Aceptar</b></a>");
+	});
+
+	if(getCookie('aviso')!="1"){
+		document.getElementById("avisoCookie").style.display="block";
+	}
+	*/
+
+
+		
+	
+</script>
+
+</body>
+</html>
