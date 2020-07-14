@@ -1,0 +1,3543 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+<link rel="shortcut icon" href="https://www.iconj.com/ico/w/j/wjvcaa98f8.ico" type="image/x-icon" />
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={licenseKey:"8c66ac5a08",applicationID:"206695550"};window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var i=n[t]={exports:{}};e[t][0].call(i.exports,function(n){var i=e[t][1][n];return r(i||n)},i,i.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var i=0;i<t.length;i++)r(t[i]);return r}({1:[function(e,n,t){function r(){}function i(e,n,t){return function(){return o(e,[u.now()].concat(f(arguments)),n?null:this,t),n?void 0:this}}var o=e("handle"),a=e(4),f=e(5),c=e("ee").get("tracer"),u=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],l="api-",d=l+"ixn-";a(p,function(e,n){s[n]=i(l+n,!0,"api")}),s.addPageAction=i(l+"addPageAction",!0),s.setCurrentRouteName=i(l+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,i="function"==typeof n;return o(d+"tracer",[u.now(),e,t],r),function(){if(c.emit((i?"":"no-")+"fn-start",[u.now(),r,i],t),i)try{return n.apply(this,arguments)}catch(e){throw c.emit("fn-err",[arguments,this,e],t),e}finally{c.emit("fn-end",[u.now()],t)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=i(d+n)}),newrelic.noticeError=function(e,n){"string"==typeof e&&(e=new Error(e)),o("err",[e,u.now(),!1,n])}},{}],2:[function(e,n,t){function r(e,n){var t=e.getEntries();t.forEach(function(e){"first-paint"===e.name?c("timing",["fp",Math.floor(e.startTime)]):"first-contentful-paint"===e.name&&c("timing",["fcp",Math.floor(e.startTime)])})}function i(e,n){var t=e.getEntries();t.length>0&&c("lcp",[t[t.length-1]])}function o(e){if(e instanceof s&&!l){var n,t=Math.round(e.timeStamp);n=t>1e12?Date.now()-t:u.now()-t,l=!0,c("timing",["fi",t,{type:e.type,fid:n}])}}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var a,f,c=e("handle"),u=e("loader"),s=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){a=new PerformanceObserver(r),f=new PerformanceObserver(i);try{a.observe({entryTypes:["paint"]}),f.observe({entryTypes:["largest-contentful-paint"]})}catch(p){}}if("addEventListener"in document){var l=!1,d=["click","keydown","mousedown","pointerdown","touchstart"];d.forEach(function(e){document.addEventListener(e,o,!1)})}}},{}],3:[function(e,n,t){function r(e,n){if(!i)return!1;if(e!==i)return!1;if(!n)return!0;if(!o)return!1;for(var t=o.split("."),r=n.split("."),a=0;a<r.length;a++)if(r[a]!==t[a])return!1;return!0}var i=null,o=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var f=navigator.userAgent,c=f.match(a);c&&f.indexOf("Chrome")===-1&&f.indexOf("Chromium")===-1&&(i="Safari",o=c[1])}n.exports={agent:i,version:o,match:r}},{}],4:[function(e,n,t){function r(e,n){var t=[],r="",o=0;for(r in e)i.call(e,r)&&(t[o]=n(r,e[r]),o+=1);return t}var i=Object.prototype.hasOwnProperty;n.exports=r},{}],5:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,i=t-n||0,o=Array(i<0?0:i);++r<i;)o[r]=e[n+r];return o}n.exports=r},{}],6:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function i(e){function n(e){return e&&e instanceof r?e:e?c(e,f,o):o()}function t(t,r,i,o){if(!l.aborted||o){e&&e(t,r,i);for(var a=n(i),f=v(t),c=f.length,u=0;u<c;u++)f[u].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function d(e,n){h[e]=v(e).concat(n)}function m(e,n){var t=h[e];if(t)for(var r=0;r<t.length;r++)t[r]===n&&t.splice(r,1)}function v(e){return h[e]||[]}function g(e){return p[e]=p[e]||i(t)}function w(e,n){u(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var h={},y={},b={on:d,addEventListener:d,removeEventListener:m,emit:t,get:g,listeners:v,context:n,buffer:w,abort:a,aborted:!1};return b}function o(){return new r}function a(){(s.api||s.feature)&&(l.aborted=!0,s=l.backlog={})}var f="nr@context",c=e("gos"),u=e(4),s={},p={},l=n.exports=i();l.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(i.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(o){}return e[n]=r,r}var i=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){i.buffer([e],r),i.emit(e,n,t)}var i=e("ee").get("handle");n.exports=r,r.ee=i},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,o,function(){return i++})}var i=1,o="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!x++){var e=E.info=NREUM.info,n=d.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();u(y,function(n,t){e[n]||(e[n]=t)}),c("mark",["onload",a()+E.offset],null,"api");var t=d.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function i(){"complete"===d.readyState&&o()}function o(){c("mark",["domContent",a()+E.offset],null,"api")}function a(){return O.exists&&performance.now?Math.round(performance.now()):(f=Math.max((new Date).getTime(),f))-E.offset}var f=(new Date).getTime(),c=e("handle"),u=e(4),s=e("ee"),p=e(3),l=window,d=l.document,m="addEventListener",v="attachEvent",g=l.XMLHttpRequest,w=g&&g.prototype;NREUM.o={ST:setTimeout,SI:l.setImmediate,CT:clearTimeout,XHR:g,REQ:l.Request,EV:l.Event,PR:l.Promise,MO:l.MutationObserver};var h=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1169.min.js"},b=g&&w&&w[m]&&!/CriOS/.test(navigator.userAgent),E=n.exports={offset:f,now:a,origin:h,features:{},xhrWrappable:b,userAgent:p};e(1),e(2),d[m]?(d[m]("DOMContentLoaded",o,!1),l[m]("load",r,!1)):(d[v]("onreadystatechange",i),l[v]("onload",r)),c("mark",["firstbyte",f],null,"api");var x=0,O=e(6)},{}],"wrap-function":[function(e,n,t){function r(e){return!(e&&e instanceof Function&&e.apply&&!e[a])}var i=e("ee"),o=e(5),a="nr@original",f=Object.prototype.hasOwnProperty,c=!1;n.exports=function(e,n){function t(e,n,t,i){function nrWrapper(){var r,a,f,c;try{a=this,r=o(arguments),f="function"==typeof t?t(r,a):t||{}}catch(u){l([u,"",[r,a,i],f])}s(n+"start",[r,a,i],f);try{return c=e.apply(a,r)}catch(p){throw s(n+"err",[r,a,p],f),p}finally{s(n+"end",[r,a,c],f)}}return r(e)?e:(n||(n=""),nrWrapper[a]=e,p(e,nrWrapper),nrWrapper)}function u(e,n,i,o){i||(i="");var a,f,c,u="-"===i.charAt(0);for(c=0;c<n.length;c++)f=n[c],a=e[f],r(a)||(e[f]=t(a,u?f+i:i,o,f))}function s(t,r,i){if(!c||n){var o=c;c=!0;try{e.emit(t,r,i,n)}catch(a){l([a,t,r,i])}c=o}}function p(e,n){if(Object.defineProperty&&Object.keys)try{var t=Object.keys(e);return t.forEach(function(t){Object.defineProperty(n,t,{get:function(){return e[t]},set:function(n){return e[t]=n,n}})}),n}catch(r){l([r])}for(var i in e)f.call(e,i)&&(n[i]=e[i]);return n}function l(n){try{e.emit("internal-error",n)}catch(t){}}return e||(e=i),t.inPlace=u,t.flag=a,t}},{}]},{},["loader"]);</script><script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"errorBeacon":"bam.nr-data.net","beacon":"bam.nr-data.net","agent":"","transactionName":"ZwRUbERQDUsHVkJdWV5OcE1YUhdRCVsZVUZAT15dV1UPUQhQVF1CQ09AUVNGEAIPW1JRTg==","queueTime":1,"applicationTime":1429,"applicationID":"206695550","licenseKey":"8c66ac5a08"}</script>
+<title>Bringing you just the headlines</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="_mg-domain-verification" content="ba2f54d70a92dc8d076a63bc745e0108" />
+<meta property="og:description" content="" />
+<meta property="og:url" content="http://headlinebits.com/" />
+<meta property="og:title" content="Bringing you just the headlines" />
+<meta property="og:site_name" content="Headline Bits">
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Bringing you just the headlines" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:url" content="http://headlinebits.com/" />
+<meta name="twitter:site" content="@headlinebits" />
+<link rel="stylesheet" href="https://headlinebits.s3.dualstack.us-east-1.amazonaws.com/static/css/09iujio9iu.css?eb5d35c8">
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+</head>
+<body>
+<nav class="navbar">
+<div class="container-fluid">
+<div class="row main-head">
+<div id="bg-left" class="gradient"></div>
+<div id="bg-right" class="gradient"></div>
+<div id="bg-bottom"></div>
+<header>
+<a href="/" title="Home page"><img src="https://headlinebits.s3.dualstack.us-east-1.amazonaws.com/static/images/hlb-logo-name.png" alt="Headline Bits" class="logo"></a>
+</header>
+</div>
+<div class="navbar-header text-center">
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+</div>
+<div id="navbar" class="navbar-collapse collapse">
+<ul class="nav navbar-nav">
+<li><a href="/" title="Home page">Home</a></li>
+<li><a href="/today/" title="Today's Headlines">Today</a></li>
+<li><a href="/yesterday/" title="Yesterday's Headlines">Yesterday</a></li>
+<li><a href="/last-week/" title="Last Week's Headlines">Last Week</a></li>
+<li><a href="/oldest/" title="Oldest Headlines">Oldest</a></li>
+</ul>
+</div>
+</div>
+</nav>
+<div class="container-fluid">
+<div class="row">
+<div class="full col-md-12">
+<header>
+<h1>Bringing you just the headlines</h1>
+</header>
+</div>
+</div>
+</div>
+<div class="container-fluid main">
+<div class="row">
+<div class="left-column col-md-8">
+<ul class="row list-unstyled">
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-05-29/the-coronavirus-was-here.AgdXVFRTUAxTBVRVUlNSAwBWB1wCXAAB" title="The Coronavirus Was Here">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://images.newrepublic.com/7238b1c8a65f239fb08f54d71d8b1bbf48910bc5.jpeg?w=1109&h=577&crop=faces&fit=crop&fm=jpg')"></div>
+</div>
+<h4 class="limited">
+The Coronavirus Was Here
+</h4>
+</a>
+<p class="limited">I live three miles from ground zero for coronavirus-shaming in America. Eons ago, in early March, the reality of the pandemic was taking hold, and public officials—at least, the ones who hadn’t dismissed the virus as fake news—began to prescribe “social distancing” and limiting travel as preventive measures. Spring-breaking students, however, had already made hotel reservations and plans to live forever; they flocked to my Fort Lauderdale, my home, as they do every year, and they writhed...</p>
+<small>The New Republic</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-03/coronavirus-scottish-health-secretary-to-face-coronavirus-questions.AgdXXFBXV10BVQQGD1RSAwBWBAkAXwZU" title="Coronavirus: Scottish health secretary to face coronavirus questions">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://ichef.bbci.co.uk/news/1024/branded_news/16BE4/production/_112665139_061753910.jpg')"></div>
+</div>
+<h4 class="limited">
+Coronavirus: Scottish health secretary to face coronavirus questions
+</h4>
+</a>
+<p class="limited">Jeane Freeman is to be questioned by MSPs over the impact of coronavirus in Scotland's care homes.</p>
+<small>BBC News</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-05-30/please-help-expand-the-good-news-map-post-good-news-stories-around-the-world-and-share-with-people.AgdXVglTB1pcC1YCVwNSAwBWBVsBDFNU" title="Please help expand the Good News Map. Post good news stories around the world and share with people you know. It had a thousand more shares from yesterday and it deserves more expansion that way national news media can notice it.">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.oneworld-stories.org/fbImage.jpg')"></div>
+</div>
+<h4 class="limited">
+Please help expand the Good News Map. Post good news stories around the world and share with people you know. It had a thousand more shares from yesterday and it deserves more expansion that way national news media can notice it.
+</h4>
+</a>
+<p class="limited">Good Stories During The Pandemic!</p>
+<small>www.oneworld-stories.org</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-03/who-has-good-news-and-bad-news-about-second-coronavirus-wave.AgdXU1cCUFpUUQdSAApSAwBWUA4GWAIF" title="WHO has good news and bad news about second coronavirus wave">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://thenypost.files.wordpress.com/2020/06/kluge.jpg?quality=90&strip=all&w=1200')"></div>
+</div>
+<h4 class="limited">
+WHO has good news and bad news about second coronavirus wave
+</h4>
+</a>
+<p class="limited">A top World Health Organization official had good news and bad news Wednesday — warning that there was a “definite threat” of another coronavirus outbreak but adding that the world would be better prepared this time around. “We still have neither a vaccine nor a cure for Covid-19,” Hans Kluge, the WHO’s European director, said</p>
+<small>New York Post</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-12/the-point-what-if-the-next-donald-trump-is-well-donald-trump.AgdWV1AGVwFTC1FSAwpSAwBWB1tRDVJX" title="The Point: What if the next Donald Trump is, well, Donald Trump?">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://cdn.cnn.com/cnnnext/dam/assets/200601192726-trump-phone-super-tease.jpg')"></div>
+</div>
+<h4 class="limited">
+The Point: What if the next Donald Trump is, well, Donald Trump?
+</h4>
+</a>
+<p class="limited">Since the moment late on November 8, 2016 when it became clear that Donald Trump would be the 45th president of the United States, many Democrats have been counting the days until November 3, 2020 -- the day that they believe he will be voted out of office.</p>
+<small>CNN</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-06/82-year-old-trump-supporter-violently-attacked-for-holding-trump-sign-gets-a-surprise-from-donald-t.AgdXBlRRBgBUAlQHBFZSAwBWAg4BC1dT" title="82 Year Old Trump Supporter Violently Attacked for Holding Trump Sign, Gets a Surprise from Donald Trump, Jr">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://media.townhall.com/townhall/reu/ha/2020/51/037c595f-6f7f-4d87-b587-111b3a2b2f5c.jpg')"></div>
+</div>
+<h4 class="limited">
+82 Year Old Trump Supporter Violently Attacked for Holding Trump Sign, Gets a Surprise from Donald Trump, Jr
+</h4>
+</a>
+<p class="limited">Nice job, Trump, Jr!</p>
+<small>redstate.com</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-05-30/please-help-expand-the-good-news-map-post-good-news-stories-around-the-world-and-share-with-people.AgdXVglTB1pcC1YCVwNSAwBWBVsBDFNU" title="Please help expand the Good News Map. Post good news stories around the world and share with people you know. It had a thousand more shares from yesterday and it deserves more expansion that way national news media can notice it.">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.oneworld-stories.org/fbImage.jpg')"></div>
+</div>
+<h4 class="limited">
+Please help expand the Good News Map. Post good news stories around the world and share with people you know. It had a thousand more shares from yesterday and it deserves more expansion that way national news media can notice it.
+</h4>
+</a>
+<p class="limited">Good Stories During The Pandemic!</p>
+<small>www.oneworld-stories.org</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-03/who-has-good-news-and-bad-news-about-second-coronavirus-wave.AgdXU1cCUFpUUQdSAApSAwBWUA4GWAIF" title="WHO has good news and bad news about second coronavirus wave">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://thenypost.files.wordpress.com/2020/06/kluge.jpg?quality=90&strip=all&w=1200')"></div>
+</div>
+<h4 class="limited">
+ WHO has good news and bad news about second coronavirus wave
+</h4>
+</a>
+<p class="limited">A top World Health Organization official had good news and bad news Wednesday — warning that there was a “definite threat” of another coronavirus outbreak but adding that the world would be better prepared this time around. “We still have neither a vaccine nor a cure for Covid-19,” Hans Kluge, the WHO’s European director, said</p>
+<small>New York Post</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-01/rev-al-don-t-use-george-floyd-for-anything-other-than-justice-for-george-floyd.AgdXUFUHUQFWBgYOBgpSAwBWUF0DWlUG" title="Rev. Al: Don't use George Floyd for anything other than justice for George Floyd">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://media12.s-nbcnews.com/j/MSNBC/Components/Video/202006/n_mj_rev_200601_1920x1080.nbcnews-fp-1200-630.jpg')"></div>
+</div>
+<h4 class="limited">
+Rev. Al: Don't use George Floyd for anything other than justice for George Floyd
+</h4>
+</a>
+<p class="limited">The Rev. Al Sharpton discusses the violence and looting overshadowing many peaceful protests across the country for George Floyd, and he calls for peaceful protesting over violence.</p>
+<small>MSNBC.com</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-10/we-need-to-talk-about-candace-owens-problem-with-george-floyd-and-everybody-like-george-floyd.AgdWVFQFUgoBUQoHB1ZSAwBWBwkBWlUH" title="We need to talk about Candace Owens' problem with George Floyd — and everybody like George Floyd">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://static.independent.co.uk/s3fs-public/thumbnails/image/2018/08/07/10/gettyimages-978440974.jpg')"></div>
+</div>
+<h4 class="limited">
+We need to talk about Candace Owens' problem with George Floyd — and everybody like George Floyd
+</h4>
+</a>
+<p class="limited">There's a lot of hurt in Owens' words. Coming from South Side Chicago, I can identify</p>
+<small>The Independent</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-15/why-generals-should-not-be-so-political.AgdWUwkBB1sGVVEPDwZSAwBWUVtWAAUD" title="Why Generals Should Not Be So Political">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://nationalinterest.org/sites/default/files/main_images/A123+(1)_0.jpg')"></div>
+</div>
+<h4 class="limited">
+Why Generals Should Not Be So Political
+</h4>
+</a>
+<p class="limited">Giselle Donnelly
+Politics, Americas
+Bad for the chain of command and cilivian-military relations.
+Key Point: The Constitution exists for a reason. Generals can have opinions, but they also are subordinate to the chain of command.
+Interviewed by CNN host Jake Tapper over the weekend, retired Chairman of the Joint Chiefs of Staff Colin Powell was asked whether he agreed with the denunciations of President Trump issued by James Mattis and John Allen, both retired Marine four-star generals and,...</p>
+<small>The National Interest</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-05/the-politics-of-murder.AgdXBQFQAV8GCgFWAQpSAwBWV1gADFQA" title="The Politics of Murder">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.americanthinker.com/images/bucket/2020-06/221368.png')"></div>
+</div>
+<h4 class="limited">
+The Politics of Murder
+</h4>
+</a>
+<p class="limited">When George Floyd died under Officer Derek Chauvin’s knee, there was nearly universal revulsion at obvious police misconduct.� This belied the narrative that black lives don’t matter to white people, or that the American institutions</p>
+<small>@AmericanThinker</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-05-28/ethan-strauss-on-the-nba-politicization-of-sports-and-sports-media.AgdXVAMFV19TBVRVUlNSAwBWB1wCCFRS" title="Ethan Strauss On The NBA, Politicization Of Sports, And Sports Media">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://thefederalist.com/wp-content/uploads/2020/05/Obama-Sport.jpg')"></div>
+</div>
+<h4 class="limited">
+Ethan Strauss On The NBA, Politicization Of Sports, And Sports Media
+</h4>
+</a>
+<p class="limited">Strauss argues it’s important for the National Basketball Association to promote the game of basketball itself to increase its popularity rather than focus on drama between players and tweets.</p>
+<small>The Federalist</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-05-28/with-some-sports-stats-all-you-need-is-the-number-do-you-recognize-these-iconic-sports-digits.AgdQAlNUVwFXBlcGUFdSAwBWAAsGWglV" title="With some sports stats, all you need is the number. Do you recognize these iconic sports digits?">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.gannett-cdn.com/presto/2020/05/28/USAT/bc64e1c4-cf2f-43aa-a479-0d39c16e46fc-AP_Wilt_100_Basketball.JPG?crop=2370,1333,x0,y184&width=1600&height=800&fit=bounds')"></div>
+</div>
+<h4 class="limited">
+With some sports stats, all you need is the number. Do you recognize these iconic sports digits?
+</h4>
+</a>
+<p class="limited">Sometimes in sports, all that's needed to spark memories of a particular record, total or performance is a single number. Here are 10 of them.</p>
+<small>USA TODAY</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-10/its-time-to-end-chinas-united-front-operations-inside-the-united-states.AgdWVFNXAAABUQoHB1ZSAwBWBwkBDlJS" title="It’s time to end China’s ‘United Front’ operations inside the United States">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/F4QL5NVA3MI6VPQGV5KRJ3QDQU.jpg&w=1440')"></div>
+</div>
+<h4 class="limited">
+It’s time to end China’s ‘United Front’ operations inside the United States
+</h4>
+</a>
+<p class="limited">The United States should stop tolerating China's covert efforts to spread its influence.</p>
+<small>Washington Post</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-05-27/united-states-passes-100000-coronavirus-deaths-as-states-continue-rush-to-reopen.AgdQAVQHAQFXBlcGUFdSAwBWAAsHX1VX" title="United States passes 100,000 coronavirus deaths as states continue rush to reopen">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.nydailynews.com/resizer/rljS6ucdRThrZPnRxq72jC1tvSc=/1200x0/top/cloudfront-us-east-1.images.arcpublishing.com/tronc/AJROCODYLVE75JNKX6ZIIMOTZM.jpg')"></div>
+</div>
+<h4 class="limited">
+United States passes 100,000 coronavirus deaths as states continue rush to reopen
+</h4>
+</a>
+<p class="limited">The United States has blown past another tragic landmark in the fight against coronavirus, surpassing 100,000 deaths nationwide. The devastating figure, reported by Johns Hopkins University’s Coronavirus Resource Center, is much higher than any other country in the world.</p>
+<small>nydailynews.com</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-05-28/when-it-comes-to-reopening-its-not-health-vs-wealth-its-health-vs-health.AgdXVAQHUgBTBVRVUlNSAwBWB1wCDwgB" title="When it comes to reopening, it’s not health vs. wealth — it’s health vs. health">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://thenypost.files.wordpress.com/2020/05/trump.11-1.jpg?quality=90&strip=all&w=1200')"></div>
+</div>
+<h4 class="limited">
+When it comes to reopening, it’s not health vs. wealth — it’s health vs. health
+</h4>
+</a>
+<p class="limited">An extended “lockdown cure” may kill far more Americans than COVID-19. That sobering reality underpins the Trump administration’s strategy to work with America’s 50 states to get the nation back to work as quickly and safely as possible. When little was known about the virus in March, the prudent course was to lock down all</p>
+<small>New York Post</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-03/hello-health-launches-9th-health-care-platform-in-philippines.AgdXUwddBwlUUQdSAApSAwBWUA4HAAkF" title="Hello Health launches 9th health care platform in Philippines">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://media.philstar.com/photos/2020/06/02/hello-doctor-lead_2020-06-02_12-13-03.jpg')"></div>
+</div>
+<h4 class="limited">
+Hello Health launches 9th health care platform in Philippines
+</h4>
+</a>
+<p class="limited">Hello Health, a leading provider of consumer health information in Asia, expands to the Philippines with the launch of its 9th platform.</p>
+<small>www.philstar.com</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-10/cancel-culture-is-giving-way-to-erasure-culture-and-we-are-becoming-dumber-for-it.AgdWVQABUggBUQoHB1ZSAwBWBwkADQQF" title="Cancel Culture is Giving Way to Erasure Culture and we are Becoming Dumber for It">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://media.townhall.com/townhall/reu/ha/2020/161/5ed3e913-8994-4316-a50f-478d837d4ebc.jpg')"></div>
+</div>
+<h4 class="limited">
+Cancel Culture is Giving Way to Erasure Culture and we are Becoming Dumber for It
+</h4>
+</a>
+<p class="limited">By eliminating anything that can be questioned it prevents us from coming up with answers</p>
+<small>redstate.com</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-09/cancel-culture-journalism.AgdXAVVTUwFWC1cCUFdSAwBWVgoEDwcD" title="Cancel Culture Journalism">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://images.wsj.net/im-196189/social')"></div>
+</div>
+<h4 class="limited">
+Cancel Culture Journalism
+</h4>
+</a>
+<p class="limited">Two liberal editors fall for violations against progressive orthodoxy.</p>
+<small>WSJ</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-05-29/the-coronavirus-was-here.AgdXVFRTUAxTBVRVUlNSAwBWB1wCXAAB" title="The Coronavirus Was Here">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://images.newrepublic.com/7238b1c8a65f239fb08f54d71d8b1bbf48910bc5.jpeg?w=1109&h=577&crop=faces&fit=crop&fm=jpg')"></div>
+</div>
+<h4 class="limited">
+The Coronavirus Was Here
+</h4>
+</a>
+<p class="limited">I live three miles from ground zero for coronavirus-shaming in America. Eons ago, in early March, the reality of the pandemic was taking hold, and public officials—at least, the ones who hadn’t dismissed the virus as fake news—began to prescribe “social distancing” and limiting travel as preventive measures. Spring-breaking students, however, had already made hotel reservations and plans to live forever; they flocked to my Fort Lauderdale, my home, as they do every year, and they writhed...</p>
+<small>The New Republic</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-03/coronavirus-scottish-health-secretary-to-face-coronavirus-questions.AgdXXFBXV10BVQQGD1RSAwBWBAkAXwZU" title="Coronavirus: Scottish health secretary to face coronavirus questions">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://ichef.bbci.co.uk/news/1024/branded_news/16BE4/production/_112665139_061753910.jpg')"></div>
+</div>
+<h4 class="limited">
+Coronavirus: Scottish health secretary to face coronavirus questions
+</h4>
+</a>
+<p class="limited">Jeane Freeman is to be questioned by MSPs over the impact of coronavirus in Scotland's care homes.</p>
+<small>BBC News</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-04/u-s-attorney-general-to-hold-news-conference-on-thursday.AgdXXQBSAFwBVQQGD1RSAwBWBAkHAAID" title="U.S. attorney general to hold news conference on Thursday">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://s3.reutersmedia.net/resources/r/?m=02&d=20200604&t=2&i=1521102981&w=1200&r=LYNXMPEG531QQ')"></div>
+</div>
+<h4 class="limited">
+U.S. attorney general to hold news conference on Thursday
+</h4>
+</a>
+<p class="limited">U.S. Attorney General Bill Barr will hold a news conference at 12:30 p.m. (1630 GMT) on Thursday, the U.S. Justice Department said in a statement.</p>
+<small>U.S.</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-11/trump-taps-retired-general-fox-news-commentator-as-pentagon-policy-chief.AgdWVghdBAFSAQFUBVBSAwBWBl8ACVRT" title="Trump taps retired general, Fox News commentator as Pentagon policy chief">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://thenypost.files.wordpress.com/2020/06/spl5171535_009.jpg?quality=90&strip=all&w=1200')"></div>
+</div>
+<h4 class="limited">
+Trump taps retired general, Fox News commentator as Pentagon policy chief
+</h4>
+</a>
+<p class="limited">President Trump will nominate retired Army brigadier general and Fox News commentator Anthony Tata to be the Pentagon’s undersecretary for policy, the White House announced. Citing his “extensive uniformed service with the United States Army,” the White House announced Wednesday that Tata would succeed John Rood, who was ousted from the post in February. The</p>
+<small>New York Post</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-02/jadon-sancho-marcus-rashford-and-the-importance-of-footballers-not-sticking-to-football.AgdXUgBTXFwFAVEFDldSAwBWAQ4CCwNV" title="Jadon Sancho, Marcus Rashford and the importance of footballers not sticking to football">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://static.independent.co.uk/s3fs-public/thumbnails/image/2020/05/31/19/football.jpg')"></div>
+</div>
+<h4 class="limited">
+Jadon Sancho, Marcus Rashford and the importance of footballers not sticking to football
+</h4>
+</a>
+<p class="limited">So many young footballers have refused to stay silent and have amplified Black Lives Matter, regardless of the consequences. They are empowering a generation to use their voices to force necessary change</p>
+<small>The Independent</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-08/b-r-football-ranks-the-best-teams-in-europe-as-football-returns.AgdXAQBVUgEBUAdVA1RSAwBWVl9WCFJX" title="B/R Football Ranks: The Best Teams in Europe as Football Returns">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://img.bleacherreport.net/img/images/photos/003/871/645/hi-res-8105e45aefcd4b33ae6dc51ea7899d08_crop_exact.jpg?w=1200&h=1200&q=75')"></div>
+</div>
+<h4 class="limited">
+B/R Football Ranks: The Best Teams in Europe as Football Returns
+</h4>
+</a>
+<p class="limited">Slowly but steadily, football is coming back. The Bundesliga will complete its fifth matchweek since returning on Monday night; last Wednesday saw the Portuguese Primeira Liga</p>
+<small>Bleacher Report</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-02/covid-cases-rising-in-russia-eastern-europe-waning-in-western-europe.AgdXUgUAUAsFAVEFDldSAwBWAQ4CDwkB" title="COVID cases rising in Russia, Eastern Europe, waning in Western Europe">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://s1.reutersmedia.net/resources/r/?m=02&d=20200602&t=2&i=1520767405&w=1200&r=LYNXMPEG510W2')"></div>
+</div>
+<h4 class="limited">
+COVID cases rising in Russia, Eastern Europe, waning in Western Europe
+</h4>
+</a>
+<p class="limited">New cases of COVID-19 reported daily are steadily declining in Western Europe, but not in hotspots in Russia and Eastern Europe, the World Health Organization (WHO) said on Tuesday.</p>
+<small>IN</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-02/covid-cases-rising-in-russia-eastern-europe-waning-in-western-europe-who.AgdXUgICAF0FAVEFDldSAwBWAQ4CDAUD" title="COVID cases rising in Russia, Eastern Europe, waning in Western Europe: WHO">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://s1.reutersmedia.net/resources/r/?m=02&d=20200602&t=2&i=1520767405&w=1200&r=LYNXMPEG510W2')"></div>
+</div>
+<h4 class="limited">
+COVID cases rising in Russia, Eastern Europe, waning in Western Europe: WHO
+</h4>
+</a>
+<p class="limited">New cases of COVID-19 reported daily are steadily declining in Western Europe, but not in hotspots in Russia and Eastern Europe, the World Health Organization (WHO) said on Tuesday.</p>
+<small>in.reuters.com</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-03/us-to-block-chinese-airlines-from-flying-into-the-us.AgdXU1IAXVtUUQdSAApSAwBWUA4GClNU" title="US to block Chinese airlines from flying into the US">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://cdn.cnn.com/cnnnext/dam/assets/200203021934-china-eastern-airline-file-super-tease.jpg')"></div>
+</div>
+<h4 class="limited">
+US to block Chinese airlines from flying into the US
+</h4>
+</a>
+<p class="limited">The US government says it will block Chinese airlines from flying into the US in response to what it says is a policy that has prevented US carriers from service between the two countries.</p>
+<small>CNN</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-15/maryland-bishops-the-sin-of-racism-remains-with-us-and-in-us.AgdWU1AHVVgGVVEPDwZSAwBWUVtWXQQG" title="Maryland Bishops: the Sin of Racism ‘Remains with Us and in Us’">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://media.breitbart.com/media/2020/06/GettyImages-1217490276-640x335.jpg')"></div>
+</div>
+<h4 class="limited">
+Maryland Bishops: the Sin of Racism ‘Remains with Us and in Us’
+</h4>
+</a>
+<p class="limited">The Maryland bishops released a pastoral letter Monday decrying the sin of racism and confessing their own participation in it.</p>
+<small>Breitbart</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-04/covid-19-smell-and-taste-how-is-covid-19-different-from-other-respiratory-diseases.AgdXXFQCVAgBVQQGD1RSAwBWBAkHDVcG" title="COVID-19, smell and taste – how is COVID-19 different from other respiratory diseases?">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.rawstory.com/wp-content/uploads/2015/03/Man-eating-a-strawberry-Shutterstock.jpg')"></div>
+</div>
+<h4 class="limited">
+COVID-19, smell and taste – how is COVID-19 different from other respiratory diseases?
+</h4>
+</a>
+<p class="limited">In March 2020, Google searches for phrases like “can’t taste food” or “why can’t I smell” spiked around the world, particularly in areas where COVID-19 hit hardest. Still, many of us have experienced a temporary change in the flavor of our food with a common cold or the flu (influenza). So, is COVID-19 – the [</p>
+<small>www.rawstory.com</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-06/covid-19-update-vitamin-k-in-cheese-can-fight-the-coronavirus-covid-19-patients-found-to-be-suffer.AgdXBgFRBl9UAlQHBFZSAwBWAg4CAAYJ" title="COVID-19 Update: Vitamin K in Cheese Can Fight the Coronavirus; COVID-19 Patients Found to be Suffering From Vitamin Deficiency">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://1734811051.rsc.cdn77.org/data/images/full/366679/coronavirus-can-be-fought-with-vitamin-k-found-in-cheese-patients-who-died-from-the-virus-found-with-vitamin-deficiency.jpg')"></div>
+</div>
+<h4 class="limited">
+COVID-19 Update: Vitamin K in Cheese Can Fight the Coronavirus; COVID-19 Patients Found to be Suffering From Vitamin Deficiency
+</h4>
+</a>
+<p class="limited">Experts have claimed that vitamin K found in eggs, spinach, and blue cheeses can fight coronavirus infections. Patients who died from the virus were found to have been suffering from vitamin K deficiency.</p>
+<small>Tech Times</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-10/lessons-from-asias-reopening.AgdWVFMFVA4BUQoHB1ZSAwBWBwkBAQUD" title="Lessons from Asia’s reopening">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://content.fortune.com/wp-content/uploads/2020/06/GettyImages-1219041899.jpg?resize=1200,600')"></div>
+</div>
+<h4 class="limited">
+Lessons from Asia’s reopening
+</h4>
+</a>
+<p class="limited">The CEOs of Rakuten, Yum China, Alibaba and Grab have a lot of wisdom to share on the subject.</p>
+<small>Fortune</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-05-29/ap-week-in-pictures-asia.AgdXVAdSBg5TBVRVUlNSAwBWB1wCDgBS" title="AP Week in Pictures, Asia">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://s.abcnews.com/images/International/WireAP_83733ebb057f45a1a3f9564ffbd09c6e_16x9_992.jpg')"></div>
+</div>
+<h4 class="limited">
+AP Week in Pictures, Asia
+</h4>
+</a>
+<p class="limited">MAY 22-28, 2020
+This photo gallery highlights some of the most compelling images made or published by Associated Press photographers in Asia and the Pacific.
+The gallery was curated by AP photo editor Masayo Yoshida in Tokyo.
+Follow AP visual journalism:
+Instagram: https://www.instagram.com/apnews
+AP Images on Twitter: http://twitter.com/AP—Images
+AP Images blog: http://apimagesblog.com</p>
+<small>ABC News</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-05-27/google-is-facing-antitrust-scrutiny-in-india-for-unfairly-promoting-its-google-pay-app-over-competit.AgdQAQlTAFtQAFFTVwVSAwBWVg8EDgdT" title="Google is facing antitrust scrutiny in India for unfairly promoting its Google Pay app over competitors (GOOG, GOOGL)">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://i.insider.com/5ece75155af6cc04091cfb44?width=1200&format=jpeg')"></div>
+</div>
+<h4 class="limited">
+Google is facing antitrust scrutiny in India for unfairly promoting its Google Pay app over competitors (GOOG, GOOGL)
+</h4>
+</a>
+<p class="limited">REUTERS/Albert Gea
+India's antitrust body is said to be investigating whether Google abused its market position and unfairly promoted its mobile payments app.
+The complaint, filed in February, claims that Google promotes Google Pay in its Android app store in a way that hurts competitors and consumers.
+The case is still being reviewed. In the US, Google could face lawsuits later this year from ongoing antitrust probes.
+Visit Business Insider's homepage for more stories.
+Google is facing a...</p>
+<small>Business Insider</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-08/google-killing-google-play-music-for-youtube-music-in-2020.AgdXAVRTBgBWC1cCUFdSAwBWVgoEDgcB" title="Google killing Google Play Music for YouTube Music in 2020">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.gannett-cdn.com/presto/2020/05/11/USAT/bd5f20a6-f5a2-488e-bf4e-12249a04d34e-GPM_PR_PHONE_YTM_GPM-Widget.png?crop=2181,1227,x0,y1192&width=1600&height=800&fit=bounds')"></div>
+</div>
+<h4 class="limited">
+Google killing Google Play Music for YouTube Music in 2020
+</h4>
+</a>
+<p class="limited">New tab in Google Play Music app lets you transfer playlists, libraries, uploads and personal preferences over to YouTube Music.</p>
+<small>USA TODAY</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-05-29/the-coronavirus-was-here.AgdXVFRTUAxTBVRVUlNSAwBWB1wCXAAB" title="The Coronavirus Was Here">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://images.newrepublic.com/7238b1c8a65f239fb08f54d71d8b1bbf48910bc5.jpeg?w=1109&h=577&crop=faces&fit=crop&fm=jpg')"></div>
+</div>
+<h4 class="limited">
+The Coronavirus Was Here
+</h4>
+</a>
+<p class="limited">I live three miles from ground zero for coronavirus-shaming in America. Eons ago, in early March, the reality of the pandemic was taking hold, and public officials—at least, the ones who hadn’t dismissed the virus as fake news—began to prescribe “social distancing” and limiting travel as preventive measures. Spring-breaking students, however, had already made hotel reservations and plans to live forever; they flocked to my Fort Lauderdale, my home, as they do every year, and they writhed...</p>
+<small>The New Republic</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-03/coronavirus-scottish-health-secretary-to-face-coronavirus-questions.AgdXXFBXV10BVQQGD1RSAwBWBAkAXwZU" title="Coronavirus: Scottish health secretary to face coronavirus questions">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://ichef.bbci.co.uk/news/1024/branded_news/16BE4/production/_112665139_061753910.jpg')"></div>
+</div>
+<h4 class="limited">
+Coronavirus: Scottish health secretary to face coronavirus questions
+</h4>
+</a>
+<p class="limited">Jeane Freeman is to be questioned by MSPs over the impact of coronavirus in Scotland's care homes.</p>
+<small>BBC News</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-11/crime.AgdWVlBTVgFSAQFUBVBSAwBWBl8ACwlT" title="CRIME">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://i.dailymail.co.uk/1s/2020/06/11/21/29505498-0-image-a-98_1591908653156.jpg')"></div>
+</div>
+<h4 class="limited">
+CRIME
+</h4>
+</a>
+<p class="limited">This third outing for the two magnificently eccentric analysts from the National Crime Agency, Washington Poe and Tilly Bradshaw, firmly underlines what they have become.</p>
+<small>Mail Online</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-06/crime-is-crime-the-age-of-chaos-has-arrived.AgdXBVdQAQFUAlQHBFZSAwBWAg4CAVMG" title="Crime... Is Crime! The Age Of Chaos Has Arrived">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.zerohedge.com/s3/files/styles/max_650x650/public/2020-06/165759830.jpg?itok=XbN1uNO9')"></div>
+</div>
+<h4 class="limited">
+Crime... Is Crime! The Age Of Chaos Has Arrived
+</h4>
+</a>
+<p class="limited">Rioters and looters are faithfully adhering to the distilled essence of what our rulers and intellectual have been telling them for decades: If you need it, or just want it, it’s yours to have or destroy.</p>
+<small>Zero Hedge</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-05-28/when-it-comes-to-reopening-its-not-health-vs-wealth-its-health-vs-health.AgdXVAQHUgBTBVRVUlNSAwBWB1wCDwgB" title="When it comes to reopening, it’s not health vs. wealth — it’s health vs. health">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://thenypost.files.wordpress.com/2020/05/trump.11-1.jpg?quality=90&strip=all&w=1200')"></div>
+</div>
+<h4 class="limited">
+When it comes to reopening, it’s not health vs. wealth — it’s health vs. health
+</h4>
+</a>
+<p class="limited">An extended “lockdown cure” may kill far more Americans than COVID-19. That sobering reality underpins the Trump administration’s strategy to work with America’s 50 states to get the nation back to work as quickly and safely as possible. When little was known about the virus in March, the prudent course was to lock down all</p>
+<small>New York Post</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-03/hello-health-launches-9th-health-care-platform-in-philippines.AgdXUwddBwlUUQdSAApSAwBWUA4HAAkF" title="Hello Health launches 9th health care platform in Philippines">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://media.philstar.com/photos/2020/06/02/hello-doctor-lead_2020-06-02_12-13-03.jpg')"></div>
+</div>
+<h4 class="limited">
+Hello Health launches 9th health care platform in Philippines
+</h4>
+</a>
+<p class="limited">Hello Health, a leading provider of consumer health information in Asia, expands to the Philippines with the launch of its 9th platform.</p>
+<small>www.philstar.com</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-04/u-s-attorney-general-to-hold-news-conference-on-thursday.AgdXXQBSAFwBVQQGD1RSAwBWBAkHAAID" title="U.S. attorney general to hold news conference on Thursday">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://s3.reutersmedia.net/resources/r/?m=02&d=20200604&t=2&i=1521102981&w=1200&r=LYNXMPEG531QQ')"></div>
+</div>
+<h4 class="limited">
+U.S. attorney general to hold news conference on Thursday
+</h4>
+</a>
+<p class="limited">U.S. Attorney General Bill Barr will hold a news conference at 12:30 p.m. (1630 GMT) on Thursday, the U.S. Justice Department said in a statement.</p>
+<small>U.S.</small>
+</div>
+</li>
+<li class="col-sm-6">
+<div class="article-tile">
+<a href="/2020-06-11/trump-taps-retired-general-fox-news-commentator-as-pentagon-policy-chief.AgdWVghdBAFSAQFUBVBSAwBWBl8ACVRT" title="Trump taps retired general, Fox News commentator as Pentagon policy chief">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://thenypost.files.wordpress.com/2020/06/spl5171535_009.jpg?quality=90&strip=all&w=1200')"></div>
+</div>
+<h4 class="limited">
+Trump taps retired general, Fox News commentator as Pentagon policy chief
+</h4>
+</a>
+<p class="limited">President Trump will nominate retired Army brigadier general and Fox News commentator Anthony Tata to be the Pentagon’s undersecretary for policy, the White House announced. Citing his “extensive uniformed service with the United States Army,” the White House announced Wednesday that Tata would succeed John Rood, who was ousted from the post in February. The</p>
+<small>New York Post</small>
+</div>
+</li>
+</ul>
+<div id="ad1"></div>
+<ul class="row list-unstyled">
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-14/coronavirus-david-lammy-condemns-buried-bame-coronavirus-recommendations.AgdWUgFdAQpTCwBTAAZSAwBWBw1RAQJU" title="Coronavirus: David Lammy condemns 'buried' BAME coronavirus recommendations">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://ichef.bbci.co.uk/news/1024/branded_news/5351/production/_112892312_p08gyjwm.jpg')"></div>
+</div>
+<h4 class="limited">
+Coronavirus: David Lammy condemns 'buried' BAME coronavirus recommendations
+</h4>
+</a>
+<p class="limited">The shadow justice secretary calls on the government to release recommendations from a report into the impact of coronavirus on BAME communities.</p>
+<small>www.bbc.co.uk</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-12/coronavirus-world-round-up-india-overtakes-uk-in-coronavirus-caseload.AgdWVwJXBlpTC1FSAwpSAwBWB1tSWAVV" title="Coronavirus world round-up: India overtakes UK in coronavirus caseload">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.telegraph.co.uk/content/dam/news/2020/06/12/TELEMMGLPICT000232907710-xlarge_trans_NvBQzQNjv4Bqr-7O72qaIw6JcGx7YfRv5iSCpaSurtP4qciNMA_ZpPo.jpeg?imwidth=1200')"></div>
+</div>
+<h4 class="limited">
+Coronavirus world round-up: India overtakes UK in coronavirus caseload
+</h4>
+</a>
+<p class="limited">Developing world described as a 'ticking time bomb'; WHO rebuked Russian death toll; Macron may resign</p>
+<small>The Telegraph</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-02/coronavirus-world-round-up-arthritis-drug-may-aid-coronavirus-fight.AgdXUgFQUQ0FAVEFDldSAwBWAQ4CCAVU" title="Coronavirus world round-up: arthritis drug may aid coronavirus fight">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.telegraph.co.uk/content/dam/news/2020/06/02/TELEMMGLPICT000232278524-xlarge_trans_NvBQzQNjv4BqaRL1kC4G7DT9ZsZm6Pe3PehAFAI_f6ud569StXyOKH0.jpeg?imwidth=1200')"></div>
+</div>
+<h4 class="limited">
+Coronavirus world round-up: arthritis drug may aid coronavirus fight
+</h4>
+</a>
+<p class="limited">George Floyd protests may lead to second wave; Saudi Arabia calls for funds to support Yemen; South America begins easing restrictions</p>
+<small>The Telegraph</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-13/my-fake-news-whodunnit-caught-up-in-a-senegal-fake-news-scam.AgdWUQcCVghTCwBTAAZSAwBWBw1RDQID" title="My fake news whodunnit: Caught up in a Senegal fake news scam">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://ichef.bbci.co.uk/news/1024/branded_news/74D3/production/_112870992_2ce3acec-0238-491a-93db-96e58ff21f2e.jpg')"></div>
+</div>
+<h4 class="limited">
+My fake news whodunnit: Caught up in a Senegal fake news scam
+</h4>
+</a>
+<p class="limited">A news story accusing a presidential candidate of corruption was written in my name, or almost in my name.</p>
+<small>BBC News</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-10/facebook-launches-news-tab-in-the-us-adds-a-local-news-section.AgdWVQBTXAABUQoHB1ZSAwBWBwkACgQI" title="Facebook Launches News tab in the US, adds a local news section">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.verrafin.com/storage/app/uploads/public/5ee/100/7bc/5ee1007bcb618132690280.png')"></div>
+</div>
+<h4 class="limited">
+Facebook Launches News tab in the US, adds a local news section
+</h4>
+</a>
+<p class="limited">Facebook has introduced a news tab on its platform. The news tab firstly introduced in the US after successful testing.</p>
+<small>Verrafin</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-09/facebook-news-launches-to-all-in-us-with-addition-of-local-news-and-video-techcrunch.AgdXAlUBBgBWC1cCUFdSAwBWVgoLWwUC" title="Facebook News launches to all in US with addition of local news and video – TechCrunch">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://techcrunch.com/wp-content/uploads/2020/06/Screen-Shot-2020-06-09-at-2.30.02-PM.png?w=764')"></div>
+</div>
+<h4 class="limited">
+Facebook News launches to all in US with addition of local news and video – TechCrunch
+</h4>
+</a>
+<p class="limited">Facebook News, the social network’s dedicated section devoted to journalism, is today launching for all users in the U.S. The feature was first introduced in October 2019 as a limited test in the U.S. The product represents Facebook’s much-debated new effort in wooing publishers to its platform with the promise of increased distribution. In addition to [</p>
+<small>TechCrunch</small>
+</div>
+</li>
+<li class="col-sm-4">
+ <div class="article-tile">
+<a href="/2020-05-28/trumps-order-on-social-media-could-harm-one-person-in-particular-donald-trump.AgdXVAUFUlpTBVRVUlNSAwBWB1wCDAMB" title="Trump’s Order on Social Media Could Harm One Person in Particular: Donald Trump">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://static01.nyt.com/images/2020/05/28/us/politics/28dc-trumpmedia1/28dc-trumpmedia1-facebookJumbo.jpg')"></div>
+</div>
+<h4 class="limited">
+Trump’s Order on Social Media Could Harm One Person in Particular: Donald Trump
+</h4>
+</a>
+<p class="limited">Without certain liability protections, companies like Twitter would have to be more aggressive about policing messages that press the boundaries — like the president’s.</p>
+<small>www.nytimes.com</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-02/ivanka-trump-carried-the-bible-donald-trump-posed-with-in-her-1540-max-mara-handbag.AgdXUlVcBwtUUQdSAApSAwBWUA4HCANX" title="Ivanka Trump carried the Bible Donald Trump posed with in her $1,540 Max Mara handbag">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://i.dailymail.co.uk/1s/2020/06/02/23/29145606-0-image-a-85_1591137227585.jpg')"></div>
+</div>
+<h4 class="limited">
+Ivanka Trump carried the Bible Donald Trump posed with in her $1,540 Max Mara handbag
+</h4>
+</a>
+<p class="limited">Ivanka Trump carried the bible President Donald Trump brandished in his controversial photo-op in her designer purse as she joined administration officials in the walk to St. John's Church.</p>
+<small>Mail Online</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-15/when-has-donald-trump-respected-black-people-in-this-country-dr-tiffany-crutcher-critical-of-tr.AgdWUwYGAQEGVVEPDwZSAwBWUVtWDgFU" title="'When has Donald Trump respected Black people in this country?', Dr. Tiffany Crutcher critical of Trump's Tulsa rally">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://media11.s-nbcnews.com/j/MSNBC/Components/Video/202006/n_sharp_tulsa_200615_1920x1080.nbcnews-fp-1200-630.jpg')"></div>
+</div>
+<h4 class="limited">
+'When has Donald Trump respected Black people in this country?', Dr. Tiffany Crutcher critical of Trump's Tulsa rally
+</h4>
+</a>
+<p class="limited">Rev. Al Sharpton is joined by Dr. Tiffany Crutcher, the sister of Tulsa police-shooting victim Terence Crutcher and mayoral candidate Greg Robinson to unpack deep-rooted feelings amid Trump's rally rebirth.</p>
+<small>MSNBC.com</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-13/my-fake-news-whodunnit-caught-up-in-a-senegal-fake-news-scam.AgdWUQcCVghTCwBTAAZSAwBWBw1RDQID" title="My fake news whodunnit: Caught up in a Senegal fake news scam">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://ichef.bbci.co.uk/news/1024/branded_news/74D3/production/_112870992_2ce3acec-0238-491a-93db-96e58ff21f2e.jpg')"></div>
+</div>
+<h4 class="limited">
+My fake news whodunnit: Caught up in a Senegal fake news scam
+</h4>
+</a>
+<p class="limited">A news story accusing a presidential candidate of corruption was written in my name, or almost in my name.</p>
+<small>BBC News</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-10/facebook-launches-news-tab-in-the-us-adds-a-local-news-section.AgdWVQBTXAABUQoHB1ZSAwBWBwkACgQI" title="Facebook Launches News tab in the US, adds a local news section">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.verrafin.com/storage/app/uploads/public/5ee/100/7bc/5ee1007bcb618132690280.png')"></div>
+</div>
+<h4 class="limited">
+Facebook Launches News tab in the US, adds a local news section
+</h4>
+</a>
+<p class="limited">Facebook has introduced a news tab on its platform. The news tab firstly introduced in the US after successful testing.</p>
+<small>Verrafin</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-09/facebook-news-launches-to-all-in-us-with-addition-of-local-news-and-video-techcrunch.AgdXAlUBBgBWC1cCUFdSAwBWVgoLWwUC" title="Facebook News launches to all in US with addition of local news and video – TechCrunch">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://techcrunch.com/wp-content/uploads/2020/06/Screen-Shot-2020-06-09-at-2.30.02-PM.png?w=764')"></div>
+</div>
+<h4 class="limited">
+Facebook News launches to all in US with addition of local news and video – TechCrunch
+</h4>
+</a>
+<p class="limited">Facebook News, the social network’s dedicated section devoted to journalism, is today launching for all users in the U.S. The feature was first introduced in October 2019 as a limited test in the U.S. The product represents Facebook’s much-debated new effort in wooing publishers to its platform with the promise of increased distribution. In addition to [</p>
+<small>TechCrunch</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-05-26/amy-klobuchar-inserts-herself-into-the-george-floyd-case-without-saying-george-floyd-police-or.AgdQAAhRVVxQAFFTVwVSAwBWVg8FDAkJ" title="Amy Klobuchar Inserts Herself Into the George Floyd Case Without Saying 'George Floyd,' 'Police' or 'Murder'">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://i.kinja-img.com/gawker-media/image/upload/c_fill,f_auto,fl_progressive,g_center,h_675,pg_1,q_80,w_1200/usft8l8dpr096estunt5.jpg')"></div>
+</div>
+<h4 class="limited">
+Amy Klobuchar Inserts Herself Into the George Floyd Case Without Saying 'George Floyd,' 'Police' or 'Murder'
+</h4>
+</a>
+<p class="limited">Four Minnesota police officers have been fired after video footage from the arrest of George Floyd, who died as a result of injuries he sustained during the arrest, appears to show Floyd pleading for his life as an officer cuts off Floyd’s air supply with his knee while fellow officers watch and do nothing. And as the story unfolded, Minnesota Senator and vice-presidential hopeful Amy Klobuchar wasted no time releasing a statement that said absolutely nothing, including George Floyd’s name.</p>
+<small>The Slot</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-10/red-flag-what-we-know-about-18-complaints-on-cop-who-put-knee-to-george-floyds-neck-what-to-make.AgdWVQcCVlxSAQFUBVBSAwBWBl8CDwZX" title="Red Flag?: What We Know About 18 Complaints on Cop Who Put Knee to George Floyd’s Neck What to Make of the Misconduct Complaints Against Derek Chauvin Before George Floyd’s Death">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.dailysignal.com/wp-content/uploads/200610_Chauvin_lucas.jpg')"></div>
+</div>
+<h4 class="limited">
+Red Flag?: What We Know About 18 Complaints on Cop Who Put Knee to George Floyd’s Neck What to Make of the Misconduct Complaints Against Derek Chauvin Before George Floyd’s Death
+</h4>
+</a>
+<p class="limited">Before Derek Chauvin became a national name, Minneapolis resident Michelle Gross was familiar with the veteran police officer and his badge number.  When the video</p>
+<small>The Daily Signal</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-05/germany-thousands-attend-anti-racism-protests-honoring-george-floyd-hamburg-police-have-dispersed.AgdXBVJQAQhUAlQHBFZSAwBWAg4CDAlU" title="Germany: Thousands attend anti-racism protests honoring George Floyd. Hamburg police have dispersed the 4500 Black Lives Matter protesters, citing a violation of coronavirus restrictions. Germany held the largest demonstrations over the death of George Floyd outside the US on Friday">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.dw.com/image/53701029_304.jpg')"></div>
+</div>
+<h4 class="limited">
+Germany: Thousands attend anti-racism protests honoring George Floyd. Hamburg police have dispersed the 4500 Black Lives Matter protesters, citing a violation of coronavirus restrictions. Germany held the largest demonstrations over the death of George Floyd outside the US on Friday
+</h4>
+</a>
+<p class="limited">Hamburg police have dispersed Black Lives Matter protesters, citing a violation of coronavirus restrictions. Germany held the largest demonstrations over the death of George Floyd outside the US on Friday.</p>
+<small>DW.COM</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-13/the-end-of-black-politics.AgdWUQVRBABWBwYEUldSAwBWA1tQW1IJ" title="The End of Black Politics">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://static01.nyt.com/images/2020/06/14/opinion/sunday/14Taylor/14Taylor-facebookJumbo.jpg')"></div>
+</div>
+<h4 class="limited">
+The End of Black Politics
+</h4>
+</a>
+<p class="limited">Our best leaders are organizers and workers — not elected officials.</p>
+<small>www.nytimes.com</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-09/how-to-get-involved-politically.AgdWVFQCVw8BUQoHB1ZSAwBWBwkBXQkB" title="How to Get Involved, Politically">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://static01.nyt.com/images/2020/06/05/smarter-living/05sl-political-involvement/05sl-political-involvement-facebookJumbo.jpg')"></div>
+</div>
+<h4 class="limited">
+How to Get Involved, Politically
+</h4>
+</a>
+<p class="limited">There are many ways to make your voice heard, protesting included. Here’s an overview of your options.</p>
+<small>www.nytimes.com</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-03/how-tiktok-became-political.AgdXUwQGXQlUUQdSAApSAwBWUA4HAVVT" title="How TikTok Became Political">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://nationalinterest.org/sites/default/files/main_images/tiktok.jpg')"></div>
+</div>
+<h4 class="limited">
+How TikTok Became Political
+</h4>
+</a>
+<p class="limited">Penny CS Andrews
+Politics, United Kingdom
+Political activists adapt existing TikTok memes and trends.
+TikTok, the viral video sharing platform, has been one of the biggest hits of lockdown. Content that originated on the app, like nurses dancing in UK hospitals, has jumped to mainstream TV coverage. TikTok even put its first ad on UK television, made in isolation.
+TikTok’s user base has grown rapidly over the lockdown period, with 315 million downloads in the first quarter of 2020. It is not...</p>
+<small>The National Interest</small>
+</div>
+</li>
+ <li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-05-29/special-report-as-men-s-sport-clamours-to-restart-women-s-sport-is-being-abandoned.AgdXVQBXUQhTBVRVUlNSAwBWB1wBCwhQ" title="Special report: As men's sport clamours to restart, women's sport is being abandoned">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.telegraph.co.uk/content/dam/womens-sport/2020/05/29/TELEMMGLPICT000232034387_trans_NvBQzQNjv4BqpVFtQMSn7ZYEgFkbAp9DEg4eKJZAPd6r6jcTrhbcVw0.jpeg?impolicy=logo-overlay')"></div>
+</div>
+<h4 class="limited">
+Special report: As men's sport clamours to restart, women's sport is being abandoned
+</h4>
+</a>
+<p class="limited">The latest on when rugby, netball, football and cricket will return in the UK</p>
+<small>The Telegraph</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-07/britain-s-sporting-apartheid-must-end-says-sport-england-s-chris-grant.AgdXAAJQVA5TVwFTUwpSAwBWCl1VWAcF" title="Britain's sporting 'apartheid' must end, says Sport England's Chris Grant">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://i.guim.co.uk/img/media/8170eb14a77dc1319bd0b0f023c2a14a96ace6b6/0_45_3363_2018/master/3363.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&overlay-align=bottom,left&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=cfea48462815594154cc77efc1c80125')"></div>
+</div>
+<h4 class="limited">
+Britain's sporting 'apartheid' must end, says Sport England's Chris Grant
+</h4>
+</a>
+<p class="limited">Senior board member calls for investigatory commission‘It’s time for the voices of BAME people to be heard,’ says GrantStructural racism in British sport is so deep and pervasive that it amounts to a kind of apartheid and needs a South African-style truth and reconciliation commission to tackle it, a Sport England board member has said.
+Chris Grant, one of the most senior black administrators in British sport, has written to UK Sport and Sport England urging them to establish a forum where...</p>
+<small>the Guardian</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-05-30/sports-nz-sports-among-those-woefully-unprepared-for-pandemic-tv-official-says.AgdXVVdTUglcC1YCVwNSAwBWBVsCX1QA" title="Sports-NZ sports among those 'woefully unprepared' for pandemic, TV official says">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://s4.reutersmedia.net/resources_v2/images/rcom-default.png')"></div>
+</div>
+<h4 class="limited">
+Sports-NZ sports among those 'woefully unprepared' for pandemic, TV official says
+</h4>
+</a>
+<p class="limited">Sports bodies were among those "woefully unprepared" for the effects of the coronavirus pandemic, the head of New Zealand's Spark Sport said.</p>
+<small>in.reuters.com</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-08/george-floyds-family-petitions-united-nations-to-help-disarm-police-in-the-united-states.AgdXAVAFUQ1WC1cCUFdSAwBWVgoECwMG" title="George Floyd’s Family Petitions United Nations to Help Disarm Police in the United States">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://media.breitbart.com/media/2020/06/AP_20159229893682-640x335.png')"></div>
+</div>
+<h4 class="limited">
+George Floyd’s Family Petitions United Nations to Help Disarm Police in the United States
+</h4>
+</a>
+<p class="limited">The family of George Floyd, the black man killed while in police custody in Minneapolis, is asking the U.N. to help disarm police in the U.S.</p>
+<small>Breitbart</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-05-30/the-united-states-and-the-world-trade-organization.AgdXVgAHVQtcC1YCVwNSAwBWBVsBCVNT" title="The United States and the World Trade Organization">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.americanthinker.com/images/bucket/2020-01/218546.jpg')"></div>
+</div>
+<h4 class="limited">
+The United States and the World Trade Organization
+</h4>
+</a>
+<p class="limited">The most urgent problem today is the international fight against the pandemic, Covid-19 and the search for a vaccine to overcome the deadly virus, and for funds to develop its manufacture. �The issue has become controversial because of the delay</p>
+<small>@AmericanThinker</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-12/map-statue-removals-across-the-united-states.AgdWV1BUAVpTC1FSAwpSAwBWB1tRCggF" title="Map: Statue removals across the United States">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://media2.s-nbcnews.com/j/newscms/2020_24/3386211/200610-castleman-statue-louisville-2x1-al-1233_fed42d128e78541b5c4fb5158d938055.nbcnews-fp-1200-630.jpg')"></div>
+</div>
+<h4 class="limited">
+Map: Statue removals across the United States
+</h4>
+</a>
+<p class="limited">This statue removal map will be updated when more statues are removed.</p>
+<small>NBC News</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-09/proposed-georgia-community-health-cuts-spark-discussion-on-health-disparities.AgdWVAECV1sBUQoHB1ZSAwBWBwkCXAgF" title="Proposed Georgia community health cuts spark discussion on health disparities">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://mediadc.brightspotcdn.com/dims4/default/8bb161f/2147483647/strip/true/crop/2290x1202+0+63/resize/1200x630!/quality/90/?url=https://mediadc.brightspotcdn.com/cd/4f/7440bd26443491eb5ebee95f83fd/ap120326126444.jpg')"></div>
+</div>
+<h4 class="limited">
+Proposed Georgia community health cuts spark discussion on health disparities
+</h4>
+</a>
+<p class="limited">Georgia lawmakers came face to face Monday with the people behind budget cuts at a committee meeting focused on spending reductions for community health.</p>
+<small>Washington Examiner</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-09/public-health-experts-seem-to-have-targeted-the-constitution-as-a-public-health-crisis.AgdWVANVUwwBUQoHB1ZSAwBWBwkBCQMI" title="Public Health Experts Seem to Have Targeted the Constitution as a Public Health Crisis">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://media.townhall.com/townhall/reu/ha/images/2020/159/0b5db915-075b-4721-b6be-a45a6409350f.png')"></div>
+</div>
+<h4 class="limited">
+Public Health Experts Seem to Have Targeted the Constitution as a Public Health Crisis
+</h4>
+</a>
+<p class="limited">These people don't care if you live or die so long as they have the power to manage your life</p>
+<small>redstate.com</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-05/harford-health-officer-announces-retirement-after-more-than-30-years-with-health-department.AgdXBVNRAAEGCgFWAQpSAwBWV1gHAQFU" title="Harford health officer announces retirement after more than 30 years with health department">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.baltimoresun.com/resizer/uDuZYQHSzj6fZF8NX3Q9KNU7prY=/1200x0/top/cloudfront-us-east-1.images.arcpublishing.com/tronc/ZDYDSPRMNBF5FAQZ25A6PM2JPQ.jpg')"></div>
+</div>
+<h4 class="limited">
+Harford health officer announces retirement after more than 30 years with health department
+</h4>
+</a>
+<p class="limited">Harford County Health Officer Dr. Russell Moy, who has guided the county's Health Department during the coronavirus pandemic, announced earlier this week he plans to retire in the fall.</p>
+<small>baltimoresun.com</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-08/changing-police-culture.AgdXAVVcAQ5WC1cCUFdSAwBWVgoEDwYB" title="Changing Police Culture">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://static01.nyt.com/images/2020/06/06/autossell/Police-Push1/Police-Push-facebookJumbo.jpg')"></div>
+</div>
+<h4 class="limited">
+Changing Police Culture
+</h4>
+</a>
+<p class="limited">A professor of psychology urges adoption of the Ethical Policing Is Courageous training program. Also: Missing Broadway theater.</p>
+<small>www.nytimes.com</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-16/how-violent-police-culture-perpetuates-itself.AgdWXFNTVAldAFAHBVRSAwBWAQoHXFJS" title="How Violent Police Culture Perpetuates Itself">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://media.gq.com/photos/5ee7c9ecf0469a259eb999a4/16:9/w_1280,c_limit/here's%20why%20police%20misconduct%20is%20contagious%20gq%20june%202020.jpg')"></div>
+</div>
+<h4 class="limited">
+How Violent Police Culture Perpetuates Itself
+</h4>
+</a>
+<p class="limited">Experts that study policing say department cultures of aggression and misconduct are barriers to reform.</p>
+<small>GQ</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-13/the-cultural-revolution-in-american-journalism.AgdWV1cAAFhTC1FSAwpSAwBWB1tRXAIB" title="The Cultural Revolution in American Journalism">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://cdn.newsbusters.org/styles/mobile_author_thumbs/s3/pictures/picture-346-1583534504.jpg?itok=qjnoXoRc')"></div>
+</div>
+<h4 class="limited">
+The Cultural Revolution in American Journalism
+</h4>
+</a>
+<p class="limited">Over there at the History Channel is this short history of China’s “Cultural revolution” back there in 1966. It was, but of course, the brainchild of China’s Communist founder and leader Mao Zedong.  Here is a bit of the description, with bold print for emphasis supplied:
+Mao launched the so-called Cultural Revolution (known in full as the Great Proletarian Cultural Revolution) in August 1966, at a meeting of the Plenum of the Central Committee. He shut down the nation’s schools, calling for a...</p>
+<small>Newsbusters</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-14/coronavirus-david-lammy-condemns-buried-bame-coronavirus-recommendations.AgdWUgFdAQpTCwBTAAZSAwBWBw1RAQJU" title="Coronavirus: David Lammy condemns 'buried' BAME coronavirus recommendations">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://ichef.bbci.co.uk/news/1024/branded_news/5351/production/_112892312_p08gyjwm.jpg')"></div>
+</div>
+<h4 class="limited">
+ Coronavirus: David Lammy condemns 'buried' BAME coronavirus recommendations
+</h4>
+</a>
+<p class="limited">The shadow justice secretary calls on the government to release recommendations from a report into the impact of coronavirus on BAME communities.</p>
+<small>www.bbc.co.uk</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-12/coronavirus-world-round-up-india-overtakes-uk-in-coronavirus-caseload.AgdWVwJXBlpTC1FSAwpSAwBWB1tSWAVV" title="Coronavirus world round-up: India overtakes UK in coronavirus caseload">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.telegraph.co.uk/content/dam/news/2020/06/12/TELEMMGLPICT000232907710-xlarge_trans_NvBQzQNjv4Bqr-7O72qaIw6JcGx7YfRv5iSCpaSurtP4qciNMA_ZpPo.jpeg?imwidth=1200')"></div>
+</div>
+<h4 class="limited">
+Coronavirus world round-up: India overtakes UK in coronavirus caseload
+</h4>
+</a>
+<p class="limited">Developing world described as a 'ticking time bomb'; WHO rebuked Russian death toll; Macron may resign</p>
+<small>The Telegraph</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-02/coronavirus-world-round-up-arthritis-drug-may-aid-coronavirus-fight.AgdXUgFQUQ0FAVEFDldSAwBWAQ4CCAVU" title="Coronavirus world round-up: arthritis drug may aid coronavirus fight">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.telegraph.co.uk/content/dam/news/2020/06/02/TELEMMGLPICT000232278524-xlarge_trans_NvBQzQNjv4BqaRL1kC4G7DT9ZsZm6Pe3PehAFAI_f6ud569StXyOKH0.jpeg?imwidth=1200')"></div>
+</div>
+<h4 class="limited">
+Coronavirus world round-up: arthritis drug may aid coronavirus fight
+</h4>
+</a>
+<p class="limited">George Floyd protests may lead to second wave; Saudi Arabia calls for funds to support Yemen; South America begins easing restrictions</p>
+<small>The Telegraph</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-10/trump-taps-retired-general-and-fox-news-regular-as-pentagon-policy-chief.AgdWVQZUUQpSAQFUBVBSAwBWBl8CDwhS" title="Trump taps retired general and Fox News regular as Pentagon policy chief">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://static.politico.com/06/bc/57addc48420587a903b9a2ff44f2/aptrumpjpg.jpg')"></div>
+</div>
+<h4 class="limited">
+Trump taps retired general and Fox News regular as Pentagon policy chief
+</h4>
+</a>
+<p class="limited">Tata would succeed John Rood, who was ousted as undersecretary for policy in February after being viewed as insufficiently loyal to Trump.</p>
+<small>POLITICO</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-10/in-fox-news-interview-attorney-general-bill-barr-promises-accountability-for-russian-collusion-hoax.AgdWVFJUUwwBUQoHB1ZSAwBWBwkBAVIG" title="In Fox News Interview, Attorney General Bill Barr Promises Accountability For Russian Collusion Hoaxers">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://thefederalist.com/wp-content/uploads/2020/06/Bill-Barr-e1591755741963.jpg')"></div>
+</div>
+<h4 class="limited">
+In Fox News Interview, Attorney General Bill Barr Promises Accountability For Russian Collusion Hoaxers
+</h4>
+</a>
+<p class="limited">"For the first time in American history, police organizations and the National Security organizations were used to spy on a campaign," Barr said.</p>
+<small>The Federalist</small>
+</div>
+</li>
+ <li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-05-30/please-help-expand-the-good-news-map-post-good-news-stories-around-the-world-and-share-with-people.AgdXVglTB1pcC1YCVwNSAwBWBVsBDFNU" title="Please help expand the Good News Map. Post good news stories around the world and share with people you know. It had a thousand more shares from yesterday and it deserves more expansion that way national news media can notice it.">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.oneworld-stories.org/fbImage.jpg')"></div>
+</div>
+<h4 class="limited">
+Please help expand the Good News Map. Post good news stories around the world and share with people you know. It had a thousand more shares from yesterday and it deserves more expansion that way national news media can notice it.
+</h4>
+</a>
+<p class="limited">Good Stories During The Pandemic!</p>
+<small>www.oneworld-stories.org</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-10/black-lives-matter-racism-in-football-and-representation-in-sports-media-football-weekly-special.AgdWVFVQBw0BUQoHB1ZSAwBWBwkBWAYE" title="Black Lives Matter, racism in football and representation in sports media – Football Weekly special">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://i.guim.co.uk/img/media/d487276ff32a6a3f6a7df5fdec41c65d66d68f04/42_0_4898_2939/master/4898.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&overlay-align=bottom,left&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=bc9eb27b3db4458739fa2b45101a45e9')"></div>
+</div>
+<h4 class="limited">
+Black Lives Matter, racism in football and representation in sports media – Football Weekly special
+</h4>
+</a>
+<p class="limited">Max Rushden, Troy Townsend, Elliot Ross and Jordan Jarrett-Bryan discuss football’s reaction to the Black Lives Matter protests following the death of George Floyd and ask whether this reaction is good enough. They also look inwards and ask questions about black representation in sports media, as well as discussing some of the incidents that have marred football since our last special on racism
+As a follow up to our racism special that we recorded last October, we take another look at race...</p>
+<small>the Guardian</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-14/football-match-summary.AgdWUgJWBFpTCwBTAAZSAwBWBw1RWANS" title="Football Match Summary">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://a1.espncdn.com/combiner/i?img=/i/espn/espn_logos/espn_red.png')"></div>
+</div>
+<h4 class="limited">
+Football Match Summary
+</h4>
+</a>
+<p class="limited">Follow live coverage of the Mainz vs FC Augsburg 2019-20 German Bundesliga football match.</p>
+<small>ESPN.com</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-12/how-do-you-fix-racism-in-football.AgdWVwRRUwxTC1FSAwpSAwBWB1tSWgBV" title="How do you fix racism in football?">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://static.independent.co.uk/s3fs-public/thumbnails/image/2020/02/17/08/pri138899378.jpg')"></div>
+</div>
+<h4 class="limited">
+How do you fix racism in football?
+</h4>
+</a>
+<p class="limited">Football is still to fully address its problem with racism, as demonstrated after Moussa Marega walked off the pitch after receiving racist abuse while playing for Porto against Vitoria back in February</p>
+<small>The Independent</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-02/covid-cases-rising-in-russia-eastern-europe-waning-in-western-europe-who.AgdXUgMAU1wFAVEFDldSAwBWAQ4CClAD" title="COVID cases rising in Russia, Eastern Europe, waning in Western Europe: WHO">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://s4.reutersmedia.net/resources/r/?m=02&d=20200602&t=2&i=1520767085&w=1200&r=LYNXMPEG510VT')"></div>
+</div>
+<h4 class="limited">
+COVID cases rising in Russia, Eastern Europe, waning in Western Europe: WHO
+</h4>
+</a>
+<p class="limited">New cases of COVID-19 reported daily are steadily declining in Western Europe, but not in hotspots in Russia and Eastern Europe, the World Health Organization (WHO) said on Tuesday.</p>
+<small>U.S.</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-11/what-black-america-means-to-europe.AgdWVVVVAV9SAQFUBVBSAwBWBl8CWgkC" title="What black America means to Europe">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://i.guim.co.uk/img/media/8921ee3c67a6f714ff09b944dd234a65e292c424/0_232_3500_2101/master/3500.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&overlay-align=bottom,left&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=a5c1a46cec6d218009f6ba3aab2f58b7')"></div>
+</div>
+<h4 class="limited">
+What black America means to Europe
+</h4>
+</a>
+<p class="limited">Many have attempted to claim that ‘things are better here’ for black people than in the US. This ignores both Europe’s colonial past and its own racist present. By Gary Younge
+In September 1963, in Llansteffan, Wales, a stained-glass artist named John Petts was listening to the radio when he heard the news that four black girls had been murdered in a bombing while at Sunday school at the 16th Street Baptist Church in Birmingham, Alabama.
+The news moved Petts, who was white and British, deeply....</p>
+<small>the Guardian</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-10/why-we-should-all-be-troubled-by-europe-s-violent-weekend.AgdWVFJUU1sBUQoHB1ZSAwBWBwkBAVJS" title="Why We Should All Be Troubled By Europe's Violent Weekend">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://thefederalist.com/wp-content/uploads/2020/06/49977420411_df55e79c4b_o1-Custom.jpg')"></div>
+</div>
+<h4 class="limited">
+Why We Should All Be Troubled By Europe's Violent Weekend
+</h4>
+</a>
+<p class="limited">A chaotic weekend of mayhem and violence across Europe showed the impotence of European governments and the limits of the progressive model of policing.</p>
+<small>The Federalist</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-15/either-you-are-with-us-or-against-us-gulf-states-caught-between-america-and-china.AgdWUlJdXAkGVVEPDwZSAwBWUVtXXVBT" title="Either You are With Us Or Against Us: Gulf States Caught Between America and China">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://nationalinterest.org/sites/default/files/main_images/2015-07-14T000000Z_1375908763_GF10000158897_RTRMADP_3_IRAN-NUCLEAR+copy.jpg')"></div>
+</div>
+<h4 class="limited">
+Either You are With Us Or Against Us: Gulf States Caught Between America and China
+</h4>
+</a>
+<p class="limited">Yoel Guzansky
+Security, Americas
+It seems that U.S. patience with China’s growing footprint in the Middle East is running out in what increasingly looks like a zero-sum game, demanding its allies now must choose sides.
+A rare statement in early May 2020 by U.S. Assistant Secretary of State for Near Eastern Affairs David Schenker didn’t receive a proper amount of attention. Schenker said that the Gulf Arab states should consider their relationship with the United States when dealing with China....</p>
+<small>The National Interest</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-10/us-general-taliban-not-yet-met-conditions-for-us-withdrawal.AgdWVQMBXV0BUQoHB1ZSAwBWBwkADwMF" title="US general: Taliban not yet met conditions for US withdrawal">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://wtop.com/wp-content/uploads/2020/01/US_Afghanistan_50955.jpg')"></div>
+</div>
+<h4 class="limited">
+US general: Taliban not yet met conditions for US withdrawal
+</h4>
+</a>
+<p class="limited">WASHINGTON (AP) — The Taliban have not yet met conditions required for a complete U.S. troop withdrawal from Afghanistan by next May as envisioned in a U.S.-Taliban deal signed in February</p>
+<small>WTOP</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-10/us-general-taliban-not-yet-met-conditions-for-us-withdrawal.AgdWVQUAUVwBUQoHB1ZSAwBWBwkAAAgA" title="US general: Taliban not yet met conditions for US withdrawal">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.palmbeachpost.com/storyimage/ZZ/20200610/NEWS/306109951/AR/0/AR-306109951.jpg')"></div>
+</div>
+<h4 class="limited">
+US general: Taliban not yet met conditions for US withdrawal
+</h4>
+</a>
+<p class="limited">WASHINGTON (AP) " The Taliban have not yet met conditions required for a complete U.S. troop withdrawal from Afghanistan by next May as envisioned in a U.S.-Taliban deal signed in February, the commander overseeing U.S. forces there said Wednesday.Gen. Frank McKenzie, head of U.S. Central Command, said the U.S. is ahead of schedule for an initial drawdown by July to 8,600 troops. Another U.S. official, who was not authorized to discuss details and so spoke on condition of anonymity, [</p>
+<small>The Palm Beach Post</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-04/covid-19-update-99-of-coronavirus-can-be-killed-by-copper-and-silver-anti-viral-doorknob-coating.AgdXXARRVlsBVQQGD1RSAwBWBAkAW1RT" title="COVID-19 UPDATE: 99% of Coronavirus Can Be Killed by Copper and Silver; Anti-Viral Doorknob Coating Neutralizes COVID-19 in Seconds">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://1734811051.rsc.cdn77.org/data/images/full/366590/anti-viral-coatings-used-in-doorknobs-can-kill-coronavirus-in-seconds-copper-and-silver-can-neutralize-99.jpg')"></div>
+</div>
+<h4 class="limited">
+COVID-19 UPDATE: 99% of Coronavirus Can Be Killed by Copper and Silver; Anti-Viral Doorknob Coating Neutralizes COVID-19 in Seconds
+</h4>
+</a>
+<p class="limited">A new study has claimed that copper and silver can kill 99% of the coronavirus. Anti-viral coatings for doorknobs can neutralize COVID-19 in seconds.</p>
+<small>Tech Times</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-05-29/covid-19-update-virus-found-in-bats-is-closest-relative-of-sars-cov-2-6-feet-not-enough-to-avoid.AgdXVFNVAV1TBVRVUlNSAwBWB1wCWFdQ" title="COVID-19 Update: Virus Found in Bats is 'Closest Relative' of SARS-CoV-2; 6 Feet Not Enough to Avoid COVID-19, Experts Say">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://1734811051.rsc.cdn77.org/data/images/full/366399/new-virus-found-in-bats-currently-the-closest-relative-of-sars-cov-2-experts-claimed-that-6-feet-is-not-far-enough-to-avoid-coronavirus-transmission.jpg')"></div>
+</div>
+<h4 class="limited">
+COVID-19 Update: Virus Found in Bats is 'Closest Relative' of SARS-CoV-2; 6 Feet Not Enough to Avoid COVID-19, Experts Say
+</h4>
+</a>
+<p class="limited">Experts discovered a new virus in bats that is currently the closest relative of SARS-CoV-2. Medical experts claimed that 6 feet is not far enough to avoid contracting the novel coronavirus.</p>
+<small>Tech Times</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-12/covid-19-no-new-cases-in-new-zealand-for-21st-day-new-zealand-has-now-marked-three-weeks-since-its.AgdWVwMHXFpTC1FSAwpSAwBWB1tSWAEJ" title="Covid-19: No new cases in New Zealand for 21st day. New Zealand has now marked three weeks since its last new case of Covid-19, the Ministry of Health has confirmed.">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.rnz.co.nz/assets/news/226820/eight_col_033_6209814_5e8358bcbcdfa.jpg?1585716741')"></div>
+</div>
+<h4 class="limited">
+Covid-19: No new cases in New Zealand for 21st day. New Zealand has now marked three weeks since its last new case of Covid-19, the Ministry of Health has confirmed.
+</h4>
+</a>
+<p class="limited">New Zealand has now marked 21 days since its last new case of Covid-19, the Ministry of Health has confirmed.</p>
+<small>RNZ</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-05-29/ap-week-in-pictures-asia.AgdXVAdSBgxTBVRVUlNSAwBWB1wCDgBT" title="AP Week in Pictures, Asia">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://s.abcnews.com/images/International/WireAP_83733ebb057f45a1a3f9564ffbd09c6e_16x9_992.jpg')"></div>
+</div>
+<h4 class="limited">
+AP Week in Pictures, Asia
+</h4>
+</a>
+<p class="limited">MAY 22-28, 2020
+This photo gallery highlights some of the most compelling images made or published by Associated Press photographers in Asia and the Pacific.
+The gallery was curated by AP photo editor Masayo Yoshida in Tokyo.
+Follow AP visual journalism:
+Instagram: https://www.instagram.com/apnews
+AP Images on Twitter: http://twitter.com/AP—Images
+AP Images blog: http://apimagesblog.com</p>
+<small>ABC News</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-05-29/ap-week-in-pictures-asia.AgdXVAcAXAlTBVRVUlNSAwBWB1wCDgkF" title="AP Week in Pictures, Asia">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://wtop.com/wp-content/uploads/2020/05/AP_Week_in_Pictures_Asia_26525.jpg')"></div>
+</div>
+<h4 class="limited">
+AP Week in Pictures, Asia
+</h4>
+</a>
+<p class="limited">MAY 22-28, 2020 This photo gallery highlights some of the most compelling images made or published by Associated Press photographers in Asia and the Pacific. The gallery was curated by AP photo editor</p>
+<small>WTOP</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-10/as-markets-recover-here-s-how-to-make-the-most-of-your-money-in-asia.AgdWVAlUUAkBUQoHB1ZSAwBWBwkBDAAE" title="As markets recover, here's how to make the most of your money in Asia">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://image.cnbcfm.com/api/v1/image/106566640-1591352889623gettyimages-1219764755.jpeg?v=1591353512')"></div>
+</div>
+<h4 class="limited">
+As markets recover, here's how to make the most of your money in Asia
+</h4>
+</a>
+<p class="limited">As markets recover from the coronavirus lows, experts share where to find investing opportunities in Asia.</p>
+<small>CNBC</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-01/how-to-use-google-assistant-make-your-google-home-speaker-work-for-you.AgdXUQBQXAxWBgYOBgpSAwBWUF0CCwBU" title="How to use Google Assistant: make your Google Home speaker work for you">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://cdn.mos.cms.futurecdn.net/AtpYynFTeryC55Jsfv3k96-1200-80.jpg')"></div>
+</div>
+<h4 class="limited">
+How to use Google Assistant: make your Google Home speaker work for you
+</h4>
+</a>
+<p class="limited">Got a Google Assistant-enabled speaker or smartphone? Here’s all the cool things Google Assistant can do.</p>
+<small>TechRadar</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-12/sonos-and-google-are-going-to-battle-over-audio-patents-updated-google-countersues.AgdWV1cAVwhTC1FSAwpSAwBWB1tRXAFT" title="Sonos and Google are Going to Battle Over Audio Patents (Updated: Google Countersues)">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.droid-life.com/wp-content/uploads/2016/08/sonos-600x315-cropped.jpg')"></div>
+</div>
+<h4 class="limited">
+Sonos and Google are Going to Battle Over Audio Patents (Updated: Google Countersues)
+</h4>
+</a>
+<p class="limited">Read the original post: Sonos and Google are Going to Battle Over Audio Patents (Updated: Google Countersues)
+Sonos, maker of high-end audio that kicked off the multi-room media industry years before everyone else caught on to the brilliant concept, is suing Google over patents it holds on that very technology. You probably don’t need me to explain this, but Sonos is pissed about Google Home units, interactions between them through Casting, how</p>
+<small>Droid Life</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-08/siri-and-google-now-address-all-lives-matter-but-google-does-a-better-job.AgdXAQIBXQoBUAdVA1RSAwBWVl9WDAJV" title="Siri and Google now address ‘all lives matter,’ but Google does a better job">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://9to5mac.com/wp-content/uploads/sites/6/2020/06/All-lives-matter-Siri.png')"></div>
+</div>
+<h4 class="limited">
+Siri and Google now address ‘all lives matter,’ but Google does a better job
+</h4>
+</a>
+<p class="limited">One of the ways some people dismiss the concerns expressed through the phrase Black Lives Matter is to respond ‘all lives matter.’ Both Siri and Google Assistant now observe that this response misses the point, though Google does a much better job of it</p>
+<small>9to5Mac</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-14/coronavirus-david-lammy-condemns-buried-bame-coronavirus-recommendations.AgdWUgFdAQpTCwBTAAZSAwBWBw1RAQJU" title="Coronavirus: David Lammy condemns 'buried' BAME coronavirus recommendations">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://ichef.bbci.co.uk/news/1024/branded_news/5351/production/_112892312_p08gyjwm.jpg')"></div>
+</div>
+<h4 class="limited">
+Coronavirus: David Lammy condemns 'buried' BAME coronavirus recommendations
+</h4>
+</a>
+<p class="limited">The shadow justice secretary calls on the government to release recommendations from a report into the impact of coronavirus on BAME communities.</p>
+<small>www.bbc.co.uk</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-12/coronavirus-world-round-up-india-overtakes-uk-in-coronavirus-caseload.AgdWVwJXBlpTC1FSAwpSAwBWB1tSWAVV" title="Coronavirus world round-up: India overtakes UK in coronavirus caseload">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.telegraph.co.uk/content/dam/news/2020/06/12/TELEMMGLPICT000232907710-xlarge_trans_NvBQzQNjv4Bqr-7O72qaIw6JcGx7YfRv5iSCpaSurtP4qciNMA_ZpPo.jpeg?imwidth=1200')"></div>
+</div>
+<h4 class="limited">
+Coronavirus world round-up: India overtakes UK in coronavirus caseload
+</h4>
+</a>
+<p class="limited">Developing world described as a 'ticking time bomb'; WHO rebuked Russian death toll; Macron may resign</p>
+<small>The Telegraph</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-02/coronavirus-world-round-up-arthritis-drug-may-aid-coronavirus-fight.AgdXUgFQUQ0FAVEFDldSAwBWAQ4CCAVU" title="Coronavirus world round-up: arthritis drug may aid coronavirus fight">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.telegraph.co.uk/content/dam/news/2020/06/02/TELEMMGLPICT000232278524-xlarge_trans_NvBQzQNjv4BqaRL1kC4G7DT9ZsZm6Pe3PehAFAI_f6ud569StXyOKH0.jpeg?imwidth=1200')"></div>
+</div>
+<h4 class="limited">
+Coronavirus world round-up: arthritis drug may aid coronavirus fight
+</h4>
+</a>
+<p class="limited">George Floyd protests may lead to second wave; Saudi Arabia calls for funds to support Yemen; South America begins easing restrictions</p>
+<small>The Telegraph</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-15/nypd-to-eliminate-plainclothes-anti-crime-unit-despite-crime-surge.AgdWXAEBAAEGVVEPDwZSAwBWUVtVDlcF" title="NYPD to Eliminate Plainclothes Anti-Crime Unit Despite Crime Surge">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://media.breitbart.com/media/2020/06/GettyImages-1218885770-640x335.jpg')"></div>
+</div>
+<h4 class="limited">
+NYPD to Eliminate Plainclothes Anti-Crime Unit Despite Crime Surge
+</h4>
+</a>
+<p class="limited">The New York City Police Department (NYPD) on Monday announced that it is disbanding its anti-crime unit — a group of approximately 600 plainclothes police officers who blend in with the general population to combat crime — in the wake of protests and violent unrest over the death of George Floyd.</p>
+<small>Breitbart</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-12/symone-sanders-on-biden-s-crime-record-don-t-enjoy-relitigating-90s-crime-bill-has-context-gave-u.AgdWVwFWVVhTC1FSAwpSAwBWB1tSAQJU" title="Symone Sanders on Biden's Crime Record: Don't Enjoy Relitigating 90s, Crime Bill Has Context, Gave Us Means to Hold Cops Accountable">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://media.breitbart.com/media/2020/03/AP_17212647245051-640x335.jpg')"></div>
+</div>
+<h4 class="limited">
+Symone Sanders on Biden's Crime Record: Don't Enjoy Relitigating 90s, Crime Bill Has Context, Gave Us Means to Hold Cops Accountable
+</h4>
+</a>
+<p class="limited">On Thursday’s broadcast of MSNBC’s “All In,” Biden Senior Adviser Symone Sanders discussed Biden’s crime record by stating that she doesn’t like trying to relitigate things from the early 90s, the context of rampant crime and demands for reform at</p>
+<small>Breitbart</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-04/heinous-crimes.AgdXXQMHV1gBVQQGD1RSAwBWBAkHWgID" title="Heinous crimes">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://media.philstar.com/images/filler/logo-filler-thumbnail.jpg')"></div>
+</div>
+<h4 class="limited">
+Heinous crimes
+</h4>
+</a>
+<p class="limited">The crimes committed in these cases happened when death as a capital punishment was not yet abolished.</p>
+<small>philstar.com</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-09/proposed-georgia-community-health-cuts-spark-discussion-on-health-disparities.AgdWVAECV1sBUQoHB1ZSAwBWBwkCXAgF" title="Proposed Georgia community health cuts spark discussion on health disparities">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://mediadc.brightspotcdn.com/dims4/default/8bb161f/2147483647/strip/true/crop/2290x1202+0+63/resize/1200x630!/quality/90/?url=https://mediadc.brightspotcdn.com/cd/4f/7440bd26443491eb5ebee95f83fd/ap120326126444.jpg')"></div>
+</div>
+<h4 class="limited">
+Proposed Georgia community health cuts spark discussion on health disparities
+</h4>
+</a>
+<p class="limited">Georgia lawmakers came face to face Monday with the people behind budget cuts at a committee meeting focused on spending reductions for community health.</p>
+<small>Washington Examiner</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-09/public-health-experts-seem-to-have-targeted-the-constitution-as-a-public-health-crisis.AgdWVANVUwwBUQoHB1ZSAwBWBwkBCQMI" title="Public Health Experts Seem to Have Targeted the Constitution as a Public Health Crisis">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://media.townhall.com/townhall/reu/ha/images/2020/159/0b5db915-075b-4721-b6be-a45a6409350f.png')"></div>
+</div>
+<h4 class="limited">
+Public Health Experts Seem to Have Targeted the Constitution as a Public Health Crisis
+</h4>
+</a>
+<p class="limited">These people don't care if you live or die so long as they have the power to manage your life</p>
+<small>redstate.com</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-05/harford-health-officer-announces-retirement-after-more-than-30-years-with-health-department.AgdXBVNRAAEGCgFWAQpSAwBWV1gHAQFU" title="Harford health officer announces retirement after more than 30 years with health department">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.baltimoresun.com/resizer/uDuZYQHSzj6fZF8NX3Q9KNU7prY=/1200x0/top/cloudfront-us-east-1.images.arcpublishing.com/tronc/ZDYDSPRMNBF5FAQZ25A6PM2JPQ.jpg')"></div>
+</div>
+<h4 class="limited">
+Harford health officer announces retirement after more than 30 years with health department
+</h4>
+</a>
+<p class="limited">Harford County Health Officer Dr. Russell Moy, who has guided the county's Health Department during the coronavirus pandemic, announced earlier this week he plans to retire in the fall.</p>
+<small>baltimoresun.com</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-10/trump-taps-retired-general-and-fox-news-regular-as-pentagon-policy-chief.AgdWVQZUUQpSAQFUBVBSAwBWBl8CDwhS" title="Trump taps retired general and Fox News regular as Pentagon policy chief">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://static.politico.com/06/bc/57addc48420587a903b9a2ff44f2/aptrumpjpg.jpg')"></div>
+</div>
+<h4 class="limited">
+Trump taps retired general and Fox News regular as Pentagon policy chief
+</h4>
+</a>
+<p class="limited">Tata would succeed John Rood, who was ousted as undersecretary for policy in February after being viewed as insufficiently loyal to Trump.</p>
+<small>POLITICO</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-06-10/in-fox-news-interview-attorney-general-bill-barr-promises-accountability-for-russian-collusion-hoax.AgdWVFJUUwwBUQoHB1ZSAwBWBwkBAVIG" title="In Fox News Interview, Attorney General Bill Barr Promises Accountability For Russian Collusion Hoaxers">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://thefederalist.com/wp-content/uploads/2020/06/Bill-Barr-e1591755741963.jpg')"></div>
+</div>
+<h4 class="limited">
+In Fox News Interview, Attorney General Bill Barr Promises Accountability For Russian Collusion Hoaxers
+</h4>
+</a>
+<p class="limited">"For the first time in American history, police organizations and the National Security organizations were used to spy on a campaign," Barr said.</p>
+<small>The Federalist</small>
+</div>
+</li>
+<li class="col-sm-4">
+<div class="article-tile">
+<a href="/2020-05-30/please-help-expand-the-good-news-map-post-good-news-stories-around-the-world-and-share-with-people.AgdXVglTB1pcC1YCVwNSAwBWBVsBDFNU" title="Please help expand the Good News Map. Post good news stories around the world and share with people you know. It had a thousand more shares from yesterday and it deserves more expansion that way national news media can notice it.">
+<div class="picture-frame">
+<div class="picture" style="background-image: url('http://www.oneworld-stories.org/fbImage.jpg')"></div>
+</div>
+<h4 class="limited">
+Please help expand the Good News Map. Post good news stories around the world and share with people you know. It had a thousand more shares from yesterday and it deserves more expansion that way national news media can notice it.
+</h4>
+</a>
+<p class="limited">Good Stories During The Pandemic!</p>
+<small>www.oneworld-stories.org</small>
+</div>
+</li>
+</ul>
+</div>
+<div class="right-column col-md-4">
+<div id="ad2"></div>
+<h3>HEALTH</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-line">
+<a href="/2020-06-04/how-to-spot-fake-health-information-and-root-out-charlatans-according-to-health-experts.AgdXXFQHUA0BVQQGD1RSAwBWBAkHDQgJ" title="How to spot fake health information and root out charlatans, according to health experts">
+<h4 class="limited">
+How to spot fake health information and root out charlatans, according to health experts
+<small>CNBC</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-11/conversa-health-raises-12m-series-b-for-its-digital-health-platform-techcrunch.AgdWVgMAUQ1SAQFUBVBSAwBWBl8BC1QC" title="Conversa Health raises $12M Series B for its digital health platform – TechCrunch">
+<h4 class="limited">
+Conversa Health raises $12M Series B for its digital health platform – TechCrunch
+<small>TechCrunch</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-07/health-professionals-floyd-protests-vital-to-national-health-lockdown-protests-are-racist.AgdXAARUBl8BUAdVA1RSAwBWVl9XWAQA" title="‘Health professionals’: Floyd protests ‘vital’ to national health; lockdown protests are racist">
+<h4 class="limited">
+‘Health professionals’: Floyd protests ‘vital’ to national health; lockdown protests are racist
+<small>World Tribune: Window on the Real World</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-03/health-experts-activists-white-supremacy-is-a-lethal-public-health-issue-that-contributes-to-cor.AgdXXAUGXF8BVQQGD1RSAwBWBAkAWwVQ" title="Health Experts, Activists: ‘White Supremacy Is a Lethal Public Health Issue’ that Contributes to Coronavirus">
+<h4 class="limited">
+Health Experts, Activists: ‘White Supremacy Is a Lethal Public Health Issue’ that Contributes to Coronavirus
+<small>Breitbart</small>
+</h4>
+</a>
+</div>
+</li>
+</ul>
+<h3>Culture</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-line">
+<a href="/2020-06-13/the-cultural-revolution-in-american-journalism.AgdWV1dcAw9TC1FSAwpSAwBWB1tRXQkG" title="The Cultural Revolution in American Journalism">
+<h4 class="limited">
+The Cultural Revolution in American Journalism
+<small>Newsbusters</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-08/america-is-in-a-cultural-civil-war.AgdXAQRQAVoBUAdVA1RSAwBWVl9WDggE" title="America Is In A Cultural Civil War">
+<h4 class="limited">
+America Is In A Cultural Civil War
+<small>The Federalist</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-07/cancel-culture-is-worse-than-ever.AgdXBwcBVwxTVwFTUwpSAwBWCl1VC1cF" title="Cancel culture is worse than ever">
+<h4 class="limited">
+Cancel culture is worse than ever
+<small>Washington Examiner</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-04/parasites-have-a-comic-cultural-history.AgdXXAlXVA0BVQQGD1RSAwBWBAkAXAIC" title="Parasites Have a Comic Cultural History">
+<h4 class="limited">
+Parasites Have a Comic Cultural History
+<small>The National Interest</small>
+</h4>
+</a>
+</div>
+</li>
+</ul>
+<h3>Coronavirus</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-line">
+<a href="/2020-06-06/coronavirus-africa-has-to-weather-coronavirus-fallout-without-stimulus-provided-in-us-asia-and-eur.AgdXBlMCAA5UAlQHBFZSAwBWAg4BCVcJ" title="Coronavirus: Africa has to weather coronavirus fallout without stimulus provided in US, Asia and Europe">
+<h4 class="limited">
+Coronavirus: Africa has to weather coronavirus fallout without stimulus provided in US, Asia and Europe
+<small>The Independent</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-12/an-indian-healer-who-kissed-hands-to-cure-coronavirus-died-of-coronavirus-so-far-20-people-who-cam.AgdWVwgHAFpTC1FSAwpSAwBWB1tRCgEE" title="An Indian Healer Who Kissed Hands to Cure Coronavirus Died of Coronavirus: So far, 20 people who came in close contact with him tested positive, making the area a hotspot.">
+<h4 class="limited">
+An Indian Healer Who Kissed Hands to Cure Coronavirus Died of Coronavirus: So far, 20 people who came in close contact with him tested positive, making the area a hotspot.
+<small>Vice</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-15/with-265-ideas-coronavirus-panel-calls-for-us-to-lead-world-in-recovering-preparing-for-next-pande.AgdWXAFSUVsGVVEPDwZSAwBWUVtVDgQB" title="With 265 Ideas, Coronavirus Panel Calls for US to Lead World in Recovering, Preparing for Next Pandemic With 265 Ideas, Coronavirus Panel Calls for US to Lead World in Recovering, Preparing for Next Pandemic">
+<h4 class="limited">
+With 265 Ideas, Coronavirus Panel Calls for US to Lead World in Recovering, Preparing for Next Pandemic With 265 Ideas, Coronavirus Panel Calls for US to Lead World in Recovering, Preparing for Next Pandemic
+<small>The Daily Signal</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-06/why-the-coronavirus-is-winning.AgdXB1QHVglTVwFTUwpSAwBWCl1VD1MA" title="Why the Coronavirus Is Winning">
+<h4 class="limited">
+Why the Coronavirus Is Winning
+<small>www.nytimes.com</small>
+</h4>
+</a>
+</div>
+</li>
+</ul>
+<h3>News</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-line">
+<a href="/2020-06-05/the-good-news-the-bad-news-and-the-scariest-jobs-chart-youll-see.AgdXBQYBBgoGCgFWAQpSAwBWV1gHCFcJ" title="The good news, the bad news and the scariest jobs chart you’ll see">
+<h4 class="limited">
+The good news, the bad news and the scariest jobs chart you’ll see
+<small>Washington Post</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-09/google-news-initiative-kicks-off-6-week-support-local-news-campaign.AgdXAlMGVQtWC1cCUFdSAwBWVgoLDwZT" title="Google News Initiative Kicks Off 6-Week Support Local News Campaign">
+<h4 class="limited">
+Google News Initiative Kicks Off 6-Week Support Local News Campaign
+<small>@adweek</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-08/does-new-cnn-poll-spell-out-bad-news-for-trump-or-worse-news-for-pollsters.AgdXAVBRAA5WC1cCUFdSAwBWVgoECFAC" title="Does New CNN Poll Spell Out Bad News for Trump or Worse News for Pollsters?">
+<h4 class="limited">
+Does New CNN Poll Spell Out Bad News for Trump or Worse News for Pollsters?
+<small>redstate.com</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-05-26/former-cbs-news-president-confirms-most-cable-news-hates-you-trump-supporters.AgdQAARTXQxQAFFTVwVSAwBWVg8GXFcJ" title="Former CBS News President Confirms Most Cable News Hates You, Trump Supporters">
+<h4 class="limited">
+Former CBS News President Confirms Most Cable News Hates You, Trump Supporters
+<small>redstate.com</small>
+</h4>
+</a>
+</div>
+</li>
+</ul>
+<h3>General news</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-line">
+<a href="/2020-06-03/who-has-good-news-and-bad-news-about-second-coronavirus-wave.AgdXU1cCUFpUUQdSAApSAwBWUA4GWAIF" title="WHO has good news and bad news about second coronavirus wave">
+<h4 class="limited">
+WHO has good news and bad news about second coronavirus wave
+<small>New York Post</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-13/my-fake-news-whodunnit-caught-up-in-a-senegal-fake-news-scam.AgdWUQcCVghTCwBTAAZSAwBWBw1RDQID" title="My fake news whodunnit: Caught up in a Senegal fake news scam">
+<h4 class="limited">
+My fake news whodunnit: Caught up in a Senegal fake news scam
+<small>BBC News</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-10/facebook-launches-news-tab-in-the-us-adds-a-local-news-section.AgdWVQBTXAABUQoHB1ZSAwBWBwkACgQI" title="Facebook Launches News tab in the US, adds a local news section">
+<h4 class="limited">
+Facebook Launches News tab in the US, adds a local news section
+<small>Verrafin</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-09/facebook-news-launches-to-all-in-us-with-addition-of-local-news-and-video-techcrunch.AgdXAlUBBgBWC1cCUFdSAwBWVgoLWwUC" title="Facebook News launches to all in US with addition of local news and video – TechCrunch">
+<h4 class="limited">
+Facebook News launches to all in US with addition of local news and video – TechCrunch
+<small>TechCrunch</small>
+</h4>
+</a>
+</div>
+</li>
+</ul>
+<h3>Asia</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-line">
+<a href="/2020-06-06/the-new-realist-balancing-option-in-asia.AgdXBwMCBgpTVwFTUwpSAwBWCl1VCVQB" title="The New Realist Balancing Option in Asia">
+<h4 class="limited">
+The New Realist Balancing Option in Asia
+<small>The National Interest</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-05-29/virus-misinformation-fuels-panic-in-asia.AgdXVFBXBwtTBVRVUlNSAwBWB1wCWARS" title="Virus misinformation fuels panic in Asia">
+<h4 class="limited">
+Virus misinformation fuels panic in Asia
+<small>www.rawstory.com</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-12/ap-photos-ap-week-in-pictures-asia.AgdWVlUGAV1TC1FSAwpSAwBWB1tSDwMA" title="AP PHOTOS: AP Week in Pictures, Asia">
+<h4 class="limited">
+AP PHOTOS: AP Week in Pictures, Asia
+<small>ABC News</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-06/lessons-for-the-world-from-asia-s-new-virus-spikes.AgdXBwNSBwlTVwFTUwpSAwBWCl1VCQYG" title="Lessons for the world from Asia's new virus spikes">
+<h4 class="limited">
+Lessons for the world from Asia's new virus spikes
+<small>BBC News</small>
+</h4>
+</a>
+</div>
+</li>
+</ul>
+<h3>Coronavirus</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-line">
+<a href="/2020-06-06/coronavirus-africa-has-to-weather-coronavirus-fallout-without-stimulus-provided-in-us-asia-and-eur.AgdXBlMCAA5UAlQHBFZSAwBWAg4BCVcJ" title="Coronavirus: Africa has to weather coronavirus fallout without stimulus provided in US, Asia and Europe">
+<h4 class="limited">
+Coronavirus: Africa has to weather coronavirus fallout without stimulus provided in US, Asia and Europe
+<small>The Independent</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-12/an-indian-healer-who-kissed-hands-to-cure-coronavirus-died-of-coronavirus-so-far-20-people-who-cam.AgdWVwgHAFpTC1FSAwpSAwBWB1tRCgEE" title="An Indian Healer Who Kissed Hands to Cure Coronavirus Died of Coronavirus: So far, 20 people who came in close contact with him tested positive, making the area a hotspot.">
+<h4 class="limited">
+An Indian Healer Who Kissed Hands to Cure Coronavirus Died of Coronavirus: So far, 20 people who came in close contact with him tested positive, making the area a hotspot.
+<small>Vice</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-15/with-265-ideas-coronavirus-panel-calls-for-us-to-lead-world-in-recovering-preparing-for-next-pande.AgdWXAFSUVsGVVEPDwZSAwBWUVtVDgQB" title="With 265 Ideas, Coronavirus Panel Calls for US to Lead World in Recovering, Preparing for Next Pandemic With 265 Ideas, Coronavirus Panel Calls for US to Lead World in Recovering, Preparing for Next Pandemic">
+<h4 class="limited">
+With 265 Ideas, Coronavirus Panel Calls for US to Lead World in Recovering, Preparing for Next Pandemic With 265 Ideas, Coronavirus Panel Calls for US to Lead World in Recovering, Preparing for Next Pandemic
+<small>The Daily Signal</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-06/why-the-coronavirus-is-winning.AgdXB1QHVglTVwFTUwpSAwBWCl1VD1MA" title="Why the Coronavirus Is Winning">
+<h4 class="limited">
+Why the Coronavirus Is Winning
+<small>www.nytimes.com</small>
+</h4>
+</a>
+</div>
+</li>
+</ul>
+<h3>Football</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-line">
+<a href="/2020-06-09/football-quiz-runners-up.AgdXAgZQAQpWC1cCUFdSAwBWVgoEXAlX" title="Football quiz: runners up">
+<h4 class="limited">
+Football quiz: runners up
+<small>the Guardian</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-15/football-quiz-host-venues.AgdWUwUCXAgGVVEPDwZSAwBWUVtWCgFT" title="Football quiz: host venues">
+<h4 class="limited">
+Football quiz: host venues
+<small>the Guardian</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-14/mohamed-salah-egyptian-footballer.AgdWUVIFUQFTCwBTAAZSAwBWBw1RD1ME" title="Mohamed Salah, Egyptian footballer">
+<h4 class="limited">
+Mohamed Salah, Egyptian footballer
+<small>IN</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-12/sports-quiz-football-in-the-1980s.AgdWVwUAUAlTC1FSAwpSAwBWB1tSWwkJ" title="Sports quiz: football in the 1980s">
+<h4 class="limited">
+Sports quiz: football in the 1980s
+<small>the Guardian</small>
+</h4>
+</a>
+</div>
+</li>
+</ul>
+<h3>Crime</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-line">
+<a href="/2020-06-11/the-best-crime-series-on-netflix.AgdWV1VQAAlTC1FSAwpSAwBWB1tRAAhV" title="The Best Crime Series on Netflix">
+<h4 class="limited">
+The Best Crime Series on Netflix
+<small>Collider</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-16/compassionate-jail-releases-are-bringing-more-crime.AgdWXABTBl9dAFAHBVRSAwBWAQoHDAhT" title="‘Compassionate’  jail releases are bringing more crime">
+<h4 class="limited">
+‘Compassionate’  jail releases are bringing more crime
+<small>New York Post</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-11/a-crime-thriller-set-against-a-global-pandemic.AgdWVlMFBAFTC1FSAwpSAwBWB1tSCgJX" title="A crime thriller set against a global pandemic">
+<h4 class="limited">
+A crime thriller set against a global pandemic
+<small>The Washington Times</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-04/more-than-100-charged-with-crimes-but-most-protests-peaceful.AgdXXAkBBw8BVQQGD1RSAwBWBAkAXAhV" title="More than 100 charged with crimes but most protests peaceful">
+<h4 class="limited">
+More than 100 charged with crimes but most protests peaceful
+<small>WTOP</small>
+</h4>
+</a>
+</div>
+</li>
+</ul>
+<h3>General News</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-line">
+<a href="/2020-06-03/who-has-good-news-and-bad-news-about-second-coronavirus-wave.AgdXU1cCUFpUUQdSAApSAwBWUA4GWAIF" title="WHO has good news and bad news about second coronavirus wave">
+<h4 class="limited">
+WHO has good news and bad news about second coronavirus wave
+<small>New York Post</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-13/my-fake-news-whodunnit-caught-up-in-a-senegal-fake-news-scam.AgdWUQcCVghTCwBTAAZSAwBWBw1RDQID" title="My fake news whodunnit: Caught up in a Senegal fake news scam">
+<h4 class="limited">
+My fake news whodunnit: Caught up in a Senegal fake news scam
+<small>BBC News</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-10/facebook-launches-news-tab-in-the-us-adds-a-local-news-section.AgdWVQBTXAABUQoHB1ZSAwBWBwkACgQI" title="Facebook Launches News tab in the US, adds a local news section">
+<h4 class="limited">
+Facebook Launches News tab in the US, adds a local news section
+<small>Verrafin</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-09/facebook-news-launches-to-all-in-us-with-addition-of-local-news-and-video-techcrunch.AgdXAlUBBgBWC1cCUFdSAwBWVgoLWwUC" title="Facebook News launches to all in US with addition of local news and video – TechCrunch">
+<h4 class="limited">
+Facebook News launches to all in US with addition of local news and video – TechCrunch
+<small>TechCrunch</small>
+</h4>
+</a>
+</div>
+</li>
+</ul>
+<h3>George Floyd</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-line">
+<a href="/2020-06-11/full-testimony-of-philonise-floyd-george-floyd-s-brother.AgdWVVBTAwxSAQFUBVBSAwBWBl8CWAdS" title="Full testimony of Philonise Floyd, George Floyd's brother">
+<h4 class="limited">
+Full testimony of Philonise Floyd, George Floyd's brother
+<small>the Guardian</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-02/floyd-mayweather-offers-to-pay-for-george-floyd-s-funeral.AgdXUgBWUQgFAVEFDldSAwBWAQ4CCFRV" title="Floyd Mayweather offers to pay for George Floyd's funeral">
+<h4 class="limited">
+Floyd Mayweather offers to pay for George Floyd's funeral
+<small>The Telegraph</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-02/boxer-floyd-mayweather-to-pay-for-george-floyd-s-funeral.AgdXUVNRVl8FAVEFDldSAwBWAQ4DXQgB" title="Boxer Floyd Mayweather to pay for George Floyd's funeral">
+<h4 class="limited">
+Boxer Floyd Mayweather to pay for George Floyd's funeral
+<small>WCVB</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-02/boxer-floyd-mayweather-to-pay-for-george-floyd-s-funeral.AgdXUVNQVA4FAVEFDldSAwBWAQ4DXQkH" title="Boxer Floyd Mayweather to pay for George Floyd's funeral">
+<h4 class="limited">
+Boxer Floyd Mayweather to pay for George Floyd's funeral
+<small>KSBW</small>
+</h4>
+</a>
+</div>
+</li>
+</ul>
+<h3>Sport</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-line">
+<a href="/2020-06-02/live-sport-returns-horse-racing-back-at-kempton-park-as-easing-of-sporting-lockdown-continues.AgdXUgFQUQwFAVEFDldSAwBWAQ4CCAVX" title="Live sport returns — horse racing back at Kempton Park as easing of sporting lockdown continues">
+<h4 class="limited">
+Live sport returns — horse racing back at Kempton Park as easing of sporting lockdown continues
+<small>The Telegraph</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-05-29/when-will-my-sky-sports-and-bt-sport-subscriptions-resume-now-premier-league-football-is-back.AgdXVFUFXA1TBVRVUlNSAwBWB1wCXQNU" title="When will my Sky Sports and BT Sport subscriptions resume, now Premier League football is back?">
+<h4 class="limited">
+When will my Sky Sports and BT Sport subscriptions resume, now Premier League football is back?
+<small>The Telegraph</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-05-26/60-minutes-sports-timeless-stories-cbs-sports-highlights-unforgettable-stories-in-new-series.AgdQAAVWAwxVAgIDBQBSAwBWUQlQW1UD" title="'60 Minutes Sports: Timeless Stories': CBS Sports highlights unforgettable stories in new series">
+<h4 class="limited">
+'60 Minutes Sports: Timeless Stories': CBS Sports highlights unforgettable stories in new series
+<small>CBSSports.com</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-12/nbc-sports-chicago-is-presenting-race-in-america-a-discussion-on-race-with-local-sports-stars-t.AgdWVwlUBFxTC1FSAwpSAwBWB1tSX1RT" title="NBC Sports Chicago is presenting ‘Race in America,’ a discussion on race with local sports stars. ‘The ultimate goal at hand is to create some kind of change.’">
+<h4 class="limited">
+NBC Sports Chicago is presenting ‘Race in America,’ a discussion on race with local sports stars. ‘The ultimate goal at hand is to create some kind of change.’
+<small>chicagotribune.com</small>
+</h4>
+</a>
+</div>
+</li>
+</ul>
+<h3>Google</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-line">
+<a href="/2020-05-26/google-pilots-voice-authentication-for-purchases-made-though-google-assistant.AgdQAAhXVgBQAFFTVwVSAwBWVg8FDAVX" title="Google pilots voice authentication for purchases made though Google Assistant">
+<h4 class="limited">
+Google pilots voice authentication for purchases made though Google Assistant
+<small>TechSpot</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-05-28/google-offering-free-nest-mini-to-youtube-premium-google-music-subscribers.AgdQAgVdUF9XBlcGUFdSAwBWAAsGDwAB" title="Google Offering Free Nest Mini to YouTube Premium, Google Music Subscribers">
+<h4 class="limited">
+Google Offering Free Nest Mini to YouTube Premium, Google Music Subscribers
+<small>Droid Life</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-05-27/19-incredibly-useful-google-maps-features-everyone-should-know-about-goog-googl.AgdQAQhSXQpQAFFTVwVSAwBWVg8EAFBV" title="19 incredibly useful Google Maps features everyone should know about (GOOG, GOOGL)">
+<h4 class="limited">
+19 incredibly useful Google Maps features everyone should know about (GOOG, GOOGL)
+<small>Business Insider</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-16/google-update-popular-android-apps-banned-from-google-play-store-with-warning-to-delete-them.AgdWXAQCXVhdAFAHBVRSAwBWAQoHAAcE" title="[Google Update] Popular Android Apps Banned From Google Play Store with Warning to Delete Them">
+<h4 class="limited">
+[Google Update] Popular Android Apps Banned From Google Play Store with Warning to Delete Them
+<small>Tech Times</small>
+</h4>
+</a>
+</div>
+</li>
+</ul>
+<h3>Donald Trump</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-line">
+<a href="/2020-06-06/ivanka-trump-gets-blunt-reminder-of-her-own-complicity-after-free-speech-call-twitter-users-point.AgdXBghTAF9UAlQHBFZSAwBWAg4CXAgG" title="Ivanka Trump Gets Blunt Reminder Of Her Own Complicity After ‘Free Speech’ Call: Twitter users pointed out the hypocrisy of Donald Trump’s daughter and adviser.">
+<h4 class="limited">
+Ivanka Trump Gets Blunt Reminder Of Her Own Complicity After ‘Free Speech’ Call: Twitter users pointed out the hypocrisy of Donald Trump’s daughter and adviser.
+<small>HuffPost</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-03/trump-s-antifa-accusations-spark-debate-in-germany-the-movement-s-birthplace-after-donald-trump.AgdXXAFRBA1UUQdSAApSAwBWUA4GWFQA" title="Trump's 'antifa' accusations spark debate in Germany, the movement's birthplace: After Donald Trump claimed most protesters in the US were " antifa," Germany's Social Democrats rushed to declare solidarity with the movement">
+<h4 class="limited">
+Trump's 'antifa' accusations spark debate in Germany, the movement's birthplace: After Donald Trump claimed most protesters in the US were "antifa," Germany's Social Democrats rushed to declare solidarity with the movement
+<small>DW.COM</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-05-29/joe-biden-bluntly-reminds-donald-trump-of-what-they-tweeted-on-same-day-in-october-biden-warned-abo.AgdXVQNcVFtTBVRVUlNSAwBWB1wBDVcI" title="Joe Biden Bluntly Reminds Donald Trump Of What They Tweeted On Same Day In October: Biden warned about the United States not being ready for a pandemic. Trump tweeted some head-scratching advice for Apple CEO Tim Cook.">
+<h4 class="limited">
+Joe Biden Bluntly Reminds Donald Trump Of What They Tweeted On Same Day In October: Biden warned about the United States not being ready for a pandemic. Trump tweeted some head-scratching advice for Apple CEO Tim Cook.
+<small>HuffPost</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-01/the-blasphemy-of-donald-trump.AgdXUVAFXQ4FAVEFDldSAwBWAQ4DWlcG" title="The blasphemy of Donald Trump">
+<h4 class="limited">
+The blasphemy of Donald Trump
+<small>Washington Post</small>
+</h4>
+</a>
+</div>
+</li>
+</ul>
+<h3>US</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-line">
+<a href="/2020-06-02/can-trump-legally-deploy-us-troops-to-us-cities.AgdXUVBdVV8FAVEFDldSAwBWAQ4DWlQF" title="Can Trump legally deploy US troops to US cities?">
+<h4 class="limited">
+Can Trump legally deploy US troops to US cities?
+<small>CNN</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-05-31/world-uneasily-watches-us-protests-but-us-racism-seen-before.AgdXV1NVAAxdCgBSDldSAwBWBloDCQAB" title="World uneasily watches US protests but US racism seen before">
+<h4 class="limited">
+World uneasily watches US protests but US racism seen before
+<small>ABC News</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-05-31/world-uneasily-watches-us-protests-but-us-racism-seen-before.AgdXV1JSUFpdCgBSDldSAwBWBloDCAVV" title="World uneasily watches US protests but US racism seen before">
+<h4 class="limited">
+World uneasily watches US protests but US racism seen before
+<small>The Washington Times</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-05-31/world-uneasily-watches-us-protests-but-us-racism-seen-before.AgdXV1NcVFtdCgBSDldSAwBWBloDCQlQ" title="World uneasily watches US protests but US racism seen before">
+<h4 class="limited">
+World uneasily watches US protests but US racism seen before
+<small>WTOP</small>
+</h4>
+</a>
+</div>
+</li>
+</ul>
+<h3>Politics</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-line">
+<a href="/2020-06-01/everything-with-the-left-is-political.AgdXUFIHXQhWBgYOBgpSAwBWUF0DWwkF" title="Everything with the left is political">
+<h4 class="limited">
+Everything with the left is political
+<small>@AmericanThinker</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-10/open-the-schools-without-politics.AgdWVAgHVloBUQoHB1ZSAwBWBwkBDwVT" title="Open the schools without politics">
+<h4 class="limited">
+Open the schools without politics
+<small>@AmericanThinker</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-05/how-to-be-civically-or-politically-active-during-a-pandemic.AgdXBQgHXA0GCgFWAQpSAwBWV1gHDART" title="How to be civically or politically active during a pandemic">
+<h4 class="limited">
+How to be civically or politically active during a pandemic
+<small>Los Angeles Times</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-05/political-cartoons-by-joe-fournier.AgdXBVRQUQ9UAlQHBFZSAwBWAg4CDlQJ" title="Political cartoons by Joe Fournier">
+<h4 class="limited">
+Political cartoons by Joe Fournier
+<small>chicagotribune.com</small>
+</h4>
+</a>
+</div>
+</li>
+</ul>
+<h3>Health</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-line">
+<a href="/2020-06-04/how-to-spot-fake-health-information-and-root-out-charlatans-according-to-health-experts.AgdXXFQHUA0BVQQGD1RSAwBWBAkHDQgJ" title="How to spot fake health information and root out charlatans, according to health experts">
+<h4 class="limited">
+How to spot fake health information and root out charlatans, according to health experts
+ <small>CNBC</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-11/conversa-health-raises-12m-series-b-for-its-digital-health-platform-techcrunch.AgdWVgMAUQ1SAQFUBVBSAwBWBl8BC1QC" title="Conversa Health raises $12M Series B for its digital health platform – TechCrunch">
+<h4 class="limited">
+Conversa Health raises $12M Series B for its digital health platform – TechCrunch
+<small>TechCrunch</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-07/health-professionals-floyd-protests-vital-to-national-health-lockdown-protests-are-racist.AgdXAARUBl8BUAdVA1RSAwBWVl9XWAQA" title="‘Health professionals’: Floyd protests ‘vital’ to national health; lockdown protests are racist">
+<h4 class="limited">
+‘Health professionals’: Floyd protests ‘vital’ to national health; lockdown protests are racist
+<small>World Tribune: Window on the Real World</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-03/health-experts-activists-white-supremacy-is-a-lethal-public-health-issue-that-contributes-to-cor.AgdXXAUGXF8BVQQGD1RSAwBWBAkAWwVQ" title="Health Experts, Activists: ‘White Supremacy Is a Lethal Public Health Issue’ that Contributes to Coronavirus">
+<h4 class="limited">
+Health Experts, Activists: ‘White Supremacy Is a Lethal Public Health Issue’ that Contributes to Coronavirus
+<small>Breitbart</small>
+</h4>
+</a>
+</div>
+</li>
+</ul>
+<h3>CORONAVIRUS</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-line">
+<a href="/2020-06-06/coronavirus-africa-has-to-weather-coronavirus-fallout-without-stimulus-provided-in-us-asia-and-eur.AgdXBlMCAA5UAlQHBFZSAwBWAg4BCVcJ" title="Coronavirus: Africa has to weather coronavirus fallout without stimulus provided in US, Asia and Europe">
+<h4 class="limited">
+Coronavirus: Africa has to weather coronavirus fallout without stimulus provided in US, Asia and Europe
+<small>The Independent</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-12/an-indian-healer-who-kissed-hands-to-cure-coronavirus-died-of-coronavirus-so-far-20-people-who-cam.AgdWVwgHAFpTC1FSAwpSAwBWB1tRCgEE" title="An Indian Healer Who Kissed Hands to Cure Coronavirus Died of Coronavirus: So far, 20 people who came in close contact with him tested positive, making the area a hotspot.">
+<h4 class="limited">
+An Indian Healer Who Kissed Hands to Cure Coronavirus Died of Coronavirus: So far, 20 people who came in close contact with him tested positive, making the area a hotspot.
+<small>Vice</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-15/with-265-ideas-coronavirus-panel-calls-for-us-to-lead-world-in-recovering-preparing-for-next-pande.AgdWXAFSUVsGVVEPDwZSAwBWUVtVDgQB" title="With 265 Ideas, Coronavirus Panel Calls for US to Lead World in Recovering, Preparing for Next Pandemic With 265 Ideas, Coronavirus Panel Calls for US to Lead World in Recovering, Preparing for Next Pandemic">
+<h4 class="limited">
+With 265 Ideas, Coronavirus Panel Calls for US to Lead World in Recovering, Preparing for Next Pandemic With 265 Ideas, Coronavirus Panel Calls for US to Lead World in Recovering, Preparing for Next Pandemic
+<small>The Daily Signal</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-06/why-the-coronavirus-is-winning.AgdXB1QHVglTVwFTUwpSAwBWCl1VD1MA" title="Why the Coronavirus Is Winning">
+<h4 class="limited">
+Why the Coronavirus Is Winning
+<small>www.nytimes.com</small>
+</h4>
+</a>
+</div>
+</li>
+</ul>
+<h3>United States</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-line">
+<a href="/2020-06-12/there-are-615-billionaires-in-the-united-states-and-only-6-of-them-are-black.AgdWV1MHXApTC1FSAwpSAwBWB1tRD1MA" title="There are 615 billionaires in the United States, and only 6 of them are Black">
+<h4 class="limited">
+There are 615 billionaires in the United States, and only 6 of them are Black
+<small>Business Insider</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-10/the-promesa-board-members-are-not-officers-of-the-united-states-so-what-are-they.AgdWVQNdUFsBUQoHB1ZSAwBWBwkADAkH" title="The PROMESA Board Members are not " Officers of the United States." So what are they?">
+<h4 class="limited">
+The PROMESA Board Members are not "Officers of the United States." So what are they?
+<small>Reason.com</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-04/how-the-united-states-might-have-condemned-the-trump-regime.AgdXXFRTVQEBVQQGD1RSAwBWBAkHDQAH" title="How the United States might have condemned the Trump regime">
+<h4 class="limited">
+How the United States might have condemned the Trump regime
+<small>Washington Post</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-03/we-are-perilously-close-to-the-end-of-justice-in-the-united-states.AgdXXABRVVsBVQQGD1RSAwBWBAkADwAD" title="We are perilously close to the end of justice in the United States">
+<h4 class="limited">
+We are perilously close to the end of justice in the United States
+<small>Washington Post</small>
+</h4>
+</a>
+</div>
+</li>
+</ul>
+<h3>News</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-line">
+<a href="/2020-06-05/the-good-news-the-bad-news-and-the-scariest-jobs-chart-youll-see.AgdXBQYBBgoGCgFWAQpSAwBWV1gHCFcJ" title="The good news, the bad news and the scariest jobs chart you’ll see">
+<h4 class="limited">
+The good news, the bad news and the scariest jobs chart you’ll see
+<small>Washington Post</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-09/google-news-initiative-kicks-off-6-week-support-local-news-campaign.AgdXAlMGVQtWC1cCUFdSAwBWVgoLDwZT" title="Google News Initiative Kicks Off 6-Week Support Local News Campaign">
+<h4 class="limited">
+Google News Initiative Kicks Off 6-Week Support Local News Campaign
+<small>@adweek</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-08/does-new-cnn-poll-spell-out-bad-news-for-trump-or-worse-news-for-pollsters.AgdXAVBRAA5WC1cCUFdSAwBWVgoECFAC" title="Does New CNN Poll Spell Out Bad News for Trump or Worse News for Pollsters?">
+<h4 class="limited">
+Does New CNN Poll Spell Out Bad News for Trump or Worse News for Pollsters?
+<small>redstate.com</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-05-26/former-cbs-news-president-confirms-most-cable-news-hates-you-trump-supporters.AgdQAARTXQxQAFFTVwVSAwBWVg8GXFcJ" title="Former CBS News President Confirms Most Cable News Hates You, Trump Supporters">
+<h4 class="limited">
+Former CBS News President Confirms Most Cable News Hates You, Trump Supporters
+<small>redstate.com</small>
+</h4>
+</a>
+</div>
+</li>
+</ul>
+<h3>COVID-19</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-line">
+<a href="/2020-06-01/vietnam-recorded-no-new-covid-19-infection-as-of-6pm-on-june-1-marking-the-46th-day-in-a-row-withou.AgdXUQZVVA4FAVEFDldSAwBWAQ4DDlQI" title="Vietnam recorded no new COVID-19 infection as of 6pm on June 1, marking the 46th day in a row without coronavirus transmission in the community, according to the National Steering Committee for COVID-19 Prevention and Control.">
+<h4 class="limited">
+Vietnam recorded no new COVID-19 infection as of 6pm on June 1, marking the 46th day in a row without coronavirus transmission in the community, according to the National Steering Committee for COVID-19 Prevention and Control.
+<small>VietnamPlus</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-02/a-british-man-who-is-vietnam-s-most-critical-covid-19-patient-so-far-smiled-as-doctors-talked-to-him.AgdXUlJWXQ1UUQdSAApSAwBWUA4AXFUI" title="A British man who is Vietnam's most critical Covid-19 patient so far smiled as doctors talked to him on Tuesday. The Covid-19 treatment sub-committee under the Health Ministry said his smile carries a lot of meaning, showing that he has been more conscious.">
+<h4 class="limited">
+A British man who is Vietnam's most critical Covid-19 patient so far smiled as doctors talked to him on Tuesday. The Covid-19 treatment sub-committee under the Health Ministry said his smile carries a lot of meaning, showing that he has been more conscious.
+<small>VnExpress International – Latest news, business, travel and analysis from Vietnam</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-07/taiwan-launches-website-to-share-covid-19-experience-worldwide-the-website-titled-taiwan-crucial.AgdXAAFRB1tTVwFTUwpSAwBWCl1VDlcJ" title="Taiwan launches website to share COVID-19 experience worldwide. The website, titled " Taiwan Crucial Policy for Combating COVID-19," provides information about major developments and policies in Taiwan relating to its battle against the coronavirus since Dec. 31, 2019.">
+<h4 class="limited">
+Taiwan launches website to share COVID-19 experience worldwide. The website, titled "Taiwan Crucial Policy for Combating COVID-19," provides information about major developments and policies in Taiwan relating to its battle against the coronavirus since Dec. 31, 2019.
+<small>@Focus_Taiwan</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-02/covid-19-infections-in-philippines-approach-19000-with-addition-of-359-cases.AgdXUgNRBA0FAVEFDldSAwBWAQ4CCgFU" title="COVID-19 infections in Philippines approach 19,000 with addition of 359 cases">
+<h4 class="limited">
+COVID-19 infections in Philippines approach 19,000 with addition of 359 cases
+<small>philstar.com</small>
+</h4>
+</a>
+</div>
+</li>
+</ul>
+<h3>Europe</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-line">
+<a href="/2020-06-07/the-samurai-who-charmed-the-courts-of-europe.AgdXBwkGUQBTVwFTUwpSAwBWCl1VClAG" title="The samurai who charmed the courts of Europe">
+<h4 class="limited">
+The samurai who charmed the courts of Europe
+<small>the Guardian</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-05/europes-patchwork-reopening.AgdXBQACVggGCgFWAQpSAwBWV1gADgkJ" title="Europe’s Patchwork Reopening">
+<h4 class="limited">
+Europe’s Patchwork Reopening
+<small>www.nytimes.com</small>
+</h4>
+</a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-06-02/europe-s-non-hamiltonian-muddle.AgdXUVdQXAoFAVEFDldSAwBWAQ4CCVMD" title="Europe's Non-Hamiltonian Muddle">
+<h4 class="limited">
+Europe's Non-Hamiltonian Muddle
+<small>Zero Hedge</small>
+</h4>
+ </a>
+</div>
+</li>
+<li>
+<div class="article-line">
+<a href="/2020-05-31/coronavirus-may-have-been-in-europe-in-november.AgdXVwYHUFtdCgBSDldSAwBWBltVXVRU" title="Coronavirus may have been in Europe in NOVEMBER">
+<h4 class="limited">
+Coronavirus may have been in Europe in NOVEMBER
+<small>Mail Online</small>
+</h4>
+</a>
+</div>
+</li>
+</ul>
+<h3>HEALTH</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-thumb">
+<a href="/2020-05-26/covi-pass-uk-introduces-digital-health-passport-to-monitor-travel-health-of-population.AgdQAARRBA9QAFFTVwVSAwBWVg8GXAgJ" title="COVI-PASS: UK Introduces ‘Digital Health Passport’ To Monitor Travel, Health Of Population">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://assets.infowars.com/2020/05/covipassw93876.jpg')"></div>
+</div>
+<h4 class="limited">
+COVI-PASS: UK Introduces ‘Digital Health Passport’ To Monitor Travel, Health Of Population
+</h4>
+<small>www.infowars.com</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-03/the-health-202-joe-biden-says-health-care-comes-first-when-tackling-racial-inequality.AgdXUwhSAQBUUQdSAApSAwBWUA4HWlRX" title="The Health 202: Joe Biden says health care comes first when tackling racial inequality.">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://www.washingtonpost.com/resizer/B-XEcLnNnf63Koxpr4Wa6LN35KQ=/90x0/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/OSI4WKFFRUI6VB2FJ7RXSHTV5U.jpg')"></div>
+</div>
+<h4 class="limited">
+The Health 202: Joe Biden says health care comes first when tackling racial inequality.
+</h4>
+<small>www.washingtonpost.com</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-01/la-county-public-health-s-ferrer-addressing-law-enforcement-violence-is-a-public-health-issue.AgdXUQlcBggFAVEFDldSAwBWAQ4DWAID" title="LA County Public Health's Ferrer: " Addressing Law Enforcement Violence is a Public Health Issue"">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://media.townhall.com/townhall/reu/ha/2020/149/00fce3e7-3b9b-4ac5-9c60-6e2641c0263e.jpg')"></div>
+</div>
+<h4 class="limited">
+LA County Public Health's Ferrer: "Addressing Law Enforcement Violence is a Public Health Issue"
+</h4>
+<small>redstate.com</small>
+</a>
+</div>
+</li>
+</ul>
+<h3>Culture</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-thumb">
+<a href="/2020-06-11/opinion-culture-is-a-matter-of-show-don-t-tell.AgdWVgcCVl9SAQFUBVBSAwBWBl8BW1AB" title="Opinion: Culture Is a Matter of 'Show, Don't Tell'">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://media.townhall.com/townhall/reu/ha/2019/128/ad596b89-a06d-443a-b7b2-c8a72493bd90.png')"></div>
+</div>
+<h4 class="limited">
+Opinion: Culture Is a Matter of 'Show, Don't Tell'
+</h4>
+<small>redstate.com</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-10/the-absolutist-case-for-problematic-pop-culture.AgdWVQZUXQ1SAQFUBVBSAwBWBl8CD1AE" title="The Absolutist Case for Problematic Pop Culture">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://pyxis.nymag.com/v1/imgs/9d2/823/9ebec6dadc34ff4df48611ee5e0c9dc9f1-gone-with-the-wind.1x.rsocial.w1200.jpg')"></div>
+</div>
+<h4 class="limited">
+The Absolutist Case for Problematic Pop Culture
+</h4>
+<small>www.vulture.com</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-09/inside-the-culture-of-racism-at-bon-appetit.AgdXAlcGUghWC1cCUFdSAwBWVgoLXAUF" title="Inside the Culture of Racism at Bon Appétit">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://i.kinja-img.com/gawker-media/image/upload/c_fill,f_auto,fl_progressive,g_center,h_675,pg_1,q_80,w_1200/e9tvgfxiqxtpie1ygkfj.png')"></div>
+</div>
+<h4 class="limited">
+Inside the Culture of Racism at Bon Appétit
+</h4>
+<small>Jezebel</small>
+</a>
+</div>
+</li>
+</ul>
+<h3>Coronavirus</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-thumb">
+<a href="/2020-06-05/is-the-coronavirus-crisis-over.AgdXBQdQBwgGCgFWAQpSAwBWV1gAXAdV" title="Is The Coronavirus Crisis Over?">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://img.huffingtonpost.com/asset/5eda51262200003c2282a124.jpeg?cache=pmFQGce901&ops=1778_1000')"></div>
+</div>
+<h4 class="limited">
+Is The Coronavirus Crisis Over?
+</h4>
+<small>HuffPost</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-15/could-heating-protect-against-coronavirus.AgdWUwcAUQ0GVVEPDwZSAwBWUVtWDAgF" title="Could HEATING protect against coronavirus?">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://i.dailymail.co.uk/1s/2020/06/15/12/29625530-0-image-a-10_1592222390107.jpg')"></div>
+</div>
+<h4 class="limited">
+Could HEATING protect against coronavirus?
+</h4>
+<small>Mail Online</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-15/what-weve-learned-about-the-coronavirus.AgdWUwUAAAwGVVEPDwZSAwBWUVtWC1dQ" title="What We’ve Learned About the Coronavirus">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://static01.nyt.com/images/2020/04/19/science/15daily-image/00VIRUS-FUTURE8-facebookJumbo.jpg')"></div>
+</div>
+<h4 class="limited">
+What We’ve Learned About the Coronavirus
+</h4>
+<small>www.nytimes.com</small>
+</a>
+</div>
+</li>
+</ul>
+<h3>News</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-thumb">
+<a href="/2020-06-16/fox-news-panics-over-bracing-news-that-black-lives-matter-has-more-support-than-donald-trump.AgdWXABcXAtdAFAHBVRSAwBWAQoHDFBT" title="Fox News panics over ‘bracing news’ that Black Lives Matter has more support than Donald Trump">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://www.rawstory.com/wp-content/uploads/2020/06/BLM.jpg')"></div>
+</div>
+<h4 class="limited">
+Fox News panics over ‘bracing news’ that Black Lives Matter has more support than Donald Trump
+</h4>
+<small>www.rawstory.com</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-05-30/fox-news-reporter-taunted-with-fuck-fox-news-chants-as-protests-continue-nationwide.AgdXVglTBAFcC1YCVwNSAwBWBVsBDFMJ" title="Fox News Reporter Taunted With “Fuck Fox News” Chants as Protests Continue Nationwide">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://www.rollingstone.com/wp-content/uploads/2020/05/Screen-Shot-2020-05-30-at-8.12.58-AM.jpg')"></div>
+</div>
+<h4 class="limited">
+Fox News Reporter Taunted With “Fuck Fox News” Chants as Protests Continue Nationwide
+</h4>
+<small>Rolling Stone</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-02/wgn-america-announces-news-anchors-correspondents-for-national-newscast-news-nation-launching-in.AgdXUghTBAkFAVEFDldSAwBWAQ4CXwhS" title="WGN America announces news anchors, correspondents for national newscast ‘News Nation’ launching in September">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://fox8.com/wp-content/uploads/sites/12/2020/06/nn_talentannounce_generic_16x9_060120.jpg?w=1280&h=720&crop=1')"></div>
+</div>
+<h4 class="limited">
+WGN America announces news anchors, correspondents for national newscast ‘News Nation’ launching in September
+</h4>
+<small>fox8.com</small>
+</a>
+</div>
+</li>
+</ul>
+<h3>General news</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-thumb">
+<a href="/2020-06-05/the-good-news-the-bad-news-and-the-scariest-jobs-chart-youll-see.AgdXBQYBBgoGCgFWAQpSAwBWV1gHCFcJ" title="The good news, the bad news and the scariest jobs chart you’ll see">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/5QXOHWZTWJGILGQIBKUEQ6UIRI.png&w=1440')"></div>
+</div>
+<h4 class="limited">
+The good news, the bad news and the scariest jobs chart you’ll see
+</h4>
+<small>Washington Post</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-09/google-news-initiative-kicks-off-6-week-support-local-news-campaign.AgdXAlMGVQtWC1cCUFdSAwBWVgoLDwZT" title="Google News Initiative Kicks Off 6-Week Support Local News Campaign">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://www.adweek.com/wp-content/uploads/2020/06/GoogleSupportLocalNewsHero-600x315.jpg')"></div>
+</div>
+<h4 class="limited">
+Google News Initiative Kicks Off 6-Week Support Local News Campaign
+</h4>
+<small>@adweek</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-08/does-new-cnn-poll-spell-out-bad-news-for-trump-or-worse-news-for-pollsters.AgdXAVBRAA5WC1cCUFdSAwBWVgoECFAC" title="Does New CNN Poll Spell Out Bad News for Trump or Worse News for Pollsters?">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://media.townhall.com/townhall/reu/ha/2020/43/c98860c7-54a6-4739-96ec-5e773629d041.jpg')"></div>
+</div>
+<h4 class="limited">
+Does New CNN Poll Spell Out Bad News for Trump or Worse News for Pollsters?
+</h4>
+<small>redstate.com</small>
+</a>
+</div>
+</li>
+</ul>
+<h3>Asia</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-thumb">
+<a href="/2020-06-05/ap-photos-ap-week-in-pictures-asia.AgdXXVBVUA4GCgFWAQpSAwBWV1gACAAJ" title="AP PHOTOS: AP Week in Pictures, Asia">
+<div class="picture-frame pull-left">
+<div class="picture"></div>
+</div>
+<h4 class="limited">
+AP PHOTOS: AP Week in Pictures, Asia
+</h4>
+<small>ABC News</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-05/ap-photos-ap-week-in-pictures-asia.AgdXXQgFUAsGCgFWAQpSAwBWV1gACVID" title="AP PHOTOS: AP Week in Pictures, Asia">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://wtop.com/wp-content/uploads/2020/06/AP_Week_in_Pictures_Asia_33226.jpg')"></div>
+</div>
+<h4 class="limited">
+AP PHOTOS: AP Week in Pictures, Asia
+</h4>
+<small>WTOP</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-04/up-jumps-30-spots-in-asia-university-rankings.AgdXXQMHVVoBVQQGD1RSAwBWBAkHWgMC" title="UP jumps 30 spots in Asia university rankings">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://media.philstar.com/photos/2020/06/04/up_2020-06-04_21-57-05.jpg')"></div>
+</div>
+<h4 class="limited">
+UP jumps 30 spots in Asia university rankings
+</h4>
+<small>philstar.com</small>
+</a>
+</div>
+</li>
+</ul>
+<h3>Coronavirus</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-thumb">
+<a href="/2020-06-05/is-the-coronavirus-crisis-over.AgdXBQdQBwgGCgFWAQpSAwBWV1gAXAdV" title="Is The Coronavirus Crisis Over?">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://img.huffingtonpost.com/asset/5eda51262200003c2282a124.jpeg?cache=pmFQGce901&ops=1778_1000')"></div>
+</div>
+<h4 class="limited">
+Is The Coronavirus Crisis Over?
+</h4>
+<small>HuffPost</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-15/could-heating-protect-against-coronavirus.AgdWUwcAUQ0GVVEPDwZSAwBWUVtWDAgF" title="Could HEATING protect against coronavirus?">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://i.dailymail.co.uk/1s/2020/06/15/12/29625530-0-image-a-10_1592222390107.jpg')"></div>
+</div>
+<h4 class="limited">
+Could HEATING protect against coronavirus?
+</h4>
+<small>Mail Online</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-15/what-weve-learned-about-the-coronavirus.AgdWUwUAAAwGVVEPDwZSAwBWUVtWC1dQ" title="What We’ve Learned About the Coronavirus">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://static01.nyt.com/images/2020/04/19/science/15daily-image/00VIRUS-FUTURE8-facebookJumbo.jpg')"></div>
+</div>
+<h4 class="limited">
+What We’ve Learned About the Coronavirus
+</h4>
+<small>www.nytimes.com</small>
+</a>
+</div>
+</li>
+</ul>
+<h3>Football</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-thumb">
+<a href="/2020-06-10/football-quiz-euro-2000.AgdWVFRWBAwBUQoHB1ZSAwBWBwkBW1QI" title="Football quiz: Euro 2000">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://i.guim.co.uk/img/media/561e6f09a16cded3eedeb30a1de0146c89fe4d85/0_11_2048_1230/master/2048.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&overlay-align=bottom,left&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=a366e1417edec81fa26d9ba57a074793')"></div>
+</div>
+<h4 class="limited">
+Football quiz: Euro 2000
+</h4>
+<small>the Guardian</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-05/football-quiz-boastful-quotes.AgdXBQMBAw0GCgFWAQpSAwBWV1gAAVUF" title="Football quiz: boastful quotes">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://i.guim.co.uk/img/media/7d45fc1575d3757db1e16143c54a9ecbf0b70880/34_39_2492_1495/master/2492.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&overlay-align=bottom,left&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=f477270d772d1098ce3977e8c62acd2e')"></div>
+</div>
+<h4 class="limited">
+Football quiz: boastful quotes
+</h4>
+<small>the Guardian</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-03/hapless-footballer-is-knocked-over-by-his-own-penalty.AgdXUwkBUF9UUQdSAApSAwBWUA4HWgcD" title="Hapless footballer is knocked over by his OWN penalty">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://i.dailymail.co.uk/1s/2020/06/03/09/29162048-0-image-a-27_1591173192434.jpg')"></div>
+</div>
+<h4 class="limited">
+Hapless footballer is knocked over by his OWN penalty
+</h4>
+<small>Mail Online</small>
+</a>
+</div>
+</li>
+</ul>
+<h3>Crime</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-thumb">
+<a href="/2020-05-27/top-10-scottish-crime-novels.AgdQAQcAXAhQAFFTVwVSAwBWVg8ECldU" title="Top 10 Scottish crime novels">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://i.guim.co.uk/img/media/013765bd74592b03bc2bb5c66f8d279f1d06e88a/0_1148_2451_1469/master/2451.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&overlay-align=bottom,left&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=df6be8c8e0ebd57c540a4609b9f03d9a')"></div>
+</div>
+<h4 class="limited">
+Top 10 Scottish crime novels
+</h4>
+<small>the Guardian</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-15/nypd-disbands-plainclothes-anti-crime-units.AgdWU1ddAFwGVVEPDwZSAwBWUVtVDwIC" title="NYPD Disbands Plainclothes " Anti-Crime" Units">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://cms.prod.nypr.digital/images/296498/fill-1200x650/')"></div>
+</div>
+<h4 class="limited">
+NYPD Disbands Plainclothes "Anti-Crime" Units
+</h4>
+<small>Gothamist</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-12/range-resources-pleads-no-contest-to-environmental-crimes.AgdWV1IGVFhTC1FSAwpSAwBWB1tRAQVX" title="Range Resources pleads no contest to environmental crimes">
+<div class="picture-frame pull-left">
+<div class="picture"></div>
+</div>
+<h4 class="limited">
+Range Resources pleads no contest to environmental crimes
+</h4>
+<small>ABC News</small>
+</a>
+</div>
+</li>
+</ul>
+<h3>General News</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-thumb">
+<a href="/2020-06-05/the-good-news-the-bad-news-and-the-scariest-jobs-chart-youll-see.AgdXBQYBBgoGCgFWAQpSAwBWV1gHCFcJ" title="The good news, the bad news and the scariest jobs chart you’ll see">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/5QXOHWZTWJGILGQIBKUEQ6UIRI.png&w=1440')"></div>
+</div>
+<h4 class="limited">
+The good news, the bad news and the scariest jobs chart you’ll see
+</h4>
+<small>Washington Post</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-09/google-news-initiative-kicks-off-6-week-support-local-news-campaign.AgdXAlMGVQtWC1cCUFdSAwBWVgoLDwZT" title="Google News Initiative Kicks Off 6-Week Support Local News Campaign">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://www.adweek.com/wp-content/uploads/2020/06/GoogleSupportLocalNewsHero-600x315.jpg')"></div>
+</div>
+<h4 class="limited">
+Google News Initiative Kicks Off 6-Week Support Local News Campaign
+</h4>
+<small>@adweek</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-08/does-new-cnn-poll-spell-out-bad-news-for-trump-or-worse-news-for-pollsters.AgdXAVBRAA5WC1cCUFdSAwBWVgoECFAC" title="Does New CNN Poll Spell Out Bad News for Trump or Worse News for Pollsters?">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://media.townhall.com/townhall/reu/ha/2020/43/c98860c7-54a6-4739-96ec-5e773629d041.jpg')"></div>
+</div>
+<h4 class="limited">
+Does New CNN Poll Spell Out Bad News for Trump or Worse News for Pollsters?
+</h4>
+<small>redstate.com</small>
+</a>
+</div>
+</li>
+</ul>
+<h3>George Floyd</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-thumb">
+<a href="/2020-06-02/boxer-floyd-mayweather-to-pay-for-george-floyd-s-funeral.AgdXUVAHUVoFAVEFDldSAwBWAQ4DXQFV" title="Boxer Floyd Mayweather to pay for George Floyd's funeral">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://static.foxnews.com/foxnews.com/content/uploads/2018/09/Mayweather-Maidana-Bo_Vros-1.jpg')"></div>
+</div>
+<h4 class="limited">
+Boxer Floyd Mayweather to pay for George Floyd's funeral
+</h4>
+<small>Fox News</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-02/boxer-floyd-mayweather-to-pay-for-george-floyd-s-funeral.AgdXUQgBAw4FAVEFDldSAwBWAQ4DWgIC" title="Boxer Floyd Mayweather to pay for George Floyd's funeral">
+<div class="picture-frame pull-left">
+<div class="picture"></div>
+</div>
+<h4 class="limited">
+Boxer Floyd Mayweather to pay for George Floyd's funeral
+</h4>
+<small>ABC News</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-02/boxer-floyd-mayweather-to-pay-for-george-floyd-s-funeral.AgdXUVJRV1oFAVEFDldSAwBWAQ4DXAYJ" title="Boxer Floyd Mayweather to pay for George Floyd's funeral">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://storage.googleapis.com/afs-prod/media/34e97b1e475e41aa8502a10b2a973524/3000.jpeg')"></div>
+</div>
+<h4 class="limited">
+Boxer Floyd Mayweather to pay for George Floyd's funeral
+</h4>
+<small>AP NEWS</small>
+</a>
+</div>
+</li>
+</ul>
+<h3>Sport</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-thumb">
+<a href="/2020-05-26/reopening-sports-real-sports-bryant-gumbel-on-greed-fueled-pro-leagues-wanting-to-start-up-amid.AgdQAFBWAV1QAFFTVwVSAwBWVg8FD1VV" title="Reopening Sports: ‘Real Sports’ Bryant Gumbel On “Greed” Fueled Pro Leagues Wanting To Start Up Amidst COVID-19 Realities & Second Wave Worries">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://pmcdeadline2.files.wordpress.com/2020/05/bryan-gumbel-reopening-sports.jpg?w=1000')"></div>
+</div>
+<h4 class="limited">
+Reopening Sports: ‘Real Sports’ Bryant Gumbel On “Greed” Fueled Pro Leagues Wanting To Start Up Amidst COVID-19 Realities & Second Wave Worries
+</h4>
+<small>Deadline</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-09/want-people-to-keep-this-same-energy-going-forward-laila-ali-and-swin-cash-discuss-protests-acti.AgdWVABcVA4BUQoHB1ZSAwBWBwkCXwRQ" title="'Want People To Keep This Same Energy Going Forward': Laila Ali And Swin Cash Discuss Protests, Activism In Sports On 'We Need To Talk' On CBS Sports Network">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://dfw.cbslocal.com/wp-content/uploads/sites/15909545/2020/06/GettyImages-1199734287.jpg?w=1024')"></div>
+</div>
+<h4 class="limited">
+'Want People To Keep This Same Energy Going Forward': Laila Ali And Swin Cash Discuss Protests, Activism In Sports On 'We Need To Talk' On CBS Sports Network
+</h4>
+<small>CBSDFW</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-09/want-people-to-keep-this-same-energy-going-forward-laila-ali-and-swin-cash-discuss-protests-acti.AgdWVAFTAAsBUQoHB1ZSAwBWBwkCXVJS" title="'Want People To Keep This Same Energy Going Forward': Laila Ali And Swin Cash Discuss Protests, Activism In Sports On 'We Need To Talk' On CBS Sports Network">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://denver.cbslocal.com/wp-content/uploads/sites/15909806/2020/06/GettyImages-1199734287.jpg?w=1024')"></div>
+</div>
+<h4 class="limited">
+'Want People To Keep This Same Energy Going Forward': Laila Ali And Swin Cash Discuss Protests, Activism In Sports On 'We Need To Talk' On CBS Sports Network
+</h4>
+<small>/CBSdenver</small>
+</a>
+</div>
+</li>
+</ul>
+<h3>Google</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-thumb">
+<a href="/2020-06-01/the-untold-story-of-google-s-1-65-billion-acquisition-of-youtube-from-those-who-lived-it-goog-go.AgdXUQVdBgxWBgYOBgpSAwBWUF0CAVVQ" title="The untold story of Google's $1.65 billion acquisition of YouTube, from those who lived it (GOOG, GOOGL)">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://i.insider.com/5ebda91c2618b919a81c2ff4?width=1200&format=jpeg')"></div>
+</div>
+<h4 class="limited">
+The untold story of Google's $1.65 billion acquisition of YouTube, from those who lived it (GOOG, GOOGL)
+</h4>
+<small>Business Insider</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-05-26/google-will-test-voice-matching-feature-to-secure-purchases-made-through-google-assistant.AgdQAAdSUFxQAFFTVwVSAwBWVg8FCQlX" title="Google Will Test Voice Matching Feature To Secure Purchases Made Through Google Assistant">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://1734811051.rsc.cdn77.org/data/images/full/366259/googles-limited-pilot-program-will-test-its-voice-matching-feature-to-secure-google-assistant-purchases.jpg')"></div>
+</div>
+<h4 class="limited">
+Google Will Test Voice Matching Feature To Secure Purchases Made Through Google Assistant
+</h4>
+<small>Tech Times</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-05-29/google-chrome-is-getting-a-new-feature-that-blocks-misleading-and-intrusive-website-notifications-g.AgdXVQMFAw9TBVRVUlNSAwBWB1wBDAVX" title="Google Chrome is getting a new feature that blocks misleading and intrusive website notifications (GOOG, GOOGL)">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://i.insider.com/5e558d23fee23d5e245dfe76?width=1200&format=jpeg')"></div>
+</div>
+<h4 class="limited">
+Google Chrome is getting a new feature that blocks misleading and intrusive website notifications (GOOG, GOOGL)
+</h4>
+<small>Business Insider</small>
+</a>
+</div>
+</li>
+</ul>
+<h3>Donald Trump</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-thumb">
+<a href="/2020-06-11/how-language-is-bringing-down-donald-trump.AgdWVgZdV1pSAQFUBVBSAwBWBl8BWlID" title="How language is bringing down Donald Trump">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://thehill.com/sites/default/files/trumpdonald3_060520getty.jpg')"></div>
+</div>
+<h4 class="limited">
+How language is bringing down Donald Trump
+</h4>
+<small>TheHill</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-11/how-donald-trump-killed-america.AgdWVVcBAAtSAQFUBVBSAwBWBl8CXFQF" title="How Donald Trump killed America">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://www.rawstory.com/wp-content/uploads/2019/04/shutterstock_353116907.jpg')"></div>
+</div>
+<h4 class="limited">
+How Donald Trump killed America
+</h4>
+<small>www.rawstory.com</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-11/why-donald-trump-is-standing-up-for-the-confederacy.AgdWVgZRAw1SAQFUBVBSAwBWBl8BWgQG" title="Why Donald Trump is standing up for the Confederacy">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/MASIR4FLSII6VJB3X2PWJFFIPU.jpg&w=1440')"></div>
+</div>
+<h4 class="limited">
+Why Donald Trump is standing up for the Confederacy
+</h4>
+<small>Washington Post</small>
+</a>
+</div>
+</li>
+</ul>
+<h3>US</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-thumb">
+<a href="/2020-05-31/world-uneasily-watches-us-protests-but-us-racism-seen-before.AgdXV1IFAQFdCgBSDldSAwBWBloDCAZU" title="World uneasily watches US protests but US racism seen before">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://storage.googleapis.com/afs-prod/media/06a3fb9bb70840abb423c7cec0e9650d/3000.jpeg')"></div>
+</div>
+<h4 class="limited">
+World uneasily watches US protests but US racism seen before
+</h4>
+<small>AP NEWS</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-05-31/world-uneasily-watches-us-protests-but-us-racism-seen-before.AgdXV1MFXQ9dCgBSDldSAwBWBloDCVMD" title="World uneasily watches US protests but US racism seen before">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://www.palmbeachpost.com/storyimage/ZZ/20200531/NEWS/305319989/AR/0/AR-305319989.jpg')"></div>
+</div>
+<h4 class="limited">
+World uneasily watches US protests but US racism seen before
+</h4>
+<small>The Palm Beach Post</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-07/sheriff-says-community-doesn-t-trust-us-when-they-see-us-in-a-uniform-because-we-re-black.AgdXAAVQUQ5TVwFTUwpSAwBWCl1VWwAJ" title="Sheriff says community doesn't 'trust us when they see us in a uniform, because we're black'">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://media11.s-nbcnews.com/j/MSNBC/Components/Video/202006/n_witt_sheriff_200607_1920x1080.nbcnews-fp-1200-630.jpg')"></div>
+</div>
+<h4 class="limited">
+Sheriff says community doesn't 'trust us when they see us in a uniform, because we're black'
+</h4>
+<small>MSNBC.com</small>
+</a>
+</div>
+</li>
+</ul>
+<h3>Politics</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-thumb">
+<a href="/2020-06-02/the-troubling-origins-of-birthright-politics.AgdXUgUHUAAFAVEFDldSAwBWAQ4CDwYC" title="The Troubling Origins of Birthright Politics">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://www.thenation.com/wp-content/uploads/2020/05/Perl-Rosenthal-Jews-Spain-ftr_img.jpg')"></div>
+</div>
+<h4 class="limited">
+The Troubling Origins of Birthright Politics
+</h4>
+<small>The Nation</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-01/we-re-living-in-a-vacuum-of-political-leadership.AgdXUQMBUA1WBgYOBgpSAwBWUF0CDAcI" title="We're Living In A Vacuum Of Political Leadership">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://img.buzzfeed.com/buzzfeed-static/static/2020-06/1/16/campaign_images/a133f54f35c4/were-living-in-a-vacuum-of-political-leadership-2-549-1591029042-7_dblbig.jpg')"></div>
+</div>
+<h4 class="limited">
+We're Living In A Vacuum Of Political Leadership
+</h4>
+<small>BuzzFeed News</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-05-31/how-violent-protests-change-politics.AgdXV1VdVABdCgBSDldSAwBWBloDCwYE" title="How Violent Protests Change Politics">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://media.newyorker.com/photos/5ed1699c682c2f11ba7ecb1f/16:9/w_1280,c_limit/Chotiner-ViolentProtests.jpg')"></div>
+</div>
+<h4 class="limited">
+How Violent Protests Change Politics
+</h4>
+<small>The New Yorker</small>
+</a>
+</div>
+</li>
+</ul>
+<h3>Health</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-thumb">
+<a href="/2020-05-26/covi-pass-uk-introduces-digital-health-passport-to-monitor-travel-health-of-population.AgdQAARRBA9QAFFTVwVSAwBWVg8GXAgJ" title="COVI-PASS: UK Introduces ‘Digital Health Passport’ To Monitor Travel, Health Of Population">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://assets.infowars.com/2020/05/covipassw93876.jpg')"></div>
+</div>
+<h4 class="limited">
+COVI-PASS: UK Introduces ‘Digital Health Passport’ To Monitor Travel, Health Of Population
+</h4>
+<small>www.infowars.com</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-03/the-health-202-joe-biden-says-health-care-comes-first-when-tackling-racial-inequality.AgdXUwhSAQBUUQdSAApSAwBWUA4HWlRX" title="The Health 202: Joe Biden says health care comes first when tackling racial inequality.">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://www.washingtonpost.com/resizer/B-XEcLnNnf63Koxpr4Wa6LN35KQ=/90x0/arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/OSI4WKFFRUI6VB2FJ7RXSHTV5U.jpg')"></div>
+</div>
+<h4 class="limited">
+The Health 202: Joe Biden says health care comes first when tackling racial inequality.
+</h4>
+<small>www.washingtonpost.com</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-01/la-county-public-health-s-ferrer-addressing-law-enforcement-violence-is-a-public-health-issue.AgdXUQlcBggFAVEFDldSAwBWAQ4DWAID" title="LA County Public Health's Ferrer: " Addressing Law Enforcement Violence is a Public Health Issue"">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://media.townhall.com/townhall/reu/ha/2020/149/00fce3e7-3b9b-4ac5-9c60-6e2641c0263e.jpg')"></div>
+</div>
+<h4 class="limited">
+LA County Public Health's Ferrer: "Addressing Law Enforcement Violence is a Public Health Issue"
+</h4>
+<small>redstate.com</small>
+</a>
+</div>
+</li>
+</ul>
+<h3>CORONAVIRUS</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-thumb">
+<a href="/2020-06-05/is-the-coronavirus-crisis-over.AgdXBQdQBwgGCgFWAQpSAwBWV1gAXAdV" title="Is The Coronavirus Crisis Over?">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://img.huffingtonpost.com/asset/5eda51262200003c2282a124.jpeg?cache=pmFQGce901&ops=1778_1000')"></div>
+</div>
+<h4 class="limited">
+Is The Coronavirus Crisis Over?
+</h4>
+<small>HuffPost</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-15/could-heating-protect-against-coronavirus.AgdWUwcAUQ0GVVEPDwZSAwBWUVtWDAgF" title="Could HEATING protect against coronavirus?">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://i.dailymail.co.uk/1s/2020/06/15/12/29625530-0-image-a-10_1592222390107.jpg')"></div>
+</div>
+<h4 class="limited">
+Could HEATING protect against coronavirus?
+</h4>
+<small>Mail Online</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-15/what-weve-learned-about-the-coronavirus.AgdWUwUAAAwGVVEPDwZSAwBWUVtWC1dQ" title="What We’ve Learned About the Coronavirus">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://static01.nyt.com/images/2020/04/19/science/15daily-image/00VIRUS-FUTURE8-facebookJumbo.jpg')"></div>
+</div>
+<h4 class="limited">
+What We’ve Learned About the Coronavirus
+</h4>
+<small>www.nytimes.com</small>
+</a>
+</div>
+</li>
+</ul>
+<h3>United States</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-thumb">
+<a href="/2020-05-27/extreme-weather-is-influencing-movement-in-the-united-states.AgdQAQZQAQxQAFFTVwVSAwBWVg8EDVQJ" title="Extreme Weather is Influencing Movement in the United States">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://nationalinterest.org/sites/default/files/main_images/2020-03-18T191750Z_459610717_RC2JMF9S3C66_RTRMADP_3_CLIMATE-CHANGE-ACCORD.JPG.jpg')"></div>
+</div>
+<h4 class="limited">
+Extreme Weather is Influencing Movement in the United States
+</h4>
+<small>The National Interest</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-09/australians-havent-given-up-on-the-united-states-yet.AgdXAlVWAw5WC1cCUFdSAwBWVgoLAFcE" title="Australians haven’t given up on the United States — yet">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/UF7HRYFKOII6VJB3X2PWJFFIPU.jpg&w=1440')"></div>
+</div>
+<h4 class="limited">
+Australians haven’t given up on the United States — yet
+</h4>
+<small>Washington Post</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-08/mapping-civil-unrest-in-the-united-states-2000-2020.AgdXAFNXVVgBUAdVA1RSAwBWVl9XXAJU" title="Mapping Civil Unrest In The United States (2000–2020)">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://zh-prod-1cc738ca-7d3b-4a72-b792-20bd8d8fa069.storage.googleapis.com/s3fs-public/styles/max_650x650/public/2020-06/civil-unrest-in-the-united-states.png?itok=ZW4tnoOZ')"></div>
+</div>
+<h4 class="limited">
+Mapping Civil Unrest In The United States (2000–2020)
+</h4>
+<small>Zero Hedge</small>
+</a>
+</div>
+</li>
+</ul>
+<h3>News</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-thumb">
+<a href="/2020-06-16/fox-news-panics-over-bracing-news-that-black-lives-matter-has-more-support-than-donald-trump.AgdWXABcXAtdAFAHBVRSAwBWAQoHDFBT" title="Fox News panics over ‘bracing news’ that Black Lives Matter has more support than Donald Trump">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://www.rawstory.com/wp-content/uploads/2020/06/BLM.jpg')"></div>
+</div>
+<h4 class="limited">
+Fox News panics over ‘bracing news’ that Black Lives Matter has more support than Donald Trump
+</h4>
+<small>www.rawstory.com</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-05-30/fox-news-reporter-taunted-with-fuck-fox-news-chants-as-protests-continue-nationwide.AgdXVglTBAFcC1YCVwNSAwBWBVsBDFMJ" title="Fox News Reporter Taunted With “Fuck Fox News” Chants as Protests Continue Nationwide">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://www.rollingstone.com/wp-content/uploads/2020/05/Screen-Shot-2020-05-30-at-8.12.58-AM.jpg')"></div>
+</div>
+<h4 class="limited">
+Fox News Reporter Taunted With “Fuck Fox News” Chants as Protests Continue Nationwide
+</h4>
+<small>Rolling Stone</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-02/wgn-america-announces-news-anchors-correspondents-for-national-newscast-news-nation-launching-in.AgdXUghTBAkFAVEFDldSAwBWAQ4CXwhS" title="WGN America announces news anchors, correspondents for national newscast ‘News Nation’ launching in September">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://fox8.com/wp-content/uploads/sites/12/2020/06/nn_talentannounce_generic_16x9_060120.jpg?w=1280&h=720&crop=1')"></div>
+</div>
+<h4 class="limited">
+WGN America announces news anchors, correspondents for national newscast ‘News Nation’ launching in September
+</h4>
+<small>fox8.com</small>
+</a>
+</div>
+</li>
+</ul>
+<h3>COVID-19</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-thumb">
+<a href="/2020-05-29/health-officials-report-19-new-covid-19-cases-in-collin-county.AgdXVQNTUl1TBVRVUlNSAwBWB1wBDVQI" title="Health Officials Report 19 New COVID-19 Cases In Collin County">
+<div class="picture-frame pull-left">
+ <div class="picture" style="background-image: url('http://dfw.cbslocal.com/wp-content/uploads/sites/15909545/2020/05/GettyImages-1214017626.jpg?w=1500')"></div>
+</div>
+<h4 class="limited">
+Health Officials Report 19 New COVID-19 Cases In Collin County
+</h4>
+<small>CBSDFW</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-08/atlanta-pastor-weve-been-witnessing-in-our-country-two-viruses-covid-19-and-covid-1619.AgdXAFNQUl0BUAdVA1RSAwBWVl9XXAQH" title="Atlanta Pastor: ‘We’ve been witnessing in our country two viruses…COVID-19 and COVID “1619”’">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://media11.s-nbcnews.com/j/MSNBC/Components/Video/202006/n_hunt_warnock_20200607_1920x1080.nbcnews-fp-1200-630.jpg')"></div>
+</div>
+<h4 class="limited">
+Atlanta Pastor: ‘We’ve been witnessing in our country two viruses…COVID-19 and COVID “1619”’
+</h4>
+<small>MSNBC.com</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-08/city-of-cleveland-reporting-19-more-confirmed-cases-of-covid-19-five-new-fatalities.AgdXAAkCAA0BUAdVA1RSAwBWVl9XXQFU" title="City of Cleveland reporting 19 more confirmed cases of COVID-19, five new fatalities">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://fox8.com/wp-content/uploads/sites/12/2020/05/GettyImages-1213688615.jpg?w=724&h=483&crop=1&resize=1280,720')"></div>
+</div>
+<h4 class="limited">
+City of Cleveland reporting 19 more confirmed cases of COVID-19, five new fatalities
+</h4>
+<small>fox8.com</small>
+</a>
+</div>
+</li>
+</ul>
+<h3>Europe</h3>
+<ul class="list-unstyled">
+<li>
+<div class="article-thumb">
+<a href="/2020-06-12/radioactive-cloud-over-europe-had-civilian-background.AgdWV1NQUQ1TC1FSAwpSAwBWB1tRDFUJ" title="Radioactive cloud over Europe had civilian background">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://scx2.b-cdn.net/gfx/news/2020/radioactivec.jpg')"></div>
+</div>
+<h4 class="limited">
+Radioactive cloud over Europe had civilian background
+</h4>
+<small>phys.org</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-11/amazon-to-be-hit-with-antitrust-charges-in-europe.AgdWVgIGXQtSAQFUBVBSAwBWBl8BDQkE" title="Amazon to be hit with antitrust charges in Europe">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://i0.wp.com/media.boingboing.net/wp-content/uploads/2017/06/amz.jpeg?fit=702,468&ssl=1')"></div>
+</div>
+<h4 class="limited">
+Amazon to be hit with antitrust charges in Europe
+</h4>
+<small>Boing Boing</small>
+</a>
+</div>
+</li>
+<li>
+<div class="article-thumb">
+<a href="/2020-06-10/andrzej-krauze-on-europe-as-icarus-cartoon.AgdWVAZWXVsBUQoHB1ZSAwBWBwkBDQhV" title="Andrzej Krauze on Europe as Icarus – cartoon">
+<div class="picture-frame pull-left">
+<div class="picture" style="background-image: url('http://i.guim.co.uk/img/media/7e96a01b779e08a681658ea0865f36695cc79a8c/111_0_3361_2017/master/3361.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&overlay-align=bottom,left&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctb3BpbmlvbnMucG5n&enable=upscale&s=84231b2d23baa40ab5b70b24e4bfa386')"></div>
+</div>
+<h4 class="limited">
+Andrzej Krauze on Europe as Icarus – cartoon
+</h4>
+
+<small>the Guardian</small>
+</a>
+</div>
+</li>
+</ul>
+<div id="ad3"></div>
+</div>
+</div>
+</div>
+<div class="container-fluid foot">
+<footer>
+<p><strong>Copyright &copy; Headline Bits</strong>. All trademarks are the property of their respective owners, authors and source websites. By using this website, you agree to our <a href="/about/terms-of-service" rel="nofollow" title="Terms of Use">terms of use</a> and <a href="/about/privacy-policy" rel="nofollow" title="Privacy Policy">privacy policy</a>.</p>
+</footer>
+</div>
+<script type="text/javascript" src="https://headlinebits.s3.dualstack.us-east-1.amazonaws.com/static/js/09iujio9iu.js?b8dab7c6"></script>
+<script type="application/ld+json">
+        {
+          "@context": "http://schema.org",
+          "@type": "WebSite",
+          "url": "https://headlinebits.com/",
+          "name": "Headline Bits",
+          "author": {
+            "@type": "Organization",
+            "name": "Headline Bits"
+          },
+          "description": "Bringing you just the headlines",
+          "publisher": "Headline Bits",
+        }
+        </script>
+</body>
+</html>

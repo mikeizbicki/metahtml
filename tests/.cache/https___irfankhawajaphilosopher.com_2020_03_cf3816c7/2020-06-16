@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>March | 2020 | Policy of Truth</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="https://irfankhawajaphilosopher.com/xmlrpc.php" />
+<!--[if lt IE 9]>
+<script src="https://s2.wp.com/wp-content/themes/pub/book-lite/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+
+
+	<style type="text/css">
+		 .widget-area {
+		 	width: 32%;
+		 }
+	</style>
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.remove(); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[i].remove();
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9pcmZhbmtoYXdhamFwaGlsb3NvcGhlci5jb20%3D"
+		+ "&wpcomid=71666299"
+		+ "&time=1592317108";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='//s1.wp.com' />
+<link rel='dns-prefetch' href='//s2.wp.com' />
+<link rel='dns-prefetch' href='//irfankhawajaphilosopher.wordpress.com' />
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel="alternate" type="application/rss+xml" title="Policy of Truth &raquo; Feed" href="https://irfankhawajaphilosopher.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Policy of Truth &raquo; Comments Feed" href="https://irfankhawajaphilosopher.com/comments/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s2.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1582709031h&ver=5.4.2"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s2.wp.com/_static/??-eJydkdtOwzAMhl+I1GsRqFwgniVJ3eCRkxJHU9+ehI1RWBmHm8h2/u+PY8MhCh08o2dwRURbDPkMh6iDE9mRxeVL1umcb2AbIz+TJ17OwYX4XWlKTRUmU28SwtgNXQ+qkJ1A2aBfhCWVZFog82LxFzZvVIY9cpQNl0soLEyi6b8WSTJ5k3/AdThhfTfcdjuYKPO5KLbZ1cTa72vdRclN4XAiiRZdlV3DjhtRKibMWdTTUXGCnyt4uaA/Det0Naew0cHxAYhFgQqhLYnxm/msmjUYRHWt4wz+UyJmKyldQxPWfkwNDVTVKr0GSd3MlUwfUZM/ucf+7mF3P47DMOxfAfaXHow=?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-2-1' href='https://s0.wp.com/wp-content/themes/h4/global.css?m=1420737423h&cssminify=yes' type='text/css' media='all' />
+<script type='text/javascript' src='https://s2.wp.com/_static/??-eJx9zk0KhDAMBeALWYtIZTbiWfyJ0mLS2qQM3t4KymwcIZBFPt6L/gZlaVzTBKxdni1B3K9VOi70G1Bol9gLlGjpxqMnAZLTBs+CwNwv8HBFP9gVVGKIGZDkmtk/VXL4pf//9VIdtpUxn9o0jandAcDzUjU='></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://irfankhawajaphilosopher.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress.com" />
+
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="March 2020 &#8211; Policy of Truth" />
+<meta property="og:site_name" content="Policy of Truth" />
+<meta property="og:image" content="https://s0.wp.com/i/blank.jpg" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:site" content="@wordpressdotcom" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://s1.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="icon" type="image/x-icon" href="https://s1.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="apple-touch-icon" href="https://s2.wp.com/i/webclip.png" />
+<link rel='openid.server' href='https://irfankhawajaphilosopher.com/?openidserver=1' />
+<link rel='openid.delegate' href='https://irfankhawajaphilosopher.com/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://irfankhawajaphilosopher.com/osd.xml" title="Policy of Truth" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+
+	<style type="text/css">
+
+	
+		#masthead {
+			background: url( https://irfankhawajaphilosopher.files.wordpress.com/2015/12/cropped-badlands.jpg ) center 0 no-repeat;
+			margin-top: 0;
+			padding-bottom: 0;
+			max-width: 100%;
+			height: 500px;
+			position: relative;
+			background-attachment: fixed;
+		}
+		.admin-bar #masthead {
+			background-position: center 28px;
+		}
+		hgroup {
+			position: absolute;
+			bottom: 50px;
+			width: 100%;
+		}
+		.site-title {
+			max-width: 750px;
+			margin: auto;
+		}
+		h2.site-description {
+			max-width: 550px;
+		}
+		.site-title,
+		.site-description {
+			color: #fff		}
+		#page {
+			max-width: 100%;
+		}
+		#main,
+		#colophon {
+			max-width: 750px;
+			margin: 0 auto;
+		}
+		.main-navigation {
+			background: rgba(0,0,0,.7);
+		}
+		.main-navigation ul a {
+			color: #ccc;
+		}
+		.main-navigation ul li:after {
+			color: #ccc;
+		}
+		.main-navigation li.current_page_item a,
+		.main-navigation li.current-menu-item a {
+			color: #888;
+		}
+		.main-navigation ul li:first-child {
+			background: none;
+		}
+
+		</style>
+<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>		<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta name="application-name" content="Policy of Truth" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="The website and group blog of Irfan Khawaja" /><meta name="msapplication-task" content="name=Subscribe;action-uri=https://irfankhawajaphilosopher.com/feed/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="description" content="10 posts published by Irfan Khawaja during March 2020" />
+	<style type="text/css">
+			.site-title,
+		.site-description {
+			color: #ffffff;
+		}
+	
+	</style>
+	</head>
+
+<body class="archive date customizer-styles-applied group-blog custom-header highlander-enabled highlander-light infinite-scroll">
+<div id="page" class="hfeed site">
+		<header id="masthead" class="site-header" role="banner">
+		<nav role="navigation" class="site-navigation main-navigation">
+			<h1 class="assistive-text">Menu</h1>
+			<div class="assistive-text skip-link"><a href="#content" title="Skip to content">Skip to content</a></div>
+
+			<div class="menu"><ul>
+<li ><a href="https://irfankhawajaphilosopher.com/">Home</a></li><li class="page_item page-item-1 page_item_has_children"><a href="https://irfankhawajaphilosopher.com/about/">About me and the&nbsp;website</a>
+<ul class='children'>
+	<li class="page_item page-item-201"><a href="https://irfankhawajaphilosopher.com/about/about-the-header-photos/">About the header&nbsp;photos</a></li>
+</ul>
+</li>
+<li class="page_item page-item-37"><a href="https://irfankhawajaphilosopher.com/blog-policies/">About the blog and its&nbsp;bloggers</a></li>
+<li class="page_item page-item-490"><a href="https://irfankhawajaphilosopher.com/covid19narrativeproject/">COVID-19 Narrative Project</a></li>
+<li class="page_item page-item-234"><a href="https://irfankhawajaphilosopher.com/blog-roll/">COVID-19: How to&nbsp;Help</a></li>
+<li class="page_item page-item-21985"><a href="https://irfankhawajaphilosopher.com/institute-for-ethics-and-public-affairs-defunct/">Institute for Ethics and Public Affairs&nbsp;(defunct)</a></li>
+<li class="page_item page-item-2783"><a href="https://irfankhawajaphilosopher.com/policy-of-truth-research-workshop__trashed/2013-seminar-photo/">2013 Seminar Photo</a></li>
+</ul></div>
+		</nav><!-- .site-navigation .main-navigation -->
+		<hgroup>
+			<h1 class="site-title"><a href="https://irfankhawajaphilosopher.com/" title="Policy of Truth" rel="home">Policy of Truth</a></h1>
+			<h2 class="site-description">The website and group blog of Irfan Khawaja</h2>
+		</hgroup>
+	</header><!-- #masthead .site-header -->
+
+	<div id="main" class="site-main">
+
+		<section id="primary" class="content-area">
+			<div id="content" class="site-content" role="main">
+
+			
+				<header class="page-header">
+					<h1 class="page-title">
+						Monthly Archives: <span>March 2020</span>					</h1>
+									</header><!-- .page-header -->
+
+					<nav role="navigation" id="nav-above" class="site-navigation paging-navigation">
+		<h1 class="assistive-text">Post navigation</h1>
+
+	
+				<div class="nav-previous"><a href="https://irfankhawajaphilosopher.com/2020/03/page/2/" ><span class="meta-nav">&larr;</span> Older posts</a></div>
+		
+		
+	
+	</nav><!-- #nav-above -->
+	
+								
+					
+<article id="post-20985" class="post-20985 post type-post status-publish format-standard hentry category-covid-19 tag-coronavirus tag-covid-19 tag-hospitals tag-new-jersey">
+	<header class="entry-header">
+
+		<h1 class="entry-title"><a href="https://irfankhawajaphilosopher.com/2020/03/31/coronavirus-diary-26-new-jersey-under-siege/" rel="bookmark">Coronavirus Diary (26): New Jersey Under&nbsp;Siege</a></h1>
+				<div class="entry-meta">
+			Posted on <a href="https://irfankhawajaphilosopher.com/2020/03/31/coronavirus-diary-26-new-jersey-under-siege/" title="7:29 pm" rel="bookmark"><time class="entry-date" datetime="2020-03-31T19:29:56-04:00" pubdate>March 31, 2020</time></a><span class="byline"> by <span class="author vcard"><a class="url fn n" href="https://irfankhawajaphilosopher.com/author/khawajaenator/" title="View all posts by Irfan Khawaja" rel="author">Irfan Khawaja</a></span></span><span class="cats-links"> under <a href="https://irfankhawajaphilosopher.com/tag/covid-19/" rel="category tag">COVID-19</a></span>					</div><!-- .entry-meta -->
+		
+	</header><!-- .entry-header -->
+
+		<div class="entry-content">
+		<p>Most of the national media reporting on the COVID-19 pandemic has focused, understandably, on the catastrophe taking place in New York City, the epicenter of the pandemic. A student in one of my classes, with friends and family in Queens, told me that he knew personally of <em>fifteen</em> COVID-19 deaths in Queens alone (Elmhurst). New York City essentially leads the world right now in COVID-19 cases.</p>
+<p>Somewhat lost in the shuffle as it always is, is the second-place case of New Jersey, where, apart from graduate school, I&#8217;ve lived all my life. You can turn on the TV to see what things are like in New York, but whether you see it there or not, things aren&#8217;t much different in Jersey: like New York, New Jersey is under siege. And &#8220;siege&#8221; is no metaphor. COVID-19 is an invading army&#8211;much more so than the Japanese, the Nazis, the Soviets, Al Qaeda, Saddam, or ISIS ever were&#8211;and we&#8217;re losing the battle to it. <a href="https://irfankhawajaphilosopher.com/2020/03/31/coronavirus-diary-26-new-jersey-under-siege/#more-20985" class="more-link">Continue reading <span class="meta-nav">&rarr;</span></a></p>
+			</div><!-- .entry-content -->
+	
+	<footer class="entry-meta">
+
+				<span class="comments-link"><a href="https://irfankhawajaphilosopher.com/2020/03/31/coronavirus-diary-26-new-jersey-under-siege/#comments">11 Comments</a></span>
+		
+	</footer><!-- .entry-meta -->
+</article><!-- #post-20985 -->
+
+				
+					
+<article id="post-20975" class="post-20975 post type-post status-publish format-standard hentry category-covid-19">
+	<header class="entry-header">
+
+		<h1 class="entry-title"><a href="https://irfankhawajaphilosopher.com/2020/03/31/coronavirus-diary-25-love-can-mend-your-life-but/" rel="bookmark">Coronavirus Diary (25): &#8220;Love Can Mend Your Life, But&#8230;&#8221;</a></h1>
+				<div class="entry-meta">
+			Posted on <a href="https://irfankhawajaphilosopher.com/2020/03/31/coronavirus-diary-25-love-can-mend-your-life-but/" title="9:32 am" rel="bookmark"><time class="entry-date" datetime="2020-03-31T09:32:50-04:00" pubdate>March 31, 2020</time></a><span class="byline"> by <span class="author vcard"><a class="url fn n" href="https://irfankhawajaphilosopher.com/author/khawajaenator/" title="View all posts by Irfan Khawaja" rel="author">Irfan Khawaja</a></span></span><span class="cats-links"> under <a href="https://irfankhawajaphilosopher.com/tag/covid-19/" rel="category tag">COVID-19</a></span>					</div><!-- .entry-meta -->
+		
+	</header><!-- .entry-header -->
+
+		<div class="entry-content">
+		<div class="embed-twitter">
+<blockquote class="twitter-tweet" data-width="550" data-dnt="true">
+<p lang="en" dir="ltr">My babies are too young to read this now. And they’d barely recognize me in my gear. But if they lose me to COVID I want them to know Mommy tried really hard to do her job. <a href="https://twitter.com/hashtag/GetMePPE?src=hash&amp;ref_src=twsrc%5Etfw">#GetMePPE</a> <a href="https://twitter.com/hashtag/NYC?src=hash&amp;ref_src=twsrc%5Etfw">#NYC</a> <a href="https://t.co/OMew5G7mjK">pic.twitter.com/OMew5G7mjK</a></p>
+<p>&mdash; Cornelia Griggs (@CorneliaLG) <a href="https://twitter.com/CorneliaLG/status/1244259261758296064?ref_src=twsrc%5Etfw">March 29, 2020</a></p></blockquote>
+<p><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div>
+			</div><!-- .entry-content -->
+	
+	<footer class="entry-meta">
+
+				<span class="comments-link"><a href="https://irfankhawajaphilosopher.com/2020/03/31/coronavirus-diary-25-love-can-mend-your-life-but/#comments">1 Comment</a></span>
+		
+	</footer><!-- .entry-meta -->
+</article><!-- #post-20975 -->
+
+				
+					
+<article id="post-20954" class="post-20954 post type-post status-publish format-standard hentry category-covid-19 tag-andy-byford tag-coronavirus tag-covid-19 tag-imran-khan tag-india tag-khawaja-saad-rafiq tag-pakistan tag-railways">
+	<header class="entry-header">
+
+		<h1 class="entry-title"><a href="https://irfankhawajaphilosopher.com/2020/03/31/coronavirus-diary-24-peace-trains/" rel="bookmark">Coronavirus Diary (24): Peace&nbsp;Trains</a></h1>
+				<div class="entry-meta">
+			Posted on <a href="https://irfankhawajaphilosopher.com/2020/03/31/coronavirus-diary-24-peace-trains/" title="7:00 am" rel="bookmark"><time class="entry-date" datetime="2020-03-31T07:00:36-04:00" pubdate>March 31, 2020</time></a><span class="byline"> by <span class="author vcard"><a class="url fn n" href="https://irfankhawajaphilosopher.com/author/khawajaenator/" title="View all posts by Irfan Khawaja" rel="author">Irfan Khawaja</a></span></span><span class="cats-links"> under <a href="https://irfankhawajaphilosopher.com/tag/covid-19/" rel="category tag">COVID-19</a></span>					</div><!-- .entry-meta -->
+		
+	</header><!-- .entry-header -->
+
+		<div class="entry-content">
+		<p>A lot of the news about India&#8217;s handling of the COVID-19 pandemic <a href="https://www.nytimes.com/2020/03/29/world/asia/coronavirus-india-migrants.html" target="_blank" rel="noopener">has been demoralizing, and justifiably so</a>, but I haven&#8217;t seen much coverage in the American press of one of India&#8217;s more ingenious success stories. Apparently, the Indian government <a href="https://www.travelandleisure.com/travel-news/india-repurposing-empty-train-carriages-coronavirus" target="_blank" rel="noopener">has decided to re-purpose railway cars as medical facilities</a>. This particular idea seems to be the successor to an earlier one, described in a <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6933430/" target="_blank" rel="noopener">recent paper</a> in the <em>Bulletin of the World Health Organization</em>.  <a href="https://irfankhawajaphilosopher.com/2020/03/31/coronavirus-diary-24-peace-trains/#more-20954" class="more-link">Continue reading <span class="meta-nav">&rarr;</span></a></p>
+			</div><!-- .entry-content -->
+	
+	<footer class="entry-meta">
+
+				<span class="comments-link"><a href="https://irfankhawajaphilosopher.com/2020/03/31/coronavirus-diary-24-peace-trains/#respond">Leave a comment</a></span>
+		
+	</footer><!-- .entry-meta -->
+</article><!-- #post-20954 -->
+
+				
+					
+<article id="post-20942" class="post-20942 post type-post status-publish format-standard hentry category-covid-19 tag-coronavirus tag-covid-19 tag-ethics tag-jessica-franklin tag-valley-hospital">
+	<header class="entry-header">
+
+		<h1 class="entry-title"><a href="https://irfankhawajaphilosopher.com/2020/03/30/coronavirus-diary-23-a-disdain-for-science/" rel="bookmark">Coronavirus Diary (23): &#8220;A Disdain for&nbsp;Science&#8221;</a></h1>
+				<div class="entry-meta">
+			Posted on <a href="https://irfankhawajaphilosopher.com/2020/03/30/coronavirus-diary-23-a-disdain-for-science/" title="2:59 pm" rel="bookmark"><time class="entry-date" datetime="2020-03-30T14:59:57-04:00" pubdate>March 30, 2020</time></a><span class="byline"> by <span class="author vcard"><a class="url fn n" href="https://irfankhawajaphilosopher.com/author/khawajaenator/" title="View all posts by Irfan Khawaja" rel="author">Irfan Khawaja</a></span></span><span class="cats-links"> under <a href="https://irfankhawajaphilosopher.com/tag/covid-19/" rel="category tag">COVID-19</a></span>					</div><!-- .entry-meta -->
+		
+	</header><!-- .entry-header -->
+
+		<div class="entry-content">
+		<p>A plea from my sister-in-law, <a href="https://www.valleyhealth.com/doctors/jessica-c-franklin-md" target="_blank" rel="noopener">Jessica Franklin, MD</a>, of <a href="https://www.valleyhealth.com/" target="_blank" rel="noopener">Valley Hospital</a> in Ridgewood, New Jersey. She posted this on Facebook, and was reluctant to have it posted publicly, describing it as more a &#8220;frustrated, heart-broken rant than a reasoned opinion.&#8221; But there&#8217;s been no paucity of reasoned opinions at this point. Every other commenter on her Facebook post has a story to tell about someone&#8217;s backsliding or refusing to comply with social distancing, the ban on gatherings, etc. If we&#8217;re going to break our health care workers and our health care facilities in this excruciating way, we should have the courage to watch it happen in real time.  <a href="https://irfankhawajaphilosopher.com/2020/03/30/coronavirus-diary-23-a-disdain-for-science/#more-20942" class="more-link">Continue reading <span class="meta-nav">&rarr;</span></a></p>
+			</div><!-- .entry-content -->
+	
+	<footer class="entry-meta">
+
+				<span class="comments-link"><a href="https://irfankhawajaphilosopher.com/2020/03/30/coronavirus-diary-23-a-disdain-for-science/#respond">Leave a comment</a></span>
+		
+	</footer><!-- .entry-meta -->
+</article><!-- #post-20942 -->
+
+				
+					
+<article id="post-20928" class="post-20928 post type-post status-publish format-standard hentry category-covid-19 tag-acdc tag-coronavirus tag-covid-19">
+	<header class="entry-header">
+
+		<h1 class="entry-title"><a href="https://irfankhawajaphilosopher.com/2020/03/30/it-tolls-for-thee/" rel="bookmark">It Tolls for&nbsp;Thee</a></h1>
+				<div class="entry-meta">
+			Posted on <a href="https://irfankhawajaphilosopher.com/2020/03/30/it-tolls-for-thee/" title="7:00 am" rel="bookmark"><time class="entry-date" datetime="2020-03-30T07:00:44-04:00" pubdate>March 30, 2020</time></a><span class="byline"> by <span class="author vcard"><a class="url fn n" href="https://irfankhawajaphilosopher.com/author/khawajaenator/" title="View all posts by Irfan Khawaja" rel="author">Irfan Khawaja</a></span></span><span class="cats-links"> under <a href="https://irfankhawajaphilosopher.com/tag/covid-19/" rel="category tag">COVID-19</a></span>					</div><!-- .entry-meta -->
+		
+	</header><!-- .entry-header -->
+
+		<div class="entry-content">
+		<p style="text-align:right;"><span style="font-size:large;">P</span>ERCHANCE he for whom this bell tolls may be so ill as that he knows not it tolls for him.</p>
+<p style="text-align:right;">&#8211;John Donne, <a href="http://www.luminarium.org/sevenlit/donne/meditation17.php" target="_blank" rel="noopener">Meditation XVII</a></p>
+<p><span class="embed-youtube" style="text-align:center; display: block;"><iframe class='youtube-player' width='750' height='422' src='https://www.youtube.com/embed/GL56LY6fE0E?version=3&#038;rel=1&#038;fs=1&#038;autohide=2&#038;showsearch=0&#038;showinfo=1&#038;iv_load_policy=1&#038;wmode=transparent' allowfullscreen='true' style='border:0;'></iframe></span></p>
+			</div><!-- .entry-content -->
+	
+	<footer class="entry-meta">
+
+				<span class="comments-link"><a href="https://irfankhawajaphilosopher.com/2020/03/30/it-tolls-for-thee/#respond">Leave a comment</a></span>
+		
+	</footer><!-- .entry-meta -->
+</article><!-- #post-20928 -->
+
+				
+					
+<article id="post-20917" class="post-20917 post type-post status-publish format-standard hentry category-covid-19 tag-coronavirus tag-covid-19 tag-health-care tag-nursing tag-public-health">
+	<header class="entry-header">
+
+		<h1 class="entry-title"><a href="https://irfankhawajaphilosopher.com/2020/03/29/coronavirus-diary-22-im-breaking/" rel="bookmark">Coronavirus Diary (22): &#8220;I Don&#8217;t Know What I Can Do to Save People Anymore&#8230;&#8221;</a></h1>
+				<div class="entry-meta">
+			Posted on <a href="https://irfankhawajaphilosopher.com/2020/03/29/coronavirus-diary-22-im-breaking/" title="9:24 pm" rel="bookmark"><time class="entry-date" datetime="2020-03-29T21:24:22-04:00" pubdate>March 29, 2020</time></a><span class="byline"> by <span class="author vcard"><a class="url fn n" href="https://irfankhawajaphilosopher.com/author/khawajaenator/" title="View all posts by Irfan Khawaja" rel="author">Irfan Khawaja</a></span></span><span class="cats-links"> under <a href="https://irfankhawajaphilosopher.com/tag/covid-19/" rel="category tag">COVID-19</a></span>					</div><!-- .entry-meta -->
+		
+	</header><!-- .entry-header -->
+
+		<div class="entry-content">
+		<p>A viral video worth watching:</p>
+<p><span class="embed-youtube" style="text-align:center; display: block;"><iframe class='youtube-player' width='750' height='422' src='https://www.youtube.com/embed/HBlKs04Gj3M?version=3&#038;rel=1&#038;fs=1&#038;autohide=2&#038;showsearch=0&#038;showinfo=1&#038;iv_load_policy=1&#038;wmode=transparent' allowfullscreen='true' style='border:0;'></iframe></span></p>
+<p>There are two ways of interpreting this video.  <a href="https://irfankhawajaphilosopher.com/2020/03/29/coronavirus-diary-22-im-breaking/#more-20917" class="more-link">Continue reading <span class="meta-nav">&rarr;</span></a></p>
+			</div><!-- .entry-content -->
+	
+	<footer class="entry-meta">
+
+				<span class="comments-link"><a href="https://irfankhawajaphilosopher.com/2020/03/29/coronavirus-diary-22-im-breaking/#comments">11 Comments</a></span>
+		
+	</footer><!-- .entry-meta -->
+</article><!-- #post-20917 -->
+
+				
+					
+<article id="post-20904" class="post-20904 post type-post status-publish format-standard hentry category-covid-19 tag-chris-sciabarra tag-coronavirus tag-covid-19 tag-covid-19-narratives tag-medicine">
+	<header class="entry-header">
+
+		<h1 class="entry-title"><a href="https://irfankhawajaphilosopher.com/2020/03/29/covid-19-narrative-2-chris-matthew-sciabarra/" rel="bookmark">COVID-19 Narrative (2): Chris Matthew&nbsp;Sciabarra</a></h1>
+				<div class="entry-meta">
+			Posted on <a href="https://irfankhawajaphilosopher.com/2020/03/29/covid-19-narrative-2-chris-matthew-sciabarra/" title="3:43 pm" rel="bookmark"><time class="entry-date" datetime="2020-03-29T15:43:52-04:00" pubdate>March 29, 2020</time></a><span class="byline"> by <span class="author vcard"><a class="url fn n" href="https://irfankhawajaphilosopher.com/author/khawajaenator/" title="View all posts by Irfan Khawaja" rel="author">Irfan Khawaja</a></span></span><span class="cats-links"> under <a href="https://irfankhawajaphilosopher.com/tag/covid-19/" rel="category tag">COVID-19</a></span>					</div><!-- .entry-meta -->
+		
+	</header><!-- .entry-header -->
+
+		<div class="entry-content">
+		<p><em>This is the second in my series of <a href="https://irfankhawajaphilosopher.com/covid19narrativeproject/" target="_blank" rel="noopener">COVID-19 Narratives,</a> by my dear friend <a href="https://en.wikipedia.org/wiki/Chris_Matthew_Sciabarra" target="_blank" rel="noopener">Chris Sciabarra</a>, sheltering in place in Brooklyn, New York. Though the series is primarily about what I called the &#8220;supply side&#8221; of the health care equation during this crisis, I wanted to run some posts that described the &#8220;demand side&#8221; as well, that is, what it&#8217;s like to be a patient during the pandemic. Particularly valuable about Chris&#8217;s post is how it illustrates the implications of the COVID-19 pandemic for people with serious medical conditions whose previously scheduled medical procedures have now been deemed &#8220;elective.&#8221; &#8220;Elective&#8221; in this context doesn&#8217;t mean &#8220;optional.&#8221; It means downgraded to second or third priority out of sheer, dire necessity: hospital beds, equipment, and personnel have to be left vacant or unused to absorb the overwhelming crush of COVID-19 patients we expect to see. And even at the center of the pandemic, we haven&#8217;t yet reached the peak of that crush.</em> <a href="https://irfankhawajaphilosopher.com/2020/03/29/covid-19-narrative-2-chris-matthew-sciabarra/#more-20904" class="more-link">Continue reading <span class="meta-nav">&rarr;</span></a></p>
+			</div><!-- .entry-content -->
+	
+	<footer class="entry-meta">
+
+				<span class="comments-link"><a href="https://irfankhawajaphilosopher.com/2020/03/29/covid-19-narrative-2-chris-matthew-sciabarra/#comments">9 Comments</a></span>
+		
+	</footer><!-- .entry-meta -->
+</article><!-- #post-20904 -->
+
+				
+					
+<article id="post-20891" class="post-20891 post type-post status-publish format-standard hentry category-covid-19 tag-announcements tag-coronavirus tag-covid-19 tag-valley-hospital">
+	<header class="entry-header">
+
+		<h1 class="entry-title"><a href="https://irfankhawajaphilosopher.com/2020/03/28/coronavirus-diary-21-more-you-can-do-while-locked-down/" rel="bookmark">Coronavirus Diary (21): More You Can Do While &#8220;Locked&nbsp;Down&#8221;</a></h1>
+				<div class="entry-meta">
+			Posted on <a href="https://irfankhawajaphilosopher.com/2020/03/28/coronavirus-diary-21-more-you-can-do-while-locked-down/" title="10:46 pm" rel="bookmark"><time class="entry-date" datetime="2020-03-28T22:46:34-04:00" pubdate>March 28, 2020</time></a><span class="byline"> by <span class="author vcard"><a class="url fn n" href="https://irfankhawajaphilosopher.com/author/khawajaenator/" title="View all posts by Irfan Khawaja" rel="author">Irfan Khawaja</a></span></span><span class="cats-links"> under <a href="https://irfankhawajaphilosopher.com/tag/covid-19/" rel="category tag">COVID-19</a></span>					</div><!-- .entry-meta -->
+		
+	</header><!-- .entry-header -->
+
+		<div class="entry-content">
+		<p>Here&#8217;s some more you can do while locked down: donate to the <a href="https://www.valleyhospitalfoundation.org/" target="_blank" rel="noopener">Valley Hospital Foundation</a>. <a href="https://www.valleyhealth.com/" target="_blank" rel="noopener">Valley Hospital</a> is at the epicenter of the COVID-19 crisis, in Ridgewood, New Jersey.</p>
+<p><span class="embed-youtube" style="text-align:center; display: block;"><iframe class='youtube-player' width='750' height='422' src='https://www.youtube.com/embed/HNIhJ-YJz7g?version=3&#038;rel=1&#038;fs=1&#038;autohide=2&#038;showsearch=0&#038;showinfo=1&#038;iv_load_policy=1&#038;wmode=transparent' allowfullscreen='true' style='border:0;'></iframe></span></p>
+<p> <a href="https://irfankhawajaphilosopher.com/2020/03/28/coronavirus-diary-21-more-you-can-do-while-locked-down/#more-20891" class="more-link">Continue reading <span class="meta-nav">&rarr;</span></a></p>
+			</div><!-- .entry-content -->
+	
+	<footer class="entry-meta">
+
+				<span class="comments-link"><a href="https://irfankhawajaphilosopher.com/2020/03/28/coronavirus-diary-21-more-you-can-do-while-locked-down/#comments">1 Comment</a></span>
+		
+	</footer><!-- .entry-meta -->
+</article><!-- #post-20891 -->
+
+				
+					
+<article id="post-20882" class="post-20882 post type-post status-publish format-standard hentry category-covid-19 tag-coronavirus tag-covid-19 tag-donald-trump tag-emergencies tag-ems tag-suleman-khawaja tag-valley-hospital">
+	<header class="entry-header">
+
+		<h1 class="entry-title"><a href="https://irfankhawajaphilosopher.com/2020/03/28/coronavirus-diary-20-its-going-to-be-just-fine/" rel="bookmark">Coronavirus Diary (20): &#8220;It&#8217;s Going to Be Just&nbsp;Fine.&#8221;</a></h1>
+				<div class="entry-meta">
+			Posted on <a href="https://irfankhawajaphilosopher.com/2020/03/28/coronavirus-diary-20-its-going-to-be-just-fine/" title="10:01 pm" rel="bookmark"><time class="entry-date" datetime="2020-03-28T22:01:23-04:00" pubdate>March 28, 2020</time></a><span class="byline"> by <span class="author vcard"><a class="url fn n" href="https://irfankhawajaphilosopher.com/author/khawajaenator/" title="View all posts by Irfan Khawaja" rel="author">Irfan Khawaja</a></span></span><span class="cats-links"> under <a href="https://irfankhawajaphilosopher.com/tag/covid-19/" rel="category tag">COVID-19</a></span>					</div><!-- .entry-meta -->
+		
+	</header><!-- .entry-header -->
+
+		<div class="entry-content">
+		<p>From a <a href="https://www.factcheck.org/2020/03/trumps-statements-about-the-coronavirus/" target="_blank" rel="noopener">list of Donald Trump&#8217;s statements on the COVID-19 crisis</a>:</p>
+<blockquote><p><strong>Jan. 22:</strong> “We have it totally under control. It’s one person coming in from China. We have it under control. It’s going to be just fine.” — Trump in a <a href="https://www.cnbc.com/2020/01/22/trump-on-coronavirus-from-china-we-have-it-totally-under-control.html">CNBC interview</a>.</p></blockquote>
+<p> <a href="https://irfankhawajaphilosopher.com/2020/03/28/coronavirus-diary-20-its-going-to-be-just-fine/#more-20882" class="more-link">Continue reading <span class="meta-nav">&rarr;</span></a></p>
+			</div><!-- .entry-content -->
+	
+	<footer class="entry-meta">
+
+				<span class="comments-link"><a href="https://irfankhawajaphilosopher.com/2020/03/28/coronavirus-diary-20-its-going-to-be-just-fine/#comments">2 Comments</a></span>
+		
+	</footer><!-- .entry-meta -->
+</article><!-- #post-20882 -->
+
+				
+					
+<article id="post-20875" class="post-20875 post type-post status-publish format-standard hentry category-covid-19 tag-ayn-rand tag-coronavirus tag-covid-19 tag-hospitals tag-objectivism">
+	<header class="entry-header">
+
+		<h1 class="entry-title"><a href="https://irfankhawajaphilosopher.com/2020/03/28/coronavirus-diary-19-this-isnt-john-galt-speaking/" rel="bookmark">Coronavirus Diary (19): This Isn&#8217;t John Galt&nbsp;Speaking</a></h1>
+				<div class="entry-meta">
+			Posted on <a href="https://irfankhawajaphilosopher.com/2020/03/28/coronavirus-diary-19-this-isnt-john-galt-speaking/" title="2:04 pm" rel="bookmark"><time class="entry-date" datetime="2020-03-28T14:04:27-04:00" pubdate>March 28, 2020</time></a><span class="byline"> by <span class="author vcard"><a class="url fn n" href="https://irfankhawajaphilosopher.com/author/khawajaenator/" title="View all posts by Irfan Khawaja" rel="author">Irfan Khawaja</a></span></span><span class="cats-links"> under <a href="https://irfankhawajaphilosopher.com/tag/covid-19/" rel="category tag">COVID-19</a></span>					</div><!-- .entry-meta -->
+		
+	</header><!-- .entry-header -->
+
+		<div class="entry-content">
+		<p><em>The existence of inanimate matter is unconditional, the existence of life is not: it depends on a specific course of action. Matter is indestructible, it changes its forms, but it cannot cease to exist. It is only a living organism that faces a constant alternative: the issue of life or death. Life is a process of self-sustaining and self-generated action. If an organism fails in that action, it dies&#8230;</em></p>
+<p style="text-align:right;">&#8211;Ayn Rand, &#8220;The Objectivist Ethics&#8221;</p>
+<p>Imagine a version of <a href="https://en.wikipedia.org/wiki/Atlas_Shrugged" target="_blank" rel="noopener"><em>Atlas Shrugged</em></a> in which the <a href="https://www.conservapedia.com/Taggart_Tunnel" target="_blank" rel="noopener">Taggart Tunnel disaster</a> involves a causal process driven primarily by Mother Nature, and what goes off the rails is not a train but a health care system. Now imagine that the hero of the piece is not a shadowy figure like John Galt but the functional (not moral) equivalent of Dr. Robert Stadler. Now imagine that a retreat to Galt&#8217;s Gulch is a physical impossibility. If, for some readers, this requires a re-conceptualization of how the world works, maybe a lot of other things do, too.  <a href="https://irfankhawajaphilosopher.com/2020/03/28/coronavirus-diary-19-this-isnt-john-galt-speaking/#more-20875" class="more-link">Continue reading <span class="meta-nav">&rarr;</span></a></p>
+			</div><!-- .entry-content -->
+	
+	<footer class="entry-meta">
+
+				<span class="comments-link"><a href="https://irfankhawajaphilosopher.com/2020/03/28/coronavirus-diary-19-this-isnt-john-galt-speaking/#comments">2 Comments</a></span>
+		
+	</footer><!-- .entry-meta -->
+</article><!-- #post-20875 -->
+
+				
+					<nav role="navigation" id="nav-below" class="site-navigation paging-navigation">
+		<h1 class="assistive-text">Post navigation</h1>
+
+	
+				<div class="nav-previous"><a href="https://irfankhawajaphilosopher.com/2020/03/page/2/" ><span class="meta-nav">&larr;</span> Older posts</a></div>
+		
+		
+	
+	</nav><!-- #nav-below -->
+	
+			
+			</div><!-- #content .site-content -->
+		</section><!-- #primary .content-area -->
+
+<div id="secondary">
+		<div id="first" class="widget-area" role="complementary">
+		<aside id="recent-comments-4" class="widget widget_recent_comments"><h1 class="widget-title">Recent Comments</h1>				<table class="recentcommentsavatar" cellspacing="0" cellpadding="0" border="0">
+					<tr><td title="sean samis" class="recentcommentsavatartop" style="height:32px; width:32px;"><a href="http://seansamis.wordpress.com" rel="nofollow"><img alt='' src='https://0.gravatar.com/avatar/c587432107e6fa3a642348f8395ac43c?s=32&#038;d=identicon&#038;r=PG' class='avatar avatar-32' height='32' width='32' /></a></td><td class="recentcommentstexttop" style=""><a href="http://seansamis.wordpress.com" rel="nofollow">sean samis</a> on <a href="https://irfankhawajaphilosopher.com/2020/06/09/libertarian-bloggers-are-failing-us/comment-page-1/#comment-6026">Libertarian Bloggers Are Faili&hellip;</a></td></tr><tr><td title="Irfan Khawaja" class="recentcommentsavatarend" style="height:32px; width:32px;"><a href="https://irfankhawajaphilosopher.wordpress.com" rel="nofollow"><img alt='' src='https://1.gravatar.com/avatar/40594b0d2e3bbb55cd8bba4372bcb5ed?s=32&#038;d=identicon&#038;r=PG' class='avatar avatar-32' height='32' width='32' /></a></td><td class="recentcommentstextend" style=""><a href="https://irfankhawajaphilosopher.wordpress.com" rel="nofollow">Irfan Khawaja</a> on <a href="https://irfankhawajaphilosopher.com/2020/06/09/libertarian-bloggers-are-failing-us/comment-page-1/#comment-6025">Libertarian Bloggers Are Faili&hellip;</a></td></tr><tr><td title="Irfan Khawaja" class="recentcommentsavatarend" style="height:32px; width:32px;"><a href="https://irfankhawajaphilosopher.wordpress.com" rel="nofollow"><img alt='' src='https://1.gravatar.com/avatar/40594b0d2e3bbb55cd8bba4372bcb5ed?s=32&#038;d=identicon&#038;r=PG' class='avatar avatar-32' height='32' width='32' /></a></td><td class="recentcommentstextend" style=""><a href="https://irfankhawajaphilosopher.wordpress.com" rel="nofollow">Irfan Khawaja</a> on <a href="https://irfankhawajaphilosopher.com/2020/06/09/libertarian-bloggers-are-failing-us/comment-page-1/#comment-6024">Libertarian Bloggers Are Faili&hellip;</a></td></tr><tr><td title="sean samis" class="recentcommentsavatarend" style="height:32px; width:32px;"><a href="http://seansamis.wordpress.com" rel="nofollow"><img alt='' src='https://0.gravatar.com/avatar/c587432107e6fa3a642348f8395ac43c?s=32&#038;d=identicon&#038;r=PG' class='avatar avatar-32' height='32' width='32' /></a></td><td class="recentcommentstextend" style=""><a href="http://seansamis.wordpress.com" rel="nofollow">sean samis</a> on <a href="https://irfankhawajaphilosopher.com/2020/06/09/libertarian-bloggers-are-failing-us/comment-page-1/#comment-6022">Libertarian Bloggers Are Faili&hellip;</a></td></tr><tr><td title="Irfan Khawaja" class="recentcommentsavatarend" style="height:32px; width:32px;"><a href="https://irfankhawajaphilosopher.wordpress.com" rel="nofollow"><img alt='' src='https://1.gravatar.com/avatar/40594b0d2e3bbb55cd8bba4372bcb5ed?s=32&#038;d=identicon&#038;r=PG' class='avatar avatar-32' height='32' width='32' /></a></td><td class="recentcommentstextend" style=""><a href="https://irfankhawajaphilosopher.wordpress.com" rel="nofollow">Irfan Khawaja</a> on <a href="https://irfankhawajaphilosopher.com/2020/06/09/libertarian-bloggers-are-failing-us/comment-page-1/#comment-6021">Libertarian Bloggers Are Faili&hellip;</a></td></tr><tr><td title="mlyoung57" class="recentcommentsavatarend" style="height:32px; width:32px;"><img alt='' src='https://1.gravatar.com/avatar/467014f5086d1974bb4668bfa214eb20?s=32&#038;d=identicon&#038;r=PG' class='avatar avatar-32' height='32' width='32' /></td><td class="recentcommentstextend" style="">mlyoung57 on <a href="https://irfankhawajaphilosopher.com/2020/06/09/libertarian-bloggers-are-failing-us/comment-page-1/#comment-6020">Libertarian Bloggers Are Faili&hellip;</a></td></tr><tr><td title="mlyoung57" class="recentcommentsavatarend" style="height:32px; width:32px;"><img alt='' src='https://1.gravatar.com/avatar/467014f5086d1974bb4668bfa214eb20?s=32&#038;d=identicon&#038;r=PG' class='avatar avatar-32' height='32' width='32' /></td><td class="recentcommentstextend" style="">mlyoung57 on <a href="https://irfankhawajaphilosopher.com/2020/06/09/libertarian-bloggers-are-failing-us/comment-page-1/#comment-6019">Libertarian Bloggers Are Faili&hellip;</a></td></tr>				</table>
+				</aside>	</div><!-- #first .widget-area -->
+	
+		<div id="second" class="widget-area" role="complementary">
+		<aside id="search-4" class="widget widget_search">	<form method="get" id="searchform" action="https://irfankhawajaphilosopher.com/" role="search">
+		<label for="s" class="assistive-text">Search</label>
+		<input type="text" class="field" name="s" value="" id="s" placeholder="Search &hellip;" />
+		<input type="submit" class="submit" name="submit" id="searchsubmit" value="Search" />
+	</form>
+</aside>	</div><!-- #second .widget-area -->
+	
+		<div id="third" class="widget-area" role="complementary">
+		<aside id="blog-stats-2" class="widget widget_blog-stats"><h1 class="widget-title">Blog Stats</h1>		<ul>
+			<li>310,121 hits</li>
+		</ul>
+		</aside>	</div><!-- #third .widget-area -->
+	</div><!-- #supplementary -->
+
+	</div><!-- #main .site-main -->
+
+	<footer id="colophon" class="site-footer" role="contentinfo">
+		<div class="site-info">
+						<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Blog at WordPress.com.</a>
+			
+					</div><!-- .site-info -->
+	</footer><!-- #colophon .site-footer -->
+</div><!-- #page .hfeed .site -->
+
+		<script type="text/javascript">
+		//<![CDATA[
+		var infiniteScroll = JSON.parse( decodeURIComponent( '%7B%22settings%22%3A%7B%22id%22%3A%22content%22%2C%22ajaxurl%22%3A%22https%3A%5C%2F%5C%2Firfankhawajaphilosopher.com%5C%2F%3Finfinity%3Dscrolling%22%2C%22type%22%3A%22click%22%2C%22wrapper%22%3Atrue%2C%22wrapper_class%22%3A%22infinite-wrap%22%2C%22footer%22%3A%22main%22%2C%22click_handle%22%3A%221%22%2C%22text%22%3A%22Older%20posts%22%2C%22totop%22%3A%22Scroll%20back%20to%20top%22%2C%22currentday%22%3A%2228.03.20%22%2C%22order%22%3A%22DESC%22%2C%22scripts%22%3A%5B%5D%2C%22styles%22%3A%5B%5D%2C%22google_analytics%22%3Afalse%2C%22offset%22%3A0%2C%22history%22%3A%7B%22host%22%3A%22irfankhawajaphilosopher.com%22%2C%22path%22%3A%22%5C%2F2020%5C%2F03%5C%2Fpage%5C%2F%25d%5C%2F%22%2C%22use_trailing_slashes%22%3Atrue%2C%22parameters%22%3A%22%22%7D%2C%22query_args%22%3A%7B%22year%22%3A2020%2C%22monthnum%22%3A3%2C%22error%22%3A%22%22%2C%22m%22%3A%22%22%2C%22p%22%3A0%2C%22post_parent%22%3A%22%22%2C%22subpost%22%3A%22%22%2C%22subpost_id%22%3A%22%22%2C%22attachment%22%3A%22%22%2C%22attachment_id%22%3A0%2C%22name%22%3A%22%22%2C%22pagename%22%3A%22%22%2C%22page_id%22%3A0%2C%22second%22%3A%22%22%2C%22minute%22%3A%22%22%2C%22hour%22%3A%22%22%2C%22day%22%3A0%2C%22w%22%3A0%2C%22category_name%22%3A%22%22%2C%22tag%22%3A%22%22%2C%22cat%22%3A%22%22%2C%22tag_id%22%3A%22%22%2C%22author%22%3A%22%22%2C%22author_name%22%3A%22%22%2C%22feed%22%3A%22%22%2C%22tb%22%3A%22%22%2C%22paged%22%3A0%2C%22meta_key%22%3A%22%22%2C%22meta_value%22%3A%22%22%2C%22preview%22%3A%22%22%2C%22s%22%3A%22%22%2C%22sentence%22%3A%22%22%2C%22title%22%3A%22%22%2C%22fields%22%3A%22%22%2C%22menu_order%22%3A%22%22%2C%22embed%22%3A%22%22%2C%22category__in%22%3A%5B%5D%2C%22category__not_in%22%3A%5B%5D%2C%22category__and%22%3A%5B%5D%2C%22post__in%22%3A%5B%5D%2C%22post__not_in%22%3A%5B%5D%2C%22post_name__in%22%3A%5B%5D%2C%22tag__in%22%3A%5B%5D%2C%22tag__not_in%22%3A%5B%5D%2C%22tag__and%22%3A%5B%5D%2C%22tag_slug__in%22%3A%5B%5D%2C%22tag_slug__and%22%3A%5B%5D%2C%22post_parent__in%22%3A%5B%5D%2C%22post_parent__not_in%22%3A%5B%5D%2C%22author__in%22%3A%5B%5D%2C%22author__not_in%22%3A%5B%5D%2C%22lazy_load_term_meta%22%3Afalse%2C%22posts_per_page%22%3A10%2C%22ignore_sticky_posts%22%3Afalse%2C%22suppress_filters%22%3Afalse%2C%22cache_results%22%3Afalse%2C%22update_post_term_cache%22%3Atrue%2C%22update_post_meta_cache%22%3Atrue%2C%22post_type%22%3A%22%22%2C%22nopaging%22%3Afalse%2C%22comments_per_page%22%3A%2250%22%2C%22no_found_rows%22%3Afalse%2C%22order%22%3A%22DESC%22%7D%2C%22last_post_date%22%3A%222020-03-28%2014%3A04%3A27%22%2C%22stats%22%3A%22blog%3D71666299%26v%3Dwpcom%26tz%3D-4%26user_id%3D0%26subd%3Dirfankhawajaphilosopher%26x_pagetype%3Dinfinite-click%22%7D%7D' ) );
+		//]]>
+		</script>
+		<!--  -->
+<script src='//0.gravatar.com/js/gprofiles.js?ver=202025y'></script>
+<script>
+var WPGroHo = {"my_hash":""};
+</script>
+<script type='text/javascript' src='https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h'></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	<div class="grofile-hash-map-c587432107e6fa3a642348f8395ac43c">
+	</div>
+	<div class="grofile-hash-map-40594b0d2e3bbb55cd8bba4372bcb5ed">
+	</div>
+	<div class="grofile-hash-map-467014f5086d1974bb4668bfa214eb20">
+	</div>
+	</div>
+
+	<div id="carousel-reblog-box">
+		<form action="#" name="carousel-reblog">
+			<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Add your thoughts here... (optional)"></textarea>
+			<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Post to</label>
+			<select name="carousel-reblog-to-blog-id" id="carousel-reblog-to-blog-id">
+						</select>
+
+			<div class="submit">
+				<span class="canceltext"><a href="#" class="cancel">Cancel</a></span>
+				<input type="submit" name="carousel-reblog-submit" class="button" id="carousel-reblog-submit" value="Reblog Post" />
+				<input type="hidden" id="carousel-reblog-blog-id" value="71666299" />
+				<input type="hidden" id="carousel-reblog-blog-url" value="https://irfankhawajaphilosopher.com" />
+				<input type="hidden" id="carousel-reblog-blog-title" value="Policy of Truth" />
+				<input type="hidden" id="carousel-reblog-post-url" value="" />
+				<input type="hidden" id="carousel-reblog-post-title" value="" />
+			</div>
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="442af702f3" /><input type="hidden" name="_wp_http_referer" value="/2020/03/" />		</form>
+
+		<div class="arrow"></div>
+	</div>
+<link rel='stylesheet' id='all-css-0-2' href='https://s1.wp.com/_static/??/wp-content/mu-plugins/carousel/jetpack-carousel.css,/wp-content/mu-plugins/tiled-gallery/tiled-gallery.css?m=1563361695j&cssminify=yes' type='text/css' media='all' />
+<script>
+var actionbardata = {"siteID":"71666299","siteName":"Policy of Truth","siteURL":"https:\/\/irfankhawajaphilosopher.com","icon":"<img alt='' src='https:\/\/s2.wp.com\/i\/logo\/wpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/book-lite","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Firfankhawajaphilosopher.com%2F2020%2F03%2F31%2Fcoronavirus-diary-26-new-jersey-under-siege%2F&signup_flow=account&domain=irfankhawajaphilosopher.com","themeURL":"","xhrURL":"https:\/\/irfankhawajaphilosopher.com\/wp-admin\/admin-ajax.php","nonce":"123e749948","isSingular":"","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"0423c106f9\" \/>","referer":"https:\/\/irfankhawajaphilosopher.com\/2020\/03\/","canFollow":"1","feedID":"42398291","statusMessage":"","customizeLink":"https:\/\/irfankhawajaphilosopher.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Firfankhawajaphilosopher.wordpress.com%2F2020%2F03%2F","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: Book Lite","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"Join 752 other followers","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Firfankhawajaphilosopher.com%2F2020%2F03%2F31%2Fcoronavirus-diary-26-new-jersey-under-siege%2F&signup_flow=account&domain=irfankhawajaphilosopher.com\">Log in now.<\/a>","stats":"Stats"}};
+</script>
+<script>
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"en","ajaxurl":"https:\/\/irfankhawajaphilosopher.com\/wp-admin\/admin-ajax.php","nonce":"db1b54d7f0","display_exif":"1","display_comments":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Comment","post_comment":"Post Comment","write_comment":"Write a Comment...","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","copyright":"Copyright","comment_registration":"1","require_name_email":"1","login_url":"https:\/\/irfankhawajaphilosopher.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Firfankhawajaphilosopher.com%2F2020%2F03%2F28%2Fcoronavirus-diary-19-this-isnt-john-galt-speaking%2F","blog_id":"71666299","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<p id=\"jp-carousel-commenting-as\">You must be <a href=\"#\" class=\"jp-carousel-comment-login\">logged in<\/a> to post a comment.<\/p>","reblog":"Reblog","reblogged":"Reblogged","reblog_add_thoughts":"Add your thoughts here... (optional)","reblogging":"Reblogging...","post_reblog":"Post Reblog","stats_query_args":"blog=71666299&v=wpcom&tz=-4&user_id=0&subd=irfankhawajaphilosopher","is_public":"1","reblog_enabled":""};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyVkNtqwzAMhl+orghskF2MPYvjqK1cWzaWnLZvXyeQsOUisLtfh//TAR7ZuMSKrOAFRpzIYX6evZzgVylWk0O9EgsQX4hJX5vY9+oNIwrkOsCQ0t0EUpzZEm0IJiLXA7odI7EZbIFoRbE0ZdKEpdDYmFvunwQt1t3lyOSUEs+mTa3dxC7Uefh8wuOSBo9O96iVM7U1E1gR1MWwxLmgHA13tqQqGMCj5raoWRMHHqWAo7m2j2J5/Y2a6yd+d5/9V99/9F3n31uitaI='></script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script><script type="text/javascript">
+			jQuery.extend( infiniteScroll.settings.scripts, ["jquery-core","jquery-migrate","jquery","postmessage","mobile-useragent-info","spin","jquery.spin","grofiles-cards","wpgroho","devicepx","the-neverending-homepage","small-menu","wpcom-masterbar-js","wpcom-masterbar-tracks-js","wpcom-actionbar-bar","swfobject","videopress","jetpack-carousel","tiled-gallery"] );
+			jQuery.extend( infiniteScroll.settings.styles, ["wpcom-smileys","the-neverending-homepage","wp-block-library","jetpack-layout-grid","jetpack-ratings","coblocks-frontend","wpcom-core-compat-playlist-styles","wpcom-bbpress2-staff-css","wpcom-layout-grid-front","book-lite-style","geo-location-flair","reblogging","wpcom-actionbar-bar","h4-global","jetpack-global-styles-frontend-style","jetpack-carousel","tiled-gallery"] );
+		</script><script src="//stats.wp.com/w.js?61" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'71666299','blog_tz':'-4','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'71666299','v':'wpcom','tz':'-4','user_id':'0','subd':'irfankhawajaphilosopher'}]);
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1TaVhzUzFMbjdWNHpwZGhTayxPSUFCMGRVYVNrSFguN3FwSmQ5RGtNX3VQcj1yVzhiflM1THQtLGFdQ2toOXYlLE0wYVtjOS5JOS1OLitPcGlZM3Y1YjVta0V6eXhUa09kayxPJWU4bmtiS35ncldJMEljSUdwbnUxMGhFemZDcDk3RFRoRDMxMyZLYi04P0VfUi9dc04tbDAtX1M2WC5jMU1IWG1jSHRxU3JyNnNoNXosd1d8emFfK1NSLTROMz9uZVJZTGhqUnhBcS89am4uT2MrWC4sPSUmJWdpUHUxTCt+QVlVbDVnSjlpVG5aUEJmZiVffkhdVWtYdjFbZmx4dyx2TGx8JmpwXz1ofk5JRlc/PQ=='}]);
+_stq.push([ 'clickTrackerInit', '71666299', '0' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+		<script defer src="data:text/javascript,%21function%28%29%7B%22use%20strict%22%3Bvar%20e%3D%5B%5D%2Ct%3D%22wpcom.simple.ttfb.batcache.%22%3Btry%7Bfor%28var%20n%3Dperformance.getEntriesByType%28%22navigation%22%29%5B0%5D%7C%7C%7B%7D%2Co%3D0%2Cs%3Ddocument.body.childNodes%2Cc%3Ds.length-1%3Bc%3E%3D0%3Bc--%29s%5Bc%5D.nodeType%3D%3D%3DNode.COMMENT_NODE%26%26s%5Bc%5D.textContent.indexOf%28%22served%20from%20batcache%22%29%3E0%26%26%28o%3D1%29%3Bvar%20r%3DMath.round%28n.responseStart%7C%7C0%29%3Bif%28r%3E0%26%26%28o%3Fe.push%28t%2B%22hit%3A%22%2Br%2B%22%7Cms%22%29%3Ae.push%28t%2B%22miss%3A%22%2Br%2B%22%7Cms%22%29%29%2Ce.length%29document.createElement%28%22img%22%29.src%3D%22https%3A%2F%2Fpixel.wp.com%2Fboom.gif%3Fjson%3D%22%2BencodeURIComponent%28JSON.stringify%28%7Bbeacons%3Ae%7D%29%29%7Dcatch%28e%29%7B%7D%7D%28%29%3B"></script>
+		<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>

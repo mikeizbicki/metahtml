@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>17 | March | 2020 | Policy of Truth</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="https://irfankhawajaphilosopher.com/xmlrpc.php" />
+<!--[if lt IE 9]>
+<script src="https://s2.wp.com/wp-content/themes/pub/book-lite/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+
+
+	<style type="text/css">
+		 .widget-area {
+		 	width: 32%;
+		 }
+	</style>
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.remove(); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[i].remove();
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9pcmZhbmtoYXdhamFwaGlsb3NvcGhlci5jb20%3D"
+		+ "&wpcomid=71666299"
+		+ "&time=1592317109";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='//s2.wp.com' />
+<link rel='dns-prefetch' href='//s1.wp.com' />
+<link rel='dns-prefetch' href='//irfankhawajaphilosopher.wordpress.com' />
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel="alternate" type="application/rss+xml" title="Policy of Truth &raquo; Feed" href="https://irfankhawajaphilosopher.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Policy of Truth &raquo; Comments Feed" href="https://irfankhawajaphilosopher.com/comments/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s2.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1582709031h&ver=5.4.2"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s2.wp.com/_static/??-eJydkdtOAyEQhl9Idro0mvXC+CzATpHKKQOk2bd3sFVXU9fGGzKn72f4gVMWJsWKsUJoIvtmXSxwyiYFUYLzuPzIBlPKHaywD8Y2TjWS5Q4hTIMcRtDN+Rm0T+ZVeKdJ0QKlLh5vkHmnChyxZtVxtaRWhSU3/1eCVHXRlj9wky7YOMj9sIPZlfpZFNfZlXf99VwPWdU+EXB2Cj0GHtvCziZrnQlLEXwG14KoLwze4vmGWZfWgdKVDc4XQG4adEr9kyr+4s9qWYtJsCrbmeK3RBy8crSFEvI+lkMLPLVKtyBlurhW9BX18efwNN4/7h6mSUp5fAPyVg05?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-2-1' href='https://s0.wp.com/wp-content/themes/h4/global.css?m=1420737423h&cssminify=yes' type='text/css' media='all' />
+<script type='text/javascript' src='https://s1.wp.com/_static/??-eJx9zUsKgDAMBNALWYtIixvxLH6itJhUmxTx9lbQnQgDs5gHo49NORrXNAFrn7MniOdTpedC/wGFbom9QImOXjwGEiC57RZYEJj7BT5WDINbQSWGmAFJvplDdh22lTFNbaw1tb8AOGU7DA=='></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://irfankhawajaphilosopher.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress.com" />
+
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="March 17, 2020 &#8211; Policy of Truth" />
+<meta property="og:site_name" content="Policy of Truth" />
+<meta property="og:image" content="https://s0.wp.com/i/blank.jpg" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:site" content="@wordpressdotcom" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://s1.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="icon" type="image/x-icon" href="https://s1.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="apple-touch-icon" href="https://s2.wp.com/i/webclip.png" />
+<link rel='openid.server' href='https://irfankhawajaphilosopher.com/?openidserver=1' />
+<link rel='openid.delegate' href='https://irfankhawajaphilosopher.com/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://irfankhawajaphilosopher.com/osd.xml" title="Policy of Truth" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+
+	<style type="text/css">
+
+	
+		#masthead {
+			background: url( https://irfankhawajaphilosopher.files.wordpress.com/2014/07/cropped-tibetanmuseum2.jpg ) center 0 no-repeat;
+			margin-top: 0;
+			padding-bottom: 0;
+			max-width: 100%;
+			height: 500px;
+			position: relative;
+			background-attachment: fixed;
+		}
+		.admin-bar #masthead {
+			background-position: center 28px;
+		}
+		hgroup {
+			position: absolute;
+			bottom: 50px;
+			width: 100%;
+		}
+		.site-title {
+			max-width: 750px;
+			margin: auto;
+		}
+		h2.site-description {
+			max-width: 550px;
+		}
+		.site-title,
+		.site-description {
+			color: #fff		}
+		#page {
+			max-width: 100%;
+		}
+		#main,
+		#colophon {
+			max-width: 750px;
+			margin: 0 auto;
+		}
+		.main-navigation {
+			background: rgba(0,0,0,.7);
+		}
+		.main-navigation ul a {
+			color: #ccc;
+		}
+		.main-navigation ul li:after {
+			color: #ccc;
+		}
+		.main-navigation li.current_page_item a,
+		.main-navigation li.current-menu-item a {
+			color: #888;
+		}
+		.main-navigation ul li:first-child {
+			background: none;
+		}
+
+		</style>
+<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>		<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta name="application-name" content="Policy of Truth" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="The website and group blog of Irfan Khawaja" /><meta name="msapplication-task" content="name=Subscribe;action-uri=https://irfankhawajaphilosopher.com/feed/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="description" content="2 posts published by Irfan Khawaja on March 17, 2020" />
+	<style type="text/css">
+			.site-title,
+		.site-description {
+			color: #ffffff;
+		}
+	
+	</style>
+	</head>
+
+<body class="archive date customizer-styles-applied group-blog custom-header highlander-enabled highlander-light">
+<div id="page" class="hfeed site">
+		<header id="masthead" class="site-header" role="banner">
+		<nav role="navigation" class="site-navigation main-navigation">
+			<h1 class="assistive-text">Menu</h1>
+			<div class="assistive-text skip-link"><a href="#content" title="Skip to content">Skip to content</a></div>
+
+			<div class="menu"><ul>
+<li ><a href="https://irfankhawajaphilosopher.com/">Home</a></li><li class="page_item page-item-1 page_item_has_children"><a href="https://irfankhawajaphilosopher.com/about/">About me and the&nbsp;website</a>
+<ul class='children'>
+	<li class="page_item page-item-201"><a href="https://irfankhawajaphilosopher.com/about/about-the-header-photos/">About the header&nbsp;photos</a></li>
+</ul>
+</li>
+<li class="page_item page-item-37"><a href="https://irfankhawajaphilosopher.com/blog-policies/">About the blog and its&nbsp;bloggers</a></li>
+<li class="page_item page-item-490"><a href="https://irfankhawajaphilosopher.com/covid19narrativeproject/">COVID-19 Narrative Project</a></li>
+<li class="page_item page-item-234"><a href="https://irfankhawajaphilosopher.com/blog-roll/">COVID-19: How to&nbsp;Help</a></li>
+<li class="page_item page-item-21985"><a href="https://irfankhawajaphilosopher.com/institute-for-ethics-and-public-affairs-defunct/">Institute for Ethics and Public Affairs&nbsp;(defunct)</a></li>
+<li class="page_item page-item-2783"><a href="https://irfankhawajaphilosopher.com/policy-of-truth-research-workshop__trashed/2013-seminar-photo/">2013 Seminar Photo</a></li>
+</ul></div>
+		</nav><!-- .site-navigation .main-navigation -->
+		<hgroup>
+			<h1 class="site-title"><a href="https://irfankhawajaphilosopher.com/" title="Policy of Truth" rel="home">Policy of Truth</a></h1>
+			<h2 class="site-description">The website and group blog of Irfan Khawaja</h2>
+		</hgroup>
+	</header><!-- #masthead .site-header -->
+
+	<div id="main" class="site-main">
+
+		<section id="primary" class="content-area">
+			<div id="content" class="site-content" role="main">
+
+			
+				<header class="page-header">
+					<h1 class="page-title">
+						Daily Archives: <span>March 17, 2020</span>					</h1>
+									</header><!-- .page-header -->
+
+				
+								
+					
+<article id="post-20564" class="post-20564 post type-post status-publish format-standard hentry category-covid-19 tag-coronavirus tag-covid-19 tag-italy">
+	<header class="entry-header">
+
+		<h1 class="entry-title"><a href="https://irfankhawajaphilosopher.com/2020/03/17/coronavirus-diary-4-la-forza-del-destino/" rel="bookmark">Coronavirus Diary (4): La Forza del&nbsp;Destino</a></h1>
+				<div class="entry-meta">
+			Posted on <a href="https://irfankhawajaphilosopher.com/2020/03/17/coronavirus-diary-4-la-forza-del-destino/" title="11:03 am" rel="bookmark"><time class="entry-date" datetime="2020-03-17T11:03:02-04:00" pubdate>March 17, 2020</time></a><span class="byline"> by <span class="author vcard"><a class="url fn n" href="https://irfankhawajaphilosopher.com/author/khawajaenator/" title="View all posts by Irfan Khawaja" rel="author">Irfan Khawaja</a></span></span><span class="cats-links"> under <a href="https://irfankhawajaphilosopher.com/tag/covid-19/" rel="category tag">COVID-19</a></span>					</div><!-- .entry-meta -->
+		
+	</header><!-- .entry-header -->
+
+		<div class="entry-content">
+		<p>The overture:</p>
+<p><span class="embed-youtube" style="text-align:center; display: block;"><iframe class='youtube-player' width='750' height='422' src='https://www.youtube.com/embed/nMY0-4p9P-M?version=3&#038;rel=1&#038;fs=1&#038;autohide=2&#038;showsearch=0&#038;showinfo=1&#038;iv_load_policy=1&#038;wmode=transparent' allowfullscreen='true' style='border:0;'></iframe></span></p>
+			</div><!-- .entry-content -->
+	
+	<footer class="entry-meta">
+
+				<span class="comments-link"><a href="https://irfankhawajaphilosopher.com/2020/03/17/coronavirus-diary-4-la-forza-del-destino/#respond">Leave a comment</a></span>
+		
+	</footer><!-- .entry-meta -->
+</article><!-- #post-20564 -->
+
+				
+					
+<article id="post-20537" class="post-20537 post type-post status-publish format-standard hentry category-covid-19 tag-alison-bowles tag-capitalism tag-coronavirus tag-covid-19 tag-ethics tag-karl-marx tag-regulation tag-work">
+	<header class="entry-header">
+
+		<h1 class="entry-title"><a href="https://irfankhawajaphilosopher.com/2020/03/17/coronavirus-journal-3-creeping-death/" rel="bookmark">Coronavirus Diary (3): Creeping&nbsp;Death</a></h1>
+				<div class="entry-meta">
+			Posted on <a href="https://irfankhawajaphilosopher.com/2020/03/17/coronavirus-journal-3-creeping-death/" title="7:00 am" rel="bookmark"><time class="entry-date" datetime="2020-03-17T07:00:21-04:00" pubdate>March 17, 2020</time></a><span class="byline"> by <span class="author vcard"><a class="url fn n" href="https://irfankhawajaphilosopher.com/author/khawajaenator/" title="View all posts by Irfan Khawaja" rel="author">Irfan Khawaja</a></span></span><span class="cats-links"> under <a href="https://irfankhawajaphilosopher.com/tag/covid-19/" rel="category tag">COVID-19</a></span>					</div><!-- .entry-meta -->
+		
+	</header><!-- .entry-header -->
+
+		<div class="entry-content">
+		<div style="text-align:right;"><em>Tomorrow, and tomorrow, and tomorrow,</em></div>
+<div style="text-align:right;"><em>Creeps in this petty pace from day to day,</em></div>
+<div style="text-align:right;"><em>To the last syllable of recorded time;</em></div>
+<div style="text-align:right;"><em>And all our yesterdays have lighted fools</em></div>
+<div style="text-align:right;"><em>The way to dusty death. Out, out, brief candle!</em></div>
+<div style="text-align:right;"><em>Life&#8217;s but a walking shadow, a poor player,</em></div>
+<div style="text-align:right;"><em>That struts and frets his hour upon the stage,</em></div>
+<div style="text-align:right;"><em>And then is heard no more. It is a tale</em></div>
+<div style="text-align:right;"><em>Told by an idiot, full of sound and fury,</em></div>
+<div style="text-align:right;"><em>Signifying nothing.</em></div>
+<div style="text-align:right;">&#8211;Shakespeare, <em>Macbeth</em>, Act V, Scene 5</div>
+<div></div>
+<p>I count it as a great blessing that I have so far, at age fifty, managed to avoid becoming a father. Amusingly enough, my ex-wife once told me, flat out, &#8220;Before I met you, I was on the fence about having children. I no longer am. You would make a terrible father. So I&#8217;ve abandoned the idea.&#8221; Music to my ears.</p>
+<p>And yet, I&#8217;ve just had a phone conversation with one of my best friends, in which he asked me whether I would temporarily take custody of his child in the event that both he and his wife die of COVID-19. &#8220;Yes,&#8221; I say, without hesitation. I actually <em>like</em> his kid, as kids go. Granted, the custody he imagines is temporary, until family members could come and do a formal adoption. My friend knows me well enough to know that coronavirus or no, it makes little sense to turn me into a <em>bona fide</em> step-father. One catastrophe is enough. <a href="https://irfankhawajaphilosopher.com/2020/03/17/coronavirus-journal-3-creeping-death/#more-20537" class="more-link">Continue reading <span class="meta-nav">&rarr;</span></a></p>
+			</div><!-- .entry-content -->
+	
+	<footer class="entry-meta">
+
+				<span class="comments-link"><a href="https://irfankhawajaphilosopher.com/2020/03/17/coronavirus-journal-3-creeping-death/#comments">14 Comments</a></span>
+		
+	</footer><!-- .entry-meta -->
+</article><!-- #post-20537 -->
+
+				
+				
+			
+			</div><!-- #content .site-content -->
+		</section><!-- #primary .content-area -->
+
+<div id="secondary">
+		<div id="first" class="widget-area" role="complementary">
+		<aside id="recent-comments-4" class="widget widget_recent_comments"><h1 class="widget-title">Recent Comments</h1>				<table class="recentcommentsavatar" cellspacing="0" cellpadding="0" border="0">
+					<tr><td title="sean samis" class="recentcommentsavatartop" style="height:32px; width:32px;"><a href="http://seansamis.wordpress.com" rel="nofollow"><img alt='' src='https://0.gravatar.com/avatar/c587432107e6fa3a642348f8395ac43c?s=32&#038;d=identicon&#038;r=PG' class='avatar avatar-32' height='32' width='32' /></a></td><td class="recentcommentstexttop" style=""><a href="http://seansamis.wordpress.com" rel="nofollow">sean samis</a> on <a href="https://irfankhawajaphilosopher.com/2020/06/09/libertarian-bloggers-are-failing-us/comment-page-1/#comment-6026">Libertarian Bloggers Are Faili&hellip;</a></td></tr><tr><td title="Irfan Khawaja" class="recentcommentsavatarend" style="height:32px; width:32px;"><a href="https://irfankhawajaphilosopher.wordpress.com" rel="nofollow"><img alt='' src='https://1.gravatar.com/avatar/40594b0d2e3bbb55cd8bba4372bcb5ed?s=32&#038;d=identicon&#038;r=PG' class='avatar avatar-32' height='32' width='32' /></a></td><td class="recentcommentstextend" style=""><a href="https://irfankhawajaphilosopher.wordpress.com" rel="nofollow">Irfan Khawaja</a> on <a href="https://irfankhawajaphilosopher.com/2020/06/09/libertarian-bloggers-are-failing-us/comment-page-1/#comment-6025">Libertarian Bloggers Are Faili&hellip;</a></td></tr><tr><td title="Irfan Khawaja" class="recentcommentsavatarend" style="height:32px; width:32px;"><a href="https://irfankhawajaphilosopher.wordpress.com" rel="nofollow"><img alt='' src='https://1.gravatar.com/avatar/40594b0d2e3bbb55cd8bba4372bcb5ed?s=32&#038;d=identicon&#038;r=PG' class='avatar avatar-32' height='32' width='32' /></a></td><td class="recentcommentstextend" style=""><a href="https://irfankhawajaphilosopher.wordpress.com" rel="nofollow">Irfan Khawaja</a> on <a href="https://irfankhawajaphilosopher.com/2020/06/09/libertarian-bloggers-are-failing-us/comment-page-1/#comment-6024">Libertarian Bloggers Are Faili&hellip;</a></td></tr><tr><td title="sean samis" class="recentcommentsavatarend" style="height:32px; width:32px;"><a href="http://seansamis.wordpress.com" rel="nofollow"><img alt='' src='https://0.gravatar.com/avatar/c587432107e6fa3a642348f8395ac43c?s=32&#038;d=identicon&#038;r=PG' class='avatar avatar-32' height='32' width='32' /></a></td><td class="recentcommentstextend" style=""><a href="http://seansamis.wordpress.com" rel="nofollow">sean samis</a> on <a href="https://irfankhawajaphilosopher.com/2020/06/09/libertarian-bloggers-are-failing-us/comment-page-1/#comment-6022">Libertarian Bloggers Are Faili&hellip;</a></td></tr><tr><td title="Irfan Khawaja" class="recentcommentsavatarend" style="height:32px; width:32px;"><a href="https://irfankhawajaphilosopher.wordpress.com" rel="nofollow"><img alt='' src='https://1.gravatar.com/avatar/40594b0d2e3bbb55cd8bba4372bcb5ed?s=32&#038;d=identicon&#038;r=PG' class='avatar avatar-32' height='32' width='32' /></a></td><td class="recentcommentstextend" style=""><a href="https://irfankhawajaphilosopher.wordpress.com" rel="nofollow">Irfan Khawaja</a> on <a href="https://irfankhawajaphilosopher.com/2020/06/09/libertarian-bloggers-are-failing-us/comment-page-1/#comment-6021">Libertarian Bloggers Are Faili&hellip;</a></td></tr><tr><td title="mlyoung57" class="recentcommentsavatarend" style="height:32px; width:32px;"><img alt='' src='https://1.gravatar.com/avatar/467014f5086d1974bb4668bfa214eb20?s=32&#038;d=identicon&#038;r=PG' class='avatar avatar-32' height='32' width='32' /></td><td class="recentcommentstextend" style="">mlyoung57 on <a href="https://irfankhawajaphilosopher.com/2020/06/09/libertarian-bloggers-are-failing-us/comment-page-1/#comment-6020">Libertarian Bloggers Are Faili&hellip;</a></td></tr><tr><td title="mlyoung57" class="recentcommentsavatarend" style="height:32px; width:32px;"><img alt='' src='https://1.gravatar.com/avatar/467014f5086d1974bb4668bfa214eb20?s=32&#038;d=identicon&#038;r=PG' class='avatar avatar-32' height='32' width='32' /></td><td class="recentcommentstextend" style="">mlyoung57 on <a href="https://irfankhawajaphilosopher.com/2020/06/09/libertarian-bloggers-are-failing-us/comment-page-1/#comment-6019">Libertarian Bloggers Are Faili&hellip;</a></td></tr>				</table>
+				</aside>	</div><!-- #first .widget-area -->
+	
+		<div id="second" class="widget-area" role="complementary">
+		<aside id="search-4" class="widget widget_search">	<form method="get" id="searchform" action="https://irfankhawajaphilosopher.com/" role="search">
+		<label for="s" class="assistive-text">Search</label>
+		<input type="text" class="field" name="s" value="" id="s" placeholder="Search &hellip;" />
+		<input type="submit" class="submit" name="submit" id="searchsubmit" value="Search" />
+	</form>
+</aside>	</div><!-- #second .widget-area -->
+	
+		<div id="third" class="widget-area" role="complementary">
+		<aside id="blog-stats-2" class="widget widget_blog-stats"><h1 class="widget-title">Blog Stats</h1>		<ul>
+			<li>310,121 hits</li>
+		</ul>
+		</aside>	</div><!-- #third .widget-area -->
+	</div><!-- #supplementary -->
+
+	</div><!-- #main .site-main -->
+
+	<footer id="colophon" class="site-footer" role="contentinfo">
+		<div class="site-info">
+						<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Blog at WordPress.com.</a>
+			
+					</div><!-- .site-info -->
+	</footer><!-- #colophon .site-footer -->
+</div><!-- #page .hfeed .site -->
+
+<!--  -->
+<script src='//0.gravatar.com/js/gprofiles.js?ver=202025y'></script>
+<script>
+var WPGroHo = {"my_hash":""};
+</script>
+<script type='text/javascript' src='https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h'></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	<div class="grofile-hash-map-c587432107e6fa3a642348f8395ac43c">
+	</div>
+	<div class="grofile-hash-map-40594b0d2e3bbb55cd8bba4372bcb5ed">
+	</div>
+	<div class="grofile-hash-map-467014f5086d1974bb4668bfa214eb20">
+	</div>
+	</div>
+<script>
+var actionbardata = {"siteID":"71666299","siteName":"Policy of Truth","siteURL":"https:\/\/irfankhawajaphilosopher.com","icon":"<img alt='' src='https:\/\/s2.wp.com\/i\/logo\/wpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/book-lite","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Firfankhawajaphilosopher.com%2F2020%2F03%2F17%2Fcoronavirus-diary-4-la-forza-del-destino%2F&signup_flow=account&domain=irfankhawajaphilosopher.com","themeURL":"","xhrURL":"https:\/\/irfankhawajaphilosopher.com\/wp-admin\/admin-ajax.php","nonce":"123e749948","isSingular":"","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"0423c106f9\" \/>","referer":"https:\/\/irfankhawajaphilosopher.com\/2020\/03\/17\/","canFollow":"1","feedID":"42398291","statusMessage":"","customizeLink":"https:\/\/irfankhawajaphilosopher.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Firfankhawajaphilosopher.wordpress.com%2F2020%2F03%2F17%2F","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: Book Lite","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"Join 752 other followers","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Firfankhawajaphilosopher.com%2F2020%2F03%2F17%2Fcoronavirus-diary-4-la-forza-del-destino%2F&signup_flow=account&domain=irfankhawajaphilosopher.com\">Log in now.<\/a>","stats":"Stats"}};
+</script>
+<script type='text/javascript' src='https://s2.wp.com/_static/??-eJyVjEsKAjEQRC9kbATDOAvxLPk0mkw6CenO6PHNbAZxIbgrqt4reFblShbMApHB4xoc1tcx8gE+JnkgIUPtFmwpi0pBcOOZTEqKMPdvg7qqqd9DZjCeQlbWNCDDgm0kVVZsLfjxuXd/PkgzbuFfkpNQ8ibtadA3up70dJ6ni9ZzfAPar15z'></script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script><script src="//stats.wp.com/w.js?61" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'71666299','blog_tz':'-4','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'71666299','v':'wpcom','tz':'-4','user_id':'0','subd':'irfankhawajaphilosopher'}]);
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1TaVhzUzFMbjdWNHpwZGhTayxPSUFCMGRVYVNrSFguN3FwSmQ5RGtNX3VQcj1yVzhiflM1THQtLGFdQ2toOXYlLE0wYVtjOS5JOS1OLitPcGlZM3Y1YjVta0V6eXhUa09kayxPJWU4bmtiS35ncldJMEljSUdwbnUxMGV3UEQ/dFFEU113VndJNmJVR10yWGdiZE1CLWRvUnJWTm13SXUuei1KYlM1RmNON2YlclZ+SmxMJWNVcUV6aUJ5QjB5NlJPYUtPd3hPZDRyVVZbNS5KLmcvSXVMMGZ8NGNWai5xa3N4ZmVYTk81UHZaQkYtanZ4M0xYLHQ5cWZkKz93QVg9MGY3a0cmMVdnMW5OLXJhRHBJfg=='}]);
+_stq.push([ 'clickTrackerInit', '71666299', '0' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+		<script defer src="data:text/javascript,%21function%28%29%7B%22use%20strict%22%3Bvar%20e%3D%5B%5D%2Ct%3D%22wpcom.simple.ttfb.batcache.%22%3Btry%7Bfor%28var%20n%3Dperformance.getEntriesByType%28%22navigation%22%29%5B0%5D%7C%7C%7B%7D%2Co%3D0%2Cs%3Ddocument.body.childNodes%2Cc%3Ds.length-1%3Bc%3E%3D0%3Bc--%29s%5Bc%5D.nodeType%3D%3D%3DNode.COMMENT_NODE%26%26s%5Bc%5D.textContent.indexOf%28%22served%20from%20batcache%22%29%3E0%26%26%28o%3D1%29%3Bvar%20r%3DMath.round%28n.responseStart%7C%7C0%29%3Bif%28r%3E0%26%26%28o%3Fe.push%28t%2B%22hit%3A%22%2Br%2B%22%7Cms%22%29%3Ae.push%28t%2B%22miss%3A%22%2Br%2B%22%7Cms%22%29%29%2Ce.length%29document.createElement%28%22img%22%29.src%3D%22https%3A%2F%2Fpixel.wp.com%2Fboom.gif%3Fjson%3D%22%2BencodeURIComponent%28JSON.stringify%28%7Bbeacons%3Ae%7D%29%29%7Dcatch%28e%29%7B%7D%7D%28%29%3B"></script>
+		<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>
