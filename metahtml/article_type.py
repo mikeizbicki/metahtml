@@ -148,6 +148,7 @@ def get_article_type(parser, url, meta_best, fast=False):
         ( 'news.un.org', r'^/es/node?$' ),
         ( 'sportbreakingnews.com', r'^/category/uncategorized/$' ),
         ( 'thanhnien.vn', r'^/doi-song/$' ),
+        ( 'viaouest.com', r'^/actualite-daesh.html' ),
         ( 'vietnamartnews.com', r'^/category/uncategorized/$' ),
         ( 'whitehouse.gov', r'^/briefings-statements/?$' ),
         ]
