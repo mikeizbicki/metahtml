@@ -269,7 +269,9 @@ def get_golden_tests(verified_only=True):
     '''
     tests = []
     with open(golden_test_file, 'rt', encoding='utf-8', newline='\n') as f:
-        for test in csv.DictReader(f, dialect='excel', strict=True):
+        for line,test in enumerate(csv.DictReader(f, dialect='excel', strict=True)):
+            print("line=",line,'test=',test)
+
             # csv files store both the None and '' values in the same format;
             # we assume that we never store '' values, 
             # and therefore they should always be None instead 
@@ -294,7 +296,7 @@ def test_golden(test):
 
     # check to ensure that the test case is formatted correctly
     if len(test)!=9:
-        raise ValueError('there are too many columns in the CSV file; the likely cause of this problem is either that you have added an extra comma (,) in the title of the webpage without putting the title in quotes "like, this"')
+        raise ValueError('there are too many columns in the CSV file; the likely cause of this problem is either that you have added an extra comma (,) in the title of the webpage without putting the title in quotes "like, this"; test='+str(test))
 
     # printing the url makes debugging easier
     print('date=',date,'url=',url)

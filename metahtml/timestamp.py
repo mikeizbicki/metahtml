@@ -48,6 +48,7 @@ because there are several domain specific problems:
 
 import copy
 import datetime
+import jsonpath_ng
 import lxml
 import lxml.html
 import re
@@ -201,11 +202,26 @@ def parse_timestamp_str(timestamp_str, parser=None):
                 'PDT' : -7*60*60,
                 'PT' : -7*60*60,   # FIXME: technically, could be -8 or -7 depending on the day
                 'UK' : 0*60*60,
+                'ZZ' : 0*60*60,
                 'JST' : 9*60*60,
                 'CDT' : -5*60*60,
                 }
             timestamp_lo = date_parser(timestamp_str, fuzzy=True, tzinfos=tzinfos, default=default_lo)
             timestamp_hi = date_parser(timestamp_str, fuzzy=True, tzinfos=tzinfos, default=default_hi)
+
+            # a bug in date_parser causes it to not use the microseconds of default_hi;
+            # we correct for that bug here
+            if timestamp_hi.microsecond==0:
+                timestamp_hi = datetime.datetime(
+                    year            = timestamp_hi.year, 
+                    month           = timestamp_hi.month,
+                    day             = timestamp_hi.day,
+                    hour            = timestamp_hi.hour,
+                    minute          = timestamp_hi.minute,
+                    second          = timestamp_hi.second,
+                    microsecond     = 999999,
+                    tzinfo          = timestamp_hi.tzinfo
+                    )
 
             # check for common parsing errors that are caused by foreign dates
             # for example, if date_parser finds an hour but not a day,
@@ -429,7 +445,7 @@ def get_best_timestamps(timestamps, require_valid_for_hostname=True):
         return best_lo_mod
     bests.sort(key=sort_key)
 
-    # if best_timestamps contains both url and xpaths patterns,
+    # if best_timestamps contains both url and non-url patterns,
     # we should ignore the url patterns because they are less accurate
     patterns = []
     for best in bests:
@@ -475,12 +491,16 @@ def get_best_timestamps(timestamps, require_valid_for_hostname=True):
     return bests
 
 
-def get_timestamp_published(html, url, **kwargs):
+def get_timestamp_published(parser, jsonlds, url, **kwargs):
     '''
     Returns a timestamp dictionary that the input webpage was created on.
 
     See get_timestamp for details about the timestamp dictionary.
     '''
+
+    jsonpaths = [
+        ( None, '$.datePublished'),
+        ]
 
     xpaths = [
         # custom xpaths
@@ -682,7 +702,6 @@ def get_timestamp_published(html, url, **kwargs):
         ( 'news.mt.co.kr',                  '//meta[@property="article:published_time"]/@content'),
         ( 'news.mt.co.kr',                  '//span[@id="pn_article_date"]'),
         ( 'news.nicovideo.jp',              '//time[@class="article-created-at"]'),
-        ( 'news.sky.com',                   '//p[@class="sdc-article-date__date-time"]'),
         ( 'news.un.org',                    '//meta[@property="article:published_time"]/@content' ),
         ( 'news.un.org',                    '//span[@property="dc:date"]/@content' ),
         ( 'newslocker.com',                 '//time[@class="entry-time"]/@datetime'),
@@ -864,15 +883,20 @@ def get_timestamp_published(html, url, **kwargs):
 
         ]
 
-    return get_timestamp(html, url, xpaths, use_url_date=True, **kwargs)
+    return get_timestamp(parser, jsonlds, url, jsonpaths, xpaths, use_url_date=True, **kwargs)
 
 
-def get_timestamp_modified(html, url, **kwargs):
+def get_timestamp_modified(parser, jsonlds, url, **kwargs):
     '''
     Returns a timestamp dictionary that the input webpage was modified/updated on.
 
     See get_timestamp for details about the timestamp dictionary.
     '''
+
+    jsonpaths = [
+        ( None, '$.dateModified'),
+        ]
+
     xpaths = [
         # xpaths
         ( 'airsafe.com',                    '//div[@class="blocked_off"]/text()'),
@@ -923,10 +947,10 @@ def get_timestamp_modified(html, url, **kwargs):
         ( None, '//*[@*="dateModified"]' ),
 
         ]
-    return get_timestamp(html, url, xpaths, use_url_date=False, **kwargs)
+    return get_timestamp(parser, jsonlds, url, jsonpaths, xpaths, use_url_date=False, **kwargs)
 
 
-def get_timestamp(parser, url, xpaths, use_url_date=False, require_valid_for_hostname=True, fast=True):
+def get_timestamp(parser, jsonlds, url, jsonpaths, xpaths, use_url_date=False, require_valid_for_hostname=True, fast=True):
     '''
     FIXME: make the xpath code faster using
     https://www.ibm.com/developerworks/xml/library/x-hiperfparse/
@@ -948,6 +972,21 @@ def get_timestamp(parser, url, xpaths, use_url_date=False, require_valid_for_hos
             timestamp['is_valid_for_hostname'] = True
             timestamp['pattern'] = 'url'
             timestamps.append(timestamp)
+
+    # get timestamps from jsonpaths
+    for (hostname, jsonpath) in jsonpaths:
+        for jsonld in jsonlds:
+            parsed = jsonpath_ng.parse(jsonpath)
+            matches = parsed.find(jsonld)
+            for match in matches:
+                try:
+                    timestamp = parse_timestamp_str(match.value)
+                    if timestamp is not None:
+                        timestamp['is_valid_for_hostname'] = True
+                        timestamp['pattern'] = 'ld+json'
+                        timestamps.append(timestamp)
+                except Exception as e:
+                    pass
 
     # get timestamps from xpaths
     xpaths_visited = set()

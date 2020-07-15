@@ -136,6 +136,7 @@ def get_article_type(parser, url, meta_best, fast=False):
         ( 'cnn.com', r'^/ASIANOW/time/?$' ),
         ( 'coronavirus.delaware.gov', r'^/tag/delaware-student-meals/?$' ),
         ( 'crofsblogs.typepad.com', r'^/h5n1/?$' ),
+        ( 'dujour.com', r'^/culture/?$' ),
         ( 'en.mediamass.net', r'^/people/kim-jong-un/?$' ),
         ( 'elmundo.es', r'^/internacional.html$' ),
         ( 'elmundo.es', r'^/internacional/?$' ),
