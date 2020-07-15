@@ -500,6 +500,9 @@ def get_timestamp_published(parser, jsonlds, url, **kwargs):
 
     jsonpaths = [
         ( None, '$.datePublished'),
+
+        # FIXME: there's still a lot of jsonpaths to add  
+        #( None, '$..datePublished'),
         ]
 
     xpaths = [
@@ -895,6 +898,7 @@ def get_timestamp_modified(parser, jsonlds, url, **kwargs):
 
     jsonpaths = [
         ( None, '$.dateModified'),
+        #( None, '$..dateModified'),
         ]
 
     xpaths = [
