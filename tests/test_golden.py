@@ -263,7 +263,7 @@ def insert_golden_tests(urls, overwrite=False, verbose=False, recursively_added_
             )
 
 
-def get_golden_tests(filter_str=None, verified_only=True):
+def get_golden_tests(filter_str=None, filter_key=None, verified_only=True):
     '''
     returns a list of test cases that have the human_verified column set to True
     '''
@@ -280,19 +280,19 @@ def get_golden_tests(filter_str=None, verified_only=True):
                     test[k] = None
 
             # filter based on human_verified
-            valid_annotator = test['human_annotator'] is not None and test['human_annotator'][:4] != 'skip'
-            if filter_str is None:
-                if not verified_only or valid_annotator:
+            if filter_str is not None and filter_key is not None:
+                if filter_str in test[filter_key]:
                     tests.append(test)
             else:
-                if filter_str in test['human_annotator']:
+                valid_annotator = test['human_annotator'] is not None and test['human_annotator'][:4] != 'skip'
+                if not verified_only or valid_annotator:
                     tests.append(test)
     return tests
 
 ################################################################################
 # test cases
 
-@pytest.mark.parametrize('test',get_golden_tests())
+@pytest.mark.parametrize('test',get_golden_tests(), ids=lambda x:x['url'])
 def test_golden(test):
     url = test['url']
     date = test['download_date']

@@ -2,8 +2,12 @@
 '''
 
 from collections import defaultdict
-import simplejson as json
 import lxml
+
+import orjson
+import ujson
+import simplejson
+json_libs = [orjson,ujson,simplejson]
 
 from . import article_type
 from . import authors
@@ -22,17 +26,20 @@ def parse_all(html, url, fast=False):
     parser = lxml.html.fromstring(html)
 
     # ld+json
-    try:
-        xpath = '//script[@type="application/ld+json"]'
-        jsonlds = [ json.loads(element.text) for element in parser.xpath(xpath) ]
-    except json.JSONDecodeError:
-        jsonlds = []
-    except TypeError: # this happens when the input html is bytes instead of text
-        jsonlds = []
+    xpath = '//script[@type="application/ld+json"]'
+    ldjsons = []
+    for element in parser.xpath(xpath):
+        for lib in json_libs:
+            try:
+                ldjsons.append(lib.loads(element.text))
+            except Exception as e:
+                # FIXME:
+                # these warning messages should get added into the final json object somehow
+                print(lib.__name__+': '+"e=",e.__repr__())
 
     meta_best['url_canonical'], meta_all['url_canonical'] = urls.get_url_canonical(parser, url, fast=fast)
 
-    meta_best['timestamp_published'], meta_all['timestamp_published'] = timestamp.get_timestamp_published(parser, jsonlds, url, fast=fast)
+    meta_best['timestamp_published'], meta_all['timestamp_published'] = timestamp.get_timestamp_published(parser, ldjsons, url, fast=fast)
     meta_best['article_type'], meta_all['article_type'] = article_type.get_article_type(parser, url, meta_best=meta_best, fast=fast)
     is_article = meta_best['article_type']['article_type'] == 'article'
     #meta_best['article_type'] = is_article
@@ -47,7 +54,7 @@ def parse_all(html, url, fast=False):
 
     # gather other information
     if not fast or is_article:
-        meta_best['timestamp_modified'], meta_all['timestamp_modified'] = timestamp.get_timestamp_modified(parser, jsonlds, url, fast=fast)
+        meta_best['timestamp_modified'], meta_all['timestamp_modified'] = timestamp.get_timestamp_modified(parser, ldjsons, url, fast=fast)
         if len(meta_best['timestamp_modified'])>0:
             meta_best['timestamp_modified'] = meta_best['timestamp_modified'][0] 
         else:
