@@ -67,8 +67,12 @@ def get_article_type(parser, url, meta_best, fast=False):
                 })
 
     # xpath-based patterns
+    # FIXME:
+    # extracting the article type from the page itself seems like a good idea,
+    # but it's not at all clear how to do this in a consistent way,
+    # as almost all websites seem to be misusing the existing semantic tags
     xpaths = [
-        ( 'cnbc.com', '//meta[@property="og:type"]/@content' ),
+        #( 'cnbc.com', '//meta[@property="og:type"]/@content' ),
         ]
     for hostname,xpath in xpaths:
 
@@ -94,12 +98,13 @@ def get_article_type(parser, url, meta_best, fast=False):
                 text = 'article'
 
             # generate the article_type from text
-            article_types.append({
-                'article_type' : text,
-                'pattern' : 'xpath',
-                'pattern_details' : xpath,
-                'valid_for_hostname' : valid_for_hostname,
-                })
+            if text=='article':
+                article_types.append({
+                    'article_type' : text,
+                    'pattern' : 'xpath',
+                    'pattern_details' : xpath,
+                    'valid_for_hostname' : valid_for_hostname,
+                    })
 
     # url-based patterns
     regexs = [
@@ -132,6 +137,7 @@ def get_article_type(parser, url, meta_best, fast=False):
         ( 'bbc.co.uk', r'/history/historic_figures/?$' ),
         ( 'bbc.com', r'/asia_pacific$' ),
         ( 'breitbart.com', r'^/national-security/?$' ),
+        ( 'cnbc.com', r'^/2020-elections/?$' ),
         ( 'cnn.com', r'^/ASIANOW/time/?$' ),
         ( 'crofsblogs.typepad.com', r'^/h5n1/?$' ),
         ( 'elmundo.es', r'^/internacional.html$' ),
