@@ -292,7 +292,7 @@ def get_golden_tests(filter_str=None, filter_key=None, verified_only=True):
 ################################################################################
 # test cases
 
-@pytest.mark.parametrize('test',get_golden_tests(), ids=lambda x:x['url'])
+@pytest.mark.parametrize('test',get_golden_tests('accurate','human_annotator'), ids=lambda x:x['url'])
 def test_golden(test):
     url = test['url']
     date = test['download_date']
