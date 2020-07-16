@@ -108,6 +108,8 @@ def get_article_type(parser, url, meta_best, fast=False):
         ( None, r'/(19|20)\d{2}/\d{2}/\d{2}/?$' ),
         ( None, r'/(19|20)\d{2}/\d{2}/?$' ),
         ( None, r'/(19|20)\d{2}/?$' ),
+
+        ( 'bloomberg.com', r'/(19|20)\d{2}-\d{2}-\d{2}/?$' ),
         ( None, r'^/(19|20)\d{2}-[a-zA-Z]{3}-\d{2}/?$' ),
         ( None, r'^/(19|20)\d{2}-\d{2}-\d{2}/?$' ),
         ( None, r'^/(19|20)\d{2}-\d{2}/?$' ),
@@ -157,6 +159,9 @@ def get_article_type(parser, url, meta_best, fast=False):
         ( 'lci.fr', r'^/newsroom/?$' ),
         ( 'lci.fr', r'^/politique/?$' ),
         ( 'lci.fr', r'^/sante/?$' ),
+        ( 'lavanguardia.com', r'^/internacional/?$' ),
+        ( 'lavanguardia.com', r'^/internacional/20200421/?$' ),
+        ( 'lavanguardia.com', r'^/internacional/20200421/48659090331/?$' ),
         ( 'localnews8.com', r'^/news/?$' ),
         ( 'news.un.org', r'^/es/node?$' ),
         ( 'sportbreakingnews.com', r'^/category/uncategorized/$' ),
@@ -166,6 +171,8 @@ def get_article_type(parser, url, meta_best, fast=False):
         ( 'viaouest.com', r'^/actualite-daesh.html' ),
         ( 'vietnamartnews.com', r'^/category/uncategorized/$' ),
         ( 'whitehouse.gov', r'^/briefings-statements/?$' ),
+
+        ( 'shutterstock.com', r'' ),
         ]
 
     for hostname, regex in regexs:

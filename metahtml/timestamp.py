@@ -530,7 +530,7 @@ published_xpaths = [
     ( 'abc57.com',                      '//div[@class="content-date-posted"]/text()'),
     ( 'abcnews.go.com',                 '//meta[@itemprop="uploadDate"]/@content'),
     ( 'abcnews.go.com',                 '//meta[@property="lastPublishedDate"]/@content'),
-    ( 'accesswdun.com',                 '//div[@class="article-datetime"]'),
+    ( 'accesswdun.com',                 '//div[@class="article-datetime"]/text()'),
     ( 'actu.fr',                        '//time/@datetime'),
     ( 'actu.orange.fr',                 '//div[@class="player-head"]/meta[@itemprop="uploadDate"]/@content'),
     ( 'actualidad.rt.com',              '//div[@class="ArticleView-timestamp"]/time/@datetime' ),
@@ -591,7 +591,9 @@ published_xpaths = [
     ( 'debate.com.mx',                  '//time[@class="newsfull__time"]/@datetime' ),
     ( 'defamer.gawker.com',             '//time/@datetime' ),
     ( 'defense.gouv.fr',                '//div[@class="mise-a-jour"]/text()'),
+    ( 'defense.gouv.fr',                '//div[@class="mise-a-jour"]'),
     ( 'defensemaven.io',                '//div[@class="sk4e2855"]/p[@class="skpzhulc skh9fqbk"]/time/@title' ),
+    ( 'depositphotos.com',              '//div[@class="info-item"]' ),
     ( 'devdiscourse.com',               '//meta[@itemprop="datePublished"]/@content'),
     ( 'diploweb.com',                   '//div[@class="article"]/h3/text()'),
     ( 'dusiznies.blogspot.com',         '//abbr[@class="published"]/@datetime'),
@@ -764,7 +766,6 @@ published_xpaths = [
     ( 'rtbf.be',                        '//meta[@itemprop="datePublished"]/@content'),
     ( 'rtl.be',                         '//span[@itemprop="datePublished"]/text()'),
     ( 'rts.ch',                         '//span[@class="sc-141f4yq-6 cksdVr"]/text()'),
-    ( 'rtve.es',                        '//meta[@property="date"]/@content'),
     ( 'ruthfullyyours.com',             '//div/p[@id="single-byline"]'),
     ( 'salon.com',                      '//meta[@property="article:published_time"]/@content'),
     ( 'sana.sy',                        '//meta[@property="article:published_time"]/@content' ),
@@ -1159,10 +1160,14 @@ def get_timestamp(parser, ldjsons, url, compiled_jsonpaths, xpaths, use_url_date
     #################################################################################
 
     if use_url_date:
-        _STRICT_DATE_REGEX_PREFIX = r'(?<=\W)'
-        DATE_REGEX = r'(([\./\-_]{0,1}(19|20)\d{2})[\./\-_]{0,1}(([0-3]{0,1}[0-9][\./\-_])|(\w{3,5}[\./\-_]))([0-3]{0,1}[0-9][\./\-]{0,1})?)...'
-        STRICT_DATE_REGEX = _STRICT_DATE_REGEX_PREFIX + DATE_REGEX
-        date_match = re.search(STRICT_DATE_REGEX, url)
+        #_STRICT_DATE_REGEX_PREFIX = r'(?<=\W)'
+        #DATE_REGEX = r'(([\./\-_]{0,1}(19|20)\d{2})[\./\-_]{0,1}(([0-3]{0,1}[0-9][\./\-_])|(\w{3,5}[\./\-_]))([0-3]{0,1}[0-9][\./\-]{0,1})?)...'
+        #STRICT_DATE_REGEX = _STRICT_DATE_REGEX_PREFIX + DATE_REGEX
+        #date_match = re.search(STRICT_DATE_REGEX, url)
+
+        #regex = r'[\./\-_]{0,1}(19|20)\d{2}[\./\-_]'
+        regex = r'([\./\-_](19|20)\d{2}[\./\-_]?[0-1]?[0-9][\./\-_]?([0-3]?[0-9][\./\-_])?)'
+        date_match = re.search(regex, url)
         if date_match:
             timestamp_str = date_match.group(1)
             timestamp = parse_timestamp_str(timestamp_str)

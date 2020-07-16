@@ -114,6 +114,7 @@ def get_altlang_urls(parser, url, fast=False):
     # https://mainichi.jp/english/articles/20200523/p2a/00m/0na/023000c
     # https://mondediplo.com/2020/05/03covid-ecology
     # https://carnegie-mec.org/diwan/81781
+    # https://www.cdc.gov/flu/pandemic-resources/pandemic-timeline-1930-and-beyond.htm
 
     # direct translations without links:
     # https://bles.com/mundo/rusia-uso-hidroxicloroquina-medicamento-tratar-virus-pcch-sugerido-trump.html
