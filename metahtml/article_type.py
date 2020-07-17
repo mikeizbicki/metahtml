@@ -148,6 +148,7 @@ def get_article_type(parser, url, meta_best, fast=False):
         ( 'lavanguardia.com', r'^/internacional/20200421/?$' ),
         ( 'lci.fr', r'^/actualite/terrorisme-10020/?$' ),
         ( 'lci.fr', r'^/bien-etre/?$' ),
+        ( 'marca.com', r'^/claro-mx/?$' ),
         ( 'news.un.org', r'^/es/node?$' ),
         ( 'state.gov', r'^/press-releases/$' ),
         ( 'thanhnien.vn', r'^/doi-song/$' ),
