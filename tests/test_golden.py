@@ -229,9 +229,6 @@ def insert_golden_tests(urls, overwrite=False, verbose=False, recursively_added_
                         'timestamp_modified' : metahtml.timestamp.timestamp2str(meta['timestamp_modified']),
                         'lang' : metahtml.language.lang2str(meta['lang']),
                         'title' : metahtml.title.title2str(meta['title']),
-                        #'authors' : '',
-                        #'authors_raw' : metahtml.authors.authors2str(meta['authors']),
-                        #'text' : metahtml.language.lang2str(meta['text']),
                         })
 
     # sort and remove duplicates

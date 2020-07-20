@@ -67,8 +67,12 @@ def get_article_type(parser, url, meta_best, fast=False):
                 })
 
     # xpath-based patterns
+    # FIXME:
+    # extracting the article type from the page itself seems like a good idea,
+    # but it's not at all clear how to do this in a consistent way,
+    # as almost all websites seem to be misusing the existing semantic tags
     xpaths = [
-        ( 'cnbc.com', '//meta[@property="og:type"]/@content' ),
+        #( 'cnbc.com', '//meta[@property="og:type"]/@content' ),
         ]
     for hostname,xpath in xpaths:
 
@@ -94,12 +98,13 @@ def get_article_type(parser, url, meta_best, fast=False):
                 text = 'article'
 
             # generate the article_type from text
-            article_types.append({
-                'article_type' : text,
-                'pattern' : 'xpath',
-                'pattern_details' : xpath,
-                'valid_for_hostname' : valid_for_hostname,
-                })
+            if text=='article':
+                article_types.append({
+                    'article_type' : text,
+                    'pattern' : 'xpath',
+                    'pattern_details' : xpath,
+                    'valid_for_hostname' : valid_for_hostname,
+                    })
 
     # url-based patterns
     regexs = [
@@ -116,60 +121,41 @@ def get_article_type(parser, url, meta_best, fast=False):
 
         ( None, r'^/?$' ),
         ( None, r'^/article/?$' ),
-        ( None, r'^/category/?$' ),
-        ( None, r'^/category/uncategorized/?$' ),
+        ( None, r'^/category/' ),
+        ( None, r'^/category$' ),
+        ( None, r'^/tag/' ),
+        ( None, r'^/tag$' ),
 
-        ( None, r'^/en/?$' ),
-        ( None, r'^/pt/?$' ),
-        ( None, r'^/es/?$' ),
-        ( None, r'^/fr/?$' ),
-
-        # FIXME:
-        # is everything that ends in a / a category?
+        # NOTE: 
+        # this catches all 1 word page-names; is that too strict?
+        # it's definitely too strict to catch names that include -_/ etc
+        ( None, r'^/[a-zA-Z]*/?$' ), 
 
         # hostname specific regexs
         ( 'abc3340.com', r'/news/nation-world$' ),
         ( 'bbc.co.uk', r'/asia_pacific$' ),
         ( 'bbc.co.uk', r'/history/historic_figures/?$' ),
         ( 'bbc.com', r'/asia_pacific$' ),
-        ( 'breitbart.com', r'^/asia/?$' ),
         ( 'breitbart.com', r'^/national-security/?$' ),
-        ( 'breitbart.com', r'^/radio/?$' ),
+        ( 'cnbc.com', r'^/2020-elections/?$' ),
         ( 'cnn.com', r'^/ASIANOW/time/?$' ),
-        ( 'cnn.com', r'^/asia/?$' ),
-        ( 'cnnespanol.cnn.com', r'^/video/$' ),
-        ( 'coronavirus.delaware.gov', r'^/tag/delaware-student-meals/?$' ),
         ( 'crofsblogs.typepad.com', r'^/h5n1/?$' ),
-        ( 'dailynk.com', r'^/english/?$' ),
-        ( 'dujour.com', r'^/culture/?$' ),
         ( 'elmundo.es', r'^/internacional.html$' ),
-        ( 'elmundo.es', r'^/internacional/?$' ),
-        ( 'elnacional.com.do', r'^/category/' ),
         ( 'en.mediamass.net', r'^/people/kim-jong-un/?$' ),
-        ( 'europapress.es', r'^/internacional/?$' ),
-        ( 'foxnews.com', r'^/politics/?$' ),
         ( 'hannity.com', r'^/media-room/?$' ),
-        ( 'jawharafm.net', r'^/fr/?$' ),
-        ( 'krdo.com', r'^/news/?$' ),
-        ( 'kvia.com', r'^/news/?$' ),
-        ( 'larazon.es', r'^/internacional/?$' ),
+        ( 'imf.org', r'^/external/french/?$' ),
+        ( 'lavanguardia.com', r'^/internacional/20200421/48659090331/?$' ),
+        ( 'lavanguardia.com', r'^/internacional/20200421/?$' ),
         ( 'lci.fr', r'^/actualite/terrorisme-10020/?$' ),
         ( 'lci.fr', r'^/bien-etre/?$' ),
-        ( 'lci.fr', r'^/international/?$' ),
-        ( 'lci.fr', r'^/newsroom/?$' ),
-        ( 'lci.fr', r'^/politique/?$' ),
-        ( 'lci.fr', r'^/sante/?$' ),
-        ( 'lavanguardia.com', r'^/internacional/?$' ),
-        ( 'lavanguardia.com', r'^/internacional/20200421/?$' ),
-        ( 'lavanguardia.com', r'^/internacional/20200421/48659090331/?$' ),
-        ( 'localnews8.com', r'^/news/?$' ),
+        ( 'marca.com', r'^/claro-mx/?$' ),
         ( 'news.un.org', r'^/es/node?$' ),
-        ( 'sportbreakingnews.com', r'^/category/uncategorized/$' ),
         ( 'state.gov', r'^/press-releases/$' ),
-        ( 'tehrantimes.com', r'^/tag/' ),
         ( 'thanhnien.vn', r'^/doi-song/$' ),
+        ( 'treasury.gov', r'^/press-center/?$' ),
+        ( 'treasury.gov', r'^/press-center/press-releases/?$' ),
+        ( 'treasury.gov', r'^/resource-center/?$' ),
         ( 'viaouest.com', r'^/actualite-daesh.html' ),
-        ( 'vietnamartnews.com', r'^/category/uncategorized/$' ),
         ( 'whitehouse.gov', r'^/briefings-statements/?$' ),
 
         ( 'shutterstock.com', r'' ),
