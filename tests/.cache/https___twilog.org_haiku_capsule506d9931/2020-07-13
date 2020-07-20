@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>ハイク・カプセル(@haiku_capsule) - Twilog</title>
+<meta name="description" content="ハイク・カプセル(@haiku_capsule)のTwilog">
+<meta name="format-detection" content="telephone=no">
+
+
+<link rel="icon" type="image/png" sizes="32x32" href="https://twilog.org/favicon.png">
+<link rel="apple-touch-icon-precomposed" href="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_bigger.jpg">
+<link rel="alternate" type="application/rss+xml" title="ハイク・カプセル(@haiku_capsule) - Twilog" href="https://twilog.org/rss-feed/haiku_capsule">
+
+<link rel="stylesheet" href="https://twilog.org/css-dir/user.css?5">
+<link rel="stylesheet" href="https://twilog.org/css-dir/user_sp.css?5">
+
+<style type="text/css">
+body {background-color:#edf1f4;color:#333;}
+a,a:hover {color:#D4173D;}
+.side-list-icon,.nav-link a,.cal-nav a {background-color:#D4173D !important;}
+.tl-del a,.tl-del a:hover,.tl-name a:hover strong {color:#D4173D !important;}
+.side-list-icon,.nav-link a,.cal-nav a,#button-more {background-color:#D4173D !important;}
+
+
+@media screen and (max-width: 767px) {
+ #user-info a {color:#D4173D !important;}
+ .pc-only { display:none !important; }
+ #ad-main-bottom { margin:0 auto; }
+ #ad-side-bottom { margin:0 auto 70px; width:95%; }
+}
+
+</style>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.1/lity.min.js"></script>
+
+<script>
+$(function(){
+	$('a[href=#pagetop]').click(function(){ $('html, body').animate({scrollTop:0}, 'fast');	return false; });
+	$(".user-search-form").submit(function(){ user_search(); return false; });
+	$(".uf").submit(function(){ $(".ub").attr("disabled","disabled").css("color","#aaa"); });
+    $('section.slidemenu-box a[href^="#"]:not([href$="#"])').click(function() {
+        $('body, html').scrollTop($($(this).attr('href')).offset().top); menu.slideClose(); return false;
+	});
+
+	add_twbutton();
+	$(".ub").css("color","#000");
+
+	c_id = "";
+	c_str = document.cookie+";";
+	start = c_str.indexOf("update_id=");
+	if (start != -1){
+		end = c_str.indexOf(";", start);
+		c_id = c_str.substring(start+10, end);
+		if(c_id=="haiku_capsule") return;
+	}
+
+	exp=new Date(); exp.setTime(exp.getTime()+1000*60*5);
+	document.cookie = "update_id=haiku_capsule; expires=" + exp.toGMTString();
+
+	url = "https://twilog.org/j-check-update.rb?c=156082998&l=1282280617799897093&s=700703";
+	$.ajax({
+		dataType : "jsonp",
+		url: url,
+		success: function(data) {
+			if(data.tw<0) return;
+			if(data.tw==0) { $(".ub").css("color","#aaa").val("情報は最新です"); return; }
+			$("#info").slideDown();
+		}
+	});
+
+
+});
+
+function user_search(){
+	var user_id = $("#user-search-form input[type=text]").val() || $("#user-search-form-pc input[type=text]").val();
+
+	user_id = user_id.replace(/^[ ]+|[ ]+$/g, "");
+	if(!user_id) {
+		alert("Twitter IDを入力してください"); return;
+	}else if(!user_id.match(/^@?[a-zA-Z0-9_]+$/)) {
+		alert("不正なTwitter IDです"); return;
+	}
+
+	user_id = user_id.replace("@","");
+	location.href = "https://twilog.org/"+user_id;
+}
+function word_search(dv){
+	var param = {}
+	param["word"] = encodeURIComponent($("#wsearch-"+dv+" input[name='word']").val());
+	param["ao"] = ($("#wsearch-"+dv+" .ao-a").is(":checked")) ? "a" : "o";
+	
+	if(!param["word"]) { alert("検索ワードを入力してください"); return; }
+
+	var ar = [];
+	for(k in param){
+		if(param[k]=="") continue;
+		ar.push(k + "=" + param[k]);
+	}
+	location.href = "https://twilog.org/haiku_capsule/search?" + ar.join("&");
+}
+function show_hidden_tw(){ $(".button-more").hide(); $(".hidden-tw").fadeIn(); }
+function change_calendar(param){ $("#side-calendar").load("https://twilog.org/j-calendar.rb?"+param); }
+
+
+var srcbtn_date = false;
+
+function show_srcbtn(date){
+
+	if(!srcbtn_date){
+		var str = "<p class=\"mb5\">ソースを取得</p>";
+		str += "<p class=\"bt-src bt-common\"><a href=\"javascript:show_srcbox('')\">div・p</a></p>";
+		str += "<p class=\"bt-src bt-common\"><a href=\"javascript:show_srcbox('ul')\">ul・li</a></p>";
+		str += "<p class=\"bt-src bt-common\"><a href=\"javascript:show_srcbox('p')\">p</a></p>";
+		$("#s"+date).html(str).fadeIn("fast"); srcbtn_date = date;;
+	} else {
+		if(srcbtn_date==date){
+			$("#s"+date).fadeOut("fast"); srcbtn_date = false;
+		} else {
+			$("#s"+srcbtn_date).fadeOut("fast"); $("#s"+date).fadeIn("fast"); srcbtn_date = date;
+		}
+	}
+
+}
+
+function show_srcbox(type){
+
+	var date = srcbtn_date;
+	$("#s"+date).fadeOut("fast"); srcbtn_date = false;
+
+	$("#source-box").fadeOut("fast",function(){
+		$("#source-box").html("<img src='https://twilog.org/img-dir/r/ajax-loader.gif' class='mt50'>")
+	    wx = $(window).scrollLeft() + Math.floor(($(window).width() - $('#source-box').outerWidth()) / 2);
+	    wy = $(window).scrollTop() + Math.floor(($(window).height() - $('#source-box').outerHeight()) / 2);
+	    $("#source-box").css({ "top": wy, "left": wx }).fadeIn("fast");
+
+		$.ajax({
+			url : "https://twilog.org/j-source.rb?word=" ,
+			data : { "id":"haiku_capsule", "date":date, "cate":"", "param":"desc-", "type":type },
+			success : get_source_success,
+			error : function(){
+				alert("Error!!"); close_srcbox();
+			}
+
+		});
+	});
+}
+
+function get_source_success(src){ $("#source-box").html(src); }
+function close_srcbox(){ $("#source-box").fadeOut("fast"); }
+
+function add_twbutton(){
+	$("article.tl-tweet").each(function(){
+
+		var id = $(this).attr("id")
+		if(id){
+			id = id.substr(2);
+			var p_elem = $("<p/>").attr("class","tw-buttons");
+			var a_elem = $("<a/>").html("&nbsp;").attr({"href":"javascript:void(0);","class":"tb-rep","title":"返信"}).click({url:"https://twitter.com/intent/tweet?in_reply_to="+id},open_window);
+			$(p_elem).append(a_elem);
+			a_elem = $("<a/>").html("&nbsp;").attr({"href":"javascript:void(0);","class":"tb-rt","title":"リツイート"}).click({url:"https://twitter.com/intent/retweet?tweet_id="+id},open_window);
+			$(p_elem).append(a_elem);
+			a_elem = $("<a/>").html("&nbsp;").attr({"href":"javascript:void(0);","class":"tb-fav","title":"いいね"}).click({url:"https://twitter.com/intent/favorite?tweet_id="+id},open_window);
+			$(p_elem).append(a_elem);
+			$(this).append(p_elem);
+		}
+	});
+}
+
+
+function open_window(e){
+	var ww=550; var hh=520;
+    var x = (screen.width - ww) / 2; var y = (screen.height - hh) / 2;
+    open(e.data.url, "childWindow", "width="+ww+",height="+hh+",left="+x+",top="+y);
+}
+
+
+
+</script>
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-16209355-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+
+<body>
+
+
+<div class="slidemenu">
+<div class="slidemenu-body">
+<div class="slidemenu-content">
+<section class="slidemenu-box">
+ <h5>情報更新</h5>
+ <form class="uf" action="https://twilog.org/update.rb" method="get">
+  <input type="submit" class="ub" value="最新の情報に更新する">
+  <input type="hidden" name="id" value="haiku_capsule">
+  <input type="hidden" name="order" value="">
+  <input type="hidden" name="filter" value="">
+  <input type="hidden" name="kind" value="reg">
+ </form>
+ <p><span>last update 07/13 17:26</span></p>
+</section>
+
+<section class="slidemenu-box">
+ <h5>ツイート検索</h5>
+<form id="wsearch-sp" method="get" onsubmit="word_search('sp');return false;">
+<input type="hidden" name="id" value="haiku_capsule">
+<input type="hidden" name="param" value="desc">
+<input type="text" name="word" value="" placeholder="キーワード" class="input01">
+<input type="submit" value="検索" class="submit01">
+<div class="search-opt">
+<p class="ta-c mb0">
+<input type="radio" class="ao-a" id="ao-a-sp" name="ao" value="a" checked> <label for="ao-a-sp">AND検索</label>　
+<input type="radio" class="ao-o" id="ao-o-sp" name="ao" value="o"> <label for="ao-o-sp">OR検索</label>
+</p>
+</div>
+</form>
+</section>
+
+<section class="slidemenu-box">
+ <h5>@haiku_capsule</h5>
+<ul>
+<li><a href="#side-calendar">カレンダー</a></li>
+<li><a href="#side-recent">最近のツイート</a></li>
+<li><a href="https://twilog.org/haiku_capsule/archives">月別アーカイブ</a></li>
+<li><a href="https://twilog.org/haiku_capsule/friends">@ユーザー</a></li>
+<li><a href="https://twilog.org/haiku_capsule/hashtags">#ハッシュタグ</a></li>
+</ul>
+</section>
+
+
+
+ <section class="slidemenu-box">
+  <h5>サイトメニュー</h5>
+ <ul>
+	<li><a href="https://twilog.org/page-register">新規登録</a></li>
+	<li><a href="https://twilog.org/settings.rb">ログイン</a></li>
+
+	<li><a href="https://twilog.org/page-about">このサイトについて</a></li>
+	<li><a href="https://twilog.org/page-help">ヘルプ</a></li>
+	<li><a href="javascript:void(0);" onclick="location.href='https://twilog.org/switch-sp/0';return false;">PCモードに切替</a></li>
+ </ul>
+ </section>
+
+  <section class="slidemenu-box">
+  <h5>Twilogユーザー検索</h5>
+ <form action="https://twilog.org/tl-tweets.rb" method="get" class="user-search-form" id="user-search-form">
+  <input type="text" name="id" value="" placeholder="Twitter ID">
+  <input type="submit" value="検索">
+ </form>
+ </section>
+
+</div><!-- /.slidemenu-content -->
+</div><!-- /.slidemenu-body -->
+</div><!-- /.slidemenu -->
+
+<div id="slidemenu-main">
+
+<header>
+<section>
+<p id="ti-twilog"><a href="https://twilog.org/">Twilog</a></p>
+<nav class="slidemenu-button">
+ <div class="slidemenu-button1"></div>
+ <div class="slidemenu-button2"></div>
+ <div class="slidemenu-button3"></div>
+</nav>
+
+<ul>
+	<li><a href="https://twilog.org/page-about">このサイトについて</a></li>
+	<li><a href="https://twilog.org/page-help">ヘルプ</a></li>
+	<li><a href="https://twilog.org/page-register">新規登録</a></li>
+	<li><a href="https://twilog.org/settings.rb">ログイン</a></li>
+
+</ul>
+
+<form action="https://twilog.org/tl-tweets.rb" method="get" class="user-search-form" id="user-search-form-pc">
+<input type="text" name="id" value="" placeholder="Twitter ID">
+<input type="submit" value="検索">
+</form>
+</section>
+</header>
+
+
+<div id="container">
+<div id="content">
+
+<ul class="breadcrumb">
+	<li class="home"><a href="https://twilog.org/">Twilog ホーム</a></li>
+	<li>@haiku_capsule</li>
+</ul>
+
+
+
+<section id="user-info">
+<p id="user-info-bg"><img src="https://pbs.twimg.com/profile_banners/156082998/1594382910/ipad" width="610" height="305"></p>
+<p id="user-info-shadow">&nbsp;</p>
+<div id="user-info-content">
+<p id="user-info-icon"><a href="https://twilog.org/haiku_capsule" title="@haiku_capsuleのTwilogへ"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_bigger.jpg" alt="@haiku_capsule" width="73" height="73"></a></p>
+<h1><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></h1>
+<ul class="user-follow">
+	<li><a href="https://twitter.com/haiku_capsule/following" target="_blank">999</a>フォロー</li>
+	<li><a href="https://twitter.com/haiku_capsule/followers" target="_blank">926</a>フォロワー</li>
+	<li><a href="https://twitter.com/haiku_capsule/memberships" target="_blank">46</a>リスト</li>
+</ul>
+<ul class="user-info-col">
+<li class="user-info-place">Osaka Japan</li>
+<li class="user-info-web"><a href="http://twilog.org/haiku_capsule" target="_blank">http://twilog.org/haiku_capsule</a></li>
+<li class="user-info-comment">俳句を読んだり、書いたりしています。</li>
+</ul>
+</div>
+</section><!-- /user-info -->
+
+<section class="box-stats">
+<table>
+	<tr>
+		<td class="title"><a href="https://twilog.org/haiku_capsule/stats">Stats</a></td>
+		<td class="stats"><strong>Twitter歴</strong><br>3,682日<span>（2010/06/16より）</span></td>
+		<td class="stats"><strong>ツイート数</strong><br>25,803<span>（7.0件/日）</span></td>
+	</tr>
+</table>
+</section><!-- /box-stats -->
+
+
+<div id="ad-main-top">
+<div style="margin:0 16px;">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2613098592193304"
+     data-ad-slot="9984508296"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+</div>
+
+<section class="box-sort mb10 mt15">
+<div>
+<p>ツイートの並び順 :</p>
+<ul>
+ <li class="w4em"><span>通常</span></li>
+ <li class="w4em"><a href="https://twilog.org/haiku_capsule/asc">朝→夜</a></li>
+ <li class="w4em"><a href="https://twilog.org/haiku_capsule/allasc">古→新</a></li>
+</ul>
+</div>
+
+<div>
+<p>表示するツイート :</p>
+<ul>
+	<li class="w4em"><span>全て</span></li>
+	<li><a href="https://twilog.org/haiku_capsule/norep" title="先頭に@のあるツイートを除く">Replyを除く</a></li>
+	<li><a href="https://twilog.org/haiku_capsule/nomen" title="文中に@のあるツイートを除く">Mentionを除く</a></li>
+	<li><a href="https://twilog.org/haiku_capsule/rt">公式RTのみ</a></li>
+	<li><a href="https://twilog.org/haiku_capsule/nort">公式RTを除く</a></li>
+</ul>
+</div>
+
+
+</section><!-- /box-sort -->
+
+
+
+
+<ul class="nav-link mb10 mt0">
+	<li class="nav-prev"><span>前のページ</span></li>
+	<li class="nav-user"><a href="https://twilog.org/haiku_capsule">@haiku_capsule</a></li>
+	<li class="nav-next"><a href="https://twilog.org/haiku_capsule/2">次のページ</a></li>
+</ul>
+
+
+<div id="info" class="mb10" style="display:none;"><p class="box-balloon"><a href="https://twilog.org/update.rb?id=haiku_capsule&order=&filter=&kind=reg"><span>新しいツイートが投稿されています</span></a></p></div>
+<h3 class="title01" id="d200712">
+<a href="https://twilog.org/haiku_capsule/date-200712">2020年07月12日(日)</a><span>1 tweet</span><a href="javascript:void(0);" onclick="show_srcbtn('200712');return false;" title="ソースを取得" class="bt-source">source</a>
+<p id="s200712" class="sbt-box"></p>
+</h3>
+
+<section class="tl-tweets">
+<article class="tl-tweet" id="tw1282280617799897093">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1282280617799897093" target="_blank">7月12日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">7/8 荒梅雨や風が鞭なす暴れ川<br>7/9 サラダみたいに冷蔵庫からマスク<br>7/10 夏つばめ旧街道をさかのぼる<br>7/11 初蟬やどの樹ともなく立ち上がる<br>7/12 寝返りの打てる幸せ夏座敷<br>7/13 街濡れて夏ことごとくまたたけり<br><a href="https://twitter.com/hashtag/%E4%BF%B3%E5%8F%A5%E6%97%A5%E8%A8%98365?src=hash" target="_blank">＃俳句日記365</a>&#128216;鈴木茂雄<br>（ちょっとおやすみしてました☕️）</p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1282280617799897093" target="_blank">20:48:17</a></p>
+</article><!-- /tl-tweet -->
+
+
+</section><!-- /tl-tweets -->
+
+<h3 class="title01" id="d200710">
+<a href="https://twilog.org/haiku_capsule/date-200710">2020年07月10日(金)</a><span>2 tweets</span><a href="javascript:void(0);" onclick="show_srcbtn('200710');return false;" title="ソースを取得" class="bt-source">source</a>
+<p id="s200710" class="sbt-box"></p>
+</h3>
+
+<section class="tl-tweets">
+<article class="tl-tweet" id="tw1281454613598593024">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1281454613598593024" target="_blank">7月10日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281235716832280576/QbpZWo8w_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text"> ゆつくりと鵜飼の夜へ反転す<br>短夜の闇収めたるインク壺<br>Tシャツを干す青空に貼るやうに<br>プールサイド何求めゐる女の眼<br>生の側より死の側に水打てり<br>晩涼の闇深空より垂れてゐる<br>炎昼や樹の中に棲む水の精<br>青唐辛子火の国の流れ弾<br>季語でさえ憎き【酷暑】を[連打]]]する<br>（20xx.7月&#128216;俳句日記）<p class="tl-retweet">Retweeted by <a href="https://twitter.com/haiku_capsule" target="_blank">ハイク・カプセル</a></p></p>
+
+
+<p class="tl-posted">retweeted at <a href="https://twitter.com/haiku_capsule/status/1281454613598593024" target="_blank">14:06:02</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1281454242289446912">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1281454242289446912" target="_blank">7月10日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281235716832280576/QbpZWo8w_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text"> 「ハイク・カプセル」<br><a href="https://t.co/VdDM4IdVvH" target="_blank" title="http://twilog.org/haiku_capsule"><span class="invisible">http://</span>twilog.org/haiku_capsule</a><br>「ツイッター版・現代俳句アンソロジー」に、これまでに採り上げた作品を検索する方法:「Search（検索）」欄に「俳人名、HN」（例: 金子敦、ラスカル）「季語」（例: 雪、花）「テーマ」（ケータイ、夜）を入力。<p class="tl-retweet">Retweeted by <a href="https://twitter.com/haiku_capsule" target="_blank">ハイク・カプセル</a></p></p>
+
+
+<p class="tl-posted">retweeted at <a href="https://twitter.com/haiku_capsule/status/1281454242289446912" target="_blank">14:04:34</a></p>
+</article><!-- /tl-tweet -->
+
+
+</section><!-- /tl-tweets -->
+
+<h3 class="title01" id="d200707">
+<a href="https://twilog.org/haiku_capsule/date-200707">2020年07月07日(火)</a><span>6 tweets</span><a href="javascript:void(0);" onclick="show_srcbtn('200707');return false;" title="ソースを取得" class="bt-source">source</a>
+<p id="s200707" class="sbt-box"></p>
+</h3>
+
+<section class="tl-tweets">
+<article class="tl-tweet" id="tw1280482440188801025">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1280482440188801025" target="_blank">7月7日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">【今迄、俳句に、どのようなことが詠まれないで来たか、ということを考えることは、俳人として非常に大切なことだ、と私は考えている。その意味で、俳句らしくない俳句、を生み出そうとする努力も、これから俳句を新しくする一つの方法であるに異いない。(飯田龍太）】 <a href="https://twitter.com/hashtag/%E4%BF%B3%E5%8F%A5%E6%96%AD%E6%83%B3?src=hash" target="_blank">＃俳句断想</a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1280482440188801025" target="_blank">21:42:58</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1280481917087780864">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1280481917087780864" target="_blank">7月7日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">7/7 天の川共振し合ふ二人かな<br><a href="https://twitter.com/hashtag/%E4%BF%B3%E5%8F%A5%E6%97%A5%E8%A8%98365?src=hash" target="_blank">＃俳句日記365</a>&#128216;鈴木茂雄</p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1280481917087780864" target="_blank">21:40:53</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1280481614670135296">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1280481614670135296" target="_blank">7月7日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">ハイク・カプセル（４４２３）＜かたつむり日月遠くねむるなり　木下夕爾＞『ツイッタ ー版・現代俳句アンソロジー』<a href="https://t.co/U3eyXM4pg2" target="_blank" title="http://ed.by"><span class="invisible">http://</span>ed.by</a> ss  <a href="https://twitter.com/hashtag/jhaiku?src=hash" target="_blank">#jhaiku</a> <a href="https://twitter.com/hashtag/haiku?src=hash" target="_blank">#haiku</a> <a href="https://twitter.com/hashtag/micropoetry?src=hash" target="_blank">#micropoetry</a> <a href="https://twitter.com/hashtag/%E4%BF%B3%E5%8F%A5?src=hash" target="_blank">#俳句</a> <a href="https://twitter.com/hashtag/%E8%A9%A9?src=hash" target="_blank">#詩</a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1280481614670135296" target="_blank">21:39:41</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1280384262575775745">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1280384262575775745" target="_blank">7月7日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">ハイク・カプセル編「七夕句抄」<br><a href="https://t.co/lJat8g0b4D" target="_blank" title="https://www.facebook.com/100005362366793/posts/1353772128144853/"><span class="invisible">https://</span>www.facebook.com/10000536236679<span class="invisible">3/posts/1353772128144853/</span>…</a> <span class="invisible">https://</span><a href="https://t.co/O2MldmTzei" target="_blank">pic.twitter.com/O2MldmTzei</a></p>
+<p class="tl-image"><a href="https://t.co/O2MldmTzei" target="_blank" data-lity data-lity-target="https://pbs.twimg.com/media/EcTWssGUYAEABpx.jpg"><img src="https://pbs.twimg.com/media/EcTWssGUYAEABpx.jpg:small" class="tl-image" width="320" height="240"></a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1280384262575775745" target="_blank">15:12:51</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1280316998065389569">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1280316998065389569" target="_blank">7月7日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/minakatella" target="_blank"><img src="https://pbs.twimg.com/profile_images/1092919956/minakatella_normal.gif" alt="@minakatella" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/minakatella" target="_blank"><strong>南方熊楠</strong><span>@minakatella</span></a></p>
+<p class="tl-text"> 政府や世に聞こえた学者にろくなやつなし <a href="https://t.co/3M3zXxImp1" target="_blank" title="http://www.minakatella.net/letters/rirekisho35.html"><span class="invisible">http://</span>www.minakatella.net/letters/rireki<span class="invisible">sho35.html</span>…</a><p class="tl-retweet">Retweeted by <a href="https://twitter.com/haiku_capsule" target="_blank">ハイク・カプセル</a></p></p>
+
+
+<p class="tl-posted">retweeted at <a href="https://twitter.com/haiku_capsule/status/1280316998065389569" target="_blank">10:45:34</a></p>
+</article><!-- /tl-tweet -->
+
+<div style="height:250px;margin-bottom:15px;"">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Twilog PC ツイート内 -->
+<ins class="adsbygoogle"
+	style="display:block; "
+	data-ad-client="ca-pub-2613098592193304"
+	data-ad-slot="8584279139"
+	data-ad-format="auto"
+	data-full-width-responsive="true"></ins>
+<script>
+	(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+<article class="tl-tweet" id="tw1280252101466009600">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1280252101466009600" target="_blank">7月7日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">荒梅雨。 <span class="invisible">https://</span><a href="https://t.co/kg7eMiYSBm" target="_blank">pic.twitter.com/kg7eMiYSBm</a></p>
+<p class="tl-image"><a href="https://t.co/kg7eMiYSBm" target="_blank" data-lity data-lity-target="https://pbs.twimg.com/ext_tw_video_thumb/1280252073351630848/pu/img/hExWrrq_7JUcMHtD.jpg"><img src="https://pbs.twimg.com/ext_tw_video_thumb/1280252073351630848/pu/img/hExWrrq_7JUcMHtD.jpg:small" class="tl-image" width="270" height="480"></a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1280252101466009600" target="_blank">06:27:41</a></p>
+</article><!-- /tl-tweet -->
+
+
+</section><!-- /tl-tweets -->
+
+<h3 class="title01" id="d200706">
+<a href="https://twilog.org/haiku_capsule/date-200706">2020年07月06日(月)</a><span>2 tweets</span><a href="javascript:void(0);" onclick="show_srcbtn('200706');return false;" title="ソースを取得" class="bt-source">source</a>
+<p id="s200706" class="sbt-box"></p>
+</h3>
+
+<section class="tl-tweets">
+<article class="tl-tweet" id="tw1280109791637983232">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1280109791637983232" target="_blank">7月6日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">【秀作は作ろうとして出来るものではない。それは俳句の恩寵にあずかるものだ（飯田龍太）】<a href="https://twitter.com/hashtag/%E4%BF%B3%E5%8F%A5%E6%96%AD%E6%83%B3?src=hash" target="_blank">＃俳句断想</a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1280109791637983232" target="_blank">21:02:12</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1280106788210106368">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1280106788210106368" target="_blank">7月6日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">＜「この味がいいね」と君が言ったから七月六日はサラダ記念日　俵万智＞　<a href="https://twitter.com/hashtag/%E7%8F%BE%E4%BB%A3%E7%9F%AD%E6%AD%8C%E3%82%A2%E3%83%B3%E3%82%BD%E3%83%AD%E3%82%B8%E3%83%BC?src=hash" target="_blank">#現代短歌アンソロジー</a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1280106788210106368" target="_blank">20:50:16</a></p>
+</article><!-- /tl-tweet -->
+
+
+</section><!-- /tl-tweets -->
+
+<h3 class="title01" id="d200705">
+<a href="https://twilog.org/haiku_capsule/date-200705">2020年07月05日(日)</a><span>15 tweets</span><a href="javascript:void(0);" onclick="show_srcbtn('200705');return false;" title="ソースを取得" class="bt-source">source</a>
+<p id="s200705" class="sbt-box"></p>
+</h3>
+
+<section class="tl-tweets">
+<article class="tl-tweet" id="tw1279783142606254080">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1279783142606254080" target="_blank">7月5日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">【「詩は考えるものでない。考えれば考える程遠ざかって消えて行く。詩は感じるものである。（西脇順三郎）】<a href="https://twitter.com/hashtag/%E4%BF%B3%E5%8F%A5%E6%96%AD%E6%83%B3?src=hash" target="_blank">＃俳句断想</a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1279783142606254080" target="_blank">23:24:13</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1279779760734826497">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1279779760734826497" target="_blank">7月5日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">たった十七音しかない俳句形式は、いつも修辞的技法を要求する。そうしなければ十七音以上でも以下でもなく、ただの散文の一行にも満たない舌足らずな短文で終わってしまうからである。<br><a href="https://twitter.com/hashtag/%E4%BF%B3%E5%8F%A5%E6%96%AD%E6%83%B3?src=hash" target="_blank">＃俳句断想</a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1279779760734826497" target="_blank">23:10:46</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1279754107448745984">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1279754107448745984" target="_blank">7月5日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">7/6 西瓜切る時給の安い惑星で<br><a href="https://twitter.com/hashtag/%E4%BF%B3%E5%8F%A5%E6%97%A5%E8%A8%98365?src=hash" target="_blank">＃俳句日記365</a>&#128216;鈴木茂雄</p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1279754107448745984" target="_blank">21:28:50</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1279753800530587649">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1279753800530587649" target="_blank">7月5日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">ハイク・カプセル（４４２２）＜くちづけに砂つぶ混じる雲の峰　撫子＞『ツイッタ ー版・現代俳句アンソロジー』<a href="https://t.co/U3eyXM4pg2" target="_blank" title="http://ed.by"><span class="invisible">http://</span>ed.by</a> ss  <a href="https://twitter.com/hashtag/jhaiku?src=hash" target="_blank">#jhaiku</a> <a href="https://twitter.com/hashtag/haiku?src=hash" target="_blank">#haiku</a> <a href="https://twitter.com/hashtag/micropoetry?src=hash" target="_blank">#micropoetry</a> <a href="https://twitter.com/hashtag/%E4%BF%B3%E5%8F%A5?src=hash" target="_blank">#俳句</a> <a href="https://twitter.com/hashtag/%E8%A9%A9?src=hash" target="_blank">#詩</a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1279753800530587649" target="_blank">21:27:37</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1279753566031233026">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1279753566031233026" target="_blank">7月5日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">＜枯れ野踏みて帰り来たれる子を抱き何かわからぬものも抱きよす　今井恵子＞<a href="https://twitter.com/hashtag/%E7%8F%BE%E4%BB%A3%E7%9F%AD%E6%AD%8C%E3%82%A2%E3%83%B3%E3%82%BD%E3%83%AD%E3%82%B8%E3%83%BC?src=hash" target="_blank">＃現代短歌アンソロジー</a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1279753566031233026" target="_blank">21:26:41</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1279742257441042434">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1279742257441042434" target="_blank">7月5日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/kikko_no_blog" target="_blank"><img src="https://pbs.twimg.com/profile_images/1246240946431250432/KBDHWnZi_normal.jpg" alt="@kikko_no_blog" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/kikko_no_blog" target="_blank"><strong>きっこ</strong><span>@kikko_no_blog</span></a></p>
+<p class="tl-text"> 2013年12月10日の落合恵子さんのメッセージ「3年後まで国政選挙がないからといってガッカリしていてはダメ。それまでにも地方選挙があるのだから、安倍政権が真っ黒にしてしまったオセロを1枚ずつでも白にして行きましょう！」<p class="tl-retweet">Retweeted by <a href="https://twitter.com/haiku_capsule" target="_blank">ハイク・カプセル</a></p></p>
+
+
+<p class="tl-posted">retweeted at <a href="https://twitter.com/haiku_capsule/status/1279742257441042434" target="_blank">20:41:45</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1279663953761583104">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1279663953761583104" target="_blank">7月5日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">がんばれ東京都民！<br><br><a href="https://twitter.com/hashtag/%E9%83%BD%E7%9F%A5%E4%BA%8B%E9%81%B8%E3%82%92%E5%8F%B2%E4%B8%8A%E6%9C%80%E5%A4%A7%E3%81%AE%E6%8A%95%E7%A5%A8%E7%8E%87%E3%81%AB%E3%81%97%E3%82%88%E3%81%86?src=hash" target="_blank">#都知事選を史上最大の投票率にしよう</a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1279663953761583104" target="_blank">15:30:36</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1279644160467759104">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1279644160467759104" target="_blank">7月5日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">週刊俳句 Haiku Weekly: 【週俳6月の俳句を読む】テーブルの上には　鈴木茂雄 <a href="https://t.co/Ay4mcGV0C8" target="_blank" title="http://weekly-haiku.blogspot.com/2020/07/6.html"><span class="invisible">http://</span>weekly-haiku.blogspot.com/2020/07/6.html</a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1279644160467759104" target="_blank">14:11:57</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1279640598127894530">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1279640598127894530" target="_blank">7月5日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">（つづき）<br><br>頬紅をたっぷり塗って都まで　樋口由紀子<br>いっぱいのフリルにいっぱいのスリル　<br><br>冬めきて痛し愛書に指切られ　干場達矢<br>鳥交るころ禁猟区で逢ひませう</p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1279640598127894530" target="_blank">13:57:47</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1279640472009334789">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1279640472009334789" target="_blank">7月5日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">（つづき）<br>眠る部屋まで桃の実の匂ひかな　青木空知<br>ふんだんに彼岸のすすきをみなへし<br><br>あきかぜと声にだしたりする体　池田澄子<br>ひかり満つ嘗て銃後の枯葦原<br>（つづく）</p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1279640472009334789" target="_blank">13:57:17</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1279639961038282753">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1279639961038282753" target="_blank">7月5日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">句誌『トイ』創刊号が届きました。ありがとうございます。誌名の「トイ」は「おもちゃ箱のようにカラフルな同人誌でありたい」とのこと。「トイ」はまた「問い」でもあるという。俳句と川柳という二つの形式が一つの磁場の中で自らの詩型を問う。<br>（つづく） <span class="invisible">https://</span><a href="https://t.co/AXQ2chRWJL" target="_blank">pic.twitter.com/AXQ2chRWJL</a></p>
+<p class="tl-image"><a href="https://t.co/AXQ2chRWJL" target="_blank" data-lity data-lity-target="https://pbs.twimg.com/media/EcIxwk7U0AARUKi.jpg"><img src="https://pbs.twimg.com/media/EcIxwk7U0AARUKi.jpg:small" class="tl-image" width="360" height="480"></a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1279639961038282753" target="_blank">13:55:15</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1279633183747665920">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1279633183747665920" target="_blank">7月5日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text"><a href="https://twitter.com/nakahiko7777" target="_blank">@nakahiko7777</a> こちらこそ拙い文章で恐縮です。読んでいただきありがとうございます。</p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1279633183747665920" target="_blank">13:28:20</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1279614605812097025">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1279614605812097025" target="_blank">7月5日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">妹尾 凛『Ring』（水仁舎、2020）という、センスの良いパンフレットのような川柳句集が届きました。句集制作に携ったおひとり、俳人の野間幸恵さんからご恵送いただきました。ありがとうございます。読みながら本文にチェックを入れた寸感を以下にアップしました。<a href="https://t.co/wiBQag9TDj" target="_blank" title="https://www.facebook.com/100005362366793/posts/1352138448308221/"><span class="invisible">https://</span>www.facebook.com/10000536236679<span class="invisible">3/posts/1352138448308221/</span>…</a> <span class="invisible">https://</span><a href="https://t.co/qbz6KdnFoF" target="_blank">pic.twitter.com/qbz6KdnFoF</a></p>
+<p class="tl-image"><a href="https://t.co/qbz6KdnFoF" target="_blank" data-lity data-lity-target="https://pbs.twimg.com/media/EcIasxIUMAEjsWL.jpg"><img src="https://pbs.twimg.com/media/EcIasxIUMAEjsWL.jpg:small" class="tl-image" width="360" height="480"></a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1279614605812097025" target="_blank">12:14:30</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1279544698403581952">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1279544698403581952" target="_blank">7月5日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">7/1 青あらし棺になる木もならぬ木も<br>7/2 昼寝覚この世の妻に覗かれぬ<br>7/3 素麺や冷やして青き竹の笊<br>7/4 爆睡の女はとても避雷針<br>7/5 荒梅雨や行者の杖の千万本<br><a href="https://twitter.com/hashtag/%E4%BF%B3%E5%8F%A5%E6%97%A5%E8%A8%98365?src=hash" target="_blank">＃俳句日記365</a>&#128216;鈴木茂雄</p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1279544698403581952" target="_blank">07:36:43</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1279537553914257408">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1279537553914257408" target="_blank">7月5日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">週刊俳句に「６月の俳句を読む」を書かせていただきました。 <a href="https://t.co/b104QQzun7" target="_blank" title="http://weekly-haiku.blogspot.com/"><span class="invisible">http://</span>weekly-haiku.blogspot.com<span class="invisible">/</span></a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1279537553914257408" target="_blank">07:08:20</a></p>
+</article><!-- /tl-tweet -->
+
+
+</section><!-- /tl-tweets -->
+
+<h3 class="title01" id="d200701">
+<a href="https://twilog.org/haiku_capsule/date-200701">2020年07月01日(水)</a><span>1 tweet</span><a href="javascript:void(0);" onclick="show_srcbtn('200701');return false;" title="ソースを取得" class="bt-source">source</a>
+<p id="s200701" class="sbt-box"></p>
+</h3>
+
+<section class="tl-tweets">
+<article class="tl-tweet" id="tw1278063266183315457">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1278063266183315457" target="_blank">7月1日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/twryossy" target="_blank"><img src="https://pbs.twimg.com/profile_images/1198110326/IMGP1847_normal.JPG" alt="@twryossy" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/twryossy" target="_blank"><strong>HAYASHI Yoshio</strong><span>@twryossy</span></a></p>
+<p class="tl-text"> 【今日の季語3838&lt;916】辣韮(らっきょう)：三夏の植物季語。中国原産で古く日本に渡来したユリ科の多年草。この時季に収穫し、鱗茎部を塩酢や甘酢に漬けて食する。◆たかが辣韮手本通りになど漬けず(市野沢弘子) <a href="https://twitter.com/hashtag/kigo?src=hash" target="_blank">#kigo</a><p class="tl-retweet">Retweeted by <a href="https://twitter.com/haiku_capsule" target="_blank">ハイク・カプセル</a></p></p>
+
+
+<p class="tl-posted">retweeted at <a href="https://twitter.com/haiku_capsule/status/1278063266183315457" target="_blank">05:30:02</a></p>
+</article><!-- /tl-tweet -->
+
+
+</section><!-- /tl-tweets -->
+
+<h3 class="title01" id="d200630">
+<a href="https://twilog.org/haiku_capsule/date-200630">2020年06月30日(火)</a><span>5 tweets</span><a href="javascript:void(0);" onclick="show_srcbtn('200630');return false;" title="ソースを取得" class="bt-source">source</a>
+<p id="s200630" class="sbt-box"></p>
+</h3>
+
+<section class="tl-tweets">
+<article class="tl-tweet" id="tw1277832512576741376">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1277832512576741376" target="_blank">6月30日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/kikko_no_blog" target="_blank"><img src="https://pbs.twimg.com/profile_images/1246240946431250432/KBDHWnZi_normal.jpg" alt="@kikko_no_blog" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/kikko_no_blog" target="_blank"><strong>きっこ</strong><span>@kikko_no_blog</span></a></p>
+<p class="tl-text"> 「30日、国家公務員の夏のボーナスが満額支給された。河井克行容疑者と河井案里容疑者にも約319万円ずつ、計約640万円が支払われた」とのことだけど、あたしの10万円はまだですか？申請書を投函してから1カ月も経つんですけど。<p class="tl-retweet">Retweeted by <a href="https://twitter.com/haiku_capsule" target="_blank">ハイク・カプセル</a></p></p>
+
+
+<p class="tl-posted">retweeted at <a href="https://twitter.com/haiku_capsule/status/1277832512576741376" target="_blank">14:13:06</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1277797018337865728">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1277797018337865728" target="_blank">6月30日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">梅雨深し。 <span class="invisible">https://</span><a href="https://t.co/ccAtjB26d1" target="_blank">pic.twitter.com/ccAtjB26d1</a></p>
+<p class="tl-image"><a href="https://t.co/ccAtjB26d1" target="_blank" data-lity data-lity-target="https://pbs.twimg.com/media/Ebulm9bU8AIemrb.jpg"><img src="https://pbs.twimg.com/media/Ebulm9bU8AIemrb.jpg:small" class="tl-image" width="360" height="480"></a><a href="https://t.co/ccAtjB26d1" target="_blank" data-lity data-lity-target="https://pbs.twimg.com/media/Ebulm9bUMAMiRF-.jpg"><img src="https://pbs.twimg.com/media/Ebulm9bUMAMiRF-.jpg:small" class="tl-image" width="360" height="480"></a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1277797018337865728" target="_blank">11:52:04</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1277788547060076545">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1277788547060076545" target="_blank">6月30日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/543life" target="_blank"><img src="https://pbs.twimg.com/profile_images/1282469283339964416/zb4g4f9b_normal.jpg" alt="@543life" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/543life" target="_blank"><strong>暦生活｜こよみせいかつ</strong><span>@543life</span></a></p>
+<p class="tl-text"> 6月30日（旧5月10日）の火曜日。<br><br>1月1日から数えて、ちょうど半年の節目である今日。<br>夏越の祓（なごしのはらえ）は、この半年の間に「心や体に背負ってしまった罪穢れ（つみけがれ）」を、綺麗に祓い清めていただくというもの。<br><br>巫女ライターの紺野うみさん（<a href="https://twitter.com/konnoumi" target="_blank">@konnoumi</a>）<br><a href="https://t.co/4A18dgbKG0" target="_blank" title="https://www.543life.com/koyomi/post20200630.html"><span class="invisible">https://</span>www.543life.com/koyomi/post202<span class="invisible">00630.html</span>…</a><p class="tl-retweet">Retweeted by <a href="https://twitter.com/haiku_capsule" target="_blank">ハイク・カプセル</a></p></p>
+
+
+<p class="tl-posted">retweeted at <a href="https://twitter.com/haiku_capsule/status/1277788547060076545" target="_blank">11:18:24</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1277753240361156609">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1277753240361156609" target="_blank">6月30日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">訂正:<br>ひるがほの指輪を外す昼下り</p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1277753240361156609" target="_blank">08:58:06</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1277732748023623680">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1277732748023623680" target="_blank">6月30日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">6/30 昼顔が指輪を外す昼下り<br><a href="https://twitter.com/hashtag/%E4%BF%B3%E5%8F%A5%E6%97%A5%E8%A8%98365?src=hash" target="_blank">＃俳句日記365</a>&#128216;鈴木茂雄</p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1277732748023623680" target="_blank">07:36:40</a></p>
+</article><!-- /tl-tweet -->
+
+
+</section><!-- /tl-tweets -->
+
+<h3 class="title01" id="d200629">
+<a href="https://twilog.org/haiku_capsule/date-200629">2020年06月29日(月)</a><span>1 tweet</span><a href="javascript:void(0);" onclick="show_srcbtn('200629');return false;" title="ソースを取得" class="bt-source">source</a>
+<p id="s200629" class="sbt-box"></p>
+</h3>
+
+<section class="tl-tweets">
+<article class="tl-tweet" id="tw1277555811963637761">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1277555811963637761" target="_blank">6月29日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">句読点。 <a href="https://t.co/vgSak2xOMA" target="_blank" title="https://twitter.com/yachishuso/status/1277403069542658048"><span class="invisible">https://</span>twitter.com/yachishuso/sta<span class="invisible">tus/1277403069542658048</span>…</a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1277555811963637761" target="_blank">19:53:36</a></p>
+</article><!-- /tl-tweet -->
+
+
+</section><!-- /tl-tweets -->
+
+<h3 class="title01" id="d200628">
+<a href="https://twilog.org/haiku_capsule/date-200628">2020年06月28日(日)</a><span>3 tweets</span><a href="javascript:void(0);" onclick="show_srcbtn('200628');return false;" title="ソースを取得" class="bt-source">source</a>
+<p id="s200628" class="sbt-box"></p>
+</h3>
+
+<section class="tl-tweets">
+<article class="tl-tweet" id="tw1277211193908662275">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1277211193908662275" target="_blank">6月28日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">6/29 夕焼けてあがた森魚が流れだす<br><a href="https://twitter.com/hashtag/%E4%BF%B3%E5%8F%A5%E6%97%A5%E8%A8%98365?src=hash" target="_blank">＃俳句日記365</a>&#128216;鈴木茂雄</p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1277211193908662275" target="_blank">21:04:12</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1277210569083256833">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1277210569083256833" target="_blank">6月28日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">ハイク・カプセル（４４２１）＜サングラス水平線に飽きてをり　原桐子＞『ツイッタ ー版・現代俳句アンソロジー』<a href="https://t.co/U3eyXM4pg2" target="_blank" title="http://ed.by"><span class="invisible">http://</span>ed.by</a> ss  <a href="https://twitter.com/hashtag/jhaiku?src=hash" target="_blank">#jhaiku</a> <a href="https://twitter.com/hashtag/haiku?src=hash" target="_blank">#haiku</a> <a href="https://twitter.com/hashtag/micropoetry?src=hash" target="_blank">#micropoetry</a> <a href="https://twitter.com/hashtag/%E4%BF%B3%E5%8F%A5?src=hash" target="_blank">#俳句</a> <a href="https://twitter.com/hashtag/%E8%A9%A9?src=hash" target="_blank">#詩</a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1277210569083256833" target="_blank">21:01:43</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1277210251536723968">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1277210251536723968" target="_blank">6月28日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">＜花びらはしずかにながれすぎにけり水のおもてのわれを砕いて　野樹かずみ＞<a href="https://twitter.com/hashtag/%E7%8F%BE%E4%BB%A3%E7%9F%AD%E6%AD%8C%E3%82%A2%E3%83%B3%E3%82%BD%E3%83%AD%E3%82%B8%E3%83%BC?src=hash" target="_blank">＃現代短歌アンソロジー</a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1277210251536723968" target="_blank">21:00:28</a></p>
+</article><!-- /tl-tweet -->
+
+
+</section><!-- /tl-tweets -->
+
+<h3 class="title01" id="d200627">
+<a href="https://twilog.org/haiku_capsule/date-200627">2020年06月27日(土)</a><span>4 tweets</span><a href="javascript:void(0);" onclick="show_srcbtn('200627');return false;" title="ソースを取得" class="bt-source">source</a>
+<p id="s200627" class="sbt-box"></p>
+</h3>
+
+<section class="tl-tweets">
+<article class="tl-tweet" id="tw1276888145112387585">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1276888145112387585" target="_blank">6月27日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">6/28 絵も音も運ぶ電波や青あらし<br><a href="https://twitter.com/hashtag/%E4%BF%B3%E5%8F%A5%E6%97%A5%E8%A8%98365?src=hash" target="_blank">＃俳句日記365</a>&#128216;鈴木茂雄<br>ーーーーーーーーーー</p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1276888145112387585" target="_blank">23:40:31</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1276887903285571584">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1276887903285571584" target="_blank">6月27日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">ハイク・カプセル（４４２０）＜仰向けに死ぬこと日傘たたむこと　大下真理子＞『ツイッタ ー版・現代俳句アンソロジー』<a href="https://t.co/U3eyXM4pg2" target="_blank" title="http://ed.by"><span class="invisible">http://</span>ed.by</a> ss  <a href="https://twitter.com/hashtag/jhaiku?src=hash" target="_blank">#jhaiku</a> <a href="https://twitter.com/hashtag/haiku?src=hash" target="_blank">#haiku</a> <a href="https://twitter.com/hashtag/micropoetry?src=hash" target="_blank">#micropoetry</a> <a href="https://twitter.com/hashtag/%E4%BF%B3%E5%8F%A5?src=hash" target="_blank">#俳句</a> <a href="https://twitter.com/hashtag/%E8%A9%A9?src=hash" target="_blank">#詩</a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1276887903285571584" target="_blank">23:39:34</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1276887722720849921">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1276887722720849921" target="_blank">6月27日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">＜手を振っているばかりだね僕たちは別な海辺の町で生まれて　笠木拓＞<a href="https://twitter.com/hashtag/%E7%8F%BE%E4%BB%A3%E7%9F%AD%E6%AD%8C%E3%82%A2%E3%83%B3%E3%82%BD%E3%83%AD%E3%82%B8%E3%83%BC?src=hash" target="_blank">＃現代短歌アンソロジー</a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1276887722720849921" target="_blank">23:38:51</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1276634132701835264">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1276634132701835264" target="_blank">6月27日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/twryossy" target="_blank"><img src="https://pbs.twimg.com/profile_images/1198110326/IMGP1847_normal.JPG" alt="@twryossy" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/twryossy" target="_blank"><strong>HAYASHI Yoshio</strong><span>@twryossy</span></a></p>
+<p class="tl-text"> 【今日の季語3834&lt;912】昼顔(ひるがお)：仲夏の植物季語。ヒルガオ科の多年草で山野に自生するが、都会の空き地などに姿を見せることもある。蔓を伸ばして拡がり、この時季に淡い紅色の可憐な花を付ける。◆昼顔や流浪はわれにゆるされず(鈴木真砂女) <a href="https://twitter.com/hashtag/kigo?src=hash" target="_blank">#kigo</a><p class="tl-retweet">Retweeted by <a href="https://twitter.com/haiku_capsule" target="_blank">ハイク・カプセル</a></p></p>
+
+
+<p class="tl-posted">retweeted at <a href="https://twitter.com/haiku_capsule/status/1276634132701835264" target="_blank">06:51:10</a></p>
+</article><!-- /tl-tweet -->
+
+
+</section><!-- /tl-tweets -->
+
+<h3 class="title01" id="d200626">
+<a href="https://twilog.org/haiku_capsule/date-200626">2020年06月26日(金)</a><span>6 tweets</span><a href="javascript:void(0);" onclick="show_srcbtn('200626');return false;" title="ソースを取得" class="bt-source">source</a>
+<p id="s200626" class="sbt-box"></p>
+</h3>
+
+<section class="tl-tweets">
+<article class="tl-tweet" id="tw1276522562684547072">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1276522562684547072" target="_blank">6月26日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">6/27 絢爛の黴を纏ひて古書眠る<br><a href="https://twitter.com/hashtag/%E4%BF%B3%E5%8F%A5%E6%97%A5%E8%A8%98365?src=hash" target="_blank">＃俳句日記365</a>&#128216;鈴木茂雄</p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1276522562684547072" target="_blank">23:27:50</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1276521457217007621">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1276521457217007621" target="_blank">6月26日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">ハイク・カプセル（４４１９）＜クリムトの接吻のうぜん咲きのぼる　原桐子＞『ツイッタ ー版・現代俳句アンソロジー』<a href="https://t.co/U3eyXM4pg2" target="_blank" title="http://ed.by"><span class="invisible">http://</span>ed.by</a> ss  <a href="https://twitter.com/hashtag/jhaiku?src=hash" target="_blank">#jhaiku</a> <a href="https://twitter.com/hashtag/haiku?src=hash" target="_blank">#haiku</a> <a href="https://twitter.com/hashtag/micropoetry?src=hash" target="_blank">#micropoetry</a> <a href="https://twitter.com/hashtag/%E4%BF%B3%E5%8F%A5?src=hash" target="_blank">#俳句</a> <a href="https://twitter.com/hashtag/%E8%A9%A9?src=hash" target="_blank">#詩</a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1276521457217007621" target="_blank">23:23:26</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1276505040732123137">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1276505040732123137" target="_blank">6月26日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">（つづき）<br>アナタ迄私を重ねてゆくパズル　近藤真奈<br>詐欺師かもしれない月の匂いして　野間幸恵<br>果樹園のスキマに植える生殖器　竹井紫乙<br>狐火やわたしは青い豆を煮る　中村日名子<br>つまりそのつまりすみれということで　柴田美都<br><a href="https://twitter.com/hashtag/%E5%B7%9D%E6%9F%B3?src=hash" target="_blank">＃川柳</a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1276505040732123137" target="_blank">22:18:12</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1276504834615603201">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1276504834615603201" target="_blank">6月26日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">季刊『川柳杜人』2020 夏号をご恵送いただきました。ありがとうございます。<br><br>マスクの街卵になって立ち止まる　加藤久子<br>大丈夫　首が外れただけだから　鈴木逸志<br>春なのに悪事の誘いありません　広瀬ちえみ<br>走り去る蜥蜴キレイを見せながら　石田都<br>入口のすべてを犀に集められ　月波与生<br>（つづき） <span class="invisible">https://</span><a href="https://t.co/zPwQLOO67U" target="_blank">pic.twitter.com/zPwQLOO67U</a></p>
+<p class="tl-image"><a href="https://t.co/zPwQLOO67U" target="_blank" data-lity data-lity-target="https://pbs.twimg.com/media/EbcOYMlUEAEiQKR.jpg"><img src="https://pbs.twimg.com/media/EbcOYMlUEAEiQKR.jpg:small" class="tl-image" width="360" height="480"></a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1276504834615603201" target="_blank">22:17:23</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1276267949322452992">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1276267949322452992" target="_blank">6月26日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text"><a href="https://twitter.com/hashtag/%E3%82%A4%E3%83%9E%E3%82%BD%E3%83%A9?src=hash" target="_blank">#イマソラ</a> <span class="invisible">https://</span><a href="https://t.co/EqG9Fp9nSv" target="_blank">pic.twitter.com/EqG9Fp9nSv</a></p>
+<p class="tl-image"><a href="https://t.co/EqG9Fp9nSv" target="_blank" data-lity data-lity-target="https://pbs.twimg.com/media/EbY27xiVAAEg5L0.jpg"><img src="https://pbs.twimg.com/media/EbY27xiVAAEg5L0.jpg:small" class="tl-image" width="480" height="360"></a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1276267949322452992" target="_blank">06:36:05</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1276266281818152960">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1276266281818152960" target="_blank">6月26日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/twryossy" target="_blank"><img src="https://pbs.twimg.com/profile_images/1198110326/IMGP1847_normal.JPG" alt="@twryossy" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/twryossy" target="_blank"><strong>HAYASHI Yoshio</strong><span>@twryossy</span></a></p>
+<p class="tl-text"> 【今日の季語3833&lt;911】梅雨寒(つゆざむ)：仲夏の時候季語で「梅雨冷(つゆびえ)」とも。梅雨前線の停滞によって曇りや雨の日が続くこの時季は、夏とはいえ肌寒さを覚えて体調を崩しやすい。◆梅雨寒の傘ふるふると畳みけり(高澤良一) <a href="https://twitter.com/hashtag/kigo?src=hash" target="_blank">#kigo</a><p class="tl-retweet">Retweeted by <a href="https://twitter.com/haiku_capsule" target="_blank">ハイク・カプセル</a></p></p>
+
+
+<p class="tl-posted">retweeted at <a href="https://twitter.com/haiku_capsule/status/1276266281818152960" target="_blank">06:29:28</a></p>
+</article><!-- /tl-tweet -->
+
+
+</section><!-- /tl-tweets -->
+
+<h3 class="title01" id="d200625">
+<a href="https://twilog.org/haiku_capsule/date-200625">2020年06月25日(木)</a><span>9 tweets</span><a href="javascript:void(0);" onclick="show_srcbtn('200625');return false;" title="ソースを取得" class="bt-source">source</a>
+<p id="s200625" class="sbt-box"></p>
+</h3>
+
+<section class="tl-tweets">
+<article class="tl-tweet" id="tw1276136376388354048">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1276136376388354048" target="_blank">6月25日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">6/26 拝啓と敬具の間さみだるる<br><a href="https://twitter.com/hashtag/%E4%BF%B3%E5%8F%A5%E6%97%A5%E8%A8%98365?src=hash" target="_blank">＃俳句日記365</a>&#128216;鈴木茂雄</p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1276136376388354048" target="_blank">21:53:16</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1276135954646888448">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1276135954646888448" target="_blank">6月25日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">ハイク・カプセル（４４１８）＜あさがほの紺の遺伝子花いちもんめ　高石直幸＞『ツイッタ ー版・現代俳句アンソロジー』<a href="https://t.co/U3eyXM4pg2" target="_blank" title="http://ed.by"><span class="invisible">http://</span>ed.by</a> ss  <a href="https://twitter.com/hashtag/jhaiku?src=hash" target="_blank">#jhaiku</a> <a href="https://twitter.com/hashtag/haiku?src=hash" target="_blank">#haiku</a> <a href="https://twitter.com/hashtag/micropoetry?src=hash" target="_blank">#micropoetry</a> <a href="https://twitter.com/hashtag/%E4%BF%B3%E5%8F%A5?src=hash" target="_blank">#俳句</a> <a href="https://twitter.com/hashtag/%E8%A9%A9?src=hash" target="_blank">#詩</a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1276135954646888448" target="_blank">21:51:35</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1276135665147604992">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1276135665147604992" target="_blank">6月25日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">＜どこか遠くでわたしを濡らしていた雨がこの世へ移りこの世を濡らす     大森静佳＞ <a href="https://twitter.com/hashtag/%E7%8F%BE%E4%BB%A3%E7%9F%AD%E6%AD%8C%E3%82%A2%E3%83%B3%E3%82%BD%E3%83%AD%E3%82%B8%E3%83%BC?src=hash" target="_blank">#現代短歌アンソロジー</a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1276135665147604992" target="_blank">21:50:26</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1276102731464228864">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1276102731464228864" target="_blank">6月25日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text"><a href="https://t.co/9v5GXtsHVv" target="_blank" title="https://twitter.com/ozawa_jimusho/status/1276046086533087232"><span class="invisible">https://</span>twitter.com/ozawa_jimusho/<span class="invisible">status/1276046086533087232</span>…</a> <span class="invisible">https://</span><a href="https://t.co/OPJo0tnZ2x" target="_blank">pic.twitter.com/OPJo0tnZ2x</a></p>
+<p class="tl-image"><a href="https://t.co/OPJo0tnZ2x" target="_blank" data-lity data-lity-target="https://pbs.twimg.com/media/EbWgqyMVcAIrN3W.jpg"><img src="https://pbs.twimg.com/media/EbWgqyMVcAIrN3W.jpg:small" class="tl-image" width="442" height="480"></a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1276102731464228864" target="_blank">19:39:34</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1276028828242984960">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1276028828242984960" target="_blank">6月25日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/twryossy" target="_blank"><img src="https://pbs.twimg.com/profile_images/1198110326/IMGP1847_normal.JPG" alt="@twryossy" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/twryossy" target="_blank"><strong>HAYASHI Yoshio</strong><span>@twryossy</span></a></p>
+<p class="tl-text"> 【今日の季語3832&lt;910】螢(ほたる)：仲夏の生類季語で「初螢」「夕蛍」「源氏螢」などの傍題も。歌文の世界では古くからこれに人情を托して、恋の思いを詠んだり身を離れる魂に見立てたりする対象として好まれてきた。◆ゆるやかに着てひとと逢ふ螢の夜(桂 信子) <a href="https://twitter.com/hashtag/kigo?src=hash" target="_blank">#kigo</a><p class="tl-retweet">Retweeted by <a href="https://twitter.com/haiku_capsule" target="_blank">ハイク・カプセル</a></p></p>
+
+
+<p class="tl-posted">retweeted at <a href="https://twitter.com/haiku_capsule/status/1276028828242984960" target="_blank">14:45:54</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1275917344317923328">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1275917344317923328" target="_blank">6月25日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">6/25 草茂るじかん的にはジュラ紀から<br><a href="https://twitter.com/hashtag/%E4%BF%B3%E5%8F%A5%E6%97%A5%E8%A8%98364?src=hash" target="_blank">＃俳句日記364</a>&#128216;鈴木茂雄</p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1275917344317923328" target="_blank">07:22:54</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1275916761506832384">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1275916761506832384" target="_blank">6月25日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">ハイク・カプセル（４４１７）＜滝をおとしている静かなる読書　永末恵子＞『ツイッタ ー版・現代俳句アンソロジー』<a href="https://t.co/U3eyXM4pg2" target="_blank" title="http://ed.by"><span class="invisible">http://</span>ed.by</a> ss  <a href="https://twitter.com/hashtag/jhaiku?src=hash" target="_blank">#jhaiku</a> <a href="https://twitter.com/hashtag/haiku?src=hash" target="_blank">#haiku</a> <a href="https://twitter.com/hashtag/micropoetry?src=hash" target="_blank">#micropoetry</a> <a href="https://twitter.com/hashtag/%E4%BF%B3%E5%8F%A5?src=hash" target="_blank">#俳句</a> <a href="https://twitter.com/hashtag/%E8%A9%A9?src=hash" target="_blank">#詩</a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1275916761506832384" target="_blank">07:20:35</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1275916292709482501">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1275916292709482501" target="_blank">6月25日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">＜みづいろにひたされつづける廊下を歩くこの天体の淵のあたりを　笹原玉子＞<a href="https://twitter.com/hashtag/%E7%8F%BE%E4%BB%A3%E7%9F%AD%E6%AD%8C%E3%82%A2%E3%83%B3%E3%82%BD%E3%83%AD%E3%82%B8%E3%83%BC?src=hash" target="_blank">#現代短歌アンソロジー</a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1275916292709482501" target="_blank">07:18:44</a></p>
+</article><!-- /tl-tweet -->
+
+<article class="tl-tweet" id="tw1275877197371174913">
+<p class="tl-time"><a href="https://twitter.com/haiku_capsule/status/1275877197371174913" target="_blank">6月25日</a></p>
+<p class="tl-icon"><a href="https://twitter.com/haiku_capsule" target="_blank"><img src="https://pbs.twimg.com/profile_images/1281563934655307777/mdatyKpr_normal.jpg" alt="@haiku_capsule" width="48" height="48"></a></p>
+<p class="tl-name"><a href="https://twitter.com/haiku_capsule" target="_blank"><strong>ハイク・カプセル</strong><span>@haiku_capsule</span></a></p>
+<p class="tl-text">夜明け前。4:38 a.m. <span class="invisible">https://</span><a href="https://t.co/1Pyu8oHrpj" target="_blank">pic.twitter.com/1Pyu8oHrpj</a></p>
+<p class="tl-image"><a href="https://t.co/1Pyu8oHrpj" target="_blank" data-lity data-lity-target="https://pbs.twimg.com/media/EbTTiIjUcAIvW7p.jpg"><img src="https://pbs.twimg.com/media/EbTTiIjUcAIvW7p.jpg:small" class="tl-image" width="480" height="360"></a><a href="https://t.co/1Pyu8oHrpj" target="_blank" data-lity data-lity-target="https://pbs.twimg.com/media/EbTTiI2UEAA7b_F.jpg"><img src="https://pbs.twimg.com/media/EbTTiI2UEAA7b_F.jpg:small" class="tl-image" width="480" height="360"></a></p>
+
+
+<p class="tl-posted">posted at <a href="https://twitter.com/haiku_capsule/status/1275877197371174913" target="_blank">04:43:23</a></p>
+</article><!-- /tl-tweet -->
+
+
+</section><!-- /tl-tweets -->
+
+
+<ul class="nav-link mb10 mt0">
+	<li class="nav-prev"><span>前のページ</span></li>
+	<li class="nav-user"><a href="https://twilog.org/haiku_capsule">@haiku_capsule</a></li>
+	<li class="nav-next"><a href="https://twilog.org/haiku_capsule/2">次のページ</a></li>
+</ul>
+
+
+
+<div id="ad-main-bottom">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Twilog メイン下部 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:336px;height:280px"
+     data-ad-client="ca-pub-2613098592193304"
+ 	 data-ad-region="ad1"
+  	 data-color-link = "D4173D"
+     data-ad-slot="4924708346"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</div>
+
+
+
+
+<img src="https://img.twilog.org/kk1-3t387.gif" style="display:none;">
+
+</div><!-- /content -->
+
+<aside id="sidebar">
+
+<section class="sidebox sidebox-update">
+<form class="uf" action="https://twilog.org/update.rb" method="get">
+<input type="submit" class="ub" value="最新の情報に更新する">
+<input type="hidden" name="id" value="haiku_capsule">
+<input type="hidden" name="order" value="">
+<input type="hidden" name="filter" value="">
+<input type="hidden" name="kind" value="reg">
+</form>
+<p><span>last update 07/13 17:26</span></p>
+</section>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Twilog サイド上部 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:300px;height:250px"
+     data-ad-client="ca-pub-2613098592193304"
+ 	 data-ad-region="ad1"
+     data-ad-slot="1706159544"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+<section class="sidebox sidebox-search">
+<h2 class="side-title">Search</h2>
+<div class="side-pd">
+
+<form id="wsearch-pc" method="get" onsubmit="word_search('pc');return false;" action="https://twilog.org/haiku_capsule/search">
+<input type="hidden" name="param" value="desc">
+<input type="text" name="word" value="" placeholder="ツイート検索" class="input01">
+<input type="submit" value="検索" class="submit01">
+<div class="search-opt">
+<p class="ta-c mb0">
+<input type="radio" class="ao-a" id="ao-a-pc" name="ao" value="a" checked> <label for="ao-a-pc">AND検索</label>　
+<input type="radio" class="ao-o" id="ao-o-pc" name="ao" value="o"> <label for="ao-o-pc">OR検索</label>
+</p>
+
+</div>
+</form>
+</div><!-- /side-pd -->
+</section>
+
+<section class="sidebox sidebox-cal" id="side-calendar">
+<p class="cal-title"><a href="https://twilog.org/haiku_capsule/month-2007">2020年7月</a></p>
+<ul class="cal-nav">
+	<li class="ic-arrow-l"><a href="javascript:void(0)" onclick="change_calendar('id=haiku_capsule&month=2006&date=&order=desc&filter=');">前の月へ</a></li>
+	<li class="ic-arrow-r"><span>次の月へ</span></li>
+</ul>
+<table id="cal">
+<tr><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th>土</th><th>日</th></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td><td><a href="https://twilog.org/haiku_capsule/date-200701">1</a></td><td>2</td><td>3</td><td>4</td><td><a href="https://twilog.org/haiku_capsule/date-200705">5</a></td></tr>
+<tr><td><a href="https://twilog.org/haiku_capsule/date-200706">6</a></td><td><a href="https://twilog.org/haiku_capsule/date-200707">7</a></td><td>8</td><td>9</td><td><a href="https://twilog.org/haiku_capsule/date-200710">10</a></td><td>11</td><td><a href="https://twilog.org/haiku_capsule/date-200712">12</a></td></tr>
+<tr><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td></tr>
+<tr><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td></tr>
+<tr><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+</table>
+<p class="cal-link"><a href="https://twilog.org/haiku_capsule/date-190714">1年前の今日のツイートを見る</a></p>
+
+
+</section>
+
+<section class="sidebox" id="side-recent">
+<h2 class="side-title">Recent</h2>
+<ul class="side-list wide">
+<li><a href="https://twilog.org/haiku_capsule/date-200712">07月12日(日) <span>1</span></a></li>
+<li><a href="https://twilog.org/haiku_capsule/date-200710">07月10日(金) <span>2</span></a></li>
+<li><a href="https://twilog.org/haiku_capsule/date-200707">07月07日(火) <span>6</span></a></li>
+<li><a href="https://twilog.org/haiku_capsule/date-200706">07月06日(月) <span>2</span></a></li>
+<li><a href="https://twilog.org/haiku_capsule/date-200705">07月05日(日) <span>15</span></a></li>
+<li><a href="https://twilog.org/haiku_capsule/date-200701">07月01日(水) <span>1</span></a></li>
+<li><a href="https://twilog.org/haiku_capsule/date-200630">06月30日(火) <span>5</span></a></li>
+<li><a href="https://twilog.org/haiku_capsule/date-200629">06月29日(月) <span>1</span></a></li>
+<li><a href="https://twilog.org/haiku_capsule/date-200628">06月28日(日) <span>3</span></a></li>
+<li><a href="https://twilog.org/haiku_capsule/date-200627">06月27日(土) <span>4</span></a></li>
+
+</ul>
+<p class="side-more">&nbsp;</p>
+</section>
+
+
+<section class="sidebox" id="side-archives">
+<h2 class="side-title">Archives</h2>
+<ul class="side-list">
+<li><a href="https://twilog.org/haiku_capsule/monthlist-2007" class="side-list-icon" title="日別ツイート一覧"><img src="https://twilog.org/img-dir/user-ic-list.png" alt="" width="27" height="18"></a><a href="https://twilog.org/haiku_capsule/month-2007">2020年07月<span>27</span></a></li><li><a href="https://twilog.org/haiku_capsule/monthlist-2006" class="side-list-icon" title="日別ツイート一覧"><img src="https://twilog.org/img-dir/user-ic-list.png" alt="" width="27" height="18"></a><a href="https://twilog.org/haiku_capsule/month-2006">2020年06月<span>164</span></a></li><li><a href="https://twilog.org/haiku_capsule/monthlist-2005" class="side-list-icon" title="日別ツイート一覧"><img src="https://twilog.org/img-dir/user-ic-list.png" alt="" width="27" height="18"></a><a href="https://twilog.org/haiku_capsule/month-2005">2020年05月<span>250</span></a></li><li><a href="https://twilog.org/haiku_capsule/monthlist-2004" class="side-list-icon" title="日別ツイート一覧"><img src="https://twilog.org/img-dir/user-ic-list.png" alt="" width="27" height="18"></a><a href="https://twilog.org/haiku_capsule/month-2004">2020年04月<span>287</span></a></li><li><a href="https://twilog.org/haiku_capsule/monthlist-2003" class="side-list-icon" title="日別ツイート一覧"><img src="https://twilog.org/img-dir/user-ic-list.png" alt="" width="27" height="18"></a><a href="https://twilog.org/haiku_capsule/month-2003">2020年03月<span>124</span></a></li><li><a href="https://twilog.org/haiku_capsule/monthlist-2002" class="side-list-icon" title="日別ツイート一覧"><img src="https://twilog.org/img-dir/user-ic-list.png" alt="" width="27" height="18"></a><a href="https://twilog.org/haiku_capsule/month-2002">2020年02月<span>134</span></a></li><li><a href="https://twilog.org/haiku_capsule/monthlist-2001" class="side-list-icon" title="日別ツイート一覧"><img src="https://twilog.org/img-dir/user-ic-list.png" alt="" width="27" height="18"></a><a href="https://twilog.org/haiku_capsule/month-2001">2020年01月<span>113</span></a></li><li><a href="https://twilog.org/haiku_capsule/monthlist-1912" class="side-list-icon" title="日別ツイート一覧"><img src="https://twilog.org/img-dir/user-ic-list.png" alt="" width="27" height="18"></a><a href="https://twilog.org/haiku_capsule/month-1912">2019年12月<span>203</span></a></li><li><a href="https://twilog.org/haiku_capsule/monthlist-1911" class="side-list-icon" title="日別ツイート一覧"><img src="https://twilog.org/img-dir/user-ic-list.png" alt="" width="27" height="18"></a><a href="https://twilog.org/haiku_capsule/month-1911">2019年11月<span>207</span></a></li><li><a href="https://twilog.org/haiku_capsule/monthlist-1910" class="side-list-icon" title="日別ツイート一覧"><img src="https://twilog.org/img-dir/user-ic-list.png" alt="" width="27" height="18"></a><a href="https://twilog.org/haiku_capsule/month-1910">2019年10月<span>140</span></a></li><li><a href="https://twilog.org/haiku_capsule/monthlist-1909" class="side-list-icon" title="日別ツイート一覧"><img src="https://twilog.org/img-dir/user-ic-list.png" alt="" width="27" height="18"></a><a href="https://twilog.org/haiku_capsule/month-1909">2019年09月<span>127</span></a></li><li><a href="https://twilog.org/haiku_capsule/monthlist-1908" class="side-list-icon" title="日別ツイート一覧"><img src="https://twilog.org/img-dir/user-ic-list.png" alt="" width="27" height="18"></a><a href="https://twilog.org/haiku_capsule/month-1908">2019年08月<span>152</span></a></li><li><a href="https://twilog.org/haiku_capsule/monthlist-1907" class="side-list-icon" title="日別ツイート一覧"><img src="https://twilog.org/img-dir/user-ic-list.png" alt="" width="27" height="18"></a><a href="https://twilog.org/haiku_capsule/month-1907">2019年07月<span>194</span></a></li><li><a href="https://twilog.org/haiku_capsule/monthlist-1906" class="side-list-icon" title="日別ツイート一覧"><img src="https://twilog.org/img-dir/user-ic-list.png" alt="" width="27" height="18"></a><a href="https://twilog.org/haiku_capsule/month-1906">2019年06月<span>266</span></a></li><li><a href="https://twilog.org/haiku_capsule/monthlist-1905" class="side-list-icon" title="日別ツイート一覧"><img src="https://twilog.org/img-dir/user-ic-list.png" alt="" width="27" height="18"></a><a href="https://twilog.org/haiku_capsule/month-1905">2019年05月<span>253</span></a></li>
+</ul>
+<p class="side-more"><a href="https://twilog.org/haiku_capsule/archives">すべて表示 &raquo;</a></p>
+</section>
+
+
+<section class="sidebox" id="side-friends">
+<h2 class="side-title">Friends</h2>
+<ul class="side-list">
+<li><span class="side-list-noicon"><img src="https://twilog.org/img-dir/user-ic-user.png" alt="" width="27" height="18"></span><a href="https://twilog.org/haiku_capsule/friends-kikko_no_blog">@kikko_no_blog<span>469</span></a></li>
+<li><span class="side-list-noicon"><img src="https://twilog.org/img-dir/user-ic-user.png" alt="" width="27" height="18"></span><a href="https://twilog.org/haiku_capsule/friends-543life">@543life<span>423</span></a></li>
+<li><a href="https://twilog.org/twryossy" class="side-list-icon" title="このユーザーのTwilogへ"><img src="https://twilog.org/img-dir/user-ic-user.png" alt="" width="27" height="18"></a><a href="https://twilog.org/haiku_capsule/friends-twryossy">@twryossy<span>406</span></a></li>
+<li><a href="https://twilog.org/trazomperche" class="side-list-icon" title="このユーザーのTwilogへ"><img src="https://twilog.org/img-dir/user-ic-user.png" alt="" width="27" height="18"></a><a href="https://twilog.org/haiku_capsule/friends-trazomperche">@trazomperche<span>335</span></a></li>
+<li><a href="https://twilog.org/no_ra_co" class="side-list-icon" title="このユーザーのTwilogへ"><img src="https://twilog.org/img-dir/user-ic-user.png" alt="" width="27" height="18"></a><a href="https://twilog.org/haiku_capsule/friends-no_ra_co">@no_ra_co<span>327</span></a></li>
+<li><span class="side-list-noicon"><img src="https://twilog.org/img-dir/user-ic-user.png" alt="" width="27" height="18"></span><a href="https://twilog.org/haiku_capsule/friends-smiki19631">@smiki19631<span>228</span></a></li>
+<li><span class="side-list-noicon"><img src="https://twilog.org/img-dir/user-ic-user.png" alt="" width="27" height="18"></span><a href="https://twilog.org/haiku_capsule/friends-Snoopy">@Snoopy<span>192</span></a></li>
+<li><span class="side-list-noicon"><img src="https://twilog.org/img-dir/user-ic-user.png" alt="" width="27" height="18"></span><a href="https://twilog.org/haiku_capsule/friends-nadeshiko106">@nadeshiko106<span>188</span></a></li>
+<li><span class="side-list-noicon"><img src="https://twilog.org/img-dir/user-ic-user.png" alt="" width="27" height="18"></span><a href="https://twilog.org/haiku_capsule/friends-kanon15">@kanon15<span>185</span></a></li>
+<li><span class="side-list-noicon"><img src="https://twilog.org/img-dir/user-ic-user.png" alt="" width="27" height="18"></span><a href="https://twilog.org/haiku_capsule/friends-zouhai_bot">@zouhai_bot<span>185</span></a></li>
+<li><span class="side-list-noicon"><img src="https://twilog.org/img-dir/user-ic-user.png" alt="" width="27" height="18"></span><a href="https://twilog.org/haiku_capsule/friends-10_key">@10_key<span>163</span></a></li>
+<li><a href="https://twilog.org/sjyszm" class="side-list-icon" title="このユーザーのTwilogへ"><img src="https://twilog.org/img-dir/user-ic-user.png" alt="" width="27" height="18"></a><a href="https://twilog.org/haiku_capsule/friends-sjyszm">@sjyszm<span>154</span></a></li>
+<li><a href="https://twilog.org/komeo_komeo" class="side-list-icon" title="このユーザーのTwilogへ"><img src="https://twilog.org/img-dir/user-ic-user.png" alt="" width="27" height="18"></a><a href="https://twilog.org/haiku_capsule/friends-komeo_komeo">@komeo_komeo<span>126</span></a></li>
+<li><a href="https://twilog.org/Copy__writing" class="side-list-icon" title="このユーザーのTwilogへ"><img src="https://twilog.org/img-dir/user-ic-user.png" alt="" width="27" height="18"></a><a href="https://twilog.org/haiku_capsule/friends-Copy__writing">@Copy__writing<span>115</span></a></li>
+<li><a href="https://twilog.org/funfunreibun" class="side-list-icon" title="このユーザーのTwilogへ"><img src="https://twilog.org/img-dir/user-ic-user.png" alt="" width="27" height="18"></a><a href="https://twilog.org/haiku_capsule/friends-funfunreibun">@funfunreibun<span>95</span></a></li>
+
+</ul>
+<p class="side-more"><a href="https://twilog.org/haiku_capsule/friends">すべて表示 &raquo;</a></p>
+
+</section>
+
+<section class="sidebox" id="side-hashtags">
+<h2 class="side-title">Hashtags</h2>
+<ul class="side-list wide">
+<li><a href="https://twilog.org/haiku_capsule/hashtags-jhaiku">#jhaiku<span>7514</span></a></li>
+<li><a href="https://twilog.org/haiku_capsule/hashtags-haiku">#haiku<span>6889</span></a></li>
+<li><a href="https://twilog.org/haiku_capsule/hashtags-kigo">#kigo<span>5619</span></a></li>
+<li><a href="https://twilog.org/haiku_capsule/hashtags-fhaiku">#fhaiku<span>4596</span></a></li>
+<li><a href="https://twilog.org/haiku_capsule/hashtags-kotekote">#kotekote<span>3476</span></a></li>
+<li><a href="https://twilog.org/haiku_capsule/hashtags-%E4%BF%B3%E5%8F%A5">#俳句<span>3283</span></a></li>
+<li><a href="https://twilog.org/haiku_capsule/hashtags-%E8%A9%A9">#詩<span>1579</span></a></li>
+<li><a href="https://twilog.org/haiku_capsule/hashtags-%E7%8F%BE%E4%BB%A3%E7%9F%AD%E6%AD%8C%E3%82%A2%E3%83%B3%E3%82%BD%E3%83%AD%E3%82%B8%E3%83%BC">#現代短歌アンソロジー<span>1352</span></a></li>
+<li><a href="https://twilog.org/haiku_capsule/hashtags-%E4%BF%B3%E5%8F%A5%E6%97%A5%E8%A8%98365">#俳句日記365<span>899</span></a></li>
+<li><a href="https://twilog.org/haiku_capsule/hashtags-Amazon">#Amazon<span>465</span></a></li>
+<li><a href="https://twilog.org/haiku_capsule/hashtags-tubuyakku">#tubuyakku<span>418</span></a></li>
+<li><a href="https://twilog.org/haiku_capsule/hashtags-micropoetry">#micropoetry<span>364</span></a></li>
+<li><a href="https://twilog.org/haiku_capsule/hashtags-%E4%BF%B3%E5%8F%A5%E6%96%AD%E6%83%B3">#俳句断想<span>256</span></a></li>
+<li><a href="https://twilog.org/haiku_capsule/hashtags-%E6%9A%A6%E7%94%9F%E6%B4%BB">#暦生活<span>230</span></a></li>
+<li><a href="https://twilog.org/haiku_capsule/hashtags-fhaikuf">#fhaikuf<span>115</span></a></li>
+
+</ul>
+<p class="side-more"><a href="https://twilog.org/haiku_capsule/hashtags">すべて表示 &raquo;</a></p>
+
+</section>
+
+
+<section class="sidebox sidebox-stats">
+<h2 class="side-title">Stats</h2>
+<p><a href="https://twilog.org/haiku_capsule/stats">Twilog Stats</a></p>
+</section>
+
+
+<section class="sidebox sidebox-feed">
+<h2 class="side-title">Feed</h2>
+<p><a href="https://twilog.org/rss-feed/haiku_capsule" target="_blank">RSS feed</a></p>
+</section>
+<div style="clear:both;"></div>
+
+
+<div id="ad-side-bottom">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Twilog サイド下部 大 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2613098592193304"
+     data-ad-slot="7199899562"
+     data-ad-format="auto"
+  	 data-color-link = "D4173D"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</div>
+
+
+
+
+</aside><!-- /sidebar -->
+</div><!-- /container -->
+
+<div class="f-pagetop">
+<p><a href="#pagetop">このページの先頭へ</a></p>
+</div>
+
+<div id="source-box"></div>
+
+<footer>
+<section>
+
+<p id="ti-f-twilog"><a href="https://twilog.org/">Twilog</a></p>
+<ul>
+	<li><a href="https://twilog.org/page-about">このサイトについて</a></li>
+	<li><a href="https://twilog.org/page-help">ヘルプ</a></li>
+	<li><a href="https://twilog.org/page-rule">利用規約</a></li>
+	<li><a href="https://twilog.org/page-about#author">運営者・お問い合わせ</a></li>
+</ul>
+
+<p><small>&copy; 2009-2020 <a href="http://www.ropross.net/" target="_blank">ropross.net</a>.
+Created by <a href="https://twitter.com/ropross" target="_blank">@ropross</a></small></p>
+
+
+
+</section>
+</footer>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
+<script>
+twemoji.parse(document.getElementById("content"));
+</script>
+
+<script src="https://twilog.org/js-dir/sp-slidemenu-min.js?2"></script>
+<script>
+var menu = SpSlidemenu({
+  main : "#slidemenu-main",
+  button : ".slidemenu-button",
+  slidemenu : ".slidemenu",
+  slidemenu_body : ".slidemenu-body",
+  slidemenu_content : ".slidemenu-content",
+  direction : 'right'
+});
+
+</script>
+
+</div><!-- END slidemenu-main -->
+
+</body>
+</html>
+

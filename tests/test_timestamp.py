@@ -60,15 +60,15 @@ def test__get_best_timestamps_6():
 def test__parse_timestamp_str_1():
     res = metahtml.timestamp.parse_timestamp_str('2019') 
     assert res is not None
-    assert res['timestamp_lo'] is not None
+    assert res['value']['lo'] is not None
 
 def test__parse_timestamp_str_2():
     res = metahtml.timestamp.parse_timestamp_str('2019-02') 
     assert res is not None
-    assert res['timestamp_lo'] is not None
+    assert res['value']['lo'] is not None
 
 def test__parse_timestamp_str_3():
     res = metahtml.timestamp.parse_timestamp_str('2019-02-01') 
     assert res is not None
-    assert res['timestamp_lo'] is not None
+    assert res['value']['lo'] is not None
 

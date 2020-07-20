@@ -219,8 +219,12 @@ def insert_golden_tests(urls, overwrite=False, verbose=False, recursively_added_
                     else:
                         is_article = 'FALSE'
 
+                    human_annotator = None
+                    if metahtml.timestamp['pattern']=='ld+json':
+                        human_annotator = 'machine'
+
                     rows.append({
-                        'human_annotator' : None ,
+                        'human_annotator' : human_annotator,
                         'hostname' : hostname,
                         'url' : url,
                         'download_date': date,
@@ -348,7 +352,6 @@ def test_golden(test):
 
     assert ( meta['lang'] is test['lang'] or 
              meta['lang']['lang'] == test['lang'] or
-             meta['lang']['lang'] == 'la' or # <-- it is an error that 'la' is sometimes returned, and this should be fixed
              not is_article
              )
 
