@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<!--[if IE 7 ]> <html class="oldie ie7"> <![endif]-->
+<!--[if IE 8 ]> <html class="oldie ie8"> <![endif]-->
+<!--[if IE 9 ]> <html class="oldie ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html> <!--<![endif]-->
+
+<head>
+    <base href="https://account.wolfram.com/login/">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#dd1100">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="preload" href="https://www.wolframcdn.com/fonts/source-sans-pro/1.0/SourceSansPro-Light.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://www.wolframcdn.com/fonts/source-sans-pro/1.0/SourceSansPro-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://www.wolframcdn.com/fonts/source-sans-pro/1.0/SourceSansPro-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" type="text/css" href="css/main.7c50e1.min.css">
+        <title>Sign In - Wolfram Cloud</title>
+</head>
+
+<body class="layout vertical">
+
+<main id="main-page-wrapper">
+    <div id="page-content">
+    <div id="sign-in" class="container">
+        <div id="wolf-oauth" class="center-block">
+            <form role="form" id="user-form" action="j_spring_security_check" method="post" novalidate>
+                <div id="form-logo">
+                    <div class=svg-image id=wolframcloud-logo></div>
+                </div>
+                <div id="form-container">
+                    <div id="form-main">
+                        <h3 class="red">Sign In with Your Wolfram ID</h3>
+                        <div id="form-input">
+                            <div class="form-group " id="wolfram-id">
+                                <label class="control-label">Email</label>
+                                <input path="email" type="email" class="form-control" name="j_username" value="">
+                            </div>
+                            <div class="form-group " id="pw">
+                                <label class="control-label">Password</label>
+                                <input path="password" type="password" class="form-control" name="j_password">
+                            </div>
+                            <div class="checkbox" id="remember">
+                                <label class="control-label">
+                                <input path="rememberMe" type="checkbox" name="j_staySignedIn" value="remember-me" checked>Remember me</label>
+                            </div>
+                        </div>
+                        <div class="layout horizontal center justified" id="form-actions">
+                            <button class="submit-btn btn-primary" id="sign-in-btn" name="login" type="submit" wal-event="'Sign in' button Clicked">Sign in</button>
+                            <a class="row-text text-right" target="_blank" href="forgot-password">
+                                <p class="no-margin">Forgot your password?</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <h4>Don't have a Wolfram ID?&nbsp;<a id="create-account" href="create" wal-event="'Create one' link Clicked">Create one</a>.</h4>
+                <input type="hidden" name="spring-security-redirect"/>
+                <input type="hidden" name="_csrf" value="581efc23-83ec-45cc-953d-083715ddc59b"/>
+                <input type="hidden" id="timeZone" name="timeZone" value=""/>
+            </form>
+        </div>
+    </div>
+</div>
+</main>
+<footer id="footer">
+    &copy;&nbsp;2020 Wolfram Research, Inc.&nbsp;<span class="pipe">|</span>&nbsp;<a href="https://www.wolfram.com/legal/terms/wolfram-id-terms.html" target="_blank" rel="noopener">Terms</a>&nbsp;<span class="pipe">|</span>&nbsp;<a href="https://www.wolfram.com/legal/privacy/wolfram-research.html" target="_blank" rel="noopener">Privacy</a>&nbsp;<span class="pipe">|</span>&nbsp;<a href="https://www.wolfram.com/support/contact/email/?topic=Account" target="_blank">Support</a></footer>
+
+<script src="https://www.wolframcdn.com/consent/cookie-consent.php" async></script>
+<script>
+   var locale = "en";
+   var trackingEnabled = "false";
+   var walTrackingUrl = "wal.wolfram.com";
+</script>
+<script src="js/polyfill.6f76e1.min.js" defer></script>
+    <script src="js/main.b2728c.min.js" defer></script>
+    <script src="https://www.wolframcdn.com/ajax/libs/jstimezonedetect/1.0.7/jstz.min.js"></script>
+   <script>
+      window.onload = function() {
+         document.getElementById('timeZone').value = jstz.determine().name() || '';
+         document.getElementById('create-account').onclick = function(e) {
+               e.preventDefault();
+               window.location.replace(document.getElementById('create-account').href);
+         };
+
+      document.getElementById('user-form').onsubmit = function() {
+         window.history.replaceState({}, 'Sign In - Wolfram Cloud', 'https://account.wolfram.com/login/oauth2/sign-in/redirect?ref=https://account.wolfram.com/');
+      };
+
+      };
+   </script></body>
+
+</html>
