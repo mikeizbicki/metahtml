@@ -5,7 +5,8 @@ from urllib.parse import urlparse
 import lxml
 import lxml.html
 
-from metahtml.timestamp import worst_tz_lo, worst_tz_hi
+from metahtml.timestamp import worst_tz_lo, worst_tz_hi, timestamp_range
+
 
 def get_article_type(parser, url, meta_best, fast=False):
 
@@ -28,43 +29,22 @@ def get_article_type(parser, url, meta_best, fast=False):
             })
 
     # pages with too many timestamps are probably not an article, 
-    # but instead a "category" page listing many article types;
-    if best_timestamps is not None and len(best_timestamps) != 0:
+    # but instead a "catalog" page listing many articles;
+    # FIXME: this check is very heuristic and needs more evaluation
+    if len(best_timestamps) > 5:
+        
+        # FIXME: 
+        # another way to do this check is to use the range of time the timestamps cover;
+        # it's not clear if this would lead to a more accurate check
+        # bests_range = timestamp_range(best_timestamps)
+        # or (len(best_timestamps) > 3 and abs(bests_range.total_seconds()) > 48*60*60):
 
-        # Some articles have several timestamps close together, however,
-        # possibly due to misconfigured publishing platforms;
-        # therefore we have to calculate the range of the timestamps appearing on the page first
-        min_lo = None
-        max_hi = None
-        for best in best_timestamps:
-            # modified timestamps include worst case timezones if no timezone specified
-            best_lo_mod = best['timestamp_lo']
-            if best_lo_mod.tzinfo is None:
-                best_lo_mod = copy.copy(best_lo_mod).replace(tzinfo = worst_tz_lo)
-            best_hi_mod = best['timestamp_hi']
-            if best_hi_mod.tzinfo is None:
-                best_hi_mod = copy.copy(best_hi_mod).replace(tzinfo = worst_tz_hi)
-
-            # update min/max
-            if min_lo is None or best_lo_mod < min_lo:
-                min_lo = best_lo_mod
-            if max_hi is None or best_hi_mod > max_hi:
-                max_hi = best_hi_mod
-
-        if min_lo is not None and max_hi is not None:
-            timestamp_range =  max_hi - min_lo
-
-        # the webpage is determined to be a catalog if there are 
-        # too many timestamps spaced too far apart
-        # NOTE: the selected range is 1 day if no timezones are given 
-        # FIXME: this check is very heuristic and needs more evaluation
-        if len(best_timestamps) > 5 or (len(best_timestamps) > 5 and abs(timestamp_range.total_seconds()) > 48*60*60):
-            article_types.append({
-                'article_type' : 'catalog',
-                'valid_for_hostname' : True,
-                'pattern' : 'len(best_timestamps)',
-                'pattern_details' : str(len(best_timestamps)),
-                })
+        article_types.append({
+            'article_type' : 'catalog',
+            'valid_for_hostname' : True,
+            'pattern' : 'len(best_timestamps)',
+            'pattern_details' : str(len(best_timestamps)),
+            })
 
     # xpath-based patterns
     # FIXME:
@@ -150,31 +130,38 @@ def get_article_type(parser, url, meta_best, fast=False):
         ( 'lci.fr', r'^/bien-etre/?$' ),
         ( 'marca.com', r'^/claro-mx/?$' ),
         ( 'news.un.org', r'^/es/node?$' ),
+        ( 'scvo.org', r'^/coronavirus-covid-19-information-guidance/resources/?$' ),
+        ( 'scvo.org', r'^/coronavirus-covid-19-information-guidance/?$' ),
+        ( 'scvo.org', r'^/support/running-your-organisation/leaving-lockdown/?$' ),
+        ( 'smnyct.org', r'^/informacion-general/?$' ),
         ( 'state.gov', r'^/press-releases/$' ),
         ( 'thanhnien.vn', r'^/doi-song/$' ),
+        ( 'thethaiger.com', r'^/thai-th/?$' ),
         ( 'treasury.gov', r'^/press-center/?$' ),
         ( 'treasury.gov', r'^/press-center/press-releases/?$' ),
         ( 'treasury.gov', r'^/resource-center/?$' ),
         ( 'viaouest.com', r'^/actualite-daesh.html' ),
+        ( 'weather.com', r'^/health/coronavirus/?$' ),
         ( 'whitehouse.gov', r'^/briefings-statements/?$' ),
 
         ( 'shutterstock.com', r'' ),
         ]
 
-    for hostname, regex in regexs:
-        # if in fast mode, then only search for elements that will apply to the hostname
-        valid_for_hostname = hostname is None or hostname in url_parsed.hostname
-        if fast and not valid_for_hostname:
-            continue
+    if len(url_parsed.query)<5:
+        for hostname, regex in regexs:
+            # if in fast mode, then only search for elements that will apply to the hostname
+            valid_for_hostname = hostname is None or hostname in url_parsed.hostname
+            if fast and not valid_for_hostname:
+                continue
 
-        # if pattern in url, then add article type
-        if re.search(regex, url_parsed.path):
-            article_types.append({
-                'article_type' : 'category',
-                'pattern' : 'regex',
-                'pattern_details' : regex,
-                'valid_for_hostname' : valid_for_hostname,
-                })
+            # if pattern in url, then add article type
+            if re.search(regex, url_parsed.path):
+                article_types.append({
+                    'article_type' : 'category',
+                    'pattern' : 'regex',
+                    'pattern_details' : regex,
+                    'valid_for_hostname' : valid_for_hostname,
+                    })
 
     # return results
     article_types.append({

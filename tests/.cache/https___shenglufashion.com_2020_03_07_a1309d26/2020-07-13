@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+		<script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>
+<title>March 7, 2020 &#8211; FASH455 Global Apparel &amp; Textile Trade and Sourcing</title>
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.remove(); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[i].remove();
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9zaGVuZ2x1ZmFzaGlvbi5jb20%3D"
+		+ "&wpcomid=34656981"
+		+ "&time=1594679617";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='//s2.wp.com' />
+<link rel='dns-prefetch' href='//s1.wp.com' />
+<link rel='dns-prefetch' href='//shenglufashion.wordpress.com' />
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link href='https://fonts.gstatic.com' crossorigin rel='preconnect' />
+<link rel="alternate" type="application/rss+xml" title="FASH455 Global Apparel &amp; Textile Trade and Sourcing &raquo; Feed" href="https://shenglufashion.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="FASH455 Global Apparel &amp; Textile Trade and Sourcing &raquo; Comments Feed" href="https://shenglufashion.com/comments/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s2.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1582709031h&ver=5.4.2"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s2.wp.com/_static/??-eJylkt1ugzAMRl9owcDGBBfTniUJLk2XP8WOGG+/0NJesKqrtEsnPp+ObMMchQ6e0TO4LKLNk/EEc9TBCXLG4rKrKk30AvcxHRIKPqJDKt8uSgaeS89C5psR/S/2Ck65lArTJNYI6KvXqgaVjR1B2aC/hDUqybQA8WLx/zFnxydizhTBCTnKFZdLyCymZManTXYRSbLxE/2BH7K1ggyjwNGswDZiaLq+H7q6HSAmdCa7G/o4UIfNo6nadSijIb49ivvsfrHbRkuHK1YSbZmh50fY5XCUKq5E4mp8OZCV+3QfTTe81W3b1O+nH9CR8rw=?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<style id='global-styles-inline-css'>
+:root {
+	--wp--preset--color--dark-gray: #1a1a1a;
+	--wp--preset--color--medium-gray: #686868;
+	--wp--preset--color--light-gray: #e5e5e5;
+	--wp--preset--color--white: #fff;
+	--wp--preset--color--blue-gray: #4d545c;
+	--wp--preset--color--bright-blue: #007acc;
+	--wp--preset--color--light-blue: #9adffd;
+	--wp--preset--color--dark-brown: #402b30;
+	--wp--preset--color--medium-brown: #774e24;
+	--wp--preset--color--dark-red: #640c1f;
+	--wp--preset--color--bright-red: #ff675f;
+	--wp--preset--color--yellow: #ffef8e;
+	--wp--preset--font-size--small: 13;
+	--wp--preset--font-size--normal: 16;
+	--wp--preset--font-size--medium: 20;
+	--wp--preset--font-size--large: 36;
+	--wp--preset--font-size--huge: 48;
+	--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);
+	--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);
+	--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);
+	--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);
+	--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);
+	--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);
+	--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);
+	--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);
+	--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);
+	--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);
+	--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);
+	--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);
+}
+
+</style>
+<link crossorigin="anonymous" rel='stylesheet' id='twentysixteen-fonts-css'  href='https://fonts.googleapis.com/css?family=Merriweather%3A400%2C700%2C900%2C400italic%2C700italic%2C900italic%7CMontserrat%3A400%2C700%7CInconsolata%3A400&#038;subset=latin%2Clatin-ext' media='all' />
+<link rel='stylesheet' id='all-css-4-1' href='https://s0.wp.com/_static/??-eJyNjcEKgCAQRH8oW6WCLtG/JEtZukm7Uv590qlL0G1484aBMyq7kyAJhKSiT7MjhhkJD1eKj1hb5gpeW1kwIENME8hZQGZ3CSIBS/b4Xy8iTH6323MxhsF0bd8bbRq93nKBQK0=?cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 10]>
+<link rel='stylesheet' id='twentysixteen-ie-css'  href='https://s2.wp.com/wp-content/themes/pub/twentysixteen/css/ie.css?m=1448353951h&#038;ver=20160816' media='all' />
+<![endif]-->
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentysixteen-ie8-css'  href='https://s2.wp.com/wp-content/themes/pub/twentysixteen/css/ie8.css?m=1493067000h&#038;ver=20160816' media='all' />
+<![endif]-->
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='twentysixteen-ie7-css'  href='https://s2.wp.com/wp-content/themes/pub/twentysixteen/css/ie7.css?m=1448353951h&#038;ver=20160816' media='all' />
+<![endif]-->
+<link rel='stylesheet' id='all-css-10-1' href='https://s1.wp.com/_static/??-eJx9jtEOwiAMRX9IrEvckj0YvwWwIgYoWUtwfy8zJtMX3u656Wku1KwsJcEkIA+MyJCLAamtWNm/BDGBZQaWNaCq2VI8Nj7AjxiLyqE4nxiqvzkUBqGsMrF8xZ7ikFQgq8VT+gN1D9ovPXVBE8i16D4bd+xJ2m7PjV72tJ1f42UYp9N5mod5fL4B2B9pLg==?cssminify=yes' type='text/css' media='all' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-12-1' href='https://s2.wp.com/_static/??-eJxti8sKgCAQAH8oW6IHdIi+xcR0Y3XFVfr96NAh6jQMzMCZlOFYbCwQqkpUHUaBxFLUThoziNcZo3vYGpEG/i9hg5oUseO3fKbibbACfgBHvGm6gzUs3Tj3UzcO/XRcZTE30g==?cssminify=yes' type='text/css' media='all' />
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJx9jusOgjAMhV/IMSDOwA/jswiUUbKbayfy9o54+UGMSZMmPd/pOXIJAl1v0gAk5zy3BHF9r2Kmg/wHCIs6XhkKi+4D994xON7Y4IktEF01/FCt79CASAQxA45zzOj3XDBJoyM5JmMEIYOAARmdFi9FVqppWlXWrQwRLCb7td4Rlv07niAXkiF1kpd8WAkfDOC2PhNbo7LhYs+Vao9lXVflaX4CX9ZqHw=='></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://shenglufashion.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress.com" />
+
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="March 7, 2020 &#8211; FASH455 Global Apparel &amp; Textile Trade and Sourcing" />
+<meta property="og:site_name" content="FASH455 Global Apparel &amp; Textile Trade and Sourcing" />
+<meta property="og:image" content="https://shenglufashion.files.wordpress.com/2018/08/cropped-sheng.jpg?w=200" />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:creator" content="@shenglu27" />
+<meta name="twitter:site" content="@shenglu27" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel='openid.server' href='https://shenglufashion.com/?openidserver=1' />
+<link rel='openid.delegate' href='https://shenglufashion.com/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://shenglufashion.com/osd.xml" title="FASH455 Global Apparel &#38; Textile Trade and Sourcing" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+<meta name="theme-color" content="#f8f8f8" />
+<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><style>
+.milestone-widget {
+	margin-bottom: 1em;
+}
+.milestone-content {
+	line-height: 2;
+	margin-top: 5px;
+	max-width: 17em;
+	padding: 0;
+	text-align: center;
+}
+.milestone-header {
+	background-color: #1a1a1a;
+	color: #ffffff;
+	line-height: 1.3;
+	margin: 0;
+	padding: .8em;
+}
+.milestone-header .event,
+.milestone-header .date {
+	display: block;
+}
+.milestone-header .event {
+	font-size: 120%;
+}
+.milestone-countdown .difference {
+	display: block;
+	font-size: 500%;
+	font-weight: bold;
+	line-height: 1.2;
+}
+.milestone-countdown,
+.milestone-message {
+	background-color: #ffffff;
+	border: 1px solid #d1d1d1;
+	border-top: 0;
+	color: #1a1a1a;
+	padding-bottom: 1em;
+}
+.milestone-message {
+	padding-top: 1em
+}
+</style>
+		<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta name="application-name" content="FASH455 Global Apparel &amp; Textile Trade and Sourcing" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="Copyright© 2012-2020 Dr. Sheng Lu, Associate Professor, Department of Fashion &amp; Apparel Studies, University of Delaware" /><meta name="msapplication-task" content="name=Subscribe;action-uri=https://shenglufashion.com/feed/;icon-uri=https://shenglufashion.files.wordpress.com/2018/08/cropped-sheng.jpg?w=16" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="description" content="1 post published by Sheng Lu on March 7, 2020" />
+<style type="text/css" id="custom-background-css">
+body.custom-background { background-color: #f8f8f8; }
+</style>
+	<style type="text/css" id="custom-colors-css">input[type=text],input[type=email],input[type=url],input[type=password],input[type=search],input[type=tel],input[type=number],textarea{background:#f7f7f7;color:#686868}input[type=text]:focus,input[type=email]:focus,input[type=url]:focus,input[type=password]:focus,input[type=search]:focus,input[type=tel]:focus,input[type=number]:focus,textarea:focus{background-color:#fff;color:#1a1a1a}body{background-color:#f8f8f8}</style>
+<link rel="icon" href="https://shenglufashion.files.wordpress.com/2018/08/cropped-sheng.jpg?w=32" sizes="32x32" />
+<link rel="icon" href="https://shenglufashion.files.wordpress.com/2018/08/cropped-sheng.jpg?w=192" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://shenglufashion.files.wordpress.com/2018/08/cropped-sheng.jpg?w=180" />
+<meta name="msapplication-TileImage" content="https://shenglufashion.files.wordpress.com/2018/08/cropped-sheng.jpg?w=270" />
+</head>
+
+<body class="archive date custom-background wp-embed-responsive customizer-styles-applied group-blog hfeed highlander-enabled highlander-light">
+<div id="page" class="site">
+	<div class="site-inner">
+		<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+		<header id="masthead" class="site-header" role="banner">
+			<div class="site-header-main">
+				<div class="site-branding">
+					<a href="https://shenglufashion.com/" class="site-logo-link" rel="home" itemprop="url"></a>
+											<p class="site-title"><a href="https://shenglufashion.com/" rel="home">FASH455 Global Apparel &amp; Textile Trade and Sourcing</a></p>
+												<p class="site-description">Copyright© 2012-2020 Dr. Sheng Lu, Associate Professor, Department of Fashion &amp; Apparel Studies, University of Delaware</p>
+									</div><!-- .site-branding -->
+
+									<button id="menu-toggle" class="menu-toggle">Menu</button>
+
+					<div id="site-header-menu" class="site-header-menu">
+													<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Primary Menu">
+								<div class="menu-fash455-container"><ul id="menu-fash455" class="primary-menu"><li id="menu-item-28" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-28"><a href="https://shenglufashion.com/">About FASH455</a></li>
+<li id="menu-item-3617" class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-3617"><a href="https://shenglufashion.com/blog/">Blog Articles</a></li>
+<li id="menu-item-3587" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3587"><a href="https://shenglufashion.com/exclusive-interview/">Interview</a></li>
+<li id="menu-item-3585" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3585"><a href="https://shenglufashion.com/term-project/">Project|Event</a></li>
+<li id="menu-item-4991" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4991"><a href="https://shenglufashion.com/publication/">Publication</a></li>
+<li id="menu-item-27" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-27"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/">Travels of a T-shirt</a>
+<ul class="sub-menu">
+	<li id="menu-item-43" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-43"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/part-i-cotton-king/">Part I Cotton King</a></li>
+	<li id="menu-item-3588" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3588"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/part-ii-made-in-china/">Part II Made in China</a></li>
+	<li id="menu-item-3589" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3589"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/part-iii-trouble-at-the-border/">Part III Trouble at the Border</a></li>
+	<li id="menu-item-3590" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3590"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/part-iv-my-t-shirt-finally-encounters-a-free-market/">Part IV My T-shirt Finally Encounters a Free Market</a></li>
+</ul>
+</li>
+<li id="menu-item-26" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26"><a href="https://shenglufashion.com/articles-and-resources/">Useful Resources</a></li>
+<li id="menu-item-3586" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3586"><a href="https://shenglufashion.com/contact/">Contact</a></li>
+</ul></div>							</nav><!-- .main-navigation -->
+						
+													<nav id="social-navigation" class="social-navigation" role="navigation" aria-label="Social Links Menu">
+								<div class="menu-fash455-container"><ul id="menu-fash455-1" class="social-links-menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-28"><a href="https://shenglufashion.com/"><span class="screen-reader-text">About FASH455</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-3617"><a href="https://shenglufashion.com/blog/"><span class="screen-reader-text">Blog Articles</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3587"><a href="https://shenglufashion.com/exclusive-interview/"><span class="screen-reader-text">Interview</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3585"><a href="https://shenglufashion.com/term-project/"><span class="screen-reader-text">Project|Event</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4991"><a href="https://shenglufashion.com/publication/"><span class="screen-reader-text">Publication</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-27"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/"><span class="screen-reader-text">Travels of a T-shirt</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26"><a href="https://shenglufashion.com/articles-and-resources/"><span class="screen-reader-text">Useful Resources</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3586"><a href="https://shenglufashion.com/contact/"><span class="screen-reader-text">Contact</span></a></li>
+</ul></div>							</nav><!-- .social-navigation -->
+											</div><!-- .site-header-menu -->
+							</div><!-- .site-header-main -->
+
+											<div class="header-image">
+					<a href="https://shenglufashion.com/" rel="home">
+						<img src="https://shenglufashion.files.wordpress.com/2016/07/cropped-cq5dam_thumbnail_470_264.png" srcset="" sizes="" width="1200" height="326" alt="FASH455 Global Apparel &amp; Textile Trade and Sourcing">
+					</a>
+				</div><!-- .header-image -->
+					</header><!-- .site-header -->
+
+		<div id="content" class="site-content">
+
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+
+		
+			<header class="page-header">
+				<h1 class="page-title">Day: March 7, 2020</h1>			</header><!-- .page-header -->
+
+			
+<article id="post-7573" class="post-7573 post type-post status-publish format-standard hentry category-asia category-china category-fash455-course-material category-international-trade category-sourcing tag-china tag-coronavirus tag-tariff-war">
+	<header class="entry-header">
+		
+		<h2 class="entry-title"><a href="https://shenglufashion.com/2020/03/07/tariff-war-coronavirus-u-s-apparel-imports-from-china-plummet-in-january-2020/" rel="bookmark">COVID-19 and U.S. Apparel Imports (Updated: March&nbsp;2020)</a></h2>	</header><!-- .entry-header -->
+
+	
+	
+	<div class="entry-content">
+		<p><a href="https://shenglufashion.files.wordpress.com/2020/03/untitled.jpg"><img data-attachment-id="7581" data-permalink="https://shenglufashion.com/2020/03/07/tariff-war-coronavirus-u-s-apparel-imports-from-china-plummet-in-january-2020/untitled-46/" data-orig-file="https://shenglufashion.files.wordpress.com/2020/03/untitled.jpg" data-orig-size="715,432" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="Untitled" data-image-description="" data-medium-file="https://shenglufashion.files.wordpress.com/2020/03/untitled.jpg?w=300" data-large-file="https://shenglufashion.files.wordpress.com/2020/03/untitled.jpg?w=715" class="  wp-image-7581 aligncenter" src="https://shenglufashion.files.wordpress.com/2020/03/untitled.jpg?w=593&#038;h=358" alt="Untitled" width="593" height="358" srcset="https://shenglufashion.files.wordpress.com/2020/03/untitled.jpg?w=593&amp;h=358 593w, https://shenglufashion.files.wordpress.com/2020/03/untitled.jpg?w=414&amp;h=250 414w, https://shenglufashion.files.wordpress.com/2020/03/untitled.jpg?w=300&amp;h=181 300w, https://shenglufashion.files.wordpress.com/2020/03/untitled.jpg 715w" sizes="(max-width: 593px) 85vw, 593px" /></a></p>
+<p><a href="https://shenglufashion.files.wordpress.com/2020/03/3.jpg"><img data-attachment-id="7576" data-permalink="https://shenglufashion.com/2020/03/07/tariff-war-coronavirus-u-s-apparel-imports-from-china-plummet-in-january-2020/3-62/" data-orig-file="https://shenglufashion.files.wordpress.com/2020/03/3.jpg" data-orig-size="1172,245" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="3" data-image-description="" data-medium-file="https://shenglufashion.files.wordpress.com/2020/03/3.jpg?w=300" data-large-file="https://shenglufashion.files.wordpress.com/2020/03/3.jpg?w=1172" class="  wp-image-7576 aligncenter" src="https://shenglufashion.files.wordpress.com/2020/03/3.jpg?w=576&#038;h=120" alt="3" width="576" height="120" srcset="https://shenglufashion.files.wordpress.com/2020/03/3.jpg?w=576&amp;h=120 576w, https://shenglufashion.files.wordpress.com/2020/03/3.jpg?w=1148&amp;h=240 1148w, https://shenglufashion.files.wordpress.com/2020/03/3.jpg?w=500&amp;h=105 500w, https://shenglufashion.files.wordpress.com/2020/03/3.jpg?w=300&amp;h=63 300w, https://shenglufashion.files.wordpress.com/2020/03/3.jpg?w=768&amp;h=161 768w, https://shenglufashion.files.wordpress.com/2020/03/3.jpg?w=1024&amp;h=214 1024w" sizes="(max-width: 576px) 85vw, 576px" /></a></p>
+<p>Jointly affected by the U.S.-China tariff war and the spread of the coronavirus, the value of U.S. apparel imports from China see a significant drop in January 2020.</p>
+<p>Specifically, <strong>the value of U.S. apparel imports from China went down by as much as 36.1% month over month in January 2020. </strong>As a result, China’s market shares also dropped from nearly 30% in 2019 to a new record low of 23.9% in January 2020. However, <strong>it is important to note that such a downward trend started in October 2019</strong>, as U.S. fashion brands and retailers were eager to reduce their exposure to sourcing from China.</p>
+<p><a href="https://shenglufashion.files.wordpress.com/2020/03/6.jpg"><img data-attachment-id="7578" data-permalink="https://shenglufashion.com/2020/03/07/tariff-war-coronavirus-u-s-apparel-imports-from-china-plummet-in-january-2020/6-18/" data-orig-file="https://shenglufashion.files.wordpress.com/2020/03/6.jpg" data-orig-size="608,432" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="6" data-image-description="" data-medium-file="https://shenglufashion.files.wordpress.com/2020/03/6.jpg?w=300" data-large-file="https://shenglufashion.files.wordpress.com/2020/03/6.jpg?w=608" class="  wp-image-7578 aligncenter" src="https://shenglufashion.files.wordpress.com/2020/03/6.jpg?w=540&#038;h=384" alt="6" width="540" height="384" srcset="https://shenglufashion.files.wordpress.com/2020/03/6.jpg?w=540&amp;h=384 540w, https://shenglufashion.files.wordpress.com/2020/03/6.jpg?w=352&amp;h=250 352w, https://shenglufashion.files.wordpress.com/2020/03/6.jpg?w=300&amp;h=213 300w, https://shenglufashion.files.wordpress.com/2020/03/6.jpg 608w" sizes="(max-width: 540px) 85vw, 540px" /></a></p>
+<p><strong>China’s lost market shares have been picked up mostly by other Asian suppliers, particularly Vietnam and Bangladesh.</strong> However, there is no evidence showing that U.S. fashion brands and retailers are giving more apparel sourcing orders to suppliers from the Western Hemisphere. In January 2020, only 8.1% of U.S. apparel imports came from CAFTA-DR members (down from 10.3% in 2019) and 3.7% from NAFTA members (down from 4.5% in 2019). <a href="https://www.just-style.com/analysis/us-apparel-sourcing-patterns-are-changing-heres-how_id138122.aspx">Recent studies show</a> that there&#8217;s more divergence in the products imported into the US  from Asian countries and the western hemisphere.</p>
+<p>Meanwhile, according to the latest <a href="http://www.customs.gov.cn/customs/xwfb34/302425/2879130/index.html">statistics from China’s Customs</a>, the value of China’s apparel exports in the first two months of 2020 dropped by nearly 20% from a year earlier.</p>
+<div id="jp-post-flair" class="sharedaddy sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-7573" class="share-facebook sd-button share-icon" href="https://shenglufashion.com/2020/03/07/tariff-war-coronavirus-u-s-apparel-imports-from-china-plummet-in-january-2020/?share=facebook" target="_blank" title="Click to share on Facebook"><span>Facebook</span></a></li><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-7573" class="share-twitter sd-button share-icon" href="https://shenglufashion.com/2020/03/07/tariff-war-coronavirus-u-s-apparel-imports-from-china-plummet-in-january-2020/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-linkedin"><a rel="nofollow noopener noreferrer" data-shared="sharing-linkedin-7573" class="share-linkedin sd-button share-icon" href="https://shenglufashion.com/2020/03/07/tariff-war-coronavirus-u-s-apparel-imports-from-china-plummet-in-january-2020/?share=linkedin" target="_blank" title="Click to share on LinkedIn"><span>LinkedIn</span></a></li><li class="share-email"><a rel="nofollow noopener noreferrer" data-shared="" class="share-email sd-button share-icon" href="https://shenglufashion.com/2020/03/07/tariff-war-coronavirus-u-s-apparel-imports-from-china-plummet-in-january-2020/?share=email" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li class="share-pinterest"><a rel="nofollow noopener noreferrer" data-shared="sharing-pinterest-7573" class="share-pinterest sd-button share-icon" href="https://shenglufashion.com/2020/03/07/tariff-war-coronavirus-u-s-apparel-imports-from-china-plummet-in-january-2020/?share=pinterest" target="_blank" title="Click to share on Pinterest"><span>Pinterest</span></a></li><li class="share-end"></li></ul></div></div></div></div>	</div><!-- .entry-content -->
+
+	<footer class="entry-footer">
+		<span class="byline"><span class="author vcard"><img alt='' src='https://2.gravatar.com/avatar/5a5b701cc84ff4a038900ca46cd0b294?s=49&#038;d=wavatar&#038;r=G' class='avatar avatar-49' height='49' width='49' /><span class="screen-reader-text">Author </span> <a class="url fn n" href="https://shenglufashion.com/author/shenglu27/">Sheng Lu</a></span></span><span class="posted-on"><span class="screen-reader-text">Posted on </span><a href="https://shenglufashion.com/2020/03/07/tariff-war-coronavirus-u-s-apparel-imports-from-china-plummet-in-january-2020/" rel="bookmark"><time class="entry-date published" datetime="2020-03-07T09:43:51-05:00">March 7, 2020</time><time class="updated" datetime="2020-05-06T21:11:26-04:00">May 6, 2020</time></a></span><span class="cat-links"><span class="screen-reader-text">Categories </span><a href="https://shenglufashion.com/category/asia/" rel="category tag">Asia</a>, <a href="https://shenglufashion.com/category/china/" rel="category tag">China</a>, <a href="https://shenglufashion.com/category/fash455-course-material/" rel="category tag">FASH455 course material</a>, <a href="https://shenglufashion.com/category/international-trade/" rel="category tag">International Trade</a>, <a href="https://shenglufashion.com/category/sourcing/" rel="category tag">Sourcing</a></span><span class="tags-links"><span class="screen-reader-text">Tags </span><a href="https://shenglufashion.com/tag/china/" rel="tag">China</a>, <a href="https://shenglufashion.com/tag/coronavirus/" rel="tag">Coronavirus</a>, <a href="https://shenglufashion.com/tag/tariff-war/" rel="tag">tariff war</a></span><span class="comments-link"><a href="https://shenglufashion.com/2020/03/07/tariff-war-coronavirus-u-s-apparel-imports-from-china-plummet-in-january-2020/#comments">2 Comments<span class="screen-reader-text"> on COVID-19 and U.S. Apparel Imports (Updated: March&nbsp;2020)</span></a></span>			</footer><!-- .entry-footer -->
+</article><!-- #post-## -->
+
+		</main><!-- .site-main -->
+	</div><!-- .content-area -->
+
+
+	<aside id="secondary" class="sidebar widget-area" role="complementary">
+		<section id="milestone_widget-2" class="widget milestone-widget"><h2 class="widget-title">Countdown Clock</h2><div class="milestone-content"><div class="milestone-header"><strong class="event">First Day of Class</strong><span class="date">September 2nd, 2020</span></div><div class="milestone-countdown"><span class="difference">51</span> <span class="label">days</span> to go.</div></div><!--milestone-content--></section><section id="blog_subscription-2" class="widget widget_blog_subscription jetpack_subscription_widget"><h2 class="widget-title"><label for="subscribe-field">Follow the Site via Email</label></h2>
+			<form
+				action="https://subscribe.wordpress.com"
+				method="post"
+				accept-charset="utf-8"
+				id=""
+			>
+									<p>Enter your email address to follow this blog and receive notifications of new posts by email.</p>
+					<p id="subscribe-email">
+						<input
+								type="text"
+								name="email"
+								
+								style="width: 95%; padding: 1px 10px"
+								placeholder="Enter your email address"
+								value=""
+								id=""
+							/>					</p>
+				
+				<p id="subscribe-submit">
+                    <input type="hidden" name="action" value="subscribe"/>
+                    <input type="hidden" name="blog_id" value="34656981"/>
+                    <input type="hidden" name="source" value="https://shenglufashion.com/2020/03/07/"/>
+                    <input type="hidden" name="sub-type" value="widget"/>
+                    <input type="hidden" name="redirect_fragment" value="blog_subscription-2"/>
+					<input type="hidden" id="_wpnonce" name="_wpnonce" value="11a5b607ab" />                    <button type="submit"
+	                    		                	                >
+	                    Follow                    </button>
+                </p>
+            </form>
+			
+</section><section id="search-2" class="widget widget_search"><h2 class="widget-title">SEARCH THE SITE</h2>
+<form role="search" method="get" class="search-form" action="https://shenglufashion.com/">
+	<label>
+		<span class="screen-reader-text">Search for:</span>
+		<input type="search" class="search-field" placeholder="Search &hellip;" value="" name="s" />
+	</label>
+	<button type="submit" class="search-submit"><span class="screen-reader-text">Search</span></button>
+</form>
+</section><section id="pages-2" class="widget widget_pages"><h2 class="widget-title">Recommended Blog Articles by Topics</h2>		<ul>
+			<li class="page_item page-item-5312"><a href="https://shenglufashion.com/recent-crs-reports-on-trade-issues/">CRS Reports on Trade&nbsp;Issues</a></li>
+<li class="page_item page-item-3910"><a href="https://shenglufashion.com/global-sourcing-practices-and-trends/">Global Apparel Sourcing Practices and&nbsp;Trends</a></li>
+<li class="page_item page-item-3920"><a href="https://shenglufashion.com/globalization-and-trade/">Globalization and Trade</a></li>
+<li class="page_item page-item-3915"><a href="https://shenglufashion.com/key-industry-statistics/">Key Textile and Apparel Trade&nbsp;Statistics</a></li>
+<li class="page_item page-item-3908"><a href="https://shenglufashion.com/textile-and-apparel-industry-around-the-world/">Textile &amp; Apparel Industry Around the&nbsp;World</a></li>
+<li class="page_item page-item-3900"><a href="https://shenglufashion.com/textile-and-apparel-trade-policy/">Textile &amp; Apparel Trade&nbsp;Policy</a></li>
+<li class="page_item page-item-5139"><a href="https://shenglufashion.com/timeline-of-trade-policy-in-the-trump-administration/">Timeline of Trade Policy in the Trump&nbsp;Administration</a></li>
+		</ul>
+			</section><section id="top-posts-3" class="widget widget_top-posts"><h2 class="widget-title">Most READ articles</h2><ul>				<li>
+					<a href="https://shenglufashion.com/2019/08/16/wto-reports-world-textile-and-apparel-trade-in-2018/" class="bump-view" data-bump-view="tp">WTO Reports World Textile and Apparel Trade in 2018</a>					</li>
+								<li>
+					<a href="https://shenglufashion.com/2020/04/19/covid-19-and-the-fashion-apparel-industry-updated-april-2020/" class="bump-view" data-bump-view="tp">COVID-19 and the Fashion Apparel Industry (updated April 2020)</a>					</li>
+								<li>
+					<a href="https://shenglufashion.com/2018/12/18/market-size-of-the-global-textile-and-apparel-industry-2016-to-2021-2022/" class="bump-view" data-bump-view="tp">Market Size of the Global Textile and Apparel Industry: 2016 to 2021/2022</a>					</li>
+								<li>
+					<a href="https://shenglufashion.com/2018/03/04/wage-level-for-garment-workers-in-the-world-updated-in-2017/" class="bump-view" data-bump-view="tp">Wage Level for Garment Workers in the World (updated in 2017)</a>					</li>
+								<li>
+					<a href="https://shenglufashion.com/2020/05/06/covid-19-and-u-s-apparel-imports-updated-may-2020/" class="bump-view" data-bump-view="tp">COVID-19 and U.S. Apparel Imports (Updated: May 2020)</a>					</li>
+								<li>
+					<a href="https://shenglufashion.com/" class="bump-view" data-bump-view="tp">About FASH455</a>					</li>
+								<li>
+					<a href="https://shenglufashion.com/2018/02/18/statistics-global-apparel-market-2018-2022/" class="bump-view" data-bump-view="tp">Statistics: Global Apparel Market 2018-2022</a>					</li>
+								<li>
+					<a href="https://shenglufashion.com/2017/06/06/market-size-of-the-global-textile-and-apparel-industry-2015-to-2020/" class="bump-view" data-bump-view="tp">Market Size of the Global Textile and Apparel Industry: 2015 to 2020</a>					</li>
+								<li>
+					<a href="https://shenglufashion.com/2020/06/12/eu-vietnam-free-trade-agreement-and-outlook-of-vietnams-apparel-export/" class="bump-view" data-bump-view="tp">EU-Vietnam Free Trade Agreement and Outlook of Vietnam’s Apparel Export</a>					</li>
+								<li>
+					<a href="https://shenglufashion.com/2020/05/08/new-reports-time-for-change-state-of-fashion-2020-coronavirus-update/" class="bump-view" data-bump-view="tp">New Reports: Time for Change &amp; State of Fashion 2020 (Coronavirus update)</a>					</li>
+				</ul></section><section id="twitter_timeline-2" class="widget widget_twitter_timeline"><h2 class="widget-title">Twitter</h2><a class="twitter-timeline" data-width="225" data-theme="light" data-border-color="#e8e8e8" data-tweet-limit="7" data-lang="EN" data-partner="jetpack" href="https://twitter.com/shenglu27" href="https://twitter.com/shenglu27">My Tweets</a></section><section id="recent-comments-3" class="widget widget_recent_comments"><h2 class="widget-title">Recent Comments</h2>				<table class="recentcommentsavatar" cellspacing="0" cellpadding="0" border="0">
+					<tr><td title="oberembt" class="recentcommentsavatartop" style="height:48px; width:48px;"><a href="http://misy262business.wordpress.com" rel="nofollow"><img alt='' src='https://0.gravatar.com/avatar/f9c7525c7037e2fe9a65a588ef1d6690?s=48&#038;d=wavatar&#038;r=G' class='avatar avatar-48' height='48' width='48' /></a></td><td class="recentcommentstexttop" style=""><a href="http://misy262business.wordpress.com" rel="nofollow">oberembt</a> on <a href="https://shenglufashion.com/2020/05/30/production-and-export-strategies-of-u-s-textile-and-apparel-manufacturers/#comment-53592">Production and Export Strategi&hellip;</a></td></tr><tr><td title="oberembt" class="recentcommentsavatarend" style="height:48px; width:48px;"><a href="http://misy262business.wordpress.com" rel="nofollow"><img alt='' src='https://0.gravatar.com/avatar/f9c7525c7037e2fe9a65a588ef1d6690?s=48&#038;d=wavatar&#038;r=G' class='avatar avatar-48' height='48' width='48' /></a></td><td class="recentcommentstextend" style=""><a href="http://misy262business.wordpress.com" rel="nofollow">oberembt</a> on <a href="https://shenglufashion.com/2020/06/12/eu-vietnam-free-trade-agreement-and-outlook-of-vietnams-apparel-export/#comment-53591">EU-Vietnam Free Trade Agreemen&hellip;</a></td></tr><tr><td title="oberembt" class="recentcommentsavatarend" style="height:48px; width:48px;"><a href="http://misy262business.wordpress.com" rel="nofollow"><img alt='' src='https://0.gravatar.com/avatar/f9c7525c7037e2fe9a65a588ef1d6690?s=48&#038;d=wavatar&#038;r=G' class='avatar avatar-48' height='48' width='48' /></a></td><td class="recentcommentstextend" style=""><a href="http://misy262business.wordpress.com" rel="nofollow">oberembt</a> on <a href="https://shenglufashion.com/2020/06/18/how-will-eu-trade-curb-affect-cambodias-apparel-industry/#comment-53590">How will EU Trade Curb Affect&hellip;</a></td></tr><tr><td title="laurencarlucci" class="recentcommentsavatarend" style="height:48px; width:48px;"><img alt='' src='https://1.gravatar.com/avatar/d7897456e1d372d877971f114fea74fd?s=48&#038;d=wavatar&#038;r=G' class='avatar avatar-48' height='48' width='48' /></td><td class="recentcommentstextend" style="">laurencarlucci on <a href="https://shenglufashion.com/2020/05/26/explore-canadas-apparel-sourcing-patterns/#comment-53588">Explore Canada’s Apparel Sourc&hellip;</a></td></tr><tr><td title="laurencarlucci" class="recentcommentsavatarend" style="height:48px; width:48px;"><img alt='' src='https://1.gravatar.com/avatar/d7897456e1d372d877971f114fea74fd?s=48&#038;d=wavatar&#038;r=G' class='avatar avatar-48' height='48' width='48' /></td><td class="recentcommentstextend" style="">laurencarlucci on <a href="https://shenglufashion.com/2020/05/26/explore-canadas-apparel-sourcing-patterns/#comment-53587">Explore Canada’s Apparel Sourc&hellip;</a></td></tr><tr><td title="laurencarlucci" class="recentcommentsavatarend" style="height:48px; width:48px;"><img alt='' src='https://1.gravatar.com/avatar/d7897456e1d372d877971f114fea74fd?s=48&#038;d=wavatar&#038;r=G' class='avatar avatar-48' height='48' width='48' /></td><td class="recentcommentstextend" style="">laurencarlucci on <a href="https://shenglufashion.com/2020/05/26/explore-canadas-apparel-sourcing-patterns/#comment-53586">Explore Canada’s Apparel Sourc&hellip;</a></td></tr><tr><td title="laurencarlucci" class="recentcommentsavatarend" style="height:48px; width:48px;"><img alt='' src='https://1.gravatar.com/avatar/d7897456e1d372d877971f114fea74fd?s=48&#038;d=wavatar&#038;r=G' class='avatar avatar-48' height='48' width='48' /></td><td class="recentcommentstextend" style="">laurencarlucci on <a href="https://shenglufashion.com/2020/05/23/ustr-releases-negotiating-objectives-of-the-proposed-u-s-kenya-free-trade-agreement/#comment-53585">USTR Releases Negotiating Obje&hellip;</a></td></tr>				</table>
+				</section>		<section id="recent-posts-2" class="widget widget_recent_entries">		<h2 class="widget-title">Recent Posts</h2>		<ul>
+											<li>
+					<a href="https://shenglufashion.com/2020/07/02/covid-19-and-u-s-apparel-imports-updated-july-2020/">COVID-19 and U.S. Apparel Imports (Updated: July&nbsp;2020)</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/07/01/ustr-factsheet-textiles-and-apparel-and-the-us-mexico-canada-free-trade-agreement-usmca/">USTR Factsheet: Textiles and Apparel and the US-Mexico-Canada Free Trade Agreement&nbsp;(USMCA)</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/06/18/how-will-eu-trade-curb-affect-cambodias-apparel-industry/">How will EU Trade Curb Affect Cambodia&#8217;s Apparel&nbsp;Industry?</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/06/12/eu-vietnam-free-trade-agreement-and-outlook-of-vietnams-apparel-export/">EU-Vietnam Free Trade Agreement and Outlook of Vietnam’s Apparel&nbsp;Export</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/06/05/covid-19-and-u-s-apparel-imports-updated-june-2020/">COVID-19 and U.S. Apparel Imports (Updated: June&nbsp;2020)</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/06/03/north-american-apparel-market-leaders-talk/">North American Apparel Market Leaders&nbsp;Talk</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/05/30/production-and-export-strategies-of-u-s-textile-and-apparel-manufacturers/">Production and Export Strategies of U.S. Textile and Apparel&nbsp;Manufacturers</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/05/26/explore-canadas-apparel-sourcing-patterns/">Explore Canada’s Apparel Sourcing&nbsp;Patterns</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/05/23/ustr-releases-negotiating-objectives-of-the-proposed-u-s-kenya-free-trade-agreement/">USTR Releases Negotiating Objectives of the Proposed U.S.-Kenya Free Trade&nbsp;Agreement</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/05/08/new-reports-time-for-change-state-of-fashion-2020-coronavirus-update/">New Reports: Time for Change &amp; State of Fashion 2020 (Coronavirus&nbsp;update)</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/05/06/what-do-you-take-away-from-fash455-6/">What Do You Take Away from&nbsp;FASH455?</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/05/06/covid-19-and-u-s-apparel-imports-updated-may-2020/">COVID-19 and U.S. Apparel Imports (Updated: May&nbsp;2020)</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/05/01/usitc-report-u-s-apparel-sourcing-under-african-growth-and-opportunity-act-agoa/">USITC Report: U.S. Apparel Sourcing under African Growth and Opportunity Act&nbsp;(AGOA)</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/04/28/the-evolving-apparel-industry-in-asia-discussion-questions-from-fash455/">The Evolving Apparel Industry in Asia—Discussion Questions from&nbsp;FASH455</a>
+									</li>
+											<li>
+					<a href="https://shenglufashion.com/2020/04/19/covid-19-and-the-fashion-apparel-industry-updated-april-2020/">COVID-19 and the Fashion Apparel Industry (updated April&nbsp;2020)</a>
+									</li>
+					</ul>
+		</section><section id="wp_tag_cloud-2" class="widget wp_widget_tag_cloud"><h2 class="widget-title">POPULAR THEMES</h2><div style="overflow:hidden"><ul class='wp-tag-cloud' role='list'>
+	<li><a href="https://shenglufashion.com/tag/3d-printing/" class="tag-cloud-link tag-link-1334084 tag-link-position-1" style="font-size: 1em;">3D printing</a></li>
+	<li><a href="https://shenglufashion.com/tag/africa/" class="tag-cloud-link tag-link-2214 tag-link-position-2" style="font-size: 1em;">Africa</a></li>
+	<li><a href="https://shenglufashion.com/tag/agoa/" class="tag-cloud-link tag-link-1419768 tag-link-position-3" style="font-size: 1em;">AGOA</a></li>
+	<li><a href="https://shenglufashion.com/tag/apparel/" class="tag-cloud-link tag-link-13894 tag-link-position-4" style="font-size: 1em;">apparel</a></li>
+	<li><a href="https://shenglufashion.com/tag/apparel-sourcing/" class="tag-cloud-link tag-link-22736064 tag-link-position-5" style="font-size: 1em;">apparel sourcing</a></li>
+	<li><a href="https://shenglufashion.com/tag/asia/" class="tag-cloud-link tag-link-1612 tag-link-position-6" style="font-size: 1em;">Asia</a></li>
+	<li><a href="https://shenglufashion.com/tag/bangladesh/" class="tag-cloud-link tag-link-29223 tag-link-position-7" style="font-size: 1em;">Bangladesh</a></li>
+	<li><a href="https://shenglufashion.com/tag/cafta/" class="tag-cloud-link tag-link-1019047 tag-link-position-8" style="font-size: 1em;">CAFTA</a></li>
+	<li><a href="https://shenglufashion.com/tag/canada/" class="tag-cloud-link tag-link-2443 tag-link-position-9" style="font-size: 1em;">Canada</a></li>
+	<li><a href="https://shenglufashion.com/tag/china/" class="tag-cloud-link tag-link-1470 tag-link-position-10" style="font-size: 1em;">China</a></li>
+	<li><a href="https://shenglufashion.com/tag/coronavirus/" class="tag-cloud-link tag-link-1899315 tag-link-position-11" style="font-size: 1em;">Coronavirus</a></li>
+	<li><a href="https://shenglufashion.com/tag/corporate-social-responsbility/" class="tag-cloud-link tag-link-5847280 tag-link-position-12" style="font-size: 1em;">corporate social responsbility</a></li>
+	<li><a href="https://shenglufashion.com/tag/covid19/" class="tag-cloud-link tag-link-694480403 tag-link-position-13" style="font-size: 1em;">covid19</a></li>
+	<li><a href="https://shenglufashion.com/tag/development/" class="tag-cloud-link tag-link-780 tag-link-position-14" style="font-size: 1em;">development</a></li>
+	<li><a href="https://shenglufashion.com/tag/education/" class="tag-cloud-link tag-link-1342 tag-link-position-15" style="font-size: 1em;">Education</a></li>
+	<li><a href="https://shenglufashion.com/tag/emerging-markets/" class="tag-cloud-link tag-link-16895 tag-link-position-16" style="font-size: 1em;">emerging markets</a></li>
+	<li><a href="https://shenglufashion.com/tag/employment/" class="tag-cloud-link tag-link-7915 tag-link-position-17" style="font-size: 1em;">employment</a></li>
+	<li><a href="https://shenglufashion.com/tag/eu/" class="tag-cloud-link tag-link-2702 tag-link-position-18" style="font-size: 1em;">EU</a></li>
+	<li><a href="https://shenglufashion.com/tag/europe/" class="tag-cloud-link tag-link-4328 tag-link-position-19" style="font-size: 1em;">Europe</a></li>
+	<li><a href="https://shenglufashion.com/tag/export/" class="tag-cloud-link tag-link-43231 tag-link-position-20" style="font-size: 1em;">export</a></li>
+	<li><a href="https://shenglufashion.com/tag/export-promotion/" class="tag-cloud-link tag-link-539222 tag-link-position-21" style="font-size: 1em;">export promotion</a></li>
+	<li><a href="https://shenglufashion.com/tag/fashion/" class="tag-cloud-link tag-link-3737 tag-link-position-22" style="font-size: 1em;">fashion</a></li>
+	<li><a href="https://shenglufashion.com/tag/fdi/" class="tag-cloud-link tag-link-215607 tag-link-position-23" style="font-size: 1em;">FDI</a></li>
+	<li><a href="https://shenglufashion.com/tag/free-trade-agreement/" class="tag-cloud-link tag-link-292448 tag-link-position-24" style="font-size: 1em;">free trade agreement</a></li>
+	<li><a href="https://shenglufashion.com/tag/future/" class="tag-cloud-link tag-link-2850 tag-link-position-25" style="font-size: 1em;">future</a></li>
+	<li><a href="https://shenglufashion.com/tag/global/" class="tag-cloud-link tag-link-21656 tag-link-position-26" style="font-size: 1em;">Global</a></li>
+	<li><a href="https://shenglufashion.com/tag/globalization/" class="tag-cloud-link tag-link-10767 tag-link-position-27" style="font-size: 1em;">Globalization</a></li>
+	<li><a href="https://shenglufashion.com/tag/global-sourcing/" class="tag-cloud-link tag-link-526470 tag-link-position-28" style="font-size: 1em;">global sourcing</a></li>
+	<li><a href="https://shenglufashion.com/tag/gsp/" class="tag-cloud-link tag-link-748920 tag-link-position-29" style="font-size: 1em;">GSP</a></li>
+	<li><a href="https://shenglufashion.com/tag/import/" class="tag-cloud-link tag-link-43222 tag-link-position-30" style="font-size: 1em;">import</a></li>
+	<li><a href="https://shenglufashion.com/tag/international-market/" class="tag-cloud-link tag-link-202619 tag-link-position-31" style="font-size: 1em;">international market</a></li>
+	<li><a href="https://shenglufashion.com/tag/international-trade-2/" class="tag-cloud-link tag-link-34924412 tag-link-position-32" style="font-size: 1em;">international trade</a></li>
+	<li><a href="https://shenglufashion.com/tag/japan/" class="tag-cloud-link tag-link-2062 tag-link-position-33" style="font-size: 1em;">Japan</a></li>
+	<li><a href="https://shenglufashion.com/tag/job/" class="tag-cloud-link tag-link-1114 tag-link-position-34" style="font-size: 1em;">job</a></li>
+	<li><a href="https://shenglufashion.com/tag/jobs/" class="tag-cloud-link tag-link-3558 tag-link-position-35" style="font-size: 1em;">jobs</a></li>
+	<li><a href="https://shenglufashion.com/tag/labor/" class="tag-cloud-link tag-link-11898 tag-link-position-36" style="font-size: 1em;">labor</a></li>
+	<li><a href="https://shenglufashion.com/tag/labor-cost/" class="tag-cloud-link tag-link-7600813 tag-link-position-37" style="font-size: 1em;">labor cost</a></li>
+	<li><a href="https://shenglufashion.com/tag/made-in-usa/" class="tag-cloud-link tag-link-684915 tag-link-position-38" style="font-size: 1em;">made in USA</a></li>
+	<li><a href="https://shenglufashion.com/tag/manufacturing/" class="tag-cloud-link tag-link-9675 tag-link-position-39" style="font-size: 1em;">manufacturing</a></li>
+	<li><a href="https://shenglufashion.com/tag/mexico/" class="tag-cloud-link tag-link-783 tag-link-position-40" style="font-size: 1em;">Mexico</a></li>
+	<li><a href="https://shenglufashion.com/tag/nafta/" class="tag-cloud-link tag-link-67253 tag-link-position-41" style="font-size: 1em;">NAFTA</a></li>
+	<li><a href="https://shenglufashion.com/tag/politics/" class="tag-cloud-link tag-link-398 tag-link-position-42" style="font-size: 1em;">politics</a></li>
+	<li><a href="https://shenglufashion.com/tag/retail-2/" class="tag-cloud-link tag-link-34923684 tag-link-position-43" style="font-size: 1em;">retail</a></li>
+	<li><a href="https://shenglufashion.com/tag/rules-of-origin/" class="tag-cloud-link tag-link-22561213 tag-link-position-44" style="font-size: 1em;">rules of origin</a></li>
+	<li><a href="https://shenglufashion.com/tag/section301/" class="tag-cloud-link tag-link-642364599 tag-link-position-45" style="font-size: 1em;">section301</a></li>
+	<li><a href="https://shenglufashion.com/tag/skill/" class="tag-cloud-link tag-link-49443 tag-link-position-46" style="font-size: 1em;">skill</a></li>
+	<li><a href="https://shenglufashion.com/tag/sourcing/" class="tag-cloud-link tag-link-203718 tag-link-position-47" style="font-size: 1em;">Sourcing</a></li>
+	<li><a href="https://shenglufashion.com/tag/supply-chain-management/" class="tag-cloud-link tag-link-512533 tag-link-position-48" style="font-size: 1em;">Supply chain management</a></li>
+	<li><a href="https://shenglufashion.com/tag/sustainability/" class="tag-cloud-link tag-link-6877 tag-link-position-49" style="font-size: 1em;">sustainability</a></li>
+	<li><a href="https://shenglufashion.com/tag/tariff/" class="tag-cloud-link tag-link-446914 tag-link-position-50" style="font-size: 1em;">tariff</a></li>
+	<li><a href="https://shenglufashion.com/tag/technology/" class="tag-cloud-link tag-link-6 tag-link-position-51" style="font-size: 1em;">technology</a></li>
+	<li><a href="https://shenglufashion.com/tag/textile/" class="tag-cloud-link tag-link-89104 tag-link-position-52" style="font-size: 1em;">textile</a></li>
+	<li><a href="https://shenglufashion.com/tag/textile-and-apparel/" class="tag-cloud-link tag-link-21851686 tag-link-position-53" style="font-size: 1em;">textile and apparel</a></li>
+	<li><a href="https://shenglufashion.com/tag/textile-industry/" class="tag-cloud-link tag-link-1467364 tag-link-position-54" style="font-size: 1em;">Textile industry</a></li>
+	<li><a href="https://shenglufashion.com/tag/tpl/" class="tag-cloud-link tag-link-2100327 tag-link-position-55" style="font-size: 1em;">TPL</a></li>
+	<li><a href="https://shenglufashion.com/tag/tpp/" class="tag-cloud-link tag-link-79333 tag-link-position-56" style="font-size: 1em;">TPP</a></li>
+	<li><a href="https://shenglufashion.com/tag/trade/" class="tag-cloud-link tag-link-1595 tag-link-position-57" style="font-size: 1em;">trade</a></li>
+	<li><a href="https://shenglufashion.com/tag/trade-barrier/" class="tag-cloud-link tag-link-11494765 tag-link-position-58" style="font-size: 1em;">trade barrier</a></li>
+	<li><a href="https://shenglufashion.com/tag/trade-deficit/" class="tag-cloud-link tag-link-289089 tag-link-position-59" style="font-size: 1em;">trade deficit</a></li>
+	<li><a href="https://shenglufashion.com/tag/trade-policy-2/" class="tag-cloud-link tag-link-75068178 tag-link-position-60" style="font-size: 1em;">trade policy</a></li>
+	<li><a href="https://shenglufashion.com/tag/trade-theory/" class="tag-cloud-link tag-link-8004387 tag-link-position-61" style="font-size: 1em;">trade theory</a></li>
+	<li><a href="https://shenglufashion.com/tag/ttip/" class="tag-cloud-link tag-link-115650698 tag-link-position-62" style="font-size: 1em;">TTIP</a></li>
+	<li><a href="https://shenglufashion.com/tag/used-clothing/" class="tag-cloud-link tag-link-4004509 tag-link-position-63" style="font-size: 1em;">used clothing</a></li>
+	<li><a href="https://shenglufashion.com/tag/usmca/" class="tag-cloud-link tag-link-27949662 tag-link-position-64" style="font-size: 1em;">USMCA</a></li>
+	<li><a href="https://shenglufashion.com/tag/value-chain/" class="tag-cloud-link tag-link-261107 tag-link-position-65" style="font-size: 1em;">value chain</a></li>
+	<li><a href="https://shenglufashion.com/tag/vietnam/" class="tag-cloud-link tag-link-10717 tag-link-position-66" style="font-size: 1em;">Vietnam</a></li>
+	<li><a href="https://shenglufashion.com/tag/western-hemisphere-supply-chain/" class="tag-cloud-link tag-link-584165463 tag-link-position-67" style="font-size: 1em;">western hemisphere supply chain</a></li>
+	<li><a href="https://shenglufashion.com/tag/worker/" class="tag-cloud-link tag-link-89245 tag-link-position-68" style="font-size: 1em;">worker</a></li>
+	<li><a href="https://shenglufashion.com/tag/wto/" class="tag-cloud-link tag-link-35086 tag-link-position-69" style="font-size: 1em;">WTO</a></li>
+	<li><a href="https://shenglufashion.com/tag/yarn-forward/" class="tag-cloud-link tag-link-3095322 tag-link-position-70" style="font-size: 1em;">yarn forward</a></li>
+</ul>
+</div></section><section id="categories-2" class="widget widget_categories"><h2 class="widget-title">CATEGORIES</h2>		<ul>
+				<li class="cat-item cat-item-2214"><a href="https://shenglufashion.com/category/africa/">Africa</a> (16)
+</li>
+	<li class="cat-item cat-item-2363171"><a href="https://shenglufashion.com/category/apparel-industry/">Apparel industry</a> (36)
+</li>
+	<li class="cat-item cat-item-1612"><a href="https://shenglufashion.com/category/asia/">Asia</a> (27)
+</li>
+	<li class="cat-item cat-item-1386608"><a href="https://shenglufashion.com/category/books-and-reports/">Books and reports</a> (9)
+</li>
+	<li class="cat-item cat-item-1470"><a href="https://shenglufashion.com/category/china/">China</a> (28)
+</li>
+	<li class="cat-item cat-item-4328"><a href="https://shenglufashion.com/category/europe/">Europe</a> (9)
+</li>
+	<li class="cat-item cat-item-1776423"><a href="https://shenglufashion.com/category/exclusive-interview/">Exclusive Interview</a> (9)
+</li>
+	<li class="cat-item cat-item-608987894"><a href="https://shenglufashion.com/category/fash455-course-material/">FASH455 course material</a> (63)
+</li>
+	<li class="cat-item cat-item-608987959"><a href="https://shenglufashion.com/category/free-trade-agreement-and-trade-preference-program/">Free trade agreement and trade preference program</a> (28)
+</li>
+	<li class="cat-item cat-item-608987987"><a href="https://shenglufashion.com/category/international-economics-and-trade-theory/">International economics and trade theory</a> (11)
+</li>
+	<li class="cat-item cat-item-33369"><a href="https://shenglufashion.com/category/international-trade/">International Trade</a> (296)
+</li>
+	<li class="cat-item cat-item-9425047"><a href="https://shenglufashion.com/category/original-research/">Original Research</a> (94)
+</li>
+	<li class="cat-item cat-item-13879"><a href="https://shenglufashion.com/category/retail/">Retail</a> (25)
+</li>
+	<li class="cat-item cat-item-203718"><a href="https://shenglufashion.com/category/sourcing/">Sourcing</a> (91)
+</li>
+	<li class="cat-item cat-item-5849"><a href="https://shenglufashion.com/category/statistics/">Statistics</a> (21)
+</li>
+	<li class="cat-item cat-item-512533"><a href="https://shenglufashion.com/category/supply-chain-management/">Supply chain management</a> (12)
+</li>
+	<li class="cat-item cat-item-6543205"><a href="https://shenglufashion.com/category/technology-2/">Technology</a> (16)
+</li>
+	<li class="cat-item cat-item-1467364"><a href="https://shenglufashion.com/category/textile-industry/">Textile industry</a> (80)
+</li>
+	<li class="cat-item cat-item-1033689"><a href="https://shenglufashion.com/category/trade-policy/">Trade policy</a> (125)
+</li>
+	<li class="cat-item cat-item-699"><a href="https://shenglufashion.com/category/usa/">USA</a> (156)
+</li>
+	<li class="cat-item cat-item-294919"><a href="https://shenglufashion.com/category/western-hemisphere/">Western-Hemisphere</a> (16)
+</li>
+		</ul>
+			</section><section id="calendar-2" class="widget widget_calendar"><h2 class="widget-title">Calendar</h2><div id="calendar_wrap" class="calendar_wrap"><table id="wp-calendar" class="wp-calendar-table">
+	<caption>March 2020</caption>
+	<thead>
+	<tr>
+		<th scope="col" title="Monday">M</th>
+		<th scope="col" title="Tuesday">T</th>
+		<th scope="col" title="Wednesday">W</th>
+		<th scope="col" title="Thursday">T</th>
+		<th scope="col" title="Friday">F</th>
+		<th scope="col" title="Saturday">S</th>
+		<th scope="col" title="Sunday">S</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td colspan="6" class="pad">&nbsp;</td><td>1</td>
+	</tr>
+	<tr>
+		<td>2</td><td><a href="https://shenglufashion.com/2020/03/03/" aria-label="Posts published on March 3, 2020">3</a></td><td>4</td><td>5</td><td>6</td><td><a href="https://shenglufashion.com/2020/03/07/" aria-label="Posts published on March 7, 2020">7</a></td><td>8</td>
+	</tr>
+	<tr>
+		<td>9</td><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td>
+	</tr>
+	<tr>
+		<td>16</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td>22</td>
+	</tr>
+	<tr>
+		<td>23</td><td>24</td><td><a href="https://shenglufashion.com/2020/03/25/" aria-label="Posts published on March 25, 2020">25</a></td><td>26</td><td>27</td><td>28</td><td>29</td>
+	</tr>
+	<tr>
+		<td>30</td><td>31</td>
+		<td class="pad" colspan="5">&nbsp;</td>
+	</tr>
+	</tbody>
+	</table><nav aria-label="Previous and next months" class="wp-calendar-nav">
+		<span class="wp-calendar-nav-prev"><a href="https://shenglufashion.com/2020/02/">&laquo; Feb</a></span>
+		<span class="pad">&nbsp;</span>
+		<span class="wp-calendar-nav-next"><a href="https://shenglufashion.com/2020/04/">Apr &raquo;</a></span>
+	</nav></div></section><section id="meta-2" class="widget widget_meta"><h2 class="widget-title">Meta</h2>			<ul>
+			<li><a href="https://wordpress.com/start?ref=wplogin">Register</a></li>			<li><a href="https://shenglufashion.wordpress.com/wp-login.php">Log in</a></li>
+			<li><a href="https://shenglufashion.com/feed/">Entries feed</a></li>
+			<li><a href="https://shenglufashion.com/comments/feed/">Comments feed</a></li>
+			<li><a href="https://wordpress.com/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.com</a></li>			</ul>
+			</section>	</aside><!-- .sidebar .widget-area -->
+
+		</div><!-- .site-content -->
+
+		<footer id="colophon" class="site-footer" role="contentinfo">
+							<nav class="main-navigation" role="navigation" aria-label="Footer Primary Menu">
+					<div class="menu-fash455-container"><ul id="menu-fash455-2" class="primary-menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-28"><a href="https://shenglufashion.com/">About FASH455</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-3617"><a href="https://shenglufashion.com/blog/">Blog Articles</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3587"><a href="https://shenglufashion.com/exclusive-interview/">Interview</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3585"><a href="https://shenglufashion.com/term-project/">Project|Event</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4991"><a href="https://shenglufashion.com/publication/">Publication</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-27"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/">Travels of a T-shirt</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-43"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/part-i-cotton-king/">Part I Cotton King</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3588"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/part-ii-made-in-china/">Part II Made in China</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3589"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/part-iii-trouble-at-the-border/">Part III Trouble at the Border</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3590"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/part-iv-my-t-shirt-finally-encounters-a-free-market/">Part IV My T-shirt Finally Encounters a Free Market</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26"><a href="https://shenglufashion.com/articles-and-resources/">Useful Resources</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3586"><a href="https://shenglufashion.com/contact/">Contact</a></li>
+</ul></div>				</nav><!-- .main-navigation -->
+			
+							<nav class="social-navigation" role="navigation" aria-label="Footer Social Links Menu">
+					<div class="menu-fash455-container"><ul id="menu-fash455-3" class="social-links-menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-28"><a href="https://shenglufashion.com/"><span class="screen-reader-text">About FASH455</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-3617"><a href="https://shenglufashion.com/blog/"><span class="screen-reader-text">Blog Articles</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3587"><a href="https://shenglufashion.com/exclusive-interview/"><span class="screen-reader-text">Interview</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3585"><a href="https://shenglufashion.com/term-project/"><span class="screen-reader-text">Project|Event</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4991"><a href="https://shenglufashion.com/publication/"><span class="screen-reader-text">Publication</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-27"><a href="https://shenglufashion.com/travels-of-a-t-shirt-discussion/"><span class="screen-reader-text">Travels of a T-shirt</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26"><a href="https://shenglufashion.com/articles-and-resources/"><span class="screen-reader-text">Useful Resources</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3586"><a href="https://shenglufashion.com/contact/"><span class="screen-reader-text">Contact</span></a></li>
+</ul></div>				</nav><!-- .social-navigation -->
+			
+			<div class="site-info">
+								<span class="site-title"><a href="https://shenglufashion.com/" rel="home">FASH455 Global Apparel &amp; Textile Trade and Sourcing</a></span>
+								<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Blog at WordPress.com.</a>
+			</div><!-- .site-info -->
+		</footer><!-- .site-footer -->
+	</div><!-- .site-inner -->
+</div><!-- .site -->
+
+<!--  -->
+<script src='//0.gravatar.com/js/gprofiles.js?ver=202029y'></script>
+<script>
+var WPGroHo = {"my_hash":""};
+</script>
+<script type='text/javascript' src='https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h'></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	<div class="grofile-hash-map-5a5b701cc84ff4a038900ca46cd0b294">
+	</div>
+	<div class="grofile-hash-map-f9c7525c7037e2fe9a65a588ef1d6690">
+	</div>
+	<div class="grofile-hash-map-d7897456e1d372d877971f114fea74fd">
+	</div>
+	</div>
+
+	<div id="carousel-reblog-box">
+		<form action="#" name="carousel-reblog">
+			<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Add your thoughts here... (optional)"></textarea>
+			<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Post to</label>
+			<select name="carousel-reblog-to-blog-id" id="carousel-reblog-to-blog-id">
+						</select>
+
+			<div class="submit">
+				<span class="canceltext"><a href="#" class="cancel">Cancel</a></span>
+				<input type="submit" name="carousel-reblog-submit" class="button" id="carousel-reblog-submit" value="Reblog Post" />
+				<input type="hidden" id="carousel-reblog-blog-id" value="34656981" />
+				<input type="hidden" id="carousel-reblog-blog-url" value="https://shenglufashion.com" />
+				<input type="hidden" id="carousel-reblog-blog-title" value="FASH455 Global Apparel &amp; Textile Trade and Sourcing" />
+				<input type="hidden" id="carousel-reblog-post-url" value="" />
+				<input type="hidden" id="carousel-reblog-post-title" value="" />
+			</div>
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="f7315ac1f4" /><input type="hidden" name="_wp_http_referer" value="/2020/03/07/" />		</form>
+
+		<div class="arrow"></div>
+	</div>
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/shenglufashion.com\/2020\/03\/07\/tariff-war-coronavirus-u-s-apparel-imports-from-china-plummet-in-january-2020\/":7573};
+	</script>
+					<div id="sharing_email" style="display: none;">
+		<form action="/2020/03/07/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" title="This field is for validation and should not be changed" />
+			
+			<div
+				class="g-recaptcha"
+				data-sitekey="6LcmyE0UAAAAALID28yVNg7pFCodGaArJzHitez_"
+				data-theme="light"
+				data-type="image"
+				data-tabindex="0"></div>
+			<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?hl=en" async></script>
+			
+			<img style="float: right; display: none" class="loading" src="https://s2.wp.com/wp-content/mu-plugins/post-flair/sharing/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Send Email" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel" role="button">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div>
+		<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/carousel/jetpack-carousel.css?m=1592560282h&cssminify=yes' type='text/css' media='all' />
+<script>
+var screenReaderText = {"expand":"expand child menu","collapse":"collapse child menu"};
+</script>
+<script>
+var MilestoneConfig = {"instances":[{"id":"milestone_widget-2","diff":4374383,"message":""}],"labels":{"year":"year","years":"years","month":"month","months":"months","day":"day","days":"days","hour":"hour","hours":"hours","minute":"minute","minutes":"minutes","second":"second","seconds":"seconds"}};
+</script>
+<script>
+var actionbardata = {"siteID":"34656981","siteName":"FASH455 Global Apparel & Textile Trade and Sourcing","siteURL":"https:\/\/shenglufashion.com","icon":"<img alt='' src='https:\/\/shenglufashion.files.wordpress.com\/2018\/08\/cropped-sheng.jpg?w=50' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/twentysixteen","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fshenglufashion.com%2F2020%2F03%2F07%2Ftariff-war-coronavirus-u-s-apparel-imports-from-china-plummet-in-january-2020%2F&signup_flow=account&domain=shenglufashion.com","themeURL":"https:\/\/wordpress.com\/theme\/twentysixteen\/","xhrURL":"https:\/\/shenglufashion.com\/wp-admin\/admin-ajax.php","nonce":"840a5fa912","isSingular":"","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"11a5b607ab\" \/>","referer":"https:\/\/shenglufashion.com\/2020\/03\/07\/","canFollow":"1","feedID":"79150889","statusMessage":"","customizeLink":"https:\/\/shenglufashion.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fshenglufashion.wordpress.com%2F2020%2F03%2F07%2F","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: Twenty Sixteen","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"Join 1,304 other followers","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fshenglufashion.com%2F2020%2F03%2F07%2Ftariff-war-coronavirus-u-s-apparel-imports-from-china-plummet-in-january-2020%2F&signup_flow=account&domain=shenglufashion.com\">Log in now.<\/a>","stats":"Stats"}};
+</script>
+<script>
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"en","ajaxurl":"https:\/\/shenglufashion.com\/wp-admin\/admin-ajax.php","nonce":"ad819a51ff","display_exif":"1","display_comments":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Comment","post_comment":"Post Comment","write_comment":"Write a Comment...","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/shenglufashion.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fshenglufashion.com%2F2020%2F03%2F07%2Ftariff-war-coronavirus-u-s-apparel-imports-from-china-plummet-in-january-2020%2F","blog_id":"34656981","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<fieldset><label for=\"email\">Email (Required)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Name (Required)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Website<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>","reblog":"Reblog","reblogged":"Reblogged","reblog_add_thoughts":"Add your thoughts here... (optional)","reblogging":"Reblogging...","post_reblog":"Post Reblog","stats_query_args":"blog=34656981&v=wpcom&tz=-4&user_id=0&subd=shenglufashion","is_public":"1","reblog_enabled":""};
+</script>
+<script>
+var sharing_js_options = {"lang":"en","counts":"1","is_stats_active":"1"};
+</script>
+<script type='text/javascript' src='https://s2.wp.com/_static/??-eJyVkNFOwzAMRX8IY6g0BA+IT0FZ6nZuEyeKnXX8PRlSB+Ih0p5ydZ0T3xvcMvgkRmK4KI50Zk/58rjoA/4Z2YkiKeZ6RNua8aV8MSK5MrpyhsCywpR8VZj4Lnyq4o2T6H8oVsihziyKG48zmWLkQGpJ6Fd1qIUsO7/iJ4tve9mMChhHamF7nBsjCxxdwei0MU1BOlMpPLYSN+/OF6y0LL2S7ucbrtBNdW57V1JVCntL2I0Ok5MaTMFxQT25wjLvZ4M+4vvz4W04vDwNr8PyDZJpypA='></script>
+<script type='text/javascript'>
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-linkedin', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomlinkedin', 'menubar=1,resizable=1,width=580,height=450' );
+				return false;
+			});
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script><script src="//stats.wp.com/w.js?61" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'34656981','blog_tz':'-4','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'34656981','v':'wpcom','tz':'-4','user_id':'0','subd':'shenglufashion'}]);
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1TaVhzUzFMbjdWNHpwZGhTayxPSUFCMGNrd29+Smw0TDhnZmRTK0hlRi9QSGh6bi9GXVhBJWIlZlR5U1JMLU8/MkNtblkvY1dzK3YrWW0zdnc4U01tSmJHSXwlUC9udls5NFJicTR+QTNbQXNDdng9Z3VpdGJORnE2R3Q5MFRUUS9GY2xSbm9fa291Q2l4QTBbJlIuSFk0U19ocG1iX2d4ZlBacDYlayx0fHctbVVYSCU/JWJObDI4NCxjN00mT2R6bFZ+elQmTllHfG0zSmwvRHNJYXZNbThrfmtvQ1NfM3o4ZkpEWmZzRCZOUEl6SFtqazlxd2pfYTUmczdWUVFzN0s3Qy9PUkpmLz9sZ0txMG1vfk58aW56NURDZjJkPW1NdHU9ZDE1SUZGQVg2UEh8ZG4vQ1k4JX5KeXZ5N0xHYVdBK0oxdzFfflAsWCxyLw=='}]);
+_stq.push([ 'clickTrackerInit', '34656981', '0' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script></body>
+</html>

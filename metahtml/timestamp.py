@@ -65,6 +65,7 @@ import dateutil.tz
 worst_tz_lo = dateutil.tz.tzoffset('worst_lo',12*60*60)
 worst_tz_hi = dateutil.tz.tzoffset('worst_hi',-12*60*60)
 
+from metahtml.common import get_timestamp, compile_jsonpaths, compile_xpaths, compile_regexes
 
 def parse_timestamp_str(timestamp_str, parser=None):
     '''
@@ -82,7 +83,7 @@ def parse_timestamp_str(timestamp_str, parser=None):
     # if no parser specified, then try them all
     if parser is None:
         result = parse_timestamp_str(timestamp_str, parser='dateutil')
-        if result['timestamp_lo'] is None:
+        if result['value']['lo'] is None:
             result = parse_timestamp_str(timestamp_str, parser='dateparser')
         return result
 
@@ -152,16 +153,11 @@ def parse_timestamp_str(timestamp_str, parser=None):
             except ValueError:
                 pass
 
-        # if we found a timestamp with one of the patterns above, then return it;
-        # otherwise, let the function continue parsing the integer
+        # if we found a timestamp with one of the patterns above, 
+        # then we set the parser variable to the corresponding pattern;
+        # this skips the parsing code below
         if timestamp_lo is not None:
-            return {
-                'timestamp_lo' : timestamp_lo,
-                'timestamp_hi' : timestamp_hi,
-                'pattern' : parser,
-                'raw' : timestamp_str,
-                'parser' : 'int',
-                }
+            parser='int:'+pattern
 
     # parse the date
     if parser=='dateutil':
@@ -194,6 +190,7 @@ def parse_timestamp_str(timestamp_str, parser=None):
                 'BST' : 1*60*60,
                 'ET' : -5*60*60,
                 'EST' : -5*60*60,
+                'MST' : -7*60*60,
                 'EDT' : -4*60*60,
                 'KST' : 9*60*60,
                 'PST' : -8*60*60,
@@ -318,11 +315,13 @@ def parse_timestamp_str(timestamp_str, parser=None):
 
     # return dictionary
     return {
-        'timestamp_lo' : timestamp_lo,
-        'timestamp_hi' : timestamp_hi,
-        'pattern' : 'unknown',
+        'value': {
+            'lo' : timestamp_lo,
+            'hi' : timestamp_hi,
+            },
         'raw' : timestamp_str,
         'parser' : parser,
+        'pattern' : 'unknown',
         }
 
 
@@ -333,8 +332,8 @@ def timestamp2str(timestamp):
     if timestamp is None:
         return
     timestamp_format = ''
-    lo = timestamp['timestamp_lo']
-    hi = timestamp['timestamp_hi']
+    lo = timestamp['value']['lo']
+    hi = timestamp['value']['hi']
     if lo.year == hi.year:
         timestamp_format += '%Y'
     if lo.month == hi.month:
@@ -350,7 +349,6 @@ def timestamp2str(timestamp):
     if lo.microsecond == hi.microsecond:
         timestamp_format += '.%f'
     timestamp_format += ' %Z'
-    #print("lo=",lo)
     return str(lo) #lo.strftime(timestamp_format).strip()
 
 
@@ -377,7 +375,7 @@ def get_best_timestamps(timestamps, require_valid_for_hostname=True):
         found_match = False
 
         # skip timestamps that don't represent a time
-        if timestamp is None or timestamp['timestamp_hi'] is None or timestamp['timestamp_lo'] is None:
+        if timestamp is None or timestamp['value']['hi'] is None or timestamp['value']['lo'] is None:
             continue
 
         # skip timestamps not valid for the hostname
@@ -385,10 +383,10 @@ def get_best_timestamps(timestamps, require_valid_for_hostname=True):
             continue
 
         # modified timestamps include worst case timezones if no timezone specified
-        timestamp_lo_mod = timestamp['timestamp_lo']
+        timestamp_lo_mod = timestamp['value']['lo']
         if timestamp_lo_mod.tzinfo is None:
             timestamp_lo_mod = copy.copy(timestamp_lo_mod).replace(tzinfo = worst_tz_lo)
-        timestamp_hi_mod = timestamp['timestamp_hi']
+        timestamp_hi_mod = timestamp['value']['hi']
         if timestamp_hi_mod.tzinfo is None:
             timestamp_hi_mod = copy.copy(timestamp_hi_mod).replace(tzinfo = worst_tz_hi)
         
@@ -397,10 +395,10 @@ def get_best_timestamps(timestamps, require_valid_for_hostname=True):
             
             # modified timestamps include worst case timezones if no timezone specified
             # FIXME: this is mildly inefficient to recalculate these each iteration
-            best_lo_mod = best['timestamp_lo']
+            best_lo_mod = best['value']['lo']
             if best_lo_mod.tzinfo is None:
                 best_lo_mod = copy.copy(best_lo_mod).replace(tzinfo = worst_tz_lo)
-            best_hi_mod = best['timestamp_hi']
+            best_hi_mod = best['value']['hi']
             if best_hi_mod.tzinfo is None:
                 best_hi_mod = copy.copy(best_hi_mod).replace(tzinfo = worst_tz_hi)
 
@@ -445,7 +443,7 @@ def get_best_timestamps(timestamps, require_valid_for_hostname=True):
     # sorting the timestamps by date helps ensure deterministic results,
     # since some downstream tasks will depend on the order
     def sort_key(best):
-        best_lo_mod = best['timestamp_lo']
+        best_lo_mod = best['value']['lo']
         if best_lo_mod.tzinfo is None:
             best_lo_mod = copy.copy(best_lo_mod).replace(tzinfo = worst_tz_lo)
         return best_lo_mod
@@ -516,16 +514,13 @@ def get_best_timestamps(timestamps, require_valid_for_hostname=True):
 
 ################################################################################
 
-published_jsonpaths = [
+published_jsonpaths = compile_jsonpaths([
     ( None, '$.datePublished'),
+    #( None, '$.uploadDate'),
     ( None, '$."@graph"[*].datePublished'),
-    ]
+    ])
 
-compiled_published_jsonpaths = [
-    ( hostname, jsonpath_ng.parse(jsonpath) ) for hostname,jsonpath in published_jsonpaths
-    ]
-
-published_xpaths = [
+published_xpaths = compile_xpaths([
     # custom xpaths
     ( 'abc57.com',                      '//div[@class="content-date-posted"]/text()'),
     ( 'abcnews.go.com',                 '//meta[@itemprop="uploadDate"]/@content'),
@@ -765,7 +760,7 @@ published_xpaths = [
     ( 'resumenmediooriente.org',        '//time[@class="entry-date"]/@datetime'),
     ( 'rtbf.be',                        '//meta[@itemprop="datePublished"]/@content'),
     ( 'rtl.be',                         '//span[@itemprop="datePublished"]/text()'),
-    ( 'rts.ch',                         '//span[@class="sc-141f4yq-6 cksdVr"]/text()'),
+    ( 'rts.ch',                         '(//span[@class="sc-141f4yq-6 cksdVr"])[1]'),
     ( 'ruthfullyyours.com',             '//div/p[@id="single-byline"]'),
     ( 'salon.com',                      '//meta[@property="article:published_time"]/@content'),
     ( 'sana.sy',                        '//meta[@property="article:published_time"]/@content' ),
@@ -870,6 +865,32 @@ published_xpaths = [
     ( 'zdnet.com',                      '(//time/@datetime)[1]'),
     ( 'zdnet.fr',                       '//time/@datetime'),
 
+    ( 'deloitte.com',                   '//span[@class="hidden-xs hidden-sm"]/text()'),
+    ( 'ivoox.com',                      '//span[@class="icon-date"]/text()'),
+    ( 'seekhlopakistan',                '(//time[@class="entry-date published updated"]/@datetime)[1]'),
+    ( 'siouxcountyradio.com',           '//p[@class="card-text text-muted"]/text()'),
+    ( 'smnyct.org',                     '(//small/text())[1]'),
+    ( 'smw.ch',                         '//meta[@name="dc.date"]/@content'),
+    ( 'soundcloud.com',                 '//time[@class="relativeTime"]/@datetime'),
+    ( 'sp.m.jiji.com',                  '//div[@class="newsArticle__date"]/text()'),
+    ( 'stajastur.blogspot.com',         '//h2[@class="date-header"]/span/text()'),
+    ( 'sumedico.lasillarota.com',       '//ul[@class="data-note"]'),
+    ( 'sumedico.lasillarota.com',       '//li[@class="far fa-calendar-all"]/text()'),
+    ( 'theday.co.uk',                   '//time[@id="published-at"]/@datetime'),
+    ( 'threadreaderapp.com',            '//a[@class="time"]/@data-time'),
+    ( 'tiemposllegados.blogspot.com',   '//h2[@class="date-header"]/span/text()'),
+    ( 'todotexcoco.com',                '//time/text()'),
+    ( 'tonibitt.blogia.com',            '//time/@datetime'),
+    ( 'tribuna.ucm.es',                 '//span[@class="fechaarticulo"]/text()'),
+    ( 'txarmyvet.blogspot.com',         '//time[@class="published"]/@datetime'),
+    ( 'ultimahora.hn',                  '//span[@property="dc:date dc:created"]/@content'),
+
+    ( 'videos.telesurtv.net',           '//time/@datetime'),
+    ( 'virosin.org',                    '//meta[@name="dc.date"]/@content'),
+    ( 'virusncov.com',                  '(//small/text())[1]'),
+    ( 'wajr.com',                       '//time[@class="published"]/@datetime'),
+    ( 'works.medical.nikkeibp.co.jp',   '//span[@itemprop="datePublished"]/text()'),
+    ( 'wiki2.org',                      '//div[@class="last_mod"]/text()'),
 
     # universal xpaths
     ( None, '//meta[@*="ArticlePublishDate"]/@content'),
@@ -905,35 +926,33 @@ published_xpaths = [
     ( None, '//*[@property="datePublished"]/@content' ),
     ( None, '//*[@property="datePublished"]/@datetime' ),
 
-    ]
+    ])
 
-compiled_published_xpaths = [
-    ( hostname, xpath, lxml.etree.XPath(xpath)) for hostname,xpath in published_xpaths
-    ]
+published_regexes = compile_regexes([
+    ( None, r'([\./\-_](19|20)\d{2}[\./\-_]?[0-1]?[0-9][\./\-_]?([0-3]?[0-9][\./\-_])?)' ),
+    ])
 
 def get_timestamp_published(parser, ldjsons, url, **kwargs):
     return get_timestamp(
         parser,
         ldjsons,
         url,
-        compiled_published_jsonpaths,
-        compiled_published_xpaths,
-        use_url_date=True,
+        published_jsonpaths,
+        published_xpaths,
+        published_regexes,
+        parse_timestamp_str,
+        get_best_timestamps,
         **kwargs
         )
 
 ################################################################################
 
-modified_jsonpaths = [
+modified_jsonpaths = compile_jsonpaths([
     ( None, '$.dateModified'),
     ( None, '$."@graph"[*].dateModified'),
-    ]
+    ])
 
-compiled_modified_jsonpaths = [
-    ( hostname, jsonpath_ng.parse(jsonpath)) for hostname,jsonpath in modified_jsonpaths
-    ]
-
-modified_xpaths = [
+modified_xpaths = compile_xpaths([
     # xpaths
     ( 'airsafe.com',                    '//div[@class="blocked_off"]/text()'),
     ( 'arabic.rt.com',                  '(//time)[3]'),
@@ -982,203 +1001,46 @@ modified_xpaths = [
     ( None, '//*[@*="dateModified"]/@datetime' ),
     ( None, '//*[@*="dateModified"]' ),
 
-    ]
+    ])
 
-compiled_modified_xpaths = [
-    ( hostname, xpath, lxml.etree.XPath(xpath)) for hostname,xpath in modified_xpaths
-    ]
+modified_regexes = compile_regexes([])
 
 def get_timestamp_modified(parser, ldjsons, url, **kwargs):
     return get_timestamp(
         parser,
         ldjsons,
         url,
-        compiled_modified_jsonpaths,
-        compiled_modified_xpaths,
-        use_url_date=False,
+        modified_jsonpaths,
+        modified_xpaths,
+        modified_regexes,
+        parse_timestamp_str,
+        get_best_timestamps,
         **kwargs
         )
 
-################################################################################
+def timestamp_range(timestamps):
+    # Some articles have several timestamps close together, however,
+    # possibly due to misconfigured publishing platforms;
+    # therefore we have to calculate the range of the timestamps appearing on the page first
+    min_lo = None
+    max_hi = None
+    for timestamp in timestamps:
+        # modified timestamps include worst case timezones if no timezone specified
+        timestamp_lo_mod = timestamp['value']['lo']
+        if timestamp_lo_mod.tzinfo is None:
+            timestamp_lo_mod = copy.copy(timestamp_lo_mod).replace(tzinfo = worst_tz_lo)
+        timestamp_hi_mod = timestamp['value']['hi']
+        if timestamp_hi_mod.tzinfo is None:
+            timestamp_hi_mod = copy.copy(timestamp_hi_mod).replace(tzinfo = worst_tz_hi)
 
-# NOTE: url_jsonpaths
-url_jsonpaths = [
-    '$..url',
-    '$..@id',
-    '$..mainEntityOfPage',
-    ]
-url_jsonpath = '(' + ')|('.join(url_jsonpaths) + ')'
-compiled_url_jsonpath = jsonpath_ng.parse(url_jsonpath)
+        # update min/max
+        if min_lo is None or timestamp_lo_mod < min_lo:
+            min_lo = timestamp_lo_mod
+        if max_hi is None or timestamp_hi_mod > max_hi:
+            max_hi = timestamp_hi_mod
 
-def get_timestamp(parser, ldjsons, url, compiled_jsonpaths, xpaths, use_url_date=False, require_valid_for_hostname=True, fast=True):
-    '''
-    FIXME: make the xpath code faster using
-    https://www.ibm.com/developerworks/xml/library/x-hiperfparse/
-    '''
-    url_parsed = urlparse(url)
-    url_hostname = url_parsed.hostname
-
-    timestamps = []
-
-    #################################################################################
-    # get timestamps from jsonpaths
-    #################################################################################
-
-    # find all entries in the ldjsons that match a jsonpath
-    matches = []
-    for ldjson in ldjsons:
-        for hostname, compiled_jsonpath in compiled_jsonpaths:
-            matches += list(compiled_jsonpath.find(ldjson))
-
-    # compute the total number of unique matches;
-    # this number is used to help interpret malformed ld+json entries;
-    # if there is only 1 unique match found,
-    # then we assume that value must be the value for the entire page
-    # even if this is not explicitly stated in the ld+json entry
-    # NOTE:
-    # this is wrapped in a try/except block because if the match contains a dictionary,
-    # it cannot be placed inside of a set
-    try:
-        num_unique_matches = len(set([match.value for match in matches]))
-    except:
-        num_unique_matches = 2
-
-    # parsing timestamps is very expensive,
-    # therefore, we don't want to parse the same timestamp twice;
-    # this list holds all the previously found timestamps
-    match_values_added = []
-
-    # we're now ready to extract the timestamps from the matches
-    for match in matches:
-
-        # skip the match if we've already found it
-        if match.value in match_values_added:
-            continue
-
-        # all matches correspond to a timestamp,
-        # but they are not necessarily a timestamp for the current article;
-        # we will reject the match if ld+json entry does not contain the current url inside of it;
-        # but if there is only 1 timestamp,
-        # we assume it is the timestamp of the current article;
-        # this step is not an optimization, it is required for correctness
-        if num_unique_matches>1:
-            found_urls = [ found_url.value for found_url in compiled_url_jsonpath.find(match.context) if found_url.value is not None]
-            if not any (url in found_url for found_url in found_urls):
-                continue
-            # NOTE:
-            # we must use the condition above rather than the simpler condition below
-            # because the url may be followed by a #id symbol with the ld+json
-            #if not url in found_urls:
-                #continue
-
-        # the match was not rejected, so we parse the timestamp from the match
-        timestamp = parse_timestamp_str(match.value)
-        if timestamp is not None:
-            timestamp['is_valid_for_hostname'] = True
-            timestamp['pattern'] = 'ld+json'
-            timestamps.append(timestamp)
-        match_values_added.append(match.value)
-
-    #################################################################################
-    # get timestamps from xpaths
-    #################################################################################
-
-    xpaths_visited = set()
-
-    # if a hostname specific xpath is found, then we will disable the universal xpaths;
-    # this variable keeps track of whether the hostname specific hostname has been found
-    disable_universal_xpaths = False
-
-    # sort the xpaths in alphabetical order by hostname, with universal paths at the end;
-    # sorting improves determinism by ensuring that we always visit xpaths in the same order,
-    # and in particular that we always visit hostname-specific xpaths before universal xpaths;
-    # this ensures the disable_universal_xpaths flag always works
-    xpaths.sort(key = lambda x: (x[0] is None, x[0]))
-
-    for hostname,xpath,compiled_xpath in xpaths:
-
-        # determine whether the xpath applies to this hostname
-        if hostname is not None:
-            disable_universal_xpaths = disable_universal_xpaths or (hostname == url_hostname or 'www.'+hostname == url_hostname)
-            valid_for_hostname = hostname in url_hostname
-        else:
-            valid_for_hostname = not disable_universal_xpaths
-
-        # if in fast mode, then only search for elements that will apply to the hostname
-        if fast and not valid_for_hostname:
-            continue
-
-        # If we've already looked at this xpath, then skip it
-        # unless it's valid_for_hostname, then we must keep it.
-        # We skip because many hostnames can have the same xpath,
-        # and we don't want to include the same xpath multiple times
-        # FIXME:
-        # Currently, if we insert an xpath that's not valid_for_hostname,
-        # then when we insert the same xpath that is valid_for_hostname,
-        # we don't remove the previous results, so we get duplicates
-        if xpath in xpaths_visited and not valid_for_hostname:
-            continue
-        xpaths_visited.add(xpath)
-
-        # calculate the elements found by the xpath;
-        # this is wrapped in a try/except block so that when an error occurs,
-        # we can see the offending test case;
-        # this aids debugging
-        try:
-            elements = compiled_xpath(parser)
-        except Exception as e:
-            raise ValueError('hostname=',hostname,' xpath=',xpath,' ; e=',e)
-
-        # loop through all elements found by the xpath
-        for element in elements:
-
-            # element can be one of several different types of lxml objects;
-            # depending on the type, we need to extract the text in different ways
-            if type(element) is lxml.etree._ElementUnicodeResult:
-                timestamp_str = str(element)
-            elif type(element) is lxml.etree._Element:
-                timestamp_str = element.text
-            elif type(element) is lxml.html.HtmlElement:
-                timestamp_str = element.text_content()
-
-            # generate the timestamp from text
-            timestamp = parse_timestamp_str(timestamp_str)
-            if timestamp is not None:
-                timestamp['is_valid_for_hostname'] = valid_for_hostname
-                timestamp['pattern'] = xpath
-                timestamps.append(timestamp)
-
-                # NOTE:
-                # the following check is tempting but wrong;
-                # we need to ensure that pages with many urls 
-                # get treated as categories and not articles
-                #if valid_for_hostname and fast:
-                    #break
-
-    #################################################################################
-    # get timestamp from url
-    #################################################################################
-
-    if use_url_date:
-        #_STRICT_DATE_REGEX_PREFIX = r'(?<=\W)'
-        #DATE_REGEX = r'(([\./\-_]{0,1}(19|20)\d{2})[\./\-_]{0,1}(([0-3]{0,1}[0-9][\./\-_])|(\w{3,5}[\./\-_]))([0-3]{0,1}[0-9][\./\-]{0,1})?)...'
-        #STRICT_DATE_REGEX = _STRICT_DATE_REGEX_PREFIX + DATE_REGEX
-        #date_match = re.search(STRICT_DATE_REGEX, url)
-
-        #regex = r'[\./\-_]{0,1}(19|20)\d{2}[\./\-_]'
-        regex = r'([\./\-_](19|20)\d{2}[\./\-_]?[0-1]?[0-9][\./\-_]?([0-3]?[0-9][\./\-_])?)'
-        date_match = re.search(regex, url)
-        if date_match:
-            timestamp_str = date_match.group(1)
-            timestamp = parse_timestamp_str(timestamp_str)
-            timestamp['is_valid_for_hostname'] = True
-            timestamp['pattern'] = 'url'
-            timestamps.append(timestamp)
-
-    #################################################################################
-    # extract the best timestamp from the list of available timestamps
-    #################################################################################
-
-    best_timestamps = get_best_timestamps(timestamps)
-
-    return best_timestamps, timestamps
+    if min_lo is not None and max_hi is not None:
+        return max_hi - min_lo
+    else:
+        import datetime
+        return datetime.timedelta.max
