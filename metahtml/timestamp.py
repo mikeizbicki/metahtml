@@ -515,9 +515,27 @@ def get_best_timestamps(timestamps, require_valid_for_hostname=True):
 ################################################################################
 
 published_jsonpaths = compile_jsonpaths([
+    ( 'en.antaranews.com', '$.datePublished' ),
+    ( 'wusa9.com', '$.datePublished' ),
+    ( 'wfaa.com', '$.datePublished' ),
+    ( 'news.sky.com', '$.datePublished' ),
+    ( 'king5.com', '$.datePublished' ),
+    ( 'kens5.com', '$.datePublished' ),
+    ( 'fox61.com', '$.datePublished' ),
+    ( '13newsnow.com', '$.datePublished' ),
+    ( 'onenewspage.us', '$.datePublished' ),
+    ( 'onenewspage.us', '$."@graph"[*].datePublished' ),
+    #( 'courrierinternational.com', '$.datePublished' ),
+    #( 'courrierinternational.com', '$."@graph"[*].datePublished' ),
+
     ( None, '$.datePublished'),
-    #( None, '$.uploadDate'),
+    ( None, '$.uploadDate'),
+    ( None, '$.dateCreated'),
+    ( None, '$.temporal'),
     ( None, '$."@graph"[*].datePublished'),
+    ( None, '$."@graph"[*].uploadDate'),
+    ( None, '$."@graph"[*].dateCreated'),
+    ( None, '$."@graph"[*].temporal'),
     ])
 
 published_xpaths = compile_xpaths([
@@ -892,6 +910,40 @@ published_xpaths = compile_xpaths([
     ( 'works.medical.nikkeibp.co.jp',   '//span[@itemprop="datePublished"]/text()'),
     ( 'wiki2.org',                      '//div[@class="last_mod"]/text()'),
 
+    ( 'conseil-constitutionnel.fr',     '//h1[@class="title"]/span[@class="date"]'),
+    #( 'courrierinternational.com',      '//span[@class="date"]'),
+    ( 'cronicaglobal.elespanol.com',    '(//div[@class="news_ext_date"]/time)[1]'),
+    ( 'dailyreadlist.com',              '//time[class="entry-date date published updated"]'),
+    ( 'dalloz-actualite.fr',            '//span[@class="field-field-published-at"]'),
+    ( 'datarepository.wolframcloud.com', '(//ul[@class="source-metadata"]/li/span[@class="property"])[1]'),
+    ( 'diagnostics.roche.com',          '//meta[@name="publishedDate"]/@content'),
+    ( 'driverscloud.com',               '//div[@class="auteur"]'),
+    ( 'eldeber.com.bo',                 '//div[@class="bottom"]/h6/span'),
+    ( 'english.kyodonews.net',          '//p[@class="credit"]'),
+    ( 'es.weforum.org',                 '//div[@class="article-published"]'),
+    ( 'euobserver.com',                 '//article[@id="article"]/time/@datetime'),
+    ( 'europe1.fr',                     '(//span[@class="publication"]/time/@datetime)[1]'),
+    ( 'extranet.who.int',               '//span[@class="date-display-single"]/@content'),
+    ( 'icrc.org',                       '//span[@class="small date seperator-left"]'),
+    ( 'islamsounnah.com',               '//meta[@property="article:published_time"]/@content'),
+    ( 'lci.fr',                         '//div[@class="col-full"]/div[@class="article-date-credit-wrapper"]/time/@datetime'),
+    ( 'lecourrier.vn',                  '//div[@class="newsDetail_time"]/span'),
+    ( 'ledevoir.com',                   '//time/@datetime'),
+    ( 'lenouvelliste.ch',               '//div[@class="col-xs-22"]/small/text()'),
+    ( 'parismatch.com',                 '//time/@datetime'),
+    ( 'pourquoidocteur.fr',             '//div[@class="date mb10"]'),
+    ( 'rtl.fr',                         '//div[@class="article-info"]/time/@datetime'),
+    ( 'santemagazine.fr',               '//time/@datetime'),
+    ( 'senenews.com',                   '//span[@class="date updated"]'),
+    ( 'slateafrique.com',               '//time/@datetime'),
+    ( 'streetpress.com',                '//span[@class="date has-text-yellow"]'),
+    ( 'tdg.ch',                         '//time/@datetime'),
+    ( 'universalis.fr',                 '//span[@class="rg"]'),
+    ( 'valeursactuelles.com',           '//span[@property="schema:dateCreated"]/@content'),
+    ( 'vie-publique.fr',                '//p[@class="dateBox"]/span[@class="field field--name-field-date-remise field--type-datetime field--label-hidden field__item"]/time/@datetime'),
+
+    ( 'corporate.qiagen.com',           '//div[@class="field-publication-date"]' ),
+
     # universal xpaths
     ( None, '//meta[@*="ArticlePublishDate"]/@content'),
     ( None, '//meta[@*="DATE"]/@content' ),
@@ -919,6 +971,7 @@ published_xpaths = compile_xpaths([
     ( None, '//meta[@*="recv_time"]/@content'),
     ( None, '//meta[@*="rnews:datePublished"]/@content' ),
     ( None, '//meta[@*="sailthru.date"]/@content' ),
+    ( None, '//meta[@*="uploadDate"]/@content'),
 
     # microdata paths
     ( None, '//*[@itemprop="datePublished"]/@content' ),
@@ -929,7 +982,10 @@ published_xpaths = compile_xpaths([
     ])
 
 published_regexes = compile_regexes([
-    ( None, r'([\./\-_](19|20)\d{2}[\./\-_]?[0-1]?[0-9][\./\-_]?([0-3]?[0-9][\./\-_])?)' ),
+    ( 'herodote.net', r'[\./\-_](\d{8})[\./\-_]' ),
+
+    #( None, r'([\./\-_](19|20)\d{2}[\./\-_]?[0-1]?[0-9][\./\-_]?([0-3]?[0-9][\./\-_])?)' ),
+    ( None, r'([\./\-_](19|20)\d{2}[\./\-_]?[0-1]?[0-9][\./\-_]([0-3]?[0-9][\./\-_])?)' ),
     ])
 
 def get_timestamp_published(parser, ldjsons, url, **kwargs):
@@ -948,6 +1004,8 @@ def get_timestamp_published(parser, ldjsons, url, **kwargs):
 ################################################################################
 
 modified_jsonpaths = compile_jsonpaths([
+    ( 'en.antaranews.com', '$.disabled' ),
+
     ( None, '$.dateModified'),
     ( None, '$."@graph"[*].dateModified'),
     ])
@@ -977,6 +1035,14 @@ modified_xpaths = compile_xpaths([
     ( 'wiki.islamiccounterterrorism.org', '//li[@id="lastmod"]/text()'),
     ( 'world-nuclear.org',              '(//em/text())[1]'),
     ( 'worldometers.info',              '//div[@style="font-size:13px; color:#999; text-align:center"]/text()'),
+
+    ( 'consilium.europa.eu',            '//div[@class="time-wrapper"]/time/@datetime'),
+    ( 'cronicaglobal.elespanol.com',    '(//div[@class="news_ext_date"]/time)[2]'),
+    ( 'datarepository.wolframcloud.com', '(//ul[@class="source-metadata"]/li/span[@class="property"])[2]'),
+    ( 'europe1.fr',                     '(//span[@class="publication"]/time/@datetime)[2]'),
+    ( 'islamsounnah.com',               '//meta[@property="article:modified_time"]/@content'),
+    ( 'senenews.com',                   '//span[@class="timeT"]'),
+    ( 'vie-publique.fr',                '//div[@class="dateBox"]/p/time/@datetime'),
 
     # meta xpaths
     ( None, '//meta[@*="DCTERMS.modified"]/@content'),

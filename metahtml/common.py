@@ -62,11 +62,26 @@ def get_timestamp(
     # get timestamps from jsonpaths
     #################################################################################
 
+    # if a hostname specific jsonpath is found, then we will disable the universal jsonpaths;
+    # this variable keeps track of whether the hostname specific hostname has been found
+    disable_universal_jsonpaths = False
+
     # find all entries in the ldjsons that match a jsonpath
     matches = []
     for ldjson in ldjsons:
         for hostname, jsonpath, compiled_jsonpath in compiled_jsonpaths:
-            matches += list(compiled_jsonpath.find(ldjson))
+
+            # determine whether the jsonpath applies to this hostname
+            if hostname is not None:
+                disable_universal_jsonpaths = disable_universal_jsonpaths or (hostname == url_hostname or 'www.'+hostname == url_hostname)
+                valid_for_hostname = hostname in url_hostname
+            else:
+                valid_for_hostname = not disable_universal_jsonpaths
+
+            # apply the jsonpath
+            if valid_for_hostname:
+                for match in compiled_jsonpath.find(ldjson):
+                    matches.append((jsonpath,match))
 
     # compute the total number of unique matches;
     # this number is used to help interpret malformed ld+json entries;
@@ -77,7 +92,7 @@ def get_timestamp(
     # this is wrapped in a try/except block because if the match contains a dictionary,
     # it cannot be placed inside of a set
     try:
-        num_unique_matches = len(set([match.value for match in matches]))
+        num_unique_matches = len(set([match.value for jsonpath,match in matches]))
     except:
         num_unique_matches = 2
 
@@ -87,7 +102,7 @@ def get_timestamp(
     match_values_added = []
 
     # we're now ready to extract the timestamps from the matches
-    for match in matches:
+    for jsonpath,match in matches:
 
         # skip the match if we've already found it
         if match.value in match_values_added:
@@ -114,6 +129,7 @@ def get_timestamp(
         if timestamp is not None:
             timestamp['is_valid_for_hostname'] = True
             timestamp['pattern'] = 'ld+json'
+            timestamp['pattern_details'] = jsonpath
             timestamps.append(timestamp)
         match_values_added.append(match.value)
 
@@ -199,12 +215,13 @@ def get_timestamp(
 
     for hostname, regex, compiled_regex in compiled_regexes:
         date_match = re.search(regex, url)
-        if date_match:
-            timestamp_str = date_match.group(1)
-            timestamp = parse_timestamp_str(timestamp_str)
-            timestamp['is_valid_for_hostname'] = True
-            timestamp['pattern'] = 'url'
-            timestamps.append(timestamp)
+        if hostname is None or hostname==url_hostname or 'www.'+hostname==url_hostname:
+            if date_match:
+                timestamp_str = date_match.group(1)
+                timestamp = parse_timestamp_str(timestamp_str)
+                timestamp['is_valid_for_hostname'] = True
+                timestamp['pattern'] = 'url'
+                timestamps.append(timestamp)
 
     #################################################################################
     # extract the best timestamp from the list of available timestamps
