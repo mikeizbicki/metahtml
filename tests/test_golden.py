@@ -220,7 +220,7 @@ def insert_golden_tests(urls, overwrite=False, verbose=False, recursively_added_
                         is_article = 'FALSE'
 
                     human_annotator = None
-                    if meta['timestamp']['pattern']=='ld+json':
+                    if meta['timestamp'] is not None and meta['timestamp']['pattern']=='ld+json':
                         human_annotator = 'machine'
 
                     rows.append({
@@ -271,7 +271,6 @@ def get_golden_tests(filter_str=None, filter_key=None, verified_only=True):
     tests = []
     with open(golden_test_file, 'rt', encoding='utf-8', newline='\n') as f:
         for line,test in enumerate(csv.DictReader(f, dialect='excel', strict=True)):
-            print("line=",line,'test=',test)
 
             # csv files store both the None and '' values in the same format;
             # we assume that we never store '' values, 
