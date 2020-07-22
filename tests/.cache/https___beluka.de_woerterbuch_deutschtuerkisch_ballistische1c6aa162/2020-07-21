@@ -1,0 +1,1005 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]>         <html class="ie8" lang="de"> <![endif]-->
+<!--[if IE 9]>         <html class="ie9 gt-ie8" lang="de"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="gt-ie8 gt-ie9 not-ie" lang="de"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>ballistische auf türkisch übersetzen (Deutsch-Türkisch Wörterbuch)</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="description" content="1 Übersetzungen für das Wort ballistische vom Deutschen ins Türkische." />
+
+	
+
+<script type='text/javascript'>
+var yieldlove_site_id = "beluka.de";
+</script><script type='text/javascript' src='//cdn-a.yieldlove.com/yieldlove-bidder.js?beluka.de'></script>
+
+<script async='async' src='https://securepubads.g.doubleclick.net/tag/js/gpt.js'></script>
+<script>
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+</script>
+
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin" rel="stylesheet" type="text/css">
+<link href="/assets/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/stylesheets/pixel-admin.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/stylesheets/widgets.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/stylesheets/rtl.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/stylesheets/themes.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="/assets/sweetalert/sweet-alert.css">
+<!--[if lt IE 9]>
+	<script src="/assets/javascripts/ie.min.js"></script>
+<![endif]-->
+</head>
+
+<body class="theme-adminflare no-main-menu">
+
+<script>var init = [];</script>
+
+<div id="main-wrapper">
+
+	
+	<div id="main-navbar" class="navbar navbar-inverse" role="navigation">		
+		<div class="navbar-inner">
+			<div class="navbar-header">
+				<a href="/" class="navbar-brand">
+					<img src="/assets/images/pixel-admin/logo.png" width="70">
+				</a>
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse"><i class="navbar-icon fa fa-bars"></i></button>
+			</div>
+
+			<div id="main-navbar-collapse" class="collapse navbar-collapse main-navbar-collapse">
+				<div>
+					<ul class="nav navbar-nav pull-right">
+						<li>
+							<a href="/">Startseite</a>
+						</li>
+						<li>
+							<a href="/beliebtewoerter">Top-Wörter</a>
+						</li>
+						<li>
+							<a href="/wortvorschlagen.jsp">Wortvorschlag</a>
+						</li>
+						<li>
+							<a href="/impressum.jsp">Impressum</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="content-wrapper">
+		
+
+
+	<ul class="breadcrumb breadcrumb-page">
+		<div class="breadcrumb-label">Deutsch <img src="/assets/images/de.png"> <i class="fa fa-exchange"></i> <img src="/assets/images/tr.png"> Türkisch</div>
+		<li></li>
+	</ul>
+	<div class="page-header">
+		<div class="row">
+			<div class="col-xs-12 col-sm-8">
+				<div class="row">
+					<form action="/woerterbuch/deutschtuerkisch/" class="col-xs-12 col-sm-6" id="searchForm">
+						<div class="input-group no-margin">
+							<span class="input-group-addon" style="border:none;background: #fff;background: rgba(0,0,0,.05);"><i class="fa fa-search"></i></span>
+							<input name="q" id="ui-autocomplete" type="text" placeholder="Wörterbuch" class="form-control no-padding-hr" style="border:none;background: #fff;background: rgba(0,0,0,.05);">
+							<span class="input-group-btn">
+							<button class="btn" type="button" id="submitSearch">Übersetzen</button>
+						</span>
+						</div>
+					</form>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-8">
+					<small>754.516 Einträge, 144.165 Anfragen</small>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		init.push(function () {
+			$("#searchForm").submit(function(event) {
+				event.preventDefault();
+				window.open("/woerterbuch/deutschtuerkisch/"+encodeURIComponent($("#ui-autocomplete").val()),"_self");
+			});
+			
+			$("#submitSearch").click(function() {
+				window.open("/woerterbuch/deutschtuerkisch/"+encodeURIComponent($("#ui-autocomplete").val()),"_self");
+			});
+			
+			$.widget("ui.autocomplete", $.ui.autocomplete, {
+				options: {
+					renderItem: null,
+				},
+				_renderItem: function(ul, item) {
+					var image = "<img src=\"/assets/images/"+item.language+".png\" />";
+			        var itemhtml = "<a>" + image + " " + item.value + "</a>";
+			        
+			        return $( "<li></li>" )
+			            .data( "item.autocomplete", item )
+			            .append( itemhtml )
+			            .appendTo( ul );
+				}
+			});
+			
+			$("#ui-autocomplete").autocomplete({
+				source: function(request, response) {
+					$.ajax({
+						url: "/Autocomplete",
+						data: {
+							query: request.term,
+						},
+						success: function(data) {
+							if(data.length == 0){
+								return;
+							}
+							
+							var dataArray = data.split(/\r\n|\r|\n/g);
+							
+							response($.map(dataArray, function(item) {
+				                var itemArray = item.split(";");
+								
+								return {
+				                    label: itemArray[0],
+				                    value: itemArray[0],
+				                    language: itemArray[2]
+				                }
+				            }));
+						}
+					});
+				},
+				minLength: 2,
+				select: function(event, ui) {
+					window.open("/woerterbuch/deutschtuerkisch/"+encodeURIComponent(ui.item.value),"_self");
+				}
+			});
+			
+			$("#ui-autocomplete").focus();
+		});
+	</script>
+		
+		<table style="max-width: 1275px; padding:0px; margin:0px auto;">
+			<tr>
+				<td style="max-width: 975px">
+					<div class="row">
+						<div class="col col-md-12 text-center">
+							<!-- Yieldlove AdTag - beluka.de - responsive -->
+							<script type='text/javascript'>
+							    googletag.cmd.push(function() {
+							        if (window.innerWidth >= 991) {
+							            googletag.defineSlot('/53015287/beluka.de_d_970x250_1', [970, 250], 'div-gpt-ad-1407836239789-0').addService(googletag.pubads());
+							        }
+							
+							if (window.innerWidth < 991) {
+							            googletag.defineSlot('/53015287/beluka.de_m_320x50_1', [320, 50], 'div-gpt-ad-1407836239789-0').addService(googletag.pubads());
+							        }
+							
+							        googletag.pubads().enableSingleRequest();
+							        googletag.enableServices();
+							    });
+							</script>
+							<div id='div-gpt-ad-1407836239789-0'>
+							    <script type='text/javascript'>
+							        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1407836239789-0'); });
+							    </script>
+							</div>
+			
+					
+							<div class="search-text">
+								
+										<strong>1</strong> direkte Treffer gefunden für: <span class="text-primary">ballistische</span>
+								
+								
+							</div> 
+							
+							<br />
+							
+							<div class="panel " style="max-width: 975px; margin: 0 auto !important;">
+								<div class="table-primary">
+									<table class="table table-hover table-striped">
+										<col width="55%" />
+					    				<col width="45%" />
+					    				<col width="0%" />
+										<thead>
+											<tr>
+												<th><img src="/assets/images/de.png"> Deutsch</th>
+												<th><img src="/assets/images/tr.png"> Türkisch</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody style="a:link {color: #FF0000 !important;}; text-align: left;">
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/die">die</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/ballistische"><b>ballistische</b></a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+																
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/balistik">balistik</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21027920&wordGerman=ballistische&wordTurkish=balistik&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21027920"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+										</tbody>
+									</table>
+								</div>
+							</div>
+			
+							
+							
+							<!-- Yieldlove AdTag - beluka.de - responsive -->
+							<script type='text/javascript'>
+							    googletag.cmd.push(function() {
+							        if (window.innerWidth >= 991) {
+							            googletag.defineSlot('/53015287/beluka.de_d_970x90_1', [970, 90], 'div-gpt-ad-1407836231608-0').addService(googletag.pubads());
+							        }
+							
+							if (window.innerWidth < 991) {
+							            googletag.defineSlot('/53015287/beluka.de_m_320x50_2', [320, 50], 'div-gpt-ad-1407836231608-0').addService(googletag.pubads());
+							        }
+							
+							        googletag.pubads().enableSingleRequest();
+							        googletag.enableServices();
+							    });
+							</script>
+							<div id='div-gpt-ad-1407836231608-0'>
+							    <script type='text/javascript'>
+							        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1407836231608-0'); });
+							    </script>
+							</div>
+							
+							<br />
+							
+							<div class="search-text">
+								
+										<strong>18</strong> indirekte Treffer gefunden für: <span class="text-primary">ballistische</span>
+								
+								
+							</div>
+							
+							<br />
+							
+							<div class="panel " style="max-width: 975px; margin: 0 auto !important;">
+								<div class="table-primary">
+									<table class="table table-hover table-striped">
+										<col width="55%" />
+					    				<col width="45%" />
+					    				<col width="0%" />
+										<thead>
+											<tr>
+												<th><img src="/assets/images/de.png"> Deutsch</th>
+												<th><img src="/assets/images/tr.png"> Türkisch</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody style="text-align: left;">
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/ballistische"><b>ballistische</b></a> <a href="/woerterbuch/deutschtuerkisch/Bombe">Bombe</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/balistik">balistik</a> <a href="/woerterbuch/deutschtuerkisch/bomba">bomba</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21027940&wordGerman=ballistische Bombe&wordTurkish=balistik bomba&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21027940"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/ballistische"><b>ballistische</b></a> <a href="/woerterbuch/deutschtuerkisch/Daten">Daten</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Plural" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Plural">pl</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/balistik">balistik</a> <a href="/woerterbuch/deutschtuerkisch/veriler">veriler</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21027950&wordGerman=ballistische Daten&wordTurkish=balistik veriler&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=pl&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21027950"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/ballistische"><b>ballistische</b></a> <a href="/woerterbuch/deutschtuerkisch/Flugbahn">Flugbahn</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/balistik">balistik</a> <a href="/woerterbuch/deutschtuerkisch/uçuş">uçuş</a> <a href="/woerterbuch/deutschtuerkisch/hattı">hattı</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21027960&wordGerman=ballistische Flugbahn&wordTurkish=balistik uçuş hattı&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21027960"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/ballistische"><b>ballistische</b></a> <a href="/woerterbuch/deutschtuerkisch/Kamera">Kamera</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/balistik">balistik</a> <a href="/woerterbuch/deutschtuerkisch/kamera">kamera</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21027990&wordGerman=ballistische Kamera&wordTurkish=balistik kamera&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21027990"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/ballistische"><b>ballistische</b></a> <a href="/woerterbuch/deutschtuerkisch/Kurve">Kurve</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/balistik">balistik</a> <a href="/woerterbuch/deutschtuerkisch/münhani">münhani</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21028000&wordGerman=ballistische Kurve&wordTurkish=balistik münhani&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21028000"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/ballistische"><b>ballistische</b></a> <a href="/woerterbuch/deutschtuerkisch/Kurzstreckenrakete">Kurzstreckenrakete</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/balistik">balistik</a> <a href="/woerterbuch/deutschtuerkisch/kısa">kısa</a> <a href="/woerterbuch/deutschtuerkisch/menzilli">menzilli</a> <a href="/woerterbuch/deutschtuerkisch/roket">roket</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21028010&wordGerman=ballistische Kurzstreckenrakete&wordTurkish=balistik kısa menzilli roket&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21028010"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/ballistische"><b>ballistische</b></a> <a href="/woerterbuch/deutschtuerkisch/Langstreckenrakete">Langstreckenrakete</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/balistik">balistik</a> <a href="/woerterbuch/deutschtuerkisch/uzun">uzun</a> <a href="/woerterbuch/deutschtuerkisch/menzilli">menzilli</a> <a href="/woerterbuch/deutschtuerkisch/roket">roket</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21028020&wordGerman=ballistische Langstreckenrakete&wordTurkish=balistik uzun menzilli roket&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21028020"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/ballistische"><b>ballistische</b></a> <a href="/woerterbuch/deutschtuerkisch/Mittelstreckenrakete">Mittelstreckenrakete</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/balistik">balistik</a> <a href="/woerterbuch/deutschtuerkisch/orta">orta</a> <a href="/woerterbuch/deutschtuerkisch/menzilli">menzilli</a> <a href="/woerterbuch/deutschtuerkisch/roket">roket</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21028040&wordGerman=ballistische Mittelstreckenrakete&wordTurkish=balistik orta menzilli roket&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21028040"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/ballistische"><b>ballistische</b></a> <a href="/woerterbuch/deutschtuerkisch/Rakete">Rakete</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/balistik">balistik</a> <a href="/woerterbuch/deutschtuerkisch/roket">roket</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21028050&wordGerman=ballistische Rakete&wordTurkish=balistik roket&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21028050"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/ballistische"><b>ballistische</b></a> <a href="/woerterbuch/deutschtuerkisch/Sichtung">Sichtung</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/balsitik">balsitik</a> <a href="/woerterbuch/deutschtuerkisch/görüntüleme">görüntüleme</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21028060&wordGerman=ballistische Sichtung&wordTurkish=balsitik görüntüleme&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21028060"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/ballistischer"><b>ballistische</b>r</a> <a href="/woerterbuch/deutschtuerkisch/Elektromesser">Elektromesser</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Maskulinum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Maskulinum">m</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/balistik">balistik</a> <a href="/woerterbuch/deutschtuerkisch/elektrometre">elektrometre</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21028070&wordGerman=ballistischer Elektromesser&wordTurkish=balistik elektrometre&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=m&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21028070"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/ballistischer"><b>ballistische</b>r</a> <a href="/woerterbuch/deutschtuerkisch/Flugkörper">Flugkörper</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Maskulinum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Maskulinum">m</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/balsitik">balsitik</a> <a href="/woerterbuch/deutschtuerkisch/uçan">uçan</a> <a href="/woerterbuch/deutschtuerkisch/cisim">cisim</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21028080&wordGerman=ballistischer Flugkörper&wordTurkish=balsitik uçan cisim&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=m&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21028080"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/ballistischer"><b>ballistische</b>r</a> <a href="/woerterbuch/deutschtuerkisch/Galvanometer">Galvanometer</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Neutrum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Neutrum">n</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/balistik">balistik</a> <a href="/woerterbuch/deutschtuerkisch/galvanometre">galvanometre</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21028090&wordGerman=ballistischer Galvanometer&wordTurkish=balistik galvanometre&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=n&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21028090"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/ballistischer"><b>ballistische</b>r</a> <a href="/woerterbuch/deutschtuerkisch/Sichter">Sichter</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Maskulinum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Maskulinum">m</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/balistik">balistik</a> <a href="/woerterbuch/deutschtuerkisch/görüntüleyici">görüntüleyici</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21028110&wordGerman=ballistischer Sichter&wordTurkish=balistik görüntüleyici&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=m&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21028110"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/ballistischer"><b>ballistische</b>r</a> <a href="/woerterbuch/deutschtuerkisch/Wind">Wind</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Maskulinum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Maskulinum">m</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/balistik">balistik</a> <a href="/woerterbuch/deutschtuerkisch/rüzgâr">rüzgâr</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21028130&wordGerman=ballistischer Wind&wordTurkish=balistik rüzgâr&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=m&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21028130"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/ballistisches"><b>ballistische</b>s</a> <a href="/woerterbuch/deutschtuerkisch/Galvanometer">Galvanometer</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/balistik">balistik</a> <a href="/woerterbuch/deutschtuerkisch/galvanometre">galvanometre</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21028140&wordGerman=ballistisches Galvanometer&wordTurkish=balistik galvanometre&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21028140"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/ballistisches"><b>ballistische</b>s</a> <a href="/woerterbuch/deutschtuerkisch/Pendel">Pendel</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Neutrum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Neutrum">n</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/balistik">balistik</a> <a href="/woerterbuch/deutschtuerkisch/pendül">pendül</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21028150&wordGerman=ballistisches Pendel&wordTurkish=balistik pendül&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=n&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21028150"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/ballistisches"><b>ballistische</b>s</a> <a href="/woerterbuch/deutschtuerkisch/Syndrom">Syndrom</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Neutrum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Neutrum">n</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/balistik">balistik</a> <a href="/woerterbuch/deutschtuerkisch/sendrom">sendrom</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21028160&wordGerman=ballistisches Syndrom&wordTurkish=balistik sendrom&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=n&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21028160"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+										</tbody>
+									</table>
+								</div>
+							</div>
+							
+							<!-- Yieldlove AdTag - beluka.de - responsive -->
+							<script type='text/javascript'>
+							    googletag.cmd.push(function() {
+							        if (window.innerWidth >= 991) {
+							            googletag.defineSlot('/53015287/beluka.de_d_970x250_2', [970, 250], 'div-gpt-ad-1407836198173-0').addService(googletag.pubads());
+							        }
+							
+							if (window.innerWidth < 991) {
+							            googletag.defineSlot('/53015287/beluka.de_m_300x600_1', [300, 600], 'div-gpt-ad-1407836198173-0').addService(googletag.pubads());
+							        }
+							
+							        googletag.pubads().enableSingleRequest();
+							        googletag.enableServices();
+							    });
+							</script>
+							<div id='div-gpt-ad-1407836198173-0'>
+							    <script type='text/javascript'>
+							        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1407836198173-0'); });
+							    </script>
+							</div>
+			
+							
+							<small>0.001s</small>
+							<br />
+							<br />
+						</div>
+					</div>
+				</td>
+				<td style="width: 300px" valign="top" class="hidden-md hidden-sm hidden-xs">
+					<div class="stickyElem" style="width: 300px; height: 600px;">
+						<!-- Yieldlove AdTag - beluka.de - responsive -->
+						<script type='text/javascript'>
+						    googletag.cmd.push(function() {
+						        if (window.innerWidth >= 991) {
+						            googletag.defineSlot('/53015287/beluka.de_d_300x600_1', [300, 600], 'div-gpt-ad-1407836008946-0').addService(googletag.pubads());
+						        }
+						
+						        googletag.pubads().enableSingleRequest();
+						        googletag.enableServices();
+						    });
+						</script>
+						<div id='div-gpt-ad-1407836008946-0'>
+						    <script type='text/javascript'>
+						        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1407836008946-0'); });
+						    </script>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+		
+	</div>
+	
+</div>
+
+
+<!--[if !IE]> -->
+	<script type="text/javascript"> window.jQuery || document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js">'+"<"+"/script>"); </script>
+<!-- <![endif]-->
+<!--[if lte IE 9]>
+	<script type="text/javascript"> window.jQuery || document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">'+"<"+"/script>"); </script>
+<![endif]-->
+<script src="/assets/sweetalert/sweet-alert.min.js"></script>
+<script src="/assets/javascripts/bootstrap.min.js"></script>
+<script src="/assets/javascripts/pixel-admin.min.js"></script>
+
+<script type="text/javascript">
+	init.push(function () {
+		$(window).scroll(function(e){ 
+			var $el = $('.stickyElem'); 
+			var isPositionFixed = ($el.css('position') == 'fixed');
+			if ($(this).scrollTop() > 200 && !isPositionFixed){ 
+				$('.stickyElem').css({'position': 'fixed', 'top': '0px'}); 
+			}
+			if ($(this).scrollTop() < 200 && isPositionFixed){
+				$('.stickyElem').css({'position': 'static', 'top': '0px'}); 
+			} 
+		});
+	});
+	window.PixelAdmin.start(init);
+</script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-86954761-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- Start of StatCounter Code for Default Guide -->
+<script type="text/javascript">
+var sc_project=4937398; 
+var sc_invisible=1; 
+var sc_security="c8230772"; 
+var scJsHost = (("https:" == document.location.protocol) ?
+"https://secure." : "http://www.");
+document.write("<sc"+"ript type='text/javascript' src='" +
+scJsHost+
+"statcounter.com/counter/counter.js'></"+"script>");
+</script>
+<noscript><div class="statcounter"><a title="web analytics"
+href="http://statcounter.com/" target="_blank"><img
+class="statcounter"
+src="http://c.statcounter.com/4937398/0/c8230772/1/"
+alt="web analytics"></a></div></noscript>
+<!-- End of StatCounter Code for Default Guide -->
+
+</body>
+</html>

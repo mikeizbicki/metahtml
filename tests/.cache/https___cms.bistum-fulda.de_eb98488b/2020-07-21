@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Weblication&reg; Anmeldemaske</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <meta name="robots" content="noindex, follow" /> 
+    <link rel="stylesheet" type="text/css" href="/weblication/grid5/gui/styles/grid.css?av=8c3df5" />
+    <link rel="stylesheet" type="text/css" href="/weblication/grid5/gui/styles/wui-mask.css?av=8c3df5" />
+    <style>
+      html {height:100%}
+      body {height:100%;background:-webkit-radial-gradient(center, ellipse cover, #dbdbdb 0%,#bebebe 100%);background:-moz-radial-gradient(center, ellipse cover, #dbdbdb 0%,#bebebe 100%);background:-ms-radial-gradient(center, ellipse cover, #dbdbdb 0%,#bebebe 100%);-webkit-user-select:none;}
+      a {color:#000000}
+
+      #loginStatus {width:320px;height:60px;position:absolute;top:50%;left:50%;margin-top:160px;margin-left:-160px;text-align:center;line-height:19px}
+      .mfa #loginStatus {margin-top:100px}      
+      #blockLogin  {width:320px;height:320px;position:absolute;top:50%;left:50%;margin-top:-180px;margin-left:-160px;box-shadow:0 0 32px 8px rgba(0, 0, 0, 0.08);outline:solid 1px #cbcbcb;background-color:#f0f0f0;transition:top 0.3s ease-in-out,margin 0.3s ease-in-out,height 0.3 ease-in-out}
+      .mfa #blockLogin {height:260px;}
+      #blockLogin:after             {content:'';position:absolute;width:100%;height:0%;top:0;background-color:#f0f0f0;opacity:0;transition:opacity 0.2s linear}
+      #blockLogin.inProgress:after  {height:100%;opacity:0.7}
+
+      #blockLogin:before {content:'';position:absolute;display:block;z-index:1;width:100%;height:158px;background-image:url('/weblication/grid5/gui/images/logo-g.svg');background-repeat:no-repeat;background-size:200px;background-position:30px 30px}
+      .weblication-s #blockLogin:before {background-image:url('/weblication/grid5/gui/images/logo-s.svg');background-position:72px 68px}
+      .weblication-c #blockLogin:before {background-image:url('/weblication/grid5/gui/images/logo-c.svg');background-position:10px 32px;background-size:240px}
+      .weblication-g #blockLogin:before {background-image:url('/weblication/grid5/gui/images/logo-g.svg');background-position:50px 32px;background-size:240px}
+      .weblication-a #blockLogin:before {background-image:url('/weblication/grid5/gui/images/logo-a.svg');background-position:36px 88px;background-size:240px}      
+      .weblication-o #blockLogin:before {background-image:url('/weblication/grid5/gui/images/logo-o.svg');background-position:36px 4px;background-size:240px}      
+      
+            
+      #formLogin         {margin:160px 48px 40px 32px;}
+      #formMFA           {margin:160px 48px 40px 32px;display:none}
+      
+      dl       {width:100%;overflow:hidden;margin:0}
+      dl:after {content:'';clear:both;width:0;height:0}
+      dl dt    {width:82px;float:left;clear:both;height:32px;line-height:21px;text-align:right}
+      dl dd    {width:150px;float:right;height:20px;margin-top:-32px}
+      dl input    {margin:0;width:140px;-webkit-appearance:none;border:solid 1px #c0c0c0;border-radius:0;height:20px;padding:0 4px;font-size:11px}
+      button.wui-button {width:150px;float:right;margin-right:0}     
+      
+      #loginProgress {visibility:hidden}
+      .linksLoggedIn,
+      .linksLoggedIn a {color:#777777;padding:0 3px;text-decoration:none}
+      .linksLoggedIn a:hover {text-decoration:underline}
+      #rowKeepCookie {float:right;clear:both;margin-top:8px;color:#666666}
+      #rowKeepCookie input {border:solid 1px #c0c0c0;width:auto;height:auto;margin-right:4px}
+      #rowKeepCookie * {line-height:19px;vertical-align:middle}
+      
+                 
+
+      #loggedInAs a {display:inline-block;position:relative}
+
+      #linkWebsite:after {content:'';display:block;position:absolute;bottom:0;left:0;width:0;height:1px;background-color:#2e50a1}
+      #linkWebsite.progressLink:after {width:100%;transition:all 1s linear}
+
+      @media only screen and (max-width: 520px){
+        body        {background:none;background-color:#f0f0f0;}
+        #blockLogin {outline:none;box-shadow:none}
+      }
+
+      @media only screen and (max-height:520px){
+        #blockLogin  {top:0;margin-top:0}
+        #loginStatus {top:0;margin-top:340px}
+        .mfa #loginStatus {margin-top:280px}          
+        body        {background:none;background-color:#f0f0f0;}
+        #blockLogin {outline:none;box-shadow:none}
+      }
+      
+    </style>  
+    <script src="/weblication/grid5/gui/scripts/wLogin.js?av=8c3df5"></script>
+    <script src="/weblication/grid5/gui/scripts/grid.js?av=8c3df5"></script>
+    <script>
+    /*<![CDATA[*/
+
+      var displayAlertBox = false;
+
+      function login(){
+        if(wDocument.wHasClass('#blockLogin', 'inProgress')){
+          return false;
+        }
+        wDocument.show('#loginProgress');
+        wDocument.hide('#ipLocked');
+        wDocument.hide('#userInactive');
+        wDocument.hide('#loginFailed');
+
+        postStr = "action=login&loginusername=" + encodeURIComponent( document.frmLogin.username.value ) + "&loginpassword=" + encodeURIComponent(document.frmLogin.password.value) + "&keepCookie=" + (document.frmLogin.keepCookie.checked ? '1' : '0') + "&considerStart=1";
+
+        wDocument.wAddClass('#blockLogin', 'inProgress');
+        wGetUrlPost('/weblication/grid5/scripts/wSystem.php?' + postStr,            
+          function loginResponse(responseText){
+          
+            responseText = responseText.replace(/^\s+/, '').replace(/\s+$/, '');
+    
+            if(responseText.substr(0, 1) == 'm'){        
+              wDocument.wRemoveClass('#blockLogin', 'inProgress');
+              wDocument.hide('#loginProgress');
+              wDocument.hide('#ipLocked');
+              wDocument.hide('#userInactive');
+              wDocument.hide('#loginFailed');
+              wDocument.hide('#formLogin');
+              wDocument.show('#tanRequired');
+              wDocument.show('#formMFA'); 
+              document.frmLogin.password.value = '';                                               
+              document.frmMFA.tan.value = '';
+              document.frmMFA.tan.focus();
+              wDocument.wAddClass('body', 'mfa'); 
+            }    
+            else if(responseText.substr(0, 1) == 's'){
+              document.frmLogin.username.value = '';
+              document.frmLogin.password.value = '';
+              updateLoginStatus();
+              redirectIfIsLoggedIn(responseText.substr(2));
+              return;
+            }
+            else if(responseText.substr(0, 1) == 'f'){
+              if(responseText.substr(2) == 'ipLocked'){
+                wDocument.show('#ipLocked');
+                wDocument.hide('#userInactive');
+                wDocument.hide('#loginFailed');
+                document.frmLogin.password.value = '';
+                document.frmLogin.password.focus();
+              }
+              else if(responseText.substr(2) == 'inactive'){
+                wDocument.hide('#ipLocked');
+                wDocument.show('#userInactive');
+                wDocument.hide('#loginFailed');
+                document.frmLogin.password.value = '';
+                document.frmLogin.password.focus();
+              }
+              else{
+                wDocument.hide('#ipLocked');
+                wDocument.hide('#userInactive');
+                wDocument.show('#loginFailed');
+                document.frmLogin.password.value = '';
+                document.frmLogin.password.focus();
+              }
+              updateLoginStatus();
+            }
+            else{
+              wMessagebox({
+                'type': 'error',
+                'title': 'Hinweis',
+                'content': 'Es ist ein Fehler aufgetreten! Möglicherweise haben Sie keine gültige Lizenz für diese Domain. <a target="_blank" href="http://weblik.de/Vorgehensweise-bei-ungueltiger-Lizenz">Mehr Infos zu diesem Thema</a>',
+                'buttons': [{'caption': 'ok', 'icon': 'cancel', 'action': function(){
+                   wHideBlocker();       
+                 }}]  
+              });           
+            }
+            window.setTimeout(function(){
+              wDocument.wRemoveClass('#blockLogin', 'inProgress');
+            }, 500);
+          }
+        );
+      }     
+      
+     function mfa(){
+        if(wDocument.wHasClass('#blockLogin', 'inProgress')){
+          return false;
+        }
+        wDocument.show('#loginProgress');
+        wDocument.hide('#ipLocked');
+        wDocument.hide('#userInactive');
+        wDocument.hide('#loginFailed');
+
+        postStr = "action=confirmmfa&loginusername=" + encodeURIComponent(document.frmLogin.username.value) + "&tan=" + encodeURIComponent(document.frmMFA.tan.value) + "&keepCookie=" + (document.frmLogin.keepCookie.checked ? '1' : '0') + "&considerStart=1";
+
+        wDocument.wAddClass('#blockLogin', 'inProgress');
+
+        wGetUrlPost('/weblication/grid5/scripts/wSystem.php?' + postStr, function(responseText){
+          //wDocument.wRemoveClass('#blockLogin', 'inProgress');
+
+          if(responseText.substr(0, 1) == 's'){
+            document.frmLogin.username.value = '';
+            document.frmLogin.password.value = '';
+            updateLoginStatus();
+            redirectIfIsLoggedIn(responseText.substr(2));
+            return;
+          }
+          else if(responseText.substr(0, 1) == 'f'){
+            if(responseText.substr(2) == 'ipLocked'){
+              wDocument.show('#ipLocked');
+              wDocument.hide('#userInactive');
+              wDocument.hide('#tanFailed');
+              document.frmLogin.password.value = '';
+              document.frmLogin.password.focus();
+            }
+            else if(responseText.substr(2) == 'inactive'){
+              wDocument.hide('#ipLocked');
+              wDocument.show('#userInactive');
+              wDocument.hide('#tanFailed');
+              document.frmLogin.password.value = '';
+              document.frmLogin.password.focus();
+            }
+            else{
+              wDocument.hide('#ipLocked');
+              wDocument.hide('#userInactive');
+              wDocument.show('#tanFailed');
+              document.frmLogin.password.value = '';
+              document.frmLogin.password.focus();
+            }
+            updateLoginStatus();
+          }
+        });        
+      }             
+      
+      function updateLoginStatus(){
+        wGetUrl('/weblication/grid5/scripts/wSystem.php?action=getusername', function(response){
+          username = response;
+          if(username && username != ''){
+            wDocument.show('#loggedInAs');
+            wDocument.element('#currentUserName').innerHTML = username;
+          }
+          else{
+            wDocument.hide('#loggedInAs');
+          }
+        });
+      }
+
+      function firstLogin(){
+        displayAlertBox = true;
+        wShowMessagebox('firstLogin', '', 'Standardmäßig wird als Benutzername "admin" und als Passwort "admin" verwendet. Bitte ändern Sie das Passwort, nachdem Sie sich eingeloggt haben. Wollen Sie sich nun mit den Standarddaten einloggen?', 'yesNo', 'warning','');
+      }
+
+      function messagebox_firstLogin_onConfirm(rtc, variable){
+        if(rtc == 'yes'){
+          document.frmLogin.submit();
+        }
+        else{
+          document.frmLogin.username.focus();
+          displayAlertBox = false;
+        }
+      }
+      
+      function toggleShowPassword(){
+        if(document.frmLogin.password.type == 'password'){
+          document.frmLogin.password.type = 'text';
+          document.body.setAttribute('data-sp', '1')
+        }
+        else{
+          document.frmLogin.password.type = 'password';
+          document.body.setAttribute('data-sp', '0')          
+        }
+      }
+
+      function redirectIfIsLoggedIn(userType){
+        var urlRedirect = getParameter('redirect');
+        var admin = false;
+
+        if(userType.search(/r:(.*$)/) != -1){
+          if(urlRedirect == ''){
+        	  urlRedirect = RegExp.$1;
+          }
+          userType  = userType.replace(/\sr:.*$/, '');
+        }
+
+        urlRedirect = urlRedirect.replace(/^(https?\:)?\/\/[^\/]+/, '');
+
+                  
+
+        if(urlRedirect == ''){
+          urlRedirect = '/';
+        }
+
+        if(urlRedirect == 'backend' && userType == 'admin'){
+          var screenWidth  = screen.width;
+          var screenHeight = screen.height;
+          if(screenWidth > 1280){
+            screenWidth  = 1280;
+            screenHeight = 795;
+          }
+          else{
+            screenWidth = 'max';
+            screenHeight = 'max';
+          }
+
+          var rtc = wOpenWin('/weblication/grid5/scripts/wSystem.php', 'wGridBackend_cms_bistum_fulda_de', screenWidth, screenHeight, 'resizable=yes');
+
+          wDocument.hide('#ipLocked');
+          wDocument.hide('#userInactive');
+          wDocument.hide('#loginFailed');
+          window.setTimeout(function(){
+            wDocument.wRemoveClass('#blockLogin', 'inProgress');
+          }, 500);
+        }
+        else if(urlRedirect != '' || userType == 'admin' || userType == 'standard' || userType == 'author' || userType == 'public'){
+          window.setTimeout(function(){
+            wDocument.wAddClass('#linkWebsite', 'progressLink');
+          }, 500);
+          location.href = urlRedirect;
+        }
+      }
+
+      wDocument.ready(function(){
+        document.frmLogin.username.focus();            
+        updateLoginStatus('');
+
+        try{
+          if(!navigator.cookieEnabled){
+            wMessagebox({
+              'type': 'info',
+              'title': 'Ihr Browser unterstützt keine Cookies!',
+              'content': 'Bitte aktivieren Sie Cookies für diese Domain in den Einstellungen Ihres Browsers.<br />Laden Sie diese Seite anschließend neu.',
+              'buttons': [{'caption': 'Schließen', 'icon': 'cancel', 'selected' : false, 'action': function(){
+              }}]
+            });
+          }
+        }
+        catch(e){
+        }
+              });
+    /*]]>*/
+    </script>
+  </head>
+  <body class="weblication-g">
+    <div id="loginStatus">
+            <div id="loginFailed" style="display:none;color:red;">Das System konnte Sie nicht einloggen! Überprüfen Sie die eingegebenen Daten und versuchen Sie es erneut.<br/><a target="_blank" href="http://weblik.de/Login-fehlerhaft">Mehr Infos zu diesem Thema</a></div>
+      <div id="tanFailed" style="display:none;color:red;">Das System konnte Sie nicht einloggen! Überprüfen Sie die eingegebene TAN und versuchen Sie es erneut. Beachten Sie, dass die TAN nur eine begrenzte Gültigkeitsdauer hat.<br/><a href="/weblication" style="color:#888888;line-height:28px">Erneut anmelden</a><br/></div>
+      <div id="ipLocked" style="display:none;color:red;">Sie haben zu oft versucht, sich mit falschen Daten einzuloggen und wurden deshalb gesperrt!<br/><a target="_blank" href="http://weblik.de/Login-fehlerhaft">Mehr Infos zu diesem Thema</a></div>
+      <div id="userInactive" style="display:none;color:red">Ihr Benutzer ist nicht aktiv.<br />Bitte wenden Sie sich an den Administrator.<br/><a target="_blank" href="http://weblik.de/Login-fehlerhaft">Mehr Infos zu diesem Thema</a></div>
+      <div id="loggedInAs" style="display:none">
+        <div>Sie sind angemeldet als: <span id="currentUserName"></span></div>
+        <div class="linksLoggedIn">
+        <a id="linkWebsite" href="/">Webseite</a>
+                        
+                  <a id="linkCloud" href="/cloud">Cloud</a>
+                <a id="linkLogout" href="/weblication/grid5/scripts/wSystem.php?action=logout&amp;redirect=/weblication">Abmelden</a>
+        </div>
+      </div>
+      <div id="tanRequired" style="display:none;color:#000000">Wir haben Ihnen eine TAN per E-Mail gesendet. Bitte tragen Sie diese hier in das Feld ein, um die Anmeldung abzuschließen.</div>
+      <div id="loginProgress" style="display:none;position:absolute;bottom:64px;right:24px;width:240px;height:110px;background-color:#dddddd;opacity:0.5;filter:alpha(opacity=50)"><img src="/weblication/grid5/gui/images/style/loading.gif" alt="" style="margin:58px 20px"/></div>
+    </div>
+    <div id="blockLogin">
+      <form id="formLogin" name="frmLogin" method="post" action="" onsubmit="login();return false;">
+        <input type="hidden" name="redirect" value="" />
+        <dl>
+          <dt>Benutzername</dt>
+          <dd><input type="text" id="inputUsername" name="username" autocapitalize="none" value="" /></dd>
+          <dt>Passwort</dt>
+          <dd><input type="password" id="inputPassword" name="password" autocomplete="off" value="" onfocus="document.body.setAttribute('data-fp', '1')" onblur="document.body.setAttribute('data-fp', '0')"/>
+                  </dl>
+        <button id="button_login" class="wui-button" type="submit">Anmelden</button>
+        <div id="rowKeepCookie"><input type="checkbox" id="keepCookie" name="keepCookie"/><label for="keepCookie">angemeldet bleiben</label></div>
+      </form>
+      <form id="formMFA" name="frmMFA" method="post" action="" onsubmit="mfa();return false;">
+        <input type="hidden" name="redirect" value="" />
+        <dl>
+          <dt>TAN</dt>
+          <dd>
+            <input type="password" name="tan" autocapitalize="none" value="" />
+          </dd>
+        </dl>
+        <button id="button_login_confirmed" class="wui-button" type="submit">Anmeldung abschließen</button>
+      </form>      
+    </div>
+  </body>
+</html>
