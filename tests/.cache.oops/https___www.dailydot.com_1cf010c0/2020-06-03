@@ -1,0 +1,762 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8"><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={licenseKey:"27897e3c2b",applicationID:"87827566"};window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var i=n[t]={exports:{}};e[t][0].call(i.exports,function(n){var i=e[t][1][n];return r(i||n)},i,i.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var i=0;i<t.length;i++)r(t[i]);return r}({1:[function(e,n,t){function r(){}function i(e,n,t){return function(){return o(e,[u.now()].concat(f(arguments)),n?null:this,t),n?void 0:this}}var o=e("handle"),a=e(4),f=e(5),c=e("ee").get("tracer"),u=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],l="api-",d=l+"ixn-";a(p,function(e,n){s[n]=i(l+n,!0,"api")}),s.addPageAction=i(l+"addPageAction",!0),s.setCurrentRouteName=i(l+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,i="function"==typeof n;return o(d+"tracer",[u.now(),e,t],r),function(){if(c.emit((i?"":"no-")+"fn-start",[u.now(),r,i],t),i)try{return n.apply(this,arguments)}catch(e){throw c.emit("fn-err",[arguments,this,e],t),e}finally{c.emit("fn-end",[u.now()],t)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=i(d+n)}),newrelic.noticeError=function(e,n){"string"==typeof e&&(e=new Error(e)),o("err",[e,u.now(),!1,n])}},{}],2:[function(e,n,t){function r(e,n){var t=e.getEntries();t.forEach(function(e){"first-paint"===e.name?c("timing",["fp",Math.floor(e.startTime)]):"first-contentful-paint"===e.name&&c("timing",["fcp",Math.floor(e.startTime)])})}function i(e,n){var t=e.getEntries();t.length>0&&c("lcp",[t[t.length-1]])}function o(e){if(e instanceof s&&!l){var n,t=Math.round(e.timeStamp);n=t>1e12?Date.now()-t:u.now()-t,l=!0,c("timing",["fi",t,{type:e.type,fid:n}])}}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var a,f,c=e("handle"),u=e("loader"),s=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){a=new PerformanceObserver(r),f=new PerformanceObserver(i);try{a.observe({entryTypes:["paint"]}),f.observe({entryTypes:["largest-contentful-paint"]})}catch(p){}}if("addEventListener"in document){var l=!1,d=["click","keydown","mousedown","pointerdown","touchstart"];d.forEach(function(e){document.addEventListener(e,o,!1)})}}},{}],3:[function(e,n,t){function r(e,n){if(!i)return!1;if(e!==i)return!1;if(!n)return!0;if(!o)return!1;for(var t=o.split("."),r=n.split("."),a=0;a<r.length;a++)if(r[a]!==t[a])return!1;return!0}var i=null,o=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var f=navigator.userAgent,c=f.match(a);c&&f.indexOf("Chrome")===-1&&f.indexOf("Chromium")===-1&&(i="Safari",o=c[1])}n.exports={agent:i,version:o,match:r}},{}],4:[function(e,n,t){function r(e,n){var t=[],r="",o=0;for(r in e)i.call(e,r)&&(t[o]=n(r,e[r]),o+=1);return t}var i=Object.prototype.hasOwnProperty;n.exports=r},{}],5:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,i=t-n||0,o=Array(i<0?0:i);++r<i;)o[r]=e[n+r];return o}n.exports=r},{}],6:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function i(e){function n(e){return e&&e instanceof r?e:e?c(e,f,o):o()}function t(t,r,i,o){if(!l.aborted||o){e&&e(t,r,i);for(var a=n(i),f=v(t),c=f.length,u=0;u<c;u++)f[u].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function d(e,n){h[e]=v(e).concat(n)}function m(e,n){var t=h[e];if(t)for(var r=0;r<t.length;r++)t[r]===n&&t.splice(r,1)}function v(e){return h[e]||[]}function g(e){return p[e]=p[e]||i(t)}function w(e,n){u(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var h={},y={},b={on:d,addEventListener:d,removeEventListener:m,emit:t,get:g,listeners:v,context:n,buffer:w,abort:a,aborted:!1};return b}function o(){return new r}function a(){(s.api||s.feature)&&(l.aborted=!0,s=l.backlog={})}var f="nr@context",c=e("gos"),u=e(4),s={},p={},l=n.exports=i();l.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(i.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(o){}return e[n]=r,r}var i=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){i.buffer([e],r),i.emit(e,n,t)}var i=e("ee").get("handle");n.exports=r,r.ee=i},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,o,function(){return i++})}var i=1,o="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!x++){var e=E.info=NREUM.info,n=d.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();u(y,function(n,t){e[n]||(e[n]=t)}),c("mark",["onload",a()+E.offset],null,"api");var t=d.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function i(){"complete"===d.readyState&&o()}function o(){c("mark",["domContent",a()+E.offset],null,"api")}function a(){return O.exists&&performance.now?Math.round(performance.now()):(f=Math.max((new Date).getTime(),f))-E.offset}var f=(new Date).getTime(),c=e("handle"),u=e(4),s=e("ee"),p=e(3),l=window,d=l.document,m="addEventListener",v="attachEvent",g=l.XMLHttpRequest,w=g&&g.prototype;NREUM.o={ST:setTimeout,SI:l.setImmediate,CT:clearTimeout,XHR:g,REQ:l.Request,EV:l.Event,PR:l.Promise,MO:l.MutationObserver};var h=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1169.min.js"},b=g&&w&&w[m]&&!/CriOS/.test(navigator.userAgent),E=n.exports={offset:f,now:a,origin:h,features:{},xhrWrappable:b,userAgent:p};e(1),e(2),d[m]?(d[m]("DOMContentLoaded",o,!1),l[m]("load",r,!1)):(d[v]("onreadystatechange",i),l[v]("onload",r)),c("mark",["firstbyte",f],null,"api");var x=0,O=e(6)},{}],"wrap-function":[function(e,n,t){function r(e){return!(e&&e instanceof Function&&e.apply&&!e[a])}var i=e("ee"),o=e(5),a="nr@original",f=Object.prototype.hasOwnProperty,c=!1;n.exports=function(e,n){function t(e,n,t,i){function nrWrapper(){var r,a,f,c;try{a=this,r=o(arguments),f="function"==typeof t?t(r,a):t||{}}catch(u){l([u,"",[r,a,i],f])}s(n+"start",[r,a,i],f);try{return c=e.apply(a,r)}catch(p){throw s(n+"err",[r,a,p],f),p}finally{s(n+"end",[r,a,c],f)}}return r(e)?e:(n||(n=""),nrWrapper[a]=e,p(e,nrWrapper),nrWrapper)}function u(e,n,i,o){i||(i="");var a,f,c,u="-"===i.charAt(0);for(c=0;c<n.length;c++)f=n[c],a=e[f],r(a)||(e[f]=t(a,u?f+i:i,o,f))}function s(t,r,i){if(!c||n){var o=c;c=!0;try{e.emit(t,r,i,n)}catch(a){l([a,t,r,i])}c=o}}function p(e,n){if(Object.defineProperty&&Object.keys)try{var t=Object.keys(e);return t.forEach(function(t){Object.defineProperty(n,t,{get:function(){return e[t]},set:function(n){return e[t]=n,n}})}),n}catch(r){l([r])}for(var i in e)f.call(e,i)&&(n[i]=e[i]);return n}function l(n){try{e.emit("internal-error",n)}catch(t){}}return e||(e=i),t.inPlace=u,t.flag=a,t}},{}]},{},["loader"]);</script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" id="ao_optimized_gfonts" href="https://fonts.googleapis.com/css?family=Muli%3A400%2C600%7CCrimson+Text%3A400%2C600%2C700&amp;display=swap" /><link rel="profile" href="https://gmpg.org/xfn/11">
+
+		<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+				new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-PJPNS3H');</script>
+	<!-- End Google Tag Manager -->
+
+
+	<!-- This site is optimized with the Yoast SEO Premium plugin v14.0.4 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>The Daily Dot | Your Internet. Your Internet news.</title>
+	<meta name="description" content="Latest news, opinion, and in-depth reporting from around the Internet. The Daily Dot is the hometown newspaper of the World Wide Web." />
+	<meta name="robots" content="index, follow" />
+	<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+	<meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+	<link rel="canonical" href="https://www.dailydot.com/" />
+	<link rel="next" href="https://www.dailydot.com/page/2/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="The Daily Dot | Your Internet. Your Internet news." />
+	<meta property="og:description" content="Latest news, opinion, and in-depth reporting from around the Internet. The Daily Dot is the hometown newspaper of the World Wide Web." />
+	<meta property="og:url" content="https://www.dailydot.com/" />
+	<meta property="og:site_name" content="The Daily Dot" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:site" content="@dailydot" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.dailydot.com/#organization","name":"The Daily Dot","url":"https://www.dailydot.com/","sameAs":["https://www.facebook.com/dailydot","https://www.instagram.com/dailydot/","https://www.youtube.com/user/dailydotvideo","https://www.pinterest.com/dailydot/","https://twitter.com/dailydot"],"logo":{"@type":"ImageObject","@id":"https://www.dailydot.com/#logo","inLanguage":"en-US","url":"https://www.dailydot.com/wp-content/uploads/65f/7f/f2e293bfc3abd94e.jpg","width":3000,"height":3000,"caption":"The Daily Dot"},"image":{"@id":"https://www.dailydot.com/#logo"}},{"@type":"WebSite","@id":"https://www.dailydot.com/#website","url":"https://www.dailydot.com/","name":"The Daily Dot","description":"The Daily Dot | Your Internet. Your Internet news.","publisher":{"@id":"https://www.dailydot.com/#organization"},"potentialAction":[{"@type":"SearchAction","target":"https://www.dailydot.com/?s={search_term_string}","query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"CollectionPage","@id":"https://www.dailydot.com/#webpage","url":"https://www.dailydot.com/","name":"The Daily Dot | Your Internet. Your Internet news.","isPartOf":{"@id":"https://www.dailydot.com/#website"},"about":{"@id":"https://www.dailydot.com/#organization"},"description":"Latest news, opinion, and in-depth reporting from around the Internet. The Daily Dot is the hometown newspaper of the World Wide Web.","inLanguage":"en-US"}]}</script>
+	<!-- / Yoast SEO Premium plugin. -->
+
+
+<link rel='dns-prefetch' href='//platform.twitter.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link href='https://fonts.gstatic.com' crossorigin='anonymous' rel='preconnect' />
+<link rel="alternate" type="application/rss+xml" title="The Daily Dot &raquo; Feed" href="https://www.dailydot.com/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.dailydot.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.4.1"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='DYNAMITE_frontend-css'  href='https://www.dailydot.com/wp-content/plugins/dynamite/dist/css/style.min.css?ver=1.2.2' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-css'  href='https://www.dailydot.com/wp-includes/css/dist/block-library/style.min.css?ver=5.4.1' type='text/css' media='all' />
+
+<link rel='stylesheet' id='freepress-icons-css'  href='https://www.dailydot.com/wp-content/themes/freepress-ui/fonts/icons.css?ver=1582067144' type='text/css' media='all' />
+<link rel='stylesheet' id='freepress-style-css'  href='https://www.dailydot.com/wp-content/themes/freepress-ui/style.css?ver=1587136685' type='text/css' media='all' />
+<link rel='stylesheet' id='forget-about-shortcode-buttons-css'  href='https://www.dailydot.com/wp-content/plugins/forget-about-shortcode-buttons/public/css/button-styles.css?ver=2.1.2' type='text/css' media='all' />
+<link rel='https://api.w.org/' href='https://www.dailydot.com/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.dailydot.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.dailydot.com/wp-includes/wlwmanifest.xml" /> 
+	<meta name="news_keywords" content="New York Times, Nikole Hannah-Jones, Daily Caller, 1619 project, daily caller 1619 project">
+	<script type="text/javascript">
+    window._taboola = window._taboola || [];
+    _taboola.push({article:'auto'});
+    !function (e, f, u, i) {
+        if (!document.getElementById(i)){
+            e.async = 1;
+            e.src = u;
+            e.id = i;
+            f.parentNode.insertBefore(e, f);
+        }
+    }(document.createElement('script'),
+        document.getElementsByTagName('script')[0],
+        '//cdn.taboola.com/libtrc/thedailydot-network/loader.js',
+        'tb_loader_script');
+    if(window.performance && typeof window.performance.mark == 'function')
+    {window.performance.mark('tbl_ic');}
+</script>
+				<meta property="fb:pages" content="127559550648374" />
+							<meta property="ia:markup_url_dev" content="https://www.dailydot.com/debug/nikole-hannah-jones-daily-caller/?ia_markup=1" />
+				<!-- HFCM by 99 Robots - Snippet # 2: Admiral Tag (Ryan, Dec-19-2019) -->
+<script type="text/javascript">!(function(o,n,t){t=o.createElement(n),o=o.getElementsByTagName(n)[0],t.async=1,t.src="https://aliveachiever.com/v2/0/lfkB1-NGnlTmVBqexS12KxSptpJQkY0xw-RALFpGzEaRwjaAH9RuMfLnTPjCxCDnr8L",o.parentNode.insertBefore(t,o)})(document,"script"),(function(o,n){o[n]=o[n]||function(){(o[n].q=o[n].q||[]).push(arguments)}})(window,"admiral");!(function(n,e,r,t){function o(){if((function o(t){try{return(t=localStorage.getItem("v4ac1eiZr0"))&&0<t.split(",")[4]}catch(n){}return!1})()){var t=n[e].pubads();typeof t.setTargeting===r&&t.setTargeting("admiral-engaged","true")}}(t=n[e]=n[e]||{}).cmd=t.cmd||[],typeof t.pubads===r?o():typeof t.cmd.unshift===r?t.cmd.unshift(o):t.cmd.push(o)})(window,"googletag","function");;;!(function(o,c,n,t){var r=c[n];function e(c){if(c){var t,n="__cmpCall",i="string"==typeof c.data&&0<=c.data.indexOf(n);(t=i?((function o(n){try{return JSON.parse(n)}catch(e){}})(c.data)||{})[n]:(c.data||{})[n])&&r(t.command,t.parameter,function(n,e){var o={__cmpReturn:{returnValue:n,success:e,callId:t.callId}};c.source.postMessage(i?JSON.stringify(o):o,"*")})}}!(function i(){if(!window.frames[t]){var n=o.body;if(n){var e=o.createElement("iframe");e.style.display="none",e.name=t,n.appendChild(e)}else setTimeout(i,5)}})(),"function"!=typeof r&&(r=c[n]=function a(){for(var n=[],e=0;e<arguments.length;e++)n.push(arguments[e]);r.q=r.q||[],"ping"===n[0]?n[2]({gdprAppliesGlobally:c.__cmpGdprAppliesGlobally||!1,cmpLoaded:!1},!0):n.length&&r.q.push(n)},c.addEventListener?c.addEventListener("message",e,!1):c.attachEvent&&c.attachEvent("onmessage",e))})(document,window,"__cmp","__cmpLocator");</script>
+<!-- /end HFCM by 99 Robots -->
+<!-- HFCM by 99 Robots - Snippet # 3: C.io (Ryan, Feb 21, 2020) -->
+<script type="text/javascript" src="//d137xjgotpkrvc.cloudfront.net/script.js"></script>
+<!-- /end HFCM by 99 Robots -->
+      <meta name="onesignal" content="wordpress-plugin"/>
+            <script>
+
+      window.OneSignal = window.OneSignal || [];
+
+      OneSignal.push( function() {
+        OneSignal.SERVICE_WORKER_UPDATER_PATH = "OneSignalSDKUpdaterWorker.js.php";
+        OneSignal.SERVICE_WORKER_PATH = "OneSignalSDKWorker.js.php";
+        OneSignal.SERVICE_WORKER_PARAM = { scope: '/' };
+
+        OneSignal.setDefaultNotificationUrl("https://www.dailydot.com");
+        var oneSignal_options = {};
+        window._oneSignalInitOptions = oneSignal_options;
+
+        oneSignal_options['wordpress'] = true;
+oneSignal_options['appId'] = '744a5505-a062-4744-ac13-37a6a66ac320';
+oneSignal_options['welcomeNotification'] = { };
+oneSignal_options['welcomeNotification']['title'] = "";
+oneSignal_options['welcomeNotification']['message'] = "";
+oneSignal_options['welcomeNotification']['url'] = "https://www.dailydot.com/latest/?os=dd";
+oneSignal_options['path'] = "https://www.dailydot.com/wp-content/plugins/onesignal-free-web-push-notifications/sdk_files/";
+oneSignal_options['safari_web_id'] = "web.onesignal.auto.2cb21d9d-922f-420a-8137-99f511b7fc1b";
+oneSignal_options['persistNotification'] = false;
+oneSignal_options['promptOptions'] = { };
+oneSignal_options['promptOptions']['actionMessage'] = 'Make sure you never miss breaking news by subscribing to notifications.';
+oneSignal_options['promptOptions']['acceptButtonText'] = 'CONTINUE';
+oneSignal_options['promptOptions']['cancelButtonText'] = 'NOT NOW';
+oneSignal_options['promptOptions']['siteName'] = 'https://www.dailydot.com/?os=dd';
+oneSignal_options['notifyButton'] = { };
+oneSignal_options['notifyButton']['enable'] = true;
+oneSignal_options['notifyButton']['position'] = 'bottom-left';
+oneSignal_options['notifyButton']['theme'] = 'default';
+oneSignal_options['notifyButton']['size'] = 'small';
+oneSignal_options['notifyButton']['showCredit'] = true;
+oneSignal_options['notifyButton']['offset'] = {};
+oneSignal_options['notifyButton']['offset']['left'] = '16px';
+                OneSignal.init(window._oneSignalInitOptions);
+                OneSignal.showSlidedownPrompt();      });
+
+      function documentInitOneSignal() {
+        var oneSignal_elements = document.getElementsByClassName("OneSignal-prompt");
+
+        var oneSignalLinkClickHandler = function(event) { OneSignal.push(['registerForPushNotifications']); event.preventDefault(); };        for(var i = 0; i < oneSignal_elements.length; i++)
+          oneSignal_elements[i].addEventListener('click', oneSignalLinkClickHandler, false);
+      }
+
+      if (document.readyState === 'complete') {
+           documentInitOneSignal();
+      }
+      else {
+           window.addEventListener("load", function(event){
+               documentInitOneSignal();
+          });
+      }
+    </script>
+<script type="text/javascript">var Arrive=function(d,e,c){"use strict";if(d.MutationObserver&&"undefined"!=typeof HTMLElement){var a,t,r=0,u=(a=HTMLElement.prototype.matches||HTMLElement.prototype.webkitMatchesSelector||HTMLElement.prototype.mozMatchesSelector||HTMLElement.prototype.msMatchesSelector,{matchesSelector:function(e,t){return e instanceof HTMLElement&&a.call(e,t)},addMethod:function(e,t,a){var r=e[t];e[t]=function(){return a.length==arguments.length?a.apply(this,arguments):"function"==typeof r?r.apply(this,arguments):void 0}},callCallbacks:function(e,t){t&&t.options.onceOnly&&1==t.firedElems.length&&(e=[e[0]]);for(var a,r=0;a=e[r];r++)a&&a.callback&&a.callback.call(a.elem,a.elem);t&&t.options.onceOnly&&1==t.firedElems.length&&t.me.unbindEventWithSelectorAndCallback.call(t.target,t.selector,t.callback)},checkChildNodesRecursively:function(e,t,a,r){for(var i,n=0;i=e[n];n++)a(i,t,r)&&r.push({callback:t.callback,elem:i}),0<i.childNodes.length&&u.checkChildNodesRecursively(i.childNodes,t,a,r)},mergeArrays:function(e,t){var a,r={};for(a in e)e.hasOwnProperty(a)&&(r[a]=e[a]);for(a in t)t.hasOwnProperty(a)&&(r[a]=t[a]);return r},toElementsArray:function(e){return void 0===e||"number"==typeof e.length&&e!==d||(e=[e]),e}}),w=((t=function(){this._eventsBucket=[],this._beforeAdding=null,this._beforeRemoving=null}).prototype.addEvent=function(e,t,a,r){var i={target:e,selector:t,options:a,callback:r,firedElems:[]};return this._beforeAdding&&this._beforeAdding(i),this._eventsBucket.push(i),i},t.prototype.removeEvent=function(e){for(var t,a=this._eventsBucket.length-1;t=this._eventsBucket[a];a--)if(e(t)){this._beforeRemoving&&this._beforeRemoving(t);var r=this._eventsBucket.splice(a,1);r&&r.length&&(r[0].callback=null)}},t.prototype.beforeAdding=function(e){this._beforeAdding=e},t.prototype.beforeRemoving=function(e){this._beforeRemoving=e},t),l=function(i,n){var l=new w,o=this,s={fireOnAttributesModification:!1};return l.beforeAdding(function(t){var e,a=t.target;a!==d.document&&a!==d||(a=document.getElementsByTagName("html")[0]),e=new MutationObserver(function(e){n.call(this,e,t)});var r=i(t.options);e.observe(a,r),t.observer=e,t.me=o}),l.beforeRemoving(function(e){e.observer.disconnect()}),this.bindEvent=function(e,t,a){t=u.mergeArrays(s,t);for(var r=u.toElementsArray(this),i=0;i<r.length;i++)l.addEvent(r[i],e,t,a)},this.unbindEvent=function(){var a=u.toElementsArray(this);l.removeEvent(function(e){for(var t=0;t<a.length;t++)if(this===c||e.target===a[t])return!0;return!1})},this.unbindEventWithSelectorOrCallback=function(a){var e,r=u.toElementsArray(this),i=a;e="function"==typeof a?function(e){for(var t=0;t<r.length;t++)if((this===c||e.target===r[t])&&e.callback===i)return!0;return!1}:function(e){for(var t=0;t<r.length;t++)if((this===c||e.target===r[t])&&e.selector===a)return!0;return!1},l.removeEvent(e)},this.unbindEventWithSelectorAndCallback=function(a,r){var i=u.toElementsArray(this);l.removeEvent(function(e){for(var t=0;t<i.length;t++)if((this===c||e.target===i[t])&&e.selector===a&&e.callback===r)return!0;return!1})},this},i=new function(){var s={fireOnAttributesModification:!1,onceOnly:!1,existing:!1};function n(e,t,a){return!(!u.matchesSelector(e,t.selector)||(e._id===c&&(e._id=r++),-1!=t.firedElems.indexOf(e._id))||(t.firedElems.push(e._id),0))}var d=(i=new l(function(e){var t={attributes:!1,childList:!0,subtree:!0};return e.fireOnAttributesModification&&(t.attributes=!0),t},function(e,i){e.forEach(function(e){var t=e.addedNodes,a=e.target,r=[];null!==t&&0<t.length?u.checkChildNodesRecursively(t,i,n,r):"attributes"===e.type&&n(a,i)&&r.push({callback:i.callback,elem:a}),u.callCallbacks(r,i)})})).bindEvent;return i.bindEvent=function(e,t,a){t=void 0===a?(a=t,s):u.mergeArrays(s,t);var r=u.toElementsArray(this);if(t.existing){for(var i=[],n=0;n<r.length;n++)for(var l=r[n].querySelectorAll(e),o=0;o<l.length;o++)i.push({callback:a,elem:l[o]});if(t.onceOnly&&i.length)return a.call(i[0].elem,i[0].elem);setTimeout(u.callCallbacks,1,i)}d.call(this,e,t,a)},i},o=new function(){var r={};function i(e,t){return u.matchesSelector(e,t.selector)}var n=(o=new l(function(){return{childList:!0,subtree:!0}},function(e,r){e.forEach(function(e){var t=e.removedNodes,a=[];null!==t&&0<t.length&&u.checkChildNodesRecursively(t,r,i,a),u.callCallbacks(a,r)})})).bindEvent;return o.bindEvent=function(e,t,a){t=void 0===a?(a=t,r):u.mergeArrays(r,t),n.call(this,e,t,a)},o};e&&g(e.fn),g(HTMLElement.prototype),g(NodeList.prototype),g(HTMLCollection.prototype),g(HTMLDocument.prototype),g(Window.prototype);var n={};return s(i,n,"unbindAllArrive"),s(o,n,"unbindAllLeave"),n}function s(e,t,a){u.addMethod(t,a,e.unbindEvent),u.addMethod(t,a,e.unbindEventWithSelectorOrCallback),u.addMethod(t,a,e.unbindEventWithSelectorAndCallback)}function g(e){e.arrive=i.bindEvent,s(i,e,"unbindArrive"),e.leave=o.bindEvent,s(o,e,"unbindLeave")}}(window,"undefined"==typeof jQuery?null:jQuery,void 0);function check_webp_feature(e,t){var a=new Image;a.onload=function(){var e=0<a.width&&0<a.height;t(e)},a.onerror=function(){t(!1)},a.src="data:image/webp;base64,"+{alpha:"UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA==",animation:"UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA"}[e]}function ewwwLoadImages(e){var n="data-";function t(e,t){for(var a=["accesskey","align","alt","border","class","contenteditable","contextmenu","crossorigin","dir","draggable","dropzone","height","hidden","hspace","id","ismap","lang","longdesc","sizes","spellcheck","style","tabindex","title","translate","usemap","vspace","width","data-attachment-id","data-caption","data-comments-opened","data-event-trigger","data-height","data-highlight-color","data-highlight-border-color","data-highlight-border-opacity","data-highlight-border-width","data-highlight-opacity","data-image-meta","data-image-title","data-image-description","data-large_image_width","data-large_image_height","data-lazy","data-lazy-type","data-no-lazy","data-orig-size","data-permalink","data-pin-description","data-pin-id","data-pin-media","data-pin-url","data-width"],r=0,i=a.length;r<i;r++)ewwwAttr(t,a[r],e.getAttribute(n+a[r]));return t}if(e){for(var a=document.querySelectorAll(".batch-image img, .image-wrapper a, .ngg-pro-masonry-item a, .ngg-galleria-offscreen-seo-wrapper a"),r=0,i=a.length;r<i;r++)ewwwAttr(a[r],"data-src",a[r].getAttribute("data-webp")),ewwwAttr(a[r],"data-thumbnail",a[r].getAttribute("data-webp-thumbnail"));for(r=0,i=(o=document.querySelectorAll(".rev_slider ul li")).length;r<i;r++){ewwwAttr(o[r],"data-thumb",o[r].getAttribute("data-webp-thumb"));for(var l=1;l<11;)ewwwAttr(o[r],"data-param"+l,o[r].getAttribute("data-webp-param"+l)),l++}var o;for(r=0,i=(o=document.querySelectorAll(".rev_slider img")).length;r<i;r++)ewwwAttr(o[r],"data-lazyload",o[r].getAttribute("data-webp-lazyload"));var s=document.querySelectorAll("div.woocommerce-product-gallery__image");for(r=0,i=s.length;r<i;r++)ewwwAttr(s[r],"data-thumb",s[r].getAttribute("data-webp-thumb"))}var d=document.querySelectorAll("video");for(r=0,i=d.length;r<i;r++)ewwwAttr(d[r],"poster",e?d[r].getAttribute("data-poster-webp"):d[r].getAttribute("data-poster-image"));var c=document.querySelectorAll("img.ewww_webp_lazy_load");for(r=0,i=c.length;r<i;r++){if(e){ewwwAttr(c[r],"data-lazy-srcset",c[r].getAttribute("data-lazy-srcset-webp")),ewwwAttr(c[r],"data-srcset",c[r].getAttribute("data-srcset-webp")),ewwwAttr(c[r],"data-lazy-src",c[r].getAttribute("data-lazy-src-webp")),ewwwAttr(c[r],"data-src",c[r].getAttribute("data-src-webp")),ewwwAttr(c[r],"data-orig-file",c[r].getAttribute("data-webp-orig-file")),ewwwAttr(c[r],"data-medium-file",c[r].getAttribute("data-webp-medium-file")),ewwwAttr(c[r],"data-large-file",c[r].getAttribute("data-webp-large-file"));var u=c[r].getAttribute("srcset");null!=u&&!1!==u&&u.includes("R0lGOD")&&ewwwAttr(c[r],"src",c[r].getAttribute("data-lazy-src-webp"))}c[r].className=c[r].className.replace(/\bewww_webp_lazy_load\b/,"")}var w=document.querySelectorAll(".ewww_webp");for(r=0,i=w.length;r<i;r++){var g=document.createElement("img");e?(ewwwAttr(g,"src",w[r].getAttribute("data-webp")),ewwwAttr(g,"srcset",w[r].getAttribute("data-srcset-webp")),ewwwAttr(g,"data-orig-file",w[r].getAttribute("data-orig-file")),ewwwAttr(g,"data-orig-file",w[r].getAttribute("data-webp-orig-file")),ewwwAttr(g,"data-medium-file",w[r].getAttribute("data-medium-file")),ewwwAttr(g,"data-medium-file",w[r].getAttribute("data-webp-medium-file")),ewwwAttr(g,"data-large-file",w[r].getAttribute("data-large-file")),ewwwAttr(g,"data-large-file",w[r].getAttribute("data-webp-large-file")),ewwwAttr(g,"data-large_image",w[r].getAttribute("data-large_image")),ewwwAttr(g,"data-large_image",w[r].getAttribute("data-webp-large_image")),ewwwAttr(g,"data-src",w[r].getAttribute("data-src")),ewwwAttr(g,"data-src",w[r].getAttribute("data-webp-src"))):(ewwwAttr(g,"src",w[r].getAttribute("data-img")),ewwwAttr(g,"srcset",w[r].getAttribute("data-srcset-img")),ewwwAttr(g,"data-orig-file",w[r].getAttribute("data-orig-file")),ewwwAttr(g,"data-medium-file",w[r].getAttribute("data-medium-file")),ewwwAttr(g,"data-large-file",w[r].getAttribute("data-large-file")),ewwwAttr(g,"data-large_image",w[r].getAttribute("data-large_image")),ewwwAttr(g,"data-src",w[r].getAttribute("data-src"))),g=t(w[r],g),w[r].parentNode.insertBefore(g,w[r].nextSibling),w[r].className=w[r].className.replace(/\bewww_webp\b/,"")}window.jQuery&&jQuery.fn.isotope&&jQuery.fn.imagesLoaded&&(jQuery(".fusion-posts-container-infinite").imagesLoaded(function(){jQuery(".fusion-posts-container-infinite").hasClass("isotope")&&jQuery(".fusion-posts-container-infinite").isotope()}),jQuery(".fusion-portfolio:not(.fusion-recent-works) .fusion-portfolio-wrapper").imagesLoaded(function(){jQuery(".fusion-portfolio:not(.fusion-recent-works) .fusion-portfolio-wrapper").isotope()}))}function ewwwWebPInit(e){ewwwLoadImages(e),ewwwNggLoadGalleries(e),document.arrive(".ewww_webp",function(){ewwwLoadImages(e)}),document.arrive(".ewww_webp_lazy_load",function(){ewwwLoadImages(e)});var t=0,a=setInterval(function(){"undefined"!=typeof galleries&&(ewwwNggParseGalleries(e),clearInterval(a)),1e3<(t+=25)&&clearInterval(a)},25)}function ewwwAttr(e,t,a){null!=a&&!1!==a&&e.setAttribute(t,a)}function ewwwNggParseGalleries(e){if(e)for(var t in galleries){var a=galleries[t];galleries[t].images_list=ewwwNggParseImageList(a.images_list)}}function ewwwNggLoadGalleries(e){e&&document.addEventListener("ngg.galleria.themeadded",function(e,t){window.ngg_galleria._create_backup=window.ngg_galleria.create,window.ngg_galleria.create=function(e,t){var a=$(e).data("id");return galleries["gallery_"+a].images_list=ewwwNggParseImageList(galleries["gallery_"+a].images_list),window.ngg_galleria._create_backup(e,t)}})}function ewwwNggParseImageList(e){for(var t in e){var a=e[t];if(void 0!==a["image-webp"]&&(e[t].image=a["image-webp"],delete e[t]["image-webp"]),void 0!==a["thumb-webp"]&&(e[t].thumb=a["thumb-webp"],delete e[t]["thumb-webp"]),void 0!==a.full_image_webp&&(e[t].full_image=a.full_image_webp,delete e[t].full_image_webp),void 0!==a.srcsets)for(var r in a.srcsets)nggSrcset=a.srcsets[r],void 0!==a.srcsets[r+"-webp"]&&(e[t].srcsets[r]=a.srcsets[r+"-webp"],delete e[t].srcsets[r+"-webp"]);if(void 0!==a.full_srcsets)for(var i in a.full_srcsets)nggFSrcset=a.full_srcsets[i],void 0!==a.full_srcsets[i+"-webp"]&&(e[t].full_srcsets[i]=a.full_srcsets[i+"-webp"],delete e[t].full_srcsets[i+"-webp"])}return e}check_webp_feature("alpha",ewwwWebPInit);</script><!-- There is no amphtml version available for this URL. --><link rel="icon" href="https://www.dailydot.com/wp-content/uploads/2020/03/cropped-favicon-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://www.dailydot.com/wp-content/uploads/2020/03/cropped-favicon-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://www.dailydot.com/wp-content/uploads/2020/03/cropped-favicon-180x180.png" />
+<meta name="msapplication-TileImage" content="https://www.dailydot.com/wp-content/uploads/2020/03/cropped-favicon-270x270.png" />
+		<style type="text/css" id="wp-custom-css">
+			#inline_1 {
+	max-width: 450px
+}
+
+#primisPlayerContainerDiv {
+	max-width: 400px;
+	margin: auto;
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+
+#main {
+	margin-top: 10px
+}
+
+.dd-article-leadart-image-credit {
+	font-size: 12px;
+}
+
+.article-img {
+	margin-top: 16px;
+}
+
+
+.closable {
+	right: 10px;
+	width: fit-content;
+	max-width: 470px;
+}
+
+ul.mini-articles.padd-left-none.margin-v-none {
+	padding: 20px;
+	margin-left: 20px;
+}
+
+.wp-block-embed-tiktok>.wp-block-embed__wrapper {
+	width: 100%;
+}
+
+@media (max-width: 500px) {
+	.single-post h1.article-head {
+		font-size: 20px;
+	}
+	.single-post .category-stamp {
+		display:none;
+	}
+.single-post .wp-post-image {
+	display: none;
+}
+		.single-post .date-stamp {
+			margin-right: 6px;
+		}
+	.single-post .dd-article-leadart-image-credit {
+		display: none;
+	}
+}
+
+@media (max-width: 500px){
+	.wp-block-table {
+		font-size: 13px;
+	}
+}		</style>
+		</head>
+
+<body class="home blog dd-ad-geo-USA hfeed no-sidebar">
+		<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PJPNS3H"
+					  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+	<header id="main-header">
+		<div class="wrapper">
+			<div class="row">
+				<nav class="col-8 d-none d-lg-inline-block" role="navigation">
+					<a href="https://www.dailydot.com">
+						<svg xmlns="http://www.w3.org/2000/svg" class="main-logo inline-flex" viewBox="0 0 1195 235"><g fill="none" fill-rule="nonzero"><g fill="#110133"><path d="M411.94.46c2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.11 3.23 2.11 5.22v169.15c0 1.99-.75 3.73-2.24 5.22-1.49 1.49-3.23 2.24-5.22 2.24-2.32 0-4.19-.75-5.6-2.24-1.41-1.49-2.11-3.23-2.11-5.22v-29.6l4.48-3.48c0 4.81-1.24 9.74-3.73 14.8-2.49 5.06-6.01 9.7-10.57 13.93-4.56 4.23-9.87 7.67-15.92 10.32-6.06 2.65-12.65 3.98-19.77 3.98-11.11 0-21.06-2.9-29.85-8.71-8.79-5.8-15.76-13.68-20.89-23.63-5.14-9.95-7.71-21.31-7.71-34.08 0-12.6 2.57-23.92 7.71-33.95 5.14-10.03 12.1-17.91 20.89-23.63 8.79-5.72 18.66-8.58 29.6-8.58 6.96 0 13.51 1.24 19.65 3.73 6.13 2.49 11.57 5.89 16.29 10.2 4.73 4.31 8.41 9.25 11.07 14.8 2.65 5.56 3.98 11.32 3.98 17.29l-5.22-3.73V7.93c0-1.99.7-3.73 2.11-5.22 1.4-1.5 3.26-2.25 5.59-2.25zM360.2 173.09c8.79 0 16.58-2.28 23.38-6.84 6.8-4.56 12.15-10.78 16.04-18.66 3.89-7.87 5.85-16.87 5.85-26.99 0-9.95-1.95-18.86-5.85-26.74-3.9-7.87-9.25-14.05-16.04-18.53-6.8-4.48-14.59-6.72-23.38-6.72-8.62 0-16.38 2.24-23.26 6.72-6.88 4.48-12.27 10.66-16.17 18.53-3.9 7.88-5.85 16.79-5.85 26.74s1.95 18.9 5.85 26.86c3.89 7.96 9.29 14.22 16.17 18.78 6.88 4.57 14.63 6.85 23.26 6.85zM552.72 57.42c2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.11 3.32 2.11 5.47v111.94c0 1.99-.75 3.73-2.24 5.22-1.49 1.49-3.23 2.24-5.22 2.24-2.32 0-4.19-.75-5.6-2.24-1.41-1.49-2.11-3.23-2.11-5.22v-29.6l4.48-1.74c0 4.48-1.29 9.16-3.86 14.05-2.57 4.89-6.09 9.37-10.57 13.43-4.48 4.07-9.74 7.38-15.8 9.95-6.06 2.57-12.65 3.86-19.77 3.86-11.11 0-21.1-2.9-29.97-8.71-8.87-5.8-15.84-13.76-20.89-23.88-5.06-10.11-7.59-21.47-7.59-34.08 0-12.93 2.57-24.33 7.71-34.2 5.14-9.86 12.1-17.62 20.89-23.26 8.79-5.64 18.66-8.46 29.6-8.46 7.13 0 13.81 1.24 20.02 3.73 6.21 2.49 11.65 5.89 16.29 10.2 4.64 4.31 8.25 9.25 10.82 14.8 2.57 5.56 3.86 11.32 3.86 17.29l-5.22-3.73V65.13c0-2.15.7-3.98 2.11-5.47 1.41-1.49 3.28-2.24 5.6-2.24zm-51.74 115.67c8.79 0 16.58-2.28 23.38-6.84 6.8-4.56 12.15-10.86 16.04-18.91 3.89-8.04 5.85-17.04 5.85-26.99 0-9.62-1.95-18.36-5.85-26.24-3.9-7.87-9.25-14.09-16.04-18.66-6.8-4.56-14.59-6.84-23.38-6.84-8.62 0-16.38 2.2-23.26 6.59-6.88 4.4-12.27 10.49-16.17 18.28-3.9 7.8-5.85 16.75-5.85 26.86 0 9.95 1.9 18.95 5.72 26.99 3.81 8.05 9.16 14.35 16.04 18.91 6.9 4.57 14.73 6.85 23.52 6.85zM597.25 38.52c-3.48 0-6.09-.78-7.84-2.36-1.74-1.57-2.61-3.86-2.61-6.84v-2.49c0-2.98.95-5.26 2.86-6.84 1.9-1.57 4.52-2.36 7.84-2.36 3.15 0 5.6.79 7.34 2.36 1.74 1.58 2.61 3.86 2.61 6.84v2.49c0 2.98-.87 5.27-2.61 6.84-1.75 1.57-4.28 2.36-7.59 2.36zm7.46 138.55c0 1.99-.75 3.73-2.24 5.22-1.49 1.49-3.23 2.24-5.22 2.24-2.32 0-4.15-.75-5.47-2.24-1.33-1.49-1.99-3.23-1.99-5.22V62.65c0-1.99.7-3.73 2.11-5.22 1.41-1.49 3.19-2.24 5.35-2.24 2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.11 3.23 2.11 5.22v114.42zM650.97 177.07c0 1.99-.75 3.73-2.24 5.22-1.49 1.49-3.23 2.24-5.22 2.24-2.16 0-3.94-.75-5.35-2.24-1.41-1.49-2.11-3.23-2.11-5.22V7.92c0-1.99.75-3.73 2.24-5.22 1.49-1.49 3.23-2.24 5.22-2.24 2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.12 3.23 2.12 5.22v169.15h-.01zM773.85 55.19c2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.11 3.23 2.11 5.22v109.7c0 13.43-2.66 24.75-7.96 33.95-5.31 9.2-12.44 16.17-21.39 20.89-8.95 4.73-19.15 7.09-30.59 7.09-7.13 0-13.72-.79-19.78-2.36-6.06-1.58-10.99-3.53-14.8-5.85-1.99-1.16-3.48-2.61-4.48-4.35-1-1.74-1.08-3.53-.25-5.35.83-2.32 2.11-3.86 3.86-4.6 1.75-.74 3.52-.71 5.35.12 2.82 1.49 6.88 3.32 12.19 5.47s11.36 3.23 18.16 3.23c9.12 0 17-1.91 23.63-5.72 6.63-3.82 11.82-9.33 15.55-16.54 3.73-7.21 5.6-15.8 5.6-25.75v-17.91l1.74 6.22c-2.49 4.97-6.06 9.45-10.7 13.43-4.64 3.98-9.87 7.09-15.67 9.33-5.81 2.24-12.03 3.36-18.66 3.36-9.95 0-18.2-2.03-24.75-6.09-6.55-4.06-11.44-9.66-14.68-16.79-3.23-7.13-4.85-15.5-4.85-25.12V62.65c0-1.99.7-3.73 2.11-5.22 1.41-1.49 3.27-2.24 5.6-2.24 2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.11 3.23 2.11 5.22v74.13c0 11.61 2.53 20.56 7.59 26.86 5.06 6.3 13.31 9.45 24.75 9.45 7.13 0 13.68-1.7 19.65-5.1 5.97-3.4 10.86-7.88 14.68-13.43 3.81-5.55 5.72-11.48 5.72-17.79V62.64c0-1.99.66-3.73 1.99-5.22 1.32-1.49 3.14-2.23 5.47-2.23zM961.65.46c2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.11 3.23 2.11 5.22v169.15c0 1.99-.75 3.73-2.24 5.22-1.49 1.49-3.23 2.24-5.22 2.24-2.32 0-4.19-.75-5.6-2.24-1.41-1.49-2.11-3.23-2.11-5.22v-29.6l4.48-3.48c0 4.81-1.24 9.74-3.73 14.8-2.49 5.06-6.01 9.7-10.57 13.93-4.56 4.23-9.87 7.67-15.92 10.32-6.05 2.65-12.65 3.98-19.77 3.98-11.11 0-21.06-2.9-29.85-8.71-8.79-5.8-15.76-13.68-20.89-23.63-5.14-9.95-7.71-21.31-7.71-34.08 0-12.6 2.57-23.92 7.71-33.95 5.14-10.03 12.1-17.91 20.89-23.63 8.79-5.72 18.66-8.58 29.6-8.58 6.96 0 13.51 1.24 19.65 3.73 6.13 2.49 11.57 5.89 16.29 10.2 4.73 4.31 8.42 9.25 11.07 14.8 2.65 5.56 3.98 11.32 3.98 17.29l-5.22-3.73V7.93c0-1.99.7-3.73 2.11-5.22 1.4-1.5 3.26-2.25 5.59-2.25zm-51.74 172.63c8.79 0 16.58-2.28 23.38-6.84 6.8-4.56 12.15-10.78 16.04-18.66 3.89-7.87 5.85-16.87 5.85-26.99 0-9.95-1.95-18.86-5.85-26.74-3.9-7.87-9.25-14.05-16.04-18.53-6.8-4.48-14.59-6.72-23.38-6.72-8.62 0-16.38 2.24-23.26 6.72-6.88 4.48-12.27 10.66-16.17 18.53-3.9 7.88-5.85 16.79-5.85 26.74s1.95 18.9 5.85 26.86c3.89 7.96 9.29 14.22 16.17 18.78 6.88 4.57 14.64 6.85 23.26 6.85zM1116.61 120.85c0 12.6-2.78 23.92-8.33 33.95-5.56 10.04-13.06 17.91-22.51 23.63-9.45 5.72-20.15 8.58-32.09 8.58-11.78 0-22.43-2.86-31.96-8.58-9.54-5.72-17.08-13.6-22.64-23.63-5.56-10.03-8.33-21.35-8.33-33.95 0-12.77 2.78-24.13 8.33-34.08 5.55-9.95 13.1-17.82 22.64-23.63 9.53-5.8 20.19-8.71 31.96-8.71 11.94 0 22.64 2.9 32.09 8.71 9.45 5.81 16.95 13.68 22.51 23.63 5.55 9.96 8.33 21.32 8.33 34.08zm-15.17 0c0-10.11-2.08-19.11-6.22-26.99-4.15-7.87-9.83-14.05-17.04-18.53-7.21-4.48-15.38-6.72-24.5-6.72s-17.29 2.24-24.5 6.72c-7.21 4.48-12.93 10.66-17.16 18.53-4.23 7.88-6.34 16.88-6.34 26.99 0 10.12 2.11 19.07 6.34 26.86 4.23 7.8 9.95 13.97 17.16 18.53 7.21 4.56 15.38 6.84 24.5 6.84s17.29-2.28 24.5-6.84c7.21-4.56 12.89-10.74 17.04-18.53 4.14-7.78 6.22-16.74 6.22-26.86zM1130.04 57.92H1188c1.99 0 3.65.71 4.97 2.11 1.33 1.41 1.99 3.11 1.99 5.1 0 1.99-.67 3.65-1.99 4.98-1.33 1.33-2.98 1.99-4.97 1.99h-57.96c-1.99 0-3.69-.7-5.1-2.11-1.41-1.41-2.11-3.11-2.11-5.1 0-1.99.7-3.65 2.11-4.98 1.41-1.32 3.11-1.99 5.1-1.99zm25.62-35.07c2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.11 3.23 2.11 5.22v124.87c0 4.64.62 8.13 1.87 10.45 1.24 2.32 2.86 3.86 4.85 4.6 1.99.74 3.98 1.12 5.97 1.12 1.33 0 2.53-.21 3.61-.62 1.08-.41 2.28-.62 3.61-.62 1.49 0 2.77.58 3.86 1.74 1.08 1.16 1.62 2.65 1.62 4.48 0 2.32-1.33 4.27-3.98 5.85s-5.81 2.36-9.45 2.36c-1.49 0-3.73-.12-6.72-.37-2.99-.25-6.06-1.16-9.2-2.74-3.15-1.57-5.81-4.35-7.96-8.33-2.16-3.98-3.23-9.7-3.23-17.16V30.31c0-1.99.75-3.73 2.24-5.22 1.47-1.49 3.29-2.24 5.45-2.24z"/></g><path fill="#110133" d="M88.84 120.55c7.16.06 13.91-1.32 20.25-4.14 6.34-2.82 11.88-6.73 16.63-11.73 4.74-4.99 8.49-10.85 11.25-17.58 2.75-6.73 4.16-13.92 4.22-21.58.06-7.66-1.23-14.86-3.87-21.59-2.64-6.74-6.3-12.64-10.96-17.72-4.67-5.08-10.15-9.1-16.44-12.09-6.3-2.98-13.02-4.51-20.18-4.57L72.48 9.4l-.89 111 17.25.15z"/><path fill="#110133" d="M220.08 123.96c3.33 0 6.57.34 9.76.84V33.88c0-14.25-11.55-25.81-25.81-25.81h-46.64c2.55 3.48 4.89 7.13 6.98 10.99 3.73 6.87 6.59 14.26 8.58 22.15 1.99 7.89 2.95 16.1 2.88 24.61-.07 8.52-1.16 16.71-3.27 24.56-2.11 7.86-5.09 15.19-8.93 21.99-3.84 6.81-8.39 13.01-13.67 18.59-5.28 5.59-11.15 10.38-17.62 14.36-6.47 3.99-13.39 7.04-20.77 9.17-7.38 2.13-15.06 3.16-23.02 3.09l-52.15-.47L37.6 8.06H26.44C12.19 8.06.63 19.61.63 33.87v156.08c0 14.25 11.55 25.81 25.81 25.81h138.89a61.868 61.868 0 01-7.49-29.57c0-34.31 27.92-62.23 62.24-62.23z"/><path fill="#3BB77A" d="M229.83 149.68c-3.12-.83-6.38-1.32-9.76-1.32-20.86 0-37.84 16.98-37.84 37.84 0 11.96 5.6 22.63 14.29 29.57 6.47 5.16 14.65 8.27 23.55 8.27 20.86 0 37.84-16.98 37.84-37.84 0-17.49-11.93-32.2-28.08-36.52z"/></g></svg>
+					</a>
+					<ul id="primary-menu" class="header-list padd-left-none inline-flex"><li id="menu-item-786353" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-786353"><a href="https://www.dailydot.com/topics/debug/">Tech</a></li>
+<li id="menu-item-786352" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-786352"><a href="https://www.dailydot.com/topics/unclick/">Internet Culture</a></li>
+<li id="menu-item-786354" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-786354"><a href="https://www.dailydot.com/topics/upstream/">Streaming</a></li>
+<li id="menu-item-786355" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-786355"><a href="https://www.dailydot.com/topics/irl/">IRL</a></li>
+<li id="menu-item-786455" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-786455"><a href="https://www.dailydot.com/about/">About</a>
+<ul class="sub-menu">
+	<li id="menu-item-786456" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-786456"><a href="https://www.dailydot.com/about/">About Us</a></li>
+	<li id="menu-item-786457" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-786457"><a href="https://www.dailydot.com/contact-us/">Contact</a></li>
+	<li id="menu-item-786498" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-786498"><a href="https://www.dailydot.com/jobs/">Jobs</a></li>
+	<li id="menu-item-786496" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-786496"><a href="https://www.dailydot.com/terms-of-use/">Terms of Use</a></li>
+	<li id="menu-item-786497" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-786497"><a href="https://www.dailydot.com/privacy-policy/">Privacy Policy</a></li>
+	<li id="menu-item-786488" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-786488"><a href="https://www.dailydot.com/ethics-policy/">Ethics Policy</a></li>
+</ul>
+</li>
+</ul>				</nav><!-- left col end -->
+
+				<div class="col d-block d-lg-none">
+					<!-- mobile menu start -->
+					<nav role="navigation">
+					  <div id="menuToggle">
+					    <!--
+					    A fake / hidden checkbox is used as click reciever,
+					    so you can use the :checked selector on it.
+					    -->
+					    <input type="checkbox" />
+					    <span></span>
+					    <span></span>
+							<span></span>
+
+							<ul id="menu" class="menu"><li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-786353"><a href="https://www.dailydot.com/topics/debug/">Tech</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-786352"><a href="https://www.dailydot.com/topics/unclick/">Internet Culture</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-786354"><a href="https://www.dailydot.com/topics/upstream/">Streaming</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-786355"><a href="https://www.dailydot.com/topics/irl/">IRL</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-786455"><a href="https://www.dailydot.com/about/">About</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-786456"><a href="https://www.dailydot.com/about/">About Us</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-786457"><a href="https://www.dailydot.com/contact-us/">Contact</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-786498"><a href="https://www.dailydot.com/jobs/">Jobs</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-786496"><a href="https://www.dailydot.com/terms-of-use/">Terms of Use</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-786497"><a href="https://www.dailydot.com/privacy-policy/">Privacy Policy</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-786488"><a href="https://www.dailydot.com/ethics-policy/">Ethics Policy</a></li>
+</ul>
+</li>
+</ul>					  </div><!-- menu toggle end -->
+					</nav><!-- mobile menu end -->
+				</div><!-- col end -->
+
+				<div class="col d-block d-lg-none">
+					<a href="https://www.dailydot.com">
+						<svg xmlns="http://www.w3.org/2000/svg" class="main-logo inline-flex" viewBox="0 0 1195 235"><g fill="none" fill-rule="nonzero"><g fill="#110133"><path d="M411.94.46c2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.11 3.23 2.11 5.22v169.15c0 1.99-.75 3.73-2.24 5.22-1.49 1.49-3.23 2.24-5.22 2.24-2.32 0-4.19-.75-5.6-2.24-1.41-1.49-2.11-3.23-2.11-5.22v-29.6l4.48-3.48c0 4.81-1.24 9.74-3.73 14.8-2.49 5.06-6.01 9.7-10.57 13.93-4.56 4.23-9.87 7.67-15.92 10.32-6.06 2.65-12.65 3.98-19.77 3.98-11.11 0-21.06-2.9-29.85-8.71-8.79-5.8-15.76-13.68-20.89-23.63-5.14-9.95-7.71-21.31-7.71-34.08 0-12.6 2.57-23.92 7.71-33.95 5.14-10.03 12.1-17.91 20.89-23.63 8.79-5.72 18.66-8.58 29.6-8.58 6.96 0 13.51 1.24 19.65 3.73 6.13 2.49 11.57 5.89 16.29 10.2 4.73 4.31 8.41 9.25 11.07 14.8 2.65 5.56 3.98 11.32 3.98 17.29l-5.22-3.73V7.93c0-1.99.7-3.73 2.11-5.22 1.4-1.5 3.26-2.25 5.59-2.25zM360.2 173.09c8.79 0 16.58-2.28 23.38-6.84 6.8-4.56 12.15-10.78 16.04-18.66 3.89-7.87 5.85-16.87 5.85-26.99 0-9.95-1.95-18.86-5.85-26.74-3.9-7.87-9.25-14.05-16.04-18.53-6.8-4.48-14.59-6.72-23.38-6.72-8.62 0-16.38 2.24-23.26 6.72-6.88 4.48-12.27 10.66-16.17 18.53-3.9 7.88-5.85 16.79-5.85 26.74s1.95 18.9 5.85 26.86c3.89 7.96 9.29 14.22 16.17 18.78 6.88 4.57 14.63 6.85 23.26 6.85zM552.72 57.42c2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.11 3.32 2.11 5.47v111.94c0 1.99-.75 3.73-2.24 5.22-1.49 1.49-3.23 2.24-5.22 2.24-2.32 0-4.19-.75-5.6-2.24-1.41-1.49-2.11-3.23-2.11-5.22v-29.6l4.48-1.74c0 4.48-1.29 9.16-3.86 14.05-2.57 4.89-6.09 9.37-10.57 13.43-4.48 4.07-9.74 7.38-15.8 9.95-6.06 2.57-12.65 3.86-19.77 3.86-11.11 0-21.1-2.9-29.97-8.71-8.87-5.8-15.84-13.76-20.89-23.88-5.06-10.11-7.59-21.47-7.59-34.08 0-12.93 2.57-24.33 7.71-34.2 5.14-9.86 12.1-17.62 20.89-23.26 8.79-5.64 18.66-8.46 29.6-8.46 7.13 0 13.81 1.24 20.02 3.73 6.21 2.49 11.65 5.89 16.29 10.2 4.64 4.31 8.25 9.25 10.82 14.8 2.57 5.56 3.86 11.32 3.86 17.29l-5.22-3.73V65.13c0-2.15.7-3.98 2.11-5.47 1.41-1.49 3.28-2.24 5.6-2.24zm-51.74 115.67c8.79 0 16.58-2.28 23.38-6.84 6.8-4.56 12.15-10.86 16.04-18.91 3.89-8.04 5.85-17.04 5.85-26.99 0-9.62-1.95-18.36-5.85-26.24-3.9-7.87-9.25-14.09-16.04-18.66-6.8-4.56-14.59-6.84-23.38-6.84-8.62 0-16.38 2.2-23.26 6.59-6.88 4.4-12.27 10.49-16.17 18.28-3.9 7.8-5.85 16.75-5.85 26.86 0 9.95 1.9 18.95 5.72 26.99 3.81 8.05 9.16 14.35 16.04 18.91 6.9 4.57 14.73 6.85 23.52 6.85zM597.25 38.52c-3.48 0-6.09-.78-7.84-2.36-1.74-1.57-2.61-3.86-2.61-6.84v-2.49c0-2.98.95-5.26 2.86-6.84 1.9-1.57 4.52-2.36 7.84-2.36 3.15 0 5.6.79 7.34 2.36 1.74 1.58 2.61 3.86 2.61 6.84v2.49c0 2.98-.87 5.27-2.61 6.84-1.75 1.57-4.28 2.36-7.59 2.36zm7.46 138.55c0 1.99-.75 3.73-2.24 5.22-1.49 1.49-3.23 2.24-5.22 2.24-2.32 0-4.15-.75-5.47-2.24-1.33-1.49-1.99-3.23-1.99-5.22V62.65c0-1.99.7-3.73 2.11-5.22 1.41-1.49 3.19-2.24 5.35-2.24 2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.11 3.23 2.11 5.22v114.42zM650.97 177.07c0 1.99-.75 3.73-2.24 5.22-1.49 1.49-3.23 2.24-5.22 2.24-2.16 0-3.94-.75-5.35-2.24-1.41-1.49-2.11-3.23-2.11-5.22V7.92c0-1.99.75-3.73 2.24-5.22 1.49-1.49 3.23-2.24 5.22-2.24 2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.12 3.23 2.12 5.22v169.15h-.01zM773.85 55.19c2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.11 3.23 2.11 5.22v109.7c0 13.43-2.66 24.75-7.96 33.95-5.31 9.2-12.44 16.17-21.39 20.89-8.95 4.73-19.15 7.09-30.59 7.09-7.13 0-13.72-.79-19.78-2.36-6.06-1.58-10.99-3.53-14.8-5.85-1.99-1.16-3.48-2.61-4.48-4.35-1-1.74-1.08-3.53-.25-5.35.83-2.32 2.11-3.86 3.86-4.6 1.75-.74 3.52-.71 5.35.12 2.82 1.49 6.88 3.32 12.19 5.47s11.36 3.23 18.16 3.23c9.12 0 17-1.91 23.63-5.72 6.63-3.82 11.82-9.33 15.55-16.54 3.73-7.21 5.6-15.8 5.6-25.75v-17.91l1.74 6.22c-2.49 4.97-6.06 9.45-10.7 13.43-4.64 3.98-9.87 7.09-15.67 9.33-5.81 2.24-12.03 3.36-18.66 3.36-9.95 0-18.2-2.03-24.75-6.09-6.55-4.06-11.44-9.66-14.68-16.79-3.23-7.13-4.85-15.5-4.85-25.12V62.65c0-1.99.7-3.73 2.11-5.22 1.41-1.49 3.27-2.24 5.6-2.24 2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.11 3.23 2.11 5.22v74.13c0 11.61 2.53 20.56 7.59 26.86 5.06 6.3 13.31 9.45 24.75 9.45 7.13 0 13.68-1.7 19.65-5.1 5.97-3.4 10.86-7.88 14.68-13.43 3.81-5.55 5.72-11.48 5.72-17.79V62.64c0-1.99.66-3.73 1.99-5.22 1.32-1.49 3.14-2.23 5.47-2.23zM961.65.46c2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.11 3.23 2.11 5.22v169.15c0 1.99-.75 3.73-2.24 5.22-1.49 1.49-3.23 2.24-5.22 2.24-2.32 0-4.19-.75-5.6-2.24-1.41-1.49-2.11-3.23-2.11-5.22v-29.6l4.48-3.48c0 4.81-1.24 9.74-3.73 14.8-2.49 5.06-6.01 9.7-10.57 13.93-4.56 4.23-9.87 7.67-15.92 10.32-6.05 2.65-12.65 3.98-19.77 3.98-11.11 0-21.06-2.9-29.85-8.71-8.79-5.8-15.76-13.68-20.89-23.63-5.14-9.95-7.71-21.31-7.71-34.08 0-12.6 2.57-23.92 7.71-33.95 5.14-10.03 12.1-17.91 20.89-23.63 8.79-5.72 18.66-8.58 29.6-8.58 6.96 0 13.51 1.24 19.65 3.73 6.13 2.49 11.57 5.89 16.29 10.2 4.73 4.31 8.42 9.25 11.07 14.8 2.65 5.56 3.98 11.32 3.98 17.29l-5.22-3.73V7.93c0-1.99.7-3.73 2.11-5.22 1.4-1.5 3.26-2.25 5.59-2.25zm-51.74 172.63c8.79 0 16.58-2.28 23.38-6.84 6.8-4.56 12.15-10.78 16.04-18.66 3.89-7.87 5.85-16.87 5.85-26.99 0-9.95-1.95-18.86-5.85-26.74-3.9-7.87-9.25-14.05-16.04-18.53-6.8-4.48-14.59-6.72-23.38-6.72-8.62 0-16.38 2.24-23.26 6.72-6.88 4.48-12.27 10.66-16.17 18.53-3.9 7.88-5.85 16.79-5.85 26.74s1.95 18.9 5.85 26.86c3.89 7.96 9.29 14.22 16.17 18.78 6.88 4.57 14.64 6.85 23.26 6.85zM1116.61 120.85c0 12.6-2.78 23.92-8.33 33.95-5.56 10.04-13.06 17.91-22.51 23.63-9.45 5.72-20.15 8.58-32.09 8.58-11.78 0-22.43-2.86-31.96-8.58-9.54-5.72-17.08-13.6-22.64-23.63-5.56-10.03-8.33-21.35-8.33-33.95 0-12.77 2.78-24.13 8.33-34.08 5.55-9.95 13.1-17.82 22.64-23.63 9.53-5.8 20.19-8.71 31.96-8.71 11.94 0 22.64 2.9 32.09 8.71 9.45 5.81 16.95 13.68 22.51 23.63 5.55 9.96 8.33 21.32 8.33 34.08zm-15.17 0c0-10.11-2.08-19.11-6.22-26.99-4.15-7.87-9.83-14.05-17.04-18.53-7.21-4.48-15.38-6.72-24.5-6.72s-17.29 2.24-24.5 6.72c-7.21 4.48-12.93 10.66-17.16 18.53-4.23 7.88-6.34 16.88-6.34 26.99 0 10.12 2.11 19.07 6.34 26.86 4.23 7.8 9.95 13.97 17.16 18.53 7.21 4.56 15.38 6.84 24.5 6.84s17.29-2.28 24.5-6.84c7.21-4.56 12.89-10.74 17.04-18.53 4.14-7.78 6.22-16.74 6.22-26.86zM1130.04 57.92H1188c1.99 0 3.65.71 4.97 2.11 1.33 1.41 1.99 3.11 1.99 5.1 0 1.99-.67 3.65-1.99 4.98-1.33 1.33-2.98 1.99-4.97 1.99h-57.96c-1.99 0-3.69-.7-5.1-2.11-1.41-1.41-2.11-3.11-2.11-5.1 0-1.99.7-3.65 2.11-4.98 1.41-1.32 3.11-1.99 5.1-1.99zm25.62-35.07c2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.11 3.23 2.11 5.22v124.87c0 4.64.62 8.13 1.87 10.45 1.24 2.32 2.86 3.86 4.85 4.6 1.99.74 3.98 1.12 5.97 1.12 1.33 0 2.53-.21 3.61-.62 1.08-.41 2.28-.62 3.61-.62 1.49 0 2.77.58 3.86 1.74 1.08 1.16 1.62 2.65 1.62 4.48 0 2.32-1.33 4.27-3.98 5.85s-5.81 2.36-9.45 2.36c-1.49 0-3.73-.12-6.72-.37-2.99-.25-6.06-1.16-9.2-2.74-3.15-1.57-5.81-4.35-7.96-8.33-2.16-3.98-3.23-9.7-3.23-17.16V30.31c0-1.99.75-3.73 2.24-5.22 1.47-1.49 3.29-2.24 5.45-2.24z"/></g><path fill="#110133" d="M88.84 120.55c7.16.06 13.91-1.32 20.25-4.14 6.34-2.82 11.88-6.73 16.63-11.73 4.74-4.99 8.49-10.85 11.25-17.58 2.75-6.73 4.16-13.92 4.22-21.58.06-7.66-1.23-14.86-3.87-21.59-2.64-6.74-6.3-12.64-10.96-17.72-4.67-5.08-10.15-9.1-16.44-12.09-6.3-2.98-13.02-4.51-20.18-4.57L72.48 9.4l-.89 111 17.25.15z"/><path fill="#110133" d="M220.08 123.96c3.33 0 6.57.34 9.76.84V33.88c0-14.25-11.55-25.81-25.81-25.81h-46.64c2.55 3.48 4.89 7.13 6.98 10.99 3.73 6.87 6.59 14.26 8.58 22.15 1.99 7.89 2.95 16.1 2.88 24.61-.07 8.52-1.16 16.71-3.27 24.56-2.11 7.86-5.09 15.19-8.93 21.99-3.84 6.81-8.39 13.01-13.67 18.59-5.28 5.59-11.15 10.38-17.62 14.36-6.47 3.99-13.39 7.04-20.77 9.17-7.38 2.13-15.06 3.16-23.02 3.09l-52.15-.47L37.6 8.06H26.44C12.19 8.06.63 19.61.63 33.87v156.08c0 14.25 11.55 25.81 25.81 25.81h138.89a61.868 61.868 0 01-7.49-29.57c0-34.31 27.92-62.23 62.24-62.23z"/><path fill="#3BB77A" d="M229.83 149.68c-3.12-.83-6.38-1.32-9.76-1.32-20.86 0-37.84 16.98-37.84 37.84 0 11.96 5.6 22.63 14.29 29.57 6.47 5.16 14.65 8.27 23.55 8.27 20.86 0 37.84-16.98 37.84-37.84 0-17.49-11.93-32.2-28.08-36.52z"/></g></svg>
+					</a>
+				</div>
+
+				<div class="col">
+					<div class="pull-right">
+						<button type="button" class="button-unstyled search-button" onclick="openSearchModal(event);">
+							<i class="icons8-search h3 inline-flex"></i>
+						</button>
+
+						<!--<div class="user-account inline-flex d-none d-lg-inline-block">
+							<noscript><img class="header-user-img" src="/images/avatar.svg"></noscript><img class="lazyload header-user-img" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20210%20140%22%3E%3C/svg%3E' data-src="/images/avatar.svg">
+							<span>My Account</span>
+						</div>-->
+					</div><!-- pull right end -->
+				</div><!-- right col end -->
+			</div><!-- row end -->
+
+			
+		</div><!-- wrapper end -->
+	</header><!-- header end -->
+
+	<div class="sticky-header-gap" style="height: 64px;"></div>
+
+	<div id="content" class="site-content">
+		
+	<div id="primary" class="content-area">
+		<main id="main" class="main-body">
+			<div class="wrapper">
+				<div class="row latest-posts-row">
+
+				
+<div class="col-sm-6 col-md-8">
+  <div class="featured-article">
+    <a href="https://www.dailydot.com/debug/nikole-hannah-jones-daily-caller/">
+      <noscript><img width="640" height="320" src="https://www.dailydot.com/wp-content/uploads/2020/06/nikole-hannah-jones-daily-caller-1024x512.jpg" class="featured-article-img wp-post-image" alt="nikole hannah-jones daily callerr" srcset="https://www.dailydot.com/wp-content/uploads/2020/06/nikole-hannah-jones-daily-caller-1024x512.jpg 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/nikole-hannah-jones-daily-caller-800x400.jpg 800w, https://www.dailydot.com/wp-content/uploads/2020/06/nikole-hannah-jones-daily-caller-500x250.jpg 500w, https://www.dailydot.com/wp-content/uploads/2020/06/nikole-hannah-jones-daily-caller-768x384.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/06/nikole-hannah-jones-daily-caller-1536x768.jpg 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/nikole-hannah-jones-daily-caller.jpg 2000w" sizes="(max-width: 640px) 100vw, 640px" /></noscript><img width="640" height="320" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20640%20320%22%3E%3C/svg%3E' data-src="https://www.dailydot.com/wp-content/uploads/2020/06/nikole-hannah-jones-daily-caller-1024x512.jpg" class="lazyload featured-article-img wp-post-image ewww_webp_lazy_load" alt="nikole hannah-jones daily callerr" data-srcset="https://www.dailydot.com/wp-content/uploads/2020/06/nikole-hannah-jones-daily-caller-1024x512.jpg 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/nikole-hannah-jones-daily-caller-800x400.jpg 800w, https://www.dailydot.com/wp-content/uploads/2020/06/nikole-hannah-jones-daily-caller-500x250.jpg 500w, https://www.dailydot.com/wp-content/uploads/2020/06/nikole-hannah-jones-daily-caller-768x384.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/06/nikole-hannah-jones-daily-caller-1536x768.jpg 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/nikole-hannah-jones-daily-caller.jpg 2000w" data-sizes="(max-width: 640px) 100vw, 640px" data-src-webp="https://www.dailydot.com/wp-content/uploads/2020/06/nikole-hannah-jones-daily-caller-1024x512.jpg.webp" data-srcset-webp="https://www.dailydot.com/wp-content/uploads/2020/06/nikole-hannah-jones-daily-caller-1024x512.jpg.webp 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/nikole-hannah-jones-daily-caller-800x400.jpg.webp 800w, https://www.dailydot.com/wp-content/uploads/2020/06/nikole-hannah-jones-daily-caller-500x250.jpg.webp 500w, https://www.dailydot.com/wp-content/uploads/2020/06/nikole-hannah-jones-daily-caller-768x384.jpg.webp 768w, https://www.dailydot.com/wp-content/uploads/2020/06/nikole-hannah-jones-daily-caller-1536x768.jpg.webp 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/nikole-hannah-jones-daily-caller.jpg.webp 2000w" />      <!--<div class="img-overlay"></div>-->
+      <h4 class="tile-article-head">Black journalist accuses Daily Caller of encouraging readers to harass, dox her</h4>
+            <p class="tile-article-stamp">On Jun 3, 2020      by Tiffanie Drayton</p>
+
+          </a><!-- href link end -->
+  </div><!-- featured article end -->
+</div><!-- col8 end -->
+
+<div id="archive-item-top-newsletter" class="col-12 col-md-4">
+  <div class="featured-article t-top-newsletter text-center d-none">
+    <noscript><img class="newsletter-pitch-img" src="https://www.dailydot.com/wp-content/themes/freepress-ui/images/newsletter.svg"></noscript><img class="lazyload newsletter-pitch-img" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20210%20140%22%3E%3C/svg%3E' data-src="https://www.dailydot.com/wp-content/themes/freepress-ui/images/newsletter.svg">
+    <h5>Get DailyDot in your inbox!</h5><br/>
+    <form
+      action="https://dailydot.us18.list-manage.com/subscribe/post?u=557794e049a42cb8dcdf4eacc&id=14207741b3"
+      method="post"
+      id="mc-embedded-subscribe-form-archive-item"
+      name="mc-embedded-subscribe-form"
+      class="inline-flex newsletter-form"
+      onsubmit="subscribeSubmitHandler(event);"
+    >
+      <div id="mc_embed_signup_scroll" class="inline-flex">
+        <input
+          type="email"
+          value=""
+          name="EMAIL"
+          class="required email small-form"
+          id="mce-EMAIL-2"
+          placeholder="Email Address"
+          required
+        />
+        <div id="mce-responses" class="clear">
+          <div
+            class="response"
+            id="mce-error-response"
+            style="display:none"
+          ></div>
+          <div
+            class="response"
+            id="mce-success-response"
+            style="display:none"
+          ></div>
+        </div>
+        <div style="position: absolute; left: -5000px;" aria-hidden="true">
+          <input
+            type="text"
+            name="b_557794e049a42cb8dcdf4eacc_14207741b3"
+            tabindex="-1"
+            value=""
+          />
+        </div>
+        <button
+          type="submit"
+          name="subscribe"
+          id="mc-embedded-subscribe-archive-item"
+          class="btn btn-xsmall u-newsletter-btn btn-primary"
+        >
+          Go
+        </button>
+      </div>
+    </form>
+  </div> <!-- Newsletter panel end -->
+
+  <div class="featured-article t-top-snippet padd-v-none">
+    <ul class="mini-articles padd-left-none margin-v-none">
+    
+        <li class="mini-article-list">
+          <a href="https://www.dailydot.com/upstream/5-myths-about-cutting-the-cord/">
+            <noscript><img width="1600" height="700" src="https://www.dailydot.com/wp-content/uploads/2020/04/Featured.jpg" class="min-article-img wp-post-image" alt="" srcset="https://www.dailydot.com/wp-content/uploads/2020/04/Featured.jpg 1600w, https://www.dailydot.com/wp-content/uploads/2020/04/Featured-800x350.jpg 800w, https://www.dailydot.com/wp-content/uploads/2020/04/Featured-1024x448.jpg 1024w, https://www.dailydot.com/wp-content/uploads/2020/04/Featured-768x336.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/04/Featured-1536x672.jpg 1536w" sizes="(max-width: 1600px) 100vw, 1600px" /></noscript><img width="1600" height="700" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%201600%20700%22%3E%3C/svg%3E' data-src="https://www.dailydot.com/wp-content/uploads/2020/04/Featured.jpg" class="lazyload min-article-img wp-post-image ewww_webp_lazy_load" alt="" data-srcset="https://www.dailydot.com/wp-content/uploads/2020/04/Featured.jpg 1600w, https://www.dailydot.com/wp-content/uploads/2020/04/Featured-800x350.jpg 800w, https://www.dailydot.com/wp-content/uploads/2020/04/Featured-1024x448.jpg 1024w, https://www.dailydot.com/wp-content/uploads/2020/04/Featured-768x336.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/04/Featured-1536x672.jpg 1536w" data-sizes="(max-width: 1600px) 100vw, 1600px" data-src-webp="https://www.dailydot.com/wp-content/uploads/2020/04/Featured.jpg.webp" data-srcset-webp="https://www.dailydot.com/wp-content/uploads/2020/04/Featured.jpg.webp 1600w, https://www.dailydot.com/wp-content/uploads/2020/04/Featured-800x350.jpg.webp 800w, https://www.dailydot.com/wp-content/uploads/2020/04/Featured-1024x448.jpg.webp 1024w, https://www.dailydot.com/wp-content/uploads/2020/04/Featured-768x336.jpg.webp 768w, https://www.dailydot.com/wp-content/uploads/2020/04/Featured-1536x672.jpg.webp 1536w" />            <p class="mini-article-title">5-Myths About Cutting the Cord</p>
+          </a>
+          <!--<a href="" class="category-stamp">
+            <noscript><img class="article-category-img inline-flex" src="https://img.icons8.com/doodle/2x/opened-folder.png"></noscript><img class="lazyload article-category-img inline-flex" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20210%20140%22%3E%3C/svg%3E' data-src="https://img.icons8.com/doodle/2x/opened-folder.png"> 
+            <p class="author-name inline-flex"></p>
+          </a>-->
+        </li><!-- list end -->
+
+      
+        <li class="mini-article-list">
+          <a href="https://www.dailydot.com/debug/eric-trump-fake-bloomberg-dance/">
+            <noscript><img width="2000" height="1000" src="https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance.jpg" class="min-article-img wp-post-image" alt="A tweet from Eric Trump on top of a comedy group singing" srcset="https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance.jpg 2000w, https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance-800x400.jpg 800w, https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance-1024x512.jpg 1024w, https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance-500x250.jpg 500w, https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance-768x384.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance-1536x768.jpg 1536w, https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance-1280x640.jpg 1280w, https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance-250x125.jpg 250w" sizes="(max-width: 2000px) 100vw, 2000px" /></noscript><img width="2000" height="1000" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%202000%201000%22%3E%3C/svg%3E' data-src="https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance.jpg" class="lazyload min-article-img wp-post-image ewww_webp_lazy_load" alt="A tweet from Eric Trump on top of a comedy group singing" data-srcset="https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance.jpg 2000w, https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance-800x400.jpg 800w, https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance-1024x512.jpg 1024w, https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance-500x250.jpg 500w, https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance-768x384.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance-1536x768.jpg 1536w, https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance-1280x640.jpg 1280w, https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance-250x125.jpg 250w" data-sizes="(max-width: 2000px) 100vw, 2000px" data-src-webp="https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance.jpg.webp" data-srcset-webp="https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance.jpg.webp 2000w, https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance-800x400.jpg.webp 800w, https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance-1024x512.jpg.webp 1024w, https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance-500x250.jpg.webp 500w, https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance-768x384.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance-1536x768.jpg.webp 1536w, https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance-1280x640.jpg.webp 1280w, https://www.dailydot.com/wp-content/uploads/2020/03/eric-trump-bloomberg-dance-250x125.jpg.webp 250w" />            <p class="mini-article-title">Eric Trump fell for that fake Bloomberg dance video</p>
+          </a>
+          <!--<a href="" class="category-stamp">
+            <noscript><img class="article-category-img inline-flex" src="https://img.icons8.com/doodle/2x/opened-folder.png"></noscript><img class="lazyload article-category-img inline-flex" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20210%20140%22%3E%3C/svg%3E' data-src="https://img.icons8.com/doodle/2x/opened-folder.png"> 
+            <p class="author-name inline-flex"></p>
+          </a>-->
+        </li><!-- list end -->
+
+      
+        <li class="mini-article-list">
+          <a href="https://www.dailydot.com/irl/asian-woman-train-racism-coronavirus/">
+            <noscript><img width="2000" height="1000" src="https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus.jpg" class="min-article-img wp-post-image" alt="" srcset="https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus.jpg 2000w, https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus-800x400.jpg 800w, https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus-1024x512.jpg 1024w, https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus-500x250.jpg 500w, https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus-768x384.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus-1536x768.jpg 1536w, https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus-1280x640.jpg 1280w, https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus-250x125.jpg 250w" sizes="(max-width: 2000px) 100vw, 2000px" /></noscript><img width="2000" height="1000" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%202000%201000%22%3E%3C/svg%3E' data-src="https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus.jpg" class="lazyload min-article-img wp-post-image ewww_webp_lazy_load" alt="" data-srcset="https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus.jpg 2000w, https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus-800x400.jpg 800w, https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus-1024x512.jpg 1024w, https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus-500x250.jpg 500w, https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus-768x384.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus-1536x768.jpg 1536w, https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus-1280x640.jpg 1280w, https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus-250x125.jpg 250w" data-sizes="(max-width: 2000px) 100vw, 2000px" data-src-webp="https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus.jpg.webp" data-srcset-webp="https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus.jpg.webp 2000w, https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus-800x400.jpg.webp 800w, https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus-1024x512.jpg.webp 1024w, https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus-500x250.jpg.webp 500w, https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus-768x384.jpg.webp 768w, https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus-1536x768.jpg.webp 1536w, https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus-1280x640.jpg.webp 1280w, https://www.dailydot.com/wp-content/uploads/2020/03/asian-woman-train-racism-coronavirus-250x125.jpg.webp 250w" />            <p class="mini-article-title">Video: Asian woman confronts person who assumes she has coronavirus</p>
+          </a>
+          <!--<a href="" class="category-stamp">
+            <noscript><img class="article-category-img inline-flex" src="https://img.icons8.com/doodle/2x/opened-folder.png"></noscript><img class="lazyload article-category-img inline-flex" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20210%20140%22%3E%3C/svg%3E' data-src="https://img.icons8.com/doodle/2x/opened-folder.png"> 
+            <p class="author-name inline-flex"></p>
+          </a>-->
+        </li><!-- list end -->
+
+          </ul><!-- mini articles end -->
+  </div><!-- top-snipped end -->
+</div><!-- col4 end -->
+
+<div class="col-sm-6 col-md-4">
+  <div class="tiled-article">
+    <a href="https://www.dailydot.com/irl/sjpd-jared-yuen-petition/">
+      <noscript><img width="640" height="320" src="https://www.dailydot.com/wp-content/uploads/2020/06/sjpd-jared-yuen-petition-1024x512.jpg" class="tile-article-img wp-post-image" alt="sjpd jared yuen petition" srcset="https://www.dailydot.com/wp-content/uploads/2020/06/sjpd-jared-yuen-petition-1024x512.jpg 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/sjpd-jared-yuen-petition-800x400.jpg 800w, https://www.dailydot.com/wp-content/uploads/2020/06/sjpd-jared-yuen-petition-500x250.jpg 500w, https://www.dailydot.com/wp-content/uploads/2020/06/sjpd-jared-yuen-petition-768x384.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/06/sjpd-jared-yuen-petition-1536x768.jpg 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/sjpd-jared-yuen-petition.jpg 2000w" sizes="(max-width: 640px) 100vw, 640px" /></noscript><img width="640" height="320" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20640%20320%22%3E%3C/svg%3E' data-src="https://www.dailydot.com/wp-content/uploads/2020/06/sjpd-jared-yuen-petition-1024x512.jpg" class="lazyload tile-article-img wp-post-image ewww_webp_lazy_load" alt="sjpd jared yuen petition" data-srcset="https://www.dailydot.com/wp-content/uploads/2020/06/sjpd-jared-yuen-petition-1024x512.jpg 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/sjpd-jared-yuen-petition-800x400.jpg 800w, https://www.dailydot.com/wp-content/uploads/2020/06/sjpd-jared-yuen-petition-500x250.jpg 500w, https://www.dailydot.com/wp-content/uploads/2020/06/sjpd-jared-yuen-petition-768x384.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/06/sjpd-jared-yuen-petition-1536x768.jpg 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/sjpd-jared-yuen-petition.jpg 2000w" data-sizes="(max-width: 640px) 100vw, 640px" data-src-webp="https://www.dailydot.com/wp-content/uploads/2020/06/sjpd-jared-yuen-petition-1024x512.jpg.webp" data-srcset-webp="https://www.dailydot.com/wp-content/uploads/2020/06/sjpd-jared-yuen-petition-1024x512.jpg.webp 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/sjpd-jared-yuen-petition-800x400.jpg.webp 800w, https://www.dailydot.com/wp-content/uploads/2020/06/sjpd-jared-yuen-petition-500x250.jpg.webp 500w, https://www.dailydot.com/wp-content/uploads/2020/06/sjpd-jared-yuen-petition-768x384.jpg.webp 768w, https://www.dailydot.com/wp-content/uploads/2020/06/sjpd-jared-yuen-petition-1536x768.jpg.webp 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/sjpd-jared-yuen-petition.jpg.webp 2000w" />      <!--<div class="img-overlay"></div>-->
+      <h4 class="tile-article-head">Petition calls for termination of officer who treated protest like an ‘exciting game’</h4>
+              <p class="tile-article-desc">In the footage, Jared Yuen has a smirk on his face, licks his lips, and bounces around from side to side. At one point, he tells a female protester, 'Shut up, b*tch.'</p>
+            <p class="tile-article-stamp">On Jun 3, 2020      by Eilish O'Sullivan</p>
+
+            <div class="category-stamp margin-left-none">
+                  <a href="https://www.dailydot.com/topics/irl/">
+            <!-- <noscript><img class="article-category-img inline-flex" src="/images/rocket.png"></noscript><img class="lazyload article-category-img inline-flex" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20210%20140%22%3E%3C/svg%3E' data-src="/images/rocket.png"> -->
+            <span class="author-name inline-flex">IRL</span>
+          </a><!-- category stamp end -->
+              </div>
+                </a><!-- href link end -->
+  </div><!-- featured article end -->
+</div><!-- col8 end -->
+
+
+<div class="col-sm-6 col-md-4">
+  <div class="tiled-article">
+    <a href="https://www.dailydot.com/debug/facebook-employees-quit-trump-inaction/">
+      <noscript><img width="640" height="320" src="https://www.dailydot.com/wp-content/uploads/2020/06/facebook-employees-quit-trump-inaction-1024x512.jpg" class="tile-article-img wp-post-image" alt="facebook employees quit over trump inaction" srcset="https://www.dailydot.com/wp-content/uploads/2020/06/facebook-employees-quit-trump-inaction-1024x512.jpg 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/facebook-employees-quit-trump-inaction-800x400.jpg 800w, https://www.dailydot.com/wp-content/uploads/2020/06/facebook-employees-quit-trump-inaction-500x250.jpg 500w, https://www.dailydot.com/wp-content/uploads/2020/06/facebook-employees-quit-trump-inaction-768x384.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/06/facebook-employees-quit-trump-inaction-1536x768.jpg 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/facebook-employees-quit-trump-inaction.jpg 2000w" sizes="(max-width: 640px) 100vw, 640px" /></noscript><img width="640" height="320" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20640%20320%22%3E%3C/svg%3E' data-src="https://www.dailydot.com/wp-content/uploads/2020/06/facebook-employees-quit-trump-inaction-1024x512.jpg" class="lazyload tile-article-img wp-post-image ewww_webp_lazy_load" alt="facebook employees quit over trump inaction" data-srcset="https://www.dailydot.com/wp-content/uploads/2020/06/facebook-employees-quit-trump-inaction-1024x512.jpg 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/facebook-employees-quit-trump-inaction-800x400.jpg 800w, https://www.dailydot.com/wp-content/uploads/2020/06/facebook-employees-quit-trump-inaction-500x250.jpg 500w, https://www.dailydot.com/wp-content/uploads/2020/06/facebook-employees-quit-trump-inaction-768x384.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/06/facebook-employees-quit-trump-inaction-1536x768.jpg 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/facebook-employees-quit-trump-inaction.jpg 2000w" data-sizes="(max-width: 640px) 100vw, 640px" data-src-webp="https://www.dailydot.com/wp-content/uploads/2020/06/facebook-employees-quit-trump-inaction-1024x512.jpg.webp" data-srcset-webp="https://www.dailydot.com/wp-content/uploads/2020/06/facebook-employees-quit-trump-inaction-1024x512.jpg.webp 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/facebook-employees-quit-trump-inaction-800x400.jpg.webp 800w, https://www.dailydot.com/wp-content/uploads/2020/06/facebook-employees-quit-trump-inaction-500x250.jpg.webp 500w, https://www.dailydot.com/wp-content/uploads/2020/06/facebook-employees-quit-trump-inaction-768x384.jpg.webp 768w, https://www.dailydot.com/wp-content/uploads/2020/06/facebook-employees-quit-trump-inaction-1536x768.jpg.webp 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/facebook-employees-quit-trump-inaction.jpg.webp 2000w" />      <!--<div class="img-overlay"></div>-->
+      <h4 class="tile-article-head">Facebook employees are quitting over Zuckerberg’s inaction on Trump</h4>
+              <p class="tile-article-desc">One quit on Twitter, and the rival platform reached out him regarding a job opportunity.</p>
+            <p class="tile-article-stamp">On Jun 3, 2020      by Siobhan Ball</p>
+
+            <div class="category-stamp margin-left-none">
+                  <a href="https://www.dailydot.com/topics/debug/">
+            <!-- <noscript><img class="article-category-img inline-flex" src="/images/rocket.png"></noscript><img class="lazyload article-category-img inline-flex" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20210%20140%22%3E%3C/svg%3E' data-src="/images/rocket.png"> -->
+            <span class="author-name inline-flex">Tech</span>
+          </a><!-- category stamp end -->
+              </div>
+                </a><!-- href link end -->
+  </div><!-- featured article end -->
+</div><!-- col8 end -->
+
+
+<div class="col-sm-6 col-md-4">
+  <div class="tiled-article">
+    <a href="https://www.dailydot.com/debug/michelle-malkin-suspended-twitter-shooting-looters/">
+      <noscript><img width="640" height="326" src="https://www.dailydot.com/wp-content/uploads/2020/06/malkin-1004x512.jpg" class="tile-article-img wp-post-image" alt="" srcset="https://www.dailydot.com/wp-content/uploads/2020/06/malkin-1004x512.jpg 1004w, https://www.dailydot.com/wp-content/uploads/2020/06/malkin-785x400.jpg 785w, https://www.dailydot.com/wp-content/uploads/2020/06/malkin-768x392.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/06/malkin-1536x783.jpg 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/malkin.jpg 1622w" sizes="(max-width: 640px) 100vw, 640px" /></noscript><img width="640" height="326" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20640%20326%22%3E%3C/svg%3E' data-src="https://www.dailydot.com/wp-content/uploads/2020/06/malkin-1004x512.jpg" class="lazyload tile-article-img wp-post-image ewww_webp_lazy_load" alt="" data-srcset="https://www.dailydot.com/wp-content/uploads/2020/06/malkin-1004x512.jpg 1004w, https://www.dailydot.com/wp-content/uploads/2020/06/malkin-785x400.jpg 785w, https://www.dailydot.com/wp-content/uploads/2020/06/malkin-768x392.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/06/malkin-1536x783.jpg 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/malkin.jpg 1622w" data-sizes="(max-width: 640px) 100vw, 640px" data-src-webp="https://www.dailydot.com/wp-content/uploads/2020/06/malkin-1004x512.jpg.webp" data-srcset-webp="https://www.dailydot.com/wp-content/uploads/2020/06/malkin-1004x512.jpg.webp 1004w, https://www.dailydot.com/wp-content/uploads/2020/06/malkin-785x400.jpg.webp 785w, https://www.dailydot.com/wp-content/uploads/2020/06/malkin-768x392.jpg.webp 768w, https://www.dailydot.com/wp-content/uploads/2020/06/malkin-1536x783.jpg.webp 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/malkin.jpg.webp 1622w" />      <!--<div class="img-overlay"></div>-->
+      <h4 class="tile-article-head">Michelle Malkin suspended from Twitter for calling for looters to be shot</h4>
+              <p class="tile-article-desc">She claims she is appealing. </p>
+            <p class="tile-article-stamp">On Jun 3, 2020      by Zachary Petrizzo</p>
+
+            <div class="category-stamp margin-left-none">
+                  <a href="https://www.dailydot.com/topics/debug/">
+            <!-- <noscript><img class="article-category-img inline-flex" src="/images/rocket.png"></noscript><img class="lazyload article-category-img inline-flex" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20210%20140%22%3E%3C/svg%3E' data-src="/images/rocket.png"> -->
+            <span class="author-name inline-flex">Tech</span>
+          </a><!-- category stamp end -->
+              </div>
+                </a><!-- href link end -->
+  </div><!-- featured article end -->
+</div><!-- col8 end -->
+
+
+<div class="col-sm-6 col-md-4">
+  <div class="tiled-article">
+    <a href="https://www.dailydot.com/irl/tiktok-half-blackface/">
+      <noscript><img width="640" height="320" src="https://www.dailydot.com/wp-content/uploads/2020/06/tiktok_half_blackface-1024x512.jpg" class="tile-article-img wp-post-image" alt="" srcset="https://www.dailydot.com/wp-content/uploads/2020/06/tiktok_half_blackface-1024x512.jpg 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/tiktok_half_blackface-800x400.jpg 800w, https://www.dailydot.com/wp-content/uploads/2020/06/tiktok_half_blackface-500x250.jpg 500w, https://www.dailydot.com/wp-content/uploads/2020/06/tiktok_half_blackface-768x384.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/06/tiktok_half_blackface-1536x768.jpg 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/tiktok_half_blackface.jpg 2000w" sizes="(max-width: 640px) 100vw, 640px" /></noscript><img width="640" height="320" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20640%20320%22%3E%3C/svg%3E' data-src="https://www.dailydot.com/wp-content/uploads/2020/06/tiktok_half_blackface-1024x512.jpg" class="lazyload tile-article-img wp-post-image ewww_webp_lazy_load" alt="" data-srcset="https://www.dailydot.com/wp-content/uploads/2020/06/tiktok_half_blackface-1024x512.jpg 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/tiktok_half_blackface-800x400.jpg 800w, https://www.dailydot.com/wp-content/uploads/2020/06/tiktok_half_blackface-500x250.jpg 500w, https://www.dailydot.com/wp-content/uploads/2020/06/tiktok_half_blackface-768x384.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/06/tiktok_half_blackface-1536x768.jpg 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/tiktok_half_blackface.jpg 2000w" data-sizes="(max-width: 640px) 100vw, 640px" data-src-webp="https://www.dailydot.com/wp-content/uploads/2020/06/tiktok_half_blackface-1024x512.jpg.webp" data-srcset-webp="https://www.dailydot.com/wp-content/uploads/2020/06/tiktok_half_blackface-1024x512.jpg.webp 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/tiktok_half_blackface-800x400.jpg.webp 800w, https://www.dailydot.com/wp-content/uploads/2020/06/tiktok_half_blackface-500x250.jpg.webp 500w, https://www.dailydot.com/wp-content/uploads/2020/06/tiktok_half_blackface-768x384.jpg.webp 768w, https://www.dailydot.com/wp-content/uploads/2020/06/tiktok_half_blackface-1536x768.jpg.webp 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/tiktok_half_blackface.jpg.webp 2000w" />      <!--<div class="img-overlay"></div>-->
+      <h4 class="tile-article-head">TikTok teen slammed for doing half-blackface to denounce racism</h4>
+              <p class="tile-article-desc">She says she received death threats. </p>
+            <p class="tile-article-stamp">On Jun 3, 2020      by Samira Sadeque</p>
+
+            <div class="category-stamp margin-left-none">
+                  <a href="https://www.dailydot.com/topics/unclick/">
+            <!-- <noscript><img class="article-category-img inline-flex" src="/images/rocket.png"></noscript><img class="lazyload article-category-img inline-flex" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20210%20140%22%3E%3C/svg%3E' data-src="/images/rocket.png"> -->
+            <span class="author-name inline-flex">Internet Culture</span>
+          </a><!-- category stamp end -->
+                  <a href="https://www.dailydot.com/topics/irl/">
+            <!-- <noscript><img class="article-category-img inline-flex" src="/images/rocket.png"></noscript><img class="lazyload article-category-img inline-flex" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20210%20140%22%3E%3C/svg%3E' data-src="/images/rocket.png"> -->
+            <span class="author-name inline-flex">IRL</span>
+          </a><!-- category stamp end -->
+              </div>
+                </a><!-- href link end -->
+  </div><!-- featured article end -->
+</div><!-- col8 end -->
+
+
+<div class="col-sm-6 col-md-4">
+  <div class="tiled-article">
+    <a href="https://www.dailydot.com/irl/k-pop-bluelivesmatter-memes/">
+      <noscript><img width="640" height="320" src="https://www.dailydot.com/wp-content/uploads/2020/06/bluelivesmatter_kpop_power_rangers-1024x512.jpg" class="tile-article-img wp-post-image" alt="bluelivesmatter kpop power rangers" srcset="https://www.dailydot.com/wp-content/uploads/2020/06/bluelivesmatter_kpop_power_rangers-1024x512.jpg 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/bluelivesmatter_kpop_power_rangers-800x400.jpg 800w, https://www.dailydot.com/wp-content/uploads/2020/06/bluelivesmatter_kpop_power_rangers-500x250.jpg 500w, https://www.dailydot.com/wp-content/uploads/2020/06/bluelivesmatter_kpop_power_rangers-768x384.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/06/bluelivesmatter_kpop_power_rangers-1536x768.jpg 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/bluelivesmatter_kpop_power_rangers.jpg 2000w" sizes="(max-width: 640px) 100vw, 640px" /></noscript><img width="640" height="320" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20640%20320%22%3E%3C/svg%3E' data-src="https://www.dailydot.com/wp-content/uploads/2020/06/bluelivesmatter_kpop_power_rangers-1024x512.jpg" class="lazyload tile-article-img wp-post-image ewww_webp_lazy_load" alt="bluelivesmatter kpop power rangers" data-srcset="https://www.dailydot.com/wp-content/uploads/2020/06/bluelivesmatter_kpop_power_rangers-1024x512.jpg 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/bluelivesmatter_kpop_power_rangers-800x400.jpg 800w, https://www.dailydot.com/wp-content/uploads/2020/06/bluelivesmatter_kpop_power_rangers-500x250.jpg 500w, https://www.dailydot.com/wp-content/uploads/2020/06/bluelivesmatter_kpop_power_rangers-768x384.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/06/bluelivesmatter_kpop_power_rangers-1536x768.jpg 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/bluelivesmatter_kpop_power_rangers.jpg 2000w" data-sizes="(max-width: 640px) 100vw, 640px" data-src-webp="https://www.dailydot.com/wp-content/uploads/2020/06/bluelivesmatter_kpop_power_rangers-1024x512.jpg.webp" data-srcset-webp="https://www.dailydot.com/wp-content/uploads/2020/06/bluelivesmatter_kpop_power_rangers-1024x512.jpg.webp 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/bluelivesmatter_kpop_power_rangers-800x400.jpg.webp 800w, https://www.dailydot.com/wp-content/uploads/2020/06/bluelivesmatter_kpop_power_rangers-500x250.jpg.webp 500w, https://www.dailydot.com/wp-content/uploads/2020/06/bluelivesmatter_kpop_power_rangers-768x384.jpg.webp 768w, https://www.dailydot.com/wp-content/uploads/2020/06/bluelivesmatter_kpop_power_rangers-1536x768.jpg.webp 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/bluelivesmatter_kpop_power_rangers.jpg.webp 2000w" />      <!--<div class="img-overlay"></div>-->
+      <h4 class="tile-article-head">K-pop fans hijack #BlueLivesMatter with memes and blue Power Rangers</h4>
+              <p class="tile-article-desc">It’s the third time they’ve taken over the internet this week.</p>
+            <p class="tile-article-stamp">On Jun 3, 2020      by Trinady Joslin</p>
+
+            <div class="category-stamp margin-left-none">
+                  <a href="https://www.dailydot.com/topics/unclick/">
+            <!-- <noscript><img class="article-category-img inline-flex" src="/images/rocket.png"></noscript><img class="lazyload article-category-img inline-flex" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20210%20140%22%3E%3C/svg%3E' data-src="/images/rocket.png"> -->
+            <span class="author-name inline-flex">Internet Culture</span>
+          </a><!-- category stamp end -->
+                  <a href="https://www.dailydot.com/topics/irl/">
+            <!-- <noscript><img class="article-category-img inline-flex" src="/images/rocket.png"></noscript><img class="lazyload article-category-img inline-flex" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20210%20140%22%3E%3C/svg%3E' data-src="/images/rocket.png"> -->
+            <span class="author-name inline-flex">IRL</span>
+          </a><!-- category stamp end -->
+              </div>
+                </a><!-- href link end -->
+  </div><!-- featured article end -->
+</div><!-- col8 end -->
+
+
+<div class="col-sm-6 col-md-4">
+  <div class="tiled-article">
+    <a href="https://www.dailydot.com/debug/dog-abuse-video-protests/">
+      <noscript><img width="640" height="320" src="https://www.dailydot.com/wp-content/uploads/2020/06/Screen-Shot-2020-06-03-at-10.06.54-AM-1024x512.png" class="tile-article-img wp-post-image" alt="" srcset="https://www.dailydot.com/wp-content/uploads/2020/06/Screen-Shot-2020-06-03-at-10.06.54-AM-1024x512.png 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/Screen-Shot-2020-06-03-at-10.06.54-AM-800x400.png 800w, https://www.dailydot.com/wp-content/uploads/2020/06/Screen-Shot-2020-06-03-at-10.06.54-AM-500x250.png 500w, https://www.dailydot.com/wp-content/uploads/2020/06/Screen-Shot-2020-06-03-at-10.06.54-AM-768x384.png 768w, https://www.dailydot.com/wp-content/uploads/2020/06/Screen-Shot-2020-06-03-at-10.06.54-AM-1536x768.png 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/Screen-Shot-2020-06-03-at-10.06.54-AM.png 2000w" sizes="(max-width: 640px) 100vw, 640px" /></noscript><img width="640" height="320" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20640%20320%22%3E%3C/svg%3E' data-src="https://www.dailydot.com/wp-content/uploads/2020/06/Screen-Shot-2020-06-03-at-10.06.54-AM-1024x512.png" class="lazyload tile-article-img wp-post-image ewww_webp_lazy_load" alt="" data-srcset="https://www.dailydot.com/wp-content/uploads/2020/06/Screen-Shot-2020-06-03-at-10.06.54-AM-1024x512.png 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/Screen-Shot-2020-06-03-at-10.06.54-AM-800x400.png 800w, https://www.dailydot.com/wp-content/uploads/2020/06/Screen-Shot-2020-06-03-at-10.06.54-AM-500x250.png 500w, https://www.dailydot.com/wp-content/uploads/2020/06/Screen-Shot-2020-06-03-at-10.06.54-AM-768x384.png 768w, https://www.dailydot.com/wp-content/uploads/2020/06/Screen-Shot-2020-06-03-at-10.06.54-AM-1536x768.png 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/Screen-Shot-2020-06-03-at-10.06.54-AM.png 2000w" data-sizes="(max-width: 640px) 100vw, 640px" data-src-webp="https://www.dailydot.com/wp-content/uploads/2020/06/Screen-Shot-2020-06-03-at-10.06.54-AM-1024x512.png.webp" data-srcset-webp="https://www.dailydot.com/wp-content/uploads/2020/06/Screen-Shot-2020-06-03-at-10.06.54-AM-1024x512.png.webp 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/Screen-Shot-2020-06-03-at-10.06.54-AM-800x400.png.webp 800w, https://www.dailydot.com/wp-content/uploads/2020/06/Screen-Shot-2020-06-03-at-10.06.54-AM-500x250.png.webp 500w, https://www.dailydot.com/wp-content/uploads/2020/06/Screen-Shot-2020-06-03-at-10.06.54-AM-768x384.png.webp 768w, https://www.dailydot.com/wp-content/uploads/2020/06/Screen-Shot-2020-06-03-at-10.06.54-AM-1536x768.png.webp 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/Screen-Shot-2020-06-03-at-10.06.54-AM.png.webp 2000w" />      <!--<div class="img-overlay"></div>-->
+      <h4 class="tile-article-head">Animal services says viral claims about puppy being killed at protests don&#8217;t add up</h4>
+              <p class="tile-article-desc">There is currently no evidence to support viral claim.</p>
+            <p class="tile-article-stamp">On Jun 3, 2020      by Colleen Hagerty</p>
+
+            <div class="category-stamp margin-left-none">
+                  <a href="https://www.dailydot.com/topics/debug/">
+            <!-- <noscript><img class="article-category-img inline-flex" src="/images/rocket.png"></noscript><img class="lazyload article-category-img inline-flex" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20210%20140%22%3E%3C/svg%3E' data-src="/images/rocket.png"> -->
+            <span class="author-name inline-flex">Tech</span>
+          </a><!-- category stamp end -->
+              </div>
+                </a><!-- href link end -->
+  </div><!-- featured article end -->
+</div><!-- col8 end -->
+
+
+<div class="col-sm-6 col-md-4">
+  <div class="tiled-article">
+    <a href="https://www.dailydot.com/debug/george-floyd-challenge/">
+      <noscript><img width="640" height="320" src="https://www.dailydot.com/wp-content/uploads/2020/06/george-floyd-challenge-1024x512.jpg" class="tile-article-img wp-post-image" alt="white teens mockingly re-enact George Floyd&#039;s murder" srcset="https://www.dailydot.com/wp-content/uploads/2020/06/george-floyd-challenge-1024x512.jpg 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/george-floyd-challenge-800x400.jpg 800w, https://www.dailydot.com/wp-content/uploads/2020/06/george-floyd-challenge-500x250.jpg 500w, https://www.dailydot.com/wp-content/uploads/2020/06/george-floyd-challenge-768x384.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/06/george-floyd-challenge-1536x768.jpg 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/george-floyd-challenge.jpg 2000w" sizes="(max-width: 640px) 100vw, 640px" /></noscript><img width="640" height="320" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20640%20320%22%3E%3C/svg%3E' data-src="https://www.dailydot.com/wp-content/uploads/2020/06/george-floyd-challenge-1024x512.jpg" class="lazyload tile-article-img wp-post-image ewww_webp_lazy_load" alt="white teens mockingly re-enact George Floyd&#039;s murder" data-srcset="https://www.dailydot.com/wp-content/uploads/2020/06/george-floyd-challenge-1024x512.jpg 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/george-floyd-challenge-800x400.jpg 800w, https://www.dailydot.com/wp-content/uploads/2020/06/george-floyd-challenge-500x250.jpg 500w, https://www.dailydot.com/wp-content/uploads/2020/06/george-floyd-challenge-768x384.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/06/george-floyd-challenge-1536x768.jpg 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/george-floyd-challenge.jpg 2000w" data-sizes="(max-width: 640px) 100vw, 640px" data-src-webp="https://www.dailydot.com/wp-content/uploads/2020/06/george-floyd-challenge-1024x512.jpg.webp" data-srcset-webp="https://www.dailydot.com/wp-content/uploads/2020/06/george-floyd-challenge-1024x512.jpg.webp 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/george-floyd-challenge-800x400.jpg.webp 800w, https://www.dailydot.com/wp-content/uploads/2020/06/george-floyd-challenge-500x250.jpg.webp 500w, https://www.dailydot.com/wp-content/uploads/2020/06/george-floyd-challenge-768x384.jpg.webp 768w, https://www.dailydot.com/wp-content/uploads/2020/06/george-floyd-challenge-1536x768.jpg.webp 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/george-floyd-challenge.jpg.webp 2000w" />      <!--<div class="img-overlay"></div>-->
+      <h4 class="tile-article-head">The &#8216;George Floyd challenge&#8217; is here, and it sucks</h4>
+              <p class="tile-article-desc">There have been consequences.</p>
+            <p class="tile-article-stamp">On Jun 3, 2020      by Claire Goforth</p>
+
+            <div class="category-stamp margin-left-none">
+                  <a href="https://www.dailydot.com/topics/debug/">
+            <!-- <noscript><img class="article-category-img inline-flex" src="/images/rocket.png"></noscript><img class="lazyload article-category-img inline-flex" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20210%20140%22%3E%3C/svg%3E' data-src="/images/rocket.png"> -->
+            <span class="author-name inline-flex">Tech</span>
+          </a><!-- category stamp end -->
+              </div>
+                </a><!-- href link end -->
+  </div><!-- featured article end -->
+</div><!-- col8 end -->
+
+
+<div class="col-sm-6 col-md-4">
+  <div class="tiled-article">
+    <a href="https://www.dailydot.com/irl/black-lives-matter-donate-youtube/">
+      <noscript><img width="640" height="320" src="https://www.dailydot.com/wp-content/uploads/2020/06/Screenshot-2020-06-03-at-16.09.16-1024x512.png" class="tile-article-img wp-post-image" alt="" srcset="https://www.dailydot.com/wp-content/uploads/2020/06/Screenshot-2020-06-03-at-16.09.16-1024x512.png 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/Screenshot-2020-06-03-at-16.09.16-800x400.png 800w, https://www.dailydot.com/wp-content/uploads/2020/06/Screenshot-2020-06-03-at-16.09.16-500x250.png 500w, https://www.dailydot.com/wp-content/uploads/2020/06/Screenshot-2020-06-03-at-16.09.16-768x384.png 768w, https://www.dailydot.com/wp-content/uploads/2020/06/Screenshot-2020-06-03-at-16.09.16-1536x768.png 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/Screenshot-2020-06-03-at-16.09.16.png 1770w" sizes="(max-width: 640px) 100vw, 640px" /></noscript><img width="640" height="320" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20640%20320%22%3E%3C/svg%3E' data-src="https://www.dailydot.com/wp-content/uploads/2020/06/Screenshot-2020-06-03-at-16.09.16-1024x512.png" class="lazyload tile-article-img wp-post-image ewww_webp_lazy_load" alt="" data-srcset="https://www.dailydot.com/wp-content/uploads/2020/06/Screenshot-2020-06-03-at-16.09.16-1024x512.png 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/Screenshot-2020-06-03-at-16.09.16-800x400.png 800w, https://www.dailydot.com/wp-content/uploads/2020/06/Screenshot-2020-06-03-at-16.09.16-500x250.png 500w, https://www.dailydot.com/wp-content/uploads/2020/06/Screenshot-2020-06-03-at-16.09.16-768x384.png 768w, https://www.dailydot.com/wp-content/uploads/2020/06/Screenshot-2020-06-03-at-16.09.16-1536x768.png 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/Screenshot-2020-06-03-at-16.09.16.png 1770w" data-sizes="(max-width: 640px) 100vw, 640px" data-src-webp="https://www.dailydot.com/wp-content/uploads/2020/06/Screenshot-2020-06-03-at-16.09.16-1024x512.png.webp" data-srcset-webp="https://www.dailydot.com/wp-content/uploads/2020/06/Screenshot-2020-06-03-at-16.09.16-1024x512.png.webp 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/Screenshot-2020-06-03-at-16.09.16-800x400.png.webp 800w, https://www.dailydot.com/wp-content/uploads/2020/06/Screenshot-2020-06-03-at-16.09.16-500x250.png.webp 500w, https://www.dailydot.com/wp-content/uploads/2020/06/Screenshot-2020-06-03-at-16.09.16-768x384.png.webp 768w, https://www.dailydot.com/wp-content/uploads/2020/06/Screenshot-2020-06-03-at-16.09.16-1536x768.png.webp 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/Screenshot-2020-06-03-at-16.09.16.png.webp 1770w" />      <!--<div class="img-overlay"></div>-->
+      <h4 class="tile-article-head">YouTube videos are helping fundraise for Black Lives Matter</h4>
+              <p class="tile-article-desc">No cash, no problem.</p>
+            <p class="tile-article-stamp">On Jun 3, 2020      by Siobhan Ball</p>
+
+            <div class="category-stamp margin-left-none">
+                  <a href="https://www.dailydot.com/topics/irl/">
+            <!-- <noscript><img class="article-category-img inline-flex" src="/images/rocket.png"></noscript><img class="lazyload article-category-img inline-flex" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20210%20140%22%3E%3C/svg%3E' data-src="/images/rocket.png"> -->
+            <span class="author-name inline-flex">IRL</span>
+          </a><!-- category stamp end -->
+              </div>
+                </a><!-- href link end -->
+  </div><!-- featured article end -->
+</div><!-- col8 end -->
+
+
+<div class="col-sm-6 col-md-4">
+  <div class="tiled-article">
+    <a href="https://www.dailydot.com/irl/john-boyega-black-lives-matter-london-protest-speech/">
+      <noscript><img width="640" height="320" src="https://www.dailydot.com/wp-content/uploads/2020/06/john-boyega-hyde-park-black-lives-matter-DO-NOT-REUSE-1024x512.jpg" class="tile-article-img wp-post-image" alt="Star Wars actor John Boyega speaks in Hyde Park, London in support of the Black Lives Matter movement after the death of George Floyd in Minneapolis at the hands of a white police officer." srcset="https://www.dailydot.com/wp-content/uploads/2020/06/john-boyega-hyde-park-black-lives-matter-DO-NOT-REUSE-1024x512.jpg 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/john-boyega-hyde-park-black-lives-matter-DO-NOT-REUSE-800x400.jpg 800w, https://www.dailydot.com/wp-content/uploads/2020/06/john-boyega-hyde-park-black-lives-matter-DO-NOT-REUSE-500x250.jpg 500w, https://www.dailydot.com/wp-content/uploads/2020/06/john-boyega-hyde-park-black-lives-matter-DO-NOT-REUSE-768x384.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/06/john-boyega-hyde-park-black-lives-matter-DO-NOT-REUSE-1536x768.jpg 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/john-boyega-hyde-park-black-lives-matter-DO-NOT-REUSE.jpg 2000w" sizes="(max-width: 640px) 100vw, 640px" /></noscript><img width="640" height="320" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20640%20320%22%3E%3C/svg%3E' data-src="https://www.dailydot.com/wp-content/uploads/2020/06/john-boyega-hyde-park-black-lives-matter-DO-NOT-REUSE-1024x512.jpg" class="lazyload tile-article-img wp-post-image ewww_webp_lazy_load" alt="Star Wars actor John Boyega speaks in Hyde Park, London in support of the Black Lives Matter movement after the death of George Floyd in Minneapolis at the hands of a white police officer." data-srcset="https://www.dailydot.com/wp-content/uploads/2020/06/john-boyega-hyde-park-black-lives-matter-DO-NOT-REUSE-1024x512.jpg 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/john-boyega-hyde-park-black-lives-matter-DO-NOT-REUSE-800x400.jpg 800w, https://www.dailydot.com/wp-content/uploads/2020/06/john-boyega-hyde-park-black-lives-matter-DO-NOT-REUSE-500x250.jpg 500w, https://www.dailydot.com/wp-content/uploads/2020/06/john-boyega-hyde-park-black-lives-matter-DO-NOT-REUSE-768x384.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/06/john-boyega-hyde-park-black-lives-matter-DO-NOT-REUSE-1536x768.jpg 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/john-boyega-hyde-park-black-lives-matter-DO-NOT-REUSE.jpg 2000w" data-sizes="(max-width: 640px) 100vw, 640px" data-src-webp="https://www.dailydot.com/wp-content/uploads/2020/06/john-boyega-hyde-park-black-lives-matter-DO-NOT-REUSE-1024x512.jpg.webp" data-srcset-webp="https://www.dailydot.com/wp-content/uploads/2020/06/john-boyega-hyde-park-black-lives-matter-DO-NOT-REUSE-1024x512.jpg.webp 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/john-boyega-hyde-park-black-lives-matter-DO-NOT-REUSE-800x400.jpg.webp 800w, https://www.dailydot.com/wp-content/uploads/2020/06/john-boyega-hyde-park-black-lives-matter-DO-NOT-REUSE-500x250.jpg.webp 500w, https://www.dailydot.com/wp-content/uploads/2020/06/john-boyega-hyde-park-black-lives-matter-DO-NOT-REUSE-768x384.jpg.webp 768w, https://www.dailydot.com/wp-content/uploads/2020/06/john-boyega-hyde-park-black-lives-matter-DO-NOT-REUSE-1536x768.jpg.webp 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/john-boyega-hyde-park-black-lives-matter-DO-NOT-REUSE.jpg.webp 2000w" />      <!--<div class="img-overlay"></div>-->
+      <h4 class="tile-article-head">&#8216;Now is the time&#8217;: John Boyega joins Black Lives Matter protest in London</h4>
+              <p class="tile-article-desc">He joined thousands protesting in London's Hyde Park.</p>
+            <p class="tile-article-stamp">On Jun 3, 2020      by Michelle Jaworski</p>
+
+            <div class="category-stamp margin-left-none">
+                  <a href="https://www.dailydot.com/topics/unclick/">
+            <!-- <noscript><img class="article-category-img inline-flex" src="/images/rocket.png"></noscript><img class="lazyload article-category-img inline-flex" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20210%20140%22%3E%3C/svg%3E' data-src="/images/rocket.png"> -->
+            <span class="author-name inline-flex">Internet Culture</span>
+          </a><!-- category stamp end -->
+                  <a href="https://www.dailydot.com/topics/irl/">
+            <!-- <noscript><img class="article-category-img inline-flex" src="/images/rocket.png"></noscript><img class="lazyload article-category-img inline-flex" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20210%20140%22%3E%3C/svg%3E' data-src="/images/rocket.png"> -->
+            <span class="author-name inline-flex">IRL</span>
+          </a><!-- category stamp end -->
+              </div>
+                </a><!-- href link end -->
+  </div><!-- featured article end -->
+</div><!-- col8 end -->
+
+
+<div class="col-sm-6 col-md-4">
+  <div class="tiled-article">
+    <a href="https://www.dailydot.com/debug/nyc-police-claim-looters-bricks/">
+      <noscript><img width="640" height="321" src="https://www.dailydot.com/wp-content/uploads/2020/06/Pile-of-Bricks-e1591199843839-1021x512.jpg" class="tile-article-img wp-post-image" alt="" srcset="https://www.dailydot.com/wp-content/uploads/2020/06/Pile-of-Bricks-e1591199843839-1021x512.jpg 1021w, https://www.dailydot.com/wp-content/uploads/2020/06/Pile-of-Bricks-e1591199843839-798x400.jpg 798w, https://www.dailydot.com/wp-content/uploads/2020/06/Pile-of-Bricks-e1591199843839-500x250.jpg 500w, https://www.dailydot.com/wp-content/uploads/2020/06/Pile-of-Bricks-e1591199843839-768x385.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/06/Pile-of-Bricks-e1591199843839-1536x770.jpg 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/Pile-of-Bricks-e1591199843839.jpg 1981w" sizes="(max-width: 640px) 100vw, 640px" /></noscript><img width="640" height="321" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20640%20321%22%3E%3C/svg%3E' data-src="https://www.dailydot.com/wp-content/uploads/2020/06/Pile-of-Bricks-e1591199843839-1021x512.jpg" class="lazyload tile-article-img wp-post-image" alt="" data-srcset="https://www.dailydot.com/wp-content/uploads/2020/06/Pile-of-Bricks-e1591199843839-1021x512.jpg 1021w, https://www.dailydot.com/wp-content/uploads/2020/06/Pile-of-Bricks-e1591199843839-798x400.jpg 798w, https://www.dailydot.com/wp-content/uploads/2020/06/Pile-of-Bricks-e1591199843839-500x250.jpg 500w, https://www.dailydot.com/wp-content/uploads/2020/06/Pile-of-Bricks-e1591199843839-768x385.jpg 768w, https://www.dailydot.com/wp-content/uploads/2020/06/Pile-of-Bricks-e1591199843839-1536x770.jpg 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/Pile-of-Bricks-e1591199843839.jpg 1981w" data-sizes="(max-width: 640px) 100vw, 640px" />      <!--<div class="img-overlay"></div>-->
+      <h4 class="tile-article-head">NYPD commissioner tweets conspiracy theory that &#8216;organized looters&#8217; are putting bricks around the city</h4>
+              <p class="tile-article-desc">There's no evidence this is true.</p>
+            <p class="tile-article-stamp">On Jun 3, 2020      by Claire Goforth</p>
+
+            <div class="category-stamp margin-left-none">
+                  <a href="https://www.dailydot.com/topics/debug/">
+            <!-- <noscript><img class="article-category-img inline-flex" src="/images/rocket.png"></noscript><img class="lazyload article-category-img inline-flex" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20210%20140%22%3E%3C/svg%3E' data-src="/images/rocket.png"> -->
+            <span class="author-name inline-flex">Tech</span>
+          </a><!-- category stamp end -->
+              </div>
+                </a><!-- href link end -->
+  </div><!-- featured article end -->
+</div><!-- col8 end -->
+
+
+<div class="col-sm-6 col-md-4">
+  <div class="tiled-article">
+    <a href="https://www.dailydot.com/upstream/batwoman-ryan-wilder-recasting-notice/">
+      <noscript><img width="640" height="320" src="https://www.dailydot.com/wp-content/uploads/2020/06/batwoman-1024x512.jpeg" class="tile-article-img wp-post-image" alt="batwoman" srcset="https://www.dailydot.com/wp-content/uploads/2020/06/batwoman-1024x512.jpeg 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/batwoman-800x400.jpeg 800w, https://www.dailydot.com/wp-content/uploads/2020/06/batwoman-500x250.jpeg 500w, https://www.dailydot.com/wp-content/uploads/2020/06/batwoman-768x384.jpeg 768w, https://www.dailydot.com/wp-content/uploads/2020/06/batwoman-1536x768.jpeg 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/batwoman.jpeg 1920w" sizes="(max-width: 640px) 100vw, 640px" /></noscript><img width="640" height="320" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20640%20320%22%3E%3C/svg%3E' data-src="https://www.dailydot.com/wp-content/uploads/2020/06/batwoman-1024x512.jpeg" class="lazyload tile-article-img wp-post-image ewww_webp_lazy_load" alt="batwoman" data-srcset="https://www.dailydot.com/wp-content/uploads/2020/06/batwoman-1024x512.jpeg 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/batwoman-800x400.jpeg 800w, https://www.dailydot.com/wp-content/uploads/2020/06/batwoman-500x250.jpeg 500w, https://www.dailydot.com/wp-content/uploads/2020/06/batwoman-768x384.jpeg 768w, https://www.dailydot.com/wp-content/uploads/2020/06/batwoman-1536x768.jpeg 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/batwoman.jpeg 1920w" data-sizes="(max-width: 640px) 100vw, 640px" data-src-webp="https://www.dailydot.com/wp-content/uploads/2020/06/batwoman-1024x512.jpeg.webp" data-srcset-webp="https://www.dailydot.com/wp-content/uploads/2020/06/batwoman-1024x512.jpeg.webp 1024w, https://www.dailydot.com/wp-content/uploads/2020/06/batwoman-800x400.jpeg.webp 800w, https://www.dailydot.com/wp-content/uploads/2020/06/batwoman-500x250.jpeg.webp 500w, https://www.dailydot.com/wp-content/uploads/2020/06/batwoman-768x384.jpeg.webp 768w, https://www.dailydot.com/wp-content/uploads/2020/06/batwoman-1536x768.jpeg.webp 1536w, https://www.dailydot.com/wp-content/uploads/2020/06/batwoman.jpeg.webp 1920w" />      <!--<div class="img-overlay"></div>-->
+      <h4 class="tile-article-head">Leaked casting sheet shows the CW is casting a new character to play Batwoman</h4>
+              <p class="tile-article-desc">The casting notice is encouraging LGBTQ actors to apply.</p>
+            <p class="tile-article-stamp">On Jun 3, 2020      by Michelle Jaworski</p>
+
+            <div class="category-stamp margin-left-none">
+                  <a href="https://www.dailydot.com/topics/unclick/">
+            <!-- <noscript><img class="article-category-img inline-flex" src="/images/rocket.png"></noscript><img class="lazyload article-category-img inline-flex" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20210%20140%22%3E%3C/svg%3E' data-src="/images/rocket.png"> -->
+            <span class="author-name inline-flex">Internet Culture</span>
+          </a><!-- category stamp end -->
+                  <a href="https://www.dailydot.com/topics/upstream/shows/">
+            <!-- <noscript><img class="article-category-img inline-flex" src="/images/rocket.png"></noscript><img class="lazyload article-category-img inline-flex" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20210%20140%22%3E%3C/svg%3E' data-src="/images/rocket.png"> -->
+            <span class="author-name inline-flex">Shows</span>
+          </a><!-- category stamp end -->
+                  <a href="https://www.dailydot.com/topics/upstream/">
+            <!-- <noscript><img class="article-category-img inline-flex" src="/images/rocket.png"></noscript><img class="lazyload article-category-img inline-flex" src='data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20210%20140%22%3E%3C/svg%3E' data-src="/images/rocket.png"> -->
+            <span class="author-name inline-flex">Streaming</span>
+          </a><!-- category stamp end -->
+              </div>
+                </a><!-- href link end -->
+  </div><!-- featured article end -->
+</div><!-- col8 end -->
+
+
+				</div><!-- row end -->
+			</div><!-- wrapper end -->
+
+		
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+
+	</div><!-- #content -->
+
+	<div class="search-wrapper">
+  <div class="container">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1195 235" width="200"><g fill="none" fill-rule="nonzero"><g fill="#110133"><path d="M411.94.46c2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.11 3.23 2.11 5.22v169.15c0 1.99-.75 3.73-2.24 5.22-1.49 1.49-3.23 2.24-5.22 2.24-2.32 0-4.19-.75-5.6-2.24-1.41-1.49-2.11-3.23-2.11-5.22v-29.6l4.48-3.48c0 4.81-1.24 9.74-3.73 14.8-2.49 5.06-6.01 9.7-10.57 13.93-4.56 4.23-9.87 7.67-15.92 10.32-6.06 2.65-12.65 3.98-19.77 3.98-11.11 0-21.06-2.9-29.85-8.71-8.79-5.8-15.76-13.68-20.89-23.63-5.14-9.95-7.71-21.31-7.71-34.08 0-12.6 2.57-23.92 7.71-33.95 5.14-10.03 12.1-17.91 20.89-23.63 8.79-5.72 18.66-8.58 29.6-8.58 6.96 0 13.51 1.24 19.65 3.73 6.13 2.49 11.57 5.89 16.29 10.2 4.73 4.31 8.41 9.25 11.07 14.8 2.65 5.56 3.98 11.32 3.98 17.29l-5.22-3.73V7.93c0-1.99.7-3.73 2.11-5.22 1.4-1.5 3.26-2.25 5.59-2.25zM360.2 173.09c8.79 0 16.58-2.28 23.38-6.84 6.8-4.56 12.15-10.78 16.04-18.66 3.89-7.87 5.85-16.87 5.85-26.99 0-9.95-1.95-18.86-5.85-26.74-3.9-7.87-9.25-14.05-16.04-18.53-6.8-4.48-14.59-6.72-23.38-6.72-8.62 0-16.38 2.24-23.26 6.72-6.88 4.48-12.27 10.66-16.17 18.53-3.9 7.88-5.85 16.79-5.85 26.74s1.95 18.9 5.85 26.86c3.89 7.96 9.29 14.22 16.17 18.78 6.88 4.57 14.63 6.85 23.26 6.85zM552.72 57.42c2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.11 3.32 2.11 5.47v111.94c0 1.99-.75 3.73-2.24 5.22-1.49 1.49-3.23 2.24-5.22 2.24-2.32 0-4.19-.75-5.6-2.24-1.41-1.49-2.11-3.23-2.11-5.22v-29.6l4.48-1.74c0 4.48-1.29 9.16-3.86 14.05-2.57 4.89-6.09 9.37-10.57 13.43-4.48 4.07-9.74 7.38-15.8 9.95-6.06 2.57-12.65 3.86-19.77 3.86-11.11 0-21.1-2.9-29.97-8.71-8.87-5.8-15.84-13.76-20.89-23.88-5.06-10.11-7.59-21.47-7.59-34.08 0-12.93 2.57-24.33 7.71-34.2 5.14-9.86 12.1-17.62 20.89-23.26 8.79-5.64 18.66-8.46 29.6-8.46 7.13 0 13.81 1.24 20.02 3.73 6.21 2.49 11.65 5.89 16.29 10.2 4.64 4.31 8.25 9.25 10.82 14.8 2.57 5.56 3.86 11.32 3.86 17.29l-5.22-3.73V65.13c0-2.15.7-3.98 2.11-5.47 1.41-1.49 3.28-2.24 5.6-2.24zm-51.74 115.67c8.79 0 16.58-2.28 23.38-6.84 6.8-4.56 12.15-10.86 16.04-18.91 3.89-8.04 5.85-17.04 5.85-26.99 0-9.62-1.95-18.36-5.85-26.24-3.9-7.87-9.25-14.09-16.04-18.66-6.8-4.56-14.59-6.84-23.38-6.84-8.62 0-16.38 2.2-23.26 6.59-6.88 4.4-12.27 10.49-16.17 18.28-3.9 7.8-5.85 16.75-5.85 26.86 0 9.95 1.9 18.95 5.72 26.99 3.81 8.05 9.16 14.35 16.04 18.91 6.9 4.57 14.73 6.85 23.52 6.85zM597.25 38.52c-3.48 0-6.09-.78-7.84-2.36-1.74-1.57-2.61-3.86-2.61-6.84v-2.49c0-2.98.95-5.26 2.86-6.84 1.9-1.57 4.52-2.36 7.84-2.36 3.15 0 5.6.79 7.34 2.36 1.74 1.58 2.61 3.86 2.61 6.84v2.49c0 2.98-.87 5.27-2.61 6.84-1.75 1.57-4.28 2.36-7.59 2.36zm7.46 138.55c0 1.99-.75 3.73-2.24 5.22-1.49 1.49-3.23 2.24-5.22 2.24-2.32 0-4.15-.75-5.47-2.24-1.33-1.49-1.99-3.23-1.99-5.22V62.65c0-1.99.7-3.73 2.11-5.22 1.41-1.49 3.19-2.24 5.35-2.24 2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.11 3.23 2.11 5.22v114.42zM650.97 177.07c0 1.99-.75 3.73-2.24 5.22-1.49 1.49-3.23 2.24-5.22 2.24-2.16 0-3.94-.75-5.35-2.24-1.41-1.49-2.11-3.23-2.11-5.22V7.92c0-1.99.75-3.73 2.24-5.22 1.49-1.49 3.23-2.24 5.22-2.24 2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.12 3.23 2.12 5.22v169.15h-.01zM773.85 55.19c2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.11 3.23 2.11 5.22v109.7c0 13.43-2.66 24.75-7.96 33.95-5.31 9.2-12.44 16.17-21.39 20.89-8.95 4.73-19.15 7.09-30.59 7.09-7.13 0-13.72-.79-19.78-2.36-6.06-1.58-10.99-3.53-14.8-5.85-1.99-1.16-3.48-2.61-4.48-4.35-1-1.74-1.08-3.53-.25-5.35.83-2.32 2.11-3.86 3.86-4.6 1.75-.74 3.52-.71 5.35.12 2.82 1.49 6.88 3.32 12.19 5.47s11.36 3.23 18.16 3.23c9.12 0 17-1.91 23.63-5.72 6.63-3.82 11.82-9.33 15.55-16.54 3.73-7.21 5.6-15.8 5.6-25.75v-17.91l1.74 6.22c-2.49 4.97-6.06 9.45-10.7 13.43-4.64 3.98-9.87 7.09-15.67 9.33-5.81 2.24-12.03 3.36-18.66 3.36-9.95 0-18.2-2.03-24.75-6.09-6.55-4.06-11.44-9.66-14.68-16.79-3.23-7.13-4.85-15.5-4.85-25.12V62.65c0-1.99.7-3.73 2.11-5.22 1.41-1.49 3.27-2.24 5.6-2.24 2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.11 3.23 2.11 5.22v74.13c0 11.61 2.53 20.56 7.59 26.86 5.06 6.3 13.31 9.45 24.75 9.45 7.13 0 13.68-1.7 19.65-5.1 5.97-3.4 10.86-7.88 14.68-13.43 3.81-5.55 5.72-11.48 5.72-17.79V62.64c0-1.99.66-3.73 1.99-5.22 1.32-1.49 3.14-2.23 5.47-2.23zM961.65.46c2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.11 3.23 2.11 5.22v169.15c0 1.99-.75 3.73-2.24 5.22-1.49 1.49-3.23 2.24-5.22 2.24-2.32 0-4.19-.75-5.6-2.24-1.41-1.49-2.11-3.23-2.11-5.22v-29.6l4.48-3.48c0 4.81-1.24 9.74-3.73 14.8-2.49 5.06-6.01 9.7-10.57 13.93-4.56 4.23-9.87 7.67-15.92 10.32-6.05 2.65-12.65 3.98-19.77 3.98-11.11 0-21.06-2.9-29.85-8.71-8.79-5.8-15.76-13.68-20.89-23.63-5.14-9.95-7.71-21.31-7.71-34.08 0-12.6 2.57-23.92 7.71-33.95 5.14-10.03 12.1-17.91 20.89-23.63 8.79-5.72 18.66-8.58 29.6-8.58 6.96 0 13.51 1.24 19.65 3.73 6.13 2.49 11.57 5.89 16.29 10.2 4.73 4.31 8.42 9.25 11.07 14.8 2.65 5.56 3.98 11.32 3.98 17.29l-5.22-3.73V7.93c0-1.99.7-3.73 2.11-5.22 1.4-1.5 3.26-2.25 5.59-2.25zm-51.74 172.63c8.79 0 16.58-2.28 23.38-6.84 6.8-4.56 12.15-10.78 16.04-18.66 3.89-7.87 5.85-16.87 5.85-26.99 0-9.95-1.95-18.86-5.85-26.74-3.9-7.87-9.25-14.05-16.04-18.53-6.8-4.48-14.59-6.72-23.38-6.72-8.62 0-16.38 2.24-23.26 6.72-6.88 4.48-12.27 10.66-16.17 18.53-3.9 7.88-5.85 16.79-5.85 26.74s1.95 18.9 5.85 26.86c3.89 7.96 9.29 14.22 16.17 18.78 6.88 4.57 14.64 6.85 23.26 6.85zM1116.61 120.85c0 12.6-2.78 23.92-8.33 33.95-5.56 10.04-13.06 17.91-22.51 23.63-9.45 5.72-20.15 8.58-32.09 8.58-11.78 0-22.43-2.86-31.96-8.58-9.54-5.72-17.08-13.6-22.64-23.63-5.56-10.03-8.33-21.35-8.33-33.95 0-12.77 2.78-24.13 8.33-34.08 5.55-9.95 13.1-17.82 22.64-23.63 9.53-5.8 20.19-8.71 31.96-8.71 11.94 0 22.64 2.9 32.09 8.71 9.45 5.81 16.95 13.68 22.51 23.63 5.55 9.96 8.33 21.32 8.33 34.08zm-15.17 0c0-10.11-2.08-19.11-6.22-26.99-4.15-7.87-9.83-14.05-17.04-18.53-7.21-4.48-15.38-6.72-24.5-6.72s-17.29 2.24-24.5 6.72c-7.21 4.48-12.93 10.66-17.16 18.53-4.23 7.88-6.34 16.88-6.34 26.99 0 10.12 2.11 19.07 6.34 26.86 4.23 7.8 9.95 13.97 17.16 18.53 7.21 4.56 15.38 6.84 24.5 6.84s17.29-2.28 24.5-6.84c7.21-4.56 12.89-10.74 17.04-18.53 4.14-7.78 6.22-16.74 6.22-26.86zM1130.04 57.92H1188c1.99 0 3.65.71 4.97 2.11 1.33 1.41 1.99 3.11 1.99 5.1 0 1.99-.67 3.65-1.99 4.98-1.33 1.33-2.98 1.99-4.97 1.99h-57.96c-1.99 0-3.69-.7-5.1-2.11-1.41-1.41-2.11-3.11-2.11-5.1 0-1.99.7-3.65 2.11-4.98 1.41-1.32 3.11-1.99 5.1-1.99zm25.62-35.07c2.15 0 3.94.75 5.35 2.24 1.41 1.49 2.11 3.23 2.11 5.22v124.87c0 4.64.62 8.13 1.87 10.45 1.24 2.32 2.86 3.86 4.85 4.6 1.99.74 3.98 1.12 5.97 1.12 1.33 0 2.53-.21 3.61-.62 1.08-.41 2.28-.62 3.61-.62 1.49 0 2.77.58 3.86 1.74 1.08 1.16 1.62 2.65 1.62 4.48 0 2.32-1.33 4.27-3.98 5.85s-5.81 2.36-9.45 2.36c-1.49 0-3.73-.12-6.72-.37-2.99-.25-6.06-1.16-9.2-2.74-3.15-1.57-5.81-4.35-7.96-8.33-2.16-3.98-3.23-9.7-3.23-17.16V30.31c0-1.99.75-3.73 2.24-5.22 1.47-1.49 3.29-2.24 5.45-2.24z"/></g><path fill="#110133" d="M88.84 120.55c7.16.06 13.91-1.32 20.25-4.14 6.34-2.82 11.88-6.73 16.63-11.73 4.74-4.99 8.49-10.85 11.25-17.58 2.75-6.73 4.16-13.92 4.22-21.58.06-7.66-1.23-14.86-3.87-21.59-2.64-6.74-6.3-12.64-10.96-17.72-4.67-5.08-10.15-9.1-16.44-12.09-6.3-2.98-13.02-4.51-20.18-4.57L72.48 9.4l-.89 111 17.25.15z"/><path fill="#110133" d="M220.08 123.96c3.33 0 6.57.34 9.76.84V33.88c0-14.25-11.55-25.81-25.81-25.81h-46.64c2.55 3.48 4.89 7.13 6.98 10.99 3.73 6.87 6.59 14.26 8.58 22.15 1.99 7.89 2.95 16.1 2.88 24.61-.07 8.52-1.16 16.71-3.27 24.56-2.11 7.86-5.09 15.19-8.93 21.99-3.84 6.81-8.39 13.01-13.67 18.59-5.28 5.59-11.15 10.38-17.62 14.36-6.47 3.99-13.39 7.04-20.77 9.17-7.38 2.13-15.06 3.16-23.02 3.09l-52.15-.47L37.6 8.06H26.44C12.19 8.06.63 19.61.63 33.87v156.08c0 14.25 11.55 25.81 25.81 25.81h138.89a61.868 61.868 0 01-7.49-29.57c0-34.31 27.92-62.23 62.24-62.23z"/><path fill="#3BB77A" d="M229.83 149.68c-3.12-.83-6.38-1.32-9.76-1.32-20.86 0-37.84 16.98-37.84 37.84 0 11.96 5.6 22.63 14.29 29.57 6.47 5.16 14.65 8.27 23.55 8.27 20.86 0 37.84-16.98 37.84-37.84 0-17.49-11.93-32.2-28.08-36.52z"/></g></svg>
+    <div class="search-wrapper__form">
+      
+<form role="search" method="get" class="search-form" action="https://www.dailydot.com/">
+  <label>
+    <span class="screen-reader-text"></span>
+    <input type="search" class="search-field" placeholder="Search posts here..." value="" name="s" />
+  </label>
+  <input type="submit" class="search-submit" value="Search" />
+</form>
+    </div>
+  </div>
+  <button class="button-unstyled search-wrapper--close" onclick="closeSearchModal();">
+    <i class="icons8-cancel" style="color: #666;"></i>
+  </button>
+</div>
+<footer>
+  <div class="wrapper">
+    <div class="row">
+      <div class="col-lg-8 col-sm-8 col-xs-12" id="bottombar-textarea">
+        <p class="inline-flex d-none d-lg-inline-block d-sm-none
+        d-md-none">Get the Daily Dot in your inbox</p>
+        <form
+          action="https://dailydot.us18.list-manage.com/subscribe/post?u=557794e049a42cb8dcdf4eacc&id=14207741b3"
+          method="post"
+          id="mc-embedded-subscribe-form"
+          name="mc-embedded-subscribe-form"
+          class="validate newsletter-form inline-flex"
+          onsubmit="subscribeSubmitHandler(event);"
+        >
+          <div id="mc_embed_signup_scroll" class="inline-flex">
+            <input
+              type="email"
+              value=""
+              name="EMAIL"
+              class="required email small-form"
+              id="mce-EMAIL"
+              placeholder="Email Address"
+              required
+            />
+            <div id="mce-responses" class="clear">
+              <div
+                class="response"
+                id="mce-error-response"
+                style="display:none"
+              ></div>
+              <div
+                class="response"
+                id="mce-success-response"
+                style="display:none"
+              ></div>
+            </div>
+            <div style="position: absolute; left: -5000px;" aria-hidden="true">
+              <input
+                type="text"
+                name="b_557794e049a42cb8dcdf4eacc_14207741b3"
+                tabindex="-1"
+                value=""
+              />
+            </div>
+            <button
+              type="submit"
+              name="subscribe"
+              id="mc-embedded-subscribe"
+              class="btn btn-xsmall u-newsletter-btn btn-primary"
+            >
+              Go
+            </button>
+          </div>
+        </form>
+      </div><!-- left col end -->
+
+      <div class="col-lg-4 col-sm-4 col-xs-12">
+        <div class="in-plug-holder footer-in-plug text-center">
+                  </div><!-- in-plug-holder end -->
+      </div><!-- col end -->
+    </div><!-- row end -->
+  </div><!-- wrapper end -->
+</footer><!-- footer end -->
+
+	<script type="text/javascript">
+		var ajaxUrl = "https://www.dailydot.com/wp-admin/admin-ajax.php";
+		var restUrl = "https://www.dailydot.com/wp-json/wp/v2/";
+		var ajaxPageType = "home";
+		var fpMorePostsAction = "more_posts_ajax";
+		var fpMorePostsFilter = JSON.parse('{}');
+		var slignTagID = "670618";
+	</script>
+
+	<script type="text/javascript">
+        window._taboola = window._taboola || [];
+        _taboola.push({flush: true});
+	</script>
+<style>.lazyload,.lazyloading{opacity:0;}.lazyloaded{opacity:1;transition:opacity 300ms;}</style><noscript><style>.lazyload{display:none;}</style></noscript><script data-noptimize="1">window.lazySizesConfig=window.lazySizesConfig||{};window.lazySizesConfig.loadMode=1;</script><script async data-noptimize="1" src='https://www.dailydot.com/wp-content/plugins/autoptimize/classes/external/js/lazysizes.min.js?ao_version=2.7.1'></script>
+
+
+<script src="https://platform.twitter.com/widgets.js" data-handle="twitter-widget" defer="defer" type="text/javascript"></script>
+
+<script type='text/javascript' src='https://www.dailydot.com/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp'></script>
+
+<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js?' async='async" data-handle="remote_sdk" defer="defer" type="text/javascript"></script>
+
+<script defer src="https://www.dailydot.com/wp-content/cache/autoptimize/js/autoptimize_2c7ea3d5215fbc304a50fe534f2138d8.js"></script><script data-cfasync='false'>!function(t){"use strict";t.loadCSS||(t.loadCSS=function(){});var e=loadCSS.relpreload={};if(e.support=function(){var e;try{e=t.document.createElement("link").relList.supports("preload")}catch(t){e=!1}return function(){return e}}(),e.bindMediaToggle=function(t){function e(){t.media=a}var a=t.media||"all";t.addEventListener?t.addEventListener("load",e):t.attachEvent&&t.attachEvent("onload",e),setTimeout(function(){t.rel="stylesheet",t.media="only x"}),setTimeout(e,3e3)},e.poly=function(){if(!e.support())for(var a=t.document.getElementsByTagName("link"),n=0;n<a.length;n++){var o=a[n];"preload"!==o.rel||"style"!==o.getAttribute("as")||o.getAttribute("data-loadcss")||(o.setAttribute("data-loadcss",!0),e.bindMediaToggle(o))}},!e.support()){e.poly();var a=t.setInterval(e.poly,500);t.addEventListener?t.addEventListener("load",function(){e.poly(),t.clearInterval(a)}):t.attachEvent&&t.attachEvent("onload",function(){e.poly(),t.clearInterval(a)})}"undefined"!=typeof exports?exports.loadCSS=loadCSS:t.loadCSS=loadCSS}("undefined"!=typeof global?global:this);</script><script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"27897e3c2b","applicationID":"87827566","transactionName":"YFNRNkBWXhZQUkVfCVkZZhBbGFkLVVRJGBZfRg==","queueTime":0,"applicationTime":373,"atts":"TBRSQAhMTRg=","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+</html>

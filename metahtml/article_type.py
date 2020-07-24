@@ -58,7 +58,7 @@ def get_article_type(parser, url, meta_best, fast=False):
         # too many timestamps spaced too far apart
         # NOTE: the selected range is 1 day if no timezones are given 
         # FIXME: this check is very heuristic and needs more evaluation
-        if len(best_timestamps) > 5 or abs(timestamp_range.total_seconds()) > 48*60*60:
+        if len(best_timestamps) > 5 or (len(best_timestamps) > 5 and abs(timestamp_range.total_seconds()) > 48*60*60):
             article_types.append({
                 'article_type' : 'catalog',
                 'valid_for_hostname' : True,
@@ -123,23 +123,34 @@ def get_article_type(parser, url, meta_best, fast=False):
         # hostname specific regexs
         ( 'abc3340.com', r'/news/nation-world$' ),
         ( 'bbc.co.uk', r'/asia_pacific$' ),
+        ( 'bbc.co.uk', r'/history/historic_figures/?$' ),
         ( 'bbc.com', r'/asia_pacific$' ),
         ( 'breitbart.com', r'^/radio/?$' ),
         ( 'breitbart.com', r'^/asia/?$' ),
         ( 'breitbart.com', r'^/national-security/?$' ),
         ( 'cnn.com', r'^/asia/?$' ),
+        ( 'cnn.com', r'^/ASIANOW/time/?$' ),
         ( 'coronavirus.delaware.gov', r'^/tag/delaware-student-meals/?$' ),
+        ( 'crofsblogs.typepad.com', r'^/h5n1/?$' ),
+        ( 'en.mediamass.net', r'^/people/kim-jong-un/?$' ),
         ( 'elmundo.es', r'^/internacional.html$' ),
         ( 'elmundo.es', r'^/internacional/?$' ),
         ( 'foxnews.com', r'^/politics/?$' ),
+        ( 'jawharafm.net', r'^/fr/?$' ),
         ( 'cnnespanol.cnn.com', r'^/video/$' ),
         ( 'elnacional.com.do', r'^/category/' ),
-        ( 'lci.fr', r'^/sante/$' ),
-        ( 'lci.fr', r'^/bien-etre/$' ),
+        ( 'lci.fr', r'^/actualite/terrorisme-10020/?$' ),
+        ( 'lci.fr', r'^/politique/?$' ),
+        ( 'lci.fr', r'^/newsroom/?$' ),
+        ( 'lci.fr', r'^/international/?$' ),
+        ( 'lci.fr', r'^/sante/?$' ),
+        ( 'lci.fr', r'^/bien-etre/?$' ),
         ( 'news.un.org', r'^/es/node?$' ),
         ( 'sportbreakingnews.com', r'^/category/uncategorized/$' ),
         ( 'thanhnien.vn', r'^/doi-song/$' ),
+        ( 'viaouest.com', r'^/actualite-daesh.html' ),
         ( 'vietnamartnews.com', r'^/category/uncategorized/$' ),
+        ( 'whitehouse.gov', r'^/briefings-statements/?$' ),
         ]
 
     for hostname, regex in regexs:
