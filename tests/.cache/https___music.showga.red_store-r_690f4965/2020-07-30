@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:ng="http://angularjs.org" id="ng-app" ng-app="app">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>ルイ・ヴィトンのイヤホン・ヘッドホン・bluetooth | 人気のブランド　ヘッドホン</title>
+<meta name="description" content="ルイ・ヴィトンのイヤホン・ヘッドホン・bluetooth | 人気のブランド　ヘッドホン">
+<meta name="keywords" content="ヴィトン,イヤホン,bluetooth,spotify,音楽,ブランド" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link href="https://fonts.googleapis.com/css?family=M+PLUS+1p&display=swap&subset=japanese" rel="stylesheet"> 
+
+<style>
+body {font-family: 'M PLUS 1p', ‘ヒラギノ角ゴシック’, ‘メイリオ’ ,sans-serif;}
+</style> 
+
+
+
+<style>
+	.thumbnail {
+		height: 400px;
+		overflow: hidden;
+	}
+	
+	h1 {
+		font-size: 102%;
+	}
+
+	h2 {
+		font-size: 100%;
+	}
+
+	h3 {
+		font-size: 100%;
+	}
+	
+	.price {
+		color: #F00;
+		font-size: 120%;
+		font-weight: bold;
+	}
+</style>
+</head>
+
+<body>
+<div class="container" ng-controller="MainCtrl" ng-cloak>
+	
+<h1>ルイ・ヴィトンのイヤホン・ヘッドホン・bluetooth</h1>
+<h2>2020年7月 ルイ・ヴィトンのイヤホン・ヘッドホン・bluetooth | 人気のブランド　ヘッドホン</h2>
+<div class="honbun">
+良質な音楽に欠かせない、良質なイヤホン。<br>
+Spotifyを良質なイヤホンで。<br>
+ここでは、高級ブランド　Louis Vuitton （ルイ・ヴィトン）のイヤホンを特集します。<br>
+<br>
+<hr>
+</div>
+		<div class="row">
+			<div ng-repeat="item in items" class="col-sm-6 col-md-3">
+				<div class="thumbnail">
+					<a ng-href="{{item.affiliateUrl}}" target="_blank">
+						<img ng-src="{{item.mediumImageUrls[0]}}">
+					</a>
+					<div class="caption">
+						<h3>
+							<a ng-href="{{item.affiliateUrl}}" target="_blank">{{item.itemName}}</a>
+						</h3>
+						<div class="price">{{item.itemPrice}}円</div>
+						<rating ng-model="item.reviewAverage" max="5"></rating>
+						<div class="catchcopy">{{item.catchcopy}}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<pagination
+			direction-links="true"
+			boundary-links="false"
+			total-items="totalItems"
+			items-per-page="itemsPerPage"
+			ng-model="currentPage"
+			ng-change="callAPI()"
+			previous-text="«"
+			next-text="»">
+		</pagination>
+
+		<div class="center-block">
+			<a href="http://webservice.rakuten.co.jp/" target="_blank">
+				<img src="//webservice.rakuten.co.jp/img/credit/200709/credit_22121.gif">
+			</a>
+		</div>
+
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.28/angular.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.2.10/angular-locale_ja-jp.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js"></script>
+
+	<script>
+
+		// 楽天API用パラメータ
+		var api = 'https://app.rakuten.co.jp/services/api/IchibaItem/Search/20170706';
+		var applicationId = '1093114047584945317'; //for music.showga.red
+		var affiliateId = '1a5bbc21.4d1e2375.1a5bbc22.748926b6';
+
+
+
+		// 検索キーワード
+		var keyword ='ルイヴィトン イヤホン';
+		
+		// ショップを限定する場合は、ここにshopCodeを記入
+		var shopCode ='';
+
+		// 一度に読み込む件数
+		var itemsPerPage = 30;
+
+		// PCかスマホかで検索条件を分ける
+		var carrier = /android|iphone|ipad|ipod/i.test(navigator.userAgent) ? 2 : 0;
+
+		// 	Angular を起動する
+		var app = angular.module('app',['ui.bootstrap']);
+
+		// コントローラ
+		app.controller('MainCtrl', function($scope, $http) {
+
+			$scope.currentPage = 1;
+			$scope.itemsPerPage = itemsPerPage;
+
+			$scope.callAPI = function() {
+
+				// APIコール用のパラメータ
+				var params = {
+					applicationId : applicationId,
+					affiliateId   : affiliateId,
+					hits          : itemsPerPage,
+					page          : $scope.currentPage,
+					carrier       : carrier,
+					formatVersion : 2,
+					imageFlag     : 1,
+					callback      : 'JSON_CALLBACK',
+					format        : 'json',
+					minAffiliateRate : '8.0',
+					sort          : '+affiliateRate',
+					keyword      : keyword
+				};
+
+				// APIをコールする
+				$http.jsonp(api, { params: params })
+				.success(function(result) {
+					$scope.items = result.Items;
+					$scope.totalItems = result.count;
+				});
+
+			}
+
+			// APIを呼び出す
+			$scope.callAPI()
+		});
+
+	</script>
+
+<div style="text-align:right;">更新日:2020-07-31<br/>
+</div>
+<div style="text-align:right;">#louisvuitton,#ビトン,#ルイビトン,#ルイヴィトン,#LV,#モノグラム,#イヤホン,#earphone,#ホライズン,#spotify</div>
+<footer style="text-align:right;">
+		powered by <a href="https://music.showga.red/">music.showga.red</a>
+</footer>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- rakutenten -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4677460047451450"
+     data-ad-slot="9266898931"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<script type="text/javascript">
+    amzn_assoc_ad_type = "link_enhancement_widget";
+    amzn_assoc_tracking_id = "kintokido-22";
+    amzn_assoc_linkid = "ce8d2c4ec5ea20a0b0e3756a0bee2aab";
+    amzn_assoc_placement = "";
+    amzn_assoc_marketplace = "amazon";
+    amzn_assoc_region = "JP";
+</script>
+<script src="//ws-fe.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&Operation=GetScript&ID=OneJS&WS=1&MarketPlace=JP"></script>
+
+</body>
+</html>

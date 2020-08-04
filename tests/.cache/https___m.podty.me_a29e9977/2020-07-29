@@ -1,0 +1,2709 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <!-- https://www.podty.me mobileSpaLayout -->
+	<meta charset="utf-8">
+	<title>팟티 PODTY</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+	<meta name="description" content="국내최초! 무료로 듣고 만드는 팟캐스트 서비스, 세상의 모든 흥미로운 이야기!">
+	<meta name="keywords" content="팟캐스트, 팟케스트, 라디오, 뉴스, 어학, 방송, 영어, 학습, 김어준, 주진우, 김용민, 다스뵈이다">
+	<meta name="og:title" content="팟티 PODTY">
+	<meta name="og:type" content="website">
+    <meta name="og:image" content="https://cdn-cf.podty.me/image/common/banner_fb_share.png" />
+	<meta name="og:url" content="https://m.podty.me/">
+	<meta name="og:description" content="국내최초! 무료로 듣고 만드는 팟캐스트 서비스, 세상의 모든 흥미로운 이야기!">
+	<meta name="twitter:card" content="summary">
+	<meta id="_csrf" name="_csrf" content="4cf200d3-a2ca-4e7b-b4b6-ba2a051ee410">
+	<meta id="_csrf_header" name="_csrf_header" content="X-CSRF-TOKEN">
+    <link rel="stylesheet" href="/resources/css/externalLib.css" type="text/css" />
+    <link rel="stylesheet" href="/resources/css/mobile/podty.css?version=2020073005">
+    <link rel="icon" type="image/png" href="/resources/images/favicon-2x.png" sizes="32x32">
+
+<script src="/resources/js/jquery/jquery-1.11.3.min.js"></script>
+<script src="/resources/js/jquery/jquery-browser-plugin.min.js"></script>
+<script src="/resources/js/jquery/jquery.cookie.min.js"></script>
+<script src="/resources/js/jquery/jquery.blockUI.min.js"></script>
+<script src="/resources/js/jquery/jquery.loading.min.js"></script>
+<script src="/resources/js/jquery/jquery.mousewheel.min.js"></script>
+<script src="/resources/js/jquery/jquery.jscrollpane.min.js"></script>
+<script src="/resources/js/jquery/jquery.dotdotdot.min.js"></script>
+<script src="/resources/js/jquery/jquery.marquee.min.js"></script>
+<script src="/resources/js/jquery/jquery-ui-podty.min.js"></script>
+<script src="/resources/js/jquery/jquery.mCustomScrollbar.min.js"></script>
+<script src="/resources/js/jquery/jquery.ui.touch-punch.min.js"></script>
+<script src="/resources/js/jquery/jQueryRotate.min.js"></script>
+<script src="/resources/js/jquery/jquery.mousestop.min.js"></script>
+<script src="/resources/js/jquery/jquery.fullscreen.min.js"></script>
+
+<script src="/resources/js/bodyScrollLock.min.js"></script>
+
+<script src="/resources/js/moox-pjax/0.2.7/pjax.js"></script>
+
+<script src="/resources/js/moment/2.22.2/moment.min.js"></script>
+
+<script src="/resources/js/podty/cookie/js.cookie.js"></script>
+<script src="/resources/js/podty/podty.js?version=20200714"></script>
+<script src="/resources/js/podty/login.js?version=20200210"></script>
+<script src="/resources/js/podty/podcast.js?version=20190429"></script>
+<script src="/resources/js/podty/app.js?version=20190305"></script>
+<script src="/resources/js/podty-player/mobile/podty.player.js?version=20200114"></script>
+
+<script src="//wcs.naver.net/wcslog.js"></script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<script src="/resources/js/clipboard.min.js"></script>
+<script src="/resources/js/ui/lightslider/lightslider.min.js"></script>
+<script src="/resources/js/ui/input/cleave.min.js"></script>
+
+<script type="application/ld+json">
+{
+ 	"@context": "http://schema.org",
+ 	"@type": "Person",
+ 	"name": "팟티",
+ 	"url": "https://www.podty.me",
+ 	"sameAs": [
+  		"https://itunes.apple.com/kr/app/%ED%8C%9F%ED%8B%B0-podty/id1163690413?mt=8",
+		"https://play.google.com/store/apps/details?id=me.podty.android"
+ 	]
+}
+</script>
+
+<!--[if lt IE 9]>
+	<script type="text/javascript" src="/resources/js/html5/html5shiv.min.js"></script>
+<![endif]-->
+
+<script src="/resources/js/afreecatv/slick-1.8.0.js"></script>
+    <script>
+        g_urlBase = "https://www.podty.me";
+        g_urlSecureBase = "https://www.podty.me";
+        g_urlM = "https://m.podty.me";
+        g_isWebView = false;
+        g_osFamily = "other";
+
+        var podtyPlayer;
+
+        $(document).ready(function() {
+            podtyPlayer = new PodtyPlayer({
+                playType: 'each',
+                selectors: {
+                    episodeList: '.episodeList',
+                    play: '.miniPlayer [name="play"]',
+                    backward: '.miniPlayer .controls .prev',
+                    forward: '.miniPlayer .controls .next',
+                    episodeName: '.miniPlayer .name .play_tit',
+                    castName: '.miniPlayer .name .tit_dsc',
+                    seekBar: '.miniPlayer .seek_area .seek_bar',
+                    progressBar: '.miniPlayer .seek_bar .buffered-track',
+                    progressThumb: '.miniPlayer .seek_bar .thumb',
+                    currentTime: '.miniPlayer .seek_area .current',
+                    remainTime: '.miniPlayer .seek_area .duration'
+                }
+            });
+
+            // if player touch move prevent body scroll
+            var preventBodyScroll = false;
+            $(".miniPlayer").on('touchstart', function (e) {
+                    preventBodyScroll = true;
+            });
+
+            $(".miniPlayer").on('touchmove', function (e) {
+                if (preventBodyScroll)
+                    e.preventDefault();
+            });
+
+            $(".miniPlayer").on('touchend', function () {
+                preventBodyScroll = false;
+            });
+        }); // end of ready
+
+        $(document).on('pjax:success', function() {
+            podtyPlayer.syncCurrPlayingIcon();
+        });
+    </script>
+	
+    
+    
+
+</head>
+
+<style>
+    .inp::-ms-clear { display: none; }
+</style>
+
+<body>
+<div class="wrap include_footer">
+    <div class="bx_appbanner2" style="display:none">
+        <div class="app_info">
+            <div class="bx_dummy">
+                <strong class="app_tit"></strong>
+                <p class="tit_dsc"></p>
+            </div>
+			<span class="app_ico">
+                <a href="#" class="btn_link" onclick="return false;">
+                    <img src="https://image.toast.com/aaaaafh/podty/mobile/common/app_ico.png" alt="" width="34" height="34">
+                    <span class="sub_txt">앱으로 보기</span>
+                </a>
+			</span>
+        </div>
+    </div>
+
+    <!-- [D] Header -->
+    <div class="header">
+        <div class="inner">
+            <div class="top_area">
+            	<h1 class="logo"><a href="https://m.podty.me" class="sp">PODTY</a></h1>
+                <button type="button" class="btn btn_search" id="top_search" onclick="setSearchMode();"><span class="sp">검색창</span></button>
+                <!-- [D] 닫기버튼 활성화 시 .btn_close (display:block) 처리 필요 -->
+                <button type="button" class="btn btn_close" id="top_close" onclick="setViewMode();" style="display:none">닫기</button>
+            </div>
+            <!-- [D] 검색창 활성화 시
+            1) btn_search 클릭시 search_bx display:block 처리
+            2) 검색창 내 검색어 입력 시 클래스명 on 추가 -->
+            <div class="search_bx">
+                <form action="#" onsubmit="search();return false;">
+                    <fieldset>
+                        <legend>검색영역</legend>
+                        <div class="inp_area">
+                            <input type="text" class="inp" placeholder="검색어를 입력해 주세요" onkeyup="insertKeyword($(this).val())">
+                            <button type="button" class="btn_remove" id="inp_remove" style="visibility:hidden" onclick="$(this).closest('div').find('> input').val('').focus();">
+                                <span class="sp">검색내용 지우기</span>
+                            </button>
+                        </div>
+                        <button type="submit" class="btn_search" id="inp_search">검색</button>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="connect_bx">
+                <ul class="connect_lst">
+                    <!-- [D] 유사 단어 검색 시 span.txt_on 추가 -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="dimmed" style="display:none"></div>
+
+    <div id="pjax-container">
+        
+
+
+    <link rel="stylesheet" href="/resources/css/lightslider/lightslider.css">
+
+    <main class="contents main">
+        <section class="podty_choice">
+            <h2 class="blind">팟티초이스</h2>
+            <ul class="lst_item">
+                <li class="episodeList" data-cast-name="Music A" data-episode-title="여름 도심에 어울리는 낭만적인 시티팝 with 미미" data-episode-srl="13684970" data-play-uri="https://cdn-cf.podty.me/meta/episode_audio/100049926/204234_1595918917905.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/cdn-cf.podty.me/image/cast_image/100049926/original/1586409273120.jpg" alt="여름 도심에 어울리는 낭만적인 시티팝 with 미미" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13684970" class="item_tit">
+                        <span class="txt">여름 도심에 어울리는 낭만적인 시티팝 with 미미</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="CBS 시사자키 정관용입니다" data-episode-title="[20/07/28 전체듣기] 문대통령, 박지원 국정원장 임명안 재가 / 경실련 &quot;더 심한 통합당...의원 40% 다주택자&quot; / 우원식 &quot;행정수도 이전, 워싱턴처럼 뉴욕처럼&quot; / [여론, 숫자는 살아있다] 등" data-episode-srl="13684944" data-play-uri="https://rss.art19.com/episodes/e327470c-d493-44c6-a723-1b5c6fa2e476.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/content.production.cdn.art19.com/images/0b/d5/03/11/0bd50311-4498-4996-b0ea-164931d23be0/6e7fb1cb9c7160698827899f4cd07dc63e137daa2fe2df053b1a6982bc9dfbb3f5308d31b8b056e99226f5763655d3d72ede303173c20d0d23e9288d7145ee3a.jpeg" alt="[20/07/28 전체듣기] 문대통령, 박지원 국정원장 임명안 재가 / 경실련 &quot;더 심한 통합당...의원 40% 다주택자&quot; / 우원식 &quot;행정수도 이전, 워싱턴처럼 뉴욕처럼&quot; / [여론, 숫자는 살아있다] 등" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13684944" class="item_tit">
+                        <span class="txt">문대통령, 박지원 국정원장 임명안 재가</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="들어는 봤지만 읽지는 못한 당신을 위한, 다독다독" data-episode-title="[271] 이제부터는 오를 곳만 오른다 #2  살고 있는 곳에서 살고 싶은 곳으로 이사가는 법 (빠숑 김학렬 소장)" data-episode-srl="13684967" data-play-uri="https://cdn-cf.podty.me/meta/episode_audio/103120/180233_1595870412471.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/cdn-cf.podty.me/image/cast_image/103120/original/1518945933185.jpg" alt="[271] 이제부터는 오를 곳만 오른다 #2  살고 있는 곳에서 살고 싶은 곳으로 이사가는 법 (빠숑 김학렬 소장)" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13684967" class="item_tit">
+                        <span class="txt">살고 있는 곳에서 살고 싶은 곳으로 이사가는 법</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="김영철의 진짜미국식영어" data-episode-title="김영철의 파워FM - 진짜 미국식 영어 767회 - Can you scratch my back? (등 좀 긁어줘!)" data-episode-srl="13688507" data-play-uri="https://rss.art19.com/episodes/89f55c19-91b6-4a4e-b5d9-dc1c168caba0.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/content.production.cdn.art19.com/images/86/7e/71/6e/867e716e-3f61-401f-990e-7fe198a7075f/82036e8d3899b4d563d0c917a9eb2b8c23f917b4058e4dd5c1b75afc7752b68502942c7c6199fc6885c1c994aff9b8ae776a9d5c32885f62931ed2a1ee8b7233.jpeg" alt="김영철의 파워FM - 진짜 미국식 영어 767회 - Can you scratch my back? (등 좀 긁어줘!)" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13688507" class="item_tit">
+                        <span class="txt"> Can you scratch my back? 등 좀 긁어줘!</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="이슬아의 &lt;이스라디오&gt;" data-episode-title="73화-고요의 에너지" data-episode-srl="13684957" data-play-uri="https://cdn-cf.podty.me/meta/episode_audio/100049926/200907_1595947446440.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/cdn-cf.podty.me/image/cast_image/100049926/original/100049926_1571205499844.jpg" alt="73화-고요의 에너지" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13684957" class="item_tit">
+                        <span class="txt">고요의 에너지</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="여행본색" data-episode-title="여행본색 시즌2 중국편 200회 (살바도르 달리의 진품을 볼 수 있는 쇼핑몰 '파크뷰그린')" data-episode-srl="13688430" data-play-uri="https://rss.art19.com/episodes/c496bf3c-2466-427d-8f30-2761b298d22a.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/content.production.cdn.art19.com/images/82/86/bf/01/8286bf01-7590-4671-8a01-fe480550f1b9/77cad1e0a1f2d91aa55a873b9b748acc0b20ebc002ad341d8006bea9116348f1ecf7b83dee7a1845a2c46d86a90b27e744675b3da34959251bef54049149e46e.jpeg" alt="여행본색 시즌2 중국편 200회 (살바도르 달리의 진품을 볼 수 있는 쇼핑몰 '파크뷰그린')" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13688430" class="item_tit">
+                        <span class="txt">살바도르 달리의 진품을 볼 수 있는 쇼핑몰 '파크뷰그린'</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="리차드의 프랑스어 한걸음" data-episode-title="#8. 프랑스어 의문문을 만드는 3가지 방법 ?" data-episode-srl="13684850" data-play-uri="https://cdn-cf.podty.me/meta/episode_audio/39307/1595942766509.m4a" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/cdn-cf.podty.me/image/cast_image/39307/original/39307_1591100429896.jpg" alt="#8. 프랑스어 의문문을 만드는 3가지 방법 ?" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13684850" class="item_tit">
+                        <span class="txt">프랑스어 의문문을 만드는 3가지 방법?</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="정세운의 경청" data-episode-title="방구석 1열에서 만나는 라이브 실황! 라이브 트랙 in 경청" data-episode-srl="13684849" data-play-uri="https://cdn-cf.podty.me/meta/episode_audio/100049926/205460_1595942724536.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/cdn-cf.podty.me/image/cast_image/100049926/original/100049926_1591277442592.jpg" alt="방구석 1열에서 만나는 라이브 실황! 라이브 트랙 in 경청" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13684849" class="item_tit">
+                        <span class="txt">방구석 1열에서 만나는 라이브 실황! 라이브 트랙 in 경청</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="강PD의 똘똘한 은퇴설계" data-episode-title="96편 스마트스토어, 부업으로 시작해볼까? (feat. 김덕진 부소장)" data-episode-srl="13688392" data-play-uri="https://rss.art19.com/episodes/04d7ab51-2ea1-405c-9447-1809597573b9.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/content.production.cdn.art19.com/images/91/6a/5a/60/916a5a60-35e0-4e0d-9584-2b7dc4d810d5/b71bd0e72e6d6b432c2a2baf3b2c1f4ee2c927c0876166b74056445a2b659434d39dd808d2f9c430cfb08d9252366aafea31eb28d8ebe394ca896d5bf1062112.jpeg" alt="96편 스마트스토어, 부업으로 시작해볼까? (feat. 김덕진 부소장)" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13688392" class="item_tit">
+                        <span class="txt">스마트스토어, 부업으로 시작해볼까?</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="어차피, 음식이야기" data-episode-title="[EP.26] 모히또가서 몰디브 한 잔 하실래요?/ 칵테일에 대한 이야기" data-episode-srl="13684573" data-play-uri="https://cdn-cf.podty.me/meta/episode_audio/100062891/203396_1595946430174.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/cdn-cf.podty.me/image/cast_image/100062891/original/100062891_1584709760022.jpg" alt="[EP.26] 모히또가서 몰디브 한 잔 하실래요?/ 칵테일에 대한 이야기" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13684573" class="item_tit">
+                        <span class="txt">모히또가서 몰디브 한 잔 하실래요?/ 칵테일에 대한 이야기</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="고현준의 뉴스 브리핑" data-episode-title="200729(2) [고고뉴스] 행정수도이전, 국회내 분위기는? / 국세청, 다주택자 세금 탈루 세무조사 돌입 /금값 이어 은값도 오른다 外 - 손지은 서울신문 기자" data-episode-srl="13688068" data-play-uri="https://rss.art19.com/episodes/9ed0ff47-5bde-4b8e-8664-636815c1727f.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/content.production.cdn.art19.com/images/93/61/07/42/93610742-c6a6-44b7-836d-20ccde4eb683/518b1b3a979da1cd8b32210ebad4d4a6d77a2cecc7ff0af054398fcb4d97e777b40738fdadfe6f357f1ac96fa3fa31bfd260bf7a302889657142598b951e8578.jpeg" alt="200729(2) [고고뉴스] 행정수도이전, 국회내 분위기는? / 국세청, 다주택자 세금 탈루 세무조사 돌입 /금값 이어 은값도 오른다 外 - 손지은 서울신문 기자" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13688068" class="item_tit">
+                        <span class="txt">행정수도이전, 국회내 분위기는?</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="크리시의 키즈잉글리시 " data-episode-title="[크리시의 영어동화] 17_Fun at the Playground (놀이터에서의 재미)" data-episode-srl="13684336" data-play-uri="https://cdn-cf.podty.me/meta/episode_audio/100049926/204319_1595930543090.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/cdn-cf.podty.me/image/cast_image/100049926/original/100049926_1586765112714.jpeg" alt="[크리시의 영어동화] 17_Fun at the Playground (놀이터에서의 재미)" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13684336" class="item_tit">
+                        <span class="txt">Fun at the Playground 놀이터에서의 재미</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="말술남녀 - 쉽고 맛있는 술이야기" data-episode-title="EP236 영화술 1-1 : &lt;기생충&gt;에 나온, 맥주인듯 맥주아닌 맥주같은 ‘필라이트’" data-episode-srl="13684385" data-play-uri="https://rss.art19.com/episodes/42e0d03a-26d2-4d4c-888f-e1636a9c70d5.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/content.production.cdn.art19.com/images/3e/8c/8c/0c/3e8c8c0c-496a-4c5f-9124-164d57eecc10/639414d9e8f536de44c6f54024b3914428c59148ada899deeb1528fd0ea5e03c0caf4661986f9e754df249fe52d3e1415399790ce0f795173fd40ffba579eed7.jpeg" alt="EP236 영화술 1-1 : &lt;기생충&gt;에 나온, 맥주인듯 맥주아닌 맥주같은 ‘필라이트’" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13684385" class="item_tit">
+                        <span class="txt">&lt;기생충&gt;에 나온, 맥주인듯 맥주아닌 맥주같은 ‘필라이트’</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="도란도란 생활기록view" data-episode-title="22회 - 신현희(1부)_ 음악뿐만 아니라 모든 일상이 반짝반짝 거리는 인간사이키조명" data-episode-srl="13684323" data-play-uri="https://cdn-cf.podty.me/meta/episode_audio/100064816/203390_1595925840686.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/cdn-cf.podty.me/image/cast_image/100064816/original/100064816_1583109490038.jpg" alt="22회 - 신현희(1부)_ 음악뿐만 아니라 모든 일상이 반짝반짝 거리는 인간사이키조명" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13684323" class="item_tit">
+                        <span class="txt">&lt;신현희&gt; 음악뿐만 아니라 모든 일상이 반짝반짝 거리는 인간사이키조명</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="이철희의 정치쇼" data-episode-title="200728 [서초동 까투리] 검찰개혁위의 권고안, 검찰총장은 어떤 역할을 맡아야 하나 / 검찰, 이재용과 한동훈 기소하나 (김태현, 이한석)" data-episode-srl="13683835" data-play-uri="https://rss.art19.com/episodes/d87d3791-58c2-4c20-a809-4159319c6bee.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/content.production.cdn.art19.com/images/a8/a7/5a/93/a8a75a93-1372-469e-b725-d60de47b3ce8/cbbaa150327a517bf4b87d06a90be35a490e025b4997791edb4ae8c62de90d5b0d13868f05c49531f4da88120aeeb67a986189baea02c37d30afe71610d24ed9.jpeg" alt="200728 [서초동 까투리] 검찰개혁위의 권고안, 검찰총장은 어떤 역할을 맡아야 하나 / 검찰, 이재용과 한동훈 기소하나 (김태현, 이한석)" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13683835" class="item_tit">
+                        <span class="txt">검찰, 이재용과 한동훈 기소하나</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="민언련의 미디어 탈곡기" data-episode-title="874#검언유착 실체 이대로 가려지는가...검찰 수사심의위 &quot;한동훈 수사 중단·불기소 권고&quot;" data-episode-srl="13684206" data-play-uri="https://cdn-cf.podty.me/meta/episode_audio/22573/174405_1595926685095.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/cdn-cf.podty.me/image/cast_image/22573/original/22573_1568706538061.jpg" alt="874#검언유착 실체 이대로 가려지는가...검찰 수사심의위 &quot;한동훈 수사 중단·불기소 권고&quot;" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13684206" class="item_tit">
+                        <span class="txt">검언유착 실체 이대로 가려지는가...검찰 수사심의위 &quot;한동훈 수사 중단·불기소 권고&quot;</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="CBS 김현정의 뉴스쇼" data-episode-title="[2020/07/29] 블랙핑크 한복디자이너 &quot;기모노 논란? 한복이 더 화려한데&quot;" data-episode-srl="13688610" data-play-uri="https://rss.art19.com/episodes/f8ba0886-51e4-4422-a013-9fbbc5d73e50.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/content.production.cdn.art19.com/images/8b/80/3f/8a/8b803f8a-9188-4431-afe5-37437b3d8414/ef736b6917aba7431692873b91ac4c5081af42ebd5efbcce5132f02819a62ddcc05eb3dc54c28b2ea216b0f5e72670c98d7080ec9714f20fe50cfe7dd5ff84f8.jpeg" alt="[2020/07/29] 블랙핑크 한복디자이너 &quot;기모노 논란? 한복이 더 화려한데&quot;" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13688610" class="item_tit">
+                        <span class="txt">블랙핑크 한복디자이너 &quot;기모노 논란? 한복이 더 화려한데&quot;</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="POL.E" data-episode-title="EP 162. 러브 코미디 만화의 대명사 'H2' - 커서 보니 다르게 다가오는 만화" data-episode-srl="13684207" data-play-uri="https://cdn-cf.podty.me/meta/episode_audio/464348/185720_1595327427198.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/cdn-cf.podty.me/image/cast_image/464348/original/464348_1543756291818.png" alt="EP 162. 러브 코미디 만화의 대명사 'H2' - 커서 보니 다르게 다가오는 만화" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13684207" class="item_tit">
+                        <span class="txt">러브 코미디 만화의 대명사 'H2' - 커서 보니 다르게 다가오는 만화</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="저널리즘 토크쇼 J" data-episode-title="[100회 특집] 거의 무편집본 : 3인의 만남 &quot;언론, 너의 빈자리&quot;" data-episode-srl="13683894" data-play-uri="https://cdn-cf.podty.me/meta/episode_audio/506817/188070_1595917875922.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/cdn-cf.podty.me/image/cast_image/506817/original/506817_1538015302489.png" alt="[100회 특집] 거의 무편집본 : 3인의 만남 &quot;언론, 너의 빈자리&quot;" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13683894" class="item_tit">
+                        <span class="txt">거의 무편집본 : 3인의 만남 &quot;언론, 너의 빈자리&quot;</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="세계를 만나는 시간, NOW" data-episode-title="[세만시] &quot;같은 사건, 나라마다 역사적 평가 달라, 전 세계 역사교육은?&quot; (with 독일 다니엘, 인도 럭키) 7.29(수)" data-episode-srl="13688401" data-play-uri="http://dwradio.ytn.co.kr/ytnradio/vod/aod/2020/07/202007291041027876.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/imgradio.ytn.co.kr/podcast/podcast_0413.jpg" alt="[세만시] &quot;같은 사건, 나라마다 역사적 평가 달라, 전 세계 역사교육은?&quot; (with 독일 다니엘, 인도 럭키) 7.29(수)" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13688401" class="item_tit">
+                        <span class="txt">같은 사건, 나라마다 역사적 평가 달라, 전 세계 역사교육은?</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="키움증권 주식, 글로벌 시황 투자전략" data-episode-title="'고공행진'금값 · 약달러 '출렁' 중국증시 8월 증시전망 및 투자조언 (이진우의 마켓리더.시장분석/with.김영익 서강대학교 경제학부 교수​​​/20.07.28)" data-episode-srl="13683393" data-play-uri="https://cdn-cf.podty.me/meta/episode_audio/100021799/194153_1595909051841.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/cdn-cf.podty.me/image/cast_image/100021799/original/100021799_1572228225403.jpg" alt="'고공행진'금값 · 약달러 '출렁' 중국증시 8월 증시전망 및 투자조언 (이진우의 마켓리더.시장분석/with.김영익 서강대학교 경제학부 교수​​​/20.07.28)" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13683393" class="item_tit">
+                        <span class="txt">'고공행진'금값 · 약달러 '출렁' 중국증시 8월 증시전망 및 투자조언</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="3분 차이나" data-episode-title="[차이나] 홍콩을 보는 세 가지 시선 – 대만편 (2) 7.28(화)" data-episode-srl="13682820" data-play-uri="http://dwradio.ytn.co.kr/ytnradio/vod/aod/2020/07/202007280940013213.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/imgradio.ytn.co.kr/podcast/podcast_0398.png" alt="[차이나] 홍콩을 보는 세 가지 시선 – 대만편 (2) 7.28(화)" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13682820" class="item_tit">
+                        <span class="txt">홍콩을 보는 세 가지 시선 - 대만편</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="TBS  더 룸_뉴스공장 외전" data-episode-title="224회 박지원 국정원장 후보자 청문회 쟁점은? / 행정수도 이전, 가능성은?" data-episode-srl="13683391" data-play-uri="https://cdn-cf.podty.me/meta/episode_video/92434/partner_1595909435854.mp4" data-item-type="video/mp4" data-format="vod" data-adult="false">
+                    <a href="#" class="bx_dummy btn_vod" data-format="vod">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/cdn-cf.podty.me/image/cast_image/92434/original/92434_1582546934711.png" alt="224회 박지원 국정원장 후보자 청문회 쟁점은? / 행정수도 이전, 가능성은?" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13683391" class="item_tit">
+                        <span class="txt">박지원 국정원장 후보자 청문회 쟁점은? / 행정수도 이전, 가능성은?</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="내일을 여는 역사 시즌5" data-episode-title="시즌5_15화  &quot;평화로 가는 한국, 제국으로 가는 일본&quot;  서승교수와 함께_2부" data-episode-srl="13682982" data-play-uri="https://cdn-cf.podty.me/meta/episode_audio/90938/179432_1595812925087.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/cdn-cf.podty.me/image/cast_image/90938/original/90938_1585551522501.png" alt="시즌5_15화  &quot;평화로 가는 한국, 제국으로 가는 일본&quot;  서승교수와 함께_2부" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13682982" class="item_tit">
+                        <span class="txt">&quot;평화로 가는 한국, 제국으로 가는 일본&quot; 서승교수와 함께</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="CBS 시사자키 정관용입니다" data-episode-title="[20/07/27 전체듣기] 청문석에 앉은 박지원 / 김종대 &quot;탈북자 월북, 南 경계비상 北 코로나 비상&quot; / [직격] &quot;행정수도 ‘옮겨’ vs ‘멈춰’&quot; / 박주민 &quot;왜, 박주민이어야 하는가&quot;" data-episode-srl="13680793" data-play-uri="https://rss.art19.com/episodes/5d4b3783-5a66-43f2-a63d-c7810b723ef9.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/content.production.cdn.art19.com/images/0b/d5/03/11/0bd50311-4498-4996-b0ea-164931d23be0/6e7fb1cb9c7160698827899f4cd07dc63e137daa2fe2df053b1a6982bc9dfbb3f5308d31b8b056e99226f5763655d3d72ede303173c20d0d23e9288d7145ee3a.jpeg" alt="[20/07/27 전체듣기] 청문석에 앉은 박지원 / 김종대 &quot;탈북자 월북, 南 경계비상 北 코로나 비상&quot; / [직격] &quot;행정수도 ‘옮겨’ vs ‘멈춰’&quot; / 박주민 &quot;왜, 박주민이어야 하는가&quot;" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13680793" class="item_tit">
+                        <span class="txt">[직격] 행정수도 ‘옮겨’ vs ‘멈춰’</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="백성문의 오천만의 변호인" data-episode-title="구급차를 막아선 택시기사 사건, 어떻게 될까요?" data-episode-srl="13682980" data-play-uri="https://cdn-cf.podty.me/meta/episode_audio/100049926/201021_1595903768529.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/cdn-cf.podty.me/image/cast_image/100049926/original/100049926_1571675376629.jpg" alt="구급차를 막아선 택시기사 사건, 어떻게 될까요?" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13682980" class="item_tit">
+                        <span class="txt">구급차를 막아선 택시기사 사건, 어떻게 될까요?</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="밀떡" data-episode-title="밀떡 180-1회 (전장 네트워크 시스템, 링크 16 그리고 링크 K)" data-episode-srl="13682355" data-play-uri="https://rss.art19.com/episodes/bbeb04a4-adc8-4ff3-a649-10b603be0595.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/content.production.cdn.art19.com/images/e1/94/51/ac/e19451ac-08be-4fe5-8e5f-31d793e3389c/e24815d9105030237a4b09eb717a70ea6fbe4b99d43884f67c386bd083afe5a0b419a684b3ba7cacbdeacff3b571a39ec2fbce16aed012200b54e5eef71a1e97.jpeg" alt="밀떡 180-1회 (전장 네트워크 시스템, 링크 16 그리고 링크 K)" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13682355" class="item_tit">
+                        <span class="txt">전장 네트워크 시스템, 링크 16 그리고 링크 K</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="취업하는 법, 취업캐스트" data-episode-title="꼰대에게 받은 사랑, 채용으로 보상받으리 _  취업캐스트75회" data-episode-srl="13682712" data-play-uri="https://cdn-cf.podty.me/meta/episode_audio/105423/204893_1595900119273.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/cdn-cf.podty.me/image/cast_image/105423/original/105423_1593667262420.jpg" alt="꼰대에게 받은 사랑, 채용으로 보상받으리 _  취업캐스트75회" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13682712" class="item_tit">
+                        <span class="txt">꼰대에게 받은 사랑, 채용으로 보상받으리</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="읽는 시민" data-episode-title="시민 '김현수'가 읽은 &quot;민주사회를 이루는 대화의 기술&quot;" data-episode-srl="13682461" data-play-uri="https://cdn-cf.podty.me/meta/episode_audio/100075528/206854_1595919545175.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/cdn-cf.podty.me/image/cast_image/100075528/original/100075528_1595886359663.jpg" alt="시민 '김현수'가 읽은 &quot;민주사회를 이루는 대화의 기술&quot;" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13682461" class="item_tit">
+                        <span class="txt">시민 '김현수'가 읽은 &quot;민주사회를 이루는 대화의 기술&quot;</span>
+                    </a>
+                </li>
+                <li class="episodeList" data-cast-name="김미려, 심진화의 연애 말고 결혼" data-episode-title="172회 1부 그 사람을 좋아하는 건 아닌데 표현 받는 게 좋아요" data-episode-srl="13683312" data-play-uri="https://rss.art19.com/episodes/ef0a03b1-2c00-4d33-b788-0d2bcf517a3b.mp3" data-item-type="audio/mpeg" data-format="mp3" data-adult="false">
+                    <a href="#" class="bx_dummy btn_play" data-format="mp3">
+                        <span class="bx_img">
+                            <img src="https://image.podty.me/unsafe/300x300/content.production.cdn.art19.com/images/66/8b/96/d1/668b96d1-2186-4ac1-9dd4-e2e5ad3dfa2d/b3df6fafaa9194f03138590bd96712d4f0be2f8f2fc7b47281e0e4eeb8f40e50461ba1490dae4be00cf2f1e3c25e1ac6edb63d63e39cbcbbac7ff083de6866da.jpeg" alt="172회 1부 그 사람을 좋아하는 건 아닌데 표현 받는 게 좋아요" onload="this.style.display=''" style="display:none">
+                        </span>
+                    </a>
+                    <a href="https://m.podty.me/episode/13683312" class="item_tit">
+                        <span class="txt">그 사람을 좋아하는 건 아닌데 표현 받는 게 좋아요</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="bx_btn">
+                <div class="inner">
+                    <a href="https://m.podty.me/choice/list" class="btn_link">팟티초이스 전체보기</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="group_item bx_chart">
+            <div class="tit_info">
+                <h2 class="tit_txt">종합차트</h2>
+                <span class="dsc">2020.07.29</span>
+                <a href="https://m.podty.me/chart/podty/daily" class="btn_link"><span class="sp ico">더보기</span></a>
+            </div>
+            <div class="lst_item2">
+                <div class="group_lst_item">
+                    <a href="https://m.podty.me/cast/167056" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/92434/original/1516858179100.jpg" alt="TBS 김어준의 뉴스공장" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">1</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    TBS 김어준의 뉴스공장
+                                </em>
+                                <span class="broadcast">TBS 교통방송</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://m.podty.me/cast/177643" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/41512/original/das2_1400.png" alt="김어준의 다스 뵈이다" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">2</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    김어준의 다스 뵈이다
+                                </em>
+                                <span class="broadcast">BUNKER1</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://m.podty.me/cast/204829" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/content.production.cdn.art19.com/images/d0/73/3c/d2/d0733cd2-f0e8-4d98-901c-5086c25ad75c/d2b6c268dd669de4662102758d92c82656ab9db2b6fc9426f5aa4222b86af95d98b485b6424ba239ef6d4ec08087a59f70f26a31cb58f59d9d87b557d429adc6.jpeg" alt="[KBS] 주진우 라이브" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">3</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    [KBS] 주진우 라이브
+                                </em>
+                                <span class="broadcast"></span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="group_lst_item">
+                    <a href="https://m.podty.me/cast/153416" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/content.production.cdn.art19.com/images/8b/80/3f/8a/8b803f8a-9188-4431-afe5-37437b3d8414/ef736b6917aba7431692873b91ac4c5081af42ebd5efbcce5132f02819a62ddcc05eb3dc54c28b2ea216b0f5e72670c98d7080ec9714f20fe50cfe7dd5ff84f8.jpeg" alt="CBS 김현정의 뉴스쇼" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">4</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    CBS 김현정의 뉴스쇼
+                                </em>
+                                <span class="broadcast">CBS</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://m.podty.me/cast/146364" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/7661/original/jidae.jpg" alt="[지대넓얕] 지적 대화를 위한 넓고 얕은 지식" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">5</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    [지대넓얕] 지적 대화를 위한 넓고 얕은 지식
+                                </em>
+                                <span class="broadcast">채사장, 깡쌤, 덕실이, 김도인</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://m.podty.me/cast/193158" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/100018670/original/100018670_1551247667556.jpeg" alt="김동환 이진우 정영진의 신과함께" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">6</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    김동환 이진우 정영진의 신과함께
+                                </em>
+                                <span class="broadcast">이브로드캐스팅</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="group_lst_item">
+                    <a href="https://m.podty.me/cast/153942" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/img.imbc.com/adams/Program/20199/132141971236999913.jpg" alt="김종배의 시선집중" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">7</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    김종배의 시선집중
+                                </em>
+                                <span class="broadcast">MBC</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://m.podty.me/cast/174595" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/23802/original/1500542801538.jpeg" alt="[휴식을 위한 지식] 전쟁사 문명사 세계사" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">8</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    [휴식을 위한 지식] 전쟁사 문명사 세계사
+                                </em>
+                                <span class="broadcast">스밖남</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://m.podty.me/cast/153355" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/ifeelway.cdn3.cafe24.com/1400_150627_02.jpg" alt="그것은 알기 싫다" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">9</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    그것은 알기 싫다
+                                </em>
+                                <span class="broadcast">XSFM</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="group_lst_item">
+                    <a href="https://m.podty.me/cast/146032" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/content.production.cdn.art19.com/images/9c/70/da/40/9c70da40-802f-49c2-bf98-d3136f627ab6/7ed1103efc6307bd542e1df7a3f03f623e08c95e8c4e4d83478f92ef265aecf47d823d21bc889b77c9f3a19c8654257557abda72b76b0c317c6e9f04cfc133a8.jpeg" alt="컬투쇼 레전드 사연" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">10</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    컬투쇼 레전드 사연
+                                </em>
+                                <span class="broadcast">SBS</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://m.podty.me/cast/146135" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/ssl-static.libsyn.com/p/assets/8/d/f/f/8dff55a90fd8f635/pomnyun_profile.jpg" alt="법륜스님의 즉문즉설" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">11</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    법륜스님의 즉문즉설
+                                </em>
+                                <span class="broadcast">JUNGTO</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://m.podty.me/cast/180957" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/content.production.cdn.art19.com/images/81/de/04/5c/81de045c-2763-41e9-8306-8c163119f311/a17c35b24ccde472dc146a5bdbe3f2baa8cbba1ca55020fcca740ba6954d4394a583da89478b55f5311dac5cce01fea9e628f81b72a6573ef04dfdc62f012ce7.jpeg" alt="[KBS] 와이파이 삼국지" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">12</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    [KBS] 와이파이 삼국지
+                                </em>
+                                <span class="broadcast">KBS 1R (97.3MHz)</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="group_lst_item">
+                    <a href="https://m.podty.me/cast/145998" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/img.imbc.com/adams/Program/201810/131833611743748423.jpg" alt="이진우의 손에 잡히는 경제" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">13</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    이진우의 손에 잡히는 경제
+                                </em>
+                                <span class="broadcast">MBC</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://m.podty.me/cast/193779" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/content.production.cdn.art19.com/images/f3/22/1c/a4/f3221ca4-f84e-475a-aba5-f4069cc3eab4/44ff78cc2e3b6dc0469fcf8e9b6e178f8055369d26b52c4a8e9d39e6ac76810d7ad89a77546d4164b90c447e7b4cb6ebfc1037f2dcf5cdcae452e96e79e5936c.jpeg" alt="[KBS] 최경영의 경제쇼" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">14</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    [KBS] 최경영의 경제쇼
+                                </em>
+                                <span class="broadcast">KBS</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://m.podty.me/cast/165850" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/cdn.ddanzi.com/201608-images/116577694.jpg" alt="종합콘솔게임방송 - 겜덕비상" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">15</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    종합콘솔게임방송 - 겜덕비상
+                                </em>
+                                <span class="broadcast">재야두목</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="group_lst_item">
+                    <a href="https://m.podty.me/cast/174146" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/18775/original/1499320495196.JPG" alt="일빵빵 입에 달고 사는 기초영어" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">16</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    일빵빵 입에 달고 사는 기초영어
+                                </em>
+                                <span class="broadcast">토마토출판사</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://m.podty.me/cast/174364" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/21882/original/21882_1586421575619.jpg" alt="송은이 김숙의 비밀보장" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">17</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    송은이 김숙의 비밀보장
+                                </em>
+                                <span class="broadcast">컨텐츠랩비보</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://m.podty.me/cast/159018" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/down.kbs.gscdn.com/KBS_CMS_DOWN/R2016-0125/R2016-0125.png" alt="와이파이 초한지" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">18</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    와이파이 초한지
+                                </em>
+                                <span class="broadcast">KBS 1R (97.3MHz)</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="group_lst_item">
+                    <a href="https://m.podty.me/cast/153296" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/content.production.cdn.art19.com/images/e7/9f/d5/61/e79fd561-20ca-425a-ad84-5b364bf69925/e389f8670cc9181b923caadcbe02970c13225575859ddeb8ccc4f9acba5f6ea3e886bdc63eafef4a782d3f0b230c642ed5a58ddf357b50d440279a47c08f01c1.jpeg" alt="배성재의 텐" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">19</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    배성재의 텐
+                                </em>
+                                <span class="broadcast">SBS</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://m.podty.me/cast/174371" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/22286/original/1499838572938.jpg" alt="파토의 과학하고 앉아있네" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">20</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    파토의 과학하고 앉아있네
+                                </em>
+                                <span class="broadcast">과학과사람들</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://m.podty.me/cast/179685" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/95395/original/1517280282698.jpg" alt="시황맨의 주식이야기" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">21</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    시황맨의 주식이야기
+                                </em>
+                                <span class="broadcast">시황맨</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="group_lst_item">
+                    <a href="https://m.podty.me/cast/188887" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/514357/original/514357_1541829945847.png" alt="김양재 목사의 큐티노트 (극동방송)" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">22</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    김양재 목사의 큐티노트 (극동방송)
+                                </em>
+                                <span class="broadcast">QTM</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://m.podty.me/cast/153266" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/photo.jtbc.joins.com/news/2020/06/22/202006221428368720.jpg" alt="JTBC 뉴스룸" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">23</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    JTBC 뉴스룸
+                                </em>
+                                <span class="broadcast">JTBC</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://m.podty.me/cast/171606" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/495/original/1490924084289.jpg" alt="신해철의 고스트스테이션" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">24</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    신해철의 고스트스테이션
+                                </em>
+                                <span class="broadcast">SBS</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="group_lst_item">
+                    <a href="https://m.podty.me/cast/170761" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/content.production.cdn.art19.com/images/a8/a7/5a/93/a8a75a93-1372-469e-b725-d60de47b3ce8/cbbaa150327a517bf4b87d06a90be35a490e025b4997791edb4ae8c62de90d5b0d13868f05c49531f4da88120aeeb67a986189baea02c37d30afe71610d24ed9.jpeg" alt="이철희의 정치쇼" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">25</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    이철희의 정치쇼
+                                </em>
+                                <span class="broadcast">SBS</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://m.podty.me/cast/194153" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/100021799/original/100021799_1572228225403.jpg" alt="키움증권 주식, 글로벌 시황 투자전략" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">26</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    키움증권 주식, 글로벌 시황 투자전략
+                                </em>
+                                <span class="broadcast">키움증권 채널K</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://m.podty.me/cast/147541" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/content.production.cdn.art19.com/images/42/d5/e8/44/42d5e844-8886-4a0f-a8a1-4547edb84f05/a30dce20f68cd6a6befb6c02b2545e668902f39df0f53b1736caba97a298ccf7bb59d4da25edbffd782e451ab4783e2901ff2eed988d09a406cd01ad6afd440c.jpeg" alt="씨네타운 나인틴 - 풍문으로 듣는 방송" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">27</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    씨네타운 나인틴 - 풍문으로 듣는 방송
+                                </em>
+                                <span class="broadcast">SBS</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="group_lst_item">
+                    <a href="https://m.podty.me/cast/174137" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/18775/original/1499303410813.JPG" alt="일빵빵 스토리가 있는 영어회화" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">28</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    일빵빵 스토리가 있는 영어회화
+                                </em>
+                                <span class="broadcast">토마토출판사</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://m.podty.me/cast/170526" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/content.production.cdn.art19.com/images/86/7e/71/6e/867e716e-3f61-401f-990e-7fe198a7075f/82036e8d3899b4d563d0c917a9eb2b8c23f917b4058e4dd5c1b75afc7752b68502942c7c6199fc6885c1c994aff9b8ae776a9d5c32885f62931ed2a1ee8b7233.jpeg" alt="김영철의 진짜미국식영어" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">29</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    김영철의 진짜미국식영어
+                                </em>
+                                <span class="broadcast">SBS</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://m.podty.me/cast/189916" class="bx_align">
+                        <div class="bx_dummy ">
+                            <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                            <span class="bx_img">
+                                <img src="https://image.podty.me/unsafe/100x100/down.kbs.gscdn.com/KBS_CMS_DOWN/R2018-0227.jpg" alt="[KBS] 김경래의 최강시사" onload="this.style.display=''" style="display:none">
+                            </span>
+                        </div>
+                        <div class="item_info">
+                            <div class="bx_tit">
+                                <span class="num">30</span>
+                                <em class="tit">
+                                    <span class="sp tag_19 tag_small" name="cast19Tag" style="">19세이상 콘텐츠</span>
+                                    [KBS] 김경래의 최강시사
+                                </em>
+                                <span class="broadcast">KBS</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="group_item bx_chart">
+            <div class="tit_info">
+                <h2 class="tit_txt">정치&시사</h2>
+                <span class="dsc">87개</span>
+                <a href="https://m.podty.me/chart/daily?catId=1" class="btn_link"><span class="sp ico">더보기</span></a>
+            </div>
+            <div class="lst_item2">
+                <div class="group_lst_item">
+            <a href="https://m.podty.me/cast/167056" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/92434/original/1516858179100.jpg" alt="TBS 김어준의 뉴스공장" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">1</span>
+                        <em class="tit">TBS 김어준의 뉴스공장</em>
+                        <span class="broadcast">TBS 교통방송</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://m.podty.me/cast/177643" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/41512/original/das2_1400.png" alt="김어준의 다스 뵈이다" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">2</span>
+                        <em class="tit">김어준의 다스 뵈이다</em>
+                        <span class="broadcast">BUNKER1</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://m.podty.me/cast/204829" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/content.production.cdn.art19.com/images/d0/73/3c/d2/d0733cd2-f0e8-4d98-901c-5086c25ad75c/d2b6c268dd669de4662102758d92c82656ab9db2b6fc9426f5aa4222b86af95d98b485b6424ba239ef6d4ec08087a59f70f26a31cb58f59d9d87b557d429adc6.jpeg" alt="[KBS] 주진우 라이브" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">3</span>
+                        <em class="tit">[KBS] 주진우 라이브</em>
+                        <span class="broadcast"></span>
+                    </div>
+                </div>
+            </a>
+                </div>
+                <div class="group_lst_item">
+            <a href="https://m.podty.me/cast/153416" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/content.production.cdn.art19.com/images/8b/80/3f/8a/8b803f8a-9188-4431-afe5-37437b3d8414/ef736b6917aba7431692873b91ac4c5081af42ebd5efbcce5132f02819a62ddcc05eb3dc54c28b2ea216b0f5e72670c98d7080ec9714f20fe50cfe7dd5ff84f8.jpeg" alt="CBS 김현정의 뉴스쇼" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">4</span>
+                        <em class="tit">CBS 김현정의 뉴스쇼</em>
+                        <span class="broadcast">CBS</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://m.podty.me/cast/153942" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/img.imbc.com/adams/Program/20199/132141971236999913.jpg" alt="김종배의 시선집중" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">5</span>
+                        <em class="tit">김종배의 시선집중</em>
+                        <span class="broadcast">MBC</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://m.podty.me/cast/153355" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/ifeelway.cdn3.cafe24.com/1400_150627_02.jpg" alt="그것은 알기 싫다" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">6</span>
+                        <em class="tit">그것은 알기 싫다</em>
+                        <span class="broadcast">XSFM</span>
+                    </div>
+                </div>
+            </a>
+                </div>
+                <div class="group_lst_item">
+            <a href="https://m.podty.me/cast/153266" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/photo.jtbc.joins.com/news/2020/06/22/202006221428368720.jpg" alt="JTBC 뉴스룸" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">7</span>
+                        <em class="tit">JTBC 뉴스룸</em>
+                        <span class="broadcast">JTBC</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://m.podty.me/cast/170761" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/content.production.cdn.art19.com/images/a8/a7/5a/93/a8a75a93-1372-469e-b725-d60de47b3ce8/cbbaa150327a517bf4b87d06a90be35a490e025b4997791edb4ae8c62de90d5b0d13868f05c49531f4da88120aeeb67a986189baea02c37d30afe71610d24ed9.jpeg" alt="이철희의 정치쇼" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">8</span>
+                        <em class="tit">이철희의 정치쇼</em>
+                        <span class="broadcast">SBS</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://m.podty.me/cast/189916" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/down.kbs.gscdn.com/KBS_CMS_DOWN/R2018-0227.jpg" alt="[KBS] 김경래의 최강시사" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">9</span>
+                        <em class="tit">[KBS] 김경래의 최강시사</em>
+                        <span class="broadcast">KBS</span>
+                    </div>
+                </div>
+            </a>
+                </div>
+                <div class="group_lst_item">
+            <a href="https://m.podty.me/cast/205363" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/img2.sbs.co.kr/sbs_img/2020/05/28/podcast_1400x1400.jpg" alt="이재익의 시사특공대" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">10</span>
+                        <em class="tit">이재익의 시사특공대</em>
+                        <span class="broadcast">SBS</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://m.podty.me/cast/153673" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/is3.mzstatic.com/image/thumb/Music6/v4/20/cb/1f/20cb1f8c-fb55-94b5-9286-568dbd18aafb/source/1400x1400bb.jpg" alt="나는 꼼수다" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">11</span>
+                        <em class="tit">나는 꼼수다</em>
+                        <span class="broadcast">딴지 라디오</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://m.podty.me/cast/156975" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/imgradio.ytn.co.kr/podcast/podcast_0263.png" alt="이동형의 뉴스 정면승부" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">12</span>
+                        <em class="tit">이동형의 뉴스 정면승부</em>
+                        <span class="broadcast">YTN,와이티엔FM94.5</span>
+                    </div>
+                </div>
+            </a>
+                </div>
+                <div class="group_lst_item">
+            <a href="https://m.podty.me/cast/203168" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/ppbbs.s3-website.ap-northeast-2.amazonaws.com/2020/2/17/1581921882042_23198.jpg" alt="최경영의 이슈 오도독" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">13</span>
+                        <em class="tit">최경영의 이슈 오도독</em>
+                        <span class="broadcast">KBS</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://m.podty.me/cast/153727" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/content.production.cdn.art19.com/images/0b/d5/03/11/0bd50311-4498-4996-b0ea-164931d23be0/6e7fb1cb9c7160698827899f4cd07dc63e137daa2fe2df053b1a6982bc9dfbb3f5308d31b8b056e99226f5763655d3d72ede303173c20d0d23e9288d7145ee3a.jpeg" alt="CBS 시사자키 정관용입니다" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">14</span>
+                        <em class="tit">CBS 시사자키 정관용입니다</em>
+                        <span class="broadcast">CBS</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://m.podty.me/cast/191562" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/100012694/original/100012694_1548118341495.jpg" alt="유시민의 알릴레오" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">15</span>
+                        <em class="tit">유시민의 알릴레오</em>
+                        <span class="broadcast">사람사는세상노무현재단</span>
+                    </div>
+                </div>
+            </a>
+                </div>
+                <div class="group_lst_item">
+            <a href="https://m.podty.me/cast/188070" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/506817/original/506817_1538015302489.png" alt="저널리즘 토크쇼 J" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">16</span>
+                        <em class="tit">저널리즘 토크쇼 J</em>
+                        <span class="broadcast">저널리즘 토크쇼 J</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://m.podty.me/cast/153321" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/download.newstapa.org/api/podcast_logo.jpg" alt="뉴스타파 NEWSTAPA" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">17</span>
+                        <em class="tit">뉴스타파 NEWSTAPA</em>
+                        <span class="broadcast">뉴스타파 KCIJ</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://m.podty.me/cast/174656" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/img.imbc.com/adams/Program/20199/132141971236999913.jpg" alt="김종배의 시선집중" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">18</span>
+                        <em class="tit">김종배의 시선집중</em>
+                        <span class="broadcast">MBC</span>
+                    </div>
+                </div>
+            </a>
+                </div>
+                <div class="group_lst_item">
+            <a href="https://m.podty.me/cast/200750" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/dimg.podbbang.com/podbbang/1773614.jpg?202031" alt="TBS 김지윤의 이브닝쇼" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">19</span>
+                        <em class="tit">TBS 김지윤의 이브닝쇼</em>
+                        <span class="broadcast"></span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://m.podty.me/cast/190484" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/100007804/original/100007804_1585637170937.png" alt="밀레니얼의 시사친구, 듣똑라" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">20</span>
+                        <em class="tit">밀레니얼의 시사친구, 듣똑라</em>
+                        <span class="broadcast">듣다보면똑똑해지는라이프</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://m.podty.me/cast/153777" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/content.production.cdn.art19.com/images/2f/1b/eb/1d/2f1beb1d-a592-49c5-bc3e-ec8a5dfb5144/a9b28744ec0e2ea3632fbc02343170e6373cb4afa021021bbce01755a23b3c442deb022a58b751c38b4fc26c6a6130309d13ea4e3900c8f20ae7fc921ab79f69.jpeg" alt="골라듣는 뉴스룸" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">21</span>
+                        <em class="tit">골라듣는 뉴스룸</em>
+                        <span class="broadcast">SBS</span>
+                    </div>
+                </div>
+            </a>
+                </div>
+                <div class="group_lst_item">
+            <a href="https://m.podty.me/cast/201867" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/imgradio.ytn.co.kr/podcast/podcast_0413.jpg" alt="세계를 만나는 시간, NOW" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">22</span>
+                        <em class="tit">세계를 만나는 시간, NOW</em>
+                        <span class="broadcast">YTN,와이티엔FM94.5</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://m.podty.me/cast/203642" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/92434/original/92434_1584317949772.png" alt="TBS 정준희의 해시태그" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">23</span>
+                        <em class="tit">TBS 정준희의 해시태그</em>
+                        <span class="broadcast">TBS</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://m.podty.me/cast/154579" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/img.imbc.com/adams/Program/20194/131985569318522015.jpg" alt="이승원의 세계는 그리고 우리는" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">24</span>
+                        <em class="tit">이승원의 세계는 그리고 우리는</em>
+                        <span class="broadcast">MBC</span>
+                    </div>
+                </div>
+            </a>
+                </div>
+                <div class="group_lst_item">
+            <a href="https://m.podty.me/cast/185968" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/down.kbs.gscdn.com/KBS_CMS_DOWN/I0000-2003_03.jpg" alt="댓글 읽어주는 기자들" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">25</span>
+                        <em class="tit">댓글 읽어주는 기자들</em>
+                        <span class="broadcast">KBS</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://m.podty.me/cast/179276" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/87005/original/87005_1538417608264.jpg" alt="임상훈의 뉴스하청공장" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">26</span>
+                        <em class="tit">임상훈의 뉴스하청공장</em>
+                        <span class="broadcast">임상훈</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://m.podty.me/cast/195801" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/512612/original/512612_1557127861277.jpg" alt="김수민의 뉴스밑장" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">27</span>
+                        <em class="tit">김수민의 뉴스밑장</em>
+                        <span class="broadcast">뉴스민</span>
+                    </div>
+                </div>
+            </a>
+                </div>
+                <div class="group_lst_item">
+            <a href="https://m.podty.me/cast/157781" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/imgradio.ytn.co.kr/podcast/podcast_0214.jpg" alt="출발 새아침" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">28</span>
+                        <em class="tit">출발 새아침</em>
+                        <span class="broadcast">YTN,와이티엔FM94.5</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://m.podty.me/cast/153600" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/photo.jtbc.joins.com/news/2020/06/22/202006221423058843.jpg" alt="보고합니다! 5시 정치부회의" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">29</span>
+                        <em class="tit">보고합니다! 5시 정치부회의</em>
+                        <span class="broadcast">JTBC</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://m.podty.me/cast/183144" class="bx_align">
+                <div class="bx_dummy">
+                    <span class="bx_img">
+                        <img src=" https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/29719/original/29719_1528096230963.jpg" alt="유창선의 유창한 시선" onload="this.style.display=''" style="display:none">
+                    </span>
+                </div>
+                <div class="item_info">
+                    <div class="bx_tit">
+                        <span class="num">30</span>
+                        <em class="tit">유창선의 유창한 시선</em>
+                        <span class="broadcast">국민TV</span>
+                    </div>
+                </div>
+            </a>
+                </div>
+            </div>
+        </section>
+
+        <div class="bx_category">
+            <ul class="lst_category">
+                <li><a href="https://m.podty.me/chart/daily?catId=6">교육</a></li>
+                <li><a href="https://m.podty.me/chart/daily?catId=3">경제</a></li>
+                <li><a href="https://m.podty.me/chart/daily?catId=13">스포츠</a></li>
+                <li><a href="https://m.podty.me/chart/daily?catId=2">문화&예술</a></li>
+            </ul>
+            <div class="bx_btn">
+                <a href="#" class="btn_link no-pjax" onclick="popupCategories(); return false;">카테고리 전체보기</a>
+            </div>
+        </div>
+
+        <ul id="slider" class="lst_banner cS-hidden">
+            <li><a href="https://www.podty.me/notice/926?view_platform=pc&page=1" style="background-color:rgba(6,26,63,255);" data-title="팟티프렌즈 2기"  class="no-pjax">
+                <span class="bx_img" style="text-align:center;">
+                    <img src="https://cdn-cf.podty.me/image/banner/original/1595494613471.jpg" alt="팟티프렌즈 2기" style="width:auto;position:relative;">
+                </span>
+            </a></li>
+            <li><a href="https://www.podty.me/notice/922" style="background-color:rgba(134,43,245,255);" data-title="별풍선 소문내기 이벤트"  class="no-pjax">
+                <span class="bx_img" style="text-align:center;">
+                    <img src="https://cdn-cf.podty.me/image/banner/original/1594799483879.png" alt="별풍선 소문내기 이벤트" style="width:auto;position:relative;">
+                </span>
+            </a></li>
+            <li><a href="https://m.podty.me/cast/174371" style="background-color:rgba(0,53,106,255);" data-title="파토의 과학하고 앉아있네"  class="no-pjax">
+                <span class="bx_img" style="text-align:center;">
+                    <img src="https://cdn-cf.podty.me/image/banner/original/1541579644862.png" alt="파토의 과학하고 앉아있네" style="width:auto;position:relative;">
+                </span>
+            </a></li>
+            <li><a href="https://www.podty.me/cast/170526" style="background-color:rgba(150,242,255,255);" data-title="김영철의 진짜 미국식 영어"  class="no-pjax">
+                <span class="bx_img" style="text-align:center;">
+                    <img src="https://cdn-cf.podty.me/image/banner/original/1589516192539.jpg" alt="김영철의 진짜 미국식 영어" style="width:auto;position:relative;">
+                </span>
+            </a></li>
+            <li><a href="https://www.podty.me/cast/169533" style="background-color:rgba(224,237,191,255);" data-title="김미려, 심진화의 연애 말고 결혼"  class="no-pjax">
+                <span class="bx_img" style="text-align:center;">
+                    <img src="https://cdn-cf.podty.me/image/banner/original/1590384050513.jpg" alt="김미려, 심진화의 연애 말고 결혼" style="width:auto;position:relative;">
+                </span>
+            </a></li>
+            <li><a href="http://m.podty.me/cast/204893" style="background-color:rgba(253,251,228,255);" data-title="취업캐스트"  class="no-pjax">
+                <span class="bx_img" style="text-align:center;">
+                    <img src="https://cdn-cf.podty.me/image/banner/original/1594691166786.jpg" alt="취업캐스트" style="width:auto;position:relative;">
+                </span>
+            </a></li>
+            <li><a href="https://www.podty.me/cast/203390" style="background-color:rgba(255,236,183,255);" data-title="도란도란 생활기록view"  class="no-pjax">
+                <span class="bx_img" style="text-align:center;">
+                    <img src="https://cdn-cf.podty.me/image/banner/original/1586493984884.jpg" alt="도란도란 생활기록view" style="width:auto;position:relative;">
+                </span>
+            </a></li>
+            <li><a href="https://www.podty.me/cast/198896" style="background-color:rgba(40,111,131,255);" data-title="애니듣수다 시즌2"  class="no-pjax">
+                <span class="bx_img" style="text-align:center;">
+                    <img src="https://cdn-cf.podty.me/image/banner/original/1595991332525.jpg" alt="애니듣수다 시즌2" style="width:auto;position:relative;">
+                </span>
+            </a></li>
+            <li><a href="https://www.podty.me/cast/201217" style="background-color:rgba(0,142,204,255);" data-title="누워듣는 Mavs와 NBA"  class="no-pjax">
+                <span class="bx_img" style="text-align:center;">
+                    <img src="https://cdn-cf.podty.me/image/banner/original/1593582172254.jpg" alt="누워듣는 Mavs와 NBA" style="width:auto;position:relative;">
+                </span>
+            </a></li>
+            <li><a href="https://www.podty.me/cast/201991" style="background-color:rgba(52,88,166,255);" data-title="강지예의출근길뉴스"  class="no-pjax">
+                <span class="bx_img" style="text-align:center;">
+                    <img src="https://cdn-cf.podty.me/image/banner/original/1594009376912.jpg" alt="강지예의출근길뉴스" style="width:auto;position:relative;">
+                </span>
+            </a></li>
+        </ul>
+
+        <section class="group_item bx_episode">
+            <div class="tit_info">
+                <h2 class="tit_txt">새로운 에피소드</h2>
+                <span class="dsc">NEW EPISODE</span>
+                <a href="https://m.podty.me/new/episodes" class="btn_link"><span class="sp ico">더보기</span></a>
+            </div>
+            <ul class="lst_item3">
+                <li class="episodeList" data-cast-name="책읽어주는 간호사" data-episode-title="코로나보다 무서운 천연두" data-episode-srl="13692605" data-play-uri="https://cdn-cf.podty.me/meta/episode_audio/100076690/1596046986166.mp3" data-item-type="audio/mpeg" data-adult="false">
+                    <div class="bx_align btn_play" data-format="mp3">
+                        <a href="#" class="bx_img btn_play">
+                            <img src="https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/100076690/original/1595887717259.jpg" alt="코로나보다 무서운 천연두" onload="this.style.display=''" style="display:none">
+                        </a>
+                    </div>
+                    <div class="item_info">
+                        <a href="https://m.podty.me/episode/13692605" class="bx_tit">
+                            <em class="tit" data-episode-name="코로나보다 무서운 천연두">코로나보다 무서운 천연두</em>
+                            <span class="tit_dsc">책읽어주는 간호사</span>
+                        </a>
+                    </div>
+                </li>
+                <li class="episodeList" data-cast-name="[뇌부자들] 정신과 의사들의 진짜 정신과 이야기" data-episode-title="[뇌부책방] 어쩌다 정신과 의사 -내 주치의가 어떤 생각으로 사는지 궁금하다면 &amp; 도서 증정 이벤트!" data-episode-srl="13690785" data-play-uri="https://cdn-cf.podty.me/meta/episode_audio/18663/174090_1596015789470.mp3" data-item-type="audio/mpeg" data-adult="false">
+                    <div class="bx_align btn_play" data-format="mp3">
+                        <a href="#" class="bx_img btn_play">
+                            <img src="https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/18663/original/1499159022721.jpg" alt="[뇌부책방] 어쩌다 정신과 의사 -내 주치의가 어떤 생각으로 사는지 궁금하다면 &amp; 도서 증정 이벤트!" onload="this.style.display=''" style="display:none">
+                        </a>
+                    </div>
+                    <div class="item_info">
+                        <a href="https://m.podty.me/episode/13690785" class="bx_tit">
+                            <em class="tit" data-episode-name="[뇌부책방] 어쩌다 정신과 의사 -내 주치의가 어떤 생각으로 사는지 궁금하다면 &amp; 도서 증정 이벤트!">[뇌부책방] 어쩌다 정신과 의사 -내 주치의가 어떤 생각으로 사는지 궁금하다면 &amp; 도서 증정 이벤트!</em>
+                            <span class="tit_dsc">[뇌부자들] 정신과 의사들의 진짜 정신과 이야기</span>
+                        </a>
+                    </div>
+                </li>
+                <li class="episodeList" data-cast-name="[대모입]대치동 엄마도 모르는 진짜 입시 이야기 " data-episode-title="[시즌5] 15화. 코로나 수능, 쉬워져도 문제! 현실을 직시하고 공부에 매진하라! " data-episode-srl="13692601" data-play-uri="https://cdn-cf.podty.me/meta/episode_audio/112937/180755_1596041195642.mp3" data-item-type="audio/mpeg" data-adult="false">
+                    <div class="bx_align btn_play" data-format="mp3">
+                        <a href="#" class="bx_img btn_play">
+                            <img src="https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/112937/original/112937_1524648329476.jpg" alt="[시즌5] 15화. 코로나 수능, 쉬워져도 문제! 현실을 직시하고 공부에 매진하라! " onload="this.style.display=''" style="display:none">
+                        </a>
+                    </div>
+                    <div class="item_info">
+                        <a href="https://m.podty.me/episode/13692601" class="bx_tit">
+                            <em class="tit" data-episode-name="[시즌5] 15화. 코로나 수능, 쉬워져도 문제! 현실을 직시하고 공부에 매진하라! ">[시즌5] 15화. 코로나 수능, 쉬워져도 문제! 현실을 직시하고 공부에 매진하라! </em>
+                            <span class="tit_dsc">[대모입]대치동 엄마도 모르는 진짜 입시 이야기 </span>
+                        </a>
+                    </div>
+                </li>
+                <li class="episodeList" data-cast-name="원더풀라디오 강수지입니다" data-episode-title="07/29(수) 원더풀 라디오 강수지입니다.3,4 부" data-episode-srl="13690733" data-play-uri="http://podcastfile.imbc.com/cgi-bin/podcast.fcgi/podcast/wonderfulradio/WONDERFULRADIO_20200729_2.mp3" data-item-type="audio/mpeg" data-adult="false">
+                    <div class="bx_align btn_play" data-format="mp3">
+                        <a href="#" class="bx_img btn_play">
+                            <img src="https://image.podty.me/unsafe/100x100/img.imbc.com/adams/Program/20205/132335935217066823.jpg" alt="07/29(수) 원더풀 라디오 강수지입니다.3,4 부" onload="this.style.display=''" style="display:none">
+                        </a>
+                    </div>
+                    <div class="item_info">
+                        <a href="https://m.podty.me/episode/13690733" class="bx_tit">
+                            <em class="tit" data-episode-name="07/29(수) 원더풀 라디오 강수지입니다.3,4 부">07/29(수) 원더풀 라디오 강수지입니다.3,4 부</em>
+                            <span class="tit_dsc">원더풀라디오 강수지입니다</span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+
+
+            <ul class="lst_item3">
+                <li class="episodeList" data-cast-name="로까의 라디오" data-episode-title="첫방송 &quot;간단한 소개와 노래한곡(어쿠스틱 콜라보 - 그러지마요)&quot;" data-episode-srl="13692599" data-play-uri="https://cdn-cf.podty.me/meta/episode_audio/100076835/206878_1596039500472.mp3" data-item-type="audio/mpeg" data-adult="false">
+                    <div class="bx_align btn_play" data-format="mp3">
+                        <a href="#" class="bx_img btn_play">
+                            <img src="https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/100076835/original/100076835_1596034523922.png" alt="첫방송 &quot;간단한 소개와 노래한곡(어쿠스틱 콜라보 - 그러지마요)&quot;" onload="this.style.display=''" style="display:none">
+                        </a>
+                    </div>
+                    <div class="item_info">
+                        <a href="https://m.podty.me/episode/13692599" class="bx_tit">
+                            <em class="tit" data-episode-name="첫방송 &quot;간단한 소개와 노래한곡(어쿠스틱 콜라보 - 그러지마요)&quot;">첫방송 &quot;간단한 소개와 노래한곡(어쿠스틱 콜라보 - 그러지마요)&quot;</em>
+                            <span class="tit_dsc">로까의 라디오</span>
+                        </a>
+                    </div>
+                </li>
+                <li class="episodeList" data-cast-name="헤드헌터 윤재홍의 난JOB한 이야기" data-episode-title="[시즌2 289회①] 예고, 미대 나와서 갤러리스트가 된 사연, 미술품 가격은 어떻게 정해지나? 그림으로 재테크 하는 방법(feat. 갤러리스트 켈리) 1부" data-episode-srl="13690783" data-play-uri="https://cdn-cf.podty.me/meta/episode_audio/38913/177061_1595981153044.mp3" data-item-type="audio/mpeg" data-adult="false">
+                    <div class="bx_align btn_play" data-format="mp3">
+                        <a href="#" class="bx_img btn_play">
+                            <img src="https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/38913/original/38913_1573661102638.png" alt="[시즌2 289회①] 예고, 미대 나와서 갤러리스트가 된 사연, 미술품 가격은 어떻게 정해지나? 그림으로 재테크 하는 방법(feat. 갤러리스트 켈리) 1부" onload="this.style.display=''" style="display:none">
+                        </a>
+                    </div>
+                    <div class="item_info">
+                        <a href="https://m.podty.me/episode/13690783" class="bx_tit">
+                            <em class="tit" data-episode-name="[시즌2 289회①] 예고, 미대 나와서 갤러리스트가 된 사연, 미술품 가격은 어떻게 정해지나? 그림으로 재테크 하는 방법(feat. 갤러리스트 켈리) 1부">[시즌2 289회①] 예고, 미대 나와서 갤러리스트가 된 사연, 미술품 가격은 어떻게 정해지나? 그림으로 재테크 하는 방법(feat. 갤러리스트 켈리) 1부</em>
+                            <span class="tit_dsc">헤드헌터 윤재홍의 난JOB한 이야기</span>
+                        </a>
+                    </div>
+                </li>
+                <li class="episodeList" data-cast-name="tbs eFM  The Scoop" data-episode-title="0729 PEOPLE ( #한국을빛내는해외무용스타 #이선아 #contemporarydancer #dancecritic )" data-episode-srl="13690729" data-play-uri="http://file-ex.ssenhosting.com/data1/tbsadm/scoop0729.mp3" data-item-type="audio/mpeg" data-adult="false">
+                    <div class="bx_align btn_play" data-format="mp3">
+                        <a href="#" class="bx_img btn_play">
+                            <img src="https://image.podty.me/unsafe/100x100/dimg.podbbang.com/podbbang/1773641.jpg?202031" alt="0729 PEOPLE ( #한국을빛내는해외무용스타 #이선아 #contemporarydancer #dancecritic )" onload="this.style.display=''" style="display:none">
+                        </a>
+                    </div>
+                    <div class="item_info">
+                        <a href="https://m.podty.me/episode/13690729" class="bx_tit">
+                            <em class="tit" data-episode-name="0729 PEOPLE ( #한국을빛내는해외무용스타 #이선아 #contemporarydancer #dancecritic )">0729 PEOPLE ( #한국을빛내는해외무용스타 #이선아 #contemporarydancer #dancecritic )</em>
+                            <span class="tit_dsc">tbs eFM  The Scoop</span>
+                        </a>
+                    </div>
+                </li>
+                <li class="episodeList" data-cast-name="놀고놀" data-episode-title="28화 2부 학원물 - 선암여고 탐정단" data-episode-srl="13692600" data-play-uri="https://cdn-cf.podty.me/meta/episode_audio/95908/179732_1596040437902.mp3" data-item-type="audio/mpeg" data-adult="false">
+                    <div class="bx_align btn_play" data-format="mp3">
+                        <a href="#" class="bx_img btn_play">
+                            <img src="https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/95908/original/1517456743068.jpg" alt="28화 2부 학원물 - 선암여고 탐정단" onload="this.style.display=''" style="display:none">
+                        </a>
+                    </div>
+                    <div class="item_info">
+                        <a href="https://m.podty.me/episode/13692600" class="bx_tit">
+                            <em class="tit" data-episode-name="28화 2부 학원물 - 선암여고 탐정단">28화 2부 학원물 - 선암여고 탐정단</em>
+                            <span class="tit_dsc">놀고놀</span>
+                        </a>
+                    </div>
+                </li>
+                <li class="episodeList" data-cast-name="책읽어주는 남자사람" data-episode-title="&quot;당신거기있어줄래요&quot; 스물한번째 시간" data-episode-srl="13692603" data-play-uri="https://cdn-cf.podty.me/meta/episode_audio/100071567/204747_1596045224495.mp3" data-item-type="audio/mpeg" data-adult="false">
+                    <div class="bx_align btn_play" data-format="mp3">
+                        <a href="#" class="bx_img btn_play">
+                            <img src="https://image.podty.me/unsafe/100x100/cdn-cf.podty.me/image/cast_image/100071567/original/100071567_1588495107330.jpg" alt="&quot;당신거기있어줄래요&quot; 스물한번째 시간" onload="this.style.display=''" style="display:none">
+                        </a>
+                    </div>
+                    <div class="item_info">
+                        <a href="https://m.podty.me/episode/13692603" class="bx_tit">
+                            <em class="tit" data-episode-name="&quot;당신거기있어줄래요&quot; 스물한번째 시간">&quot;당신거기있어줄래요&quot; 스물한번째 시간</em>
+                            <span class="tit_dsc">책읽어주는 남자사람</span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <script>
+        var mousedowning = false;
+        var sliding = false;
+
+        function initBanners() {
+            var $rollingBanners = $('#slider').lightSlider({
+                item: 1,
+                auto: true,
+                loop: true,
+                pause: 3000,
+                controls: false,
+                slideMargin: 0,
+                pauseOnHover : true,
+                speed: 400,
+                onSliderLoad: function() {
+                    $rollingBanners.removeClass('cS-hidden');
+
+                    var $links = $rollingBanners.find('a');
+                    $links.off('click').on('click', onClickBanner);
+
+                    $links.mousedown(function() {
+                        mousedowning = true;
+                    });
+
+                    $links.mouseup(function() {
+                        if (!sliding)
+                            $links.off('click').on('click', onClickBanner);
+
+                        mousedowning = false;
+                    });
+
+                    $links.mousemove(function() {
+                        if (mousedowning) {
+                            $links.off('click').on('click', offClickBannerToDoNothing);
+                            sliding = true;
+                        } else
+                            sliding = false;
+                    });
+
+                    $('.lSPager').hide();
+                },
+                onAfterSlide: function() {
+                    $rollingBanners.find('a').off('click').on('click', onClickBanner);
+                    sliding = false;
+                }
+            });
+        }
+
+        function offClickBannerToDoNothing(e) {
+            e.preventDefault();
+        }
+
+        function onClickBanner(e) {
+            e.preventDefault();
+
+            var $link = $(e.target).closest('a');
+            podty.pjax.go($link.attr('href'), $link);
+
+            gaSendEvent('홈-배너', '배너', $link.data('title'));
+        }
+
+        function popupCategories() {
+            $('body').css('visibility', 'hidden');
+            $('.ly_category').show().css('visibility', 'visible');
+            bodyScrollLock.disableBodyScroll($('#categoriesPopup .pop_contents')[0]);
+        }
+
+        $(document).ready(function() {
+            podtyPlayer.setPlayButtons(['.episodeList .bx_dummy', '.episodeList .bx_align', '.area_banner button'], 'index');
+
+            initBanners();
+            goToApp();
+        });
+    </script>
+
+        <div id="categoriesPopup" class="ly_pop_wrap ly_category" style="display:none">
+            <div class="pop_contents">
+                <div class="group_item">
+                    <div class="tit_info">
+                        <strong class="tit_txt">카테고리</strong>
+                        <span class="dsc">선택한 카테고리로 이동</span>
+                    </div>
+                </div>
+                <div class="bx_contents">
+                    <ul class="lst_category">
+                        <li><a href="https://m.podty.me/chart/daily?catId=1" onclick="clickCategory(event);">정치&시사</a></li>
+                        <li><a href="https://m.podty.me/chart/daily?catId=2" onclick="clickCategory(event);">문화&예술</a></li>
+                        <li><a href="https://m.podty.me/chart/daily?catId=3" onclick="clickCategory(event);">경제</a></li>
+                        <li><a href="https://m.podty.me/chart/daily?catId=5" onclick="clickCategory(event);">코미디</a></li>
+                        <li><a href="https://m.podty.me/chart/daily?catId=4" onclick="clickCategory(event);">직업&자기개발</a></li>
+                        <li><a href="https://m.podty.me/chart/daily?catId=7" onclick="clickCategory(event);">외국어</a></li>
+                        <li><a href="https://m.podty.me/chart/daily?catId=6" onclick="clickCategory(event);">교육</a></li>
+                        <li><a href="https://m.podty.me/chart/daily?catId=9" onclick="clickCategory(event);">취미&일상</a></li>
+                        <li><a href="https://m.podty.me/chart/daily?catId=14" onclick="clickCategory(event);">음악</a></li>
+                        <li><a href="https://m.podty.me/chart/daily?catId=8" onclick="clickCategory(event);">IT&과학</a></li>
+                        <li><a href="https://m.podty.me/chart/daily?catId=15" onclick="clickCategory(event);">육아&가정</a></li>
+                        <li><a href="https://m.podty.me/chart/daily?catId=11" onclick="clickCategory(event);">건강&의학</a></li>
+                        <li><a href="https://m.podty.me/chart/daily?catId=12" onclick="clickCategory(event);">종교</a></li>
+                        <li><a href="https://m.podty.me/chart/daily?catId=13" onclick="clickCategory(event);">스포츠</a></li>
+                        <li><a href="https://m.podty.me/chart/daily?catId=16" onclick="clickCategory(event);">성&19금</a></li>
+                    </ul>
+                </div>
+                <button type="button" class="btn_close" onclick="closeCategory();"><span class="sp">닫기</span></button>
+            </div>
+        </div>
+<script>
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+
+	gaSendEvent = function(eventCategory, eventAction, eventLabel) {
+
+		eventCategory = eventCategory || "";
+		eventAction = eventAction || "";
+		eventLabel = eventLabel || "";
+
+		if(eventCategory == "" || eventAction == ""){
+			return;
+		}
+
+		if(eventLabel == "") {
+			ga('send', 'event', {
+				eventCategory : eventCategory,
+				eventAction : eventAction
+			});
+		}else{
+			ga('send', 'event', {
+				eventCategory : eventCategory,
+				eventAction : eventAction,
+				eventLabel : eventLabel
+			});
+		}
+	};
+
+	$(document).ready(function() {
+		setTimeout(function() {
+
+			ga('create', 'UA-125890633-1', 'auto');
+			// ~ 페이지뷰
+			var page = location.pathname;
+
+			if (page.length > 1 && page.substring(0, 2) == '/m')
+			    page = page.substr(2);
+			if (!page)
+			    page = '/';
+
+            var pageTitle;
+			if (page == '/' || page == '/index')
+				pageTitle = '메인 - 페이지';
+			else if (page == '/intro')
+				pageTitle = '메인 - 팟티 소개';
+			else if (page == '/choice/list')
+				pageTitle = '팟티초이스 상세';
+			else if (page == '/chart/podty/daily')
+				pageTitle = '팟티 차트 상세';
+			else if (page == '/chart/daily')
+				pageTitle = '카테고리 차트 상세';
+			else if (page == '/new/episodes')
+				pageTitle = '새로운 에피소드 상세';
+			else if (page == '/new/episodes')
+				pageTitle = '새로운 에피소드 상세';
+			else if (page == '/search/total')
+				pageTitle = '검색 결과 - 통합';
+			else if (page == '/search/cast')
+				pageTitle = '검색 결과 - 방송';
+			else if (page == '/search/episode')
+				pageTitle = '검색 결과 - 에피소드';
+            else if (/\/episode\/\d+$/.test(page))
+                pageTitle = '에피소드 페이지';
+            else if (/\/cast\/\d+$/.test(page))
+                pageTitle = '방송 상세';
+            else if (page == '/popup/kbs/2019')
+                pageTitle = '이벤트 페이지 - 팝업 - KBS 2019';
+            else if (page == '/popup/kbs/2019/detail')
+                pageTitle = '이벤트 페이지 - 상세 - KBS 2019 - 모바일 웹';
+
+            if (pageTitle)
+				ga('send', 'pageview', pageTitle);
+			else
+                ga('send', 'pageview');
+
+            var $container = $('body > .wrap');
+            var $header = $container.find('> .header');
+            $header.find('.logo').off('click').on('click', function() {
+                gaSendEvent('헤더', 'BI 버튼');
+            });
+            $header.find('.top_area .btn_search').off('click').on('click', function() {
+                gaSendEvent('헤더', '검색 버튼');
+            });
+
+            var $appBanner = $container.find('> .bx_appbanner2');
+            $appBanner.find('.btn_link').off('click').on('click', function() {
+                gaSendEvent('앱 설치 유도 배너 ', '앱으로 보기');
+            });
+
+            var $footer = $container.find('> .footer');
+            $footer.find('.lst_link a:eq(0)').off('click').on('click', function() {
+                gaSendEvent('footer', '회사소개');
+            });
+            $footer.find('.lst_link a:eq(1)').off('click').on('click', function() {
+                gaSendEvent('footer', '이용약관');
+            });
+            $footer.find('.lst_link a:eq(2)').off('click').on('click', function() {
+                gaSendEvent('footer', '개인정보취급방침');
+            });
+            $footer.find('.btn_link').off('click').on('click', function() {
+                gaSendEvent('footer', 'PC버전');
+            });
+
+            // ~ Home
+            $container = $('#pjax-container > main');
+            var $podtyChoice = $container.find('.podty_choice');
+            $podtyChoice.find('> .lst_item .bx_img').on('click', function() {
+                var $link = $(this);
+                var eventLabel;
+                var format = $link.data('format');
+                if (format == 'mp3')
+                    eventLabel = 'AOD';
+                else if (format == 'vod')
+                    eventLabel = 'VOD';
+                else if (format == 'pdf')
+                    eventLabel = 'PDF';
+
+                var eventAction;
+                if ($link.hasClass('btn_pause') || $link.hasClass('btn_vod') || $link.hasClass('btn_pdf'))
+                    eventAction = '재생';
+                else
+                    eventAction = '일시정지';
+
+                eventLabel += ' - ' + $link.siblings('a').find('.txt').text();
+                gaSendEvent('홈-팟티 초이스', eventAction, eventLabel);
+            });
+            $podtyChoice.find('> .lst_item .item_tit').on('click', function() {
+                var eventLabel;
+                var $link = $(this);
+                var format = $link.closest('li').data('format');
+                if (format == 'mp3')
+                    eventLabel = 'AOD';
+                else if (format == 'vod')
+                    eventLabel = 'VOD';
+                else if (format == 'pdf')
+                    eventLabel = 'PDF';
+
+                eventLabel += ' - ' + $.trim($link.text());
+
+                gaSendEvent('홈-팟티 초이스', '에피소드 명 클릭 - 에피소드 명', eventLabel);
+            });
+            $podtyChoice.find('> .bx_btn .btn_link').on('click', function() {
+                gaSendEvent('홈-팟티 초이스', '전체보기');
+            });
+
+            var $podtyChart = $container.find('.bx_chart:eq(0)');
+            $podtyChart.find('> .tit_info a').click(function() {
+                gaSendEvent('홈-팟티 차트', '전체보기');
+            });
+            $podtyChart.find('> .lst_item2 a .bx_dummy').click(function() {
+                var castName = $(this).siblings('.item_info').find('.tit').text();
+                gaSendEvent('홈-팟티 차트', '방송 이미지 - 방송명', castName);
+            });
+            $podtyChart.find('> .lst_item2 a .item_info').click(function() {
+                var castName = $(this).find('.tit').text();
+                gaSendEvent('홈-팟티 차트', '방송 이름 - 방송명', castName);
+            });
+
+            var $majorCategoryChart = $container.find('.bx_chart:eq(1)');
+            $majorCategoryChart.find('> .tit_info a').click(function() {
+                var categoryName = $(this).siblings('.tit_txt').text();
+                gaSendEvent('홈-카테고리', '큰 카테고리 차트 전체보기', categoryName);
+            });
+            $majorCategoryChart.find('.group_lst_item a').click(function() {
+                var castName = $(this).find('.tit').text();
+                gaSendEvent('홈-카테고리', '큰 카테고리 차트 방송 리스트 - 방송명', castName);
+            });
+
+            var $minorCategoryChart = $container.find('.bx_category');
+            $minorCategoryChart.find('> .lst_category a').click(function() {
+                var categoryName = $(this).text();
+                gaSendEvent('홈-카테고리', '카테고리 선택 - 카테고리명', categoryName);
+            });
+            $minorCategoryChart.find('> .bx_btn a').click(function() {
+                gaSendEvent('홈-카테고리', '카테고리 전체보기');
+            });
+
+            var $newEpisodes = $container.find('.bx_episode');
+            $newEpisodes.find('> .tit_info a').click(function() {
+                gaSendEvent('홈-새로운 에피소드', '전체보기');
+            });
+            $newEpisodes.find('> .lst_item3 .bx_img').click(function() {
+                var eventAction;
+                var $link = $(this);
+                if ($link.hasClass('btn_pause') || $link.hasClass('btn_vod') || $link.hasClass('btn_pdf'))
+                    eventAction = '재생 - ';
+                else
+                    eventAction = '일시정지 - ';
+
+                eventAction += '타입 - 에피소드명';
+
+                var type;
+                var format = $link.data('format');
+                if (format == 'mp3')
+                    type = 'AOD';
+                else if (format == 'vod')
+                    type = 'VOD';
+                else if (format == 'pdf')
+                    type = 'PDF';
+
+                var episodeName = $link.closest('li').find('.tit').text();
+                var eventLabel = type + ' - ' + episodeName;
+
+                gaSendEvent('홈-새로운 에피소드', eventAction, eventLabel);
+            });
+
+            $newEpisodes.find('> .lst_item3 .bx_tit').click(function() {
+                var type;
+                var format = $(this).closest('li').find('.bx_img').data('format');
+                if (format == 'mp3')
+                    type = 'AOD';
+                else if (format == 'vod')
+                    type = 'VOD';
+                else if (format == 'pdf')
+                    type = 'PDF';
+
+                var episodeName = $(this).find('.tit').text();
+                var eventLabel = type + ' - ' + episodeName;
+
+                gaSendEvent('홈-새로운 에피소드', '에피소드명 클릭 - 에피소드명', eventLabel);
+            });
+
+            $newEpisodes.find('.area_banner .bx_banner').click(function() {
+                var type;
+                var format = $(this).data('format');
+                if (format == 'mp3')
+                    type = 'AOD';
+                else if (format == 'vod')
+                    type = 'VOD';
+                else if (format == 'pdf')
+                    type = 'PDF';
+
+                var episodeName = $(this).find('.tit').text();
+                var eventLabel = type + ' - ' + episodeName;
+
+                gaSendEvent('홈-새로운 에피소드 초이스', '에피소드명 클릭', eventLabel);
+            });
+            $newEpisodes.find('.area_banner button').click(function() {
+                var eventAction;
+                var $button = $(this);
+                if ($button.hasClass('btn_pause') || $button.hasClass('btn_vod') || $button.hasClass('btn_pdf'))
+                    eventAction = '재생';
+                else
+                    eventAction = '일시정지';
+
+                var type;
+                var format = $(this).data('format');
+                if (format == 'mp3')
+                    type = 'AOD';
+                else if (format == 'vod')
+                    type = 'VOD';
+                else if (format == 'pdf')
+                    type = 'PDF';
+
+                var episodeName = $button.siblings('.bx_banner').find('.tit').text();
+                var eventLabel = type + ' - ' + episodeName;
+
+                gaSendEvent('홈-새로운 에피소드 초이스', eventAction, eventLabel);
+            });
+
+            // ~ Podty choice
+            var $podtyChoice = $('#podtyChoice');
+            $podtyChoice.find('.lst_item3 .bx_img').click(function() {
+                var eventLabel;
+                var $link = $(this);
+                var format = $link.data('format');
+                if (format == 'mp3')
+                    eventLabel = 'AOD';
+                else if (format == 'vod')
+                    eventLabel = 'VOD';
+                else if (format == 'pdf')
+                    eventLabel = 'PDF';
+
+                var eventAction;
+                if ($link.hasClass('btn_pause') || $link.hasClass('btn_vod') || $link.hasClass('btn_pdf'))
+                    eventAction = '재생';
+                else
+                    eventAction = '일시정지';
+
+                var episodeName = $link.closest('li').find('.item_info .tit').text();
+                eventLabel += ' - ' + episodeName;
+
+                gaSendEvent('팟티초이스', eventAction, eventLabel);
+            });
+            $podtyChoice.find('.lst_item3 .bx_tit').click(function() {
+                var eventLabel;
+                var $link = $(this);
+                var format = $link.closest('li').find('.bx_img').data('format');
+                if (format == 'mp3')
+                    eventLabel = 'AOD';
+                else if (format == 'vod')
+                    eventLabel = 'VOD';
+                else if (format == 'pdf')
+                    eventLabel = 'PDF';
+
+                var episodeName = $link.closest('li').find('.item_info .tit').text();
+                eventLabel += ' - ' + episodeName;
+
+                gaSendEvent('팟티초이스', '에피소드 명 클릭', eventLabel);
+            });
+
+            // ~ Podty chart
+            var $podtyChart = $('#podtyChart');
+            $podtyChart.find('.lst_item5 .bx_img').click(function() {
+                var castName = $(this).closest('a').find('.tit').text();
+                gaSendEvent('팟티 차트 상세', '방송 이미지', castName);
+            });
+            $podtyChart.find('.lst_item5 .tit').click(function() {
+                var castName = $(this).text();
+                gaSendEvent('팟티 차트 상세', '방송명', castName);
+            });
+
+            // ~ Category chart
+            var $categoryChart = $('#categoryChart');
+            $categoryChart.find('.btn_link').click(function() {
+                gaSendEvent('카테고리 선택 버튼');
+            });
+            $categoryChart.find('.lst_item5 .bx_img').click(function() {
+                var castName = $(this).closest('a').find('.tit').text();
+                gaSendEvent('카테고리', '방송 이미지', castName);
+            });
+            $categoryChart.find('.lst_item5 .tit').click(function() {
+                var castName = $(this).text();
+                gaSendEvent('카테고리', '방송명', castName);
+            });
+
+            // ~ New episodes
+            var $newEpisodes = $('#newEpisodes');
+            $newEpisodes.find('.lst_item3 .bx_img').click(function() {
+                var eventLabel;
+                var $link = $(this);
+                var format = $link.closest('div').data('format');
+                if (format == 'mp3')
+                    eventLabel = 'AOD';
+                else if (format == 'vod')
+                    eventLabel = 'VOD';
+                else if (format == 'pdf')
+                    eventLabel = 'PDF';
+
+                var eventAction;
+                if ($link.hasClass('btn_pause') || $link.hasClass('btn_vod') || $link.hasClass('btn_pdf'))
+                    eventAction = '재생';
+                else
+                    eventAction = '일시정지';
+
+                var episodeName = $link.closest('li').find('.item_info .tit').text();
+                eventLabel += ' - ' + episodeName;
+
+                gaSendEvent('새로운 에피소드 상세', eventAction, eventLabel);
+            });
+            $newEpisodes.find('.lst_item3 .bx_tit').click(function() {
+                var eventLabel;
+                var $link = $(this);
+                var format = $link.closest('li').find('.episodeList').data('format');
+                if (format == 'mp3')
+                    eventLabel = 'AOD';
+                else if (format == 'vod')
+                    eventLabel = 'VOD';
+                else if (format == 'pdf')
+                    eventLabel = 'PDF';
+
+                var episodeName = $link.closest('li').find('.item_info .tit').text();
+                eventLabel += ' - ' + episodeName;
+
+                gaSendEvent('새로운 에피소드 상세', '에피소드 명 클릭', eventLabel);
+            });
+
+            // ~ Search
+            $header.find('.search_bx .btn_search').click(function() {
+                var searchWord = $(this).siblings('.inp_area').find('.inp').val();
+                if (searchWord)
+                    gaSendEvent('검색 창', '검색 버튼', searchWord);
+            });
+            $header.find('.connect_bx').on('click', 'a', function() {
+                var searchWord = $(this).text();
+                if (searchWord)
+                    gaSendEvent('검색 창', '자동완성', searchWord);
+            });
+
+            var $searchResult = $('#searchResult');
+            var searchTabIdx;
+            $.each($searchResult.find('.tab_area li'), function(i, li) {
+                if ($(li).hasClass('on'))
+                    searchTabIdx = i;
+
+                if (i == 1) {
+                    $(this).click(function() {
+                        gaSendEvent('검색 결과 - 방송', '방송 탭 클릭');
+                    });
+                }
+                else if (i == 2) {
+                    $(this).click(function() {
+                        gaSendEvent('검색 결과 - 에피소드', '에피소드 탭 클릭');
+                    });
+                }
+            });
+
+            var $searchResult1 = $searchResult.find('.group_item:eq(0)');
+            $searchResult1.find('.cast_list .bx_img').click(function() {
+                var eventCategory = '검색 결과 - ';
+                var eventAction;
+
+                if (searchTabIdx == 0) {
+                    eventCategory += '통합';
+                    eventAction = '방송 - 방송 이미지'
+                } else if (searchTabIdx == 1) {
+                    eventCategory += '방송';
+                    eventAction = '방송 이미지'
+                }
+
+                var castName = $(this).closest('a').find('.tit').text();
+                gaSendEvent(eventCategory, eventAction, castName);
+            });
+            $searchResult1.find('.episode_list .bx_img').click(function() {
+                var eventAction;
+                var $link = $(this);
+                if ($link.hasClass('btn_play'))
+                    eventAction = '일시정지';
+                else if ($link.hasClass('btn_pause'))
+                    eventAction = '재생';
+
+                var eventLabel;
+                var format = $link.closest('li').find('.bx_img').data('format');
+                if (format == 'mp3')
+                    eventLabel = 'AOD';
+                else if (format == 'vod')
+                    eventLabel = 'VOD';
+                else if (format == 'pdf')
+                    eventLabel = 'PDF';
+
+                var episodeName = $(this).closest('li').find('.tit').text();
+                eventLabel += ' - ' + episodeName;
+
+                gaSendEvent('검색 결과 - 에피소드', eventAction, eventLabel);
+            });
+
+            $searchResult1.find('.cast_list .tit').click(function() {
+                var castName = $(this).text();
+                gaSendEvent('검색 결과 - 통합', '방송 - 방송명', castName);
+            });
+            $searchResult1.find('.episode_list .bx_tit').click(function() {
+                var castName = $(this).find('.tit_dsc').text();
+                gaSendEvent('검색 결과 - 에피소드', '방송명', castName);
+            });
+
+            $searchResult1.find('.btn_link').click(function() {
+                gaSendEvent('검색 결과 - 통합', '방송 - 전체보기');
+            });
+
+            var $searchResult2 = $searchResult.find('.group_item:eq(1)');
+            if ($searchResult2.length) {
+                $searchResult2.find('.episode_list .bx_img').click(function() {
+                    var eventLabel;
+                    var $link = $(this);
+                    var format = $link.data('format');
+                    if (format == 'mp3')
+                        eventLabel = 'AOD';
+                    else if (format == 'vod')
+                        eventLabel = 'VOD';
+                    else if (format == 'pdf')
+                        eventLabel = 'PDF';
+
+                    var eventAction = '에피소드 - ';
+                    if ($link.hasClass('btn_play'))
+                        eventAction += '일시정지';
+                    else if ($link.hasClass('btn_pause'))
+                        eventAction += '재생';
+
+                    var episodeName = $link.closest('li').find('.item_info .tit').text();
+                    eventLabel += ' - ' + episodeName;
+
+                    gaSendEvent('검색 결과 - 통합', eventAction, eventLabel);
+                });
+
+                $searchResult2.find('.episode_list .tit').click(function() {
+                    var episodeName = $(this).text();
+                    gaSendEvent('검색 결과 - 통합', '에피소드 - 에피소드명', episodeName);
+                });
+                $searchResult2.find('.btn_link').click(function() {
+                    gaSendEvent('검색 결과 - 통합', '에피소드 - 전체보기');
+                });
+            }
+
+            // ~ Episode detail
+            var $episodeDetail = $('#episodeDetail');
+            $episodeDetail.find('[name="playBtn"]').click(function() {
+                var eventCategory = '에피소드 상세 - ';
+
+                var $button = $(this);
+                var format = $episodeDetail.data('format');
+                var type;
+                if (format == 'mp3')
+                    type = 'AOD';
+                else if (format == 'vod')
+                    type = 'VOD';
+                else if (format == 'pdf')
+                    type = 'PDF';
+
+                eventCategory += type;
+
+                var eventAction;
+                if ($button.hasClass('btn_play'))
+                    eventAction = '일시정지 버튼';
+                else if ($button.hasClass('btn_vod'))
+                    eventAction = 'VOD 버튼';
+                else if ($button.hasClass('btn_pdf'))
+                    eventAction = 'PDF 버튼';
+                else if ($button.hasClass('btn_pause'))
+                    eventAction = '재생버튼';
+
+                var eventLabel = type + ' - ' + $button.data('episode-title');
+
+                gaSendEvent(eventCategory, eventAction, eventLabel);
+            });
+
+            $episodeDetail.find('.btn_link').click(function() {
+                var eventCategory = '에피소드 상세 - ';
+
+                var $link = $(this);
+                var format = $episodeDetail.data('format');
+                var type;
+                if (format == 'mp3')
+                    type = 'AOD';
+                else if (format == 'vod')
+                    type = 'VOD';
+                else if (format == 'pdf')
+                    type = 'PDF';
+
+                eventCategory += type;
+
+                var castName = $link.text();
+
+                gaSendEvent(eventCategory, '방송명 클릭', castName);
+            });
+
+            $episodeDetail.find('.btn_square').click(function() {
+                var eventCategory = '에피소드 상세 - ';
+
+                var $link = $(this);
+                var format = $episodeDetail.data('format');
+                var type;
+                var eventLabel;
+                if (format == 'mp3') {
+                    type = 'AOD';
+                    eventLabel = $link.text();
+                }
+                else if (format == 'vod') {
+                    type = 'VOD';
+                    eventLabel = $episodeDetail.find('> .episode_top .tit').text();
+                }
+                else if (format == 'pdf') {
+                    type = 'PDF';
+                    eventLabel = $episodeDetail.find('> .episode_top .tit').text();
+                }
+
+                eventCategory += type;
+
+                gaSendEvent(eventCategory, '좋아요 버튼', eventLabel);
+            });
+
+            // ~ Cast detail
+            var $castDetail = $('#castDetail');
+            $castDetail.find('.btn_read').click(function() {
+                var castName = $castDetail.find('.tit').text();
+                gaSendEvent('방송 상세', '구독버튼', castName);
+            });
+            var $episodeList = $castDetail.find('.bx_episode .lst_item4');
+            $episodeList.find('.tit_txt').click(function() {
+                var episodeName = $(this).text();
+                gaSendEvent('방송 상세', '에피소드 명', episodeName);
+            });
+            $episodeList.find('button').click(function() {
+                var $button = $(this);
+                var format = $button.data('format');
+
+                var eventAction;
+                if ($button.hasClass('btn_pause') || $button.hasClass('btn_pdf'))
+                    eventAction = '재생';
+                else
+                    eventAction = '일시정지';
+
+                var eventLabel;
+                if (format == 'mp3')
+                    eventLabel = 'AOD';
+                else if (format == 'vod')
+                    eventLabel = 'VOD';
+                else if (format == 'pdf')
+                    eventLabel = 'PDF';
+
+                eventLabel += ' - ' + $button.closest('li').find('.tit_txt').text();
+
+                gaSendEvent('방송 상세', eventAction, eventLabel);
+            });
+		}, 300);
+	});
+</script>    </div>
+
+    <footer class="footer">
+        <a href="javascript:changeViewMobileToPc();" class="btn_link">PC 버전으로 보기</a>
+        <ul class="lst_link">
+            <li><a href="http://corp.afreecatv.com" target="_blank">회사소개</a></li>
+            <li><a href="http://www.afreecatv.com/policy/policy1.html" target="_blank">이용약관</a></li>
+            <li><a href="http://www.afreecatv.com/policy/policy2.html" target="_blank"><em class="txt_weight">개인정보취급방침</em></a></li>
+        </ul>
+        <dl class="info_help">
+            <dt>고객센터 </dt>
+            <dd>(메일: <a href="mailto:podty@afreecatv.com">podty@afreecatv.com</a> 전화번호: <a href="tel:1688-7022">1688-7022</a>)</dd>
+        </dl>
+        <small class="copyright">ⓒ AfreecaTV Corp.</small>
+    </footer>
+</div>
+
+<div class="miniPlayer">
+    <div class="innerContainer">
+        <div class="name">
+            <strong class="play_tit">재생 가능한 에피소드가 없습니다.</strong>
+            <span class="tit_dsc"></span>
+        </div>
+
+        <div class="controls">
+            <button type="button" class="btn prev"><span class="sp">15초 뒤로</span></button>
+                        <button type="button" name="play" class="btn play"><span class="sp">재생</span></button>
+            <button type="button" class="btn next"><span class="sp">15초 앞으로</span></button>
+        </div>
+
+        <div class="seek_area">
+            <time class="time current">0:00:00</time>
+            <div class="seek_bar">
+                <span class="run-track"></span>
+                <span class="buffered-track"></span>
+                <span class="thumb" style="left:0;"></span>
+            </div>
+            <time class="time duration">0:00:00</time>
+        </div>
+    </div>
+</div><style>
+    .modalLayer {position:fixed;top:0;left:0;right:0;bottom:0;background:#000;opacity:0.3;z-index:1009;}
+    .layerAlert {position:absolute;width:300px;border-radius: 12px;box-shadow: 0 1px 5px 0 rgba(0,0,0,0.19);background: #FFFFFF;background:#FFF;z-index:1100;}
+    .layerAlert .msg {box-sizing:border-box;width:100%;padding:33px 10px 34px;font-size:14px;color:#191919;line-height:20px;text-align:center;vertical-align:middle;border-bottom:1px solid #E5E5E5;}
+    .layerAlert .btns {display:table;overflow:hidden;height:50px;width:100%;white-space:nowrap;}
+    .layerAlert .btns .btnCancel {display:table-cell;height:50px;width:50%;font-size:14px;color:#595959;line-height:50px;text-align:center;border-right:1px solid #E5E5E5;}
+    .layerAlert .btns .btnSubmit {display:table-cell;height:50px;width:50%;font-size:14px;color:#5153DE;line-height:50px;text-align:center;}
+    .layerAlert .btns .btnSubmit:only-child {width:100%;}
+    .pAlert {
+        display: none;
+    }
+</style>
+
+<div class="pAlert">
+    <div class="modalLayer"></div>
+    <aside class="layerAlert">
+        <p class="msg"></p>
+        <div class="btns">
+            <button class="btnSubmit" name="buttonOk">확인</button>
+        </div>
+    </aside>
+</div>
+<script>
+    $(document).ajaxSend(function(e, xhr, options) {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        xhr.setRequestHeader(header, token);
+    });
+
+    // 브라우져 체크
+    podCast.util.checkBrowser();
+
+    var pjax = new Pjax({
+        elements: 'a[href]:not(.no-pjax), form[action]', 
+        selectors: ['title', 'meta[name=description]', '#pjax-container'], 
+        cacheBust: false,
+        debug: false
+    });
+
+    (function setAppBanner() {
+        var $appBanner = $('.bx_appbanner2');
+
+        $.get(g_urlM + '/appbanner', function(data) {
+            if (data.code != 0) {
+                alert(data.detail);
+                return;
+            }
+
+            if (!Object.keys(data.result).length)
+                return;
+
+            $appBanner.find('.app_tit').html(data.result.title);
+            $appBanner.find('.tit_dsc').html(data.result.content);
+            $appBanner.show();
+        });
+    })();
+
+    $(document).ready(function() {
+        fixFooter();
+
+        if ($('.inner > .search_bx').find('input').val().length > 0)
+            $(this).find('.btn_remove').css('visibility', 'visible');
+    }); // end of ready
+
+    function setViewMode() {
+        $('.header > .inner .search_bx').hide().removeClass('on').find('.btn_remove').css('visibility', 'hidden');
+        $('.dimmed').hide();
+        $('#top_search').show();
+        $('#inp_search').hide();
+        $('#top_close').hide();
+        $('.wrap').removeClass('view_search');
+        $('.inp_area input.inp').val("");
+        bodyScrollLock.clearAllBodyScrollLocks();
+    }
+
+    function setSearchMode() {
+        $('.header > .inner .search_bx').show();
+        $('#top_search').hide();
+        $('#inp_search').show();
+        $('#top_close').show();
+        $('.inner input.inp').focus();
+    }
+
+    $('.inner input.inp').focus(function() {
+        commonSearchMode();
+        $('.search_bx').addClass('on');
+        insertKeyword($(this).val());
+    });
+
+    function commonSearchMode() {
+        $('.wrap').addClass('view_search');
+        $('.dimmed').show();
+        bodyScrollLock.disableBodyScroll($('.connect_bx')[0]);
+    }
+
+    $(document).on('click', function(e) {
+        if(!$(e.target).hasClass("lst_itm") && $(e.target).parents(".bx_appbanner2").length == 0 && $(e.target).parents(".top_area").length == 0 && $(e.target).parents(".search_bx").length == 0) {
+            $('.inner > .search_bx').removeClass('on')
+        }
+    });
+
+    function insertKeyword(keyword) {
+
+        if(keyword.length > 1){
+            $.post("/search/suggest",
+                    {"keyword" : keyword},
+                    function(data){
+                        if (data.length > 0) {
+                            $(".connect_lst > li").remove();
+                            var addli = '';
+
+                            for (var i = 0; i < data.length && i < 10; i++) {
+                                var value = data[i].toLowerCase();
+                                var keywordIndex = value.indexOf(keyword.toLowerCase());
+                                var line = data[i];
+
+                                if (keywordIndex != -1) {
+                                    line = value.slice(0, keywordIndex) + '<span class="txt_on">' + value.slice(keywordIndex, keywordIndex + keyword.length);
+                                    line += '</span>' + value.slice(keywordIndex + keyword.length);
+                                }
+                                addli += '<li class="lst_itm"><a href="' + g_urlM + '/search/total?keyword=' + encodeURIComponent(podty.string.replaceQuotation(value)) + '">' + line + '</a></li>';
+                            }
+
+                            $(".connect_lst").append(addli);
+                        }
+                    });
+        } else {
+            $(".connect_lst > li").remove();
+        }
+
+        if(keyword.length > 0){
+            $('#inp_remove').css('visibility', 'visible');
+        } else {
+            $('#inp_remove').css('visibility', 'hidden');
+        }
+    }
+
+    function search() {
+        var $input = $('.header > .inner > .search_bx input.inp');
+        var keyword = $input.val();
+        if (keyword.length > 1) {
+            podty.pjax.go(g_urlM + '/search/total?keyword=' + encodeURIComponent(podty.string.replaceQuotation(keyword)));
+            $input.blur();
+
+            $.post(g_urlSecureBase + "/search/click/log",
+                {
+                    "searchType" : 'keyword',
+                    "keyword" : keyword
+                });
+        } else {
+            setTimeout(function () {
+                podty.m.ui.alert("검색어는 최소 2글자 이상 입력해 주세요.");
+            }, 100);
+        }
+    }
+
+    $('.header .connect_lst').on('click', 'a', function(e) {
+        e.preventDefault();
+        $('.search_bx input.inp').val($(e.target)[0].innerText);
+        search();
+    });
+
+    $(document).on('pjax:send', function(e) {
+        // order: send > document ready > complete
+        goToApp();
+    });
+
+    var $layerCategories = $('.ly_category');
+    $(document).on('pjax:complete', function(e) {
+        fixFooter();
+
+        if ($(e.target)[0].URL.indexOf("/search") == -1) {
+            $('#top_close').click();
+            $layerCategories.hide();
+        }
+    });
+
+    function clickCategory(e) {
+        e.preventDefault();
+
+        podty.pjax.go(e.target.href);
+        $layerCategories.hide();
+        $('body').css('visibility', 'visible');
+
+        var categoryName = $(this).text();
+        gaSendEvent('카테고리 선택 팝업 페이지 카테고리 선택', categoryName);
+    }
+
+    function closeCategory () {
+        $('body').css('visibility', 'visible');
+        $('#categoriesPopup').hide().css('visibility', 'hidden');
+        bodyScrollLock.clearAllBodyScrollLocks();
+    };
+
+    function goToApp(path) {
+        // 앱으로 보기 커스텀 스킴
+        $('.wrap').off().on('click', '.bx_appbanner2 a', function (e) {
+            e.preventDefault();
+            podtyPlayer.stop();
+
+            if (!path)
+                path = '/main/home';
+
+        });
+    }
+
+    // 모바일에서 pc버전 보기
+    function changeViewMobileToPc() {
+        var pcLink = podty.uri.changeMobileToPc(location.href);
+        if (location.search.length > 0) {
+            if (location.search.indexOf("view_ver=mobile") < 0) {
+                pcLink += "&view_ver=mobile";
+            }
+        } else {
+            pcLink += "?view_ver=mobile";
+        }
+
+        location.href = pcLink;
+    }
+
+    function fixFooter() {
+        // add .little in footer when contents is smaller than device-height
+        var bx_appbanner = $('.bx_appbanner2')[0];
+        if (!bx_appbanner)
+            return;
+
+        var height = $(window).height() - bx_appbanner.clientHeight - $('.header')[0].clientHeight - $('.footer')[0].clientHeight - $('.miniPlayer')[0].clientHeight;
+
+        if ($('main').height() < height) {
+            $('.footer').addClass("little");
+            $('#pjax-container').css("height", height);
+        } else {
+            $('.footer').removeClass("little");
+            $('#pjax-container').removeAttr('style');
+        }
+    }
+</script>
+
+<script>
+    if (!wcs_add) var wcs_add={};
+    wcs_add["wa"] = "s_cde31afd58d";
+    if (!_nasa) var _nasa={};
+    wcs.inflow();
+    wcs_do(_nasa);
+</script>
+</body>
+</html>

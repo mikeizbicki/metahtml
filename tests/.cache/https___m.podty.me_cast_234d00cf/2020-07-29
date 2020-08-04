@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <!-- https://www.podty.me mobileSpaLayout -->
+	<meta charset="utf-8">
+	<title>팟티 PODTY</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+	<meta name="description" content="아프리카TV 팟티 제공, 국내 최초 무료로 듣고 만드는 팟캐스트 서비스! 세상 모든 이야기를 음성으로 만나보세요.">
+	<meta name="keywords" content="팟캐스트, 팟케스트, 라디오, 뉴스, 어학, 방송, 영어, 학습, 김어준, 주진우, 김용민, 다스뵈이다">
+	<meta name="og:title" content="팟티 PODTY">
+	<meta name="og:type" content="website">
+    <meta name="og:image" content="https://cdn-cf.podty.me/image/common/banner_fb_share.png" />
+	<meta name="og:url" content="https://m.podty.me/cast/">
+	<meta name="og:description" content="아프리카TV 팟티 제공, 국내 최초 무료로 듣고 만드는 팟캐스트 서비스! 세상 모든 이야기를 음성으로 만나보세요.">
+	<meta name="twitter:card" content="summary">
+	<meta id="_csrf" name="_csrf" content="6ef7994f-5ff2-4c10-8c19-3c5af83d5e59">
+	<meta id="_csrf_header" name="_csrf_header" content="X-CSRF-TOKEN">
+    <link rel="stylesheet" href="/resources/css/externalLib.css" type="text/css" />
+    <link rel="stylesheet" href="/resources/css/mobile/podty.css?version=2020073005">
+    <link rel="icon" type="image/png" href="/resources/images/favicon-2x.png" sizes="32x32">
+
+<script src="/resources/js/jquery/jquery-1.11.3.min.js"></script>
+<script src="/resources/js/jquery/jquery-browser-plugin.min.js"></script>
+<script src="/resources/js/jquery/jquery.cookie.min.js"></script>
+<script src="/resources/js/jquery/jquery.blockUI.min.js"></script>
+<script src="/resources/js/jquery/jquery.loading.min.js"></script>
+<script src="/resources/js/jquery/jquery.mousewheel.min.js"></script>
+<script src="/resources/js/jquery/jquery.jscrollpane.min.js"></script>
+<script src="/resources/js/jquery/jquery.dotdotdot.min.js"></script>
+<script src="/resources/js/jquery/jquery.marquee.min.js"></script>
+<script src="/resources/js/jquery/jquery-ui-podty.min.js"></script>
+<script src="/resources/js/jquery/jquery.mCustomScrollbar.min.js"></script>
+<script src="/resources/js/jquery/jquery.ui.touch-punch.min.js"></script>
+<script src="/resources/js/jquery/jQueryRotate.min.js"></script>
+<script src="/resources/js/jquery/jquery.mousestop.min.js"></script>
+<script src="/resources/js/jquery/jquery.fullscreen.min.js"></script>
+
+<script src="/resources/js/bodyScrollLock.min.js"></script>
+
+<script src="/resources/js/moox-pjax/0.2.7/pjax.js"></script>
+
+<script src="/resources/js/moment/2.22.2/moment.min.js"></script>
+
+<script src="/resources/js/podty/cookie/js.cookie.js"></script>
+<script src="/resources/js/podty/podty.js?version=20200714"></script>
+<script src="/resources/js/podty/login.js?version=20200210"></script>
+<script src="/resources/js/podty/podcast.js?version=20190429"></script>
+<script src="/resources/js/podty/app.js?version=20190305"></script>
+<script src="/resources/js/podty-player/mobile/podty.player.js?version=20200114"></script>
+
+<script src="//wcs.naver.net/wcslog.js"></script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<script src="/resources/js/clipboard.min.js"></script>
+<script src="/resources/js/ui/lightslider/lightslider.min.js"></script>
+<script src="/resources/js/ui/input/cleave.min.js"></script>
+
+<script type="application/ld+json">
+{
+ 	"@context": "http://schema.org",
+ 	"@type": "Person",
+ 	"name": "팟티",
+ 	"url": "https://www.podty.me",
+ 	"sameAs": [
+  		"https://itunes.apple.com/kr/app/%ED%8C%9F%ED%8B%B0-podty/id1163690413?mt=8",
+		"https://play.google.com/store/apps/details?id=me.podty.android"
+ 	]
+}
+</script>
+
+<!--[if lt IE 9]>
+	<script type="text/javascript" src="/resources/js/html5/html5shiv.min.js"></script>
+<![endif]-->
+
+<script src="/resources/js/afreecatv/slick-1.8.0.js"></script>
+    <script>
+        g_urlBase = "https://www.podty.me";
+        g_urlSecureBase = "https://www.podty.me";
+        g_urlM = "https://m.podty.me";
+        g_isWebView = false;
+        g_osFamily = "other";
+
+        var podtyPlayer;
+
+        $(document).ready(function() {
+            podtyPlayer = new PodtyPlayer({
+                playType: 'each',
+                selectors: {
+                    episodeList: '.episodeList',
+                    play: '.miniPlayer [name="play"]',
+                    backward: '.miniPlayer .controls .prev',
+                    forward: '.miniPlayer .controls .next',
+                    episodeName: '.miniPlayer .name .play_tit',
+                    castName: '.miniPlayer .name .tit_dsc',
+                    seekBar: '.miniPlayer .seek_area .seek_bar',
+                    progressBar: '.miniPlayer .seek_bar .buffered-track',
+                    progressThumb: '.miniPlayer .seek_bar .thumb',
+                    currentTime: '.miniPlayer .seek_area .current',
+                    remainTime: '.miniPlayer .seek_area .duration'
+                }
+            });
+
+            // if player touch move prevent body scroll
+            var preventBodyScroll = false;
+            $(".miniPlayer").on('touchstart', function (e) {
+                    preventBodyScroll = true;
+            });
+
+            $(".miniPlayer").on('touchmove', function (e) {
+                if (preventBodyScroll)
+                    e.preventDefault();
+            });
+
+            $(".miniPlayer").on('touchend', function () {
+                preventBodyScroll = false;
+            });
+        }); // end of ready
+
+        $(document).on('pjax:success', function() {
+            podtyPlayer.syncCurrPlayingIcon();
+        });
+    </script>
+	
+</head>
+
+<style>
+    .inp::-ms-clear { display: none; }
+</style>
+
+<body>
+<div class="wrap include_footer">
+    <div class="bx_appbanner2" style="display:none">
+        <div class="app_info">
+            <div class="bx_dummy">
+                <strong class="app_tit"></strong>
+                <p class="tit_dsc"></p>
+            </div>
+			<span class="app_ico">
+                <a href="#" class="btn_link" onclick="return false;">
+                    <img src="https://image.toast.com/aaaaafh/podty/mobile/common/app_ico.png" alt="" width="34" height="34">
+                    <span class="sub_txt">앱으로 보기</span>
+                </a>
+			</span>
+        </div>
+    </div>
+
+    <!-- [D] Header -->
+    <div class="header">
+        <div class="inner">
+            <div class="top_area">
+            	<h1 class="logo"><a href="https://m.podty.me" class="sp">PODTY</a></h1>
+                <button type="button" class="btn btn_search" id="top_search" onclick="setSearchMode();"><span class="sp">검색창</span></button>
+                <!-- [D] 닫기버튼 활성화 시 .btn_close (display:block) 처리 필요 -->
+                <button type="button" class="btn btn_close" id="top_close" onclick="setViewMode();" style="display:none">닫기</button>
+            </div>
+            <!-- [D] 검색창 활성화 시
+            1) btn_search 클릭시 search_bx display:block 처리
+            2) 검색창 내 검색어 입력 시 클래스명 on 추가 -->
+            <div class="search_bx">
+                <form action="#" onsubmit="search();return false;">
+                    <fieldset>
+                        <legend>검색영역</legend>
+                        <div class="inp_area">
+                            <input type="text" class="inp" placeholder="검색어를 입력해 주세요" onkeyup="insertKeyword($(this).val())">
+                            <button type="button" class="btn_remove" id="inp_remove" style="visibility:hidden" onclick="$(this).closest('div').find('> input').val('').focus();">
+                                <span class="sp">검색내용 지우기</span>
+                            </button>
+                        </div>
+                        <button type="submit" class="btn_search" id="inp_search">검색</button>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="connect_bx">
+                <ul class="connect_lst">
+                    <!-- [D] 유사 단어 검색 시 span.txt_on 추가 -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="dimmed" style="display:none"></div>
+
+    <div id="pjax-container">
+        <main class="contents sub_error">
+    <div class="bx_align">
+        <p class="error_dsc">
+            <strong class="tit">페이지를 찾을 수 없습니다.</strong>
+            <span class="txt">
+                찾으시려는 페이지의 주소가 잘못 입력되었거나,<br>
+                요청한 페이지의 주소(URL)가 비공개, 변경, 또는<br>
+                삭제되었을 수 있습니다.
+            </span>
+        </p>
+    </div>
+</main>
+
+        <div id="categoriesPopup" class="ly_pop_wrap ly_category" style="display:none">
+        </div>
+<script>
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+
+	gaSendEvent = function(eventCategory, eventAction, eventLabel) {
+
+		eventCategory = eventCategory || "";
+		eventAction = eventAction || "";
+		eventLabel = eventLabel || "";
+
+		if(eventCategory == "" || eventAction == ""){
+			return;
+		}
+
+		if(eventLabel == "") {
+			ga('send', 'event', {
+				eventCategory : eventCategory,
+				eventAction : eventAction
+			});
+		}else{
+			ga('send', 'event', {
+				eventCategory : eventCategory,
+				eventAction : eventAction,
+				eventLabel : eventLabel
+			});
+		}
+	};
+
+	$(document).ready(function() {
+		setTimeout(function() {
+
+			ga('create', 'UA-125890633-1', 'auto');
+			// ~ 페이지뷰
+			var page = location.pathname;
+
+			if (page.length > 1 && page.substring(0, 2) == '/m')
+			    page = page.substr(2);
+			if (!page)
+			    page = '/';
+
+            var pageTitle;
+			if (page == '/' || page == '/index')
+				pageTitle = '메인 - 페이지';
+			else if (page == '/intro')
+				pageTitle = '메인 - 팟티 소개';
+			else if (page == '/choice/list')
+				pageTitle = '팟티초이스 상세';
+			else if (page == '/chart/podty/daily')
+				pageTitle = '팟티 차트 상세';
+			else if (page == '/chart/daily')
+				pageTitle = '카테고리 차트 상세';
+			else if (page == '/new/episodes')
+				pageTitle = '새로운 에피소드 상세';
+			else if (page == '/new/episodes')
+				pageTitle = '새로운 에피소드 상세';
+			else if (page == '/search/total')
+				pageTitle = '검색 결과 - 통합';
+			else if (page == '/search/cast')
+				pageTitle = '검색 결과 - 방송';
+			else if (page == '/search/episode')
+				pageTitle = '검색 결과 - 에피소드';
+            else if (/\/episode\/\d+$/.test(page))
+                pageTitle = '에피소드 페이지';
+            else if (/\/cast\/\d+$/.test(page))
+                pageTitle = '방송 상세';
+            else if (page == '/popup/kbs/2019')
+                pageTitle = '이벤트 페이지 - 팝업 - KBS 2019';
+            else if (page == '/popup/kbs/2019/detail')
+                pageTitle = '이벤트 페이지 - 상세 - KBS 2019 - 모바일 웹';
+
+            if (pageTitle)
+				ga('send', 'pageview', pageTitle);
+			else
+                ga('send', 'pageview');
+
+            var $container = $('body > .wrap');
+            var $header = $container.find('> .header');
+            $header.find('.logo').off('click').on('click', function() {
+                gaSendEvent('헤더', 'BI 버튼');
+            });
+            $header.find('.top_area .btn_search').off('click').on('click', function() {
+                gaSendEvent('헤더', '검색 버튼');
+            });
+
+            var $appBanner = $container.find('> .bx_appbanner2');
+            $appBanner.find('.btn_link').off('click').on('click', function() {
+                gaSendEvent('앱 설치 유도 배너 ', '앱으로 보기');
+            });
+
+            var $footer = $container.find('> .footer');
+            $footer.find('.lst_link a:eq(0)').off('click').on('click', function() {
+                gaSendEvent('footer', '회사소개');
+            });
+            $footer.find('.lst_link a:eq(1)').off('click').on('click', function() {
+                gaSendEvent('footer', '이용약관');
+            });
+            $footer.find('.lst_link a:eq(2)').off('click').on('click', function() {
+                gaSendEvent('footer', '개인정보취급방침');
+            });
+            $footer.find('.btn_link').off('click').on('click', function() {
+                gaSendEvent('footer', 'PC버전');
+            });
+
+            // ~ Home
+            $container = $('#pjax-container > main');
+            var $podtyChoice = $container.find('.podty_choice');
+            $podtyChoice.find('> .lst_item .bx_img').on('click', function() {
+                var $link = $(this);
+                var eventLabel;
+                var format = $link.data('format');
+                if (format == 'mp3')
+                    eventLabel = 'AOD';
+                else if (format == 'vod')
+                    eventLabel = 'VOD';
+                else if (format == 'pdf')
+                    eventLabel = 'PDF';
+
+                var eventAction;
+                if ($link.hasClass('btn_pause') || $link.hasClass('btn_vod') || $link.hasClass('btn_pdf'))
+                    eventAction = '재생';
+                else
+                    eventAction = '일시정지';
+
+                eventLabel += ' - ' + $link.siblings('a').find('.txt').text();
+                gaSendEvent('홈-팟티 초이스', eventAction, eventLabel);
+            });
+            $podtyChoice.find('> .lst_item .item_tit').on('click', function() {
+                var eventLabel;
+                var $link = $(this);
+                var format = $link.closest('li').data('format');
+                if (format == 'mp3')
+                    eventLabel = 'AOD';
+                else if (format == 'vod')
+                    eventLabel = 'VOD';
+                else if (format == 'pdf')
+                    eventLabel = 'PDF';
+
+                eventLabel += ' - ' + $.trim($link.text());
+
+                gaSendEvent('홈-팟티 초이스', '에피소드 명 클릭 - 에피소드 명', eventLabel);
+            });
+            $podtyChoice.find('> .bx_btn .btn_link').on('click', function() {
+                gaSendEvent('홈-팟티 초이스', '전체보기');
+            });
+
+            var $podtyChart = $container.find('.bx_chart:eq(0)');
+            $podtyChart.find('> .tit_info a').click(function() {
+                gaSendEvent('홈-팟티 차트', '전체보기');
+            });
+            $podtyChart.find('> .lst_item2 a .bx_dummy').click(function() {
+                var castName = $(this).siblings('.item_info').find('.tit').text();
+                gaSendEvent('홈-팟티 차트', '방송 이미지 - 방송명', castName);
+            });
+            $podtyChart.find('> .lst_item2 a .item_info').click(function() {
+                var castName = $(this).find('.tit').text();
+                gaSendEvent('홈-팟티 차트', '방송 이름 - 방송명', castName);
+            });
+
+            var $majorCategoryChart = $container.find('.bx_chart:eq(1)');
+            $majorCategoryChart.find('> .tit_info a').click(function() {
+                var categoryName = $(this).siblings('.tit_txt').text();
+                gaSendEvent('홈-카테고리', '큰 카테고리 차트 전체보기', categoryName);
+            });
+            $majorCategoryChart.find('.group_lst_item a').click(function() {
+                var castName = $(this).find('.tit').text();
+                gaSendEvent('홈-카테고리', '큰 카테고리 차트 방송 리스트 - 방송명', castName);
+            });
+
+            var $minorCategoryChart = $container.find('.bx_category');
+            $minorCategoryChart.find('> .lst_category a').click(function() {
+                var categoryName = $(this).text();
+                gaSendEvent('홈-카테고리', '카테고리 선택 - 카테고리명', categoryName);
+            });
+            $minorCategoryChart.find('> .bx_btn a').click(function() {
+                gaSendEvent('홈-카테고리', '카테고리 전체보기');
+            });
+
+            var $newEpisodes = $container.find('.bx_episode');
+            $newEpisodes.find('> .tit_info a').click(function() {
+                gaSendEvent('홈-새로운 에피소드', '전체보기');
+            });
+            $newEpisodes.find('> .lst_item3 .bx_img').click(function() {
+                var eventAction;
+                var $link = $(this);
+                if ($link.hasClass('btn_pause') || $link.hasClass('btn_vod') || $link.hasClass('btn_pdf'))
+                    eventAction = '재생 - ';
+                else
+                    eventAction = '일시정지 - ';
+
+                eventAction += '타입 - 에피소드명';
+
+                var type;
+                var format = $link.data('format');
+                if (format == 'mp3')
+                    type = 'AOD';
+                else if (format == 'vod')
+                    type = 'VOD';
+                else if (format == 'pdf')
+                    type = 'PDF';
+
+                var episodeName = $link.closest('li').find('.tit').text();
+                var eventLabel = type + ' - ' + episodeName;
+
+                gaSendEvent('홈-새로운 에피소드', eventAction, eventLabel);
+            });
+
+            $newEpisodes.find('> .lst_item3 .bx_tit').click(function() {
+                var type;
+                var format = $(this).closest('li').find('.bx_img').data('format');
+                if (format == 'mp3')
+                    type = 'AOD';
+                else if (format == 'vod')
+                    type = 'VOD';
+                else if (format == 'pdf')
+                    type = 'PDF';
+
+                var episodeName = $(this).find('.tit').text();
+                var eventLabel = type + ' - ' + episodeName;
+
+                gaSendEvent('홈-새로운 에피소드', '에피소드명 클릭 - 에피소드명', eventLabel);
+            });
+
+            $newEpisodes.find('.area_banner .bx_banner').click(function() {
+                var type;
+                var format = $(this).data('format');
+                if (format == 'mp3')
+                    type = 'AOD';
+                else if (format == 'vod')
+                    type = 'VOD';
+                else if (format == 'pdf')
+                    type = 'PDF';
+
+                var episodeName = $(this).find('.tit').text();
+                var eventLabel = type + ' - ' + episodeName;
+
+                gaSendEvent('홈-새로운 에피소드 초이스', '에피소드명 클릭', eventLabel);
+            });
+            $newEpisodes.find('.area_banner button').click(function() {
+                var eventAction;
+                var $button = $(this);
+                if ($button.hasClass('btn_pause') || $button.hasClass('btn_vod') || $button.hasClass('btn_pdf'))
+                    eventAction = '재생';
+                else
+                    eventAction = '일시정지';
+
+                var type;
+                var format = $(this).data('format');
+                if (format == 'mp3')
+                    type = 'AOD';
+                else if (format == 'vod')
+                    type = 'VOD';
+                else if (format == 'pdf')
+                    type = 'PDF';
+
+                var episodeName = $button.siblings('.bx_banner').find('.tit').text();
+                var eventLabel = type + ' - ' + episodeName;
+
+                gaSendEvent('홈-새로운 에피소드 초이스', eventAction, eventLabel);
+            });
+
+            // ~ Podty choice
+            var $podtyChoice = $('#podtyChoice');
+            $podtyChoice.find('.lst_item3 .bx_img').click(function() {
+                var eventLabel;
+                var $link = $(this);
+                var format = $link.data('format');
+                if (format == 'mp3')
+                    eventLabel = 'AOD';
+                else if (format == 'vod')
+                    eventLabel = 'VOD';
+                else if (format == 'pdf')
+                    eventLabel = 'PDF';
+
+                var eventAction;
+                if ($link.hasClass('btn_pause') || $link.hasClass('btn_vod') || $link.hasClass('btn_pdf'))
+                    eventAction = '재생';
+                else
+                    eventAction = '일시정지';
+
+                var episodeName = $link.closest('li').find('.item_info .tit').text();
+                eventLabel += ' - ' + episodeName;
+
+                gaSendEvent('팟티초이스', eventAction, eventLabel);
+            });
+            $podtyChoice.find('.lst_item3 .bx_tit').click(function() {
+                var eventLabel;
+                var $link = $(this);
+                var format = $link.closest('li').find('.bx_img').data('format');
+                if (format == 'mp3')
+                    eventLabel = 'AOD';
+                else if (format == 'vod')
+                    eventLabel = 'VOD';
+                else if (format == 'pdf')
+                    eventLabel = 'PDF';
+
+                var episodeName = $link.closest('li').find('.item_info .tit').text();
+                eventLabel += ' - ' + episodeName;
+
+                gaSendEvent('팟티초이스', '에피소드 명 클릭', eventLabel);
+            });
+
+            // ~ Podty chart
+            var $podtyChart = $('#podtyChart');
+            $podtyChart.find('.lst_item5 .bx_img').click(function() {
+                var castName = $(this).closest('a').find('.tit').text();
+                gaSendEvent('팟티 차트 상세', '방송 이미지', castName);
+            });
+            $podtyChart.find('.lst_item5 .tit').click(function() {
+                var castName = $(this).text();
+                gaSendEvent('팟티 차트 상세', '방송명', castName);
+            });
+
+            // ~ Category chart
+            var $categoryChart = $('#categoryChart');
+            $categoryChart.find('.btn_link').click(function() {
+                gaSendEvent('카테고리 선택 버튼');
+            });
+            $categoryChart.find('.lst_item5 .bx_img').click(function() {
+                var castName = $(this).closest('a').find('.tit').text();
+                gaSendEvent('카테고리', '방송 이미지', castName);
+            });
+            $categoryChart.find('.lst_item5 .tit').click(function() {
+                var castName = $(this).text();
+                gaSendEvent('카테고리', '방송명', castName);
+            });
+
+            // ~ New episodes
+            var $newEpisodes = $('#newEpisodes');
+            $newEpisodes.find('.lst_item3 .bx_img').click(function() {
+                var eventLabel;
+                var $link = $(this);
+                var format = $link.closest('div').data('format');
+                if (format == 'mp3')
+                    eventLabel = 'AOD';
+                else if (format == 'vod')
+                    eventLabel = 'VOD';
+                else if (format == 'pdf')
+                    eventLabel = 'PDF';
+
+                var eventAction;
+                if ($link.hasClass('btn_pause') || $link.hasClass('btn_vod') || $link.hasClass('btn_pdf'))
+                    eventAction = '재생';
+                else
+                    eventAction = '일시정지';
+
+                var episodeName = $link.closest('li').find('.item_info .tit').text();
+                eventLabel += ' - ' + episodeName;
+
+                gaSendEvent('새로운 에피소드 상세', eventAction, eventLabel);
+            });
+            $newEpisodes.find('.lst_item3 .bx_tit').click(function() {
+                var eventLabel;
+                var $link = $(this);
+                var format = $link.closest('li').find('.episodeList').data('format');
+                if (format == 'mp3')
+                    eventLabel = 'AOD';
+                else if (format == 'vod')
+                    eventLabel = 'VOD';
+                else if (format == 'pdf')
+                    eventLabel = 'PDF';
+
+                var episodeName = $link.closest('li').find('.item_info .tit').text();
+                eventLabel += ' - ' + episodeName;
+
+                gaSendEvent('새로운 에피소드 상세', '에피소드 명 클릭', eventLabel);
+            });
+
+            // ~ Search
+            $header.find('.search_bx .btn_search').click(function() {
+                var searchWord = $(this).siblings('.inp_area').find('.inp').val();
+                if (searchWord)
+                    gaSendEvent('검색 창', '검색 버튼', searchWord);
+            });
+            $header.find('.connect_bx').on('click', 'a', function() {
+                var searchWord = $(this).text();
+                if (searchWord)
+                    gaSendEvent('검색 창', '자동완성', searchWord);
+            });
+
+            var $searchResult = $('#searchResult');
+            var searchTabIdx;
+            $.each($searchResult.find('.tab_area li'), function(i, li) {
+                if ($(li).hasClass('on'))
+                    searchTabIdx = i;
+
+                if (i == 1) {
+                    $(this).click(function() {
+                        gaSendEvent('검색 결과 - 방송', '방송 탭 클릭');
+                    });
+                }
+                else if (i == 2) {
+                    $(this).click(function() {
+                        gaSendEvent('검색 결과 - 에피소드', '에피소드 탭 클릭');
+                    });
+                }
+            });
+
+            var $searchResult1 = $searchResult.find('.group_item:eq(0)');
+            $searchResult1.find('.cast_list .bx_img').click(function() {
+                var eventCategory = '검색 결과 - ';
+                var eventAction;
+
+                if (searchTabIdx == 0) {
+                    eventCategory += '통합';
+                    eventAction = '방송 - 방송 이미지'
+                } else if (searchTabIdx == 1) {
+                    eventCategory += '방송';
+                    eventAction = '방송 이미지'
+                }
+
+                var castName = $(this).closest('a').find('.tit').text();
+                gaSendEvent(eventCategory, eventAction, castName);
+            });
+            $searchResult1.find('.episode_list .bx_img').click(function() {
+                var eventAction;
+                var $link = $(this);
+                if ($link.hasClass('btn_play'))
+                    eventAction = '일시정지';
+                else if ($link.hasClass('btn_pause'))
+                    eventAction = '재생';
+
+                var eventLabel;
+                var format = $link.closest('li').find('.bx_img').data('format');
+                if (format == 'mp3')
+                    eventLabel = 'AOD';
+                else if (format == 'vod')
+                    eventLabel = 'VOD';
+                else if (format == 'pdf')
+                    eventLabel = 'PDF';
+
+                var episodeName = $(this).closest('li').find('.tit').text();
+                eventLabel += ' - ' + episodeName;
+
+                gaSendEvent('검색 결과 - 에피소드', eventAction, eventLabel);
+            });
+
+            $searchResult1.find('.cast_list .tit').click(function() {
+                var castName = $(this).text();
+                gaSendEvent('검색 결과 - 통합', '방송 - 방송명', castName);
+            });
+            $searchResult1.find('.episode_list .bx_tit').click(function() {
+                var castName = $(this).find('.tit_dsc').text();
+                gaSendEvent('검색 결과 - 에피소드', '방송명', castName);
+            });
+
+            $searchResult1.find('.btn_link').click(function() {
+                gaSendEvent('검색 결과 - 통합', '방송 - 전체보기');
+            });
+
+            var $searchResult2 = $searchResult.find('.group_item:eq(1)');
+            if ($searchResult2.length) {
+                $searchResult2.find('.episode_list .bx_img').click(function() {
+                    var eventLabel;
+                    var $link = $(this);
+                    var format = $link.data('format');
+                    if (format == 'mp3')
+                        eventLabel = 'AOD';
+                    else if (format == 'vod')
+                        eventLabel = 'VOD';
+                    else if (format == 'pdf')
+                        eventLabel = 'PDF';
+
+                    var eventAction = '에피소드 - ';
+                    if ($link.hasClass('btn_play'))
+                        eventAction += '일시정지';
+                    else if ($link.hasClass('btn_pause'))
+                        eventAction += '재생';
+
+                    var episodeName = $link.closest('li').find('.item_info .tit').text();
+                    eventLabel += ' - ' + episodeName;
+
+                    gaSendEvent('검색 결과 - 통합', eventAction, eventLabel);
+                });
+
+                $searchResult2.find('.episode_list .tit').click(function() {
+                    var episodeName = $(this).text();
+                    gaSendEvent('검색 결과 - 통합', '에피소드 - 에피소드명', episodeName);
+                });
+                $searchResult2.find('.btn_link').click(function() {
+                    gaSendEvent('검색 결과 - 통합', '에피소드 - 전체보기');
+                });
+            }
+
+            // ~ Episode detail
+            var $episodeDetail = $('#episodeDetail');
+            $episodeDetail.find('[name="playBtn"]').click(function() {
+                var eventCategory = '에피소드 상세 - ';
+
+                var $button = $(this);
+                var format = $episodeDetail.data('format');
+                var type;
+                if (format == 'mp3')
+                    type = 'AOD';
+                else if (format == 'vod')
+                    type = 'VOD';
+                else if (format == 'pdf')
+                    type = 'PDF';
+
+                eventCategory += type;
+
+                var eventAction;
+                if ($button.hasClass('btn_play'))
+                    eventAction = '일시정지 버튼';
+                else if ($button.hasClass('btn_vod'))
+                    eventAction = 'VOD 버튼';
+                else if ($button.hasClass('btn_pdf'))
+                    eventAction = 'PDF 버튼';
+                else if ($button.hasClass('btn_pause'))
+                    eventAction = '재생버튼';
+
+                var eventLabel = type + ' - ' + $button.data('episode-title');
+
+                gaSendEvent(eventCategory, eventAction, eventLabel);
+            });
+
+            $episodeDetail.find('.btn_link').click(function() {
+                var eventCategory = '에피소드 상세 - ';
+
+                var $link = $(this);
+                var format = $episodeDetail.data('format');
+                var type;
+                if (format == 'mp3')
+                    type = 'AOD';
+                else if (format == 'vod')
+                    type = 'VOD';
+                else if (format == 'pdf')
+                    type = 'PDF';
+
+                eventCategory += type;
+
+                var castName = $link.text();
+
+                gaSendEvent(eventCategory, '방송명 클릭', castName);
+            });
+
+            $episodeDetail.find('.btn_square').click(function() {
+                var eventCategory = '에피소드 상세 - ';
+
+                var $link = $(this);
+                var format = $episodeDetail.data('format');
+                var type;
+                var eventLabel;
+                if (format == 'mp3') {
+                    type = 'AOD';
+                    eventLabel = $link.text();
+                }
+                else if (format == 'vod') {
+                    type = 'VOD';
+                    eventLabel = $episodeDetail.find('> .episode_top .tit').text();
+                }
+                else if (format == 'pdf') {
+                    type = 'PDF';
+                    eventLabel = $episodeDetail.find('> .episode_top .tit').text();
+                }
+
+                eventCategory += type;
+
+                gaSendEvent(eventCategory, '좋아요 버튼', eventLabel);
+            });
+
+            // ~ Cast detail
+            var $castDetail = $('#castDetail');
+            $castDetail.find('.btn_read').click(function() {
+                var castName = $castDetail.find('.tit').text();
+                gaSendEvent('방송 상세', '구독버튼', castName);
+            });
+            var $episodeList = $castDetail.find('.bx_episode .lst_item4');
+            $episodeList.find('.tit_txt').click(function() {
+                var episodeName = $(this).text();
+                gaSendEvent('방송 상세', '에피소드 명', episodeName);
+            });
+            $episodeList.find('button').click(function() {
+                var $button = $(this);
+                var format = $button.data('format');
+
+                var eventAction;
+                if ($button.hasClass('btn_pause') || $button.hasClass('btn_pdf'))
+                    eventAction = '재생';
+                else
+                    eventAction = '일시정지';
+
+                var eventLabel;
+                if (format == 'mp3')
+                    eventLabel = 'AOD';
+                else if (format == 'vod')
+                    eventLabel = 'VOD';
+                else if (format == 'pdf')
+                    eventLabel = 'PDF';
+
+                eventLabel += ' - ' + $button.closest('li').find('.tit_txt').text();
+
+                gaSendEvent('방송 상세', eventAction, eventLabel);
+            });
+		}, 300);
+	});
+</script>    </div>
+
+    <footer class="footer">
+        <a href="javascript:changeViewMobileToPc();" class="btn_link">PC 버전으로 보기</a>
+        <ul class="lst_link">
+            <li><a href="http://corp.afreecatv.com" target="_blank">회사소개</a></li>
+            <li><a href="http://www.afreecatv.com/policy/policy1.html" target="_blank">이용약관</a></li>
+            <li><a href="http://www.afreecatv.com/policy/policy2.html" target="_blank"><em class="txt_weight">개인정보취급방침</em></a></li>
+        </ul>
+        <dl class="info_help">
+            <dt>고객센터 </dt>
+            <dd>(메일: <a href="mailto:podty@afreecatv.com">podty@afreecatv.com</a> 전화번호: <a href="tel:1688-7022">1688-7022</a>)</dd>
+        </dl>
+        <small class="copyright">ⓒ AfreecaTV Corp.</small>
+    </footer>
+</div>
+
+<div class="miniPlayer">
+    <div class="innerContainer">
+        <div class="name">
+            <strong class="play_tit">재생 가능한 에피소드가 없습니다.</strong>
+            <span class="tit_dsc"></span>
+        </div>
+
+        <div class="controls">
+            <button type="button" class="btn prev"><span class="sp">15초 뒤로</span></button>
+                        <button type="button" name="play" class="btn play"><span class="sp">재생</span></button>
+            <button type="button" class="btn next"><span class="sp">15초 앞으로</span></button>
+        </div>
+
+        <div class="seek_area">
+            <time class="time current">0:00:00</time>
+            <div class="seek_bar">
+                <span class="run-track"></span>
+                <span class="buffered-track"></span>
+                <span class="thumb" style="left:0;"></span>
+            </div>
+            <time class="time duration">0:00:00</time>
+        </div>
+    </div>
+</div><style>
+    .modalLayer {position:fixed;top:0;left:0;right:0;bottom:0;background:#000;opacity:0.3;z-index:1009;}
+    .layerAlert {position:absolute;width:300px;border-radius: 12px;box-shadow: 0 1px 5px 0 rgba(0,0,0,0.19);background: #FFFFFF;background:#FFF;z-index:1100;}
+    .layerAlert .msg {box-sizing:border-box;width:100%;padding:33px 10px 34px;font-size:14px;color:#191919;line-height:20px;text-align:center;vertical-align:middle;border-bottom:1px solid #E5E5E5;}
+    .layerAlert .btns {display:table;overflow:hidden;height:50px;width:100%;white-space:nowrap;}
+    .layerAlert .btns .btnCancel {display:table-cell;height:50px;width:50%;font-size:14px;color:#595959;line-height:50px;text-align:center;border-right:1px solid #E5E5E5;}
+    .layerAlert .btns .btnSubmit {display:table-cell;height:50px;width:50%;font-size:14px;color:#5153DE;line-height:50px;text-align:center;}
+    .layerAlert .btns .btnSubmit:only-child {width:100%;}
+    .pAlert {
+        display: none;
+    }
+</style>
+
+<div class="pAlert">
+    <div class="modalLayer"></div>
+    <aside class="layerAlert">
+        <p class="msg"></p>
+        <div class="btns">
+            <button class="btnSubmit" name="buttonOk">확인</button>
+        </div>
+    </aside>
+</div>
+<script>
+    $(document).ajaxSend(function(e, xhr, options) {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        xhr.setRequestHeader(header, token);
+    });
+
+    // 브라우져 체크
+    podCast.util.checkBrowser();
+
+    var pjax = new Pjax({
+        elements: 'a[href]:not(.no-pjax), form[action]', 
+        selectors: ['title', 'meta[name=description]', '#pjax-container'], 
+        cacheBust: false,
+        debug: false
+    });
+
+    (function setAppBanner() {
+        var $appBanner = $('.bx_appbanner2');
+
+        $.get(g_urlM + '/appbanner', function(data) {
+            if (data.code != 0) {
+                alert(data.detail);
+                return;
+            }
+
+            if (!Object.keys(data.result).length)
+                return;
+
+            $appBanner.find('.app_tit').html(data.result.title);
+            $appBanner.find('.tit_dsc').html(data.result.content);
+            $appBanner.show();
+        });
+    })();
+
+    $(document).ready(function() {
+        fixFooter();
+
+        if ($('.inner > .search_bx').find('input').val().length > 0)
+            $(this).find('.btn_remove').css('visibility', 'visible');
+    }); // end of ready
+
+    function setViewMode() {
+        $('.header > .inner .search_bx').hide().removeClass('on').find('.btn_remove').css('visibility', 'hidden');
+        $('.dimmed').hide();
+        $('#top_search').show();
+        $('#inp_search').hide();
+        $('#top_close').hide();
+        $('.wrap').removeClass('view_search');
+        $('.inp_area input.inp').val("");
+        bodyScrollLock.clearAllBodyScrollLocks();
+    }
+
+    function setSearchMode() {
+        $('.header > .inner .search_bx').show();
+        $('#top_search').hide();
+        $('#inp_search').show();
+        $('#top_close').show();
+        $('.inner input.inp').focus();
+    }
+
+    $('.inner input.inp').focus(function() {
+        commonSearchMode();
+        $('.search_bx').addClass('on');
+        insertKeyword($(this).val());
+    });
+
+    function commonSearchMode() {
+        $('.wrap').addClass('view_search');
+        $('.dimmed').show();
+        bodyScrollLock.disableBodyScroll($('.connect_bx')[0]);
+    }
+
+    $(document).on('click', function(e) {
+        if(!$(e.target).hasClass("lst_itm") && $(e.target).parents(".bx_appbanner2").length == 0 && $(e.target).parents(".top_area").length == 0 && $(e.target).parents(".search_bx").length == 0) {
+            $('.inner > .search_bx').removeClass('on')
+        }
+    });
+
+    function insertKeyword(keyword) {
+
+        if(keyword.length > 1){
+            $.post("/search/suggest",
+                    {"keyword" : keyword},
+                    function(data){
+                        if (data.length > 0) {
+                            $(".connect_lst > li").remove();
+                            var addli = '';
+
+                            for (var i = 0; i < data.length && i < 10; i++) {
+                                var value = data[i].toLowerCase();
+                                var keywordIndex = value.indexOf(keyword.toLowerCase());
+                                var line = data[i];
+
+                                if (keywordIndex != -1) {
+                                    line = value.slice(0, keywordIndex) + '<span class="txt_on">' + value.slice(keywordIndex, keywordIndex + keyword.length);
+                                    line += '</span>' + value.slice(keywordIndex + keyword.length);
+                                }
+                                addli += '<li class="lst_itm"><a href="' + g_urlM + '/search/total?keyword=' + encodeURIComponent(podty.string.replaceQuotation(value)) + '">' + line + '</a></li>';
+                            }
+
+                            $(".connect_lst").append(addli);
+                        }
+                    });
+        } else {
+            $(".connect_lst > li").remove();
+        }
+
+        if(keyword.length > 0){
+            $('#inp_remove').css('visibility', 'visible');
+        } else {
+            $('#inp_remove').css('visibility', 'hidden');
+        }
+    }
+
+    function search() {
+        var $input = $('.header > .inner > .search_bx input.inp');
+        var keyword = $input.val();
+        if (keyword.length > 1) {
+            podty.pjax.go(g_urlM + '/search/total?keyword=' + encodeURIComponent(podty.string.replaceQuotation(keyword)));
+            $input.blur();
+
+            $.post(g_urlSecureBase + "/search/click/log",
+                {
+                    "searchType" : 'keyword',
+                    "keyword" : keyword
+                });
+        } else {
+            setTimeout(function () {
+                podty.m.ui.alert("검색어는 최소 2글자 이상 입력해 주세요.");
+            }, 100);
+        }
+    }
+
+    $('.header .connect_lst').on('click', 'a', function(e) {
+        e.preventDefault();
+        $('.search_bx input.inp').val($(e.target)[0].innerText);
+        search();
+    });
+
+    $(document).on('pjax:send', function(e) {
+        // order: send > document ready > complete
+        goToApp();
+    });
+
+    var $layerCategories = $('.ly_category');
+    $(document).on('pjax:complete', function(e) {
+        fixFooter();
+
+        if ($(e.target)[0].URL.indexOf("/search") == -1) {
+            $('#top_close').click();
+            $layerCategories.hide();
+        }
+    });
+
+    function clickCategory(e) {
+        e.preventDefault();
+
+        podty.pjax.go(e.target.href);
+        $layerCategories.hide();
+        $('body').css('visibility', 'visible');
+
+        var categoryName = $(this).text();
+        gaSendEvent('카테고리 선택 팝업 페이지 카테고리 선택', categoryName);
+    }
+
+    function closeCategory () {
+        $('body').css('visibility', 'visible');
+        $('#categoriesPopup').hide().css('visibility', 'hidden');
+        bodyScrollLock.clearAllBodyScrollLocks();
+    };
+
+    function goToApp(path) {
+        // 앱으로 보기 커스텀 스킴
+        $('.wrap').off().on('click', '.bx_appbanner2 a', function (e) {
+            e.preventDefault();
+            podtyPlayer.stop();
+
+            if (!path)
+                path = '/main/home';
+
+        });
+    }
+
+    // 모바일에서 pc버전 보기
+    function changeViewMobileToPc() {
+        var pcLink = podty.uri.changeMobileToPc(location.href);
+        if (location.search.length > 0) {
+            if (location.search.indexOf("view_ver=mobile") < 0) {
+                pcLink += "&view_ver=mobile";
+            }
+        } else {
+            pcLink += "?view_ver=mobile";
+        }
+
+        location.href = pcLink;
+    }
+
+    function fixFooter() {
+        // add .little in footer when contents is smaller than device-height
+        var bx_appbanner = $('.bx_appbanner2')[0];
+        if (!bx_appbanner)
+            return;
+
+        var height = $(window).height() - bx_appbanner.clientHeight - $('.header')[0].clientHeight - $('.footer')[0].clientHeight - $('.miniPlayer')[0].clientHeight;
+
+        if ($('main').height() < height) {
+            $('.footer').addClass("little");
+            $('#pjax-container').css("height", height);
+        } else {
+            $('.footer').removeClass("little");
+            $('#pjax-container').removeAttr('style');
+        }
+    }
+</script>
+
+<script>
+    if (!wcs_add) var wcs_add={};
+    wcs_add["wa"] = "s_cde31afd58d";
+    if (!_nasa) var _nasa={};
+    wcs.inflow();
+    wcs_do(_nasa);
+</script>
+</body>
+</html>
