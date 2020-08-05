@@ -1,78 +1,86 @@
 '''
 '''
 
-from collections import defaultdict
+import importlib
 import lxml
+import lxml.etree
+from urllib.parse import urlparse
+from collections import defaultdict
 
-import orjson
-import ujson
-import simplejson
-json_libs = [orjson,ujson,simplejson]
-
-from . import article_type
-from . import authors
-from . import language
-from . import timestamp
-from . import title
-from . import urls
-from . import content
+import metahtml.content
+import metahtml.adblock
 
 
-def parse_all(html, url, fast=False):
+cxpath_ldjson = lxml.etree.XPath('//script[@type="application/ld+json"]')
 
-    meta_best = defaultdict(lambda: None)
-    meta_all = defaultdict(lambda: None)
+def parse(html, url, fast=False):
 
-    parser = lxml.html.fromstring(html)
+    # parse the raw html using lxml;
+    # lxml fails whenever the html is empty, so we pass it a minimal html document;
+    # this ensures that we will return a valid result 
+    # (it will have no data, but it will be valid schematically)
+    try:
+        doc = lxml.html.fromstring(html)
+    except lxml.etree.ParserError:
+        doc = lxml.html.fromstring('<html></html>')
 
-    # ld+json
-    xpath = '//script[@type="application/ld+json"]'
+    # extract and decode any ld+json elements within the html;
+    # these will be parsed for properties later;
+    # we use multiple json docs since each is able to handle different types of malformed input
+    import orjson
+    import ujson
+    import simplejson
+    json_libs = [orjson,ujson,simplejson]
+
     ldjsons = []
-    for element in parser.xpath(xpath):
+    for element in cxpath_ldjson(doc):
         for lib in json_libs:
             try:
                 ldjsons.append(lib.loads(element.text))
             except Exception as e:
                 # FIXME:
-                # these warning messages should get added into the final json object somehow
+                # these warning messages should get added into the parser.meta somehow
                 print(lib.__name__+': '+"e=",e.__repr__())
 
-    meta_best['url_canonical'], meta_all['url_canonical'] = urls.get_url_canonical(parser, url, fast=fast)
+    # create the parser object
+    import bunch
+    parser = bunch.Bunch()
+    parser.doc = doc
+    parser.html = html
+    parser.ldjsons = ldjsons
+    parser.url = url
+    parser.url_parsed = urlparse(url)
+    parser.meta = defaultdict(lambda: None)
 
-    meta_best['timestamp_published'], meta_all['timestamp_published'] = timestamp.get_timestamp_published(parser, ldjsons, url, fast=fast)
-    meta_best['article_type'], meta_all['article_type'] = article_type.get_article_type(parser, url, meta_best=meta_best, fast=fast)
-    is_article = meta_best['article_type']['article_type'] == 'article'
-    #meta_best['article_type'] = is_article
+    # remove ads
+    metahtml.adblock.rm_ads(parser)
 
-    # FIXME:
-    if len(meta_best['timestamp_published'])>0:
-        meta_best['timestamp_published'] = meta_best['timestamp_published'][0] 
+    # extract the properties
+    def calculate_property(property):
+        module = importlib.import_module('metahtml.property.'+property)
+        parser.meta[property] = module.Extractor.extract(parser)
+
+    calculate_property('timestamp.published')
+    calculate_property('type')
+
+    if parser.meta['type']['best']['value'] == 'article':
+        calculate_property('language')
+        calculate_property('timestamp.modified')
+        # FIXME:
+        #calculate_property('url.canonical')
+        #calculate_property('url.altlang')
+        #calculate_property('author')
+        #calculate_property('title')
+        #calculate_property('description')
+
+        # extract the content;
+        # this function is allowed to arbitrarily modify parser.doc,
+        # and so it must come last
+        metahtml.content.extract(parser)
     else:
-        meta_best['timestamp_published'] = None
-    if not is_article:
-        meta_best['timestamp_published'] = None
-
-    # gather other information
-    if not fast or is_article:
-        meta_best['timestamp_modified'], meta_all['timestamp_modified'] = timestamp.get_timestamp_modified(parser, ldjsons, url, fast=fast)
-        if len(meta_best['timestamp_modified'])>0:
-            meta_best['timestamp_modified'] = meta_best['timestamp_modified'][0] 
-        else:
-            meta_best['timestamp_modified'] = None
-
-        meta_best['lang'], meta_all['lang'] = language.get_language(parser, url, fast=fast)
-        #meta_best['content'], meta_all['content'] = content.get_content(parser, url, html, meta_best, fast=fast)
-
-        meta_best['authors'], meta_all['authors'] = authors.get_authors(parser, url, fast=fast)
-        meta_best['title'], meta_all['title'] = title.get_title(parser, url, fast=fast)
-
-    altlang_urls = urls.get_altlang_urls(parser, url, fast=fast)
-    meta_best['altlang_urls'] = altlang_urls
-    meta_all['altlang_urls'] = altlang_urls
-
-    return meta_best, meta_all
+        parser.meta['timestamp.published'] = None
 
 
-def parse(html, url):
-    meta_best, meta_all = parse_all(html, url, fast=True)
-    return meta_best
+    return parser.meta
+
+

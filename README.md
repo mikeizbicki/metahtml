@@ -120,3 +120,27 @@ Adding support for a new hostname requires taking the following steps.
 Some websites aggregate from other websites, but appear to be their own news source.
 Should we special case these sites?
 Example: https://headtopics.com/es/est-grave-de-salud-kim-jong-un-12557786
+
+## Important links
+
+Schemas:
+https://iptc.org/standards/rnews/
+https://schema.org/Article
+
+Academic:
+https://www.aclweb.org/anthology/2020.wac-1.2/t
+https://ecir2020.org/
+
+Python libraries:
+https://github.com/scrapinghub/extruct
+https://github.com/victormartinez/ferret
+https://www.scrapinghub.com/data-api-news/
+https://www.diffbot.com/products/automatic/article/
+https://lateral.io/docs/article-extractor
+https://extractarticletext.com/
+https://www.octoparse.com/tutorial-7/capture-text-from-a-page
+http://adrien.barbaresi.eu/blog/trafilatura-main-text-content-python.html
+https://pypi.org/project/jusText/ (has lots of links to other libs)
+https://github.com/dalab/web2text
+https://github.com/dragnet-org/dragne
+

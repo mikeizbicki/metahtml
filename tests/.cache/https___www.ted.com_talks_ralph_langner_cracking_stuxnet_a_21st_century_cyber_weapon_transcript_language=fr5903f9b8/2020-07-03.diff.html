@@ -1,0 +1,260 @@
+<style> ins { background-color: #00ff00; }
+del {background-color: #ff0000} </style><div> <p class="page shoji__washi"><ins></ins></p><p class="container"><ins></ins></p><p class="h9"><ins>You have JavaScript disabled</ins></p><ins> For the best experience, please turn JavaScript on.
+</ins><ins><a href="https://enable-javascript.com/">Here's how Link: https://enable-javascript.com/ </a> </ins><p class="
+					d:n
+					f:.8
+					f:1@md
+					m-b:.5
+					t-t:u
+					c:white
+				"><ins>Ralph Langner
+			</ins></p><ins> </ins><p class="
+					d:n
+					f-w:700
+					f:.9
+					f:1@xxl
+					c:white
+				"><ins><span>1,587,391
+					<span>views</span> </span> <span>• 10:40</span> </ins></p><ins> </ins><p class="p-t:.5 cur:p p-b:.4 d:b f-w:700"><ins><span class="c:black">Details</span> <span class=" d:b f-w:400 f:.9 ">About the talk</span> </ins></p><ins> </ins><p><ins>L'idée derrière le ver informatique Stuxnet
+											est en fait très simple.
+											Nous ne voulons pas que l'Iran ait la Bombe.
+											Leur atout majeur pour développer des armes nucléaires
+											est l'usine d'enrichissement d'uranium Natanz.
+											Les boites grises que vous voyez,
+											ce sont des systèmes de contrôle en temps réel.
+											Et si on arrive à compromettre ces systèmes
+											qui contrôlent la vitesse des disques et les valves
+											nous pouvons en fait causer beaucoup de problèmes
+											à la centrifugeuse.
+											Les boites grises ne tournent pas sous Windows ;
+											c'est une technologie complètement différente.
+											Mais si nous parvenons
+											à placer un bon virus Windows
+											dans un portable
+											utilisé par un ingénieur
+											pour configurer cette boite grise,
+											alors on est bon.
+											Et c'est le scénario derrière Stuxnet.
+									</ins></p> <p>Donc nous commençons par un dropper Windows.
+											La charge utile va dans la boite grise,
+											endommage la centrifugeuse,
+											et le programme nucléaire iranien est retardé —
+											mission accomplie.
+											C'est facile, non?
+											Je veux vous dire comment nous avons découvert ça.
+											Quand nous avons commencé nos recherches sur Stuxnet il y a 6 mois,
+											on ignorait complètement le but de la chose.
+											La seule chose qu'on savait
+											est très très complexe dans la partie Windows, la partie du dropper,
+											elle utilisait de multiples vulnérabilités à jour zéro.
+											Et ce dropper semblait vouloir faire quelque chose
+											avec ces boites grises, ces systèmes de contrôle en temps réel.
+											Cela a donc attiré notre attention,
+											et nous avons entrepris un projet de laboratoire
+											dans lequel nous avons infecté notre environnement avec Stuxnet
+											et examiner ce truc.
+											Et puis il s'est passé de très drôles de choses.
+											Stuxnet s'est comporté comme un rat de laboratoire
+											qui n'aimait pas notre fromage —
+											il le reniflait, mais il ne voulait pas le manger.
+											Pour moi, ça n'avait pas de sens.
+											Et après que nous ayons expérimenté avec différents parfums de fromage,
+											je me suis rendu compte, et bien que c'est une attaque dirigée.
+											Elle est complètement dirigée.
+											Le dropper rôde activement
+											dans la boite grise
+											si il trouve une configuration spécifique,
+											et même si le programme même qu'il essaye d'infecter
+											est ouvert sur cette cible.
+											Dans le cas contraire, Stuxnet ne fait rien.
+									</p> <p><ins>Cela a donc vraiment retenu mon attention,
+											et nous avons commencé à travailler là dessus
+											presque en permanence,
+											parce que je pensais, nous ne savons pas quelle est la cible.
+											Elle pourrait être, disons par exemple,
+											une centrale aux Etats-Unis,
+											ou une usine chimique en Allemagne.
+											Il valait donc mieux que nous trouvions rapidement quelle était la cible .
+											Nous avons donc extrait et décompilé
+											le code d'attaque,
+											et nous avons découvert qu'il est structuré en deux bombes numériques —
+											une plus petite et une plus grande.
+											Et nous avons vu aussi qu'elles sont conçues de façon très professionnelle
+											par des gens qui avaient évidemment des informations de l'intérieur.
+											Ils connaissaient tous les détails et les octets
+											qu'ils devaient attaquer.
+											Ils connaissaient sans doute même la pointure de l'administrateur.
+											Ils savent donc tout.
+									</ins></p><ins> </ins><p><ins>Et si vous avez entendu dire que le dropper de Stuxnet
+											est complexe et high-tech,
+											permettez-moi de vous dire ceci ;
+											la charge utile, c'est du très haut niveau.
+											C'est bien au dessus de tout
+											ce que nous avons vu auparavant.
+											Vous voyez ici un échantillon du code d'attaque même.
+											Nous parlons de —
+											environ 15000 lignes de code.
+											Ca ressemble assez à du langage d'assembleur à l'ancienne.
+											Et je veux vous dire comment nous avons été en mesure
+											de comprendre ce code.
+											Donc ce que nous cherchions c'est d'abord les appels de fonctions système,
+											parce que nous savons ce qu'ils font.
+									</ins></p><ins> </ins><p><ins>Et ensuite nous cherchions les minuteurs et les structures de données
+											et nous essayions de les mettre en relation avec le monde réel —
+											avec des cibles potentielles du monde réel.
+											Nous avons donc besoin de théories de cibles
+											que nous pouvons prouver ou réfuter.
+											Pour obtenir ces théories de cibles,
+											nous nous souvenons
+											que c'est vraiment du sabotage hardcore,
+											ce doit être une cible de grande valeur,
+											et c'est le plus vraisemblablement situé en Iran,
+											parce que c'est là que la plupart des infections ont été signalées.
+											On ne trouve pas plusieurs milliers de cibles dans cette zone.
+											Ca se réduit en gros
+											à la centrale nucléaire de Bushehr
+											et à l'usine d'enrichissement d'uranium de Natanz.
+									</ins></p><ins> </ins><p><ins>Alors j'ai dit à mon assistant,
+											" Trouve moi une liste de tous les experts en centrifugeuses et centrales électriques dans notre base de clients."
+											Et je leur ai téléphoné et je les ai sollicités
+											dans un effort d'associer leur expertise
+											à ce que nous avons trouvé dans le code et les données.
+											Et ça a plutôt bien marché.
+											Nous avons donc été en mesure d'associer
+											la petite ogive numérique
+											au contrôle du rotor.
+											Le rotor est cette partie mobile dans la centrifugeuse,
+											cet objet noir que vous voyez.
+											Et si vous manipulez la vitesse de ce rotor,
+											vous êtes en fait capable de craquer votre rotor
+											et finalement faire même exploser la centifugeuse.
+											Ce que nous avons vu aussi
+											c'est que le but de l'attaque
+											était vraiment qu'elle soit lente et progressive —
+											dans un effort évident
+											de rendre les techniciens de maintenance fous,
+											et qu'ils ne soit pas en mesure de comprendre rapidement ce qui se passe.
+									</ins></p><ins> </ins><p><ins>La grande ogive numérique — nous avons essayé
+											en regardant de très près
+											les données et leurs structures.
+											Donc par exemple, le chiffre 164
+											ressort vraiment dans ce code ;
+											on ne peut pas ne pas le voir.
+											J'ai entrepris des recherches dans la littérature scientifique
+											sur la façon dont ces centrifugeuses
+											sont en fait construites à Natanz
+											et j'ai trouvé qu'elles sont structurées
+											en ce qu'on appelle une cascade,
+											et chaque cascade contient 164 centrifugeuses.
+											Cela prend donc tout son sens, ça colle.
+									</ins></p><ins> </ins><p><ins>Et c'est encore mieux ensuite.
+											Ces centrifugeuses en Iran
+											sont subdivisées en 15 stades
+											Et devinez ce qu'on a trouvé dans le code d'attaque?
+											Une structure quasiment identique.
+											Donc là encore, ça colle vraiment bien.
+											Et ça nous a donné une très grande confiance dans ce que nous avions sous les yeux.
+											Ne me faites pas dire ce que je n'ai pas dit, ça ne s'est pas fait si facilement.
+											On a obtenu ces résultats
+											sur plusieurs semaines de travail très dur.
+											Et nous sommes souvent tombés sur des impasses
+											et il a fallu nous en remettre.
+									</ins></p><ins> </ins><p><ins>Mais bon , nous avons donc compris
+											que les deux ogives numériques
+											visaient en fait une seule et même cible,
+											mais sous des angles différents.
+											La petite ogive s'attaque à une cascade,
+											et elle accélère les rotors puis les ralentit,
+											et la grande ogive
+											s'adresse à 6 cascades
+											et elle manipule les valves.
+											Donc dans l'ensemble, nous sommes très confiants
+											d'avoir en fait déterminé quelle est la cible.
+											C'est Natanz, et Natanz seulement.
+											Nous n'avons donc pas à nous inquiéter
+											que d'autres cibles
+											puissent être frappées par Stuxnet.
+									</ins></p><ins> </ins><p><ins>Voici certains des trucs très chouettes que nous avons vu —
+											ça m'a vraiment frappé.
+											Là en bas il y a une boite grise,
+											et en haut vous voyez les centrifugeuses.
+											Et ce que ce truc fait
+											c'est qu'il intercepte les valeurs des input des capteurs —
+											donc par exemple, des capteurs de pression
+											et des capteurs de vibrations —
+											et il fournit du code légitime,
+											qui tourne toujours pendant l'attaque,
+											avec de fausses données d'input.
+											Et en fait, ces fausses données d'input
+											sont en fait préenregistrées dans Stuxnet.
+											Donc c'est comme dans les films hollywoodiens
+											quand pendant le holp-up
+											la caméra de surveillance reçoit des images vidéo préenregistrées.
+											C'est chouette, non?
+									</ins></p><ins> </ins><p><ins>Il est évident que l'idée ici n'est pas seulement
+											de tromper les opérateurs dans la salle de contrôle
+											Elle est en fait plus dangereuse et agressive.
+											L'idée
+											est de contourner un système de sécurité numérique.
+											Nous avons besoin de systèmes de sécurité numériques
+											là où un opérateur humain ne pourrait pas agir assez rapidement.
+											Donc, par exemple, dans une centrale,
+											quand la grosse turbine à vapeur dépasse la vitesse limite,
+											il vaut ouvrir les vannes de délestage en une milliseconde.
+											Il est évident que ça ne peut pas être fait par un opérateur humain.
+											C'est donc là que nous avons besoin de systèmes de sécurité numériques.
+											Et quand ils sont compromis,
+											alors ça peut vraiment mal tourné.
+											Votre centrale peut exploser.
+											Et ni vos opérateurs ni votre système de sécurité ne s'en apercevront.
+											C'est effrayant.
+									</ins></p><ins> </ins><p><ins>Mais il y a pire.
+											Et c'est très important, ce que je vais dire,
+											Réfléchissez-y.
+											Cette attaque est générique.
+											Elle n'a rien à voir, dans les détails,
+											avec les centrifugeuses,
+											avec l'uranium enrichi.
+											Donc, elle marcherait aussi bien, par exemple,
+											dans une centrale
+											ou dans une usine de construction automobile.
+											Elle est générique.
+											Et vous n'avez pas — en tant qu'attaquant —
+											vous n'avez pas besoin d'introduire la charge utile
+											à l'aide d'une clé USB,
+											comme nous l'avons vu dans le cas de Stuxnet.
+											Vous pourriez aussi employer un ver conventionnel pour le répandre.
+											Simplement le répandre aussi largement que possible.
+											Et si vous le faites,
+											vous vous retrouvez avec
+											une cyber arme de destruction massive.
+											C'est la conséquence
+											à laquelle nous devons faire face.
+											Donc malheureusement,
+											le plus grand nombre de cibles pour de telles attaques
+											n'est pas au Moyen-Orient.
+											C'est en Europe, au Etats-Unis et au Japon.
+											Donc toutes les zones en vert,
+											ce sont les environnements riches en cibles.
+											Nous devons faire face aux conséquences,
+											et nous ferions mieux de commencer à nous y préparer dès maintenant.
+									</ins></p><ins> </ins><p><ins>Merci.
+									</ins></p><ins> </ins><p><ins>(Applaudissements)
+									</ins></p><ins> </ins><p><ins>Chris Anderson : J'ai une question.
+											Ralph, on a beaucoup dit
+											que les gens pensent que le Mossad
+											est la principale entité derrière ça.
+											Est-ce votre opinion?
+									</ins></p><ins> </ins><p><ins>Ralph Langner : Bon, vous voulez vraiment entendre ça?
+											Oui, Bon.
+											Mon opinion, c'est que le Mossad est impliqué,
+											mais que la puissance principale n'est pas Israel.
+											La force principale derrière ça est donc
+											la cyber superpuissance.
+											Il n'y en a qu'une,
+											et ce sont les Etats-Unis —
+											heureusement, heureusement.
+											PArce qu'autrement,
+											nos problèmes seraient encore plus grands.
+									</ins></p><ins> </ins><p><ins>CA : merci de nous avoir terrifiés. Merci Ralph.
+									</ins></p> </div>

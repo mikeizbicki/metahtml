@@ -1,0 +1,475 @@
+<div><p class="page shoji__washi">
+
+
+<p class="container">
+<p class="h9">You have JavaScript disabled</p>
+For the best experience, please turn JavaScript on.
+<a href="https://enable-javascript.com/">Here's how</a>
+</p>
+
+
+ 
+
+ 
+
+	
+		
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+		
+			
+	
+		
+
+			 
+			
+
+				 
+				
+	 
+	 
+	
+		
+			<p class="
+					d:n
+					f:.8
+					f:1@md
+					m-b:.5
+					t-t:u
+					c:white
+				">
+				Ralph Langner
+			</p>
+			<p class="
+					d:n
+					f-w:700
+					f:.9
+					f:1@xxl
+					c:white
+				">
+				<span>
+					1,587,571
+					<span> views</span>
+				</span>
+				<span> &#8226; 10:40</span>
+			</p>
+		
+	
+
+
+
+				 
+				
+					
+						<p class="p-t:.5 cur:p p-b:.4 d:b f-w:700">
+							<span class="c:black">Details</span>
+							<span class=" d:b f-w:400 f:.9 ">About the talk</span>
+						</p>
+					
+				
+
+				 
+				
+					
+
+						 
+						
+							 
+						 
+
+						 
+							
+								 
+
+								
+									<p>
+											Ide di balik worm Stuxnet
+											sebenarnya cukup sederhana.
+											Kita tidak mau Iran punya bom.
+											Aset terbesar mereka dalam pengembangan senjata nuklir
+											adalah fasilitas pengayaan uranium Natanz.
+											Kotak abu-abu yang Anda lihat,
+											ini adalah sistem kendali real time.
+											Kalau kita berhasil masuk ke sistem-sistem ini
+											yang mengendalikan kecepatan motor dan katup,
+											kita benar-benar bisa menciptakan banyak masalah
+											pada sentrifuganya.
+											Kotak abu-abu ini tidak menjalankan perangkat lunak Windows;
+											teknologi yang digunakan sama sekali berbeda.
+											Namun kalau kita berhasil
+											menanamkan virus Windows
+											pada sebuah notebook
+											yang digunakan oleh insinyur pemeliharaan
+											untuk mengatur kotak abu-abu ini,
+											kita bisa ambil alih kendali kotak abu-abu itu.
+											Dan inilah skenario di balik Stuxnet.
+									</p>
+								
+							
+													
+								 
+
+								
+									<p>
+											Jadi kita mulai dengan sebuah virus di Windows.
+											Muatannya akan menjangkiti kotak abu-abu,
+											merusak sentrifuganya,
+											dan program nuklir Iran jadi tertunda &#8212;
+											misi terlaksana.
+											Semudah itu ya?
+											Saya akan beritahukan bagaimana kami mengetahuinya.
+											Ketika kami memulai riset tentang Stuxnet 6 bulan yg lalu,
+											sama sekali tidak ada yang tahu apa tujuan virus ini.
+											Satu-satunya hal yang diketahui
+											adalah virus yang sangat rumit di Windows,
+											memanfaatkan beberapa lubang keamanan yang belum ada penangkalnya.
+											Dan ini tampak ingin melakukan sesuatu
+											pada kotak abu-abu ini, sistem pengendali real time ini,
+											Itu menarik perhatian kami,
+											jadi kami mulai sebuah proyek eksperimental
+											di mana kami jangkiti jaringan kami dengan Stuxnet
+											untuk kemudian kami amati.
+											Tidak lama kemudian beberapa kejadian aneh muncul.
+											Stuxnet berperilaku seperti kelinci percobaan
+											yang tidak suka dengan umpan yang kami berikan &#8212;
+											mengendus, tapi tidak mau memakannya.
+											Tidak masuk akal bagi saya.
+											Dan setelah kami coba dengan berbagai umpan,
+											saya menyadari, serangannya terarah.
+											Benar-benar sangat terarah.
+											Virusnya aktif merajalela
+											pada kotak abu-abu
+											jika konfigurasi yang spesifik ditemukan,
+											dan bahkan bisa memeriksa apa program yang akan dijangkiti
+											jalan pada sistem sasarannya
+											Kalau tidak, Stuxnet tidak melakukan apa-apa.
+									</p>
+								
+							
+													
+								 
+
+								
+									<p>
+											Itu benar-benar meanarik perhatian saya
+											jadi kami mulai mempelajari ini
+											nyaris 24 jam sehari
+											karena saya pikir, yah, kita tidak tahu apa sasarannya.
+											Bisa saja, misalnya,
+											pembangkit listrik AS,
+											atau pabrik kimia di Jerman.
+											Jadi sebaiknya kita cari tahu apa sasarannya secepat mungkin.
+											Lalu kami mengekstrak dan dekompilasi
+											kode penyerangnya,
+											dan kami temukan di dalamnya terdapat dua bom digital &#8212;
+											satu kecil, satu besar.
+											Kami juga dapati mereka direkayasa secara profesional
+											oleh orang-orang yang jelas-jelas tahu seluk-beluk sasarannya.
+											Mereka tahu setiap bit
+											dari sasarannya.
+											Mereka bahkan mungkin tahu ukuran sepatu petugas operatornya.
+											Intinya mereka tahu segalanya.
+									</p>
+								
+							
+													
+								 
+
+								
+									<p>
+											Dan kalau Anda pernah dengar virus Stuxnet
+											itu kompleks dan canggih,
+											saya beri tahu Anda:
+											muatan isinya jauh lebih kompleks dan canggih.
+											Jauh dari segala program
+											yang pernah kami lihat sebelumnya.
+											Berikut bisa Anda lihat potongan kode penyerang yang sebenarnya.
+											Kita sedang membicarakan &#8212;
+											sekitar 15.000-an baris kode.
+											Tampak seperti bahasa assembly yang kuno.
+											Dan saya akan jelaskan bagaimana kami
+											mencari tahu makna kode ini.
+											Yang pertama kami cari adalah panggilan fungsi sistem,
+											karena kami tahu apa kerjanya.
+									</p>
+								
+							
+													
+								 
+
+								
+									<p>
+											Lalu kami cari penghitung waktu dan struktur datanya
+											untuk kemudian mencari hubungan keduanya dengan dunia nyata &#8212;
+											dengan calon sasarannya di dunia nyata.
+											Jadi kami membutuhkan calon sasaran
+											yang bisa kami buktikan cocok tidaknya
+											Dalam menentukan calon tersebut,
+											kami ingat
+											bahwa kode ini jelas untuk mensabotase,
+											jadi sasarannya pasti bernilai tinggi
+											dan hampir pasti lokasinya di Iran,
+											karena di sanalah yang paling banyak terjangkit virus ini.
+											Anda tidak akan menemukan banyak sasaran di daerah tersebut.
+											Kemungkinannya tinggal
+											PLTN Bushehr
+											dan pusat pengayaan Natanz.
+									</p>
+								
+							
+													
+								 
+
+								
+									<p>
+											Jadi saya bilang pada asisten saya,
+											"Buat daftar semua pakar sentrifuga dan pembangkit listrik dari klien kita."
+											Lalu saya telpon mereka dan berkonsultasi
+											sebagai usaha mencari hubungan antara bidang mereka
+											dengan apa yang kami temukan dari kode dan data yang ada.
+											Dan hal itu bekerja cukup baik.
+											Kami jadi bisa menghubungkan
+											hulu ledak digital yang kecil
+											dengan kendali rotor.
+											Rotor adalah bagian yang berputar pada sentrifuga,
+											objek hitam yang Anda lihat.
+											Dan kalau Anda mengubah kecepatannya,
+											Anda bisa rusak rotor ini
+											dan bahkan bisa meledakkan sentrifuganya.
+											Hal lain yang kami temukan
+											dari tujuan serangan ini
+											adalah merusak secara perlahan dan halus &#8212;
+											sebagai usaha untuk
+											membingungkan insinyur pemeliharaan,
+											sehingga mereka tidak menyadari hal ini dengan cepat.
+									</p>
+								
+							
+													
+								 
+
+								
+									<p>
+											Hulu ledak yang besar &#8212; kami temukan titik terang
+											dengan mencermati
+											data dan struktur datanya
+											Jadi misalnya, angka 164
+											sangat dominan dalam program ini
+											cukup mencolok.
+											Saya lakukan riset literatur
+											tentang bagaimana sentrifuga
+											dibangun di Natanz
+											dan menemukan strukturnya
+											yang disebut "cascade"
+											di mana pada tiap "cascade" terpasang 164 sentrifuga.
+											Ini cocok dan masuk akal.
+									</p>
+								
+							
+													
+								 
+
+								
+									<p>
+											Bahkan lebih baik lagi.
+											Sentrifuga-sentrifuga di Iran
+											dibagi menjadi 15 tingkat.
+											Dan coba tebak apa yang kami temukan pada kode penyerangnya?
+											Struktur yang nyaris sama persis.
+											Jadi lagi-lagi, ini sangat cocok.
+											Ini menambah keyakinan kami tentang apa yg kami temukan.
+											Jangan salah, proses sebenarnya tidak seperti dalam acara ini.
+											Temuan-temuan ini didapat
+											dengan kerja keras berminggu-minggu.
+											Tidak jarang juga kami menemui jalan buntu
+											dan harus mengulang dari awal.
+									</p>
+								
+							
+													
+								 
+
+								
+									<p>
+											Singkat cerita, jadi kami simpulkan
+											bahwa kedua hulu ledak digital ini
+											sebenarnya punya sasaran yang sama
+											tapi dari sudut yang berbeda.
+											Hulu ledak yang kecil mengambil alih kendali satu "cascade",
+											dan memperlambat putaran rotornya,
+											sedangkan hulu ledak yang besar
+											mengambil alih kendali 6 "cascade"
+											dan merusak katupnya
+											Jadi secara keseluruhan, kami yakin
+											kami telah berhasil menentukan apa sasarannya
+											Sasarannya Natanz dan hanya Natanz.
+											Jadi kami tidak perlu khawatir
+											dengan sasaran lain
+											yang terjangkit Stuxnet.
+									</p>
+								
+							
+													
+								 
+
+								
+									<p>
+											Berikut adalah hal yang sangat menarik yang kami temukan &#8212;
+											Sungguh-sungguh mengagetkan saya.
+											Di bawah sana adalah kotak abu-abunya,
+											di atasnya Anda bisa lihat sentrifuganya.
+											Apa yang dilakukan virus ini adalah
+											mencegat nilai masukan dari sensor yang ada &#8212;
+											jadi misalnya, dari sensor tekanan
+											dan sensor getaran &#8212;
+											virus ini mengumpankan kode di pihak korban
+											yang jalan terus selama serangan dilakukan
+											dengan data masukan palsu.
+											Dan data masukan yang palsu ini
+											adalah hasil rekaman Stuxnet.
+											Jadi seperti pada film-film Hollywood
+											di mana selama perampokan berlangsung,
+											kamera pengawas diberi umpan hasil rekaman sebelumnya.
+											Keren kan?
+									</p>
+								
+							
+													
+								 
+
+								
+									<p>
+											Idenya tentu saja
+											tidak hanya untuk mengelabui operator di ruang kendali.
+											Tujuannya jauh lebih berbahaya dan agresif.
+											Idenya
+											adalah untuk mengelabui sistem keamanan digital.
+											Sistem keamanan digital dibutuhkan
+											ketika reaksi manusia tidak cukup cepat.
+											Misalnya, pada pembangkit listrik,
+											ketika turbin uap Anda yang besar berputar terlalu cepat,
+											Anda harus membuka katup pelepasan dalam hitungan milidetik.
+											Jelas, ini tidak bisa dilakukan oleh operator manusia.
+											Inilah tugas sistem kemanan digital.
+											Jadi ketika sistem itu teretas,
+											akibatnya bisa terjadi bencana.
+											Pembangkit listrik Anda bisa meledak.
+											Dan ini tanpa disadari oleh petugas atau sistem keamanan yang ada.
+											Ini mengerikan.
+									</p>
+								
+							
+													
+								 
+
+								
+									<p>
+											Tapi ada kemungkinan yang lebih buruk.
+											Dan ini sangat penting, apa yang akan saya sampaikan.
+											Renungkan ini
+											Serangan ini sifatnya generik.
+											Seringan ini tidak harus menyerang, secara khusus,
+											pada sentrifuga,
+											dengan pengayaan uranium.
+											Jadi bisa juga menyerang, misalnya,
+											pembangkit listrik
+											atau pabrik mobil.
+											Serangan ini generik.
+											Dan Anda tidak perlu &#8212; sebagai penyerang &#8212;
+											Anda tidak perlu menyebarkan muatannya
+											dengan USB stick,
+											seperti kita lihat pada kasus Stuxnet
+											Anda bisa menggunakan teknologi worm yang biasa untuk menyebarkannya.
+											Sebar saja seluas mungkin.
+											Kalau sudah begitu,
+											Anda akan mendapatkan
+											senjata cyber perusak massal.
+											Itu konsekuensi
+											yang harus kita hadapi
+											Sayangnya,
+											kebanyakan sasaran untuk serangan seperti itu
+											tidak berada di Timur Tengah.
+											Tapi ada di Amerika Serikat, Eropa dan Jepang.
+											Jadi area yang hijau ini,
+											adalah daerah yang sarat dengan sasaran.
+											Kita harus hadapi konsekuensi ini
+											dan kita sebaiknya siap-siap dari sekarang.
+									</p>
+								
+							
+													
+								 
+
+								
+									<p>
+											Terima kasih.
+									</p>
+								
+							
+													
+								 
+
+								
+									<p>
+											(Tepuk tangan)
+									</p>
+								
+							
+													
+								 
+
+								
+									<p>
+											Chris Anderson: Saya punya pertanyaan.
+											Ralph, ada banyak laporan yang mengatakan
+											bahwa ada dugaan Mossad
+											adalah pelaku di belakang ini semua.
+											Apakah itu pendapat Anda?
+									</p>
+								
+							
+													
+								 
+
+								
+									<p>
+											Ralph Langner: Baiklah, Anda sungguh mau mendengar ini?
+											Baiklah.
+											Menurut saya, Mossad memang terlibat,
+											tapi pemimpin serangannya bukan Israel.
+											Pemimpin serangan di balik itu
+											adalah adikuasa cyber.
+											Hanya ada satu,
+											dan itu adalah Amerika Serikat &#8212;
+											untungnya.
+											Karena kalau tidak,
+											masalah kita akan jadi bertambah besar.
+									</p>
+								
+							
+													
+								 
+
+								
+									<p>
+											CA: Terima kasih telah menakut-nakuti kami. Terima kasih Ralph.
+									</p>
+								
+							
+													
+								 
+
+								
+									</p></div>

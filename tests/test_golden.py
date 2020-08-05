@@ -19,7 +19,8 @@ import pprint
 # the sys import is needed so that we can import from the current project
 import sys
 sys.path.append('.')
-import metahtml.timestamp
+import metahtml.property.language
+import metahtml.property.timestamp.__common__
 
 ################################################################################
 # helper functions
@@ -214,7 +215,7 @@ def insert_golden_tests(urls, overwrite=False, verbose=False, recursively_added_
 
                 # insert row
                 if add_url:
-                    if meta['article_type']['article_type'] == 'article':
+                    if meta['type']['best']['value'] == 'article':
                         is_article = 'TRUE'
                     else:
                         is_article = 'FALSE'
@@ -229,9 +230,9 @@ def insert_golden_tests(urls, overwrite=False, verbose=False, recursively_added_
                         'url' : url,
                         'download_date': date,
                         'is_article' : is_article,
-                        'timestamp_published' : metahtml.timestamp.timestamp2str(meta['timestamp_published']),
-                        'timestamp_modified' : metahtml.timestamp.timestamp2str(meta['timestamp_modified']),
-                        'lang' : metahtml.language.lang2str(meta['lang']),
+                        'timestamp.published' : metahtml.property.timestamp.published.Extractor.result_to_str(meta['timestamp.published']),
+                        'timestamp.modified' : metahtml.property.timestamp.__common__.TimestampExtractor.result_to_str(meta['timestamp.modified']),
+                        'lang' : metahtml.property.language.Extractor.result_to_str(meta['lang']),
                         'title' : metahtml.title.title2str(meta['title']),
                         })
 
@@ -324,16 +325,18 @@ def test_golden(test):
         print('meta=')
         pprint.pprint(meta)
 
+    is_article = meta['type']['best']['value'] == 'article'
     print("test['human_annotator']=",test['human_annotator'])
     print("test['is_article']=",test['is_article'])
-    print("test['timestamp_published']=",test['timestamp_published'],']')
-    print("meta['timestamp_published']=",metahtml.timestamp.timestamp2str(meta['timestamp_published']),']')
-    print("test['timestamp_modified']=",test['timestamp_modified'],']')
-    print("meta['timestamp_modified']=",metahtml.timestamp.timestamp2str(meta['timestamp_modified']),']')
-    print("meta['lang']=",metahtml.language.lang2str(meta['lang']))
-    print("test['lang']=",test['lang'])
+    print("meta['type']=",metahtml.property.type.Extractor.result_to_str(meta['type']))
+    print("is_article=",is_article)
+    print("test['timestamp.published']=",test['timestamp.published'],']')
+    print("meta['timestamp.published']=",metahtml.property.timestamp.__common__.TimestampExtractor.result_to_str(meta['timestamp.published']),']')
+    print("test['timestamp.modified']=",test['timestamp.modified'],']')
+    print("meta['timestamp.modified']=",metahtml.property.timestamp.__common__.TimestampExtractor.result_to_str(meta['timestamp.modified']),']')
+    print("meta['language']=",metahtml.property.language.Extractor.result_to_str(meta['language']))
+    print("test['language']=",test['language'])
 
-    is_article = meta['article_type']['article_type'] == 'article'
     if test['is_article'] == 'TRUE':
         assert is_article
     elif test['is_article'] == 'FALSE':
@@ -341,16 +344,16 @@ def test_golden(test):
     else:
         raise ValueError('invalid is_article column; must be TRUE or FALSE')
 
-    assert ( test['timestamp_published'] is meta['timestamp_published'] or
-             test['timestamp_published'] == metahtml.timestamp.timestamp2str(meta['timestamp_published'])
+    assert ( test['timestamp.published'] is meta['timestamp.published'] or
+             test['timestamp.published'] == metahtml.property.timestamp.__common__.TimestampExtractor.result_to_str(meta['timestamp.published'])
              )
 
-    assert ( test['timestamp_modified'] is meta['timestamp_modified'] or
-             test['timestamp_modified'] == metahtml.timestamp.timestamp2str(meta['timestamp_modified'])
+    assert ( test['timestamp.modified'] is meta['timestamp.modified'] or
+             test['timestamp.modified'] == metahtml.property.timestamp.__common__.TimestampExtractor.result_to_str(meta['timestamp.modified'])
              )
 
-    assert ( meta['lang'] is test['lang'] or 
-             meta['lang']['lang'] == test['lang'] or
+    assert ( metahtml.property.language.Extractor.result_to_str(meta['language']) is test['language'] or 
+             metahtml.property.language.Extractor.result_to_str(meta['language']) == test['language'] or
              not is_article
              )
 
