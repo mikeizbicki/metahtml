@@ -1,0 +1,1355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <meta http-equiv="Content-Script-Type" content="text/javascript">
+                <meta name="description" content="좋은 뉴스, 필요한 뉴스를 빠르고 편리하게 이용하세요!" />
+        <meta property="og:title" content="뉴스줌" />
+        <meta property="og:image" content="https://data.news.zumst.com/snsimage/img_newszum.jpg" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://news.zum.com" />
+        <meta property="og:description" content="좋은 뉴스, 필요한 뉴스를 빠르고 편리하게 이용하세요!" />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:title" content="뉴스줌" />
+        <meta property="twitter:url" content="https://news.zum.com" />
+        <meta property="twitter:image" content="https://data.news.zumst.com/snsimage/img_newszum.jpg" />
+        <meta property="twitter:description" content="좋은 뉴스, 필요한 뉴스를 빠르고 편리하게 이용하세요!" />
+                                            <title>뉴스줌</title>
+    <link rel="stylesheet" type="text/css" href="//news.zumst.com/styles/basic.css?_LM=1595911089000">
+    <link rel="stylesheet" type="text/css" href="//news.zumst.com/styles/newsv6.css?_LM=1595911089000">
+    <link rel="icon" href="//news.zumst.com/favicon.ico?_LM=1595911089000">
+    <script type="text/javascript" src="//news.zumst.com/scripts/thirdParty/jquery-1.8.3.min.js?_LM=1595911089000"></script>
+        <script type="text/javascript" src="//news.zumst.com/scripts/thirdParty/mustache.js?_LM=1595911089000"></script>
+    <script type="text/javascript" src="//news.zumst.com/scripts/thirdParty/json2.min.js?_LM=1595911089000"></script>
+    <script type="text/javascript" src="//news.zumst.com/scripts/common.js?_LM=1595911089000"></script>
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script>
+        document.domain = 'zum.com';
+        window.news = {
+            codeVersion: '6.1.14-RELEASE',
+            mainCategory: 'home',
+            staticDomain: '//news.zumst.com'
+        }
+    </script>
+    <script type='text/javascript'>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+        (function() {
+            var gads = document.createElement('script');
+            gads.async = true;
+            gads.type = 'text/javascript';
+            var useSSL = 'https:' == document.location.protocol;
+            gads.src = (useSSL ? 'https:' : 'http:') +
+                    '//www.googletagservices.com/tag/js/gpt.js';
+            var node = document.getElementsByTagName('script')[0];
+            node.parentNode.insertBefore(gads, node);
+        })();
+    </script>
+    <script type='text/javascript'>
+        googletag.cmd.push(function() {
+            googletag.defineSlot('/10435414/news_right_middle_250x250', [250, 250], 'div-gpt-ad-1354847169772-0').addService(googletag.pubads());
+            googletag.defineSlot('/10435414/news_right_bottom_250x250', [250, 250], 'div-gpt-ad-1354847194908-0').addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+</head>
+<body>
+<div class="skip_navi"><a href="#content" onclick="document.getElementById('content').tabIndex = -1;document.getElementById('content').focus();return false;">본문으로 바로가기</a></div>
+<div id="wrap">
+    
+    <div id="header">
+        <h2 class="blind">상단 메뉴</h2>
+
+                <div class="gnb_wrap" id="gnb_wrap"></div>
+        <script type="text/javascript" src="//pstatic.zum.com/gnb.zum"></script>
+
+                <div id="logo">
+            <h1>
+                <a href="//zum.com/page/go" class="logo" data-pos="news_logo" data-common-cm="zum">
+                    <img src="//news.zumst.com/images/logo_zum_2x.png?_LM=1595911089000" width="68" height="24" alt="zum" />
+                </a>
+
+                <a href="//news.zum.com" class="sub_title" data-pos="news_logo" data-common-cm="news">
+                    <img src="//news.zumst.com/images/img_news_zum_2x.png?_LM=1595911089000" width="64" height="24" alt="뉴스줌" />
+                </a>
+            </h1>
+
+            <div class="search_box">
+                <form id="searchForm" target="_blank">
+                    <fieldset>
+                        <span class="search_box_wrap">
+                            <legend class="blind">검색</legend>
+                            <label for="SearchText" class="blind">검색어 입력</label>
+                            <input type="text" id="SearchText" name="query" class="search_input" title="" size="30" autocomplete="off" />
+                            <input type="hidden" id="method" name="method" value="uni">
+                            <input type="hidden" id="option" name="option" value="accu">
+                            <input type="hidden" id="querymethod" name="qm" value="f_typing.news">
+                            <button type="submit" class="search_submit"><span class="blind">검색</span></button>
+                        </span>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="update">&nbsp;</div>
+        </div>
+    </div>
+
+<div class="wrap_lnb_menu">
+    <div id="menu">
+        <ul class="main">
+            <li class="on">
+                <a href="/" class="tab_1"><span>홈</span></a>
+            </li>
+                            <li>
+                                            <a href="/front?c=06" class="tab_entertainment">
+                            <span>연예</span>
+                        </a>
+                                    </li>
+                            <li>
+                                            <a href="/front?c=05" class="tab_sports">
+                            <span>스포츠</span>
+                        </a>
+                                    </li>
+                            <li>
+                                            <a href="/front?c=01" class="tab_politics">
+                            <span>정치</span>
+                        </a>
+                                    </li>
+                            <li>
+                                            <a href="/front?c=02" class="tab_society">
+                            <span>사회</span>
+                        </a>
+                                    </li>
+                            <li>
+                                            <a href="/front?c=03" class="tab_economy">
+                            <span>경제</span>
+                        </a>
+                                    </li>
+                            <li>
+                                            <a href="/front?c=04" class="tab_international">
+                            <span>국제</span>
+                        </a>
+                                    </li>
+                            <li>
+                                            <a href="/front?c=08" class="tab_it">
+                            <span>IT/과학</span>
+                        </a>
+                                    </li>
+                            <li>
+                                            <a href="/front?c=07" class="tab_culture">
+                            <span>문화</span>
+                        </a>
+                                    </li>
+                            <li>
+                                            <a href="/front?c=09" class="tab_column">
+                            <span>칼럼</span>
+                        </a>
+                                    </li>
+                            <li>
+                                            <a href="/photo" class="tab_photo">
+                            <span>포토</span>
+                        </a>
+                                    </li>
+                    </ul>
+        <ul class="sub">
+            <li><a href="/latest" class="tab_2"><span>최신뉴스</span></a></li>
+            <li class="last"><a href="/issues">이슈뉴스</a></li>
+            <li><a href="/media">언론사별 뉴스</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="wrap_lnb_info">
+    <div id="info">
+        <div class="left">
+                            <div class="date_weather" id="date_weather" style="display:none" >
+                    <span class="date"><strong>07.29</strong>(수)</span>
+                    <span class="weather" id="weather" style="display:none">
+												<a href="http://search.zum.com/search.zum?query=%EB%82%A0%EC%94%A8&qm=g_weather.news&rc=weather&method=uni&option=accu">
+							<span class="area"></span>
+							<span class="temp"></span> °C
+						</a>
+						<span class="icon_weather"></span>
+					</span>
+                </div>
+                                        <span class="kos info_right" id="stock" style="display:none">
+                    <a href="http://search.zum.com/search.zum?query=%EC%A3%BC%EA%B0%80%EC%A7%80%EC%88%98&qm=g_stock.news&rc=stockindex&method=uni&option=accu">
+                        코스피
+                        <span id="kospi">
+                            <span class="num"></span>
+                            <span class="trend up">
+                                <span class="blind"></span>
+                                <span class="point"></span>
+                                <span class="per"></span>
+                            </span>
+                        </span>
+                        코스닥
+                        <span id="kosdaq">
+                            <span class="num"></span>
+                            <span class="trend up">
+                                <span class="blind"></span>
+                                <span class="point"></span>
+                                <span class="per"></span>
+                            </span>
+                        </span>
+                    </a>
+                </span>
+                <span id="breakingNews" class="weekend info_right" style="display:none">
+                    <strong class="title">주요뉴스</strong>
+                    <a href="#"></a>
+                </span>
+                    </div>
+        <div class="search_rank">
+            <span class="blind">실시간 이슈 검색어 순위</span>
+            <div class="rolling_list">
+                <div class="top">
+                    <span class="tit">이슈 검색어</span>
+                    <span class="date">오전 5:43</span>
+                </div>
+                <ol>
+                                            <li><a href="http://search.zum.com/search.zum?method=uni&amp;option=accu&amp;qm=g_real1.news&amp;real1_id=1&amp;query=%EB%AC%B8%EC%9E%AC%EC%9D%B8%EC%9D%84+%ED%8C%8C%EB%A9%B4%ED%95%9C%EB%8B%A4"><span class="num">1</span>문재인을 파면한다</a></li>
+                                            <li><a href="http://search.zum.com/search.zum?method=uni&amp;option=accu&amp;qm=g_real1.news&amp;real1_id=2&amp;query=%EC%82%B4%EC%95%84%EC%9E%88%EB%8B%A4"><span class="num">2</span>살아있다</a></li>
+                                            <li><a href="http://search.zum.com/search.zum?method=uni&amp;option=accu&amp;qm=g_real1.news&amp;real1_id=3&amp;query=%EC%B2%9C%EB%91%A5"><span class="num">3</span>천둥</a></li>
+                                            <li><a href="http://search.zum.com/search.zum?method=uni&amp;option=accu&amp;qm=g_real1.news&amp;real1_id=4&amp;query=%EB%B3%BC%EB%B3%B4+xc90"><span class="num">4</span>볼보 xc90</a></li>
+                                            <li><a href="http://search.zum.com/search.zum?method=uni&amp;option=accu&amp;qm=g_real1.news&amp;real1_id=5&amp;query=%EC%86%A1%EC%9D%80%EC%98%81"><span class="num">5</span>송은영</a></li>
+                                            <li><a href="http://search.zum.com/search.zum?method=uni&amp;option=accu&amp;qm=g_real1.news&amp;real1_id=6&amp;query=%ED%94%84%EB%A6%AC%EC%8A%A4%ED%8A%B8"><span class="num">6</span>프리스트</a></li>
+                                            <li><a href="http://search.zum.com/search.zum?method=uni&amp;option=accu&amp;qm=g_real1.news&amp;real1_id=7&amp;query=%EB%B0%95%EC%A7%80%EC%9B%90"><span class="num">7</span>박지원</a></li>
+                                            <li><a href="http://search.zum.com/search.zum?method=uni&amp;option=accu&amp;qm=g_real1.news&amp;real1_id=8&amp;query=%EA%B0%95%EC%B2%A0%EB%B9%842"><span class="num">8</span>강철비2</a></li>
+                                            <li><a href="http://search.zum.com/search.zum?method=uni&amp;option=accu&amp;qm=g_real1.news&amp;real1_id=9&amp;query=%EC%95%BC%EC%83%9D%EB%A7%88+%EC%A3%BC%EC%9E%91"><span class="num">9</span>야생마 주작</a></li>
+                                            <li><a href="http://search.zum.com/search.zum?method=uni&amp;option=accu&amp;qm=g_real1.news&amp;real1_id=10&amp;query=%EC%82%AC%EC%9D%B4%EB%B9%84"><span class="num">10</span>사이비</a></li>
+                                    </ol>
+            </div>
+        </div>
+    </div>
+</div>
+        <div id="box3">
+                                            <div class="top_news3" style="">
+            <dl>
+                                    <dt class="emtpy">
+                        
+<a class="" href="/articles/61734104" style="">4급이상 다주택자 94명 대상…권고 불응 시 내년 인사평가에 반영        </a>                    </dt>
+                                <dd class="title">
+                    
+<a class="" href="/articles/61734104" style="">이재명 "4급 이상 도 공무원 등 연말까지 실거주 외 주택 모두 처분하라"        </a>                </dd>
+
+                <dd class="txt no_img_w">
+                                            
+<a class="" href="/articles/61734104" style="max-height: 38px">(경기=뉴스1) 진현권 기자,송용환 기자 = 이재명 경기도지사가 주택을 여러 채 소유한 경기도 4급 이상 공무원과 공공기관 임원 등에게 올 연말까지 실거주 외 주택을 모두 처분하도록 강력 권고했다. 내년부터는 고위공직자의 주택보유현황이 인사고과에 반영된다. 고위공직자에 대한 다주택 처분 조치는 지자체 가운데는 처음이다. 2급 이상 공직자에게만 권고한 정부안보다도 강력하다. 또 정부와 협조해 3기 신도시 지역 역세권내 주택공급 물량의 50% 이상을 무주택자라면 누구나 30년 이상 거주할 수 있는 경기도 기본주택으로 공급하고, 기본소득토지세 도입을 통해 부동산 불로소득을 환수하는 방안도 추진한다. 이재명 경기도지사는 28일 오후 경기도청에서 온라인 브리핑을 열고 이런 내용을 담아 '경기도 부동산 주요 대책'을 발표했다. 이재명 지사는 이 자리에서 "'부동산으로 돈 벌 수 없게 하겠다'는 문재인 대통령의 정확한 진단과 신념을 실현하고 부동산 광풍을 잠재우려면 치밀하면서도 국민 수용성이 높...        </a>                                                <div class="info">
+                            <span class="non">뉴스1</span>
+                            <span class="etc">2020.07.28 14:29</span>
+                                                    </div>
+                                    </dd>
+
+                <dd class="news no_img_w">
+                    <ul class="news_list">
+                                                    <li>
+                                
+<a class="" href="/articles/61734079" style="">이재명 "경기도 4급이상 공직자, 1주택 빼고 다 팔아라"        </a>                                                                <span class="non">서울경제</span></li>
+                                                    <li>
+                                
+<a class="" href="/articles/61734266" style="">이재명 "경기 4급이상 공무원, 거주용 1주택외 처분"        </a>                                                                <span class="non">연합뉴스TV</span></li>
+                                                    <li>
+                                
+<a class="" href="/articles/61733725" style="">이재명 "경기도 4급 이상 공무원 거주 1주택 외 모두 처분"        </a>                                                                <span class="non">YTN</span></li>
+                                            </ul>
+                </dd>
+            </dl>
+        </div>
+                                                                <div class="top_news3" style="display:none;">
+            <dl>
+                                <dd class="title">
+                    
+<a class="" href="/articles/61730053" style="">"서울 수돗물에 유충 없다…신고 73건 모두 배수구가 원인"        </a>                </dd>
+
+                <dd class="txt no_img_w">
+                                            
+<a class="" href="/articles/61730053" style="max-height: 57px">서울 수돗물에서는 깔따구류 유충이 발견되지 않았다는 서울시 분석 결과가 28일 나왔다. 서울시에서는 지금까지 총 73건의 유충 민원이 접수됐지만 각 가정의 배수구 등이 원인이라는 설명이다. 다만 서울시는 그간 지적돼온 수질 전문가 부족 문제에 대해서는 향후 수도·토목 직렬을 신설하고 상시 전문인력을 채용하겠다고 했다. ━ 73건 유충신고…“배수구 청결이 원인” 백호 서울시 상수도사업본부장은 이날 오전 서울시청에서 기자설명회를 열고 “민·관합동조사단과 환경부 등 두 차례 점검 결과, 서울시가 운영하는 모든 정수센터의 입상 활성탄 여과지(활성탄지) 등 정수과정 전반에 문제가 없는 것으로 확인됐다”고 말했다. 22일 민·관합동조사단에 따르면 서울시가 운영하는 정수센터의 고도정수처리시설은 인천과 달리 완전 밀폐형으로 방충망·벌레유입 방지시설 등이 비교적 잘 정비돼 있는 것으로 나타났다. 조사대상이 된 활성탄 여과지는 숯과 비슷한 고농도 탄소 입자로 수돗물 내 악취·이물질 등을 제거하는 고도...        </a>                                                <div class="info">
+                            <span class="non">중앙일보</span>
+                            <span class="etc">2020.07.28 11:59</span>
+                                                    </div>
+                                    </dd>
+
+                <dd class="news no_img_w">
+                    <ul class="news_list">
+                                                    <li>
+                                
+<a class="" href="/articles/61727675" style="">서울 수돗물 유충 없다…"민원 73건 모두 외부요인"(종합)        </a>                                                                <span class="non">뉴시스</span></li>
+                                                    <li>
+                                
+<a class="" href="/articles/61731990" style="">서울시 “‘수돗물 유충’ 민원 모두 외부 유입…정수과정 이상無”        </a>                                                                <span class="non">쿠키뉴스</span></li>
+                                                    <li>
+                                
+<a class="" href="/articles/61731563" style="">서울 수돗물서 확인된 나방파리·지렁이·나방·곤충 등은 외부요인, 깔따구는 없었다        </a>                                                                <span class="non">세계일보</span></li>
+                                            </ul>
+                </dd>
+            </dl>
+        </div>
+                                                                <div class="top_news3" style="display:none;">
+            <dl>
+                                <dd class="title">
+                    
+<a class="" href="/articles/61733412" style="">손병두 "아시아나항공 국유화 가능성도 감안" 언급에 주가 급등        </a>                </dd>
+
+                <dd class="txt no_img_w">
+                                            
+<a class="" href="/articles/61733412" style="max-height: 57px">손병두 금융위원회 부위원장이 28일 아시아나항공 국유화 방안에 대해 "모든 가능성을 다 감안해서 기관과 협의를 진행하고 있다"고 말했다. 손 부위원장은 이날 오전 서울 명동 은행회관에서 열린 '금융리스크 대응반 회의'를 마친 뒤 기자들과 만나 아시아나항공 인수·합병(M&A) 노딜로 국유화 가능성이 있느냐는 질문에 이같이 답했다. 다만 손 부위원장은 "미리 섣불리 이쪽으로 간다, 저쪽으로 간다라고 예단할 필요는 없다"고 덧붙였다. 손 부위원장의 발언이 알려진 이후 주식시장은 요동쳤다. 이날 오후 2시 40분 현재 유가증권시장에서 아시아나항공 주가는 전날보다 720원(20.22%) 오른 4280원에 거래됐다. 국유화 기대감에 한때 4550원(27.81%)으로까지 치솟기도 했다. 지난해 HDC현대산업개발-미래에셋대우 컨소시엄은 금호산업과 아시아나항공 인수 계약을 체결했다. 금호산업이 거래를 마무리하자고 HDC현산에 내용증명을 보내자 HDC현산은 아시아나에 대한 재실사를 하자고 요구하면서...        </a>                                                <div class="info">
+                            <span class="non">중앙일보</span>
+                            <span class="etc">2020.07.28 14:07</span>
+                                                    </div>
+                                    </dd>
+
+                <dd class="news no_img_w">
+                    <ul class="news_list">
+                                                    <li>
+                                
+<a class="" href="/articles/61733216" style="">금융당국 처음으로 '아시아나 국유화' 가능성 공개 언급        </a>                                                                <span class="non">조선비즈</span></li>
+                                                    <li>
+                                
+<a class="" href="/articles/61734972" style="">아시아나항공, 국유화 가능성에 급등        </a>                                                                <span class="non">아시아경제</span></li>
+                                                    <li>
+                                
+<a class="" href="/articles/61734921" style="">아시아나항공, 국유화 가능성에 20%대 급등        </a>                                                                <span class="non">연합뉴스</span></li>
+                                            </ul>
+                </dd>
+            </dl>
+        </div>
+                                            <div class="top_news3" style="display:none;">
+            <dl>
+                                    <dt class="emtpy">
+                        
+<a class="" href="/articles/61728095" style="">정전협정일 맞아 27일 전국노병대회 참석해 연설        </a>                    </dt>
+                                <dd class="title">
+                    
+<a class="" href="/articles/61728095" style="">핵 보유 정당성 강조한 김정은…“넘본다면 대가 치를 것"        </a>                </dd>
+
+                <dd class="txt no_img_w">
+                                            
+<a class="" href="/articles/61728095" style="max-height: 38px">김정은 북한 국무위원장이 6·25전쟁 정전협정 67주년을 맞자 ‘핵 보유국’의 위상을 대내외에 과시하며 국방력 강화 의지를 강조했다. 28일 북한 조선중앙통신·노동신문 등에 따르면 김 위원장은 ‘조국해방전쟁 승리의 날’ 67주년이었던 지난 27일 평양 4·25문화회관에서 열린 제6회 전국노병대회에서 “우리의 믿음직하고 효과적인 핵 억제력으로 이 땅에 더는 전쟁이라는 말은 없을 것이며 우리의 국가의 안전과 미래는 영원히 굳건하게 담보될 것”이라고 말했다. 그는 6·25전쟁 이후 70년에 대해 “결코 평화 시기라고 할 수 없는 적들과의 치열한 대결의 연속이었다”며 “우리의 발전을 억제하고 우리 국가를 침탈하려는 제국주의의 위협과 압박을 각일각 가증됐다”고 엄중한 정세 인식을 드러냈다. 이어 “1950년대 전쟁과 같은 고통과 아픔이 다시는 되풀이되지 않도록 전쟁 그 자체를 방지하고 억제할 수 있는 절대적 힘을 가져야 했기에 남들 같으면 백 번도 더 쓰러지고 주저앉았을 험로 역경을 뚫고 온...        </a>                                                <div class="info">
+                            <span class="non">이데일리</span>
+                            <span class="etc">2020.07.28 11:14</span>
+                                                    </div>
+                                    </dd>
+
+                <dd class="news no_img_w">
+                    <ul class="news_list">
+                                                    <li>
+                                
+<a class="" href="/articles/61723424" style="">바쁘게 움직이는 김정은…노병대회 연설서 '핵 보유' 정당화 (종합)        </a>                                                                <span class="non">아주경제</span></li>
+                                                    <li>
+                                
+<a class="" href="/articles/61723158" style="">김정은 “자위적 핵 억제력으로 국가안전 영원히 담보”        </a>                                                                <span class="non">한겨레</span></li>
+                                                    <li>
+                                
+<a class="" href="/articles/61723937" style="">새 통일장관 취임한 날 ‘핵무기 위협’ 꺼내든 김정은        </a>                                                                <span class="non">세계일보</span></li>
+                                            </ul>
+                </dd>
+            </dl>
+        </div>
+                                                                <div class="top_news3" style="display:none;">
+            <dl>
+                                <dd class="title">
+                    
+<a class="" href="/articles/61724315" style="">KBS 이소정 앵커 "어떤 자살은 가해" 발언에 하차요구 靑 청원 등장        </a>                </dd>
+
+                <dd class="txt no_img_w">
+                                            
+<a class="" href="/articles/61724315" style="max-height: 57px">일부 네티즌들이 '중립성 훼손'을 이유로 KBS 뉴스9을 진행하는 이소정 앵커의 하차를 요구하고 나섰다. 지난 27일 청와대 국민청원 게시판에는 'KBS 뉴스9 이소정 씨 하차 청원'이라는 제목의 청원 글이 게재됐다. 청원인은 "KBS 뉴스9의 이소정 씨는 공영방송 앵커의 역할을 함에 있어 현재 경찰에서 확인 중인 사안을 소설의 한 문구로 시청자를 확증편향에 이르도록 하여 방송의 중립성을 심각하게 훼손했다"고 주장했다. 이어 그는 "박원순 전 서울시장의 임기 중에 발생한 고소인의 성추행 고소와 박 전 시장의 사망경위는 현재 경찰 등에서 조사하고 있는 사안"이라며 "현재 조사하고 있는 사안을 마치 결론이 난 것처럼 방송을 하여 사법부의 판단이 이르기 전에 결론을 내리고 고인의 명예를 심각히 훼손했다"고 했다. 그러면서 "박 전 시장 뉴스에서 피해호소인의 입장을 첫 꼭지에 다뤄 마치 모든 사안이 결론이 난 것처럼 시청자가 생각하도록 보도했다"고 덧붙였다. 앞서 이 앵커는 지난 16일 방...        </a>                                                <div class="info">
+                            <span class="non">매일경제</span>
+                            <span class="etc">2020.07.28 09:52</span>
+                                                    </div>
+                                    </dd>
+
+                <dd class="news no_img_w">
+                    <ul class="news_list">
+                                                    <li>
+                                
+<a class="" href="/articles/61724964" style="">이소정 KBS 앵커 “어떤 자살은 최종적인 가해” 문구 소개에…‘하차 청원’ 등장        </a>                                                                <span class="non">세계일보</span></li>
+                                                    <li>
+                                
+<a class="" href="/articles/61722825" style="">"어떤 자살은 가해" 소설 문구 언급했다고..."KBS 앵커 하차하라" 국민청원 등장        </a>                                                                <span class="non">경향신문</span></li>
+                                                    <li>
+                                
+<a class="" href="/articles/61721212" style="">"어떤 자살은 가해" KBS 앵커 발언에 '하차하라' 靑 청원 등장        </a>                                                                <span class="non">한국일보</span></li>
+                                            </ul>
+                </dd>
+            </dl>
+        </div>
+    
+    <div class="today_keyword">
+        <h2><img src="//news.zumst.com/images/home/txt_today_keyword.gif?_LM=1595911089000" alt="오늘의 뉴스 키워드"></h2>
+        <ul id="keywordList">
+                            <li class="on first">
+                    <a href="#keyword1">경기도 공직자 주택 처분 강력 권고</a>
+                </li>
+                            <li class="">
+                    <a href="#keyword2">서울 수돗물 유충, 모두 외부 요인 결론</a>
+                </li>
+                            <li class="">
+                    <a href="#keyword3">아시아나항공, 국유화 가능성에 급등</a>
+                </li>
+                            <li class="">
+                    <a href="#keyword4">김정은 &quot;더는 전쟁이라는 말 없어&quot;</a>
+                </li>
+                            <li class="">
+                    <a href="#keyword5">KBS 앵커 박원순 관련 발언 논란</a>
+                </li>
+                    </ul>
+    </div>
+</div>
+         <div id="content" class="home">
+        <div class="major_wrap" id="majorNews">
+    <h2><img src="//news.zumst.com/images/home/title_sub_1.png?_LM=1595911089000" alt="주요뉴스"></h2>
+            <div class="board" style="">
+            <div class="thumb_news">
+                <ul>
+                                                                                            <li>
+                            <a href="/articles/61747115" title="신천지 이만희 구속영장 청구…방역 방해·56억 횡령 혐의 이미지">
+                                <img src="//thumb.zumst.com/130x80/https://static.news.zumst.com/images/43/2020/07/29/d9e6b77c7b49449f8241f8dedf5c2b9d.jpg" alt="신천지 이만희 구속영장 청구…방역 방해·56억 횡령 혐의 이미지">
+                                                                                                    <img src="//news.zumst.com/images/home/icon_video.png?_LM=1595911089000" alt="영상아이콘" class="video_icon">
+                                                            </a>
+                            <div><a href="/articles/61747115">신천지 이만희 구속영장 청구…방역 방해·56억 횡령 혐의</a></div>
+                        </li>
+                                                                                            <li>
+                            <a href="/articles/61740699" title="이재명 &quot;3년전엔 회까닥, 싸가지 없었다…대권? 맡겨주면 굳이 피하진&quot; 이미지">
+                                <img src="//thumb.zumst.com/130x80/https://static.news.zumst.com/images/51/2020/07/28/5b961dcc97944976b776ee63d2e11a60.jpg" alt="이재명 &quot;3년전엔 회까닥, 싸가지 없었다…대권? 맡겨주면 굳이 피하진&quot; 이미지">
+                                                                                            </a>
+                            <div><a href="/articles/61740699">이재명 "3년전엔 회까닥, 싸가지 없었다…대권? 맡겨주면 굳이 피하진"</a></div>
+                        </li>
+                                    </ul>
+            </div>
+                        <div class="major_news2">
+                                                            <ul class="list">
+                                                        <li class="">
+                                                
+<a class="" href="/articles/61740332" style="">‘영원한 속죄’상에 日 “아베가 ‘도게자’를? 조속한 철거”        </a>                                                <span>KBS</span>
+                    </li>
+                                                                                                    <li class="">
+                                                
+<a class="" href="/articles/61746538" style="">추미애 "판사 시절 펑펑 울었다 보도는 오보"…조국, 채널A 기자 등 고소        </a>                                                <span>세계일보</span>
+                    </li>
+                                                                                                    <li class="">
+                                                
+<a class="" href="/articles/61746960" style="">내륙 장맛비, 최고 200mm...제주 무더위        </a>                                                <span>YTN</span>
+                    </li>
+                                                                                                    <li class="">
+                                                
+<a class="" href="/articles/61743143" style="">통합 "'30억불 이면합의' 박지원 임명 안돼"…박 "제보자 실명 밝혀라"        </a>                                                <span>뉴스1</span>
+                    </li>
+                                                                                                    <li class="">
+                                                
+<a class="" href="/articles/61742960" style="">한국 민간식물원 '아베 사죄상'에 발칵 뒤집힌 일본        </a>                                                <span>오마이뉴스</span>
+                    </li>
+                                </ul>
+                                                                            <ul class="list">
+                                                        <li class="">
+                                                
+<a class="" href="/articles/61742799" style="">신평 "추미애, 장관 부적합…판사때 지방발령에 펑펑 울며 항의"        </a>                                                <span>중앙일보</span>
+                    </li>
+                                                                                                    <li class="">
+                                                
+<a class="" href="/articles/61747150" style="">빌 게이츠 "연말까지 코로나19 사망률 상당히 낮아질 수 있다"        </a>                                                <span>뉴스핌</span>
+                    </li>
+                                                                                                    <li class="">
+                                                
+<a class="" href="/articles/61746887" style="">176석 거여, 부동산법 11개 단독처리        </a>                                                <span>중앙일보</span>
+                    </li>
+                                                                                                    <li class="">
+                                                
+<a class="" href="/articles/61746763" style="">'러셀 데뷔' 키움, 3위 탈환…롯데는 NC에 끝내기 승        </a>                                                <span>뉴시스</span>
+                    </li>
+                                                                                                    <li class="">
+                                                
+<a class="" href="/articles/61746999" style="">박지윤 교통사고, ‘볼보 XC90’ 어떤 차?…16년간 사망 사고 ‘제로’        </a>                                                <span>이투데이</span>
+                    </li>
+                                </ul>
+                                        </div>
+        </div>
+        </div>
+<script type="text/javascript" src="//news.zumst.com/scripts/news.zum.estat.js?_LM=1595911089000"></script>
+<script type="text/javascript" src="//news.zumst.com/scripts/news.zum.rightbox.js?_LM=1595911089000"></script>
+<div class="many_wrap many_wrap_home side_box">
+    <h2><img src="//news.zumst.com/images/home/title_sub_2.png?_LM=1595911089000" alt="많이 본 뉴스"></h2>
+<div class="list list_1">
+            <h4 id="popularNews-" class="sec_1 on">
+                            <a href="https://news.zum.com">종합</a>
+                    </h4>
+                        <ul class="rank_news">
+                                                                            <li class="item r_t ">
+                                                                                                            <span class="sec_name">[경제]</span><a href="/articles/61747447?t=t&amp;cm=popular" title="한국 몰려오는 日 소재 기업들 &quot;수출규제 탓 우리가 죽겠다&quot;">한국 몰려오는 日 소재 기업들 "수출규제 탓 우리가 죽겠다"</a>
+                </li>
+                                                                            <li class="item r_t ">
+                                                                                                            <span class="sec_name">[국제]</span><a href="/articles/61747400?t=t&amp;cm=popular" title="화이자 “코로나 백신, 선진국은 미국보다 싸게 못 살 것”">화이자 “코로나 백신, 선진국은 미국보다 싸게 못 살 것”</a>
+                </li>
+                                                                            <li class="item r_t ">
+                                                                                                            <span class="sec_name">[사회]</span><a href="/articles/61747579?t=t&amp;cm=popular" title="&#39;정액없는 성폭행&#39; 2심도 유죄…법원 &quot;피해진술 일관돼&quot;">'정액없는 성폭행' 2심도 유죄…법원 "피해진술 일관돼"</a>
+                </li>
+                                                                            <li class="item r_t ">
+                                                                                                            <span class="sec_name">[사회]</span><a href="/articles/61747584?t=t&amp;cm=popular" title="돌아가면 총살당한다는데…탈북 29명은 왜 기어이 北 갔나">돌아가면 총살당한다는데…탈북 29명은 왜 기어이 北 갔나</a>
+                </li>
+                                                                            <li class="item r_t ">
+                                                                                                            <span class="sec_name">[연예]</span><a href="/articles/61747810?t=t&amp;cm=popular" title="안선영, 미모 돋보이는 출산 후 화보 &quot;여자맘 아는 건 여자더라&quot;">안선영, 미모 돋보이는 출산 후 화보 "여자맘 아는 건 여자더라"</a>
+                </li>
+                                                                            <li class="item r_t sec_mid">
+                                                                                                            <span class="sec_name">[국제]</span><a href="/articles/61747761?t=t&amp;cm=popular" title="뉴욕 증시 급락…소비지표 부진에 대형 IT 주도 약세장">뉴욕 증시 급락…소비지표 부진에 대형 IT 주도 약세장</a>
+                </li>
+                                                                            <li class="item r_t ">
+                                                                                                            <span class="sec_name">[종합]</span><a href="/articles/61747569?t=t&amp;cm=popular" title="최동석·박지윤 중상 막아준 볼보, 중국차 인식 날릴 기회될까">최동석·박지윤 중상 막아준 볼보, 중국차 인식 날릴 기회될까</a>
+                </li>
+                                                                            <li class="item r_t ">
+                                                                                                            <span class="sec_name">[국제]</span><a href="/articles/61747503?t=t&amp;cm=popular" title="WHO &quot;北서 1211명 코로나19 검사...확진자 없어&quot;">WHO "北서 1211명 코로나19 검사...확진자 없어"</a>
+                </li>
+                                                                            <li class="item r_t ">
+                                                                                                            <span class="sec_name">[사회]</span><a href="/articles/61747355?t=t&amp;cm=popular" title="탈북자 보호하라고 했더니… 경찰, 탈북여성 21개월간 성폭행">탈북자 보호하라고 했더니… 경찰, 탈북여성 21개월간 성폭행</a>
+                </li>
+                                                                            <li class="item r_t ">
+                                                                                                            <span class="sec_name">[사회]</span><a href="/articles/61747484?t=t&amp;cm=popular" title="&#39;검찰총장 수사지휘권 폐지&#39; 현실화되나…법무부 &quot;심층 검토&quot;">'검찰총장 수사지휘권 폐지' 현실화되나…법무부 "심층 검토"</a>
+                </li>
+                    </ul>
+            <h4 id="popularNews-06" class="sec_2">
+                            <a href="https://news.zum.com/front?c=06">연예</a>
+                    </h4>
+                        <ul class="rank_news" style="display:none;">
+                                                                            <li class="item rank_1">
+                                                                                                            <span class="r_num">1</span><a href="/articles/61747810?cm=popular" title="안선영, 미모 돋보이는 출산 후 화보 &quot;여자맘 아는 건 여자더라&quot;">안선영, 미모 돋보이는 출산 후 화보 "여자맘 아는 건 여자더라"</a>
+                </li>
+                                                                            <li class="item rank_2">
+                                                                                                            <span class="r_num">2</span><a href="/articles/61747798?cm=popular" title="&#39;결혼+득녀&#39; 류승범, 여유로운 휴가 근황..시선강탈 화려한 타투">'결혼+득녀' 류승범, 여유로운 휴가 근황..시선강탈 화려한 타투</a>
+                </li>
+                                                                            <li class="item rank_3">
+                                                                                                            <span class="r_num">3</span><a href="/articles/61747566?cm=popular" title="예능 대세로 떠오른 레전드·현역 스포츠 스타">예능 대세로 떠오른 레전드·현역 스포츠 스타</a>
+                </li>
+                                                                            <li class="item rank_4">
+                                                                                                            <span class="r_num">4</span><a href="/articles/61746999?cm=popular" title="박지윤 교통사고, ‘볼보 XC90’ 어떤 차?…16년간 사망 사고 ‘제로’">박지윤 교통사고, ‘볼보 XC90’ 어떤 차?…16년간 사망 사고 ‘제로’</a>
+                </li>
+                                                                            <li class="item rank_5">
+                                                                                                            <span class="r_num">5</span><a href="/articles/61745639?cm=popular" title="&#39;박원순 피해자 2차 가해 논란&#39; 박지희 프리랜서 아나운서, TBS 프로그램 하차">'박원순 피해자 2차 가해 논란' 박지희 프리랜서 아나운서, TBS 프로그램 하차</a>
+                </li>
+                                                                            <li class="item rank_6">
+                                                                                                            <span class="r_num">6</span><a href="/articles/61747264?cm=popular" title="아들과 사이 안좋던 이훈, 눈맞춤방서 눈물">아들과 사이 안좋던 이훈, 눈맞춤방서 눈물</a>
+                </li>
+                                                                            <li class="item rank_7">
+                                                                                                            <span class="r_num">7</span><a href="/articles/61746957?cm=popular" title="&quot;중국 가세요&quot;..&#39;아내의 맛&#39; 진화, 마마 생파서 말싸움..함소원 안절부절[종합]">"중국 가세요"..'아내의 맛' 진화, 마마 생파서 말싸움..함소원 안절부절[종합]</a>
+                </li>
+                                                                            <li class="item rank_8">
+                                                                                                            <span class="r_num">8</span><a href="/articles/61746743?cm=popular" title="`불타는 청춘` 김도균-신효범 러브라인? 신효범 &quot;우리 보라카이 갈까&quot;">`불타는 청춘` 김도균-신효범 러브라인? 신효범 "우리 보라카이 갈까"</a>
+                </li>
+                                                                            <li class="item rank_9">
+                                                                                                            <span class="r_num">9</span><a href="/articles/61746711?cm=popular" title="심진화, 모교 &#39;심진화 장학금&#39; 지원 선행 &quot;살다보니 이런 날도&quot; [전문]">심진화, 모교 '심진화 장학금' 지원 선행 "살다보니 이런 날도" [전문]</a>
+                </li>
+                                                                            <li class="item rank_10">
+                                                                                                            <span class="r_num">10</span><a href="/articles/61746678?cm=popular" title="&#39;불청&#39; 김선경, 김광규 소개팅 요청에 당황 &quot;신효범 언니도…&quot;">'불청' 김선경, 김광규 소개팅 요청에 당황 "신효범 언니도…"</a>
+                </li>
+                    </ul>
+            <h4 id="popularNews-05" class="sec_3">
+                            <a href="https://news.zum.com/front?c=05">스포츠</a>
+                    </h4>
+                        <ul class="rank_news" style="display:none;">
+                                                                            <li class="item rank_1">
+                                                                                                            <span class="r_num">1</span><a href="/articles/61747210?cm=popular" title="데뷔전 2안타… 러셀! 러셀! 할만하네">데뷔전 2안타… 러셀! 러셀! 할만하네</a>
+                </li>
+                                                                            <li class="item rank_2">
+                                                                                                            <span class="r_num">2</span><a href="/articles/61747203?cm=popular" title="50세 최경주, 시니어 무대 데뷔… 31일 재개 PGA 챔피언스투어 출전">50세 최경주, 시니어 무대 데뷔… 31일 재개 PGA 챔피언스투어 출전</a>
+                </li>
+                                                                            <li class="item rank_3">
+                                                                                                            <span class="r_num">3</span><a href="/articles/61747201?cm=popular" title="개막 일주일도 안됐는데… MLB, 코로나 비상">개막 일주일도 안됐는데… MLB, 코로나 비상</a>
+                </li>
+                                                                            <li class="item rank_4">
+                                                                                                            <span class="r_num">4</span><a href="/articles/61741286?cm=popular" title="&quot;광주 가려면 여권 필요해&quot; SBS 정우영 아나, 지역 비하 논란 공식사과[전문]">"광주 가려면 여권 필요해" SBS 정우영 아나, 지역 비하 논란 공식사과[전문]</a>
+                </li>
+                                                                            <li class="item rank_5">
+                                                                                                            <span class="r_num">5</span><a href="/articles/61738871?cm=popular" title="&#39;기록의 사나이&#39; 손흥민, 시즌 마치고 귀국…재충전 시작">'기록의 사나이' 손흥민, 시즌 마치고 귀국…재충전 시작</a>
+                </li>
+                                                                            <li class="item rank_6">
+                                                                                                            <span class="r_num">6</span><a href="/articles/61747055?cm=popular" title="하빕 vs 개이치, 10월 24일 UFC 라이트급 타이틀전">하빕 vs 개이치, 10월 24일 UFC 라이트급 타이틀전</a>
+                </li>
+                                                                            <li class="item rank_7">
+                                                                                                            <span class="r_num">7</span><a href="/articles/61746983?cm=popular" title="마이애미, 4명 또 확진 &#39;총17명&#39; 코로나 감염 &#39;비상&#39;">마이애미, 4명 또 확진 '총17명' 코로나 감염 '비상'</a>
+                </li>
+                                                                            <li class="item rank_8">
+                                                                                                            <span class="r_num">8</span><a href="/articles/61745918?cm=popular" title="첫인상부터 강렬했다…에디슨 러셀의 반짝반짝 빛난 KBO리그 데뷔 [오늘의 MVP]">첫인상부터 강렬했다…에디슨 러셀의 반짝반짝 빛난 KBO리그 데뷔 [오늘의 MVP]</a>
+                </li>
+                                                                            <li class="item rank_9">
+                                                                                                            <span class="r_num">9</span><a href="/articles/61741283?cm=popular" title="안경현 &quot;가방에 여권… 광주 가려고&quot; 지역 비하 발언 논란">안경현 "가방에 여권… 광주 가려고" 지역 비하 발언 논란</a>
+                </li>
+                                                                            <li class="item rank_10">
+                                                                                                            <span class="r_num">10</span><a href="/articles/61732576?cm=popular" title="안경현 “광주 가려면 여권 필요” 전라도 비하 의혹">안경현 “광주 가려면 여권 필요” 전라도 비하 의혹</a>
+                </li>
+                    </ul>
+            <h4 id="popularNews-01" class="sec_4">
+                            <a href="https://news.zum.com/front?c=01">정치</a>
+                    </h4>
+                        <ul class="rank_news" style="display:none;">
+                                                                            <li class="item rank_1">
+                                                                                                            <span class="r_num">1</span><a href="/articles/61747584?cm=popular" title="돌아가면 총살당한다는데…탈북 29명은 왜 기어이 北 갔나">돌아가면 총살당한다는데…탈북 29명은 왜 기어이 北 갔나</a>
+                </li>
+                                                                            <li class="item rank_2">
+                                                                                                            <span class="r_num">2</span><a href="/articles/61747791?cm=popular" title="국회운영위 오늘 &#39;공수처 후속 3법&#39; 논의…법사위는 &#39;임대차 3법&#39;">국회운영위 오늘 '공수처 후속 3법' 논의…법사위는 '임대차 3법'</a>
+                </li>
+                                                                            <li class="item rank_3">
+                                                                                                            <span class="r_num">3</span><a href="/articles/61747615?cm=popular" title="163cm 김씨, 배수로 철망 지나 구명조끼 입고 &#39;헤엄 월북&#39;">163cm 김씨, 배수로 철망 지나 구명조끼 입고 '헤엄 월북'</a>
+                </li>
+                                                                            <li class="item rank_4">
+                                                                                                            <span class="r_num">4</span><a href="/articles/61747581?cm=popular" title="&quot;회계상 3억, 거기 1억 더&quot;…불법 적발해도 눈감아주는 전대">"회계상 3억, 거기 1억 더"…불법 적발해도 눈감아주는 전대</a>
+                </li>
+                                                                            <li class="item rank_5">
+                                                                                                            <span class="r_num">5</span><a href="/articles/61747640?cm=popular" title="국민은 통합당에 정권심판 담을 그릇인지 묻고 있다">국민은 통합당에 정권심판 담을 그릇인지 묻고 있다</a>
+                </li>
+                                                                            <li class="item rank_6">
+                                                                                                            <span class="r_num">6</span><a href="/articles/61747462?cm=popular" title="&#39;야당의 시간&#39; 판이 깔려도 &#39;송곳 견제&#39; 대신 헛발 찬 통합당">'야당의 시간' 판이 깔려도 '송곳 견제' 대신 헛발 찬 통합당</a>
+                </li>
+                                                                            <li class="item rank_7">
+                                                                                                            <span class="r_num">7</span><a href="/articles/61745825?cm=popular" title="中 겨냥했나…‘韓 미사일 통제’ 강조하던 美, 규제 푼 이유는?">中 겨냥했나…‘韓 미사일 통제’ 강조하던 美, 규제 푼 이유는?</a>
+                </li>
+                                                                            <li class="item rank_8">
+                                                                                                            <span class="r_num">8</span><a href="/articles/61747303?cm=popular" title="정경두 &quot;재래식무기로 북핵 대응 가능&quot;, 전방사령관은 &quot;반격훈련 말라&quot; 지침">정경두 "재래식무기로 북핵 대응 가능", 전방사령관은 "반격훈련 말라" 지침</a>
+                </li>
+                                                                            <li class="item rank_9">
+                                                                                                            <span class="r_num">9</span><a href="/articles/61747301?cm=popular" title="日관방장관 &quot;아베 사죄像 사실이면 한일관계에 결정적 영향&quot;">日관방장관 "아베 사죄像 사실이면 한일관계에 결정적 영향"</a>
+                </li>
+                                                                            <li class="item rank_10">
+                                                                                                            <span class="r_num">10</span><a href="/articles/61747295?cm=popular" title="&#39;靑에 항명&#39; 판단한 與, 감사원장 때리기 시작">'靑에 항명' 판단한 與, 감사원장 때리기 시작</a>
+                </li>
+                    </ul>
+            <h4 id="popularNews-02" class="sec_5">
+                            <a href="https://news.zum.com/front?c=02">사회</a>
+                    </h4>
+                        <ul class="rank_news" style="display:none;">
+                                                                            <li class="item rank_1">
+                                                                                                            <span class="r_num">1</span><a href="/articles/61747579?cm=popular" title="&#39;정액없는 성폭행&#39; 2심도 유죄…법원 &quot;피해진술 일관돼&quot;">'정액없는 성폭행' 2심도 유죄…법원 "피해진술 일관돼"</a>
+                </li>
+                                                                            <li class="item rank_2">
+                                                                                                            <span class="r_num">2</span><a href="/articles/61747355?cm=popular" title="탈북자 보호하라고 했더니… 경찰, 탈북여성 21개월간 성폭행">탈북자 보호하라고 했더니… 경찰, 탈북여성 21개월간 성폭행</a>
+                </li>
+                                                                            <li class="item rank_3">
+                                                                                                            <span class="r_num">3</span><a href="/articles/61747484?cm=popular" title="&#39;검찰총장 수사지휘권 폐지&#39; 현실화되나…법무부 &quot;심층 검토&quot;">'검찰총장 수사지휘권 폐지' 현실화되나…법무부 "심층 검토"</a>
+                </li>
+                                                                            <li class="item rank_4">
+                                                                                                            <span class="r_num">4</span><a href="/articles/61747582?cm=popular" title="“어려운 이웃 돕겠다” 모범공무원 상금 기부한 경찰관">“어려운 이웃 돕겠다” 모범공무원 상금 기부한 경찰관</a>
+                </li>
+                                                                            <li class="item rank_5">
+                                                                                                            <span class="r_num">5</span><a href="/articles/61747584?cm=popular" title="돌아가면 총살당한다는데…탈북 29명은 왜 기어이 北 갔나">돌아가면 총살당한다는데…탈북 29명은 왜 기어이 北 갔나</a>
+                </li>
+                                                                            <li class="item rank_6">
+                                                                                                            <span class="r_num">6</span><a href="/articles/61747592?cm=popular" title="6·25때 253전 253승···그 에티오피아에 진단키트 1만개 답례">6·25때 253전 253승···그 에티오피아에 진단키트 1만개 답례</a>
+                </li>
+                                                                            <li class="item rank_7">
+                                                                                                            <span class="r_num">7</span><a href="/articles/61747356?cm=popular" title="검찰 &#39;코로나 방역 방해&#39; 신천지 이만희 구속영장 청구">검찰 '코로나 방역 방해' 신천지 이만희 구속영장 청구</a>
+                </li>
+                                                                            <li class="item rank_8">
+                                                                                                            <span class="r_num">8</span><a href="/articles/61747351?cm=popular" title="내로남불 추미애">내로남불 추미애</a>
+                </li>
+                                                                            <li class="item rank_9">
+                                                                                                            <span class="r_num">9</span><a href="/articles/61747402?cm=popular" title="전국 장맛비…내일까지 충청에 150mm↑">전국 장맛비…내일까지 충청에 150mm↑</a>
+                </li>
+                                                                            <li class="item rank_10">
+                                                                                                            <span class="r_num">10</span><a href="/articles/61747386?cm=popular" title="&quot;나도 결혼 안 했으면 더 멋진 평론가 됐을까, 하하&quot;">"나도 결혼 안 했으면 더 멋진 평론가 됐을까, 하하"</a>
+                </li>
+                    </ul>
+            <h4 id="popularNews-03" class="sec_6">
+                            <a href="https://news.zum.com/front?c=03">경제</a>
+                    </h4>
+                        <ul class="rank_news" style="display:none;">
+                                                                            <li class="item rank_1">
+                                                                                                            <span class="r_num">1</span><a href="/articles/61747447?cm=popular" title="한국 몰려오는 日 소재 기업들 &quot;수출규제 탓 우리가 죽겠다&quot;">한국 몰려오는 日 소재 기업들 "수출규제 탓 우리가 죽겠다"</a>
+                </li>
+                                                                            <li class="item rank_2">
+                                                                                                            <span class="r_num">2</span><a href="/articles/61747569?cm=popular" title="최동석·박지윤 중상 막아준 볼보, 중국차 인식 날릴 기회될까">최동석·박지윤 중상 막아준 볼보, 중국차 인식 날릴 기회될까</a>
+                </li>
+                                                                            <li class="item rank_3">
+                                                                                                            <span class="r_num">3</span><a href="/articles/61747801?cm=popular" title="7월 29일 글로벌 시장 동향">7월 29일 글로벌 시장 동향</a>
+                </li>
+                                                                            <li class="item rank_4">
+                                                                                                            <span class="r_num">4</span><a href="/articles/61747786?cm=popular" title="5G 장비주 웃고, 통신주 울고…&#39;디지털 뉴딜&#39;에 엇갈린 운명">5G 장비주 웃고, 통신주 울고…'디지털 뉴딜'에 엇갈린 운명</a>
+                </li>
+                                                                            <li class="item rank_5">
+                                                                                                            <span class="r_num">5</span><a href="/articles/61747661?cm=popular" title="다우 0.77% ↓ 나스닥 1.27% ↓ 마감">다우 0.77% ↓ 나스닥 1.27% ↓ 마감</a>
+                </li>
+                                                                            <li class="item rank_6">
+                                                                                                            <span class="r_num">6</span><a href="/articles/61747540?cm=popular" title="볼보자동차 &quot;볼보의 안전 노하우는 XC90에 모두 집약&quot;">볼보자동차 "볼보의 안전 노하우는 XC90에 모두 집약"</a>
+                </li>
+                                                                            <li class="item rank_7">
+                                                                                                            <span class="r_num">7</span><a href="/articles/61747251?cm=popular" title="&#39;신의 직장&#39;의 추락···코로나 구조조정 1호 공기업은 마사회">'신의 직장'의 추락···코로나 구조조정 1호 공기업은 마사회</a>
+                </li>
+                                                                            <li class="item rank_8">
+                                                                                                            <span class="r_num">8</span><a href="/articles/61747420?cm=popular" title="4년만에 돌아온 더 뉴 SM6…새 심장 달고 승차감 업그레이드">4년만에 돌아온 더 뉴 SM6…새 심장 달고 승차감 업그레이드</a>
+                </li>
+                                                                            <li class="item rank_9">
+                                                                                                            <span class="r_num">9</span><a href="/articles/61747417?cm=popular" title="아우디 첫 전기차…브레이크 밟으면 주행거리 증가 `마술`">아우디 첫 전기차…브레이크 밟으면 주행거리 증가 `마술`</a>
+                </li>
+                                                                            <li class="item rank_10">
+                                                                                                            <span class="r_num">10</span><a href="/articles/61747363?cm=popular" title="5000억 들여 지은 백화점 재매각…갤러리아에 무슨 일이?">5000억 들여 지은 백화점 재매각…갤러리아에 무슨 일이?</a>
+                </li>
+                    </ul>
+            <h4 id="popularNews-04" class="sec_7">
+                            <a href="https://news.zum.com/front?c=04">국제</a>
+                    </h4>
+                        <ul class="rank_news" style="display:none;">
+                                                                            <li class="item rank_1">
+                                                                                                            <span class="r_num">1</span><a href="/articles/61747400?cm=popular" title="화이자 “코로나 백신, 선진국은 미국보다 싸게 못 살 것”">화이자 “코로나 백신, 선진국은 미국보다 싸게 못 살 것”</a>
+                </li>
+                                                                            <li class="item rank_2">
+                                                                                                            <span class="r_num">2</span><a href="/articles/61747761?cm=popular" title="뉴욕 증시 급락…소비지표 부진에 대형 IT 주도 약세장">뉴욕 증시 급락…소비지표 부진에 대형 IT 주도 약세장</a>
+                </li>
+                                                                            <li class="item rank_3">
+                                                                                                            <span class="r_num">3</span><a href="/articles/61747503?cm=popular" title="WHO &quot;北서 1211명 코로나19 검사...확진자 없어&quot;">WHO "北서 1211명 코로나19 검사...확진자 없어"</a>
+                </li>
+                                                                            <li class="item rank_4">
+                                                                                                            <span class="r_num">4</span><a href="/articles/61747369?cm=popular" title="&quot;남중국해 줄게, 백신 다오&quot; 中에 굴복한 필리핀">"남중국해 줄게, 백신 다오" 中에 굴복한 필리핀</a>
+                </li>
+                                                                            <li class="item rank_5">
+                                                                                                            <span class="r_num">5</span><a href="/articles/61747439?cm=popular" title="미 최북단 해안서 백상아리 공격에 1명 사망">미 최북단 해안서 백상아리 공격에 1명 사망</a>
+                </li>
+                                                                            <li class="item rank_6">
+                                                                                                            <span class="r_num">6</span><a href="/articles/61747769?cm=popular" title="화이자 CEO &quot;트럼프 약값인하 명령, 엄청난 파괴 초래할 것&quot;">화이자 CEO "트럼프 약값인하 명령, 엄청난 파괴 초래할 것"</a>
+                </li>
+                                                                            <li class="item rank_7">
+                                                                                                            <span class="r_num">7</span><a href="/articles/61747630?cm=popular" title="게이츠 &quot;연말쯤 코로나發 사망률 크게 낮아질 것&quot;">게이츠 "연말쯤 코로나發 사망률 크게 낮아질 것"</a>
+                </li>
+                                                                            <li class="item rank_8">
+                                                                                                            <span class="r_num">8</span><a href="/articles/61747590?cm=popular" title="장쯔이 “미드 견줄 중드”···해시태그 42억회 ‘중국판 SKY캐슬’">장쯔이 “미드 견줄 중드”···해시태그 42억회 ‘중국판 SKY캐슬’</a>
+                </li>
+                                                                            <li class="item rank_9">
+                                                                                                            <span class="r_num">9</span><a href="/articles/61747591?cm=popular" title="中 한놈만 팬다는 바이든…트럼프 낙선만 바라는 中의 착각">中 한놈만 팬다는 바이든…트럼프 낙선만 바라는 中의 착각</a>
+                </li>
+                                                                            <li class="item rank_10">
+                                                                                                            <span class="r_num">10</span><a href="/articles/61747597?cm=popular" title="“넥타이·마스크 깔맞춤” 아빠 패션 올린 트윗 ‘좋아요’ 67만개">“넥타이·마스크 깔맞춤” 아빠 패션 올린 트윗 ‘좋아요’ 67만개</a>
+                </li>
+                    </ul>
+            <h4 id="popularNews-08" class="sec_8">
+                            <a href="https://news.zum.com/front?c=08">IT</a>
+                    </h4>
+                        <ul class="rank_news" style="display:none;">
+                                                                            <li class="item rank_1">
+                                                                                                            <span class="r_num">1</span><a href="/articles/61747248?cm=popular" title="‘땅 위의 인공태양’… 7개국서 만든 부품 합체 착수">‘땅 위의 인공태양’… 7개국서 만든 부품 합체 착수</a>
+                </li>
+                                                                            <li class="item rank_2">
+                                                                                                            <span class="r_num">2</span><a href="/articles/61746954?cm=popular" title="&#39;인공태양&#39;으로 가는 국제핵융합실험로, 조립 단계 시작(종합2보)">'인공태양'으로 가는 국제핵융합실험로, 조립 단계 시작(종합2보)</a>
+                </li>
+                                                                            <li class="item rank_3">
+                                                                                                            <span class="r_num">3</span><a href="/articles/61746847?cm=popular" title="LG 10만원대 가성비폰 8월 초 출시, 인도서 점유율 높인다">LG 10만원대 가성비폰 8월 초 출시, 인도서 점유율 높인다</a>
+                </li>
+                                                                            <li class="item rank_4">
+                                                                                                            <span class="r_num">4</span><a href="/articles/61746844?cm=popular" title="1억℃ 인공태양 조립 시작…핵심기술 ‘한국산 진공용기’ 큰 기여">1억℃ 인공태양 조립 시작…핵심기술 ‘한국산 진공용기’ 큰 기여</a>
+                </li>
+                                                                            <li class="item rank_5">
+                                                                                                            <span class="r_num">5</span><a href="/articles/61746364?cm=popular" title="세계에서 가장 비싼 ‘개미’가 증시에 나온다">세계에서 가장 비싼 ‘개미’가 증시에 나온다</a>
+                </li>
+                                                                            <li class="item rank_6">
+                                                                                                            <span class="r_num">6</span><a href="/articles/61746257?cm=popular" title="ITER &#39;인공태양&#39;, 연구 시작 13년만에 조립 착수">ITER '인공태양', 연구 시작 13년만에 조립 착수</a>
+                </li>
+                                                                            <li class="item rank_7">
+                                                                                                            <span class="r_num">7</span><a href="/articles/61746074?cm=popular" title="과기부 장관 &quot;LG유플, 화웨이 장비 사용…기업이 알아서 할 것&quot;">과기부 장관 "LG유플, 화웨이 장비 사용…기업이 알아서 할 것"</a>
+                </li>
+                                                                            <li class="item rank_8">
+                                                                                                            <span class="r_num">8</span><a href="/articles/61746049?cm=popular" title="미래 에너지 ‘인공 태양’ 조립 착수">미래 에너지 ‘인공 태양’ 조립 착수</a>
+                </li>
+                                                                            <li class="item rank_9">
+                                                                                                            <span class="r_num">9</span><a href="/articles/61746048?cm=popular" title="산업계 의견 대폭 반영된 ‘데이터 3법’…개인정보 안전할까">산업계 의견 대폭 반영된 ‘데이터 3법’…개인정보 안전할까</a>
+                </li>
+                                                                            <li class="item rank_10">
+                                                                                                            <span class="r_num">10</span><a href="/articles/61746521?cm=popular" title="삼성 ‘시청각장애인용 TV’ 연말까지 1만5000대 공급 [포토뉴스]">삼성 ‘시청각장애인용 TV’ 연말까지 1만5000대 공급 [포토뉴스]</a>
+                </li>
+                    </ul>
+        <div class="sec_tab_paging tab_nav">
+        <a href="javascript:;" class="nav_prev t_prev" title="이전"><span>이전</span></a>
+        <a href="javascript:;" class="nav_next t_next" title="다음"><span>다음</span></a>
+    </div>
+</div>
+<div class="info">* 최근 30분간 집계를 기준으로 합니다.</div>
+</div>            </div>
+        <div id="bottom_wrap">
+    <div class="bottom_box">
+        <h2><a href="/front?c=03">
+            <img src="//news.zumst.com/images/home/title_sub_3.png?_LM=1595911089000" alt="경제">
+        </a></h2>
+        <div class="h_right">
+            <ul class="htab">
+                <li><a href="/list?c=03&sc=25">부동산</a></li>
+                <li><a href="/list?c=03&sc=21">금융</a></li>
+                <li class="last"><a href="/list?c=03&sc=26">취업</a></li>
+            </ul>
+        </div>
+                        
+
+                                            
+                <div class="thumb">
+            <a href="/articles/61743797?c=03" title="한국산 진공용기가 핵심기술…1억℃ 인공태양 꿈 성큼 이미지" >
+                <img src="//thumb.zumst.com/130x80/https://static.news.zumst.com/images/2/2020/07/28/ccbf163a170d429e9b22b7326c0792d6.jpg" alt="한국산 진공용기가 핵심기술…1억℃ 인공태양 꿈 성큼 이미지">
+                                            </a>
+            <p><a href="/articles/61743797?c=03" title="한국산 진공용기가 핵심기술…1억℃ 인공태양 꿈 성큼">한국산 진공용기가 핵심기술…1억℃ 인공태양 꿈 성큼</a></p>
+            <span>중앙일보</span>
+        </div>
+    
+                <ul>
+                            <li>
+                                        
+<a class="" href="/articles/61747120?c=03" style="">'아빠 찬스'로 법인 세워 집 10여 채 갭투자…413명 세무조사        </a>                                    </li>
+                            <li>
+                                        
+<a class="" href="/articles/61743883?c=03" style="">車 구겨져도 경상…박지윤 그 볼보, 16년간 英사망사고 0건        </a>                                    </li>
+                            <li>
+                                        
+<a class="" href="/articles/61747538?c=03" style="">최희남 KIC 사장 “세계일류 투자기관 목표…차세대 금융허브 도약 이끌것”        </a>                                    </li>
+                            <li>
+                                        
+<a class="" href="/articles/61747509?c=03" style="">코로나19 재확산 여파…美소비심리 다시 악화        </a>                                    </li>
+                    </ul>
+    
+            </div>
+    <div class="bottom_box">
+        <h2><a href="/front?c=02">
+            <img src="//news.zumst.com/images/home/title_sub_4.png?_LM=1595911089000" alt="사회">
+        </a></h2>
+        <div class="h_right">
+            <ul class="htab">
+                <li><a href="/list?c=02&sc=10">사건·사고</a></li>
+                <li><a href="/list?c=02&sc=12">교육</a></li>
+                <li class="last"><a href="/list?c=02&sc=19">전국</a></li>
+            </ul>
+        </div>
+                        
+
+                                            
+                <div class="thumb">
+            <a href="/articles/61746229?c=02" title="탈북자 신변 보호제 허점...경찰 1인당 &#39;30명 담당&#39; 이미지" >
+                <img src="//thumb.zumst.com/130x80/https://static.news.zumst.com/images/4/2020/07/28/202007282201479490_t.jpg" alt="탈북자 신변 보호제 허점...경찰 1인당 &#39;30명 담당&#39; 이미지">
+                                                    <img src="//news.zumst.com/images/home/icon_video.png?_LM=1595911089000" alt="영상아이콘" class="video_icon">
+                            </a>
+            <p><a href="/articles/61746229?c=02" title="탈북자 신변 보호제 허점...경찰 1인당 &#39;30명 담당&#39;">탈북자 신변 보호제 허점...경찰 1인당 '30명 담당'</a></p>
+            <span>YTN</span>
+        </div>
+    
+                <ul>
+                            <li>
+                                        
+<a class="" href="/articles/61744743?c=02" style="">검찰, '코로나 방역 방해' 신천지 이만희 구속영장 청구        </a>                                    </li>
+                            <li>
+                                        
+<a class="" href="/articles/61747396?c=02" style="">아침까지 충청·경북, 밤새 많은 비…제주엔 열대야        </a>                                    </li>
+                            <li>
+                                        
+<a class="" href="/articles/61745310?c=02" style="">추미애 "지방발령에 '펑펑 울었다' 글은 허위, 법적 대응"        </a>                                    </li>
+                            <li>
+                                        
+<a class="" href="/articles/61746954?c=02" style="">'인공태양'으로 가는 국제핵융합실험로, 조립 단계 시작        </a>                                    </li>
+                    </ul>
+    
+            </div>
+    <div class="bottom_box">
+        <h2><a href="/front?c=06">
+            <img src="//news.zumst.com/images/home/title_sub_5.png?_LM=1595911089000" alt="연예">
+        </a></h2>
+        <div class="h_right">
+            <ul class="htab">
+                <li><a href="/list?c=06&sc=42">방송</a></li>
+                <li><a href="/list?c=06&sc=43">음악·가요</a></li>
+                <li class="last"><a href="/list?c=06&sc=44">해외연예</a></li>
+            </ul>
+        </div>
+                        
+
+                                            
+                <div class="thumb">
+            <a href="/articles/61746715?c=06" title="&#39;아내의 맛&#39; 진화, 中 마마 생일에 &quot;요새 너무 들떴다…중국 가라&quot; 폭발 이미지" >
+                <img src="//thumb.zumst.com/130x80/https://static.news.zumst.com/images/51/2020/07/28/7567868c240141e8b1ca9758cb78167f.jpg" alt="&#39;아내의 맛&#39; 진화, 中 마마 생일에 &quot;요새 너무 들떴다…중국 가라&quot; 폭발 이미지">
+                                            </a>
+            <p><a href="/articles/61746715?c=06" title="&#39;아내의 맛&#39; 진화, 中 마마 생일에 &quot;요새 너무 들떴다…중국 가라&quot; 폭발">'아내의 맛' 진화, 中 마마 생일에 "요새 너무 들떴다…중국 가라" 폭발</a></p>
+            <span>뉴스1</span>
+        </div>
+    
+                <ul>
+                            <li>
+                                        
+<a class="" href="/articles/61746698?c=06" style="">'코리안 몬스터' 류현진, 토론토 에이스 활약 예고…♥배지현과 달달한 일상까지        </a>                                    </li>
+                            <li>
+                                        
+<a class="" href="/articles/61747085?c=06" style="">'불청' 새친구 송은영, 신인시절 회상…"챙겨준 어른" 김국진과 전화        </a>                                    </li>
+                            <li>
+                                        
+<a class="" href="/articles/61746242?c=06" style="">심진화, '심진화 장학금' 공개 "후배들 편지 받고 기뻐, 뿌듯하고 행복"        </a>                                    </li>
+                            <li>
+                                        
+<a class="" href="/articles/61746756?c=06" style="">박지윤·최동석 "정밀 검사 예정"…누리꾼 "쾌차하세요"        </a>                                    </li>
+                    </ul>
+    
+            </div>
+    <div class="bottom_box">
+        <h2><a href="/front?c=05">
+            <img src="//news.zumst.com/images/home/title_sub_8.png?_LM=1595911089000" alt="스포츠">
+        </a></h2>
+        <div class="h_right">
+            <ul class="htab">
+                <li><a href="/list?c=05&sc=37">축구</a></li>
+                <li><a href="/list?c=05&sc=38">야구</a></li>
+                <li class="last"><a href="/list?c=05&sc=39">농구</a></li>
+            </ul>
+        </div>
+                        
+
+                                            
+                <div class="thumb">
+            <a href="/articles/61746722?c=05" title="&#39;정훈 끝내기 스리런&#39; 롯데, NC와 빗속 혈전에서 재역전승 이미지" >
+                <img src="//thumb.zumst.com/130x80/https://static.news.zumst.com/images/3/2020/07/28/PYH2020072822400005100_P2.jpg" alt="&#39;정훈 끝내기 스리런&#39; 롯데, NC와 빗속 혈전에서 재역전승 이미지">
+                                            </a>
+            <p><a href="/articles/61746722?c=05" title="&#39;정훈 끝내기 스리런&#39; 롯데, NC와 빗속 혈전에서 재역전승">'정훈 끝내기 스리런' 롯데, NC와 빗속 혈전에서 재역전승</a></p>
+            <span>연합뉴스</span>
+        </div>
+    
+                <ul>
+                            <li>
+                                        
+<a class="" href="/articles/61746706?c=05" style="">'정훈 끝내기 3점포' 롯데, NC에 짜릿한 역전승…NC 3연패        </a>                                    </li>
+                            <li>
+                                        
+<a class="" href="/articles/61743680?c=05" style="">‘광주 여권 발언 논란’ 안경현 해설위원 “일베 비하 표현인 줄 몰랐다...사과드린다”        </a>                                    </li>
+                            <li>
+                                        
+<a class="" href="/articles/61746797?c=05" style="">KBO 심판위원회 "윌슨 투구 동작, 앞서 규칙 위반 전달"        </a>                                    </li>
+                            <li>
+                                        
+<a class="" href="/articles/61745957?c=05" style="">'빅리그 올스타 출신' 러셀이 보여준 것…안타·타점·차분함        </a>                                    </li>
+                    </ul>
+    
+            </div>
+    <div class="bottom_box">
+        <h2><a href="/front?c=08">
+            <img src="//news.zumst.com/images/home/title_sub_6.png?_LM=1595911089000" alt="IT/과학">
+        </a></h2>
+        <div class="h_right">
+            <ul class="htab">
+                <li><a href="/list?c=08&sc=55">인터넷</a></li>
+                <li><a href="/list?c=08&sc=56">통신</a></li>
+                <li class="last"><a href="/list?c=08&sc=58">과학</a></li>
+            </ul>
+        </div>
+                        
+
+                                            
+                <div class="thumb">
+            <a href="/articles/61742819?c=08" title="인류 최장 프로젝트…7개국 참여 ‘국제핵융합실험로’ 조립 시작 이미지" >
+                <img src="//thumb.zumst.com/130x80/https://static.news.zumst.com/images/109/2020/07/28/6a5abf03c6a34e2199444b80589fa2c8.jpg" alt="인류 최장 프로젝트…7개국 참여 ‘국제핵융합실험로’ 조립 시작 이미지">
+                                            </a>
+            <p><a href="/articles/61742819?c=08" title="인류 최장 프로젝트…7개국 참여 ‘국제핵융합실험로’ 조립 시작">인류 최장 프로젝트…7개국 참여 ‘국제핵융합실험로’ 조립 시작</a></p>
+            <span>KBS</span>
+        </div>
+    
+                <ul>
+                            <li>
+                                        
+<a class="" href="/articles/61732680?c=08" style="">네이버, 소상공인 금융서비스 집중…"기존 금융권과도 좋은 협력관계"        </a>                                    </li>
+                            <li>
+                                        
+<a class="" href="/articles/61745941?c=08" style="">네이버, 엑스퍼트 수수료 낮췄다        </a>                                    </li>
+                            <li>
+                                        
+<a class="" href="/articles/61746623?c=08" style="">삼성디스플레이, 노조활동 공식 인정        </a>                                    </li>
+                            <li>
+                                        
+<a class="" href="/articles/61741526?c=08" style="">최기영 "우주발사체 고체연료 사용제한 해제 획기적"        </a>                                    </li>
+                    </ul>
+    
+            </div>
+    <div class="bottom_box">
+        <h2><a href="/front?c=07">
+            <img src="//news.zumst.com/images/home/title_sub_7.png?_LM=1595911089000" alt="문화">
+        </a></h2>
+        <div class="h_right">
+            <ul class="htab">
+                <li><a href="/list?c=07&sc=46">영화</a></li>
+                <li><a href="/list?c=07&sc=47">공연</a></li>
+                <li class="last"><a href="/list?c=07&sc=49">요리</a></li>
+            </ul>
+        </div>
+                        
+
+                                            
+                <div class="thumb">
+            <a href="/articles/61733378?c=07" title="프랑스 대통령이 고종에게 선물한 도자기 첫 공개 이미지" >
+                <img src="//thumb.zumst.com/130x80/https://static.news.zumst.com/images/3/2020/07/28/PYH2020072809710001300_P2.jpg" alt="프랑스 대통령이 고종에게 선물한 도자기 첫 공개 이미지">
+                                            </a>
+            <p><a href="/articles/61733378?c=07" title="프랑스 대통령이 고종에게 선물한 도자기 첫 공개">프랑스 대통령이 고종에게 선물한 도자기 첫 공개</a></p>
+            <span>연합뉴스</span>
+        </div>
+    
+                <ul>
+                            <li>
+                                        
+<a class="" href="/articles/61742905?c=07" style="">"흥분됐다"…'다만 악', 황정민·이정재가 열 여름 액션 '신세계'        </a>                                    </li>
+                            <li>
+                                        
+<a class="" href="/articles/61744280?c=07" style="">박훈정 감독 '낙원의 밤', 베니스 국제 영화제 초정…韓 영화 유일        </a>                                    </li>
+                            <li>
+                                        
+<a class="" href="/articles/61733285?c=07" style="">'2차 가해 비판' 이소정 앵커 하차론 나올 이유 있나        </a>                                    </li>
+                            <li>
+                                        
+<a class="" href="/articles/61732670?c=07" style="">2020년 최고 기대작 '테넷' 8월 26일 한국서 전세계 최초 개봉 확정        </a>                                    </li>
+                    </ul>
+    
+            </div>
+    <div class="bottom_box">
+        <h2><a href="/front?c=09">
+            <img src="//news.zumst.com/images/home/title_sub_11.png?_LM=1595911089000" alt="사설/칼럼">
+        </a></h2>
+        <ul class="sc">
+                            <li><a href="/articles/61747843?c=09">[사설] 뉴질랜드 방송에 얼굴까지 공개된 성희롱 외교관</a></li>
+                            <li><a href="/articles/61747444?c=09">[사설] 부동산 부자 즐비한 통합당, 이래서 세금폭탄 운운했나</a></li>
+                            <li><a href="/articles/61747357?c=09">[사설] 정부發 전세 대란, 무주택 서민 벼랑으로 내몰고 있다</a></li>
+                            <li><a href="/articles/61747619?c=09">[칼럼] 꽃은 물만 필요하지 않습니다</a></li>
+                            <li><a href="/articles/61747522?c=09">[칼럼] 규제자유특구 '반쪽짜리' 안되려면</a></li>
+                    </ul>
+    </div>
+    <div class="bottom_box">
+        <h2><a href="/corrections">
+            <img src="//news.zumst.com/images/home/title_sub_12.png?_LM=1595911089000" alt="정정기사">
+        </a></h2>
+        <ul class="sc m_sp">
+                                            <li><a href="/articles/61620519?sc=1" title="[반론보도] &#39;대학 교수 성희롱 의혹…&quot;팔짱 한 번 껴봐&quot;&#39; 관련">[반론보도] '대학 교수 성희롱 의혹…"팔짱 한 번 껴봐"' 관련</a></li>
+                                            <li><a href="/articles/61656715?sc=1" title="[&lt;반론보도&gt; 춘천 하나뿐인 버스회사 운행 축소…인수한 업체, 알고보니 등 관련]">[<반론보도> 춘천 하나뿐인 버스회사 운행 축소…인수한 업체, 알고보니 등 관련]</a></li>
+                                            <li><a href="/articles/61651835?sc=1" title="[바로잡습니다] 21일 자 A33면 &#39;[김철중의 생로병사] 1초에 &quot;타타타타타타&quot; 말할 수 없다면 저설압 의심해봐야&#39;에서">[바로잡습니다] 21일 자 A33면 '[김철중의 생로병사] 1초에 "타타타타타타" 말할 수 없다면 저설압 의심해봐야'에서</a></li>
+                                            <li><a href="/articles/61619099?sc=1" title="[반론보도] &quot;1억 잘못 빌렸다 6000억 사업권 빼앗겨&quot; 관련">[반론보도] "1억 잘못 빌렸다 6000억 사업권 빼앗겨" 관련</a></li>
+                                            <li><a href="/articles/61594950?sc=1" title="[바로잡습니다] 20일 자 A25면 &#39;이수민, 혼인신고 선물은 우승컵&#39; 기사 중">[바로잡습니다] 20일 자 A25면 '이수민, 혼인신고 선물은 우승컵' 기사 중</a></li>
+                    </ul>
+    </div>
+    <div class="bottom_side">
+                <div class="side_box side_banner">
+            <iframe id="adFrameRightTop" src="//displayad.zum.com/NetInsight/html/zum/news/newspage@newszum_righttop"
+                    width="250" height="250" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+        </div>
+        <div class="side_box side_issue">
+            <h2>
+                <a href="/issues">
+                    <img src="//news.zumst.com/images/home/title_side_issue.png?_LM=1595911089000" alt="이슈뉴스">
+                </a>
+            </h2>
+            <ul>
+                                    <li>
+                        <div class="item">
+                            <a href="/articles/61747866?cm=news_home_issue&thumb=1&r=1" class="news">
+                                <div class="thumb">
+                                    <img src="//thumb.zumst.com/120x74/https://static.news.zumst.com/images/107/2020/07/29/6c9120f7f1934caba161431bba991d3a.jpg">
+                                </div>
+                                <p class="title">7명 제친 손흥민 번리전 골, 19-20시즌 최고의 골 1위 질주</p>
+                            </a>
+                            <div class="issue">
+								<span class="subject">
+									<a href="/issuelist/34413990"># 손흥민으로 바라보는 축구세상</a>
+								</span>
+                                <span class="link">
+									<a href="/issuelist/34413990">전체기사 <span>6240</span>건</a>
+								</span>
+                            </div>
+                        </div>
+                    </li>
+                                    <li>
+                        <div class="item">
+                            <a href="/articles/61746868?cm=news_home_issue&thumb=1&r=2" class="news">
+                                <div class="thumb">
+                                    <img src="//thumb.zumst.com/120x74/https://static.news.zumst.com/images/2/2020/07/29/23441a9e5893467cb72d321409e620a1.jpg">
+                                </div>
+                                <p class="title">민주당, 대선 후보 선출 180일 전에서 100일 전 변경 검토</p>
+                            </a>
+                            <div class="issue">
+								<span class="subject">
+									<a href="/issuelist/61140486"># 시작된 차기 대선 경쟁</a>
+								</span>
+                                <span class="link">
+									<a href="/issuelist/61140486">전체기사 <span>228</span>건</a>
+								</span>
+                            </div>
+                        </div>
+                    </li>
+                                    <li>
+                        <div class="item">
+                            <a href="/articles/61746403?cm=news_home_issue&thumb=1&r=3" class="news">
+                                <div class="thumb">
+                                    <img src="//thumb.zumst.com/120x74/https://static.news.zumst.com/images/51/2020/07/28/ddb91ae6ee814f80a65e0c2aaeb644a5.jpg">
+                                </div>
+                                <p class="title">"문재인을 파면한다" 부동산대책 반발 네티즌 실검 챌린지</p>
+                            </a>
+                            <div class="issue">
+								<span class="subject">
+									<a href="/issuelist/61246938"># 끝없는 부동산 전쟁</a>
+								</span>
+                                <span class="link">
+									<a href="/issuelist/61246938">전체기사 <span>1373</span>건</a>
+								</span>
+                            </div>
+                        </div>
+                    </li>
+                            </ul>
+        </div>
+                                    <div class="side_box side_sympathy">
+                <h2>
+                    <img src="//news.zumst.com/images/home/title_side_sympathy.png?_LM=1595911089000" alt="공감 뉴스">
+                </h2>
+                <ul class="sub_tabs" id="commentShareTabs">
+                                            <li>
+                            <a href="javascript:void(0)">댓글순</a>
+                        </li>
+                                                                <li>
+                            <a href="javascript:void(0)">공유순</a>
+                        </li>
+                                    </ul>
+                <div class="sub_lists" id="commentShareList">
+                                            <div class="news_list">
+                            <h3 class="blind">댓글순 랭킹</h3>
+                            <ul>
+                                                                    <li>
+                                        <strong class="rank">1</strong>
+                                        <a href="/articles/61742799?cm=news_home_comment&thumb=0&r=1">
+                                            <p class="title">신평 "추미애, 장관 부적합…판사때 지방발령에 펑펑 울며 항의"</p>
+                                            <span class="count">(<span>22</span>)</span>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <strong class="rank">2</strong>
+                                        <a href="/articles/61744797?cm=news_home_comment&thumb=0&r=2">
+                                            <p class="title">신평 "추미애, 자리에 안 맞는 인물…안하무인격 태도"</p>
+                                            <span class="count">(<span>20</span>)</span>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <strong class="rank">3</strong>
+                                        <a href="/articles/61744678?cm=news_home_comment&thumb=0&r=3">
+                                            <p class="title">176석의 완력…종부세 등 13건법안 처리 반나절이면 충분했다</p>
+                                            <span class="count">(<span>17</span>)</span>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <strong class="rank">4</strong>
+                                        <a href="/articles/61745310?cm=news_home_comment&thumb=0&r=4">
+                                            <p class="title">추미애 "지방발령에 '펑펑 울었다' 글은 허위, 법적 대응"</p>
+                                            <span class="count">(<span>12</span>)</span>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <strong class="rank">5</strong>
+                                        <a href="/articles/61732350?cm=news_home_comment&thumb=0&r=5">
+                                            <p class="title">소녀상에 무릎 꿇은 아베…日 "사실이면 한일관계에 결정적 영향"</p>
+                                            <span class="count">(<span>11</span>)</span>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <strong class="rank">6</strong>
+                                        <a href="/articles/61745369?cm=news_home_comment&thumb=0&r=6">
+                                            <p class="title">추미애 "내가 지방발령에 펑펑 울었다는 건 허위…법적 조치"</p>
+                                            <span class="count">(<span>11</span>)</span>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <strong class="rank">7</strong>
+                                        <a href="/articles/61731410?cm=news_home_comment&thumb=0&r=7">
+                                            <p class="title">일본, '아베 사죄상' 사실이면 "한일관계에 결정적 영향"</p>
+                                            <span class="count">(<span>10</span>)</span>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <strong class="rank">8</strong>
+                                        <a href="/articles/61745639?cm=news_home_comment&thumb=0&r=8">
+                                            <p class="title">'박원순 피해자 2차 가해 논란' 박지희 프리랜서 아나운서, TBS 프로그램 하차</p>
+                                            <span class="count">(<span>10</span>)</span>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <strong class="rank">9</strong>
+                                        <a href="/articles/61734363?cm=news_home_comment&thumb=0&r=9">
+                                            <p class="title">고민정 "댓글 99%가 원하시니" 남편 강사섭외 밀어붙이기</p>
+                                            <span class="count">(<span>9</span>)</span>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <strong class="rank">10</strong>
+                                        <a href="/articles/61745564?cm=news_home_comment&thumb=0&r=10">
+                                            <p class="title">이재명 "내가 좀 싸가지 없었다···'지지율 뽕'에 잠깐 해까닥"</p>
+                                            <span class="count">(<span>9</span>)</span>
+                                        </a>
+                                    </li>
+                                                            </ul>
+                        </div>
+                                                                <div class="news_list">
+                            <h3 class="blind">공유순 랭킹</h3>
+                            <ul>
+                                                                    <li>
+                                        <strong class="rank">1</strong>
+                                        <a href="/articles/61743558?cm=news_home_share&thumb=0&r=1">
+                                            <p class="title">박지윤·최동석 가족 지켜준 ‘볼보 XC90’ 화제… 연예계 ‘안전한 차’ 입소문</p>
+                                            <span class="count">(<span>12</span>)</span>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <strong class="rank">2</strong>
+                                        <a href="/articles/61728437?cm=news_home_share&thumb=0&r=2">
+                                            <p class="title">종잇장처럼 구겨졌는데…볼보가 박지윤·최동석 부부 살렸다?</p>
+                                            <span class="count">(<span>9</span>)</span>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <strong class="rank">3</strong>
+                                        <a href="/articles/61746601?cm=news_home_share&thumb=0&r=3">
+                                            <p class="title">코로나 백신 받으려고 남중국해 양보했다…두테르테, 시진핑에 "SOS"</p>
+                                            <span class="count">(<span>7</span>)</span>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <strong class="rank">4</strong>
+                                        <a href="/articles/61742105?cm=news_home_share&thumb=0&r=4">
+                                            <p class="title">'문재인을 파면한다' 급상승 검색어로, 들끓는 부동산 민심</p>
+                                            <span class="count">(<span>5</span>)</span>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <strong class="rank">5</strong>
+                                        <a href="/articles/61735960?cm=news_home_share&thumb=0&r=5">
+                                            <p class="title">'문재인을 파면한다' 文 정부 부동산 정책 반대 '실검 챌린지'</p>
+                                            <span class="count">(<span>4</span>)</span>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <strong class="rank">6</strong>
+                                        <a href="/articles/61743524?cm=news_home_share&thumb=0&r=6">
+                                            <p class="title">문대통령, 박지원 국정원장 임명안 '초고속' 재가…"29일부터 임기 시작"</p>
+                                            <span class="count">(<span>3</span>)</span>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <strong class="rank">7</strong>
+                                        <a href="/articles/61734104?cm=news_home_share&thumb=0&r=7">
+                                            <p class="title">이재명 "4급 이상 도 공무원 등 연말까지 실거주 외 주택 모두 처분하라"</p>
+                                            <span class="count">(<span>3</span>)</span>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <strong class="rank">8</strong>
+                                        <a href="/articles/61730040?cm=news_home_share&thumb=0&r=8">
+                                            <p class="title">다주택자 413명에 칼 빼들었다…조사대상 절반 30대</p>
+                                            <span class="count">(<span>3</span>)</span>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <strong class="rank">9</strong>
+                                        <a href="/articles/61726356?cm=news_home_share&thumb=0&r=9">
+                                            <p class="title">만성질환 당뇨병, 100세 시대에 맞춘 올바른 관리방법은?</p>
+                                            <span class="count">(<span>3</span>)</span>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <strong class="rank">10</strong>
+                                        <a href="/articles/61745639?cm=news_home_share&thumb=0&r=10">
+                                            <p class="title">'박원순 피해자 2차 가해 논란' 박지희 프리랜서 아나운서, TBS 프로그램 하차</p>
+                                            <span class="count">(<span>2</span>)</span>
+                                        </a>
+                                    </li>
+                                                            </ul>
+                        </div>
+                                    </div>
+            </div>
+            </div>
+</div>
+</div>
+
+<div id="footer">
+    <div class="menu">
+        <ul>
+            <li><a href="http://policy.zum.com/terms">이용약관</a></li>
+            <li><a href="http://policy.zum.com/info"><strong>개인정보처리방침</strong></a></li>
+            <li><a href="http://help.zum.com/faq" target="_blank">고객센터</a></li>
+            <li><a href="/help">도움말</a></li>
+            <li><a href="/editRule">뉴스 편집원칙</a></li>
+            <li class="last"><a href="http://www.zuminternet.com/notice">공지사항</a></li>
+        </ul>
+        <br/>
+        <ul style="margin-top:5px;">
+            <li>기사배열책임자 : 최주연</li>
+            <li class="last">청소년보호책임자 : 최주연</li>
+        </ul>
+    </div>
+    <address>Copyright &copy; <a href="http://www.zuminternet.com" target="_blank">ZUM internet</a> Corp. All Rights Reserved.</address>
+</div>
+    <div style="display:none;"><span id="ip_addr"></span></div>
+    <div id="sectionCategory" style="display: none">@newshome_left_top</div>
+    <div id="adx_newszum_article_leftwing" class="banner_ad_floating"></div>
+    <div id="target_ad_script"></div>
+<div class="pc_mobile d_btn_mobile_page" style="display: none"><a href="javascript:;">모바일웹화면보기</a></div>
+<script type="text/javascript">
+    (function(){
+        $('#footer').on('click', 'a', function(e) {
+            if ($(this).attr('target') != '_blank') {
+                e.preventDefault();
+                var url = $(this).attr('href');
+                setTimeout(function() {
+                    location.href = url;
+                }, 500);
+            }
+            ESTatTracker.push(['@Click', {
+                pos: 'nz_footer',
+                outurl: $(this).attr('href'),
+                codeVersion: 'news_6.1.14-RELEASE'
+            }]);
+        });
+
+        // 모바일 기기로 접속할 경우, 푸터에 모바일 페이지 이동 링크 추가
+        // 기사 페이지 PC/MOBILE 연동
+
+        // http://detectmobilebrowsers.com/
+        var ua = (navigator.userAgent || navigator.vendor || window.opera);
+        if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(ua) ||
+                /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(ua.substr(0, 4))) {
+            if (true) {
+                $(".d_btn_mobile_page").show();
+            }
+        }
+
+        // 모바일 페이지 전환
+        $(".d_btn_mobile_page a").click(function () {
+            $.cookie("viewMode", "mobile", {expires:1, path:"/", domain:".zum.com"});
+
+            if (false) {
+                location.href = "";
+            } else {
+                location.href = "https://m.news.zum.com";
+            }
+        });
+    })();
+</script>
+    <script type="text/javascript">
+    var ESTatTracker = ESTatTracker || [];
+    $(function() {
+        ESTatTracker.push(['@PageView', {
+            category: '00',
+            codeVersion: 'news_6.1.14-RELEASE',
+            pos: 'nz_lnb'
+        }]);
+    });
+</script><script type="text/javascript">
+    var ESTatTracker = ESTatTracker || [];
+    (function() {
+        var at = document.createElement('script');
+        at.type = 'text/javascript';
+        at.async = true;
+        at.src = '//estat.zum.com/scripts/at.js';
+
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(at, s);
+    })();
+</script>
+<script type="text/javascript" src="//news.zumst.com/scripts/newsv2.js?_LM=1595911089000"></script>
+<script type="text/javascript" src="//news.zumst.com/scripts/newshome.js?_LM=1595911089000"></script>
+<script type="text/javascript" src="//news.zumst.com/scripts/searchRank.js?_LM=1595911089000"></script>
+<script type="text/javascript" src="//news.zumst.com/scripts/adDefence.js?_LM=1595911089000"></script>
+<script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    //see: newsv2.js autoreload
+    if ($.cookie('isAutoReload') !== 'Y') {
+        ga('create', 'UA-48129885-1', 'zum.com');
+        ga('send', 'pageview');
+    }
+</script>
+</body>
+</html>

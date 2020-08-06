@@ -49,6 +49,15 @@ class Extractor(TimestampExtractor):
         ( 'vias.org',                       '//td[@align="right"]/text()'),
         ( 'youthdaily.co.kr',               '(//ul[@class="art_info"]/li/text())[2]'),
 
+        ( 'globalecho.org',                 '//meta[@name="shareaholic:article_modified_time"]/@content'),
+        ( 'icanswitzerland.ch',             '//time[@class="updated"]/@datetime'),
+        ( 'infox.ru',                       '//meta[@itemprop="dateModified"]/@content'),
+        ( 'lessentiel.lu',                  '//div[@class="published clearfix"]/p/span'),
+        ( 'niconews55.com',                 '//time[@class="date gf entry-date undo updated"]/@datetime'),
+        ( 'saymar.org',                     '//span[@class="updated"]'),
+        ( 'sternchen4you.de',               '//time[@class="updated"]/@datetime'),
+        ( 'varlamov.ru',                    '//span[@class="j-e-date"]/time[@itemprop="dateModified"]'),
+
         # meta xpaths
         ( None, '//meta[@*="DCTERMS.modified"]/@content'),
         ( None, '//meta[@*="Date-Revision-yyyymmdd"]/@content'),

@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137843919-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-137843919-1');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0">
+
+    <!--HEAD_INCLUDE-->
+    <title>
+        NK LOGIN - 북한에 로그인하다.    </title>
+
+    <link rel="icon" href="https://s3.ap-northeast-2.amazonaws.com/nkgcdn/faviconlogo.ico" sizes="32x32" type="image/png">
+    <link rel="icon" href="https://s3.ap-northeast-2.amazonaws.com/nkgcdn/faviconlogo.ico" sizes="16x16" type="image/png">
+
+    <meta name="title" content="NK LOGIN - 북한에 로그인하다." />
+    <meta name="description" content="NK LOGIN ,북한 소식, 북한 컨텐츠, 동영상, 남북 관계 전문가 논단,주성하" />
+    <meta property="og:site_name" content="NK LOGIN - 북한에 로그인하다.">
+    <meta property="og:url" content="https://nklogin.com" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="NK LOGIN - 북한에 로그인하다." />
+    <meta property="og:description" content="NK LOGIN , 북한 소식, 북한 컨텐츠, 동영상, 남북 관계 전문가 논단,주성하 " />
+    <meta property="og:image" content="https://s3.ap-northeast-2.amazonaws.com/nkgcdn/nkloginogimage.png" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="fb:app_id" content="979864942402071">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:url" content="https://nklogin.com">
+    <meta name="twitter:title" content="NK LOGIN - 북한에 로그인하다.">
+    <meta name="twitter:description" content="NK LOGIN , 북한 소식, 북한 컨텐츠, 동영상, 남북 관계 전문가 논단,주성하 ">
+    <meta name="twitter:image" content="https://s3.ap-northeast-2.amazonaws.com/nkgcdn/nkloginogimage.png">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.300.0/aws-sdk.min.js"></script>
+
+    <script  language="JavaScript">
+        var loginenforce =false;
+
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '979864942402071',
+                cookie     : true,  // enable cookies to allow the server to access
+                xfbml      : true,  // parse social plugins on this page
+                version    : 'v3.1' // use graph api version 2.8
+            });
+        };
+
+        windowwidth =$(window).width();
+        if(windowwidth >1000){
+            device ="pc";
+        }else{
+            device ="mobile";
+        }
+
+
+    </script>
+    <script src="/application/views/lib/nklogin.js?ver=1596127792"></script>
+    <script src="https://s3.ap-northeast-2.amazonaws.com/nkgcdn/sweetalert2.all.min.js"></script>
+
+
+    <!-- https://fontawesome.com/v4.7.0/icons/-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://s3.ap-northeast-2.amazonaws.com/nkgcdn/assets/css/font-awesome.css">
+
+    <link rel="stylesheet" href="https://s3.ap-northeast-2.amazonaws.com/nkgcdn/bootstrap-social.css">
+    <link rel="stylesheet" href="/application/views/lib/nklogin.css?ver=1596127792">
+
+
+    <link rel="stylesheet" href="https://s3.ap-northeast-2.amazonaws.com/nkgcdn/assets/css/font-awesome.css">
+    <link rel="stylesheet" href="https://s3.ap-northeast-2.amazonaws.com/nkgcdn/bootstrap-social.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+
+
+</head>
+
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-light fixed-top bd-navbar "  style="background-color: #ffffff;">
+    <div class="container" id="tophead">
+        <a class="navbar-brand" href="/">
+            <img src="https://s3.ap-northeast-2.amazonaws.com/nkgcdn/nkloginlogo.png" width="200" class="d-inline-block align-top" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" style="padding-left: 120px">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown" style="padding-left: 10px">
+                    <a href="/?category=news" class="nav-link "  style="color:black;font-size: 0.9em"    aria-expanded="false">
+                        북한소식
+                    </a>
+
+                </li>
+                <li class="nav-item dropdown"  style="padding-left: 10px">
+                    <a href="/?category=analysis" class="nav-link "   style="color:black;font-size: 0.9em"  >
+                        심층분석
+                    </a>
+
+                </li>
+                <li class="nav-item dropdown"  style="padding-left: 10px">
+                    <a href="/?category=topic" class="nav-link "   style="color:black;font-size: 0.9em"  >
+                        화제의 글
+                    </a>
+
+                </li>
+                <li class="nav-item dropdown"  style="padding-left: 10px">
+                    <a href="/?category=ncast" class="nav-link "   style="color:black;font-size: 0.9em"  >
+                       대북방송
+                    </a>
+
+                </li>
+
+                <li class="nav-item dropdown"  style="padding-left: 10px">
+                    <a href="/?category=youtube" class="nav-link "   style="color:black;font-size: 0.9em"  >
+                        유튜브
+                    </a>
+
+                </li>
+                <li class="nav-item dropdown"  style="padding-left: 10px">
+                    <a href="/post/Boardmng?category=free" class="nav-link "   style="color:black;font-size: 0.9em" >
+                        남북토론
+                    </a>
+
+                </li>
+
+                <li class="nav-item dropdown"  style="padding-left: 10px">
+                    <a href="/post/Boardmng?category=notice" class="nav-link "   style="color:black;font-size: 0.9em" >
+                        공지사항
+                    </a>
+
+                </li>
+
+                <!--
+                                -->
+
+            </ul>
+        </div>
+        <!--
+                    <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto ">
+
+                    <li class="nav-item" style="padding-left: 120px;">
+
+
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+
+                                            <li class="nav-item   "  style="padding-left: 10px">
+                            <a href="/member/Login"   class="nav-link "  style="color: black"  >
+                                <i class="fa fa-sign-in" aria-hidden="true"></i>
+                                로그인
+                            </a>
+                        </li>
+                    
+
+                </ul>
+            </div>
+                -->
+
+
+
+    </div>
+</nav>
+
+<div class="clearfix d-block d-md-none" style="padding-top: 60px"></div><div class="container">
+    <div class="row flex-xl-nowrap">
+
+        <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 "  role="main">
+            <div class="clearfix d-block d-md-none" style="padding-top: 50px"></div>
+
+            <div class="row col-md-12">
+                <h7 class="pull-left"><b>전체 게시물</b> </h7>
+            </div>
+
+            <div class="clearfix  " style="padding-top: 10px;"></div>
+
+
+            <div id="mainpostlist" style="width:100%;">
+
+                                    <div class="text-left  small" style="width:100%;">
+
+                        <div class="clearfix" style="padding-bottom: 10px"></div>
+                        <div class="shorttitle" style="font-size: 1.6em">
+                            <h3><a style="cursor: pointer;color: black"
+                                   href="/post/Postmng?ptype=v&contentkey=BFC1596043304">미국 대선을 바라보는 김정은의 고민과 한반도의 운명</a>
+                            </h3>
+                        </div>
+
+                        <div style="font-size: 1.6em">
+                            <span style=" font-size: 0.6em;padding-left: 5px;"> 2020.07.30  02:21</span>
+                            <div class="pull-right">
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                    class="fas fa-eye"></i>  368</span>
+                                <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                            class="fas fa-thumbs-up"></i> 0</span>
+                                <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                            class="fas fa-comment-dots"></i> 0 </span>
+                            </div>
+                        </div>
+
+                        <div class="clearfix" style="padding-bottom: 10px"></div>
+
+
+                        <div style="width: 100%; overflow: hidden;">
+                            <a style="cursor: pointer" href="/post/Postmng?ptype=v&contentkey=BFC1596043304">
+                                <img src="https://i.ytimg.com/vi/oHxFsB4-_JM/maxresdefault.jpg"
+                                     style="width: 100%;height: 280px;object-fit: cover;" class="img-thumbnail">
+                            </a>
+
+                        </div>
+                        <div class="clearfix" style="padding-top: 5px"></div>
+                        <div style="width: 100%;">
+                                <span style="padding-left: 0px; font-size: 1.2em;color: #737373">
+                                11월 3일 미국 대통령 선거가 실시됩니다. 석 달 남짓 앞으로 다가온 미국 대선의 결과를 전 세계가 주시하고 있지만, 누구보다 초조하게 지켜볼 사람은 김정은이라고 할 수 있습니다.만약 도널드 트럼프 미국 대통령이 재선에 실패해 조 바이든 대통령 시대가 열린다면 201.....
+                                </span>
+                        </div>
+
+                    </div>
+                    <Br>
+                    <hr>
+
+                    
+
+                            <div class="text-left  small" style="width:100%;">
+
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+                                <div class="shorttitle" style="font-size: 1.6em">
+                                    <a style="cursor: pointer;color: black" href="/post/Postmng?ptype=v&contentkey=BFC1595575828">
+                                        <strong> 사단장 승진에 실패한 현송월의 남편 </strong></a>
+                                    <span style=" font-size: 0.6em;padding-left: 5px;"> 2020.07.24  16:30</span>
+                                    <div class="pull-right">
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-eye"></i>  1,565</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-thumbs-up"></i> 0</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-comment-dots"></i> 2 </span>
+                                    </div>
+                                </div>
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+
+                                <div class="pull-left" style="width: 150px; overflow: hidden;padding-right: 10px">
+                                    <a style="cursor: pointer" href="/post/Postmng?ptype=v&contentkey=BFC1595575828">
+                                        <img
+                                            src="https://i.ytimg.com/vi/COeb1_CWxuQ/maxresdefault.jpg"
+                                            style="width: 100%;height: 100px;object-fit: cover;"
+                                            class="img-thumbnail"></a>
+
+                                </div>
+                                <span style="padding-left: 0px; font-size: 1.2em;color: #737373">
+                                    여러분들의 응원에 힘입어 최근 유튜브에서 구독자가 10만 명이 넘으면 주는 실버버튼이 왔습니다. 물론 10만 명이 넘으면 누구나 받지만, 주성하TV의 실버버튼은 바로 구독자 여러분들이 만들어주신 것이기 때문에 오늘 이렇게 함께 공유해 보여드립니다.10만 명을 넘은 것이.....
+                                    </span>
+                                <div class="clearfix" style="padding-top: 5px"></div>
+
+                            </div>
+                            <Br>
+                            <hr>
+
+                            
+
+                            <div class="text-left  small" style="width:100%;">
+
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+                                <div class="shorttitle" style="font-size: 1.6em">
+                                    <a style="cursor: pointer;color: black" href="/post/Postmng?ptype=v&contentkey=BFC1595295270">
+                                        <strong> 생사를 하늘에 맡긴 동해의 비극 현장 체험기 </strong></a>
+                                    <span style=" font-size: 0.6em;padding-left: 5px;"> 2020.07.21  10:35</span>
+                                    <div class="pull-right">
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-eye"></i>  1,263</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-thumbs-up"></i> 0</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-comment-dots"></i> 1 </span>
+                                    </div>
+                                </div>
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+
+                                <div class="pull-left" style="width: 150px; overflow: hidden;padding-right: 10px">
+                                    <a style="cursor: pointer" href="/post/Postmng?ptype=v&contentkey=BFC1595295270">
+                                        <img
+                                            src="https://i.ytimg.com/vi/ixTYmF6bRVg/maxresdefault.jpg"
+                                            style="width: 100%;height: 100px;object-fit: cover;"
+                                            class="img-thumbnail"></a>
+
+                                </div>
+                                <span style="padding-left: 0px; font-size: 1.2em;color: #737373">
+                                    여름이 왔으니 오늘은 제가 북에서 매년 여름마다 겪었던 극적인 옛 이야기 하나 해드리려 합니다. 주성하TV는 끝까지 들어주시면 힘을 얻습니다.제가 김일성대, 그것도 정말 들어가기 쉽지 않은 외문학부를 졸업했다고 하니 제가 특권층 자식인줄 아는 분들이 꽤 많습니다.아닙니.....
+                                    </span>
+                                <div class="clearfix" style="padding-top: 5px"></div>
+
+                            </div>
+                            <Br>
+                            <hr>
+
+                            
+
+                            <div class="text-left  small" style="width:100%;">
+
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+                                <div class="shorttitle" style="font-size: 1.6em">
+                                    <a style="cursor: pointer;color: black" href="/post/Postmng?ptype=v&contentkey=BFC1594888751">
+                                        <strong> 김일성 닮은 꼴 1호 배우의 삶 </strong></a>
+                                    <span style=" font-size: 0.6em;padding-left: 5px;"> 2020.07.16  17:39</span>
+                                    <div class="pull-right">
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-eye"></i>  783</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-thumbs-up"></i> 0</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-comment-dots"></i> 4 </span>
+                                    </div>
+                                </div>
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+
+                                <div class="pull-left" style="width: 150px; overflow: hidden;padding-right: 10px">
+                                    <a style="cursor: pointer" href="/post/Postmng?ptype=v&contentkey=BFC1594888751">
+                                        <img
+                                            src="https://i.ytimg.com/vi/JIYvstcRYAc/maxresdefault.jpg"
+                                            style="width: 100%;height: 100px;object-fit: cover;"
+                                            class="img-thumbnail"></a>
+
+                                </div>
+                                <span style="padding-left: 0px; font-size: 1.2em;color: #737373">
+                                    저번 시간에 가짜 김정은이 있을지를 놓고 말씀드렸는데, 그 이야기를 하다보니 과거 김일성, 김정일의 역을 맡았던 배우들, 즉 1호 배우들은 어떻게 살았는지 그걸 말씀드리고 싶어졌습니다.먼저 김일성 배역을 했던 두 명의 배우들에 대해 이야기해 드리겠습니다. 원래 김일성 .....
+                                    </span>
+                                <div class="clearfix" style="padding-top: 5px"></div>
+
+                            </div>
+                            <Br>
+                            <hr>
+
+                            
+
+                            <div class="text-left  small" style="width:100%;">
+
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+                                <div class="shorttitle" style="font-size: 1.6em">
+                                    <a style="cursor: pointer;color: black" href="/post/Postmng?ptype=v&contentkey=BFC1594787819">
+                                        <strong> 북에서 태어난 죄, 미인들의 비참한 운명 </strong></a>
+                                    <span style=" font-size: 0.6em;padding-left: 5px;"> 2020.07.15  13:38</span>
+                                    <div class="pull-right">
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-eye"></i>  1,959</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-thumbs-up"></i> 0</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-comment-dots"></i> 3 </span>
+                                    </div>
+                                </div>
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+
+                                <div class="pull-left" style="width: 150px; overflow: hidden;padding-right: 10px">
+                                    <a style="cursor: pointer" href="/post/Postmng?ptype=v&contentkey=BFC1594787819">
+                                        <img
+                                            src="https://i.ytimg.com/vi/FpqTDoV2XsY/maxresdefault.jpg"
+                                            style="width: 100%;height: 100px;object-fit: cover;"
+                                            class="img-thumbnail"></a>
+
+                                </div>
+                                <span style="padding-left: 0px; font-size: 1.2em;color: #737373">
+                                    한국에 오니 많은 사람들이 &lsquo;남남북녀&rsquo;라는 말이 사실이냐고 묻습니다. 이럴 때마다 저는 단호하게 &lsquo;남남남녀&rsquo;라고 말합니다. 지금은 한국 여성들이 훨씬 예쁘다고 생각합니다.제가 처음부터 그랬던 것은 아닙니다. 미학이란 것이 주관.....
+                                    </span>
+                                <div class="clearfix" style="padding-top: 5px"></div>
+
+                            </div>
+                            <Br>
+                            <hr>
+
+                            
+
+                            <div class="text-left  small" style="width:100%;">
+
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+                                <div class="shorttitle" style="font-size: 1.6em">
+                                    <a style="cursor: pointer;color: black" href="/post/Postmng?ptype=v&contentkey=BFC1594275505">
+                                        <strong> 김정은은 누구의 사위일까. 장인 최초 공개 </strong></a>
+                                    <span style=" font-size: 0.6em;padding-left: 5px;"> 2020.07.09  15:18</span>
+                                    <div class="pull-right">
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-eye"></i>  2,087</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-thumbs-up"></i> 0</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-comment-dots"></i> 1 </span>
+                                    </div>
+                                </div>
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+
+                                <div class="pull-left" style="width: 150px; overflow: hidden;padding-right: 10px">
+                                    <a style="cursor: pointer" href="/post/Postmng?ptype=v&contentkey=BFC1594275505">
+                                        <img
+                                            src="https://i.ytimg.com/vi/2DKdA59tIa0/maxresdefault.jpg"
+                                            style="width: 100%;height: 100px;object-fit: cover;"
+                                            class="img-thumbnail"></a>
+
+                                </div>
+                                <span style="padding-left: 0px; font-size: 1.2em;color: #737373">
+                                    이번 영상에선 김정은의 장인, 리설주의 아버지가 누구인지 세계 최초로 공개하려 합니다.리설주의 집안에 대해선 거의 알려진 바가 없습니다. 그의 아버지가 비행사였다 이런 이야기밖에 알려진 것이 없는데, 아마 알고 보면 많은 분들이 놀랄 그런 사람입니다.이야기에 앞서 말씀.....
+                                    </span>
+                                <div class="clearfix" style="padding-top: 5px"></div>
+
+                            </div>
+                            <Br>
+                            <hr>
+
+                            
+
+                            <div class="text-left  small" style="width:100%;">
+
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+                                <div class="shorttitle" style="font-size: 1.6em">
+                                    <a style="cursor: pointer;color: black" href="/post/Postmng?ptype=v&contentkey=BFC1594107341">
+                                        <strong> 북한 수재들만 먹었던 광우병 의심 소고기 </strong></a>
+                                    <span style=" font-size: 0.6em;padding-left: 5px;"> 2020.07.07  16:35</span>
+                                    <div class="pull-right">
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-eye"></i>  646</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-thumbs-up"></i> 0</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-comment-dots"></i> 1 </span>
+                                    </div>
+                                </div>
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+
+                                <div class="pull-left" style="width: 150px; overflow: hidden;padding-right: 10px">
+                                    <a style="cursor: pointer" href="/post/Postmng?ptype=v&contentkey=BFC1594107341">
+                                        <img
+                                            src="https://i.ytimg.com/vi/2a2lhtMxTC4/maxresdefault.jpg"
+                                            style="width: 100%;height: 100px;object-fit: cover;"
+                                            class="img-thumbnail"></a>
+
+                                </div>
+                                <span style="padding-left: 0px; font-size: 1.2em;color: #737373">
+                                    요즘 전염병으로 전 세계가 난리가 났죠. 경제활동이 중단되고 실업률이 치솟고, 이 힘든 시기를 견디시는 모든 분들께 함께 힘내자는 말씀드리고 싶습니다.북한은 발병자가 한 명도 없다고 주장하는데, 지방에 진단키트나 있는지 모르겠습니다. 그럼에도 제가 북한 국경지역과 전화.....
+                                    </span>
+                                <div class="clearfix" style="padding-top: 5px"></div>
+
+                            </div>
+                            <Br>
+                            <hr>
+
+                            
+
+                            <div class="text-left  small" style="width:100%;">
+
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+                                <div class="shorttitle" style="font-size: 1.6em">
+                                    <a style="cursor: pointer;color: black" href="/post/Postmng?ptype=v&contentkey=BFC1593928428">
+                                        <strong> 21세기에 적응 못한 대남공작원들에게 보내는 편지 </strong></a>
+                                    <span style=" font-size: 0.6em;padding-left: 5px;"> 2020.07.05  14:53</span>
+                                    <div class="pull-right">
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-eye"></i>  1,681</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-thumbs-up"></i> 0</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-comment-dots"></i> 2 </span>
+                                    </div>
+                                </div>
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+
+                                <div class="pull-left" style="width: 150px; overflow: hidden;padding-right: 10px">
+                                    <a style="cursor: pointer" href="/post/Postmng?ptype=v&contentkey=BFC1593928428">
+                                        <img
+                                            src="https://i.ytimg.com/vi/EdF4LNPs_bo/maxresdefault.jpg"
+                                            style="width: 100%;height: 100px;object-fit: cover;"
+                                            class="img-thumbnail"></a>
+
+                                </div>
+                                <span style="padding-left: 0px; font-size: 1.2em;color: #737373">
+                                    이렇게 남북간의 정세가 악화되면 북한이 허세를 부리기 위해 하던 일들이 있는데, 오늘은 그중 하나인 난수방송에 대해 이야기할까 합니다.북한은 2016년 7월 15일 평양방송에서 난수방송을 재개한 이후 밤 12시를 전후해서 2016년 19회, 2017년 43회, 2018.....
+                                    </span>
+                                <div class="clearfix" style="padding-top: 5px"></div>
+
+                            </div>
+                            <Br>
+                            <hr>
+
+                            
+
+                            <div class="text-left  small" style="width:100%;">
+
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+                                <div class="shorttitle" style="font-size: 1.6em">
+                                    <a style="cursor: pointer;color: black" href="/post/Postmng?ptype=v&contentkey=BFC1593675749">
+                                        <strong> 김정은 옹립 충신 이제강 사고사 진실 최초공개 </strong></a>
+                                    <span style=" font-size: 0.6em;padding-left: 5px;"> 2020.07.02  16:42</span>
+                                    <div class="pull-right">
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-eye"></i>  956</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-thumbs-up"></i> 0</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-comment-dots"></i> 3 </span>
+                                    </div>
+                                </div>
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+
+                                <div class="pull-left" style="width: 150px; overflow: hidden;padding-right: 10px">
+                                    <a style="cursor: pointer" href="/post/Postmng?ptype=v&contentkey=BFC1593675749">
+                                        <img
+                                            src="https://i.ytimg.com/vi/7THpdpaboBw/maxresdefault.jpg"
+                                            style="width: 100%;height: 100px;object-fit: cover;"
+                                            class="img-thumbnail"></a>
+
+                                </div>
+                                <span style="padding-left: 0px; font-size: 1.2em;color: #737373">
+                                    북한에는 의문의 고위층 교통사고가 많죠. 잘 나가다가 갑자기 교통사고로 사라지는 경우가 적지 않습니다.21세기에 교통사고로 사라진 대표적 인물을 든다면 2003년 김용순 대남비서, 2010년 6월 이제강 조직지도부 제1부부장, 2014년 12월 김양건 대남비서 겸 통전.....
+                                    </span>
+                                <div class="clearfix" style="padding-top: 5px"></div>
+
+                            </div>
+                            <Br>
+                            <hr>
+
+                            
+
+                            <div class="text-left  small" style="width:100%;">
+
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+                                <div class="shorttitle" style="font-size: 1.6em">
+                                    <a style="cursor: pointer;color: black" href="/post/Postmng?ptype=v&contentkey=BFC1593507233">
+                                        <strong> 북한 미녀 응원단의 서러운 눈물 속에 숨겨진 진실 </strong></a>
+                                    <span style=" font-size: 0.6em;padding-left: 5px;"> 2020.06.30  17:53</span>
+                                    <div class="pull-right">
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-eye"></i>  1,263</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-thumbs-up"></i> 0</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-comment-dots"></i> 4 </span>
+                                    </div>
+                                </div>
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+
+                                <div class="pull-left" style="width: 150px; overflow: hidden;padding-right: 10px">
+                                    <a style="cursor: pointer" href="/post/Postmng?ptype=v&contentkey=BFC1593507233">
+                                        <img
+                                            src="https://i.ytimg.com/vi/m0bsnGDrvZ0/maxresdefault.jpg"
+                                            style="width: 100%;height: 100px;object-fit: cover;"
+                                            class="img-thumbnail"></a>
+
+                                </div>
+                                <span style="padding-left: 0px; font-size: 1.2em;color: #737373">
+                                    제가 유튜브를 시작해서 댓글을 보면 많은 분들이 어떻게 저런 인간들과 통일을 하겠냐고 한탄하는 글이 많습니다. 정말 얼핏 보면 북한 사람들은 정치사상적으로 세뇌가 잘 돼 있고 김 씨 일가에 진심으로 충성을 다 하는 광신도들 같죠.그러나 실상은 그렇지 않습니다. 김 씨 .....
+                                    </span>
+                                <div class="clearfix" style="padding-top: 5px"></div>
+
+                            </div>
+                            <Br>
+                            <hr>
+
+                            
+
+                            <div class="text-left  small" style="width:100%;">
+
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+                                <div class="shorttitle" style="font-size: 1.6em">
+                                    <a style="cursor: pointer;color: black" href="/post/Postmng?ptype=v&contentkey=BFC1593395970">
+                                        <strong> 핵심을 찌른 `니가 장군님이네` 대사에 열광하는 북한 주민들 </strong></a>
+                                    <span style=" font-size: 0.6em;padding-left: 5px;"> 2020.06.29  10:59</span>
+                                    <div class="pull-right">
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-eye"></i>  1,833</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-thumbs-up"></i> 0</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-comment-dots"></i> 0 </span>
+                                    </div>
+                                </div>
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+
+                                <div class="pull-left" style="width: 150px; overflow: hidden;padding-right: 10px">
+                                    <a style="cursor: pointer" href="/post/Postmng?ptype=v&contentkey=BFC1593395970">
+                                        <img
+                                            src="https://i.ytimg.com/vi/5ZlY_SH8r9c/maxresdefault.jpg"
+                                            style="width: 100%;height: 100px;object-fit: cover;"
+                                            class="img-thumbnail"></a>
+
+                                </div>
+                                <span style="padding-left: 0px; font-size: 1.2em;color: #737373">
+                                    제가 얼마 전에 ‘사랑의 불시착’이 북한에서 퍼져 당국이 난리가 났고, 또 한국 드라마 너무 봐서 고급중학교 3학년생들과 대학생들은 코로나 격리 해제하고 등교시켰다 이런 영상 올렸습니다.오늘은 이 사랑의 불시착 때문에 평양에서 가장 핫한 유행어가 탄생했고, 그것 때문에.....
+                                    </span>
+                                <div class="clearfix" style="padding-top: 5px"></div>
+
+                            </div>
+                            <Br>
+                            <hr>
+
+                            
+
+                            <div class="text-left  small" style="width:100%;">
+
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+                                <div class="shorttitle" style="font-size: 1.6em">
+                                    <a style="cursor: pointer;color: black" href="/post/Postmng?ptype=v&contentkey=BFC1593073210">
+                                        <strong> 북한, 내년이 진짜 위기인 이유 </strong></a>
+                                    <span style=" font-size: 0.6em;padding-left: 5px;"> 2020.06.25  17:20</span>
+                                    <div class="pull-right">
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-eye"></i>  1,221</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-thumbs-up"></i> 0</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-comment-dots"></i> 2 </span>
+                                    </div>
+                                </div>
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+
+                                <div class="pull-left" style="width: 150px; overflow: hidden;padding-right: 10px">
+                                    <a style="cursor: pointer" href="/post/Postmng?ptype=v&contentkey=BFC1593073210">
+                                        <img
+                                            src="https://i.ytimg.com/vi/v4nbI46rZ3g/maxresdefault.jpg"
+                                            style="width: 100%;height: 100px;object-fit: cover;"
+                                            class="img-thumbnail"></a>
+
+                                </div>
+                                <span style="padding-left: 0px; font-size: 1.2em;color: #737373">
+                                    강한 바람은 높은 파도를 만든다. 하지만 바람이 불자마자 파도가 일진 않는다. 일정한 시차를 두고 높아지고, 바람이 멈춘 뒤에도 오랫동안 사그라지지 않는다. 파도가 갑자기 높아지면 배들이 침몰한다. 작고 낡은 배가 먼저 뒤집힌다.&nbsp;세계 주가 대폭락이라는 강풍도.....
+                                    </span>
+                                <div class="clearfix" style="padding-top: 5px"></div>
+
+                            </div>
+                            <Br>
+                            <hr>
+
+                            
+
+                            <div class="text-left  small" style="width:100%;">
+
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+                                <div class="shorttitle" style="font-size: 1.6em">
+                                    <a style="cursor: pointer;color: black" href="/post/Postmng?ptype=v&contentkey=BFC1592983079">
+                                        <strong> 북한 해군이 만든 이순신 장군보다 더 큰 해전 승리 </strong></a>
+                                    <span style=" font-size: 0.6em;padding-left: 5px;"> 2020.06.24  16:18</span>
+                                    <div class="pull-right">
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-eye"></i>  844</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-thumbs-up"></i> 0</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-comment-dots"></i> 2 </span>
+                                    </div>
+                                </div>
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+
+                                <div class="pull-left" style="width: 150px; overflow: hidden;padding-right: 10px">
+                                    <a style="cursor: pointer" href="/post/Postmng?ptype=v&contentkey=BFC1592983079">
+                                        <img
+                                            src="https://i.ytimg.com/vi/z90SGnzSpRw/maxresdefault.jpg"
+                                            style="width: 100%;height: 100px;object-fit: cover;"
+                                            class="img-thumbnail"></a>
+
+                                </div>
+                                <span style="padding-left: 0px; font-size: 1.2em;color: #737373">
+                                    지난 시간에 제가 인천 월미도를 북한에서 &lsquo;영웅의 섬&rsquo;이라고 선전한다는 이야기 해드렸습니다.문제는 이런 거짓말이 끝이 없습니다. 북한이 어떤 거짓말로 주민을 세뇌하는지 한번 들어보십시오. 오늘 시간엔 월미도 사례보다 더 황당한 북한의 역사 조작 이.....
+                                    </span>
+                                <div class="clearfix" style="padding-top: 5px"></div>
+
+                            </div>
+                            <Br>
+                            <hr>
+
+                            
+
+                            <div class="text-left  small" style="width:100%;">
+
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+                                <div class="shorttitle" style="font-size: 1.6em">
+                                    <a style="cursor: pointer;color: black" href="/post/Postmng?ptype=v&contentkey=BFC1592892874">
+                                        <strong> 개성폭파 소식에 북한에서 실시간 날아온 경악스러운 반응 </strong></a>
+                                    <span style=" font-size: 0.6em;padding-left: 5px;"> 2020.06.23  15:14</span>
+                                    <div class="pull-right">
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-eye"></i>  3,790</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-thumbs-up"></i> 0</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-comment-dots"></i> 4 </span>
+                                    </div>
+                                </div>
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+
+                                <div class="pull-left" style="width: 150px; overflow: hidden;padding-right: 10px">
+                                    <a style="cursor: pointer" href="/post/Postmng?ptype=v&contentkey=BFC1592892874">
+                                        <img
+                                            src="https://i.ytimg.com/vi/9ydKlBn9Xfc/maxresdefault.jpg"
+                                            style="width: 100%;height: 100px;object-fit: cover;"
+                                            class="img-thumbnail"></a>
+
+                                </div>
+                                <span style="padding-left: 0px; font-size: 1.2em;color: #737373">
+                                    여러분 안녕하십니까. 다시 뵙게 돼 반갑습니다. 많은 분들이 열심히 응원해 주셔서 지난 주 유튜브를 본격 시작한 지 7개월 만에 구독자 10만 명을 넘었습니다. 구독해 주신 모든 분들께 진심으로 감사를 드립니다. 앞으로도 더 열심히, 신뢰받는 유튜브 채널이 되도록 노력.....
+                                    </span>
+                                <div class="clearfix" style="padding-top: 5px"></div>
+
+                            </div>
+                            <Br>
+                            <hr>
+
+                            
+
+                            <div class="text-left  small" style="width:100%;">
+
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+                                <div class="shorttitle" style="font-size: 1.6em">
+                                    <a style="cursor: pointer;color: black" href="/post/Postmng?ptype=v&contentkey=BFC1592551678">
+                                        <strong>  ‘최고존엄`을 최고 존엄이라 하지도 못하고. </strong></a>
+                                    <span style=" font-size: 0.6em;padding-left: 5px;"> 2020.06.19  16:28</span>
+                                    <div class="pull-right">
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-eye"></i>  1,363</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-thumbs-up"></i> 0</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-comment-dots"></i> 1 </span>
+                                    </div>
+                                </div>
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+
+                                <div class="pull-left" style="width: 150px; overflow: hidden;padding-right: 10px">
+                                    <a style="cursor: pointer" href="/post/Postmng?ptype=v&contentkey=BFC1592551678">
+                                        <img
+                                            src="https://i.ytimg.com/vi/cg-66QnzEnE/maxresdefault.jpg"
+                                            style="width: 100%;height: 100px;object-fit: cover;"
+                                            class="img-thumbnail"></a>
+
+                                </div>
+                                <span style="padding-left: 0px; font-size: 1.2em;color: #737373">
+                                    북한이 6월 4일 김여정 담화문을 시작으로 한국에 대한 강경정책으로 돌변했습니다. 북한 내부에선 난리가 났습니다. 이 땡볕에 사람들 불러 모아놓고 연일 탈북자를 쓰레기라고 하며 &ldquo;타도하라&rdquo; &ldquo;죽탕쳐버리자&rdquo; 이러고 있습니다. 주.....
+                                    </span>
+                                <div class="clearfix" style="padding-top: 5px"></div>
+
+                            </div>
+                            <Br>
+                            <hr>
+
+                            
+
+                            <div class="text-left  small" style="width:100%;">
+
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+                                <div class="shorttitle" style="font-size: 1.6em">
+                                    <a style="cursor: pointer;color: black" href="/post/Postmng?ptype=v&contentkey=BFC1592290245">
+                                        <strong> 김일성경기장에서 한국 대표팀이 들었던 욕설 공개 </strong></a>
+                                    <span style=" font-size: 0.6em;padding-left: 5px;"> 2020.06.16  15:50</span>
+                                    <div class="pull-right">
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-eye"></i>  3,924</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-thumbs-up"></i> 0</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-comment-dots"></i> 3 </span>
+                                    </div>
+                                </div>
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+
+                                <div class="pull-left" style="width: 150px; overflow: hidden;padding-right: 10px">
+                                    <a style="cursor: pointer" href="/post/Postmng?ptype=v&contentkey=BFC1592290245">
+                                        <img
+                                            src="https://i.ytimg.com/vi/WtEzAP80hAA/maxresdefault.jpg"
+                                            style="width: 100%;height: 100px;object-fit: cover;"
+                                            class="img-thumbnail"></a>
+
+                                </div>
+                                <span style="padding-left: 0px; font-size: 1.2em;color: #737373">
+                                    세계적인 코로나 확산으로 올림픽이 연기됐는데 우리 대다수가 잊고 있는 사실이 하나 더 있습니다. 2022 국제축구연맹(FIFA) 카타르월드컵 아시아지역도 올해 무기한 연기됐다는 사실을 많은 분들이 모르고 있습니다.계획대로라면 6월 4일 서울에서 북한과 한국의 예선 4차.....
+                                    </span>
+                                <div class="clearfix" style="padding-top: 5px"></div>
+
+                            </div>
+                            <Br>
+                            <hr>
+
+                            
+
+                            <div class="text-left  small" style="width:100%;">
+
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+                                <div class="shorttitle" style="font-size: 1.6em">
+                                    <a style="cursor: pointer;color: black" href="/post/Postmng?ptype=v&contentkey=BFC1592199053">
+                                        <strong> 탈북자 한국 입국 완전히 막혔다 </strong></a>
+                                    <span style=" font-size: 0.6em;padding-left: 5px;"> 2020.06.15  14:30</span>
+                                    <div class="pull-right">
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-eye"></i>  2,623</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-thumbs-up"></i> 0</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-comment-dots"></i> 6 </span>
+                                    </div>
+                                </div>
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+
+                                <div class="pull-left" style="width: 150px; overflow: hidden;padding-right: 10px">
+                                    <a style="cursor: pointer" href="/post/Postmng?ptype=v&contentkey=BFC1592199053">
+                                        <img
+                                            src="https://i.ytimg.com/vi/gA5ZdSQRBwQ/maxresdefault.jpg"
+                                            style="width: 100%;height: 100px;object-fit: cover;"
+                                            class="img-thumbnail"></a>
+
+                                </div>
+                                <span style="padding-left: 0px; font-size: 1.2em;color: #737373">
+                                    오늘은 코로나 때문에 탈북 흐름이 완전히 막혔다는 주제로 방송을 하려 합니다. 사실 아무리 김정은이 조이고 어쩌고 해도 국내 입국 탈북민 숫자는 매달 평균 100명 정도씩, 1년에 1000명은 넘었습니다.그런데 이 숫자가 작년에 2001년 이후 18년 만에 최저치를 기.....
+                                    </span>
+                                <div class="clearfix" style="padding-top: 5px"></div>
+
+                            </div>
+                            <Br>
+                            <hr>
+
+                            
+
+                            <div class="text-left  small" style="width:100%;">
+
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+                                <div class="shorttitle" style="font-size: 1.6em">
+                                    <a style="cursor: pointer;color: black" href="/post/Postmng?ptype=v&contentkey=BFC1591841587">
+                                        <strong> 북한은 왜 강경정책으로 돌변했나 </strong></a>
+                                    <span style=" font-size: 0.6em;padding-left: 5px;"> 2020.06.11  11:13</span>
+                                    <div class="pull-right">
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-eye"></i>  4,231</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-thumbs-up"></i> 0</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-comment-dots"></i> 5 </span>
+                                    </div>
+                                </div>
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+
+                                <div class="pull-left" style="width: 150px; overflow: hidden;padding-right: 10px">
+                                    <a style="cursor: pointer" href="/post/Postmng?ptype=v&contentkey=BFC1591841587">
+                                        <img
+                                            src="https://s3-ap-northeast-2.amazonaws.com/nkgupload/1591841548_nkgupload_640x318_881559.jpg"
+                                            style="width: 100%;height: 100px;object-fit: cover;"
+                                            class="img-thumbnail"></a>
+
+                                </div>
+                                <span style="padding-left: 0px; font-size: 1.2em;color: #737373">
+                                    하늘로 날아오른 대북전단 풍선들이 북한에 갈 확률은 얼마나 될까.바람을 따져 보내도 20% 남짓이란 데이터가 있다. 한반도 상공의 편서풍 때문이다. 지상의 바람 방향과 상관없이 풍선이 1500m 이상 올라가면 편서풍의 영향을 받는다. 이 고도면 눈으론 풍선을 거의 볼 .....
+                                    </span>
+                                <div class="clearfix" style="padding-top: 5px"></div>
+
+                            </div>
+                            <Br>
+                            <hr>
+
+                            
+
+                            <div class="text-left  small" style="width:100%;">
+
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+                                <div class="shorttitle" style="font-size: 1.6em">
+                                    <a style="cursor: pointer;color: black" href="/post/Postmng?ptype=v&contentkey=BFC1591772896">
+                                        <strong> 김평일이 급작스럽게 북한에 들어간 이유는 뭘까 </strong></a>
+                                    <span style=" font-size: 0.6em;padding-left: 5px;"> 2020.06.10  16:08</span>
+                                    <div class="pull-right">
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-eye"></i>  1,787</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-thumbs-up"></i> 0</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-comment-dots"></i> 6 </span>
+                                    </div>
+                                </div>
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+
+                                <div class="pull-left" style="width: 150px; overflow: hidden;padding-right: 10px">
+                                    <a style="cursor: pointer" href="/post/Postmng?ptype=v&contentkey=BFC1591772896">
+                                        <img
+                                            src="https://i.ytimg.com/vi/sU1SHGAOmls/maxresdefault.jpg"
+                                            style="width: 100%;height: 100px;object-fit: cover;"
+                                            class="img-thumbnail"></a>
+
+                                </div>
+                                <span style="padding-left: 0px; font-size: 1.2em;color: #737373">
+                                    이번에 김정은의 20일 간의 잠적 사건으로 해서 뜬 인물이 하나 있습니다. 바로 김평일입니다. 김평일은 김일성과 후처 김성애 사이에서 태어난 아들이기 때문에 김정일에겐 이복동생이고, 김정은에겐 배다른 삼촌이 되는 겁니다.태영호 의원이 4월 말에 &ldquo;김정은이 죽.....
+                                    </span>
+                                <div class="clearfix" style="padding-top: 5px"></div>
+
+                            </div>
+                            <Br>
+                            <hr>
+
+                            
+
+                            <div class="text-left  small" style="width:100%;">
+
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+                                <div class="shorttitle" style="font-size: 1.6em">
+                                    <a style="cursor: pointer;color: black" href="/post/Postmng?ptype=v&contentkey=BFC1591277303">
+                                        <strong> 인민이 만세를 불렀던 전설적 북한 간부 이야기 </strong></a>
+                                    <span style=" font-size: 0.6em;padding-left: 5px;"> 2020.06.07  17:18</span>
+                                    <div class="pull-right">
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-eye"></i>  1,308</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-thumbs-up"></i> 0</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-comment-dots"></i> 0 </span>
+                                    </div>
+                                </div>
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+
+                                <div class="pull-left" style="width: 150px; overflow: hidden;padding-right: 10px">
+                                    <a style="cursor: pointer" href="/post/Postmng?ptype=v&contentkey=BFC1591277303">
+                                        <img
+                                            src="https://i.ytimg.com/vi/UtCCSOzaC5E/maxresdefault.jpg"
+                                            style="width: 100%;height: 100px;object-fit: cover;"
+                                            class="img-thumbnail"></a>
+
+                                </div>
+                                <span style="padding-left: 0px; font-size: 1.2em;color: #737373">
+                                    지금 북한을 보면 김정은만 답이 없는 게 아니고, 그 아래 간부란 것들도 하나 같이 김정은에겐 비굴하게 굽신거리며 자기 주머니만 생각하는 간신들뿐입니다.이는 바로 인민을 위한 간부는 절대 살아남을 수가 없는 북한 체제의 속성 때문입니다. 북한이라고 진정한 간부가 없었던.....
+                                    </span>
+                                <div class="clearfix" style="padding-top: 5px"></div>
+
+                            </div>
+                            <Br>
+                            <hr>
+
+                            
+
+                            <div class="text-left  small" style="width:100%;">
+
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+                                <div class="shorttitle" style="font-size: 1.6em">
+                                    <a style="cursor: pointer;color: black" href="/post/Postmng?ptype=v&contentkey=BFC1591277000">
+                                        <strong> 추락이 두려워 비행기 탑승을 거절한 북한 전직 공군사령관 </strong></a>
+                                    <span style=" font-size: 0.6em;padding-left: 5px;"> 2020.06.04  22:23</span>
+                                    <div class="pull-right">
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-eye"></i>  1,434</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-thumbs-up"></i> 0</span>
+                                        <span style=" font-size: 0.7em;padding-left: 15px;"><i
+                                                class="fas fa-comment-dots"></i> 0 </span>
+                                    </div>
+                                </div>
+                                <div class="clearfix" style="padding-bottom: 10px"></div>
+
+                                <div class="pull-left" style="width: 150px; overflow: hidden;padding-right: 10px">
+                                    <a style="cursor: pointer" href="/post/Postmng?ptype=v&contentkey=BFC1591277000">
+                                        <img
+                                            src="https://i.ytimg.com/vi/yNCxJH6kLRU/maxresdefault.jpg"
+                                            style="width: 100%;height: 100px;object-fit: cover;"
+                                            class="img-thumbnail"></a>
+
+                                </div>
+                                <span style="padding-left: 0px; font-size: 1.2em;color: #737373">
+                                    지난달 12일 김정은이 평남 순천비행장으로 추정되는 곳에 가서 전투기 훈련 보고 이후부터 오랫동안 잠적해 화제가 됐죠.그래도 그 비행장에는 미그29가 있더군요. 그거 북한에서 그나마 쓸만한 비행기인데, 1980년대 후반 제가 알건대 27기인가 사와서 지금까지 30년 동.....
+                                    </span>
+                                <div class="clearfix" style="padding-top: 5px"></div>
+
+                            </div>
+                            <Br>
+                            <hr>
+
+                            
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="pagging text-center"><nav><ul class="pagination"><li class="page-item active"><span class="page-link">1<span class="sr-only">(current)</span></span></li><li class="page-item"><span class="page-link"><a href="http://www.nklogin.com/?per_page=20&category=" data-ci-pagination-page="2">2</a></span></li><li class="page-item"><span class="page-link"><a href="http://www.nklogin.com/?per_page=40&category=" data-ci-pagination-page="3">3</a></span></li><li class="page-item"><span class="page-link"><a href="http://www.nklogin.com/?per_page=60&category=" data-ci-pagination-page="4">4</a></span></li><li class="page-item"><span class="page-link"><a href="http://www.nklogin.com/?per_page=80&category=" data-ci-pagination-page="5">5</a></span></li><li class="page-item"><span class="page-link"><a href="http://www.nklogin.com/?per_page=20&category=" data-ci-pagination-page="2" rel="next">&gt;</a><span aria-hidden="true"></span></span></li></ul></nav></div>            </div>
+
+        </main>
+
+            <div class="col-xl-4 ">
+        <div class="clearfix " style="padding-top: 20px;"></div>
+
+        <ul class="section-nav">
+
+
+
+
+
+            <li class="toc-entry toc-h2">
+
+                <div style="padding-left: 15px">
+                    <form name="search" action="/post/Search">
+                        <input type="text" class="form-control" name="query" style="width: 300px"placeholder="검색...">
+                    </form>
+                </div>
+            </li>
+            <li class="toc-h2" style="padding-top: 20px">
+                <div style="padding-left: 15px"><a href="https://nklogin.com/post/Boardmng?ptype=v&contentkey=BFC1554520582"> <img src="https://s3.ap-northeast-2.amazonaws.com/nkgupload/nkloginintro.png" width="300"></a></div>
+            </li>
+            <li class="toc-h2" style="padding-top: 20px">
+                <div style="padding-left: 15px"><a href="http://nambukstory.donga.com/" target="_blank"> <img src="https://s3.ap-northeast-2.amazonaws.com/nkgupload/pybanner.png" width="300"></a></div>
+            </li>
+
+
+                <li class="toc-h2"  style="padding-top: 10px">
+                    <div style="padding-left: 15px;padding-bottom: 10px;padding-top: 20px"> <h5>유튜브</h5></div>
+                </li>
+
+                <li class="toc-h2">
+                    <div style="width: 300px;padding-left: 15px">
+                        <table width="300"  class="table">
+                                                            <tr>
+
+                                    <td valign="top">
+                                        <img src="https://i.ytimg.com/vi/oHxFsB4-_JM/maxresdefault.jpg" style="width: 70px">
+                                    </td>
+                                    <td valign="top">
+                                        <span style="font-size: 0.9em"><b><a  style="cursor: pointer;color: black"  href="/post/Postmng?ptype=v&contentkey=BFC1596043304">미국 대선을 바라보는 김정은의 고민과 한반도의 운명</a></b></span> <br>
+
+                                    </td>
+                                </tr>
+
+                                                            <tr>
+
+                                    <td valign="top">
+                                        <img src="https://i.ytimg.com/vi/COeb1_CWxuQ/maxresdefault.jpg" style="width: 70px">
+                                    </td>
+                                    <td valign="top">
+                                        <span style="font-size: 0.9em"><b><a  style="cursor: pointer;color: black"  href="/post/Postmng?ptype=v&contentkey=BFC1595575828">사단장 승진에 실패한 현송월의 남편</a></b></span> <br>
+
+                                    </td>
+                                </tr>
+
+                                                            <tr>
+
+                                    <td valign="top">
+                                        <img src="https://i.ytimg.com/vi/ixTYmF6bRVg/maxresdefault.jpg" style="width: 70px">
+                                    </td>
+                                    <td valign="top">
+                                        <span style="font-size: 0.9em"><b><a  style="cursor: pointer;color: black"  href="/post/Postmng?ptype=v&contentkey=BFC1595295270">생사를 하늘에 맡긴 동해의 비극 현장 체험기</a></b></span> <br>
+
+                                    </td>
+                                </tr>
+
+                            
+                        </table>
+
+                    </div>
+                </li>
+
+
+            <li class="toc-h2"  style="padding-top: 10px">
+                <div style="padding-left: 15px;padding-bottom: 10px;padding-top: 20px"> <h5>남북토론</h5></div>
+            </li>
+
+            <li class="toc-h2">
+                <div style="width: 300px;padding-left: 15px">
+                    <table width="300"  class="table">
+                                                    <tr>
+                                <td valign="top">
+                                    <span style="font-size: 0.9em"><b><a  style="cursor: pointer;color: black"  href="/post/Boardmng?ptype=v&contentkey=BFC15926773089813">최근 김정은의 권력구도와 김여정의 행보에 대해 궁금한게 있어 글남깁니다.</a></b></span> <br>
+                                    <span style="font-size: 0.8em">2020년 06월 21일 | 정종영 </span>
+                                </td>
+                            </tr>
+
+                                                    <tr>
+                                <td valign="top">
+                                    <span style="font-size: 0.9em"><b><a  style="cursor: pointer;color: black"  href="/post/Boardmng?ptype=v&contentkey=BFC15801759858190">주기자님 아주 흥미로운 유튜브 영상을 보게되어 올려봅니다</a></b></span> <br>
+                                    <span style="font-size: 0.8em">2020년 01월 28일 | 이주원 </span>
+                                </td>
+                            </tr>
+
+                                                    <tr>
+                                <td valign="top">
+                                    <span style="font-size: 0.9em"><b><a  style="cursor: pointer;color: black"  href="/post/Boardmng?ptype=v&contentkey=BFC15793437408435">주기자님 함흥시에 대해서 질문하고자 합니다</a></b></span> <br>
+                                    <span style="font-size: 0.8em">2020년 01월 18일 | 이주원 </span>
+                                </td>
+                            </tr>
+
+                                                    <tr>
+                                <td valign="top">
+                                    <span style="font-size: 0.9em"><b><a  style="cursor: pointer;color: black"  href="/post/Boardmng?ptype=v&contentkey=BFC15673359413122">주기자님 남북통일 이후의 동아시아 시장경제 개편에 대해서 질문합니다</a></b></span> <br>
+                                    <span style="font-size: 0.8em">2019년 09월 01일 | 이주원 </span>
+                                </td>
+                            </tr>
+
+                                                    <tr>
+                                <td valign="top">
+                                    <span style="font-size: 0.9em"><b><a  style="cursor: pointer;color: black"  href="/post/Boardmng?ptype=v&contentkey=BFC15596285061463">안녕하세요</a></b></span> <br>
+                                    <span style="font-size: 0.8em">2019년 06월 04일 | 송성경 </span>
+                                </td>
+                            </tr>
+
+                        
+                    </table>
+
+                </div>
+
+            </li>
+
+            <li class="toc-h2"  style="padding-top:10px">
+                <div style="padding-left: 15px;padding-bottom: 10px;padding-top: 20px"> <h5>최신 댓글</h5></div>
+            </li>
+
+            <li class="toc-h2">
+                <div style="width: 300px;padding-left: 15px">
+                    <table width="300"  class="table">
+                                                    <tr>
+                                <td valign="top">
+                                    <span style="font-size: 0.9em"><a  style="cursor: pointer;color: black"  href="/post/Postmng?ptype=v&contentkey=BFC1593073210">중국이북한혜산에미군기지를세우려할가요..</a></span> <br>
+                                    <span style="font-size: 0.8em">2020년 07월 30일 | 남용 </span>
+                                </td>
+                            </tr>
+                                                    <tr>
+                                <td valign="top">
+                                    <span style="font-size: 0.9em"><a  style="cursor: pointer;color: black"  href="/post/Postmng?ptype=v&contentkey=BFC1595575828">"그가 바로 77년생인 현송월 노동당 부부장의 남편입니다. " 77년생이..</a></span> <br>
+                                    <span style="font-size: 0.8em">2020년 07월 26일 | john_lee </span>
+                                </td>
+                            </tr>
+                                                    <tr>
+                                <td valign="top">
+                                    <span style="font-size: 0.9em"><a  style="cursor: pointer;color: black"  href="/post/Postmng?ptype=v&contentkey=BFC1595575828">헉 현송월단장의 남편이 만71살 그러면 현송월단장과의 나이차이가 무려 2..</a></span> <br>
+                                    <span style="font-size: 0.8em">2020년 07월 25일 | 박혜연 </span>
+                                </td>
+                            </tr>
+                                                    <tr>
+                                <td valign="top">
+                                    <span style="font-size: 0.9em"><a  style="cursor: pointer;color: black"  href="/post/Postmng?ptype=v&contentkey=BFC1593928428">만상에나
+생각해보면 정말 그보다 더한 일이 일어나고 있을 수 있겠어요....</a></span> <br>
+                                    <span style="font-size: 0.8em">2020년 07월 23일 | 하동훈 </span>
+                                </td>
+                            </tr>
+                                                    <tr>
+                                <td valign="top">
+                                    <span style="font-size: 0.9em"><a  style="cursor: pointer;color: black"  href="/post/Postmng?ptype=v&contentkey=BFC1582795050">주영 북한대사 서열2위가 뭐가 아쉬워서 탈북했겠나 ?
+뭐가 있으니 탈북했..</a></span> <br>
+                                    <span style="font-size: 0.8em">2020년 07월 23일 | ㅇㅇ </span>
+                                </td>
+                            </tr>
+                        
+                    </table>
+
+                </div>
+
+            </li>
+
+            <li class="toc-h2"  style="padding-top:10px">
+                <div style="padding-left: 15px;padding-bottom: 10px;padding-top: 20px"> <h5>공지사항</h5></div>
+            </li>
+
+            <li class="toc-h2">
+                <div style="width: 300px;padding-left: 15px">
+                    <table width="300"  class="table">
+                        
+                    </table>
+
+                </div>
+
+            </li>
+
+        </ul>
+
+</div>
+    
+
+    </div>
+    <!-- /.row -->
+
+</div>
+<!--
+<div class="clearfix" style="padding-top: 60px"></div>
+-->
+
+<div class="clearfix d-block d-md-none" style="padding-bottom: 60px"></div>
+<link href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" rel="stylesheet">
+<link href="https://s3.ap-northeast-2.amazonaws.com/nkgcdn/docs.min.css" rel="stylesheet">
+
+
+<!--
+<footer class="footer d-block d-md-none  ">
+    <div class="container " >
+        <span class="text-muted">Place sticky footer content here.</span>
+    </div>
+</footer>
+-->
+
+</body>
+</html>
