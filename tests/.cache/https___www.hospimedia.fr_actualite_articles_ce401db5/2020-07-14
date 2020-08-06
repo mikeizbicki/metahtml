@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<!--[if IE 6]> <html class="no-js ie6 ie67 oldie" lang="fr"> <![endif]-->
+<!--[if lte IE 7]> <html class="no-js ie7 ie67 oldie" lang="fr"> <![endif]-->
+<!--[if IE 8]> <html class="no-js ie8 oldie" lang="fr"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="fr" class="no-js"> <!--<![endif]-->
+
+  <head>
+    <meta charset="UTF-8" />
+<script>window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","errorBeacon":"bam.nr-data.net","licenseKey":"ffdc5cc8ee","applicationID":"984162","transactionName":"cVxYERAKVQ9WQU0WUVFYRUoECksOUkcRSUNaXEE=","queueTime":0,"applicationTime":4,"agent":""}</script>
+<script>(window.NREUM||(NREUM={})).loader_config={xpid:"VQYHWF5SGwoIUFBUBQ==",licenseKey:"ffdc5cc8ee",applicationID:"984162"};window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var o=e[n]={exports:{}};t[n][0].call(o.exports,function(e){var o=t[n][1][e];return r(o||e)},o,o.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<n.length;o++)r(n[o]);return r}({1:[function(t,e,n){function r(t){try{s.console&&console.log(t)}catch(e){}}var o,i=t("ee"),a=t(18),s={};try{o=localStorage.getItem("__nr_flags").split(","),console&&"function"==typeof console.log&&(s.console=!0,o.indexOf("dev")!==-1&&(s.dev=!0),o.indexOf("nr_dev")!==-1&&(s.nrDev=!0))}catch(c){}s.nrDev&&i.on("internal-error",function(t){r(t.stack)}),s.dev&&i.on("fn-err",function(t,e,n){r(n.stack)}),s.dev&&(r("NR AGENT IN DEVELOPMENT MODE"),r("flags: "+a(s,function(t,e){return t}).join(", ")))},{}],2:[function(t,e,n){function r(t,e,n,r,s){try{p?p-=1:o(s||new UncaughtException(t,e,n),!0)}catch(f){try{i("ierr",[f,c.now(),!0])}catch(d){}}return"function"==typeof u&&u.apply(this,a(arguments))}function UncaughtException(t,e,n){this.message=t||"Uncaught error with no additional information",this.sourceURL=e,this.line=n}function o(t,e){var n=e?null:c.now();i("err",[t,n])}var i=t("handle"),a=t(19),s=t("ee"),c=t("loader"),f=t("gos"),u=window.onerror,d=!1,l="nr@seenError",p=0;c.features.err=!0,t(1),window.onerror=r;try{throw new Error}catch(h){"stack"in h&&(t(6),t(5),"addEventListener"in window&&t(3),c.xhrWrappable&&t(7),d=!0)}s.on("fn-start",function(t,e,n){d&&(p+=1)}),s.on("fn-err",function(t,e,n){d&&!n[l]&&(f(n,l,function(){return!0}),this.thrown=!0,o(n))}),s.on("fn-end",function(){d&&!this.thrown&&p>0&&(p-=1)}),s.on("internal-error",function(t){i("ierr",[t,c.now(),!0])})},{}],3:[function(t,e,n){function r(t){for(var e=t;e&&!e.hasOwnProperty(u);)e=Object.getPrototypeOf(e);e&&o(e)}function o(t){s.inPlace(t,[u,d],"-",i)}function i(t,e){return t[1]}var a=t("ee").get("events"),s=t("wrap-function")(a,!0),c=t("gos"),f=XMLHttpRequest,u="addEventListener",d="removeEventListener";e.exports=a,"getPrototypeOf"in Object?(r(document),r(window),r(f.prototype)):f.prototype.hasOwnProperty(u)&&(o(window),o(f.prototype)),a.on(u+"-start",function(t,e){var n=t[1],r=c(n,"nr@wrapped",function(){function t(){if("function"==typeof n.handleEvent)return n.handleEvent.apply(n,arguments)}var e={object:t,"function":n}[typeof n];return e?s(e,"fn-",null,e.name||"anonymous"):n});this.wrapped=t[1]=r}),a.on(d+"-start",function(t){t[1]=this.wrapped||t[1]})},{}],4:[function(t,e,n){function r(t,e,n){var r=t[e];"function"==typeof r&&(t[e]=function(){var t=i(arguments),e={};o.emit(n+"before-start",[t],e);var a;e[m]&&e[m].dt&&(a=e[m].dt);var s=r.apply(this,t);return o.emit(n+"start",[t,a],s),s.then(function(t){return o.emit(n+"end",[null,t],s),t},function(t){throw o.emit(n+"end",[t],s),t})})}var o=t("ee").get("fetch"),i=t(19),a=t(18);e.exports=o;var s=window,c="fetch-",f=c+"body-",u=["arrayBuffer","blob","json","text","formData"],d=s.Request,l=s.Response,p=s.fetch,h="prototype",m="nr@context";d&&l&&p&&(a(u,function(t,e){r(d[h],e,f),r(l[h],e,f)}),r(s,"fetch",c),o.on(c+"end",function(t,e){var n=this;if(e){var r=e.headers.get("content-length");null!==r&&(n.rxSize=r),o.emit(c+"done",[null,e],n)}else o.emit(c+"done",[t],n)}))},{}],5:[function(t,e,n){var r=t("ee").get("raf"),o=t("wrap-function")(r),i="equestAnimationFrame";e.exports=r,o.inPlace(window,["r"+i,"mozR"+i,"webkitR"+i,"msR"+i],"raf-"),r.on("raf-start",function(t){t[0]=o(t[0],"fn-")})},{}],6:[function(t,e,n){function r(t,e,n){t[0]=a(t[0],"fn-",null,n)}function o(t,e,n){this.method=n,this.timerDuration=isNaN(t[1])?0:+t[1],t[0]=a(t[0],"fn-",this,n)}var i=t("ee").get("timer"),a=t("wrap-function")(i),s="setTimeout",c="setInterval",f="clearTimeout",u="-start",d="-";e.exports=i,a.inPlace(window,[s,"setImmediate"],s+d),a.inPlace(window,[c],c+d),a.inPlace(window,[f,"clearImmediate"],f+d),i.on(c+u,r),i.on(s+u,o)},{}],7:[function(t,e,n){function r(t,e){d.inPlace(e,["onreadystatechange"],"fn-",s)}function o(){var t=this,e=u.context(t);t.readyState>3&&!e.resolved&&(e.resolved=!0,u.emit("xhr-resolved",[],t)),d.inPlace(t,w,"fn-",s)}function i(t){y.push(t),h&&(b?b.then(a):v?v(a):(E=-E,O.data=E))}function a(){for(var t=0;t<y.length;t++)r([],y[t]);y.length&&(y=[])}function s(t,e){return e}function c(t,e){for(var n in t)e[n]=t[n];return e}t(3);var f=t("ee"),u=f.get("xhr"),d=t("wrap-function")(u),l=NREUM.o,p=l.XHR,h=l.MO,m=l.PR,v=l.SI,g="readystatechange",w=["onload","onerror","onabort","onloadstart","onloadend","onprogress","ontimeout"],y=[];e.exports=u;var x=window.XMLHttpRequest=function(t){var e=new p(t);try{u.emit("new-xhr",[e],e),e.addEventListener(g,o,!1)}catch(n){try{u.emit("internal-error",[n])}catch(r){}}return e};if(c(p,x),x.prototype=p.prototype,d.inPlace(x.prototype,["open","send"],"-xhr-",s),u.on("send-xhr-start",function(t,e){r(t,e),i(e)}),u.on("open-xhr-start",r),h){var b=m&&m.resolve();if(!v&&!m){var E=1,O=document.createTextNode(E);new h(a).observe(O,{characterData:!0})}}else f.on("fn-end",function(t){t[0]&&t[0].type===g||a()})},{}],8:[function(t,e,n){function r(t){if(!i(t))return null;var e=window.NREUM;if(!e.loader_config)return null;var n=(e.loader_config.accountID||"").toString()||null,r=(e.loader_config.agentID||"").toString()||null,s=(e.loader_config.trustKey||"").toString()||null;if(!n||!r)return null;var c=a.generateCatId(),f=a.generateCatId(),u=Date.now(),d=o(c,f,u,n,r,s);return{header:d,guid:c,traceId:f,timestamp:u}}function o(t,e,n,r,o,i){var a="btoa"in window&&"function"==typeof window.btoa;if(!a)return null;var s={v:[0,1],d:{ty:"Browser",ac:r,ap:o,id:t,tr:e,ti:n}};return i&&r!==i&&(s.d.tk=i),btoa(JSON.stringify(s))}function i(t){var e=!1,n=!1,r={};if("init"in NREUM&&"distributed_tracing"in NREUM.init&&(r=NREUM.init.distributed_tracing,n=!!r.enabled),n)if(t.sameOrigin)e=!0;else if(r.allowed_origins instanceof Array)for(var o=0;o<r.allowed_origins.length;o++){var i=s(r.allowed_origins[o]);if(t.hostname===i.hostname&&t.protocol===i.protocol&&t.port===i.port){e=!0;break}}return n&&e}var a=t(16),s=t(10);e.exports={generateTracePayload:r,shouldGenerateTrace:i}},{}],9:[function(t,e,n){function r(t){var e=this.params,n=this.metrics;if(!this.ended){this.ended=!0;for(var r=0;r<l;r++)t.removeEventListener(d[r],this.listener,!1);e.aborted||(n.duration=a.now()-this.startTime,this.loadCaptureCalled||4!==t.readyState?null==e.status&&(e.status=0):i(this,t),n.cbTime=this.cbTime,u.emit("xhr-done",[t],t),s("xhr",[e,n,this.startTime]))}}function o(t,e){var n=c(e),r=t.params;r.host=n.hostname+":"+n.port,r.pathname=n.pathname,t.parsedOrigin=c(e),t.sameOrigin=t.parsedOrigin.sameOrigin}function i(t,e){t.params.status=e.status;var n=v(e,t.lastSize);if(n&&(t.metrics.rxSize=n),t.sameOrigin){var r=e.getResponseHeader("X-NewRelic-App-Data");r&&(t.params.cat=r.split(", ").pop())}t.loadCaptureCalled=!0}var a=t("loader");if(a.xhrWrappable){var s=t("handle"),c=t(10),f=t(8).generateTracePayload,u=t("ee"),d=["load","error","abort","timeout"],l=d.length,p=t("id"),h=t(14),m=t(13),v=t(11),g=window.XMLHttpRequest;a.features.xhr=!0,t(7),t(4),u.on("new-xhr",function(t){var e=this;e.totalCbs=0,e.called=0,e.cbTime=0,e.end=r,e.ended=!1,e.xhrGuids={},e.lastSize=null,e.loadCaptureCalled=!1,t.addEventListener("load",function(n){i(e,t)},!1),h&&(h>34||h<10)||window.opera||t.addEventListener("progress",function(t){e.lastSize=t.loaded},!1)}),u.on("open-xhr-start",function(t){this.params={method:t[0]},o(this,t[1]),this.metrics={}}),u.on("open-xhr-end",function(t,e){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&e.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid);var n=f(this.parsedOrigin);n&&n.header&&(e.setRequestHeader("newrelic",n.header),this.dt=n)}),u.on("send-xhr-start",function(t,e){var n=this.metrics,r=t[0],o=this;if(n&&r){var i=m(r);i&&(n.txSize=i)}this.startTime=a.now(),this.listener=function(t){try{"abort"!==t.type||o.loadCaptureCalled||(o.params.aborted=!0),("load"!==t.type||o.called===o.totalCbs&&(o.onloadCalled||"function"!=typeof e.onload))&&o.end(e)}catch(n){try{u.emit("internal-error",[n])}catch(r){}}};for(var s=0;s<l;s++)e.addEventListener(d[s],this.listener,!1)}),u.on("xhr-cb-time",function(t,e,n){this.cbTime+=t,e?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof n.onload||this.end(n)}),u.on("xhr-load-added",function(t,e){var n=""+p(t)+!!e;this.xhrGuids&&!this.xhrGuids[n]&&(this.xhrGuids[n]=!0,this.totalCbs+=1)}),u.on("xhr-load-removed",function(t,e){var n=""+p(t)+!!e;this.xhrGuids&&this.xhrGuids[n]&&(delete this.xhrGuids[n],this.totalCbs-=1)}),u.on("addEventListener-end",function(t,e){e instanceof g&&"load"===t[0]&&u.emit("xhr-load-added",[t[1],t[2]],e)}),u.on("removeEventListener-end",function(t,e){e instanceof g&&"load"===t[0]&&u.emit("xhr-load-removed",[t[1],t[2]],e)}),u.on("fn-start",function(t,e,n){e instanceof g&&("onload"===n&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=a.now()))}),u.on("fn-end",function(t,e){this.xhrCbStart&&u.emit("xhr-cb-time",[a.now()-this.xhrCbStart,this.onload,e],e)}),u.on("fetch-before-start",function(t){var e,n=t[1]||{};"string"==typeof t[0]?e=t[0]:t[0]&&t[0].url&&(e=t[0].url),e&&(this.parsedOrigin=c(e),this.sameOrigin=this.parsedOrigin.sameOrigin);var r=f(this.parsedOrigin);if(r&&r.header){var o=r.header;if("string"==typeof t[0]){var i={};for(var a in n)i[a]=n[a];i.headers=new Headers(n.headers||{}),i.headers.set("newrelic",o),this.dt=r,t.length>1?t[1]=i:t.push(i)}else t[0]&&t[0].headers&&(t[0].headers.append("newrelic",o),this.dt=r)}})}},{}],10:[function(t,e,n){var r={};e.exports=function(t){if(t in r)return r[t];var e=document.createElement("a"),n=window.location,o={};e.href=t,o.port=e.port;var i=e.href.split("://");!o.port&&i[1]&&(o.port=i[1].split("/")[0].split("@").pop().split(":")[1]),o.port&&"0"!==o.port||(o.port="https"===i[0]?"443":"80"),o.hostname=e.hostname||n.hostname,o.pathname=e.pathname,o.protocol=i[0],"/"!==o.pathname.charAt(0)&&(o.pathname="/"+o.pathname);var a=!e.protocol||":"===e.protocol||e.protocol===n.protocol,s=e.hostname===document.domain&&e.port===n.port;return o.sameOrigin=a&&(!e.hostname||s),"/"===o.pathname&&(r[t]=o),o}},{}],11:[function(t,e,n){function r(t,e){var n=t.responseType;return"json"===n&&null!==e?e:"arraybuffer"===n||"blob"===n||"json"===n?o(t.response):"text"===n||""===n||void 0===n?o(t.responseText):void 0}var o=t(13);e.exports=r},{}],12:[function(t,e,n){function r(){}function o(t,e,n){return function(){return i(t,[f.now()].concat(s(arguments)),e?null:this,n),e?void 0:this}}var i=t("handle"),a=t(18),s=t(19),c=t("ee").get("tracer"),f=t("loader"),u=NREUM;"undefined"==typeof window.newrelic&&(newrelic=u);var d=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],l="api-",p=l+"ixn-";a(d,function(t,e){u[e]=o(l+e,!0,"api")}),u.addPageAction=o(l+"addPageAction",!0),u.setCurrentRouteName=o(l+"routeName",!0),e.exports=newrelic,u.interaction=function(){return(new r).get()};var h=r.prototype={createTracer:function(t,e){var n={},r=this,o="function"==typeof e;return i(p+"tracer",[f.now(),t,n],r),function(){if(c.emit((o?"":"no-")+"fn-start",[f.now(),r,o],n),o)try{return e.apply(this,arguments)}catch(t){throw c.emit("fn-err",[arguments,this,t],n),t}finally{c.emit("fn-end",[f.now()],n)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,e){h[e]=o(p+e)}),newrelic.noticeError=function(t,e){"string"==typeof t&&(t=new Error(t)),i("err",[t,f.now(),!1,e])}},{}],13:[function(t,e,n){e.exports=function(t){if("string"==typeof t&&t.length)return t.length;if("object"==typeof t){if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if(!("undefined"!=typeof FormData&&t instanceof FormData))try{return JSON.stringify(t).length}catch(e){return}}}},{}],14:[function(t,e,n){var r=0,o=navigator.userAgent.match(/Firefox[\/\s](\d+\.\d+)/);o&&(r=+o[1]),e.exports=r},{}],15:[function(t,e,n){function r(t,e){var n=t.getEntries();n.forEach(function(t){"first-paint"===t.name?c("timing",["fp",Math.floor(t.startTime)]):"first-contentful-paint"===t.name&&c("timing",["fcp",Math.floor(t.startTime)])})}function o(t,e){var n=t.getEntries();n.length>0&&c("lcp",[n[n.length-1]])}function i(t){if(t instanceof u&&!l){var e,n=Math.round(t.timeStamp);e=n>1e12?Date.now()-n:f.now()-n,l=!0,c("timing",["fi",n,{type:t.type,fid:e}])}}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var a,s,c=t("handle"),f=t("loader"),u=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){a=new PerformanceObserver(r),s=new PerformanceObserver(o);try{a.observe({entryTypes:["paint"]}),s.observe({entryTypes:["largest-contentful-paint"]})}catch(d){}}if("addEventListener"in document){var l=!1,p=["click","keydown","mousedown","pointerdown","touchstart"];p.forEach(function(t){document.addEventListener(t,i,!1)})}}},{}],16:[function(t,e,n){function r(){function t(){return e?15&e[n++]:16*Math.random()|0}var e=null,n=0,r=window.crypto||window.msCrypto;r&&r.getRandomValues&&(e=r.getRandomValues(new Uint8Array(31)));for(var o,i="xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx",a="",s=0;s<i.length;s++)o=i[s],"x"===o?a+=t().toString(16):"y"===o?(o=3&t()|8,a+=o.toString(16)):a+=o;return a}function o(){function t(){return e?15&e[n++]:16*Math.random()|0}var e=null,n=0,r=window.crypto||window.msCrypto;r&&r.getRandomValues&&Uint8Array&&(e=r.getRandomValues(new Uint8Array(31)));for(var o=[],i=0;i<16;i++)o.push(t().toString(16));return o.join("")}e.exports={generateUuid:r,generateCatId:o}},{}],17:[function(t,e,n){function r(t,e){if(!o)return!1;if(t!==o)return!1;if(!e)return!0;if(!i)return!1;for(var n=i.split("."),r=e.split("."),a=0;a<r.length;a++)if(r[a]!==n[a])return!1;return!0}var o=null,i=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var s=navigator.userAgent,c=s.match(a);c&&s.indexOf("Chrome")===-1&&s.indexOf("Chromium")===-1&&(o="Safari",i=c[1])}e.exports={agent:o,version:i,match:r}},{}],18:[function(t,e,n){function r(t,e){var n=[],r="",i=0;for(r in t)o.call(t,r)&&(n[i]=e(r,t[r]),i+=1);return n}var o=Object.prototype.hasOwnProperty;e.exports=r},{}],19:[function(t,e,n){function r(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,o=n-e||0,i=Array(o<0?0:o);++r<o;)i[r]=t[e+r];return i}e.exports=r},{}],20:[function(t,e,n){e.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(t,e,n){function r(){}function o(t){function e(t){return t&&t instanceof r?t:t?c(t,s,i):i()}function n(n,r,o,i){if(!l.aborted||i){t&&t(n,r,o);for(var a=e(o),s=m(n),c=s.length,f=0;f<c;f++)s[f].apply(a,r);var d=u[y[n]];return d&&d.push([x,n,r,a]),a}}function p(t,e){w[t]=m(t).concat(e)}function h(t,e){var n=w[t];if(n)for(var r=0;r<n.length;r++)n[r]===e&&n.splice(r,1)}function m(t){return w[t]||[]}function v(t){return d[t]=d[t]||o(n)}function g(t,e){f(t,function(t,n){e=e||"feature",y[n]=e,e in u||(u[e]=[])})}var w={},y={},x={on:p,addEventListener:p,removeEventListener:h,emit:n,get:v,listeners:m,context:e,buffer:g,abort:a,aborted:!1};return x}function i(){return new r}function a(){(u.api||u.feature)&&(l.aborted=!0,u=l.backlog={})}var s="nr@context",c=t("gos"),f=t(18),u={},d={},l=e.exports=o();l.backlog=u},{}],gos:[function(t,e,n){function r(t,e,n){if(o.call(t,e))return t[e];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return t[e]=r,r}var o=Object.prototype.hasOwnProperty;e.exports=r},{}],handle:[function(t,e,n){function r(t,e,n,r){o.buffer([t],r),o.emit(t,e,n)}var o=t("ee").get("handle");e.exports=r,r.ee=o},{}],id:[function(t,e,n){function r(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:a(t,i,function(){return o++})}var o=1,i="nr@id",a=t("gos");e.exports=r},{}],loader:[function(t,e,n){function r(){if(!E++){var t=b.info=NREUM.info,e=p.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&e))return u.abort();f(y,function(e,n){t[e]||(t[e]=n)}),c("mark",["onload",a()+b.offset],null,"api");var n=p.createElement("script");n.src="https://"+t.agent,e.parentNode.insertBefore(n,e)}}function o(){"complete"===p.readyState&&i()}function i(){c("mark",["domContent",a()+b.offset],null,"api")}function a(){return O.exists&&performance.now?Math.round(performance.now()):(s=Math.max((new Date).getTime(),s))-b.offset}var s=(new Date).getTime(),c=t("handle"),f=t(18),u=t("ee"),d=t(17),l=window,p=l.document,h="addEventListener",m="attachEvent",v=l.XMLHttpRequest,g=v&&v.prototype;NREUM.o={ST:setTimeout,SI:l.setImmediate,CT:clearTimeout,XHR:v,REQ:l.Request,EV:l.Event,PR:l.Promise,MO:l.MutationObserver};var w=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1169.min.js"},x=v&&g&&g[h]&&!/CriOS/.test(navigator.userAgent),b=e.exports={offset:s,now:a,origin:w,features:{},xhrWrappable:x,userAgent:d};t(12),t(15),p[h]?(p[h]("DOMContentLoaded",i,!1),l[h]("load",r,!1)):(p[m]("onreadystatechange",o),l[m]("onload",r)),c("mark",["firstbyte",s],null,"api");var E=0,O=t(20)},{}],"wrap-function":[function(t,e,n){function r(t){return!(t&&t instanceof Function&&t.apply&&!t[a])}var o=t("ee"),i=t(19),a="nr@original",s=Object.prototype.hasOwnProperty,c=!1;e.exports=function(t,e){function n(t,e,n,o){function nrWrapper(){var r,a,s,c;try{a=this,r=i(arguments),s="function"==typeof n?n(r,a):n||{}}catch(f){l([f,"",[r,a,o],s])}u(e+"start",[r,a,o],s);try{return c=t.apply(a,r)}catch(d){throw u(e+"err",[r,a,d],s),d}finally{u(e+"end",[r,a,c],s)}}return r(t)?t:(e||(e=""),nrWrapper[a]=t,d(t,nrWrapper),nrWrapper)}function f(t,e,o,i){o||(o="");var a,s,c,f="-"===o.charAt(0);for(c=0;c<e.length;c++)s=e[c],a=t[s],r(a)||(t[s]=n(a,f?s+o:o,i,s))}function u(n,r,o){if(!c||e){var i=c;c=!0;try{t.emit(n,r,o,e)}catch(a){l([a,n,r,o])}c=i}}function d(t,e){if(Object.defineProperty&&Object.keys)try{var n=Object.keys(t);return n.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(r){l([r])}for(var o in t)s.call(t,o)&&(e[o]=t[o]);return e}function l(e){try{t.emit("internal-error",e)}catch(n){}}return t||(t=o),n.inPlace=f,n.flag=a,n}},{}]},{},["loader",2,9]);</script>
+<link rel="icon" type="image/png" href="https://cdn.hospimedia.fr/assets/hmd_public/favicon-153f9426ae65c1a6969bb01f48c0a238b6ea6d9565dc0d89810ff08df924f1fc.png" />
+<link rel="shortcut icon" type="image/x-icon" href="https://cdn.hospimedia.fr/assets/hmd_public/favicon-45022af5806d957049dc43be87a8b3026797462923be276f493d1f1e964df375.ico" />
+<link rel="apple-touch-icon" href="https://cdn.hospimedia.fr/assets/hmd_public/apple-touch-icon-a0517537c3298da0e860a92368e186c6c97502e630fe3d575c67fda70ef6cf65.png" />
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1" />
+<meta name="robots" content="max-snippet:160, max-image-preview:large">
+
+<link rel="stylesheet" media="screen" href="https://cdn.hospimedia.fr/assets/hmd_public/application-f9df507d8d02af0d40dbf1faddb67c015310cb0f7f44e34007d757419312058e.css" />
+<link rel="stylesheet" media="all" href="https://cdn.hospimedia.fr/assets/hmd_public/text-5837a5ec54e674d02161f81ff6949571cab318c90ef1fcdce8d8a760225af931.css" />
+<link rel="stylesheet" media="print" href="https://cdn.hospimedia.fr/assets/hmd_public/print-75e7a5a58ae51afff8e8eafd3858fc9f75303051af813de61ab2e8d3e85b1e7d.css" />
+<!--[if lt IE 9]>
+	<script src="https://cdn.hospimedia.fr/assets/hmd_public/html5shiv-printshiv-7ffd67b75d70c9b247f6f8a9c2050196d3726c94ca7fe5c499c60a4e4f101017.js"></script>
+<![endif]-->
+<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="6m5/O5EaheJOPF3MquwD+NljgGh1WK770xREAud/cApG0f98Bfw8E/42iUJDcpMvmM15+eWl3LGlMjj7Mt3Hwg==" />
+
+    
+    <title>Articles • HOSPIMEDIA</title>
+    <meta name="description" content="Articles • HOSPIMEDIA">
+    <link rel="alternate" type="application/rss+xml" title="Articles • HOSPIMEDIA" href="https://feeds.hospimedia.fr/hospimedia_extraits/articles" />
+    
+  </head>
+
+  <body>
+    <span id="is-mobile"></span>
+<header id="top" role="banner">
+  <div class="wrapper-private">
+    <div class="row transparent">
+      <div class="txtright"><a target="_blank" href="https://abonnes.hospimedia.fr/">Se connecter à l&#39;espace abonnés</a></div>
+    </div>
+  </div>
+  <div class="wrapper-header">
+    <div class="row transparent">
+      <div class="fourcol">
+        <div class="logo" itemscope itemtype="https://schema.org/Organization">
+          <a itemprop="url" href="http://www.hospimedia.fr/"><img alt="HOSPIMEDIA" title="HOSPIMEDIA, l&#39;actualité des territoires de santé" itemprop="logo" src="https://cdn.hospimedia.fr/assets/hmd_public/hospimedia-6595fbf16323960bc604f41df1388ce8154ca5fbe76baf52b3ab26f198c0b843.png" /></a>
+        </div>
+      </div>
+      <div class="eightcol last relative">
+        <div class="clearfix">
+          <div class="wrap-connection nmo">
+            Votre structure est déjà abonnée ? <a target="_blank" href="https://abonnes.hospimedia.fr/">Connectez-vous</a> ou <a target="_blank" href="https://abonnes.hospimedia.fr/ajouter-un-utilisateur">Ajouter un utilisateur</a>
+          </div>
+        </div>
+        <ul class="aside inline-list">
+          <li class="phone_icon"><img alt="03 20 32 99 99" title="03 20 32 99 99" src="https://cdn.hospimedia.fr/assets/hmd_public/tel-0456dc98ca97c7ffce419e6ca8679db55568491d62b0ac7e3ad5776442031167.png" /></li>
+          <li class='phone_number'><a style='color: #31B3F2;' href='tel:0320329999'>03 20 32 99 99</a></li>
+          <li class="social"><a target="_blank" href="http://twitter.com/hospimedia"><img alt="Twitter" title="Suivez-nous sur Twitter" src="https://cdn.hospimedia.fr/assets/hmd_public/twitter-bf613815832a45239c9e6ac19fbe6f4626854401c43de25da9d8a468bfb3f279.png" /></a></li>
+          <li class="social"><a target="_blank" href="https://www.linkedin.com/company/hospimedia"><img alt="Linkedin" title="Suivez-nous sur Linkedin" src="https://cdn.hospimedia.fr/assets/hmd_public/linkedin-45c23d353581d99c33a04b72b33fc1323e1493a03d3dbe669f65d86795649df2.png" /></a></li>
+          <li class="social"><a target="_blank" href="https://www.facebook.com/hospimedia"><img alt="Facebook" title="Suivez-nous sur Facebook" src="https://cdn.hospimedia.fr/assets/hmd_public/facebook-3c9fe214a6ebf164eea7e22dab5f99a6d4841df15e50df5904f9f2998ecd452e.png" /></a></li>
+         </ul>
+         <div class="shortcut-nav">
+          <a id="mobile-navigation" class="btn btn-navbar" href="#">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+</a>        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper-nav" data-disable-cookies-hidden="true">
+    <div class="row transparent">
+      <div class="twelvecol">
+        <nav class="main-navigation" role="navigation">
+          <ul class="categories inline-list">
+            <li class="first-item">
+              Qui êtes-vous ?
+            </li>
+            <li class="first-link">
+              <a href="/etablissement-sanitaire">Etablissement sanitaire</a>
+              <span class="nmo">|</span>
+            </li>
+            <li>
+              <a href="/medico-social">Etablissement médico-social</a>
+              <span class="nmo">|</span>
+            </li>
+            <li>
+              <a href="/entreprise">Entreprise</a>
+              <span class="nmo">|</span>
+            </li>
+            <li>
+              <a href="/association-professionnelle">Association professionnelle</a>
+              <span class="nmo">|</span>
+            </li>
+            <li>
+              <a href="/organisme-formation">Organisme de formation</a>
+              <span class="nmo">|</span>
+            </li>
+            <li>
+              <a href="/institutionnel">Institutionnel</a>
+            </li>
+            <li class="secondary-link"><a href="/service">Présentation du service</a><span class="nmo">|</span></li>
+<li class="secondary-link"><a href="/redaction">La rédaction</a><span class="nmo">|</span></li>
+<li class="secondary-link"><a href="/abonnement">Nos offres d&#39;abonnement</a><span class="nmo">|</span></li>
+<li class="secondary-link link-for-mobile"><a href="/contact">Nous contacter</a></li>
+
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="twelvecol clearfix" data-disable-cookies-not-show="true">
+        <div class="secondary-nav nmo">
+          <ul class="inline-list">
+            <li class="secondary-link"><a href="/service">Présentation du service</a><span class="nmo">|</span></li>
+<li class="secondary-link"><a href="/redaction">La rédaction</a><span class="nmo">|</span></li>
+<li class="secondary-link"><a href="/abonnement">Nos offres d&#39;abonnement</a><span class="nmo">|</span></li>
+<li class="secondary-link link-for-mobile"><a href="/contact">Nous contacter</a></li>
+
+          </ul>
+        </div>
+          <div class="test-subscribe nmo">
+            <a class="btn btn-blue-ocean" href="/abonnement">S&#39;abonner</a>
+<a href="#" id="btn-test" class="btn">Tester gratuitement</a>
+<div class="test-header">
+  <div class="wrap-test">
+  <div class="form-test">
+    <form class="new_requests_express_trial" id="new_requests_express_trial" data-gdpr="true" action="/demande-de-test" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
+      <div class="row form-block">
+        <div class="test-form-title">
+            <p>Testez-nous gratuitement <strong>pendant 7 jours</strong></p>
+            <input type="hidden" name="test_duration" id="test_duration" value="one-week" />
+        </div>
+        <input type="hidden" name="from" id="from" value="test_form_in_menu" />
+        <div class="content_field relative">
+          <input placeholder="Votre adresse email professionnelle" class="btn-on-right input-white" size="30" required="required" type="email" name="salesforce_test_lead[email]" id="salesforce_test_lead_email" />
+          <input type="submit" name="commit" value="Tester" class="btn btn-form" data-disable-with="Tester" />
+          <span class="loader"></span>
+          
+        </div>
+      </div>
+
+      <label class="checkbox-required">
+  <input type="checkbox" name="accept_confidentiality_and_conditions" id="accept_confidentiality_and_conditions" value="true" class="checkbox-gdpr" />
+  <div class="content_gdpr">
+    Je reconnais avoir pris connaissance des <a href='http://www.hospimedia.fr/mentions-legales' target='_blank'>conditions générales d'utilisation</a> et de la <a href='http://www.hospimedia.fr/politique-de-confidentialite' target='_blank'>politique de confidentialité</a> et je les accepte.
+    <div class="required_gdpr_notice hidden">
+      Veuillez accepter les conditions générales d’utilisation ainsi que notre politique de confidentialité avant de valider
+    </div>
+  </div>
+</label>
+</form>  </div>
+</div>
+
+</div>
+
+          </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="container" role="main">
+	    <div id="wrapper">
+	      <div id="wrapper1" class="row">
+  <div class="twelvecol">
+    <h1 class="title">Articles</h1>
+    <br>
+    <nav class="breadcrumb"><a href="/">HOSPIMEDIA</a>&nbsp;>&nbsp;<a href="/actualite/articles">Articles</a></nav>
+  </div>
+</div>
+<div class="row">
+  <div class="eightcol">
+
+
+        <article class='card private-style excerpt-card'>
+          <header>
+            <span class="eyebrow">Dialogue social</span>
+            <h1>
+              <a href="/actualite/articles/20200713-dialogue-social-la-signature-des-accords-salariaux-sur">La signature des accords salariaux sur le Ségur de la santé se veut &quot;historique&quot;</a>
+            </h1>
+          </header>
+
+          <div class='date-time-excerpts'>
+          <time datetime="2020-07-13T17:42:18+02:00" pubdate="true">13/07/20 - 17h42</time>
+ - HOSPIMEDIA
+          </div>
+
+
+          <div class='intro'>
+
+            <span class="inset">
+
+              <p>
+                <p>Sept semaines. C'est le temps qu'il aura fallu au Gouvernement et aux partenaires sociaux pour boucler le Ségur de la santé, plus exactement son volet consacré aux revalorisations salariales, sans nul doute le plus symbolique. Lancé en grande pompe…</p>
+              </p>
+            </span>
+
+          </div>
+        </article>
+        <br>
+        <article class='card private-style excerpt-card'>
+          <header>
+            <span class="eyebrow">Bloc note médico-social</span>
+            <h1>
+              <a href="/actualite/articles/20200713-bloc-note-medico-social-une-montre-connectee-pouvait">Une montre connectée pouvait mettre en danger les usagers souffrant de pertes de mémoire</a>
+            </h1>
+          </header>
+
+          <div class='date-time-excerpts'>
+          <time datetime="2020-07-13T17:32:54+02:00" pubdate="true">13/07/20 - 17h32</time>
+ - HOSPIMEDIA
+          </div>
+
+
+          <div class='intro'>
+
+            <span class="inset">
+
+              <p>
+                <p>[Technologie] "Prenez vos pilules." Une montre connectée commercialisée par l'entreprise chinoise 3G Electronics comportait une faille de sécurité. Elle pouvait permettre à un pirate informatique d'envoyer ce rappel, "prenez vos pilules", aussi…</p>
+              </p>
+            </span>
+
+          </div>
+        </article>
+        <br>
+        <article class='card private-style excerpt-card'>
+          <header>
+            <span class="eyebrow">Dialogue social</span>
+            <h1>
+              <a href="/actualite/articles/20200713-dialogue-social-le-chu-de-toulouse-accorde-des">Le CHU de Toulouse accorde des moyens au Samu-Smur sur fond de tension aux urgences</a>
+            </h1>
+          </header>
+
+          <div class='date-time-excerpts'>
+          <time datetime="2020-07-13T17:23:10+02:00" pubdate="true">13/07/20 - 17h23</time>
+ - HOSPIMEDIA
+          </div>
+
+
+          <div class='intro'>
+
+            <span class="inset">
+
+              <p>
+                <p>L'ARS Occitanie et le CHU de Toulouse (Haute-Garonne) ont annoncé le 10 juillet le déblocage de nouveaux moyens pour les urgences, après notamment que 25 médecins urgentistes ont menacé de démissionner de leurs fonctions administratives. L'annonce…</p>
+              </p>
+            </span>
+
+          </div>
+        </article>
+        <br>
+        <article class='card private-style excerpt-card'>
+          <header>
+            <span class="eyebrow">Recherche</span>
+            <h1>
+              <a href="/actualite/articles/20200713-recherche-academies-de-medecine-et-de-pharmacie-reclament">Académies de médecine et de pharmacie réclament une coordination nationale de la recherche</a>
+            </h1>
+          </header>
+
+          <div class='date-time-excerpts'>
+          <time datetime="2020-07-13T15:19:47+02:00" pubdate="true">13/07/20 - 15h19</time>
+ - HOSPIMEDIA
+          </div>
+
+
+          <div class='intro'>
+
+            <span class="inset">
+
+              <p>
+                <p>Dans un communiqué commun daté du 10 juillet, les académies nationales de médecine et de pharmacie saluent l'ambition du projet de loi de programmation pluriannuelle de la recherche (LPPR, à télécharger ci-dessous). Si le budget de la recherche…</p>
+              </p>
+            </span>
+
+          </div>
+        </article>
+        <br>
+        <article class='card private-style excerpt-card'>
+          <header>
+            <span class="eyebrow">Offre de soins</span>
+            <h1>
+              <a href="/actualite/articles/20200713-offre-de-soins-l-ars-paca-soutient-le">L&#39;ARS Paca soutient le programme As du cœur multricentrique</a>
+            </h1>
+          </header>
+
+          <div class='date-time-excerpts'>
+          <time datetime="2020-07-13T15:05:04+02:00" pubdate="true">13/07/20 - 15h05</time>
+ - HOSPIMEDIA
+          </div>
+
+
+          <div class='intro'>
+
+            <span class="inset">
+
+              <p>
+                <p>Tandis que de nombreux cardiologues et praticiens du sport militent en faveur de la mise en place concrète d'un programme de sport sur ordonnance, la région Provence-Alpes-Côte d'Azur (Paca) se relance dans une expérimentation. Intitulé "As du Coeur…</p>
+              </p>
+            </span>
+
+          </div>
+        </article>
+        <br>
+        <article class='card private-style excerpt-card'>
+          <header>
+            <span class="eyebrow">Ressources humaines</span>
+            <h1>
+              <a href="/actualite/articles/20200713-ressources-humaines-le-cng-veut-rendre-plus-communicantes">Le CNG veut rendre &quot;plus communicantes&quot; ses bases de données statistiques</a>
+            </h1>
+          </header>
+
+          <div class='date-time-excerpts'>
+          <time datetime="2020-07-13T14:46:01+02:00" pubdate="true">13/07/20 - 14h46</time>
+ - HOSPIMEDIA
+          </div>
+
+
+          <div class='intro'>
+
+            <span class="inset">
+
+              <p>
+                <p>La crise sanitaire liée au coronavirus est venue secouer de plein fouet les aspirations de refonte du Centre national de gestion (CNG). L'organisme, que sa directrice générale, Ève Parier, espère davantage ancrer dans une politique plus globale des…</p>
+              </p>
+            </span>
+
+          </div>
+        </article>
+        <br>
+        <article class='card private-style excerpt-card'>
+          <header>
+            <span class="eyebrow">Psychiatrie</span>
+            <h1>
+              <a href="/actualite/articles/20200713-psychiatrie-le-mandat-d-adeline-hazan-a-permis">Le mandat d&#39;Adeline Hazan a permis &quot;un nouveau regard&quot; sur l&#39;enfermement en psychiatrie</a>
+            </h1>
+          </header>
+
+          <div class='date-time-excerpts'>
+          <time datetime="2020-07-13T14:26:35+02:00" pubdate="true">13/07/20 - 14h26</time>
+ - HOSPIMEDIA
+          </div>
+
+
+          <div class='intro'>
+
+            <span class="inset">
+                <figure class="image-excerpt-list">
+                  <picture>
+                    <source srcset="https://cdn.hospimedia.fr/images/208970/10573/thumbnail/ahcarre.jpeg?1594631590" media="(min-width: 767px)">
+                    <img class='excerpt-img' srcset='https://cdn.hospimedia.fr/images/208970/10573/large/ahcarre.jpeg?1594631590' alt='Adeline Hazan' title='Adeline Hazan - Droits réservés — Caroline Cordier/Hospimedia' class='image-tag-excerpt-list'>
+                  </picture>
+                </figure>
+
+              <p>
+                <p>Le mandat (non renouvelable) d'Adeline Hazan au poste de contrôleur général des lieux de privation de liberté (CGLPL) s'achève le 16 juillet. Dans cette perspective, la contrôleuse générale est revenue à l'occasion d'une conférence de presse le 10…</p>
+              </p>
+            </span>
+
+          </div>
+        </article>
+        <br>
+        <article class='card private-style excerpt-card'>
+          <header>
+            <span class="eyebrow">Gestion des risques</span>
+            <h1>
+              <a href="/actualite/articles/20200713-gestion-des-risques-l-entrepot-des-donnees-de">L&#39;entrepôt des données de santé du CHU de Bordeaux participe à déceler une deuxième vague</a>
+            </h1>
+          </header>
+
+          <div class='date-time-excerpts'>
+          <time datetime="2020-07-13T11:50:36+02:00" pubdate="true">13/07/20 - 11h50</time>
+ - HOSPIMEDIA
+          </div>
+
+
+          <div class='intro'>
+
+            <span class="inset">
+
+              <p>
+                <p>Indicateurs simples ou plus sophistiqués, le CHU de Bordeaux (Gironde) s'arme pour détecter une potentielle deuxième vague du Covid-19. L'établissement dispose de nombreuses informations sur l'épidémie : nombre de cas possibles, probables et…</p>
+              </p>
+            </span>
+
+          </div>
+        </article>
+        <br>
+        <article class='card private-style excerpt-card'>
+          <header>
+            <span class="eyebrow">E-santé</span>
+            <h1>
+              <a href="/actualite/articles/20200713-e-sante-le-ght-des-alpes-du-sud">Le GHT des Alpes-du-Sud affiche les ambitions de sa stratégie de télémedecine</a>
+            </h1>
+          </header>
+
+          <div class='date-time-excerpts'>
+          <time datetime="2020-07-13T10:46:03+02:00" pubdate="true">13/07/20 - 10h46</time>
+ - HOSPIMEDIA
+          </div>
+
+
+          <div class='intro'>
+
+            <span class="inset">
+                <figure class="image-excerpt-list">
+                  <picture>
+                    <source srcset="https://cdn.hospimedia.fr/images/208961/10566/thumbnail/20200708_diagrammeschdirecteur_jpeg_-1.jpg?1594394501" media="(min-width: 767px)">
+                    <img class='excerpt-img' srcset='https://cdn.hospimedia.fr/images/208961/10566/large/20200708_diagrammeschdirecteur_jpeg_-1.jpg?1594394501' alt='Un diagramme résume le plan d&#39;actions élaboré dans le cadre de la stratégie &quot;GHT 3.0 Alpes-du-Sud&quot;.' title='Un diagramme résume le plan d&#39;actions élaboré dans le cadre de la stratégie &quot;GHT 3.0 Alpes-du-Sud&quot;. - Droits réservés — GHT Alpes-du-Sud' class='image-tag-excerpt-list'>
+                  </picture>
+                </figure>
+
+              <p>
+                <p>Baptisée "GHT 3.0 Alpes-du-Sud", la stratégie de télémédecine du groupement hospitalier de territoire (GHT)* porté par le CH intercommunal des Alpes-du-Sud (Hautes-Alpes) a été dévoilée le 8 juillet, informe l'établissement dans un communiqué de…</p>
+              </p>
+            </span>
+
+          </div>
+        </article>
+        <br>
+        <article class='card private-style excerpt-card'>
+          <header>
+            <span class="eyebrow">Système d&#39;information</span>
+            <h1>
+              <a href="/actualite/articles/20200713-systeme-d-information-le-secteur-sante-n-a">Le secteur santé n&#39;a pas été épargné par l&#39;augmentation des cyberattaques en 2019</a>
+            </h1>
+          </header>
+
+          <div class='date-time-excerpts'>
+          <time datetime="2020-07-13T10:15:02+02:00" pubdate="true">13/07/20 - 10h15</time>
+ - HOSPIMEDIA
+          </div>
+
+
+          <div class='intro'>
+
+            <span class="inset">
+                <figure class="image-excerpt-list">
+                  <picture>
+                    <source srcset="https://cdn.hospimedia.fr/images/208959/10572/thumbnail/bsip_015880_004_copie.jpg?1594621522" media="(min-width: 767px)">
+                    <img class='excerpt-img' srcset='https://cdn.hospimedia.fr/images/208959/10572/large/bsip_015880_004_copie.jpg?1594621522' alt='' title=' - Droits réservés — Image source/BSIP' class='image-tag-excerpt-list'>
+                  </picture>
+                </figure>
+
+              <p>
+                <p>392 incidents. C'est le nombre d'incidents de sécurité des systèmes d'information (SI) déclarés en 2019 par 300 établissements. Soit une augmentation de 20% par rapport à 2018, constate l'Agence du numérique en santé (ANS) dans l'observatoire des…</p>
+              </p>
+            </span>
+
+          </div>
+        </article>
+        <br>
+        <nav class="pagination">
+    
+        <span class="page current">
+  1
+</span>
+
+        <span class="page">
+  <a href="/actualite/articles?page=2">2</a>
+</span>
+
+        <span class="page">
+  <a href="/actualite/articles?page=3">3</a>
+</span>
+
+        <span class="page">
+  <a href="/actualite/articles?page=4">4</a>
+</span>
+
+        <span class="page">
+  <a href="/actualite/articles?page=5">5</a>
+</span>
+
+    <span class="next">
+  <a href="/actualite/articles?page=2">Page suivante</a>
+</span>
+
+  </nav>
+
+  </div>
+
+  <div class="fourcol last">
+    <section class="card excerpt-about">
+  <div class="center">
+    <h2 class="title-excerpt">A propos <strong>d'HOSPIMEDIA</strong></h2>
+    <br>
+    <img alt="HOSPIMEDIA" title="HOSPIMEDIA, l&#39;actualité des territoires de santé" src="https://cdn.hospimedia.fr/assets/hmd_public/excerpt-private-92f93e8b55458dd15e7de72138dcbeb2fde28c61b605153ae05e51ca518be3e3.png" />
+  </div>
+  <ul class="list-checked-small">
+    <li>L'info clé tous les matins dans votre boîte mail</li>
+    <li>La couverture d'un spécialiste sur le secteur sanitaire et médico-social</li>
+    <li>L'objectivité garantie</li>
+    <li>Plus de 3 000 structures abonnées</li>
+  </ul>
+    <div class="center">
+      <h3 class="title-excerpt">Envie d'en savoir plus ?</h3>
+      <a class="link-service" href="/service">Découvrez le service</a>
+    </div>
+</section>
+
+  </div>
+</div>
+
+	    </div>
+	  </div>
+    <footer class="wrapper-footer" role="contentinfo">
+  <div class="container">
+    <div class="row transparent">
+      <div class="twelvecol transparent">
+        <div class="col-footer">
+          <h2 class="title-footer">Découvrir HOSPIMEDIA</h2>
+          <ul>
+            <li><a href="/">Page d&#39;accueil</a></li>
+            <li><a href="/service">Présentation du service</a></li>
+            <li><a href="/redaction">La rédaction</a></li>
+            <li><a href="/abonnement">Nos offres d&#39;abonnement</a></li>
+          </ul>
+        </div>
+        <div class="col-footer">
+          <h2 class="title-footer">Qui êtes-vous ?</h2>
+          <ul>
+            <li><a href="/etablissement-sanitaire">Etablissement sanitaire</a></li>
+            <li><a href="/medico-social">Etablissement médico-social</a></li>
+            <li><a href="/entreprise">Entreprise</a></li>
+            <li><a href="/association-professionnelle">Association professionnelle</a></li>
+            <li><a href="/organisme-formation">Organisme de formation</a></li>
+            <li><a href="/institutionnel">Institutionnel</a></li>
+          </ul>
+        </div>
+        <div class="col-footer">
+          <h2 class="title-footer">Pour les abonnés</h2>
+          <ul>
+            <li><a target="_blank" href="https://abonnes.hospimedia.fr/">Connectez-vous</a></li>
+            <li><a target="_blank" href="https://abonnes.hospimedia.fr/ajouter-un-utilisateur">Ajouter un utilisateur</a></li>
+            <li><a target="_blank" href="https://abonnes.hospimedia.fr/support">Aide et support</a></li>
+          </ul>
+        </div>
+        <div class="col-footer last">
+          <h2 class="title-footer">03 20 32 99 99</h2>
+          <ul>
+            <li><a href="/contact">Nous contacter</a></li>
+            <li><a href="/charte-editoriale">Charte éditoriale</a></li>
+            <li><a href="/mentions-legales">Mentions légales</a></li>
+            <li><a href="/droits-de-reproduction">Droits de reproduction</a></li>
+            <li><a href="/politique-de-confidentialite">Politique de confidentialité</a></li>
+          </ul>
+
+        </div>
+        <p class="links-footer-mobile">
+          <a href="/contact">Nous contacter</a>
+          <a href="/mentions-legales">Mentions légales</a>
+        </p>
+        <a href="#top" class="btn btn-blue-ocean right">Haut de page</a>
+        <div class="social-footer hide-for-mobile">
+          <ul>
+            <li class="facebook last">
+              <a target="_blank" href="https://www.facebook.com/hospimedia">
+                <img alt="Facebook" title="Suivez-nous sur Facebook" src="https://cdn.hospimedia.fr/assets/hmd_public/facebook-3c9fe214a6ebf164eea7e22dab5f99a6d4841df15e50df5904f9f2998ecd452e.png" />
+</a>            </li>
+            <li class="linkedin">
+              <a target="_blank" href="https://www.linkedin.com/company/hospimedia">
+                <img alt="Linkedin" title="Suivez-nous sur Linkedin" src="https://cdn.hospimedia.fr/assets/hmd_public/linkedin-45c23d353581d99c33a04b72b33fc1323e1493a03d3dbe669f65d86795649df2.png" />
+</a>            </li>
+            <li class="twitter">
+              <a target="_blank" href="http://twitter.com/hospimedia">
+                <img alt="Twitter" title="Suivez-nous sur Twitter" src="https://cdn.hospimedia.fr/assets/hmd_public/twitter-bf613815832a45239c9e6ac19fbe6f4626854401c43de25da9d8a468bfb3f279.png" />
+</a>            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="bottom-footer hide-for-mobile">
+        <div class="hr nmo"></div>
+        <div class="logo-groupe-footer left">
+        <a target="_blank" href="http://www.hospimedia-groupe.fr">
+          <img width="120" alt="Hospimedia Groupe" title="Hospimedia Groupe" src="https://cdn.hospimedia.fr/assets/hmd_public/logo_hospimedia_groupe-6085aaef2f2ace8802992f8d794bcbae62f67786194c8fa27200df57a21f5d0a.png" />
+</a>        </div>
+        <h2 class="title-footer inline left nmo">Nos autres services :&nbsp;</h2>
+        <ul class="inline-list">
+          <li><a target="_blank" href="http://nominations.hospimedia.fr">Hospimedia Nominations</a><span class="separator"> | </span></li>
+          <li><a target="_blank" href="http://www.profilmedecin.fr">Profil Médecin</a><span class="separator"> | </span></li>
+          <li><a target="_blank" href="http://www.staffsante.fr">Staffsanté</a><span class="separator"> | </span></li>
+          <li><a target="_blank" href="http://www.staffsocial.fr">Staffsocial</a><span class="separator"> | </span></li>
+          <li><a target="_blank" href="https://www.teamsquare-sante.fr">Teamsquare</a><span class="separator"> | </span></li>
+          <li><a target="_blank" href="https://reponse-expert.hospimedia.fr">Réponse Expert</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    <script src="https://cdn.hospimedia.fr/assets/hmd_public/application-75b08b9e8ca9fa1e89e9295aff7df84648e0d94bea6d89713eddd42de1459679.js"></script>
+<script type="text/javascript" src="/oldies.js"></script>
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-123864-2', {'siteSpeedSampleRate': 10});
+ga('require', 'linkid', 'linkid.js');
+
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+<!-- Code de remarketing Google (on le masque en css pour ne pas avoir d'espace entre le footer et le bas de page) -->
+<div class="none">
+  <script type="text/javascript">
+    /* <![CDATA[ */
+    var google_conversion_id = 1071102607;
+    var google_conversion_label = "NKdBCJPJ4AMQj_Xe_gM";
+    var google_custom_params = window.google_tag_params;
+    var google_remarketing_only = true;
+    /* ]]> */
+  </script>
+  <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js"></script>
+
+  <noscript>
+    <div style="display:inline;">
+      <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/1071102607/?value=0&label=NKdBCJPJ4AMQj_Xe_gM&guid=ON&script=0"/>
+    </div>
+  </noscript>
+</div>
+  <!-- Fin code de remarketing Google -->
+
+
+  </body>
+
+</html>

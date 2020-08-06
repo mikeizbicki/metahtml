@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={licenseKey:"690645bd9e",applicationID:"24926014"};window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var i=n[t]={exports:{}};e[t][0].call(i.exports,function(n){var i=e[t][1][n];return r(i||n)},i,i.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var i=0;i<t.length;i++)r(t[i]);return r}({1:[function(e,n,t){function r(){}function i(e,n,t){return function(){return o(e,[u.now()].concat(f(arguments)),n?null:this,t),n?void 0:this}}var o=e("handle"),a=e(4),f=e(5),c=e("ee").get("tracer"),u=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],l="api-",d=l+"ixn-";a(p,function(e,n){s[n]=i(l+n,!0,"api")}),s.addPageAction=i(l+"addPageAction",!0),s.setCurrentRouteName=i(l+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,i="function"==typeof n;return o(d+"tracer",[u.now(),e,t],r),function(){if(c.emit((i?"":"no-")+"fn-start",[u.now(),r,i],t),i)try{return n.apply(this,arguments)}catch(e){throw c.emit("fn-err",[arguments,this,e],t),e}finally{c.emit("fn-end",[u.now()],t)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=i(d+n)}),newrelic.noticeError=function(e,n){"string"==typeof e&&(e=new Error(e)),o("err",[e,u.now(),!1,n])}},{}],2:[function(e,n,t){function r(e,n){var t=e.getEntries();t.forEach(function(e){"first-paint"===e.name?c("timing",["fp",Math.floor(e.startTime)]):"first-contentful-paint"===e.name&&c("timing",["fcp",Math.floor(e.startTime)])})}function i(e,n){var t=e.getEntries();t.length>0&&c("lcp",[t[t.length-1]])}function o(e){if(e instanceof s&&!l){var n,t=Math.round(e.timeStamp);n=t>1e12?Date.now()-t:u.now()-t,l=!0,c("timing",["fi",t,{type:e.type,fid:n}])}}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var a,f,c=e("handle"),u=e("loader"),s=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){a=new PerformanceObserver(r),f=new PerformanceObserver(i);try{a.observe({entryTypes:["paint"]}),f.observe({entryTypes:["largest-contentful-paint"]})}catch(p){}}if("addEventListener"in document){var l=!1,d=["click","keydown","mousedown","pointerdown","touchstart"];d.forEach(function(e){document.addEventListener(e,o,!1)})}}},{}],3:[function(e,n,t){function r(e,n){if(!i)return!1;if(e!==i)return!1;if(!n)return!0;if(!o)return!1;for(var t=o.split("."),r=n.split("."),a=0;a<r.length;a++)if(r[a]!==t[a])return!1;return!0}var i=null,o=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var f=navigator.userAgent,c=f.match(a);c&&f.indexOf("Chrome")===-1&&f.indexOf("Chromium")===-1&&(i="Safari",o=c[1])}n.exports={agent:i,version:o,match:r}},{}],4:[function(e,n,t){function r(e,n){var t=[],r="",o=0;for(r in e)i.call(e,r)&&(t[o]=n(r,e[r]),o+=1);return t}var i=Object.prototype.hasOwnProperty;n.exports=r},{}],5:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,i=t-n||0,o=Array(i<0?0:i);++r<i;)o[r]=e[n+r];return o}n.exports=r},{}],6:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function i(e){function n(e){return e&&e instanceof r?e:e?c(e,f,o):o()}function t(t,r,i,o){if(!l.aborted||o){e&&e(t,r,i);for(var a=n(i),f=v(t),c=f.length,u=0;u<c;u++)f[u].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function d(e,n){h[e]=v(e).concat(n)}function m(e,n){var t=h[e];if(t)for(var r=0;r<t.length;r++)t[r]===n&&t.splice(r,1)}function v(e){return h[e]||[]}function g(e){return p[e]=p[e]||i(t)}function w(e,n){u(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var h={},y={},b={on:d,addEventListener:d,removeEventListener:m,emit:t,get:g,listeners:v,context:n,buffer:w,abort:a,aborted:!1};return b}function o(){return new r}function a(){(s.api||s.feature)&&(l.aborted=!0,s=l.backlog={})}var f="nr@context",c=e("gos"),u=e(4),s={},p={},l=n.exports=i();l.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(i.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(o){}return e[n]=r,r}var i=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){i.buffer([e],r),i.emit(e,n,t)}var i=e("ee").get("handle");n.exports=r,r.ee=i},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,o,function(){return i++})}var i=1,o="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!x++){var e=E.info=NREUM.info,n=d.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();u(y,function(n,t){e[n]||(e[n]=t)}),c("mark",["onload",a()+E.offset],null,"api");var t=d.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function i(){"complete"===d.readyState&&o()}function o(){c("mark",["domContent",a()+E.offset],null,"api")}function a(){return O.exists&&performance.now?Math.round(performance.now()):(f=Math.max((new Date).getTime(),f))-E.offset}var f=(new Date).getTime(),c=e("handle"),u=e(4),s=e("ee"),p=e(3),l=window,d=l.document,m="addEventListener",v="attachEvent",g=l.XMLHttpRequest,w=g&&g.prototype;NREUM.o={ST:setTimeout,SI:l.setImmediate,CT:clearTimeout,XHR:g,REQ:l.Request,EV:l.Event,PR:l.Promise,MO:l.MutationObserver};var h=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1169.min.js"},b=g&&w&&w[m]&&!/CriOS/.test(navigator.userAgent),E=n.exports={offset:f,now:a,origin:h,features:{},xhrWrappable:b,userAgent:p};e(1),e(2),d[m]?(d[m]("DOMContentLoaded",o,!1),l[m]("load",r,!1)):(d[v]("onreadystatechange",i),l[v]("onload",r)),c("mark",["firstbyte",f],null,"api");var x=0,O=e(6)},{}],"wrap-function":[function(e,n,t){function r(e){return!(e&&e instanceof Function&&e.apply&&!e[a])}var i=e("ee"),o=e(5),a="nr@original",f=Object.prototype.hasOwnProperty,c=!1;n.exports=function(e,n){function t(e,n,t,i){function nrWrapper(){var r,a,f,c;try{a=this,r=o(arguments),f="function"==typeof t?t(r,a):t||{}}catch(u){l([u,"",[r,a,i],f])}s(n+"start",[r,a,i],f);try{return c=e.apply(a,r)}catch(p){throw s(n+"err",[r,a,p],f),p}finally{s(n+"end",[r,a,c],f)}}return r(e)?e:(n||(n=""),nrWrapper[a]=e,p(e,nrWrapper),nrWrapper)}function u(e,n,i,o){i||(i="");var a,f,c,u="-"===i.charAt(0);for(c=0;c<n.length;c++)f=n[c],a=e[f],r(a)||(e[f]=t(a,u?f+i:i,o,f))}function s(t,r,i){if(!c||n){var o=c;c=!0;try{e.emit(t,r,i,n)}catch(a){l([a,t,r,i])}c=o}}function p(e,n){if(Object.defineProperty&&Object.keys)try{var t=Object.keys(e);return t.forEach(function(t){Object.defineProperty(n,t,{get:function(){return e[t]},set:function(n){return e[t]=n,n}})}),n}catch(r){l([r])}for(var i in e)f.call(e,i)&&(n[i]=e[i]);return n}function l(n){try{e.emit("internal-error",n)}catch(t){}}return e||(e=i),t.inPlace=u,t.flag=a,t}},{}]},{},["loader"]);</script>
+<meta name="viewport" content="width=device-width" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+
+  
+
+
+<link rel="shortcut icon" href="https://www.politicalislam.com/wp-content/themes/political_islam_2020/images/favicon.ico">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+
+	<!-- This site is optimized with the Yoast SEO plugin v14.3 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Tears of Jihad - Political Islam</title>
+	<meta name="robots" content="index, follow" />
+	<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+	<meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+	<link rel="canonical" href="https://www.politicalislam.com/tears-of-jihad/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Tears of Jihad - Political Islam" />
+	<meta property="og:description" content="These figures are a rough estimate of the death of non-Muslims by the political act of jihad. Africa Thomas Sowell [Thomas Sowell, Race and Culture, BasicBooks, 1994, p. 188] estimates that 11 million slaves were shipped across the Atlantic and&hellip; Read&nbsp;More" />
+	<meta property="og:url" content="https://www.politicalislam.com/tears-of-jihad/" />
+	<meta property="og:site_name" content="Political Islam" />
+	<meta property="article:publisher" content="https://www.facebook.com/billwarnerauthor" />
+	<meta property="article:author" content="https://www.facebook.com/billwarnerauthor" />
+	<meta property="article:published_time" content="2008-03-03T13:37:51+00:00" />
+	<meta property="article:modified_time" content="2014-09-16T06:50:01+00:00" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:creator" content="@politicalislam" />
+	<meta name="twitter:site" content="@politicalislam" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.politicalislam.com/#website","url":"https://www.politicalislam.com/","name":"Political Islam","description":"Islam&#039;s ideology about unbelievers, Kafirs","potentialAction":[{"@type":"SearchAction","target":"https://www.politicalislam.com/?s={search_term_string}","query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"WebPage","@id":"https://www.politicalislam.com/tears-of-jihad/#webpage","url":"https://www.politicalislam.com/tears-of-jihad/","name":"Tears of Jihad - Political Islam","isPartOf":{"@id":"https://www.politicalislam.com/#website"},"datePublished":"2008-03-03T13:37:51+00:00","dateModified":"2014-09-16T06:50:01+00:00","author":{"@id":"https://www.politicalislam.com/#/schema/person/432bba3fac4674909a7d933123ce223d"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://www.politicalislam.com/tears-of-jihad/"]}]},{"@type":["Person"],"@id":"https://www.politicalislam.com/#/schema/person/432bba3fac4674909a7d933123ce223d","name":"Bill Warner","description":"Bill Warner holds a PhD in physics and math, NC State University, 1968. He has been a university professor, businessman, and applied physicist. He was a Member of the Technical Staff in solid-state physics at the Sarnoff Princeton Laboratories in the area of integrated circuit structures. During the energy crisis of the 80's he founded and ran a company that specialized in energy efficient homes. For eight years he was a professor at Tennessee State University in the Engineering School. Dr. Warner has had a life-long interest in religion and its effects on history. He has studied the source texts of the major religions for decades. Even before the destruction of the World Trade Center he had predicted the war between Islam and America. The day after 9/11 he decided to make the source texts of Islam available for the average person. Dr. Warner's training in scientific theory and mathematics shaped how he analyzed Islamic doctrine. The first step was realizing that the Islamic texts had been made deliberately difficult to read and comprehend. A program, the Trilogy Project (see below), was created to strip away the confusion in the texts. It became clear that Islam is not constructed on the same civilizational principles as the rest of the world. Simple statistical methods revealed that dualism and submission were the foundational principles of Islamic doctrine.","sameAs":["https://www.facebook.com/billwarnerauthor","https://twitter.com/politicalislam"]}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel='dns-prefetch' href='//www.politicalislam.com' />
+<link rel='dns-prefetch' href='//cdn.jsdelivr.net' />
+<link rel='dns-prefetch' href='//cdnjs.cloudflare.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Political Islam &raquo; Feed" href="https://www.politicalislam.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Political Islam &raquo; Comments Feed" href="https://www.politicalislam.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Political Islam &raquo; Tears of Jihad Comments Feed" href="https://www.politicalislam.com/tears-of-jihad/feed/" />
+<!-- This site uses the Google Analytics by MonsterInsights plugin v7.10.4 - Using Analytics tracking - https://www.monsterinsights.com/ -->
+<script type="text/javascript" data-cfasync="false">
+	var mi_version         = '7.10.4';
+	var mi_track_user      = true;
+	var mi_no_track_reason = '';
+	
+	var disableStr = 'ga-disable-UA-54976789-1';
+
+	/* Function to detect opted out users */
+	function __gaTrackerIsOptedOut() {
+		return document.cookie.indexOf(disableStr + '=true') > -1;
+	}
+
+	/* Disable tracking if the opt-out cookie exists. */
+	if ( __gaTrackerIsOptedOut() ) {
+		window[disableStr] = true;
+	}
+
+	/* Opt-out function */
+	function __gaTrackerOptout() {
+	  document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+	  window[disableStr] = true;
+	}
+	
+	if ( mi_track_user ) {
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','__gaTracker');
+
+		__gaTracker('create', 'UA-54976789-1', 'auto');
+		__gaTracker('set', 'forceSSL', true);
+	ga('require', 'displayfeatures');
+		__gaTracker('require', 'displayfeatures');
+		__gaTracker('send','pageview');
+	} else {
+		console.log( "" );
+		(function() {
+			/* https://developers.google.com/analytics/devguides/collection/analyticsjs/ */
+			var noopfn = function() {
+				return null;
+			};
+			var noopnullfn = function() {
+				return null;
+			};
+			var Tracker = function() {
+				return null;
+			};
+			var p = Tracker.prototype;
+			p.get = noopfn;
+			p.set = noopfn;
+			p.send = noopfn;
+			var __gaTracker = function() {
+				var len = arguments.length;
+				if ( len === 0 ) {
+					return;
+				}
+				var f = arguments[len-1];
+				if ( typeof f !== 'object' || f === null || typeof f.hitCallback !== 'function' ) {
+					console.log( 'Not running function __gaTracker(' + arguments[0] + " ....) because you are not being tracked. " + mi_no_track_reason );
+					return;
+				}
+				try {
+					f.hitCallback();
+				} catch (ex) {
+
+				}
+			};
+			__gaTracker.create = function() {
+				return new Tracker();
+			};
+			__gaTracker.getByName = noopnullfn;
+			__gaTracker.getAll = function() {
+				return [];
+			};
+			__gaTracker.remove = noopfn;
+			window['__gaTracker'] = __gaTracker;
+					})();
+		}
+</script>
+<!-- / Google Analytics by MonsterInsights -->
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.politicalislam.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.4.1"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='scap.flashblock-css'  href='https://www.politicalislam.com/wp-content/plugins/compact-wp-audio-player/css/flashblock.css?ver=5.4.1' type='text/css' media='all' />
+<link rel='stylesheet' id='scap.player-css'  href='https://www.politicalislam.com/wp-content/plugins/compact-wp-audio-player/css/player.css?ver=5.4.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-css'  href='https://www.politicalislam.com/wp-includes/css/dist/block-library/style.min.css?ver=5.4.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wc-block-style-css'  href='https://www.politicalislam.com/wp-content/plugins/woocommerce/packages/woocommerce-blocks/build/style.css?ver=2.5.16' type='text/css' media='all' />
+<link rel='stylesheet' id='events-manager-css'  href='https://www.politicalislam.com/wp-content/plugins/events-manager/includes/css/events_manager.css?ver=5.973' type='text/css' media='all' />
+<link rel='stylesheet' id='font-awesome-four-css'  href='https://www.politicalislam.com/wp-content/plugins/font-awesome-4-menus/css/font-awesome.min.css?ver=4.7.0' type='text/css' media='all' />
+<link rel='stylesheet' id='default-template-css'  href='https://www.politicalislam.com/wp-content/plugins/register-plus-redux/extension/readygraph/assets/css/default-popup.css?ver=5.4.1' type='text/css' media='all' />
+<link rel='stylesheet' id='rs-plugin-settings-css'  href='https://www.politicalislam.com/wp-content/plugins/revslider/public/assets/css/settings.css?ver=5.1.5' type='text/css' media='all' />
+<style id='rs-plugin-settings-inline-css' type='text/css'>
+.tp-caption a{color:#ff7302;text-shadow:none;-webkit-transition:all 0.2s ease-out;-moz-transition:all 0.2s ease-out;-o-transition:all 0.2s ease-out;-ms-transition:all 0.2s ease-out}.tp-caption a:hover{color:#ffa902}
+</style>
+<link rel='stylesheet' id='vendocrat-paymentfont-css'  href='https://www.politicalislam.com/wp-content/plugins/woocommerce-payment-methods/assets/css/paymentfont.min.css?ver=5.4.1' type='text/css' media='all' />
+<link rel='stylesheet' id='payment-methods-css'  href='https://www.politicalislam.com/wp-content/plugins/woocommerce-payment-methods/assets/css/payment-methods.min.css?ver=5.4.1' type='text/css' media='all' />
+<link rel='stylesheet' id='woocommerce-layout-css'  href='https://www.politicalislam.com/wp-content/plugins/woocommerce/assets/css/woocommerce-layout.css?ver=4.2.0' type='text/css' media='all' />
+<link rel='stylesheet' id='woocommerce-smallscreen-css'  href='https://www.politicalislam.com/wp-content/plugins/woocommerce/assets/css/woocommerce-smallscreen.css?ver=4.2.0' type='text/css' media='only screen and (max-width: 768px)' />
+<link rel='stylesheet' id='woocommerce-general-css'  href='https://www.politicalislam.com/wp-content/plugins/woocommerce/assets/css/woocommerce.css?ver=4.2.0' type='text/css' media='all' />
+<style id='woocommerce-inline-inline-css' type='text/css'>
+.woocommerce form .form-row .required { visibility: visible; }
+</style>
+<link rel='stylesheet' id='wc-composite-css-css'  href='https://www.politicalislam.com/wp-content/plugins/woocommerce-composite-products/assets/css/frontend/woocommerce.css?ver=7.0.2' type='text/css' media='all' />
+<link rel='stylesheet' id='sv-wc-payment-gateway-payment-form-css'  href='https://www.politicalislam.com/wp-content/plugins/woocommerce-gateway-authorize-net-cim/vendor/skyverge/wc-plugin-framework/woocommerce/payment-gateway/assets/css/frontend/sv-wc-payment-gateway-payment-form.min.css?ver=5.7.0' type='text/css' media='all' />
+<link rel='stylesheet' id='kadence_slider_css-css'  href='https://www.politicalislam.com/wp-content/plugins/kadence-slider/css/ksp.css?ver=2.3.0' type='text/css' media='all' />
+<link rel='stylesheet' id='jquery-magnific-popup-css'  href='https://www.politicalislam.com/wp-content/plugins/cyclone-slider-pro/libs/magnific-popup/magnific-popup.css?ver=2.10.4' type='text/css' media='all' />
+<link rel='stylesheet' id='cyclone-template-style-dark-css'  href='https://www.politicalislam.com/wp-content/plugins/cyclone-slider-pro/templates/dark/style.css?ver=2.10.4' type='text/css' media='all' />
+<link rel='stylesheet' id='cyclone-template-style-default-css'  href='https://www.politicalislam.com/wp-content/plugins/cyclone-slider-pro/templates/default/style.css?ver=2.10.4' type='text/css' media='all' />
+<link rel='stylesheet' id='cyclone-template-style-galleria-css'  href='https://www.politicalislam.com/wp-content/plugins/cyclone-slider-pro/templates/galleria/style.css?ver=2.10.4' type='text/css' media='all' />
+<link rel='stylesheet' id='cyclone-template-style-standard-css'  href='https://www.politicalislam.com/wp-content/plugins/cyclone-slider-pro/templates/standard/style.css?ver=2.10.4' type='text/css' media='all' />
+<link rel='stylesheet' id='cyclone-template-style-text-css'  href='https://www.politicalislam.com/wp-content/plugins/cyclone-slider-pro/templates/text/style.css?ver=2.10.4' type='text/css' media='all' />
+<link rel='stylesheet' id='cyclone-template-style-thumbnails-css'  href='https://www.politicalislam.com/wp-content/plugins/cyclone-slider-pro/templates/thumbnails/style.css?ver=2.10.4' type='text/css' media='all' />
+<link rel='stylesheet' id='virtue_skin-css'  href='https://www.politicalislam.com/wp-content/themes/political_islam_2020/assets/css/skins/' type='text/css' media='all' />
+<link rel='stylesheet' id='redux-google-fonts-kadence_slider-css'  href='https://fonts.googleapis.com/css?family=Raleway%3A800%2C600%2C400%2C300%2C200&#038;ver=5.4.1' type='text/css' media='all' />
+<link rel='stylesheet' id='styles-css'  href='https://www.politicalislam.com/wp-content/themes/political_islam_2020/css/style.css?ver=20190107' type='text/css' media='all' />
+<link rel='stylesheet' id='google-fonts-css'  href='https://fonts.googleapis.com/css?family=Muli%3A400%2C600%2C700%2C900%7CNoto+Serif%3A400%2C700&#038;display=swap&#038;ver=5.4.1' type='text/css' media='all' />
+<link rel='stylesheet' id='slick-css'  href='//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css?ver=1.8.1' type='text/css' media='all' />
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/compact-wp-audio-player/js/soundmanager2-nodebug-jsmin.js?ver=5.4.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var monsterinsights_frontend = {"js_events_tracking":"true","download_extensions":"pdf,mp3,docx,pptx,xlsx","inbound_paths":"[]","home_url":"https:\/\/www.politicalislam.com","hash_tracking":"false"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/google-analytics-for-wordpress/assets/js/frontend.min.js?ver=7.10.4'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-includes/js/jquery/ui/core.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-includes/js/jquery/ui/widget.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-includes/js/jquery/ui/position.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-includes/js/jquery/ui/mouse.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-includes/js/jquery/ui/sortable.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-includes/js/jquery/ui/datepicker.min.js?ver=1.11.4'></script>
+<script type='text/javascript'>
+jQuery(document).ready(function(jQuery){jQuery.datepicker.setDefaults({"closeText":"Close","currentText":"Today","monthNames":["January","February","March","April","May","June","July","August","September","October","November","December"],"monthNamesShort":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"nextText":"Next","prevText":"Previous","dayNames":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"dayNamesShort":["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],"dayNamesMin":["S","M","T","W","T","F","S"],"dateFormat":"MM d, yy","firstDay":1,"isRTL":false});});
+</script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-includes/js/jquery/ui/menu.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=7.4.4'></script>
+<script type='text/javascript'>
+( 'fetch' in window ) || document.write( '<script src="https://www.politicalislam.com/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?ver=3.0.0"></scr' + 'ipt>' );( document.contains ) || document.write( '<script src="https://www.politicalislam.com/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?ver=3.42.0"></scr' + 'ipt>' );( window.DOMRect ) || document.write( '<script src="https://www.politicalislam.com/wp-includes/js/dist/vendor/wp-polyfill-dom-rect.min.js?ver=3.42.0"></scr' + 'ipt>' );( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://www.politicalislam.com/wp-includes/js/dist/vendor/wp-polyfill-url.min.js?ver=3.6.4"></scr' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="https://www.politicalislam.com/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?ver=3.0.12"></scr' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="https://www.politicalislam.com/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?ver=2.0.2"></scr' + 'ipt>' );
+</script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-includes/js/dist/dom-ready.min.js?ver=91fc8f05178d5c6365aec778f840ae17'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-includes/js/dist/a11y.min.js?ver=45f739d280d1244f6cb498ed8f1bf042'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var uiAutocompleteL10n = {"noResults":"No results found.","oneResult":"1 result found. Use up and down arrow keys to navigate.","manyResults":"%d results found. Use up and down arrow keys to navigate.","itemSelected":"Item selected."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-includes/js/jquery/ui/autocomplete.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-includes/js/jquery/ui/resizable.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-includes/js/jquery/ui/draggable.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-includes/js/jquery/ui/button.min.js?ver=1.11.4'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-includes/js/jquery/ui/dialog.min.js?ver=1.11.4'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var EM = {"ajaxurl":"https:\/\/www.politicalislam.com\/wp-admin\/admin-ajax.php","locationajaxurl":"https:\/\/www.politicalislam.com\/wp-admin\/admin-ajax.php?action=locations_search","firstDay":"1","locale":"en","dateFormat":"dd\/mm\/yy","ui_css":"https:\/\/www.politicalislam.com\/wp-content\/plugins\/events-manager\/includes\/css\/jquery-ui.min.css","show24hours":"0","is_ssl":"1","bookingInProgress":"Please wait while the booking is being submitted.","tickets_save":"Save Ticket","bookingajaxurl":"https:\/\/www.politicalislam.com\/wp-admin\/admin-ajax.php","bookings_export_save":"Export Bookings","bookings_settings_save":"Save Settings","booking_delete":"Are you sure you want to delete?","booking_offset":"30","bb_full":"Sold Out","bb_book":"Book Now","bb_booking":"Booking...","bb_booked":"Booking Submitted","bb_error":"Booking Error. Try again?","bb_cancel":"Cancel","bb_canceling":"Canceling...","bb_cancelled":"Cancelled","bb_cancel_error":"Cancellation Error. Try again?","txt_search":"Search","txt_searching":"Searching...","txt_loading":"Loading..."};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/events-manager/includes/js/events-manager.js?ver=5.973'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/revslider/public/assets/js/jquery.themepunch.tools.min.js?ver=5.1.5'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/revslider/public/assets/js/jquery.themepunch.revolution.min.js?ver=5.1.5'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/themes/political_islam_2020/assets/js/vendor/modernizr-2.7.0.min.js'></script>
+<script type='text/javascript' src='//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.js?ver=1.8.1'></script>
+<script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.2/jquery.matchHeight-min.js?ver=5.4.1'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/themes/political_islam_2020/js/bookstore.js?ver=5.4.1'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/themes/political_islam_2020/assets/js/main.js?ver=5.4.1'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/themes/political_islam_2020/js/base.js?ver=5.4.1'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/themes/political_islam_2020/assets/js/artboxCustom4.js?ver=5.4.1'></script>
+<link rel='https://api.w.org/' href='https://www.politicalislam.com/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.politicalislam.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.politicalislam.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='shortlink' href='https://www.politicalislam.com/?p=1029' />
+<link rel="alternate" type="application/json+oembed" href="https://www.politicalislam.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.politicalislam.com%2Ftears-of-jihad%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.politicalislam.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.politicalislam.com%2Ftears-of-jihad%2F&#038;format=xml" />
+<script type="text/javascript">var light_error = "The Image could not be loaded.", light_of = "%curr% of %total%", light_load = "Loading...";</script><style type="text/css">#logo {padding-top:25px;}#logo {padding-bottom:10px;}#logo {margin-left:0px;}#logo {margin-right:0px;}#nav-main, .nav-main {margin-top:40px;}#nav-main, .nav-main {margin-bottom:10px;}.kad-header-style-two .nav-main ul.sf-menu > li {width: 33.333333%;}</style>	<noscript><style>.woocommerce-product-gallery{ opacity: 1 !important; }</style></noscript>
+	<meta name="generator" content="Powered by Slider Revolution 5.1.5 - responsive, Mobile-Friendly Slider Plugin for WordPress with comfortable drag and drop interface." />
+<!--[if lt IE 9]>
+<script src="https://www.politicalislam.com/wp-content/themes/political_islam_2020/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+		<style type="text/css" id="wp-custom-css">
+			@media screen and (max-width: 796px) {
+	.epk-wrapper > aside, .epk-wrapper > section {width: 96%; margin: 0 2%; padding:0px;}
+	.epk-wrapper {display:inline-block;padding:0px;
+}
+	.woocommerce img, .woocommerce-page img {max-width:8rem !important}
+	footer.bg-white {color: transparent !important;}		</style>
+		</head>
+<body class="post-template-default single single-post postid-1029 single-format-standard theme-political_islam_2020 siteorigin-panels siteorigin-panels-before-js woocommerce-no-js wide notsticky  not_ie tears-of-jihad">
+<header class="bg-white text-base-sans mt-1 relative">
+      <div class="container py-6 px-5 lg:px-10 flex flex-wrap lg:flex-no-wrap items-center justify-between">
+        <div>
+          <div class="lg:flex">
+            <div class="lg:w-2/5">
+              <a href="/" title="Home" rel="home">
+                <img src="https://www.politicalislam.com/wp-content/themes/political_islam_2020/assets/img/logo_blue.png" alt="CSPII" class="max-w-32 lg:max-w-full">
+              </a>
+            </div>
+
+            <div class="w-3/5 hidden lg:block relative z-50">
+              <div id="site-switch-wrapper" class="absolute top-0 left-0 mt-1 ml-3">
+                <button id="site-switch-button" class="p-3 rounded font-bold bg-grey-lighter">
+                  <span id="site-switch-button-text">PoliticalIslam.com
+                   </span>
+                  <i class="fas fa-caret-down"></i>
+                </button>
+                <div id="site-switch-menu" class="hidden bg-white rounded shadow-md mt-2 w-128" style="display: none;">
+                  <ul class="list-reset">
+                    <li class="px-4 py-3 text-grey font-bold">Switch to inter/national website</li>
+                     
+                      <li><a href="https://www.politicalislam.com/" class="px-4 py-3 block text-black hover:bg-pink hover:text-white hover:no-underline">PoliticalIslam.com</a></li>
+                       <li><a href="https://www.cspii.org/" class="px-4 py-3 block text-black hover:bg-pink hover:text-white hover:no-underline">CSPII Global Site</a></li>
+                  <!--  <li><hr class="border-t mx-2 border-grey-light"></li>
+                      <li><a href="https://www.cspii.org/cz/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Česká republika</a></li>
+                      <li><a href="https://www.cspii.org/dk/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Danmark</a></li>
+                      <li><a href="https://www.cspii.org/de/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Deutschland</a></li>
+                      <li><a href="https://www.cspii.org/lt/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Lietuva</a></li>
+                      <li><a href="https://www.cspii.org/hu/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Magyarország</a></li>
+                      <li><a href="https://www.cspii.org/nl/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Nederland</a></li>
+                      <li><a href="https://www.cspii.org/pl/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Polska</a></li>
+                      <li><a href="https://www.cspii.org/ro/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">România</a></li>
+                      <li><a href="https://www.cspii.org/sk/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Slovensko</a></li>-->
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+            <h1 class="uppercase leading-normal text-base font-normal">Center for the Study of Political Islam International</h1>
+        </div>
+
+        <div class="lg:hidden absolute p-5 top-0 right-0">
+          <button id="open-burger-button" class="flex items-center px-3 py-2 border rounded text-blue border-blue hover:text-white hover:bg-blue">
+            <svg class="fill-current h-6 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path></svg>
+          </button>
+        </div>
+
+        <nav id="burger-menu" class="w-full hidden fixed z-50 top-0 left-0 bg-grey-light lg:block lg:bg-transparent p-5 lg:p-0 lg:w-auto lg:block lg:static shadow-md lg:shadow-none">
+          <!-- <ul id="burger-menu-local-list" class="list-reset lg:inline-flex uppercase mr-16 lg:mr-0">
+              <li class="lg:ml-1 xl:ml-5">
+                <a class="px-4 py-3 block rounded" href="/about/">About</a>
+              </li>
+              <li class="lg:ml-1 xl:ml-5">
+                <a class="px-4 py-3 block rounded" href="/education/">Education</a>
+              </li>
+              <li class="lg:ml-1 xl:ml-5">
+                <a class="px-4 py-3 block rounded" href="/publications/">Books</a>
+              </li>
+              <li class="lg:ml-1 xl:ml-5">
+                <a class="px-4 py-3 block rounded" href="/be-active/">Be active</a>
+              </li>
+              <li class="lg:ml-1 xl:ml-5">
+                <a class="px-4 py-3 block rounded" href="/blog/">Blog</a>
+              </li>
+            <li class="lg:hidden"><hr class="border-t mx-2 border-grey"></li>
+            <li class="lg:hidden">
+              <a href="#" id="swap-to-site-list-button" class="px-4 py-3 block rounded text-blue">Switch to inter/national website</a>
+            </li>
+          </ul> -->
+      
+ <div class="menu-main-navbar-container"><ul id="burger-menu-local-list" class="list-reset lg:inline-flex uppercase mr-16 lg:mr-0"><li id="menu-item-3019" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3019 lg:ml-1 xl:ml-5"><a href="/shop/" class="px-4 py-3 block rounded">Book Store</a></li>
+<li id="menu-item-23939" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-23939 lg:ml-1 xl:ml-5"><a href="https://www.cspii.org/education/" class="px-4 py-3 block rounded">Education</a></li>
+<li id="menu-item-11785" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11785 lg:ml-1 xl:ml-5"><a href="https://www.politicalislam.com/about-2/" class="px-4 py-3 block rounded">About</a></li>
+<li id="menu-item-4518" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4518 lg:ml-1 xl:ml-5"><a href="https://www.cspii.org/joinus/" class="px-4 py-3 block rounded">Join Us</a></li>
+<li id="menu-item-4519" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4519 lg:ml-1 xl:ml-5"><a href="https://www.politicalislam.com/contact-us/" class="px-4 py-3 block rounded">Contact</a></li>
+ <li class="lg:hidden"><hr class="border-t mx-2 border-grey"></li>
+            <li class="lg:hidden">
+              <a href="#" id="swap-to-site-list-button" class="px-4 py-3 block rounded text-blue">Switch to inter/national website</a>
+            </li></ul></div>
+
+
+          <ul id="burger-menu-site-list" class="list-reset uppercase mr-16 hidden">
+           
+              <li><a href="/" class="px-4 py-3 block">PoliticalIslam.com</a></li>
+                 <li><a href="https://www.cspii.org/" class="px-4 py-3 block">CSPII Global Site</a></li>
+            <!--<li><hr class="border-t mx-2 border-grey"></li>
+              <li><a href="https://www.cspii.org/cz/" class="px-4 py-2 block">Česká republika</a></li>
+              <li><a href="https://www.cspii.org/dk/" class="px-4 py-2 block">Danmark</a></li>
+              <li><a href="https://www.cspii.org/de/" class="px-4 py-2 block">Deutschland</a></li>
+              <li><a href="https://www.cspii.org/lt/" class="px-4 py-2 block">Lietuva</a></li>
+              <li><a href="https://www.cspii.org/hu/" class="px-4 py-2 block">Magyarország</a></li>
+              <li><a href="https://www.cspii.org/nl/" class="px-4 py-2 block">Nederland</a></li>
+              <li><a href="https://www.cspii.org/pl/" class="px-4 py-2 block">Polska</a></li>
+              <li><a href="https://www.cspii.org/ro/" class="px-4 py-2 block">România</a></li>
+              <li><a href="https://www.cspii.org/sk/" class="px-4 py-2 block">Slovensko</a></li>
+            <li><hr class="border-t mx-2 border-grey"></li>-->
+            <li><a href="#" id="swap-to-local-list-button" class="px-4 py-3 block text-blue">Menu</a></li>
+          </ul>
+          <div class="lg:hidden absolute p-5 top-0 right-0">
+            <button id="close-burger-button" class="flex items-center px-3 py- 2 border rounded text-white bg-blue">
+              <svg class="fill-current h-6 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path></svg>
+            </button>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <section class="page-header">
+  <div class="wrapper">
+  <div class="page-title-bar">
+      <h3>Tears of Jihad</h3>   </div>
+<a href="https://www.politicalislam.com/donate/" class="btn square donate-button">Donate</a>
+</div>
+
+  </section>
+      <div class="wrapper">
+
+  <div id="content" class="container">
+    <div class="row">
+      <div class="main col-lg-9 col-md-8  postlist" role="main">
+        <div class="entry-content" itemprop="mainContentOfPage">
+
+          
+                                      <article id="post-1029" class="kad_blog_item kad-animation post-1029 post type-post status-publish format-standard hentry category-newsletter tag-jihad" data-animation="fade-in" data-delay="0" itemscope="" itemtype="http://schema.org/BlogPosting">
+                      <div class="row">
+                                                   
+						  <div class="col-md-12 postcontent">
+                                                    <header>
+                              <a href="https://www.politicalislam.com/tears-of-jihad/"><h3 class="entry-title" itemprop="name headline">Tears of Jihad</h3></a>
+                                                            
+                                <div class="subhead entry-meta">
+    <span class="postauthortop author vcard">
+        Mar 3 2008 | by  <span itemprop="author"><a href="https://www.politicalislam.com/author/bill-warner/" class="fn" rel="author">Bill Warner</a></span> 
+    </span>
+    <span class="postcommentscount">
+    <ul class="post-social">
+        <li><a href="https://www.facebook.com/sharer.php?u=https://www.politicalislam.com/tears-of-jihad/" class="post-social-facebook"></a></li>
+        <li><a href="https://twitter.com/share?url=https://www.politicalislam.com/tears-of-jihad/" class="post-social-twitter"></a></li>
+        <li><a href="https://plus.google.com/share?url=https://www.politicalislam.com/tears-of-jihad/" class="post-social-googleplus"></a></li>
+        <li><a href="/cdn-cgi/l/email-protection#b986caccdbd3dcdacd84f099ced8d7cddcdd99c0d6cc99cdd699cadcdc99cdd1d0ca99cad0cddc9fd8d4c982dbd6ddc084fad1dcdad299d6cccd99cdd1d0ca99cad0cddcd1cdcdc9ca839696cecece97c9d6d5d0cdd0dad8d5d0cad5d8d497dad6d496cddcd8cbca94d6df94d3d0d1d8dd96" class="post-social-email"></a></li>
+        <li class="comments-buffer"><a href="https://www.politicalislam.com/tears-of-jihad/#virtue_comments" class="post-social-comments">127</a></li>
+    </ul>
+    
+    </span>
+</div>                          </header>
+                          <div class="entry-content" itemprop="articleBody">
+                              <a class"back-link" href="https://www.politicalislam.com/category/newsletter/">< Back to Category</a>
+							  <p>These figures are a rough estimate of the death of non-Muslims by the political act of jihad.</p>
+<p><strong>Africa</strong><br />
+Thomas Sowell [Thomas Sowell,<em> Race and Culture</em>, BasicBooks, 1994, p. 188] estimates that 11 million slaves were shipped across the Atlantic and 14 million were sent to the Islamic nations of North Africa and the Middle East. For every slave captured many others died. Estimates of this collateral damage vary. The renowned missionary David Livingstone estimated that for every slave who reached a plantation, five others were killed in the initial raid or died of illness and privation on the forced march.[Woman&#8217;s Presbyterian Board of Missions, <em>David Livingstone</em>, p. 62, 1888] Those who were left behind were the very young, the weak, the sick and the old. These soon died since the main providers had been killed or enslaved. So, for 25 million slaves delivered to the market, we have an estimated death of about 120 million people. Islam ran the wholesale slave trade in Africa.<br />
+<em>120 million Africans</em></p>
+<p><strong>Christians</strong><br />
+The number of Christians martyred by Islam is 9 million [David B. Barrett, Todd M. Johnson,<em> World Christian Trends AD 30-AD 2200</em>, William Carey Library, 2001, p. 230, table 4-10] . A rough estimate by Raphael Moore in <em>History of Asia Minor </em>is that another 50 million died in wars by jihad. So counting the million African Christians killed in the 20th century we have:<br />
+<em>60 million Christians</em></p>
+<p><strong>Hindus</strong><br />
+Koenard Elst in Negationism in India gives an estimate of 80 million Hindus killed in the total jihad against India. [Koenard Elst, <em>Negationism in India</em>, Voice of India, New Delhi, 2002, pg. 34.] The country of India today is only half the size of ancient India, due to jihad. The mountains near India are called the Hindu Kush, meaning the “funeral pyre of the Hindus.”<br />
+<em>80 million Hindus</em></p>
+<p><strong>Buddhists</strong><br />
+Buddhists do not keep up with the history of war. Keep in mind that in jihad only Christians and Jews were allowed to survive as dhimmis (servants to Islam) everyone else had to convert or die. Jihad killed the Buddhists in Turkey, Afghanistan, along the Silk Route, and in India. The total is roughly 10 million. [David B. Barrett, Todd M. Johnson, <em>World Christian Trends AD 30-AD 2200</em>, William Carey Library, 2001, p. 230, table 4-1.]
+<em>10 million Buddhists</em></p>
+<p><strong>Jews</strong><br />
+Oddly enough there were not enough Jews killed in jihad to significantly affect the totals of the Great Annihilation. The jihad in Arabia was 100 percent effective, but the numbers were in the thousands, not millions. After that, the Jews submitted and became the dhimmis (servants and second class citizens) of Islam and did not have geographic political power.</p>
+<p><em>This gives a rough estimate of 270 million killed by jihad.</em></p>
+ 
+                          </div>
+
+
+                          
+                          <footer>
+                               <span class="posttags color_gray"><p>TAGS: </p> <a href="https://www.politicalislam.com/tag/jihad/" rel="tag">Jihad</a> </span>                          </footer>
+                        </div><!-- Text size -->
+                  </div><!-- row-->
+              </article> <!-- Article -->          
+                  </div>
+
+      </div><!-- /.main -->
+
+</div>
+
+ 
+  <footer class="bg-white text-base-sans mt-1 mb-5 relative" style="clear: both;">
+      <div class="container py-6 px-5 lg:px-10 flex flex-wrap lg:flex-no-wrap items-center justify-between">
+        <div>
+          <div class="lg:flex">
+            <div class="lg:w-2/5">
+              <a href="/" title="Home" rel="home">
+                 <img src="https://www.politicalislam.com/wp-content/themes/political_islam_2020/assets/img/logo_blue.png" alt="CSPII" class="max-w-32 lg:max-w-full">
+              </a>
+            </div>
+
+            <div class="w-3/5 hidden lg:block relative z-50">
+              <div id="footer-site-switch-wrapper" class="absolute top-0 left-0 mt-1 ml-3">
+                <button id="footer-site-switch-button" class="p-3 rounded font-bold bg-grey-lighter">
+                  <span id="footer-site-switch-button-text">PoliticalIslam.com
+                   </span>
+                  <i class="fas fa-caret-down"></i>
+                </button>
+                <div id="footer-site-switch-menu" class="site-switch-menu hidden bg-white rounded shadow-md mt-2 w-128" style="display: none;">
+                  <ul class="list-reset">
+                    <li class="px-4 py-3 text-grey font-bold">Switch to inter/national website</li>
+                     
+                      <li><a href="https://www.politicalislam.com/" class="px-4 py-3 block text-black hover:bg-pink hover:text-white hover:no-underline">PoliticalIslam.com</a></li>
+                       <li><a href="https://www.cspii.org/" class="px-4 py-3 block text-black hover:bg-pink hover:text-white hover:no-underline">CSPII Global Site</a></li>
+                    <!--<li><hr class="border-t mx-2 border-grey-light"></li>
+                      <li><a href="https://www.cspii.org/cz/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Česká republika</a></li>
+                      <li><a href="https://www.cspii.org/dk/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Danmark</a></li>
+                      <li><a href="https://www.cspii.org/de/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Deutschland</a></li>
+                      <li><a href="https://www.cspii.org/lt/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Lietuva</a></li>
+                      <li><a href="https://www.cspii.org/hu/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Magyarország</a></li>
+                      <li><a href="https://www.cspii.org/nl/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Nederland</a></li>
+                      <li><a href="https://www.cspii.org/pl/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Polska</a></li>
+                      <li><a href="https://www.cspii.org/ro/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">România</a></li>
+                      <li><a href="https://www.cspii.org/sk/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Slovensko</a></li>-->
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+            <h2 class="uppercase leading-normal text-base font-normal">Center for the Study of Political Islam International</h2>
+        </div>
+
+       <!--  <div class="lg:hidden absolute p-5 top-0 right-0">
+          <button id="footer-open-burger-button" class="flex items-center px-3 py-2 border rounded text-blue border-blue hover:text-white hover:bg-blue">
+            <svg class="fill-current h-6 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path></svg>
+          </button>
+        </div> -->
+
+        <nav id="footer-burger-menu" class="w-full hidden fixed z-50 top-0 left-0 bg-grey-light lg:block lg:bg-transparent p-5 lg:p-0 lg:w-auto lg:block lg:static shadow-md lg:shadow-none">
+           <div class="menu-main-navbar-container"><ul id="burger-menu-local-list" class="list-reset lg:inline-flex uppercase mr-16 lg:mr-0"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3019 lg:ml-1 xl:ml-5"><a href="/shop/" class="px-4 py-3 block rounded">Book Store</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-23939 lg:ml-1 xl:ml-5"><a href="https://www.cspii.org/education/" class="px-4 py-3 block rounded">Education</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11785 lg:ml-1 xl:ml-5"><a href="https://www.politicalislam.com/about-2/" class="px-4 py-3 block rounded">About</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4518 lg:ml-1 xl:ml-5"><a href="https://www.cspii.org/joinus/" class="px-4 py-3 block rounded">Join Us</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4519 lg:ml-1 xl:ml-5"><a href="https://www.politicalislam.com/contact-us/" class="px-4 py-3 block rounded">Contact</a></li>
+ <li class="lg:hidden"><hr class="border-t mx-2 border-grey"></li>
+            <li class="lg:hidden">
+              <a href="#" id="swap-to-site-list-button" class="px-4 py-3 block rounded text-blue">Switch to inter/national website</a>
+            </li></ul></div>
+           <ul id="footer-burger-menu-site-list" class="list-reset uppercase mr-16 hidden">
+               <li><a href="https://www.politicalislam.com/" class="px-4 py-3 block text-black hover:bg-pink hover:text-white hover:no-underline">PoliticalIslam.com</a></li>
+                       <li><a href="https://www.cspii.org/" class="px-4 py-3 block text-black hover:bg-pink hover:text-white hover:no-underline">CSPII Global Site</a></li>
+                    <!--<li><hr class="border-t mx-2 border-grey-light"></li>
+                      <li><a href="https://www.cspii.org/cz/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Česká republika</a></li>
+                      <li><a href="https://www.cspii.org/dk/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Danmark</a></li>
+                      <li><a href="https://www.cspii.org/de/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Deutschland</a></li>
+                      <li><a href="https://www.cspii.org/lt/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Lietuva</a></li>
+                      <li><a href="https://www.cspii.org/hu/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Magyarország</a></li>
+                      <li><a href="https://www.cspii.org/nl/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Nederland</a></li>
+                      <li><a href="https://www.cspii.org/pl/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Polska</a></li>
+                      <li><a href="https://www.cspii.org/ro/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">România</a></li>
+                      <li><a href="https://www.cspii.org/sk/" class="px-4 py-2 block text-black hover:bg-pink hover:text-white hover:no-underline">Slovensko</a></li>-->
+            <li><hr class="border-t mx-2 border-grey"></li>
+            <li><a href="#" id="footer-swap-to-local-list-button" class="px-4 py-3 block text-blue">Menu</a></li>
+          </ul> 
+         <!--  <div class="lg:hidden absolute p-5 top-0 right-0">
+            <button id="footer-close-burger-button" class="flex items-center px-3 py- 2 border rounded text-white bg-blue">
+              <svg class="fill-current h-6 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path></svg>
+            </button>
+          </div> -->
+        </nav>
+
+      </div>
+	  <div class="container px-5 lg:px-10 text-right socialmedia">
+								<ul class="footer-social-icons">
+									<li><a href="https://www.facebook.com/billwarnerauthor" class="facebook"></a></li>
+							      	<li><a href="https://twitter.com/politicalislam" class="twitter"></a></li>
+							      	<li><a href="https://www.youtube.com/channel/UC0Uu4XnRS1hiz3JCpNFIuUg" class="youtube"></a></li>
+							      	<li><a href="https://www.politicalislam.com/contact-us/" class="email"></a></li>
+							      	<li><a href="https://www.politicalislam.com/feed/" class="rss"></a></li>
+								</ul>
+      </div>
+       <div class="container py-6 px-5 lg:px-10 text-right">
+        &copy; 2007-2020 CSPII, LLC. all rights reserved. <a href="https://taxcloud.com/state-guides" target="_blank">Sales Tax Information</a>.
+      </div>
+
+    </footer>
+    <!-- wp_footer -->
+
+<!-- WP Audio player plugin v1.9.6 - https://www.tipsandtricks-hq.com/wordpress-audio-music-player-plugin-4556/ -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript">
+        soundManager.useFlashBlock = true; // optional - if used, required flashblock.css
+        soundManager.url = 'https://www.politicalislam.com/wp-content/plugins/compact-wp-audio-player/swf/soundmanager2.swf';
+        function play_mp3(flg, ids, mp3url, volume, loops)
+        {
+            //Check the file URL parameter value
+            var pieces = mp3url.split("|");
+            if (pieces.length > 1) {//We have got an .ogg file too
+                mp3file = pieces[0];
+                oggfile = pieces[1];
+                //set the file URL to be an array with the mp3 and ogg file
+                mp3url = new Array(mp3file, oggfile);
+            }
+
+            soundManager.createSound({
+                id: 'btnplay_' + ids,
+                volume: volume,
+                url: mp3url
+            });
+
+            if (flg == 'play') {
+                    soundManager.play('btnplay_' + ids, {
+                    onfinish: function() {
+                        if (loops == 'true') {
+                            loopSound('btnplay_' + ids);
+                        }
+                        else {
+                            document.getElementById('btnplay_' + ids).style.display = 'inline';
+                            document.getElementById('btnstop_' + ids).style.display = 'none';
+                        }
+                    }
+                });
+            }
+            else if (flg == 'stop') {
+    //soundManager.stop('btnplay_'+ids);
+                soundManager.pause('btnplay_' + ids);
+            }
+        }
+        function show_hide(flag, ids)
+        {
+            if (flag == 'play') {
+                document.getElementById('btnplay_' + ids).style.display = 'none';
+                document.getElementById('btnstop_' + ids).style.display = 'inline';
+            }
+            else if (flag == 'stop') {
+                document.getElementById('btnplay_' + ids).style.display = 'inline';
+                document.getElementById('btnstop_' + ids).style.display = 'none';
+            }
+        }
+        function loopSound(soundID)
+        {
+            window.setTimeout(function() {
+                soundManager.play(soundID, {onfinish: function() {
+                        loopSound(soundID);
+                    }});
+            }, 1);
+        }
+        function stop_all_tracks()
+        {
+            soundManager.stopAll();
+            var inputs = document.getElementsByTagName("input");
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].id.indexOf("btnplay_") == 0) {
+                    inputs[i].style.display = 'inline';//Toggle the play button
+                }
+                if (inputs[i].id.indexOf("btnstop_") == 0) {
+                    inputs[i].style.display = 'none';//Hide the stop button
+                }
+            }
+        }
+    </script>
+    <div id="ship-warn-popup" style="display: none">
+    <div class="bg"></div>
+    <div class="inner">
+      <p>International Customers, to avoid excessive shipping costs.</p>
+      <p><a href="https://www.amazon.com/Bill-Warner/e/B00FAWN654/ref=sr_ntt_srch_lnk_1?qid=1479832243&sr=8-1" target="_blank">Please order our products via Amazon.com</a><a class="close"></a></p>
+      <p class="amazon-link"><a href="https://www.amazon.com/Bill-Warner/e/B00FAWN654/ref=sr_ntt_srch_lnk_1?qid=1479832243&sr=8-1" target="_blank">
+        <img src="https://www.politicalislam.com/wp-content/themes/virtue_premium_child/assets/img/pi-amazon.jpg" />
+        <span>SHOP NOW</span>
+        </a></p>
+    </div>
+    
+      
+  </div><div id="processing-popup" class="custom-popup" style="display: none">
+    <div class="bg"></div>
+    <div class="inner">
+      <p>Thank you for your order.<br>It make take a few moments to place your order.</p>
+       <p><strong>Clicking the "PLACE ORDER" button<br>more than once may result in additional orders.</strong></p>
+    </div>
+    
+      
+  </div>	<script type="text/javascript">
+		var c = document.body.className;
+		c = c.replace(/woocommerce-no-js/, 'woocommerce-js');
+		document.body.className = c;
+	</script>
+	<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/woocommerce/assets/js/jquery-blockui/jquery.blockUI.min.js?ver=2.70'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wc_add_to_cart_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%","i18n_view_cart":"View cart","cart_url":"https:\/\/www.politicalislam.com\/cart\/","is_cart":"","cart_redirect_after_add":"yes"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/woocommerce/assets/js/frontend/add-to-cart.min.js?ver=4.2.0'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/woocommerce/assets/js/js-cookie/js.cookie.min.js?ver=2.1.4'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var woocommerce_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/woocommerce/assets/js/frontend/woocommerce.min.js?ver=4.2.0'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wc_cart_fragments_params = {"ajax_url":"\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/?wc-ajax=%%endpoint%%","cart_hash_key":"wc_cart_hash_2220e8acf63996be1b1f714f19c61d60","fragment_name":"wc_fragments_2220e8acf63996be1b1f714f19c61d60","request_timeout":"5000"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=4.2.0'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/woocommerce/assets/js/jquery-payment/jquery.payment.min.js?ver=3.0.0'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var sv_wc_payment_gateway_payment_form_params = {"card_number_missing":"Card number is missing","card_number_invalid":"Card number is invalid","card_number_digits_invalid":"Card number is invalid (only digits allowed)","card_number_length_invalid":"Card number is invalid (wrong length)","cvv_missing":"Card security code is missing","cvv_digits_invalid":"Card security code is invalid (only digits are allowed)","cvv_length_invalid":"Card security code is invalid (must be 3 or 4 digits)","card_exp_date_invalid":"Card expiration date is invalid","check_number_digits_invalid":"Check Number is invalid (only digits are allowed)","check_number_missing":"Check Number is missing","drivers_license_state_missing":"Drivers license state is missing","drivers_license_number_missing":"Drivers license number is missing","drivers_license_number_invalid":"Drivers license number is invalid","account_number_missing":"Account Number is missing","account_number_invalid":"Account Number is invalid (only digits are allowed)","account_number_length_invalid":"Account number is invalid (must be between 5 and 17 digits)","routing_number_missing":"Routing Number is missing","routing_number_digits_invalid":"Routing Number is invalid (only digits are allowed)","routing_number_length_invalid":"Routing number is invalid (must be 9 digits)"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/woocommerce-gateway-authorize-net-cim/vendor/skyverge/wc-plugin-framework/woocommerce/payment-gateway/assets/js/frontend/sv-wc-payment-gateway-payment-form.min.js?ver=5.7.0'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/woocommerce-gateway-authorize-net-cim/assets/js/frontend/wc-authorize-net-cim.min.js?ver=3.2.6'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/kadence-slider/js/min/ksp-min.js?ver=2.3.0'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/cyclone-slider-pro/libs/cycle2/jquery.cycle2.min.js?ver=2.10.4'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/cyclone-slider-pro/libs/cycle2/jquery.cycle2.carousel.min.js?ver=2.10.4'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/cyclone-slider-pro/libs/cycle2/jquery.cycle2.swipe.min.js?ver=2.10.4'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/cyclone-slider-pro/libs/cycle2/jquery.cycle2.tile.min.js?ver=2.10.4'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/cyclone-slider-pro/libs/cycle2/jquery.cycle2.video.min.js?ver=2.10.4'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/cyclone-slider-pro/libs/jquery-easing/jquery.easing.1.3.1.min.js?ver=2.10.4'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/cyclone-slider-pro/libs/magnific-popup/jquery.magnific-popup.min.js?ver=2.10.4'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/cyclone-slider-pro/templates/dark/script.js?ver=2.10.4'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/cyclone-slider-pro/templates/galleria/script.js?ver=2.10.4'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/cyclone-slider-pro/templates/thumbnails/script.js?ver=2.10.4'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/plugins/cyclone-slider-pro/js/client.js?ver=2.10.4'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-includes/js/comment-reply.min.js?ver=5.4.1'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/themes/political_islam_2020/assets/js/plugins.js?ver=340'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-content/themes/political_islam_2020/assets/js/min/kt-add-to-cart-variation-min.js?ver=5.4.1'></script>
+<script type='text/javascript' src='https://www.politicalislam.com/wp-includes/js/wp-embed.min.js?ver=5.4.1'></script>
+<script type="text/javascript">document.body.className = document.body.className.replace("siteorigin-panels-before-js","");</script><!-- wp_footer -->
+<script type="text/javascript">
+       $ = jQuery;
+    </script>
+
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"690645bd9e","applicationID":"24926014","transactionName":"YARaZRZWVkAEV0JZVllOeVIQXlddSl1YVFxP","queueTime":0,"applicationTime":741,"atts":"TENZE15MRU4=","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+</html>
