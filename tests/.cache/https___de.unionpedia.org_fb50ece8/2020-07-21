@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+<base href="https://de.unionpedia.org/"/>
+<meta charset="UTF-8" />
+<meta name="google-site-verification" content="kilq9ljhh3HKXbm9RyT_sL6IOaJrYNIOVmL8-mctv7M" />
+<title>Unionpedia</title>
+<meta name="description" content="Unionpedia ist ein Konzept Karte oder semantische Netzwerk organisiert wie ein Lexikon oder Wörterbuch. Es gibt eine kurze Definition jedes Konzept und seine Beziehungen."/>
+<meta property="og:image" content="https://de.unionpedia.org/static/images/unionpedia_fb_thumb.png"/>
+<meta name="google-signin-client_id" content="306351555599-gi55oqatstpohugn549l05i4n1lq0t0i.apps.googleusercontent.com">
+<link rel="shortcut icon" href="static/images/unionpedia.ico" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+
+<link rel="stylesheet" type="text/css" href="static/css/style-v2.css"/>
+<link rel="stylesheet" type="text/css" href="static/css/login.css"/>
+<style>html,body{background-color: #FFF;}</style>
+<script>var domain = 'https://de.unionpedia.org/';</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-35016837-5', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<script>
+function onSuccess(googleUser) {
+	var profile = googleUser.getBasicProfile();
+	console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+	console.log('Name: ' + profile.getName());
+	console.log('Image URL: ' + profile.getImageUrl());
+	console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+	var id_token = googleUser.getAuthResponse().id_token;
+	console.log('id_token: ' + id_token);
+
+
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', 'https://de.unionpedia.org/Anmeldung:');
+	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	xhr.onload = function() {
+		console.log('Signed in as: ' + xhr.responseText);
+	};
+	xhr.send('idtoken=' + id_token);
+
+
+}
+function onFailure(error) {
+	console.log(error);
+}
+function renderButton() {
+	gapi.signin2.render('my-signin2', {
+		'scope': 'profile email',
+		'width': 240,
+		'height': 50,
+		'longtitle': true,
+		'theme': 'dark',
+		'onsuccess': onSuccess,
+		'onfailure': onFailure
+	});
+}
+function signOut() {
+	document.getElementById('formLogout').submit();
+	return;
+	var auth2 = gapi.auth2.getAuthInstance();
+	auth2.signOut().then(function () {
+		console.log('User signed out.');
+		document.getElementById('formLogout').submit();
+	});
+}
+</script>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<script>my_google_ad_channel = '8625877597'; // Default</script>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    params: { google_ad_channel: my_google_ad_channel },
+    google_ad_client: "ca-pub-5555190471190823",
+    enable_page_level_ads: true
+  });
+</script>
+</head>
+<body class="lang-ltr">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/de_DE/sdk.js#xfbml=1&version=v2.4&appId=222655474428803";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div style="padding: 0 15pt; text-align: center;">
+<style>
+#introduction {
+	padding-top: 100px;
+}
+#introduction h1, h2 {
+	padding: 0; margin: 0; border: none;
+}
+#text-search-home {
+	padding: 7px;
+	border: 1px solid #888;
+    outline: none;
+	font-size: 11pt;
+	width: 170px;
+}
+#text-search-home:focus {
+	padding: 6px;
+	border: 2px solid #07C;
+}
+#button-search {
+	padding: 7px 9pt;
+	background-color: #07C;
+	border: 1px solid #06D;
+	color: #FFF;
+	font-size: 11pt;
+}
+</style>
+<div id="introduction">
+	<img src="static/images/logo-u.png" alt="Logo" style="height: 100px; margin-bottom: 5px;"/>
+	<h1><img src="static/images/unionpedia_home_2019.png" alt="Unionpedia" title="Unionpedia" style="height: 40px;"/></h1>
+	<h2><img src="static/images/die_concept_map_home.png" alt="Die Concept-Map" title="Die Concept-Map" style="height: 40px; margin-top: -5px;"/></h2>
+</div>
+
+<div style="height: 20px; overflow: visible; vertical-align: top; margin-top: 7px;">
+<div class="fb-like" data-show-faces="false" data-layout="button_count" data-href="https://www.facebook.com/Unionpedia" style="height: 20px;"></div>
+</div>
+
+<p style="margin: 20px 0; margin-top: 20px;">Unionpedia ist ein Konzept Karte oder semantische Netzwerk organisiert wie ein Lexikon oder Wörterbuch. Es gibt eine kurze Definition jedes Konzept und seine Beziehungen.</p>
+<p style="margin-top: 20px;">
+	<input type="text" value="" id="text-search-home"/>
+	<input type="button" value="Suche" onclick="javascript:goSearch();" id="button-search"/>
+	<script>
+	function goSearch() {
+		if ($('#text-search-home').val())
+			window.location.href = domain+'Suche:'+$('#text-search-home').val();
+		else
+			$('#text-search-home').focus();
+	}
+	$('#text-search-home').on('keypress', function(ev) {
+		if (ev.which == 13) goSearch();
+	});
+	$(document).ready(function() {
+		$('#text-search-home').focus();
+	});
+	</script>
+</p>
+
+
+
+
+<p>
+<a href="./Alle:">Index</a> &middot;
+<a href="./Zufällig:">Zufällige Seite</a> &middot;
+<a href="https://www.unionpedia.org/">In anderen Sprachen</a>
+</p>
+
+<p>
+	<a href="./Anmeldung:">Einloggen</a> &middot;
+	<a href="./Beitreten:">Benutzerkonto anlegen</a>
+</p>
+
+
+<p><a href="./Privatsphäre:">Datenschutz-Bestimmungen</a></p>
+
+</div>
+
+
+
+<script>
+// Smooth scrolling
+var $root = $('html, body');
+$('a[href*=#]').click(function(){
+	var href = $.attr(this, 'href')
+	var hash = href.substr(href.indexOf("#")+1);
+    $root.animate({
+        scrollTop: $('[id="' + hash + '"]').offset().top - 7    }, 500, function () {
+        window.location.hash = hash;
+    });
+    return false;
+});
+</script>
+
+<a href="#" id="scrollToTop"></a>
+<style>
+#scrollToTop{
+	position: fixed;
+
+		width: 55px;
+	height: 55px;
+	bottom: 10px;
+	right: 10px;
+	
+	display: none;
+	border-radius: 50%;
+	box-shadow: 1px 1px 7px rgba(0,50,150,0.3);
+
+	background-color: rgba(0,120,205,1);
+	text-decoration: none;
+
+	background-image: url(static/images/arrow-top.png);
+	background-size: 40%;
+	background-repeat: no-repeat;
+	background-position: center;
+
+	opacity: 0.7;
+}
+#scrollToTop:hover{
+	text-decoration:none;
+}
+</style>
+
+<script>
+$(document).ready(function(){
+	$(window).scroll(function(){
+		if ($(this).scrollTop() > 265) {
+			$('#scrollToTop').fadeIn(400);
+		} else {
+			$('#scrollToTop').fadeOut(400);
+		}
+	});
+	$('#scrollToTop').click(function(){
+		$('html, body').animate({scrollTop : 0},400);
+		return false;
+	});
+});
+</script>
+
+</body>
+<script src="ads.js/ads.js" type="text/javascript"></script>
+<script type="text/javascript">
+if (document.getElementById('rbiJmWFW8hYmnGheS')){
+	rbiJmWFW8hYmnGheS = 'No';
+} else {
+	rbiJmWFW8hYmnGheS = 'Yes';
+}
+
+if (typeof ga !=='undefined'){
+	ga('send','event','Blocking Ads',rbiJmWFW8hYmnGheS,{'nonInteraction':1});
+	} else if(typeof _gaq !=='undefined'){
+	_gaq.push(['_trackEvent','Blocking Ads',rbiJmWFW8hYmnGheS,undefined,undefined,true]);
+	}
+</script>
+</html>

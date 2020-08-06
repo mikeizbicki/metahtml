@@ -58,6 +58,10 @@ class Extractor(TimestampExtractor):
         ( 'sternchen4you.de',               '//time[@class="updated"]/@datetime'),
         ( 'varlamov.ru',                    '//span[@class="j-e-date"]/time[@itemprop="dateModified"]'),
 
+        ( 'artgnews.com',                   '(//div[@class="info_area"]/span[@class="date"]/span)[2]' ),
+        ( 'minwonnews.com',                 '(//div[@class="info_area"]/span[@class="date"]/span)[2]' ),
+        ( 'sohfrance.org',                  '//meta[@property="article:modified_time"]/@content' ),
+
         # meta xpaths
         ( None, '//meta[@*="DCTERMS.modified"]/@content'),
         ( None, '//meta[@*="Date-Revision-yyyymmdd"]/@content'),

@@ -202,6 +202,8 @@ class Extractor(BaseExtractor):
         ( None, r'/(19|20)\d{2}/\d{2}/?$' ),
         ( None, r'/(19|20)\d{2}/?$' ),
 
+        ( 'conexionmigrante.com', r'/(19|20)\d{2}-/\d{2}-/\d{2}/?$' ),
+        ( 'conexionmigrante.com', r'/(19|20)\d{2}-/\d{2}-/?$' ),
         ( 'bloomberg.com', r'/(19|20)\d{2}-\d{2}-\d{2}/?$' ),
         ( None, r'^/(19|20)\d{2}-[a-zA-Z]{3}-\d{2}/?$' ),
         ( None, r'^/(19|20)\d{2}-\d{2}-\d{2}/?$' ),
@@ -261,6 +263,7 @@ class Extractor(BaseExtractor):
         ( 'mundoplast.com', r'^/tag-chemical-representada-corquimia/?$' ),
         ( 'news.kakaku.com', r'^/prdnews/page=8/?$' ),
         ( 'news.un.org', r'^/es/node?$' ),
+        ( 'plaza.rakuten.co.jp', r'^/[a-zA-Z0-9]*/$' ),
         ( 'scvo.org', r'^/coronavirus-covid-19-information-guidance/?$' ),
         ( 'scvo.org', r'^/coronavirus-covid-19-information-guidance/resources/?$' ),
         ( 'scvo.org', r'^/support/running-your-organisation/leaving-lockdown/?$' ),
