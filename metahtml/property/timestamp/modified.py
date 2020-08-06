@@ -43,6 +43,12 @@ class Extractor(TimestampExtractor):
         ( 'world-nuclear.org',              '(//em/text())[1]'),
         ( 'worldometers.info',              '//div[@style="font-size:13px; color:#999; text-align:center"]/text()'),
 
+        ( 'alexandrina.eco-compliance.de',  '//a[@class="last-modified"]/text()'),
+        ( 'topia.ne.jp',                    '//p[@class="updatedAt"]/text()'),
+        ( 'unis.unvienna.org',              '//meta[@name="posting-date"]/@content'),
+        ( 'vias.org',                       '//td[@align="right"]/text()'),
+        ( 'youthdaily.co.kr',               '(//ul[@class="art_info"]/li/text())[2]'),
+
         # meta xpaths
         ( None, '//meta[@*="DCTERMS.modified"]/@content'),
         ( None, '//meta[@*="Date-Revision-yyyymmdd"]/@content'),

@@ -1,0 +1,2860 @@
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]>         <html class="ie8" lang="de"> <![endif]-->
+<!--[if IE 9]>         <html class="ie9 gt-ie8" lang="de"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="gt-ie8 gt-ie9 not-ie" lang="de"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>vas auf deutsch übersetzen (Deutsch-Türkisch Wörterbuch)</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="description" content="Übersetzungen für das Wort vas vom Türkischen ins Deutsche." />
+
+	
+
+<script type='text/javascript'>
+var yieldlove_site_id = "beluka.de";
+</script><script type='text/javascript' src='//cdn-a.yieldlove.com/yieldlove-bidder.js?beluka.de'></script>
+
+<script async='async' src='https://securepubads.g.doubleclick.net/tag/js/gpt.js'></script>
+<script>
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+</script>
+
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin" rel="stylesheet" type="text/css">
+<link href="/assets/stylesheets/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/stylesheets/pixel-admin.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/stylesheets/widgets.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/stylesheets/rtl.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/stylesheets/themes.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="/assets/sweetalert/sweet-alert.css">
+<!--[if lt IE 9]>
+	<script src="/assets/javascripts/ie.min.js"></script>
+<![endif]-->
+</head>
+
+<body class="theme-adminflare no-main-menu">
+
+<script>var init = [];</script>
+
+<div id="main-wrapper">
+
+	
+	<div id="main-navbar" class="navbar navbar-inverse" role="navigation">		
+		<div class="navbar-inner">
+			<div class="navbar-header">
+				<a href="/" class="navbar-brand">
+					<img src="/assets/images/pixel-admin/logo.png" width="70">
+				</a>
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse"><i class="navbar-icon fa fa-bars"></i></button>
+			</div>
+
+			<div id="main-navbar-collapse" class="collapse navbar-collapse main-navbar-collapse">
+				<div>
+					<ul class="nav navbar-nav pull-right">
+						<li>
+							<a href="/">Startseite</a>
+						</li>
+						<li>
+							<a href="/beliebtewoerter">Top-Wörter</a>
+						</li>
+						<li>
+							<a href="/wortvorschlagen.jsp">Wortvorschlag</a>
+						</li>
+						<li>
+							<a href="/impressum.jsp">Impressum</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="content-wrapper">
+		
+
+
+	<ul class="breadcrumb breadcrumb-page">
+		<div class="breadcrumb-label">Deutsch <img src="/assets/images/de.png"> <i class="fa fa-exchange"></i> <img src="/assets/images/tr.png"> Türkisch</div>
+		<li></li>
+	</ul>
+	<div class="page-header">
+		<div class="row">
+			<div class="col-xs-12 col-sm-8">
+				<div class="row">
+					<form action="/woerterbuch/deutschtuerkisch/" class="col-xs-12 col-sm-6" id="searchForm">
+						<div class="input-group no-margin">
+							<span class="input-group-addon" style="border:none;background: #fff;background: rgba(0,0,0,.05);"><i class="fa fa-search"></i></span>
+							<input name="q" id="ui-autocomplete" type="text" placeholder="Wörterbuch" class="form-control no-padding-hr" style="border:none;background: #fff;background: rgba(0,0,0,.05);">
+							<span class="input-group-btn">
+							<button class="btn" type="button" id="submitSearch">Übersetzen</button>
+						</span>
+						</div>
+					</form>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-8">
+					<small>754.516 Einträge, 144.165 Anfragen</small>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		init.push(function () {
+			$("#searchForm").submit(function(event) {
+				event.preventDefault();
+				window.open("/woerterbuch/deutschtuerkisch/"+encodeURIComponent($("#ui-autocomplete").val()),"_self");
+			});
+			
+			$("#submitSearch").click(function() {
+				window.open("/woerterbuch/deutschtuerkisch/"+encodeURIComponent($("#ui-autocomplete").val()),"_self");
+			});
+			
+			$.widget("ui.autocomplete", $.ui.autocomplete, {
+				options: {
+					renderItem: null,
+				},
+				_renderItem: function(ul, item) {
+					var image = "<img src=\"/assets/images/"+item.language+".png\" />";
+			        var itemhtml = "<a>" + image + " " + item.value + "</a>";
+			        
+			        return $( "<li></li>" )
+			            .data( "item.autocomplete", item )
+			            .append( itemhtml )
+			            .appendTo( ul );
+				}
+			});
+			
+			$("#ui-autocomplete").autocomplete({
+				source: function(request, response) {
+					$.ajax({
+						url: "/Autocomplete",
+						data: {
+							query: request.term,
+						},
+						success: function(data) {
+							if(data.length == 0){
+								return;
+							}
+							
+							var dataArray = data.split(/\r\n|\r|\n/g);
+							
+							response($.map(dataArray, function(item) {
+				                var itemArray = item.split(";");
+								
+								return {
+				                    label: itemArray[0],
+				                    value: itemArray[0],
+				                    language: itemArray[2]
+				                }
+				            }));
+						}
+					});
+				},
+				minLength: 2,
+				select: function(event, ui) {
+					window.open("/woerterbuch/deutschtuerkisch/"+encodeURIComponent(ui.item.value),"_self");
+				}
+			});
+			
+			$("#ui-autocomplete").focus();
+		});
+	</script>
+		
+		<table style="max-width: 1275px; padding:0px; margin:0px auto;">
+			<tr>
+				<td style="max-width: 975px">
+					<div class="row">
+						<div class="col col-md-12 text-center">
+							<!-- Yieldlove AdTag - beluka.de - responsive -->
+							<script type='text/javascript'>
+							    googletag.cmd.push(function() {
+							        if (window.innerWidth >= 991) {
+							            googletag.defineSlot('/53015287/beluka.de_d_970x250_1', [970, 250], 'div-gpt-ad-1407836239789-0').addService(googletag.pubads());
+							        }
+							
+							if (window.innerWidth < 991) {
+							            googletag.defineSlot('/53015287/beluka.de_m_320x50_1', [320, 50], 'div-gpt-ad-1407836239789-0').addService(googletag.pubads());
+							        }
+							
+							        googletag.pubads().enableSingleRequest();
+							        googletag.enableServices();
+							    });
+							</script>
+							<div id='div-gpt-ad-1407836239789-0'>
+							    <script type='text/javascript'>
+							        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1407836239789-0'); });
+							    </script>
+							</div>
+			
+					
+							<div class="search-text">
+								
+									Keine direkten Treffer gefunden für: <span class="text-primary">vas</span>
+								
+								
+							</div> 
+							
+							<br />
+							
+							<div class="panel hide" style="max-width: 975px; margin: 0 auto !important;">
+								<div class="table-primary">
+									<table class="table table-hover table-striped">
+										<col width="55%" />
+					    				<col width="45%" />
+					    				<col width="0%" />
+										<thead>
+											<tr>
+												<th><img src="/assets/images/de.png"> Deutsch</th>
+												<th><img src="/assets/images/tr.png"> Türkisch</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody style="a:link {color: #FF0000 !important;}; text-align: left;">
+											
+										</tbody>
+									</table>
+								</div>
+							</div>
+			
+							
+							
+							<!-- Yieldlove AdTag - beluka.de - responsive -->
+							<script type='text/javascript'>
+							    googletag.cmd.push(function() {
+							        if (window.innerWidth >= 991) {
+							            googletag.defineSlot('/53015287/beluka.de_d_970x90_1', [970, 90], 'div-gpt-ad-1407836231608-0').addService(googletag.pubads());
+							        }
+							
+							if (window.innerWidth < 991) {
+							            googletag.defineSlot('/53015287/beluka.de_m_320x50_2', [320, 50], 'div-gpt-ad-1407836231608-0').addService(googletag.pubads());
+							        }
+							
+							        googletag.pubads().enableSingleRequest();
+							        googletag.enableServices();
+							    });
+							</script>
+							<div id='div-gpt-ad-1407836231608-0'>
+							    <script type='text/javascript'>
+							        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1407836231608-0'); });
+							    </script>
+							</div>
+							
+							<br />
+							
+							<div class="search-text">
+								
+										<strong>77</strong> indirekte Treffer gefunden für: <span class="text-primary">vas</span>
+								
+								
+							</div>
+							
+							<br />
+							
+							<div class="panel " style="max-width: 975px; margin: 0 auto !important;">
+								<div class="table-primary">
+									<table class="table table-hover table-striped">
+										<col width="55%" />
+					    				<col width="45%" />
+					    				<col width="0%" />
+										<thead>
+											<tr>
+												<th><img src="/assets/images/de.png"> Deutsch</th>
+												<th><img src="/assets/images/tr.png"> Türkisch</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody style="text-align: left;">
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/die">die</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Akzise">Akzise</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıtalı"><b>vas</b>ıtalı</a> <a href="/woerterbuch/deutschtuerkisch/vergi">vergi</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20252120&wordGerman=Akzise&wordTurkish=vasıtalı vergi&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20252120"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/angelangen">angelangen</a> <a href="/woerterbuch/deutschtuerkisch/in">in</a>
+																<small>
+																	<span title="Verb" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Verb">v</a>}</span> 
+																	
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıl"><b>vas</b>ıl</a> <a href="/woerterbuch/deutschtuerkisch/olmak">olmak</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20406560&wordGerman=angelangen in&wordTurkish=vasıl olmak&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=v&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20406560"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/angelangt">angelangt</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıl"><b>vas</b>ıl</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20406570&wordGerman=angelangt&wordTurkish=vasıl&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20406570"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/angelangt">angelangt</a> <a href="/woerterbuch/deutschtuerkisch/sein">sein</a>
+																<small>
+																	<span title="Verb" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Verb">v</a>}</span> 
+																	
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıl"><b>vas</b>ıl</a> <a href="/woerterbuch/deutschtuerkisch/olmuş">olmuş</a> <a href="/woerterbuch/deutschtuerkisch/olmak">olmak</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20406580&wordGerman=angelangt sein&wordTurkish=vasıl olmuş olmak&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=v&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20406580"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/anhand">anhand</a>
+																<small>
+																	 
+																	
+																	
+																	[<a href="/woerterbuch/deutschtuerkisch/Präposition">Präposition</a> <a href="/woerterbuch/deutschtuerkisch/+Genitiv">+Genitiv</a>]
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıtasıyla"><b>vas</b>ıtasıyla</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20427830&wordGerman=anhand&wordTurkish=vasıtasıyla&styleIdGerman=null&styleIdTurkish=null&notesGerman=Präposition +Genitiv&notesTurkish=null&fieldId=null&grammarIdGerman=&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20427830"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/anlangen">anlangen</a>
+																<small>
+																	<span title="Verb" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Verb">v</a>}</span> 
+																	
+																	
+																	[<a href="/woerterbuch/deutschtuerkisch/oberdt.">oberdt.</a>]
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıl"><b>vas</b>ıl</a> <a href="/woerterbuch/deutschtuerkisch/olmak">olmak</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20447810&wordGerman=anlangen&wordTurkish=vasıl olmak&styleIdGerman=null&styleIdTurkish=null&notesGerman=oberdt.&notesTurkish=null&fieldId=null&grammarIdGerman=v&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20447810"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Anordnung">Anordnung</a> <a href="/woerterbuch/deutschtuerkisch/des">des</a> <a href="/woerterbuch/deutschtuerkisch/Willensvollstreckers">Willensvollstreckers</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	<span title="Jura/Recht" class="label add-tooltip">law</span>
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasiyet"><b>vas</b>iyet</a> <a href="/woerterbuch/deutschtuerkisch/hükümlerini">hükümlerini</a> <a href="/woerterbuch/deutschtuerkisch/yerine">yerine</a> <a href="/woerterbuch/deutschtuerkisch/getiren">getiren</a> <a href="/woerterbuch/deutschtuerkisch/kimsenin">kimsenin</a> <a href="/woerterbuch/deutschtuerkisch/talimatı">talimatı</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20468020&wordGerman=Anordnung des Willensvollstreckers&wordTurkish=vasiyet hükümlerini yerine getiren kimsenin talimatı&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=law&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20468020"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Anordnung">Anordnung</a> <a href="/woerterbuch/deutschtuerkisch/des">des</a> <a href="/woerterbuch/deutschtuerkisch/Willensvollstreckers">Willensvollstreckers</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	<span title="Jura/Recht" class="label add-tooltip">law</span>
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasiyeti"><b>vas</b>iyeti</a> <a href="/woerterbuch/deutschtuerkisch/infaz">infaz</a> <a href="/woerterbuch/deutschtuerkisch/memuru">memuru</a> <a href="/woerterbuch/deutschtuerkisch/kimsenin">kimsenin</a> <a href="/woerterbuch/deutschtuerkisch/talimatı">talimatı</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20468021&wordGerman=Anordnung des Willensvollstreckers&wordTurkish=vasiyeti infaz memuru kimsenin talimatı&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=law&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20468021"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Anordnung">Anordnung</a> <a href="/woerterbuch/deutschtuerkisch/des">des</a> <a href="/woerterbuch/deutschtuerkisch/Willensvollstreckers">Willensvollstreckers</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	<span title="Jura/Recht" class="label add-tooltip">law</span>
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasiyeti"><b>vas</b>iyeti</a> <a href="/woerterbuch/deutschtuerkisch/tenfiz">tenfiz</a> <a href="/woerterbuch/deutschtuerkisch/memuru">memuru</a> <a href="/woerterbuch/deutschtuerkisch/kimsenin">kimsenin</a> <a href="/woerterbuch/deutschtuerkisch/talimatı">talimatı</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20468022&wordGerman=Anordnung des Willensvollstreckers&wordTurkish=vasiyeti tenfiz memuru kimsenin talimatı&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=law&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20468022"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Anspruch">Anspruch</a> <a href="/woerterbuch/deutschtuerkisch/aus">aus</a> <a href="/woerterbuch/deutschtuerkisch/Vermächtnis">Vermächtnis</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Maskulinum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Maskulinum">m</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasiyetnameden"><b>vas</b>iyetnameden</a> <a href="/woerterbuch/deutschtuerkisch/doğan">doğan</a> <a href="/woerterbuch/deutschtuerkisch/hak">hak</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20498500&wordGerman=Anspruch aus Vermächtnis&wordTurkish=vasiyetnameden doğan hak&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=m&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20498500"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/die">die</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Art">Art</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıf"><b>vas</b>ıf</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20613310&wordGerman=Art&wordTurkish=vasıf&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20613310"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/attribuieren">attribuieren</a>
+																<small>
+																	<span title="Verb" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Verb">v</a>}</span> 
+																	
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıflandırmak"><b>vas</b>ıflandırmak</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20653290&wordGerman=attribuieren&wordTurkish=vasıflandırmak&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=v&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20653290"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/die">die</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Attribuierung">Attribuierung</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıflandırma"><b>vas</b>ıflandırma</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20653300&wordGerman=Attribuierung&wordTurkish=vasıflandırma&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20653300"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/das">das</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Attribut">Attribut</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Neutrum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Neutrum">n</a>}</span>
+																	
+																	[<a href="/woerterbuch/deutschtuerkisch/Grammatik">Grammatik</a>]
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıf"><b>vas</b>ıf</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20653370&wordGerman=Attribut&wordTurkish=vasıf&styleIdGerman=null&styleIdTurkish=null&notesGerman=Grammatik&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=n&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20653370"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/die">die</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Attribute">Attribute</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Plural" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Plural">pl</a>}</span>
+																	
+																	[<a href="/woerterbuch/deutschtuerkisch/Grammatik">Grammatik</a>]
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıflar"><b>vas</b>ıflar</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20653540&wordGerman=Attribute&wordTurkish=vasıflar&styleIdGerman=null&styleIdTurkish=null&notesGerman=Grammatik&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=pl&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20653540"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Attribute">Attribute</a> <a href="/woerterbuch/deutschtuerkisch/anzeigen">anzeigen</a>
+																<small>
+																	<span title="Verb" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Verb">v</a>}</span> 
+																	
+																	
+																	[<a href="/woerterbuch/deutschtuerkisch/Grammatik">Grammatik</a>]
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıfları"><b>vas</b>ıfları</a> <a href="/woerterbuch/deutschtuerkisch/göstermek">göstermek</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20653560&wordGerman=Attribute anzeigen&wordTurkish=vasıfları göstermek&styleIdGerman=null&styleIdTurkish=null&notesGerman=Grammatik&notesTurkish=null&fieldId=null&grammarIdGerman=v&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20653560"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/die">die</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Attributenprüfung">Attributenprüfung</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıf"><b>vas</b>ıf</a> <a href="/woerterbuch/deutschtuerkisch/incelemesi">incelemesi</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20653600&wordGerman=Attributenprüfung&wordTurkish=vasıf incelemesi&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20653600"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/die">die</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Attributprüfung">Attributprüfung</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıf"><b>vas</b>ıf</a> <a href="/woerterbuch/deutschtuerkisch/deneyi">deneyi</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20653750&wordGerman=Attributprüfung&wordTurkish=vasıf deneyi&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20653750"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/die">die</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Attributverwendung">Attributverwendung</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıf"><b>vas</b>ıf</a> <a href="/woerterbuch/deutschtuerkisch/kullanma">kullanma</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20653820&wordGerman=Attributverwendung&wordTurkish=vasıf kullanma&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20653820"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Auslegung">Auslegung</a> <a href="/woerterbuch/deutschtuerkisch/eines">eines</a> <a href="/woerterbuch/deutschtuerkisch/Testaments">Testaments</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasiyetnameyi"><b>vas</b>iyetnameyi</a> <a href="/woerterbuch/deutschtuerkisch/yorumlama">yorumlama</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20882750&wordGerman=Auslegung eines Testaments&wordTurkish=vasiyetnameyi yorumlama&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20882750"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Benennung">Benennung</a> <a href="/woerterbuch/deutschtuerkisch/des">des</a> <a href="/woerterbuch/deutschtuerkisch/Vormundes">Vormundes</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	[<a href="/woerterbuch/deutschtuerkisch/Rechtswissenschaft">Rechtswissenschaft</a>]
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasi"><b>vas</b>i</a> <a href="/woerterbuch/deutschtuerkisch/tayini">tayini</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21215980&wordGerman=Benennung des Vormundes&wordTurkish=vasi tayini&styleIdGerman=null&styleIdTurkish=null&notesGerman=Rechtswissenschaft&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21215980"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/die">die</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Beschaffenheit">Beschaffenheit</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıf"><b>vas</b>ıf</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21263930&wordGerman=Beschaffenheit&wordTurkish=vasıf&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21263930"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/beschreiben">beschreiben</a>
+																<small>
+																	<span title="Verb" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Verb">v</a>}</span> 
+																	
+																	
+																	[<a href="/woerterbuch/deutschtuerkisch/beschrieb,">beschrieb,</a> <a href="/woerterbuch/deutschtuerkisch/hat">hat</a> <a href="/woerterbuch/deutschtuerkisch/beschrieben">beschrieben</a>]
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıflandırmak"><b>vas</b>ıflandırmak</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21276150&wordGerman=beschreiben&wordTurkish=vasıflandırmak&styleIdGerman=null&styleIdTurkish=null&notesGerman=beschrieb, hat beschrieben&notesTurkish=null&fieldId=null&grammarIdGerman=v&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21276150"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/die">die</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Beschreibung">Beschreibung</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıflandırma"><b>vas</b>ıflandırma</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21276630&wordGerman=Beschreibung&wordTurkish=vasıflandırma&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21276630"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Bestellung">Bestellung</a> <a href="/woerterbuch/deutschtuerkisch/als">als</a> <a href="/woerterbuch/deutschtuerkisch/Nachlasspfleger">Nachlasspfleger</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasi"><b>vas</b>i</a> <a href="/woerterbuch/deutschtuerkisch/olarak">olarak</a> <a href="/woerterbuch/deutschtuerkisch/tayin">tayin</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21310900&wordGerman=Bestellung als Nachlasspfleger&wordTurkish=vasi olarak tayin&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21310900"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Bestätigung">Bestätigung</a> <a href="/woerterbuch/deutschtuerkisch/eines">eines</a> <a href="/woerterbuch/deutschtuerkisch/Testaments">Testaments</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasiyetnamenin"><b>vas</b>iyetnamenin</a> <a href="/woerterbuch/deutschtuerkisch/tasdiki">tasdiki</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21321640&wordGerman=Bestätigung eines Testaments&wordTurkish=vasiyetnamenin tasdiki&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21321640"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/bevormunden">bevormunden</a>
+																<small>
+																	<span title="Verb" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Verb">v</a>}</span> 
+																	
+																	
+																	[<a href="/woerterbuch/deutschtuerkisch/bevormundete,">bevormundete,</a> <a href="/woerterbuch/deutschtuerkisch/hat">hat</a> <a href="/woerterbuch/deutschtuerkisch/bevormundet">bevormundet</a>]
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasilik"><b>vas</b>ilik</a> <a href="/woerterbuch/deutschtuerkisch/etmek">etmek</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21362770&wordGerman=bevormunden&wordTurkish=vasilik etmek&styleIdGerman=null&styleIdTurkish=null&notesGerman=bevormundete, hat bevormundet&notesTurkish=null&fieldId=null&grammarIdGerman=v&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21362770"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/bevormundend">bevormundend</a>
+																<small>
+																	<span title="Adjektiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Adjektiv">adj</a>}</span> 
+																	
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasilik"><b>vas</b>ilik</a> <a href="/woerterbuch/deutschtuerkisch/eden">eden</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21362810&wordGerman=bevormundend&wordTurkish=vasilik eden&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=adj&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21362810"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/die">die</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Bevormundende">Bevormundende</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasil"><b>vas</b>il</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21362820&wordGerman=Bevormundende&wordTurkish=vasil&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21362820"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/die">die</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Bevormundung">Bevormundung</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasilik"><b>vas</b>ilik</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21362870&wordGerman=Bevormundung&wordTurkish=vasilik&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21362870"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/care">care</a> <a href="/woerterbuch/deutschtuerkisch/of">of</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıtasıyla"><b>vas</b>ıtasıyla</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21695250&wordGerman=care of&wordTurkish=vasıtasıyla&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21695250"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/der">der</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Charakter">Charakter</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Maskulinum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Maskulinum">m</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıf"><b>vas</b>ıf</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21703630&wordGerman=Charakter&wordTurkish=vasıf&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=m&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21703630"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/charakterisieren">charakterisieren</a>
+																<small>
+																	<span title="Verb" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Verb">v</a>}</span> 
+																	
+																	
+																	[<a href="/woerterbuch/deutschtuerkisch/charakterisierte,">charakterisierte,</a> <a href="/woerterbuch/deutschtuerkisch/habe">habe</a> <a href="/woerterbuch/deutschtuerkisch/charakterisiert">charakterisiert</a>]
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıflandırmak"><b>vas</b>ıflandırmak</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21704110&wordGerman=charakterisieren&wordTurkish=vasıflandırmak&styleIdGerman=null&styleIdTurkish=null&notesGerman=charakterisierte, habe charakterisiert&notesTurkish=null&fieldId=null&grammarIdGerman=v&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21704110"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/die">die</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Charakterisierungen">Charakterisierungen</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Plural" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Plural">pl</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıflandırmalar"><b>vas</b>ıflandırmalar</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21704210&wordGerman=Charakterisierungen&wordTurkish=vasıflandırmalar&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=pl&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21704210"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/das">das</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Charakteristikum">Charakteristikum</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Neutrum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Neutrum">n</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıf"><b>vas</b>ıf</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21704370&wordGerman=Charakteristikum&wordTurkish=vasıf&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=n&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21704370"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/charakterlos">charakterlos</a>
+																<small>
+																	<span title="Adjektiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Adjektiv">adj</a>}</span> 
+																	
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıfsız"><b>vas</b>ıfsız</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21705010&wordGerman=charakterlos&wordTurkish=vasıfsız&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=adj&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21705010"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/der">der</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Charakterzug">Charakterzug</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Maskulinum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Maskulinum">m</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıf"><b>vas</b>ıf</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21705650&wordGerman=Charakterzug&wordTurkish=vasıf&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=m&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21705650"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/dequalifizieren">dequalifizieren</a>
+																<small>
+																	<span title="Verb" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Verb">v</a>}</span> 
+																	
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıfsızlandırmak"><b>vas</b>ıfsızlandırmak</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21908840&wordGerman=dequalifizieren&wordTurkish=vasıfsızlandırmak&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=v&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21908840"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/direkt">direkt</a>
+																<small>
+																	<span title="Adverb" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Adverb">adv</a>}</span> 
+																	
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıtasız"><b>vas</b>ıtasız</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=22028100&wordGerman=direkt&wordTurkish=vasıtasız&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=adv&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_22028100"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/direkte">direkte</a> <a href="/woerterbuch/deutschtuerkisch/Stellvertretung">Stellvertretung</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıtasız"><b>vas</b>ıtasız</a> <a href="/woerterbuch/deutschtuerkisch/temsil">temsil</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=22030670&wordGerman=direkte Stellvertretung&wordTurkish=vasıtasız temsil&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_22030670"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Direkte">Direkte</a> <a href="/woerterbuch/deutschtuerkisch/Steuer">Steuer</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	[<a href="/woerterbuch/deutschtuerkisch/Wirtschaft">Wirtschaft</a>]
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıtasız"><b>vas</b>ıtasız</a> <a href="/woerterbuch/deutschtuerkisch/vergi">vergi</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=22030690&wordGerman=Direkte Steuer&wordTurkish=vasıtasız vergi&styleIdGerman=null&styleIdTurkish=null&notesGerman=Wirtschaft&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_22030690"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/direkte">direkte</a> <a href="/woerterbuch/deutschtuerkisch/Steuer">Steuer</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıtasız"><b>vas</b>ıtasız</a> <a href="/woerterbuch/deutschtuerkisch/vergi">vergi</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=22030720&wordGerman=direkte Steuer&wordTurkish=vasıtasız vergi&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_22030720"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/direkter">direkter</a> <a href="/woerterbuch/deutschtuerkisch/Verbotsirrtum">Verbotsirrtum</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Maskulinum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Maskulinum">m</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıtasız"><b>vas</b>ıtasız</a> <a href="/woerterbuch/deutschtuerkisch/yasakta">yasakta</a> <a href="/woerterbuch/deutschtuerkisch/yanılma">yanılma</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=22031880&wordGerman=direkter Verbotsirrtum&wordTurkish=vasıtasız yasakta yanılma&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=m&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_22031880"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/direkter">direkter</a> <a href="/woerterbuch/deutschtuerkisch/Vorsatz">Vorsatz</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Maskulinum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Maskulinum">m</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıtasız"><b>vas</b>ıtasız</a> <a href="/woerterbuch/deutschtuerkisch/kast">kast</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=22031980&wordGerman=direkter Vorsatz&wordTurkish=vasıtasız kast&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=m&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_22031980"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/der">der</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Direkterwerb">Direkterwerb</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Maskulinum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Maskulinum">m</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıtasız"><b>vas</b>ıtasız</a> <a href="/woerterbuch/deutschtuerkisch/iktisap">iktisap</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=22032100&wordGerman=Direkterwerb&wordTurkish=vasıtasız iktisap&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=m&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_22032100"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/das">das</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Direktmandat">Direktmandat</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Neutrum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Neutrum">n</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıtasız"><b>vas</b>ıtasız</a> <a href="/woerterbuch/deutschtuerkisch/vekâlet">vekâlet</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=22033600&wordGerman=Direktmandat&wordTurkish=vasıtasız vekâlet&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=n&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_22033600"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/durch">durch</a>
+																<small>
+																	<span title="Adverb" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Adverb">adv</a>}</span> 
+																	
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasıtasıyla"><b>vas</b>ıtasıyla</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=22172930&wordGerman=durch&wordTurkish=vasıtasıyla&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=adv&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_22172930"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/der">der</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Durchschnitt">Durchschnitt</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Maskulinum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Maskulinum">m</a>}</span>
+																	
+																	[<a href="/woerterbuch/deutschtuerkisch/Mittelwert">Mittelwert</a>]
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasat"><b>vas</b>at</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=22203240&wordGerman=Durchschnitt&wordTurkish=vasat&styleIdGerman=null&styleIdTurkish=null&notesGerman=Mittelwert&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=m&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_22203240"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/der">der</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Durchschnitt">Durchschnitt</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Maskulinum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Maskulinum">m</a>}</span>
+																	
+																	[<a href="/woerterbuch/deutschtuerkisch/im">im</a> <a href="/woerterbuch/deutschtuerkisch/Sinne">Sinne</a> <a href="/woerterbuch/deutschtuerkisch/von">von</a> <a href="/woerterbuch/deutschtuerkisch/Mittelmaß">Mittelmaß</a>]
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasati"><b>vas</b>ati</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=22203320&wordGerman=Durchschnitt&wordTurkish=vasati&styleIdGerman=null&styleIdTurkish=null&notesGerman=im Sinne von Mittelmaß&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=m&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_22203320"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Durchschnitt">Durchschnitt</a> <a href="/woerterbuch/deutschtuerkisch/berechnen">berechnen</a>
+																<small>
+																	<span title="Verb" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Verb">v</a>}</span> 
+																	
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasatını"><b>vas</b>atını</a> <a href="/woerterbuch/deutschtuerkisch/almak">almak</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=22203340&wordGerman=Durchschnitt berechnen&wordTurkish=vasatını almak&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=v&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_22203340"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/durchschnittlich">durchschnittlich</a>
+																<small>
+																	<span title="Adjektiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Adjektiv">adj</a>}</span> 
+																	
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/vasati"><b>vas</b>ati</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=22203530&wordGerman=durchschnittlich&wordTurkish=vasati&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=adj&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_22203530"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/die">die</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/ABC-Kriegsführung">ABC-Kriegsführung</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/atom-biyolojik-kimyasal">atom-biyolojik-kimyasal</a> <a href="/woerterbuch/deutschtuerkisch/silahlarla">silahlarla</a> <a href="/woerterbuch/deutschtuerkisch/savaş">savaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20012040&wordGerman=ABC-Kriegsführung&wordTurkish=atom-biyolojik-kimyasal silahlarla savaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20012040"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/adagio">adagio</a>
+																<small>
+																	 
+																	
+																	
+																	[<a href="/woerterbuch/deutschtuerkisch/Müzik">Müzik</a>]
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/yavaş">yavaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20190940&wordGerman=adagio&wordTurkish=yavaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=Müzik&notesTurkish=null&fieldId=null&grammarIdGerman=&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20190940"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/allgemach">allgemach</a>
+																<small>
+																	<span title="Adjektiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Adjektiv">adj</a>}</span> 
+																	
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/yavaş">yavaş</a> <a href="/woerterbuch/deutschtuerkisch/yavaş">yavaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20279280&wordGerman=allgemach&wordTurkish=yavaş yavaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=adj&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20279280"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/allmählich">allmählich</a>
+																<small>
+																	<span title="Adjektiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Adjektiv">adj</a>}</span> 
+																	
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/yavaş">yavaş</a> <a href="/woerterbuch/deutschtuerkisch/yavaş">yavaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20284650&wordGerman=allmählich&wordTurkish=yavaş yavaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=adj&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20284650"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/am">am</a> <a href="/woerterbuch/deutschtuerkisch/langsamsten">langsamsten</a>
+																<small>
+																	<span title="Adjektiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Adjektiv">adj</a>}</span> 
+																	
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/en">en</a> <a href="/woerterbuch/deutschtuerkisch/yavaş">yavaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20322600&wordGerman=am langsamsten&wordTurkish=en yavaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=adj&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20322600"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/die">die</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Anti-Alkoholbewegung">Anti-Alkoholbewegung</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/alkole">alkole</a> <a href="/woerterbuch/deutschtuerkisch/savaş">savaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20515770&wordGerman=Anti-Alkoholbewegung&wordTurkish=alkole savaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20515770"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/atomare">atomare</a> <a href="/woerterbuch/deutschtuerkisch/Kriegführung">Kriegführung</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/nükleer">nükleer</a> <a href="/woerterbuch/deutschtuerkisch/savaş">savaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20646610&wordGerman=atomare Kriegführung&wordTurkish=nükleer savaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20646610"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/atomare">atomare</a> <a href="/woerterbuch/deutschtuerkisch/Kriegsführung">Kriegsführung</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/nükleer">nükleer</a> <a href="/woerterbuch/deutschtuerkisch/savaş">savaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20646620&wordGerman=atomare Kriegsführung&wordTurkish=nükleer savaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20646620"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/der">der</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Atomkrieg">Atomkrieg</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Maskulinum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Maskulinum">m</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/nükleer">nükleer</a> <a href="/woerterbuch/deutschtuerkisch/savaş">savaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20648590&wordGerman=Atomkrieg&wordTurkish=nükleer savaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=m&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20648590"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/die">die</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Atomkriegführung">Atomkriegführung</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/nükleer">nükleer</a> <a href="/woerterbuch/deutschtuerkisch/savaş">savaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20648620&wordGerman=Atomkriegführung&wordTurkish=nükleer savaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20648620"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/die">die</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Atomkriegsführung">Atomkriegsführung</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/nükleer">nükleer</a> <a href="/woerterbuch/deutschtuerkisch/savaş">savaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=20648630&wordGerman=Atomkriegsführung&wordTurkish=nükleer savaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_20648630"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/bakteriologische">bakteriologische</a> <a href="/woerterbuch/deutschtuerkisch/Kriegsführung">Kriegsführung</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/bakteriyolojik">bakteriyolojik</a> <a href="/woerterbuch/deutschtuerkisch/savaş">savaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21020820&wordGerman=bakteriologische Kriegsführung&wordTurkish=bakteriyolojik savaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21020820"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/der">der</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Bewegungskrieg">Bewegungskrieg</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Maskulinum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Maskulinum">m</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/hareketli">hareketli</a> <a href="/woerterbuch/deutschtuerkisch/savaş">savaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21372330&wordGerman=Bewegungskrieg&wordTurkish=hareketli savaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=m&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21372330"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/der">der</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Blitzkrieg">Blitzkrieg</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Maskulinum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Maskulinum">m</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/çabuk">çabuk</a> <a href="/woerterbuch/deutschtuerkisch/biten">biten</a> <a href="/woerterbuch/deutschtuerkisch/savaş">savaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21493390&wordGerman=Blitzkrieg&wordTurkish=çabuk biten savaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=m&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21493390"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/blutdürstiger">blutdürstiger</a> <a href="/woerterbuch/deutschtuerkisch/Krieg">Krieg</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Maskulinum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Maskulinum">m</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/kana">kana</a> <a href="/woerterbuch/deutschtuerkisch/susamış">susamış</a> <a href="/woerterbuch/deutschtuerkisch/savaş">savaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21505770&wordGerman=blutdürstiger Krieg&wordTurkish=kana susamış savaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=m&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21505770"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/blutige">blutige</a> <a href="/woerterbuch/deutschtuerkisch/Schlacht">Schlacht</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/kanlı">kanlı</a> <a href="/woerterbuch/deutschtuerkisch/savaş">savaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21507610&wordGerman=blutige Schlacht&wordTurkish=kanlı savaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21507610"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/der">der</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Bombenabwurfschacht">Bombenabwurfschacht</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Maskulinum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Maskulinum">m</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/bombalı">bombalı</a> <a href="/woerterbuch/deutschtuerkisch/savaş">savaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21538930&wordGerman=Bombenabwurfschacht&wordTurkish=bombalı savaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=m&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21538930"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/der">der</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Bote">Bote</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Maskulinum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Maskulinum">m</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/kavas">ka<b>vas</b></a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21552130&wordGerman=Bote&wordTurkish=kavas&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=m&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21552130"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/breit">breit</a> <a href="/woerterbuch/deutschtuerkisch/und">und</a> <a href="/woerterbuch/deutschtuerkisch/langsam">langsam</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/geniş">geniş</a> <a href="/woerterbuch/deutschtuerkisch/ve">ve</a> <a href="/woerterbuch/deutschtuerkisch/yavaş">yavaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21576540&wordGerman=breit und langsam&wordTurkish=geniş ve yavaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21576540"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/der">der</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Bruderkrieg">Bruderkrieg</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Maskulinum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Maskulinum">m</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/iç">iç</a> <a href="/woerterbuch/deutschtuerkisch/savaş">savaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21612180&wordGerman=Bruderkrieg&wordTurkish=iç savaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=m&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21612180"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/bummelig">bummelig</a>
+																<small>
+																	 
+																	
+																	
+																	[<a href="/woerterbuch/deutschtuerkisch/langsam">langsam</a>]
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/yavaş">yavaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21642490&wordGerman=bummelig&wordTurkish=yavaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=langsam&notesTurkish=null&fieldId=null&grammarIdGerman=&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21642490"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/der">der</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Bürgerkrieg">Bürgerkrieg</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Maskulinum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Maskulinum">m</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/iç">iç</a> <a href="/woerterbuch/deutschtuerkisch/savaş">savaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21679390&wordGerman=Bürgerkrieg&wordTurkish=iç savaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=m&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21679390"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/chemische">chemische</a> <a href="/woerterbuch/deutschtuerkisch/Kriegführung">Kriegführung</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/kimyasal">kimyasal</a> <a href="/woerterbuch/deutschtuerkisch/savaş">savaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21712580&wordGerman=chemische Kriegführung&wordTurkish=kimyasal savaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21712580"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/chemische">chemische</a> <a href="/woerterbuch/deutschtuerkisch/Kriegsführung">Kriegsführung</a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Femininum" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Femininum">f</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/kimyasal">kimyasal</a> <a href="/woerterbuch/deutschtuerkisch/savaş">savaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21712590&wordGerman=chemische Kriegsführung&wordTurkish=kimyasal savaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=f&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21712590"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/"></a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/der">der</a> <a href="/woerterbuch/deutschtuerkisch/Kampf">Kampf</a> <a href="/woerterbuch/deutschtuerkisch/gegen">gegen</a> <a href="/woerterbuch/deutschtuerkisch/die">die</a> <a href="/woerterbuch/deutschtuerkisch/Armut">Armut</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/fakirliğe">fakirliğe</a> <a href="/woerterbuch/deutschtuerkisch/karşı">karşı</a> <a href="/woerterbuch/deutschtuerkisch/savaş">savaş</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=21912900&wordGerman=der Kampf gegen die Armut&wordTurkish=fakirliğe karşı savaş&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=&grammarIdTurkish=&subgrammarIdGerman=&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_21912900"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+														<tr>
+															<td>
+																<em><a href="/woerterbuch/deutschtuerkisch/die">die</a></em>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/Divas">Di<b>vas</b></a>
+																<small>
+																	<span title="Substantiv" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Substantiv">sub</a>}</span> 
+																	<span title="Plural" class="add-tooltip">{<a href="/woerterbuch/deutschtuerkisch/Plural">pl</a>}</span>
+																	
+																	
+																</small> 
+																<span class="pull-right">
+																	
+																</span>
+															</td>
+															<td>
+																
+																
+																<a href="/woerterbuch/deutschtuerkisch/ünlü">ünlü</a> <a href="/woerterbuch/deutschtuerkisch/kadın">kadın</a> <a href="/woerterbuch/deutschtuerkisch/yıldızlar">yıldızlar</a>
+																<small>
+																	 
+																	
+																	
+																	
+																</small>
+															</td>
+															<td>
+																<a href="/wortvorschlagen.jsp?id=22051180&wordGerman=Divas&wordTurkish=ünlü kadın yıldızlar&styleIdGerman=null&styleIdTurkish=null&notesGerman=null&notesTurkish=null&fieldId=null&grammarIdGerman=sub&grammarIdTurkish=&subgrammarIdGerman=pl&subgrammarIdTurkish=" title="Korrekturvorschlag" class="btn btn-xs btn-outline btn-info add-tooltip" id="suggest_22051180"><i class="fa fa-edit"></i></a>
+															</td>
+														</tr>
+											
+										</tbody>
+									</table>
+								</div>
+							</div>
+							
+							<!-- Yieldlove AdTag - beluka.de - responsive -->
+							<script type='text/javascript'>
+							    googletag.cmd.push(function() {
+							        if (window.innerWidth >= 991) {
+							            googletag.defineSlot('/53015287/beluka.de_d_970x250_2', [970, 250], 'div-gpt-ad-1407836198173-0').addService(googletag.pubads());
+							        }
+							
+							if (window.innerWidth < 991) {
+							            googletag.defineSlot('/53015287/beluka.de_m_300x600_1', [300, 600], 'div-gpt-ad-1407836198173-0').addService(googletag.pubads());
+							        }
+							
+							        googletag.pubads().enableSingleRequest();
+							        googletag.enableServices();
+							    });
+							</script>
+							<div id='div-gpt-ad-1407836198173-0'>
+							    <script type='text/javascript'>
+							        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1407836198173-0'); });
+							    </script>
+							</div>
+			
+							
+							<small>0.004s</small>
+							<br />
+							<br />
+						</div>
+					</div>
+				</td>
+				<td style="width: 300px" valign="top" class="hidden-md hidden-sm hidden-xs">
+					<div class="stickyElem" style="width: 300px; height: 600px;">
+						<!-- Yieldlove AdTag - beluka.de - responsive -->
+						<script type='text/javascript'>
+						    googletag.cmd.push(function() {
+						        if (window.innerWidth >= 991) {
+						            googletag.defineSlot('/53015287/beluka.de_d_300x600_1', [300, 600], 'div-gpt-ad-1407836008946-0').addService(googletag.pubads());
+						        }
+						
+						        googletag.pubads().enableSingleRequest();
+						        googletag.enableServices();
+						    });
+						</script>
+						<div id='div-gpt-ad-1407836008946-0'>
+						    <script type='text/javascript'>
+						        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1407836008946-0'); });
+						    </script>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+		
+	</div>
+	
+</div>
+
+
+<!--[if !IE]> -->
+	<script type="text/javascript"> window.jQuery || document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js">'+"<"+"/script>"); </script>
+<!-- <![endif]-->
+<!--[if lte IE 9]>
+	<script type="text/javascript"> window.jQuery || document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">'+"<"+"/script>"); </script>
+<![endif]-->
+<script src="/assets/sweetalert/sweet-alert.min.js"></script>
+<script src="/assets/javascripts/bootstrap.min.js"></script>
+<script src="/assets/javascripts/pixel-admin.min.js"></script>
+
+<script type="text/javascript">
+	init.push(function () {
+		$(window).scroll(function(e){ 
+			var $el = $('.stickyElem'); 
+			var isPositionFixed = ($el.css('position') == 'fixed');
+			if ($(this).scrollTop() > 200 && !isPositionFixed){ 
+				$('.stickyElem').css({'position': 'fixed', 'top': '0px'}); 
+			}
+			if ($(this).scrollTop() < 200 && isPositionFixed){
+				$('.stickyElem').css({'position': 'static', 'top': '0px'}); 
+			} 
+		});
+	});
+	window.PixelAdmin.start(init);
+</script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-86954761-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- Start of StatCounter Code for Default Guide -->
+<script type="text/javascript">
+var sc_project=4937398; 
+var sc_invisible=1; 
+var sc_security="c8230772"; 
+var scJsHost = (("https:" == document.location.protocol) ?
+"https://secure." : "http://www.");
+document.write("<sc"+"ript type='text/javascript' src='" +
+scJsHost+
+"statcounter.com/counter/counter.js'></"+"script>");
+</script>
+<noscript><div class="statcounter"><a title="web analytics"
+href="http://statcounter.com/" target="_blank"><img
+class="statcounter"
+src="http://c.statcounter.com/4937398/0/c8230772/1/"
+alt="web analytics"></a></div></noscript>
+<!-- End of StatCounter Code for Default Guide -->
+
+</body>
+</html>

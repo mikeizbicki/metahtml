@@ -76,8 +76,9 @@ def parse(html, url, fast=False):
         # extract the content;
         # this function is allowed to arbitrarily modify parser.doc,
         # and so it must come last
-        metahtml.content.extract(parser)
+        #metahtml.content.extract(parser)
     else:
+        pass
         parser.meta['timestamp.published'] = None
 
 

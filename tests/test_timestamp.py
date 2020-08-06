@@ -1,4 +1,4 @@
-import metahtml.timestamp
+import metahtml.extractors.timestamp
 
 
 def test__get_best_timestamps_0():

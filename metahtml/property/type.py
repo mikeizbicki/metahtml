@@ -217,6 +217,9 @@ class Extractor(BaseExtractor):
         # NOTE: 
         # this catches all 1 word page-names; is that too strict?
         # it's definitely too strict to catch names that include -_/ etc
+        # FIXME: false positive
+        # https://benjamineidam.com/atomwaffe
+        # https://aktuellesenergiejournal.wordpress.com/kernenergie/
         ( None, r'^/[a-zA-Z]*/?$' ), 
 
         # hostname specific regexs
@@ -227,12 +230,18 @@ class Extractor(BaseExtractor):
         ( 'be.la7.it', r'/laria-che-tira/?$' ),
         ( 'be.la7.it', r'/parlano-gli-esperti/?$' ),
         ( 'breitbart.com', r'^/national-security/?$' ),
+        ( 'channelb.org', r'^/sc/photo/?$' ),
         ( 'cnbc.com', r'^/2020-elections/?$' ),
         ( 'cnn.com', r'^/ASIANOW/time/?$' ),
+        ( 'coronadotimes.com', r'^/ASIANOW/time/?$' ),
+        ( 'coronadotimes.com', r'^/homepage-newsmag/?$' ),
+        ( 'coronadotimes.com', r'^/homepage-newsmag/news/?$' ),
         ( 'courrierinternational.com', r'^/sujet/etat-islamique/?$' ),
         ( 'courrierinternational.com', r'^/sujet/terrorisme/?$' ),
         ( 'crofsblogs.typepad.com', r'^/h5n1/?$' ),
         ( 'dailymail.co.uk', r'^/video/index.html?$' ),
+        ( 'dcmi.org', r'^/ko/%EB%89%B4%EC%8A%A4%EB%A0%88%ED%84%B0/?$' ),
+        ( 'dcmi.org', r'^/ko/%eb%89%b4%ec%8a%a4%eb%a0%88%ed%84%b0/?$' ),
         ( 'elmundo.es', r'^/internacional.html$' ),
         ( 'en.mediamass.net', r'^/people/kim-jong-un/?$' ),
         ( 'frac.org', r'^/covid-19-updates/?$' ),
@@ -246,6 +255,7 @@ class Extractor(BaseExtractor):
         ( 'lci.fr', r'^/actualite/terrorisme-10020/?$' ),
         ( 'lci.fr', r'^/bien-etre/?$' ),
         ( 'marca.com', r'^/claro-mx/?$' ),
+        ( 'money.udn.com', r'^/money/story//0' ),
         ( 'mundoplast.com', r'^/tag-chemical-representada-corquimia/?$' ),
         ( 'news.kakaku.com', r'^/prdnews/page=8/?$' ),
         ( 'news.un.org', r'^/es/node?$' ),
