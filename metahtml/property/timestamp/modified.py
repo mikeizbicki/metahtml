@@ -1,5 +1,4 @@
 from metahtml.property.timestamp.__common__ import TimestampExtractor
-#from metahtml.property.__common__ import compile_jsonpaths,compile_xpaths,compile_regexes,get_timestamp
 
 class Extractor(TimestampExtractor):
     jsonpaths = [
