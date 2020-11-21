@@ -249,7 +249,6 @@ class TimestampExtractor(BaseExtractor):
                 timestamp_hi = None
                 parse_method = None
 
-        #elif parse_method=='dateparser':
         if parse_method is None:
             parse_method='dateparser'
             date_order = 'YMD'
@@ -314,18 +313,34 @@ class TimestampExtractor(BaseExtractor):
                     'PREFER_DAY_OF_MONTH' : 'last',
                     }
                 )
-
-            if timestamp_hi and timestamp_hi.microsecond==0 and timestamp_hi.second==0 and timestamp_hi.minute==0 and timestamp_hi.hour==0:
-                timestamp_hi = datetime.datetime(
-                    year            = timestamp_hi.year,
-                    month           = timestamp_hi.month,
-                    day             = timestamp_hi.day,
-                    hour            = 23,
-                    minute          = 59,
-                    second          = 59,
-                    microsecond     = 999999,
-                    tzinfo          = timestamp_hi.tzinfo
-                    )
+            if timestamp_hi:
+                if timestamp_hi.microsecond==0:
+                    microsecond = 999999
+                    if timestamp_hi.second==0:
+                        second = 59
+                        if timestamp_hi.minute==0:
+                            minute  =59
+                            if timestamp_hi.hour==0:
+                                hour = 23
+                            else:
+                                hour = timestamp_hi.hour
+                        else:
+                            minute = timestamp_hi.minute
+                            hour = timestamp_hi.hour
+                    else:
+                        second = timestamp_hi.second
+                        minute = timestamp_hi.minute
+                        hour = timestamp_hi.hour
+                    timestamp_hi = datetime.datetime(
+                        year            = timestamp_hi.year,
+                        month           = timestamp_hi.month,
+                        day             = timestamp_hi.day,
+                        hour            = hour,
+                        minute          = minute,
+                        second          = second,
+                        microsecond     = microsecond,
+                        tzinfo          = timestamp_hi.tzinfo
+                        )
 
         # return dictionary
         return {

@@ -26,7 +26,7 @@ def load_adblocks():
                         hostnames,pattern = line.split('##',maxsplit=1)
                     except:
                         print("line=",line)
-                        crash
+                        assert(False)
 
                     try:
                         cssselector = lxml.cssselect.CSSSelector(pattern)
@@ -55,13 +55,13 @@ def load_adblocks():
         except:
             print("hostname=",hostname)
             print("rule=",rule)
-            crash
+            assert(False)
 
 #load_adblocks()
 
 # FIXME:
 # this is all temporary debugging output and should be removed
-if True:
+if False:
     print("len(filter_xpaths[''])=",len(set(filter_xpaths[''])))
     print("len(set(filter( lambda x: ' ' in x, filter_xpaths[''])))=",len(set(filter( lambda x: ' ' in x, filter_xpaths['']))))
     print("len(global_filter_class)=",len(global_filter_class))

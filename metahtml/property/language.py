@@ -76,7 +76,6 @@ class Extractor(BaseExtractor):
     def custom_patterns(parser, results):
         # use the langid library to automatically detect the language
         # this is computationally expensive, but it can always be done
-        print('custom_patterns')
         if len(results)==0:
             alltext = parser.doc.text_content()
             result = {

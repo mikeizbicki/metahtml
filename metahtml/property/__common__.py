@@ -3,6 +3,7 @@ import datetime
 import jsonpath_ng
 import lxml
 import lxml.html
+import unicodedata
 import re
 from urllib.parse import urlparse
 
@@ -41,9 +42,11 @@ class BaseExtractor():
     jsonpaths = []
     regexes = []
 
+
     @staticmethod
     def custom_patterns(parser, results):
         pass
+
 
     @staticmethod
     def result_to_str(result):
@@ -52,20 +55,25 @@ class BaseExtractor():
         except TypeError:
             return 
 
+
     @staticmethod
     def str_to_result(result):
         return {
-            'value' : result,
+            'value' : simplify_text(result),
+            'raw' : result,
             }
+
 
     @staticmethod
     def filter_results(results):
         return results
 
+
     @staticmethod
     def get_best(results):
         if len(results)>0:
             return results[0]
+
 
     @classmethod
     def _compile_paths(cls):
@@ -84,6 +92,7 @@ class BaseExtractor():
             cls.compiled_jsonpaths = [ ( hostname, jsonpath, jsonpath_ng.parse(jsonpath)) for hostname,jsonpath in cls.jsonpaths ]
             cls.compiled_xpaths = [ ( hostname, xpath, lxml.etree.XPath(xpath)) for hostname,xpath in cls.xpaths ]
             cls.compiled_regexes = [ ( hostname, regex, re.compile(regex)) for hostname,regex in cls.regexes ]
+
 
     @classmethod
     def extract(cls, parser):
@@ -283,4 +292,122 @@ class BaseExtractor():
             'filtered' : filtered,
             'results' : results
             }
+
+
+################################################################################
+# text formatting
+################################################################################
+
+def normalize_unidecode_punctuation(text):
+    '''
+    converts unicode punctuation into equivalent ascii punctuation symbols
+    see: https://lexsrv3.nlm.nih.gov/LexSysGroup/Projects/lvg/current/docs/designDoc/UDF/unicode/DefaultTables/symbolTable.html
+    '''
+    return ''.join(map(lambda c: unicode_punctuation.get(c,c), unicodedata.normalize('NFC',text)))
+
+unicode_punctuation = {
+    '\u00AB':'"',
+    '\u00AD':'-',
+    '\u00B4':'\'',
+    '\u00BB':'"',
+    '\u00F7':'/',
+    '\u01C0':'|',
+    '\u01C3':'!',
+    '\u02B9':'\'',
+    '\u02BA':'"',
+    '\u02BC':'\'',
+    '\u02C4':'^',
+    '\u02C6':'^',
+    '\u02C8':'\'',
+    '\u02CB':'`',
+    '\u02CD':'_',
+    '\u02DC':'~',
+    '\u0300':'`',
+    '\u0301':'\'',
+    '\u0302':'^',
+    '\u0303':'~',
+    '\u030B':'"',
+    '\u030E':'"',
+    '\u0331':'_',
+    '\u0332':'_',
+    '\u0338':'/',
+    '\u0589':':',
+    '\u05C0':'|',
+    '\u05C3':':',
+    '\u066A':'%',
+    '\u066D':'*',
+    '\u200B':'',
+    '\u2010':'-',
+    '\u2011':'-',
+    '\u2012':'-',
+    '\u2013':'-',
+    '\u2014':'-',
+    '\u2015':'-',
+    '\u2016':'|',
+    '\u2017':'_',
+    '\u2018':'\'',
+    '\u2019':'\'',
+    '\u201A':',',
+    '\u201B':'\'',
+    '\u201C':'"',
+    '\u201D':'"',
+    '\u201E':'"',
+    '\u201F':'"',
+    '\u2032':'\'',
+    '\u2033':'"',
+    '\u2034':'\'',
+    '\u2035':'`',
+    '\u2036':'"',
+    '\u2037':'\'',
+    '\u2038':'^',
+    '\u2039':'<',
+    '\u203A':'>',
+    '\u203D':'?',
+    '\u2044':'/',
+    '\u204E':'*',
+    '\u2052':'%',
+    '\u2053':'~',
+    '\u2060':' ',
+    '\u20E5':'\\',
+    '\u2212':'-',
+    '\u2215':'/',
+    '\u2216':'\\',
+    '\u2217':'*',
+    '\u2223':'|',
+    '\u2236':':',
+    '\u223C':'~',
+    '\u2264':'<',
+    '\u2265':'>',
+    '\u2266':'<',
+    '\u2267':'>',
+    '\u2303':'^',
+    '\u2329':'<',
+    '\u232A':'>',
+    '\u266F':'#',
+    '\u2731':'*',
+    '\u2758':'|',
+    '\u2762':'!',
+    '\u27E6':'[',
+    '\u27E8':'<',
+    '\u27E9':'>',
+    '\u2983':'{',
+    '\u2984':'}',
+    '\u3003':'"',
+    '\u3008':'<',
+    '\u3009':'>',
+    '\u301B':']',
+    '\u301C':'~',
+    '\u301D':'"',
+    '\u301E':'"',
+    '\uFEFF':'',
+    }
+
+_RE_COMBINE_WHITESPACE = re.compile(r"\s+")
+
+def simplify_text(text):
+    '''
+    converts unicode punctuation and whitespace symbols into equivalent ascii symbols,
+    and removes excess whitespace
+    '''
+    return normalize_unidecode_punctuation(_RE_COMBINE_WHITESPACE.sub(" ", text).strip())
 

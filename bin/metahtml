@@ -1,0 +1,34 @@
+#!/usr/bin/python3
+'''
+'''
+
+# process command line args
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('url')
+parser.add_argument('--simplify',action='store_true')
+args = parser.parse_args()
+
+# download the url
+import requests
+r = requests.get(args.url)
+
+# the sys import is needed so that we can import from the current project
+import sys
+sys.path.append('.')
+
+# process the downloaded webpage
+import metahtml
+meta = metahtml.parse(r.text, args.url)
+if args.simplify:
+    meta = metahtml.simplify_meta(meta)
+
+# display the result
+import json
+output = json.dumps(
+    dict(meta),
+    indent=4,
+    sort_keys=True,
+    default=str
+    )
+print(output)
