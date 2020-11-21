@@ -1,3 +1,6 @@
+import lxml
+from urllib.parse import urlparse
+
 def modified_fulltext(parser, language, url):
     '''
     Adapted from https://github.com/codelucas/newspaper/blob/master/newspaper/api.py#L71
@@ -18,7 +21,6 @@ def modified_fulltext(parser, language, url):
     output_formatter = OutputFormatter(config)
 
     doc = parser
-    doc = rm_ads(doc,url_parsed.hostname)
     doc = clean(document_cleaner,doc)
     #doc = document_cleaner.clean(doc)
     doc = calculate_best_node(extractor,doc)

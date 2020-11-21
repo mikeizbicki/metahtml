@@ -1,4 +1,5 @@
 import newspaper
+import lxml
 
 def newspaper_fulltext(parser, language, url):
     '''
