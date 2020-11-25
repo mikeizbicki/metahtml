@@ -1,6 +1,7 @@
 '''
 '''
 
+import logging
 import lxml.etree
 import uritools
 import url_normalize
@@ -27,7 +28,10 @@ class Extractor(BaseExtractor):
             href = uritools.urijoin(parser.url, href)
             href = uritools.uridefrag(href).uri
             href = clean_url(href)
-            href = url_normalize.url_normalize(href)
+            try:
+                href = url_normalize.url_normalize(href)
+            except Exception as e:
+                logging.debug('failed to normalize url '+href)
             a_tag = { 'href' : href }
 
             # extract the rel
