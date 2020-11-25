@@ -10,11 +10,23 @@ On a Unix shell, you should wrap the URL in single quotation marks, as many of t
 ''')
 parser.add_argument('url')
 parser.add_argument('--simplify',action='store_true')
+parser.add_argument('--text_only',action='store_true')
+parser.add_argument('--cache_file')
 args = parser.parse_args()
 
 # download the url
+if args.cache_file:
+    try:
+        with open(args.cache_file) as f:
+            text = f.read()
+    except FileNotFoundError:
+        pass
 import requests
 r = requests.get(args.url)
+text = r.text
+if args.cache_file:
+    with open(args.cache_file,'w') as f:
+        f.write(text)
 
 # the sys import is needed so that we can import from the current project
 import sys
@@ -22,9 +34,12 @@ sys.path.append('.')
 
 # process the downloaded webpage
 import metahtml
-meta = metahtml.parse(r.text, args.url)
+meta = metahtml.parse(text, args.url)
 if args.simplify:
     meta = metahtml.simplify_meta(meta)
+    if args.text_only:
+        print(meta['content']['html'])
+        sys.exit(0)
 
 # display the result
 import json

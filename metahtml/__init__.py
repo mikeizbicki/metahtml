@@ -8,7 +8,7 @@ import lxml.etree
 from urllib.parse import urlparse
 from collections import defaultdict
 
-import metahtml.content
+#import metahtml.content
 import metahtml.adblock
 
 
@@ -72,11 +72,16 @@ def parse(html, url, fast=False):
             calculate_property('author')
             calculate_property('title')
             calculate_property('description')
+            calculate_property('links')
 
             # extract the content;
             # this function is allowed to arbitrarily modify parser.doc,
             # and so it must come last
-            metahtml.content.extract(parser)
+            #metahtml.content.extract(parser)
+            calculate_property('content')
+
+            # FIXME:
+            # calculate the links of the article html?
     else:
         parser.meta['timestamp.published'] = None
 
@@ -91,7 +96,7 @@ def simplify_meta(meta):
     for k in meta:
         try:
             ret[k] = meta[k]['best']['value']
-        except (TypeError,KeyError):
+        except (TypeError,KeyError) as e:
             pass
 
     return ret

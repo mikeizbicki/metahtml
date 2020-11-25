@@ -71,7 +71,7 @@ def load_adblocks(force_reload = False):
 
     # FIXME:
     # this is all temporary debugging output and should be cleaned up
-    if True:
+    if False:
         print("loading_error_counts=",loading_error_counts)
         print("len(filter_xpaths[''])=",len(set(filter_xpaths[''])))
         print("len(set(filter( lambda x: ' ' in x, filter_xpaths[''])))=",len(set(filter( lambda x: ' ' in x, filter_xpaths['']))))
