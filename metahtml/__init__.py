@@ -7,6 +7,7 @@ import lxml.html
 import lxml.etree
 from urllib.parse import urlparse
 from collections import defaultdict
+import logging
 
 #import metahtml.content
 import metahtml.adblock
@@ -49,7 +50,7 @@ def parse(html, url, fast=False):
             except Exception as e:
                 # FIXME:
                 # these warning messages should get added into the parser.meta somehow
-                print(lib.__name__+': '+"e=",e.__repr__())
+                logging.warn('url='+url+' '+lib.__name__+': '+"e="+e.__repr__())
 
     # remove ads
     metahtml.adblock.rm_ads(parser)
@@ -58,6 +59,9 @@ def parse(html, url, fast=False):
     def calculate_property(property):
         module = importlib.import_module('metahtml.property.'+property)
         parser.meta[property] = module.Extractor.extract(parser)
+        #except Exception as e:
+            #logging.warn('property='+property+' exception='+str(e))
+            #parser.meta[property] = { 'exception' : str(e) }
 
     calculate_property('timestamp.published')
     calculate_property('type')

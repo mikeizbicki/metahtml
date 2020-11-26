@@ -83,6 +83,5 @@ class Extractor(BaseExtractor):
                 'pattern' : 'langid',
                 'is_valid_for_hostname' : True,
                 }
-            print("result=",result)
             results.append(result)
 

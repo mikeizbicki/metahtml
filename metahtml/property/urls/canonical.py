@@ -13,3 +13,10 @@ class Extractor(BaseExtractor):
         ( None, '//meta[@*="og:canoncial"]/@content' ),
         ( None, '//meta[@*="twitter:url"]/@content' ),
         ]
+
+    regexes = [
+        ( None, '.*')
+        ]
+
+    # FIXME:
+    # canonicalize urls
