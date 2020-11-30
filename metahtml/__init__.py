@@ -9,13 +9,15 @@ from urllib.parse import urlparse
 from collections import defaultdict
 import logging
 
-#import metahtml.content
 import metahtml.adblock
 
 
 cxpath_ldjson = lxml.etree.XPath('//script[@type="application/ld+json"]')
 
 def parse(html, url, fast=False):
+    '''
+    return the dictionary of meta information for a given html/url combination
+    '''
 
     # create the parser object
     import bunch
@@ -59,9 +61,6 @@ def parse(html, url, fast=False):
     def calculate_property(property):
         module = importlib.import_module('metahtml.property.'+property)
         parser.meta[property] = module.Extractor.extract(parser)
-        #except Exception as e:
-            #logging.warn('property='+property+' exception='+str(e))
-            #parser.meta[property] = { 'exception' : str(e) }
 
     calculate_property('timestamp.published')
     calculate_property('type')
