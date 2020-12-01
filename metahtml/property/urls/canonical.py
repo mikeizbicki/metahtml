@@ -14,9 +14,9 @@ class Extractor(BaseExtractor):
         ( None, '//meta[@*="twitter:url"]/@content' ),
         ]
 
-    regexes = [
-        ( None, '.*')
-        ]
+    #regexes = [
+        #( None, '.*')
+        #]
 
     # FIXME:
     # canonicalize urls

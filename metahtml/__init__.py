@@ -60,6 +60,7 @@ def parse(html, url, fast=False):
     # extract the properties
     def calculate_property(property):
         module = importlib.import_module('metahtml.property.'+property)
+        logging.debug('property='+property)
         parser.meta[property] = module.Extractor.extract(parser)
 
     calculate_property('timestamp.published')

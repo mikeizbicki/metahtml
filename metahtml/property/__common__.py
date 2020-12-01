@@ -264,7 +264,6 @@ class BaseExtractor():
         # it's an ugly hack that's not guaranteed to work in general
         if len(parser.url_parsed.path) >8 or len(parser.url_parsed.query)<5:
             for hostname, regex, compiled_regex in cls.compiled_regexes:
-                #date_match = re.search(regex, parser.url)
                 date_match = re.search(regex, parser.url_parsed.path)
                 if hostname is None or hostname in parser.url_parsed.hostname:
                     if date_match:
