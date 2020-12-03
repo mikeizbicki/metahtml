@@ -37,6 +37,7 @@ sys.path.append('.')
 import metahtml
 
 # load imports
+import datetime
 import hashlib
 import json
 import os
@@ -44,23 +45,31 @@ import requests
 import sqlalchemy
 
 # every url has a corresponding cache_file that is a hash of the url;
+# the file is json formatted and contains both the timestamp the url was downloaded
+# and the text of the download;
 # if the file exists, then load the contents of the url from the cache;
 # otherwise, download the url and store the url in the cache for future runs
 cache_file = os.path.join(args.cache_dir, hashlib.md5(args.url.encode('utf-8')).hexdigest())
 try:
     with open(cache_file) as f:
-        text = f.read()
+        cache = json.loads(f.read())
+        accessed_at = cache['accessed_at']
+        text = cache['text']
 except FileNotFoundError:
     try:
         os.makedirs(args.cache_dir)
     except FileExistsError:
         pass
-    logging.info('downloading url=',url)
+    logging.info('downloading url=',args.url)
     r = requests.get(args.url)
     text = r.text
+    accessed_at = str(datetime.datetime.now(tz=datetime.timezone.utc))
     with open(cache_file,'w') as f:
         logging.info('saving contents to ',cache_file)
-        f.write(text)
+        f.write(json.dumps({
+            'accessed_at' : accessed_at,
+            'text' : text
+            }))
 
 # extract the meta
 meta = metahtml.parse(text, args.url)
@@ -79,15 +88,20 @@ output = json.dumps(
     )
 print(output)
 
+# add the results to the database
 if args.db:
-    # create database connection
     engine = sqlalchemy.create_engine(args.db, connect_args={
         'application_name': 'metahtml',
         })  
     connection = engine.connect()
-
     sql = sqlalchemy.sql.text('''
-        INSERT INTO metahtml.metahtml (jsonb) VALUES (:jsonb);
+        INSERT INTO metahtml.metahtml (url, accessed_at, id_source, jsonb) VALUES 
+            (uri_normalize(:url), :accessed_at, :id_source, :jsonb);
         ''')
-    res = connection.execute(sql,{'jsonb':output})
+    res = connection.execute(sql,{
+        'url' : args.url,
+        'accessed_at' : accessed_at,
+        'id_source' : -1, # this is a hardcoded constant in the sql for this file
+        'jsonb' : output
+        })
 

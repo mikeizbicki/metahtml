@@ -17,6 +17,9 @@ cxpath_ldjson = lxml.etree.XPath('//script[@type="application/ld+json"]')
 def parse(html, url, fast=False):
     '''
     return the dictionary of meta information for a given html/url combination
+
+    FIXME:
+    add timing info into the meta (preferably CPU time rather than clock time)
     '''
 
     # create the parser object
