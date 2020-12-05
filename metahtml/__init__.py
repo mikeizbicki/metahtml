@@ -8,6 +8,7 @@ import lxml.etree
 from urllib.parse import urlparse
 from collections import defaultdict
 import logging
+import time
 
 import metahtml.adblock
 
@@ -17,10 +18,9 @@ cxpath_ldjson = lxml.etree.XPath('//script[@type="application/ld+json"]')
 def parse(html, url, fast=False):
     '''
     return the dictionary of meta information for a given html/url combination
-
-    FIXME:
-    add timing info into the meta (preferably CPU time rather than clock time)
     '''
+
+    start_time = time.process_time()
 
     # create the parser object
     import bunch
@@ -91,6 +91,10 @@ def parse(html, url, fast=False):
             # calculate the links of the article html?
     else:
         parser.meta['timestamp.published'] = None
+
+    # add process time into meta
+    stop_time = time.process_time()
+    parser.meta['process_time'] = stop_time - start_time
 
     return parser.meta
 
