@@ -33,3 +33,4 @@ RUN cd /tmp \
  && pip3 install -r requirements.txt
 
 COPY sql/create_db--1.0.sql /docker-entrypoint-initdb.d/
+COPY sql/rollup.sql /docker-entrypoint-initdb.d/
