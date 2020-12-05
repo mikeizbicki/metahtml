@@ -4,21 +4,8 @@ CREATE EXTENSION IF NOT EXISTS hll;
 CREATE SCHEMA metahtml;
 
 /*******************************************************************************
- * simple additions to the uri extension
+ * simple functions for working with urls
  */
-CREATE EXTENSION IF NOT EXISTS uri;
-
-CREATE OR REPLACE FUNCTION uri_host_or_null(url TEXT)
-RETURNS TEXT language plpgsql
-AS $$
-BEGIN
-    BEGIN
-        RETURN uri_host(uri(url));
-    EXCEPTION WHEN others THEN
-        RETURN NULL;
-    END;
-END 
-$$;
 
 CREATE OR REPLACE FUNCTION uri_simplify_host(hostname TEXT)
 RETURNS TEXT language plpgsql IMMUTABLE STRICT
@@ -37,14 +24,6 @@ BEGIN
 END 
 $$;
 
-CREATE OR REPLACE FUNCTION uri_fuzzyhost(url TEXT)
-RETURNS TEXT language plpgsql
-AS $$
-BEGIN
-    RETURN uri_simplify_host(uri_host_or_null(url));
-END 
-$$;
-
 
 CREATE OR REPLACE FUNCTION btree_sanitize(t TEXT)
 RETURNS TEXT language plpgsql IMMUTABLE STRICT
@@ -53,18 +32,6 @@ BEGIN
     RETURN SUBSTRING(t FOR 2048);
 END
 $$;
-
-
-CREATE OR REPLACE FUNCTION uri_simplify(url TEXT)
-RETURNS TEXT language plpgsql IMMUTABLE STRICT
-AS $$
-DECLARE
-    uri uri := uri_normalize(uri(url));
-BEGIN
-    RETURN btree_sanitize(CAST(uri_simplify_host(uri_host(uri)) || uri_path(uri) || '?' || uri_query(uri) AS TEXT));
-END 
-$$;
-
 
 
 CREATE OR REPLACE FUNCTION metahtml.simplify_hostname(hostname TEXT)
