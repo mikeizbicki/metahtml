@@ -89,8 +89,8 @@ CREATE OR REPLACE FUNCTION metahtml.simplify_url(url TEXT)
 RETURNS TEXT language plpgsql IMMUTABLE STRICT
 AS $$
 DECLARE
-    hostname TEXT = SUBSTRING(url, '//([^/:]*):?[^/]*/');
-    pathquery TEXT = SUBSTRING(url, '://[^/]+(/.*)');
+    hostname TEXT = SUBSTRING(url, '//([^/:]*):?[^/]*[/?]');
+    pathquery TEXT = SUBSTRING(url, '://[^/]+([/?].*)');
 BEGIN
     RETURN btree_sanitize(metahtml.simplify_hostname(hostname) || pathquery);
 END 
@@ -103,6 +103,15 @@ AS $$
 BEGIN
     RETURN SUBSTRING(url, '//([^/:?]*):?[^/?]*[/?]');
 END 
+$$;
+
+
+CREATE OR REPLACE FUNCTION metahtml.simplify_timestamp(field TEXT, t TEXT)
+RETURNS TIMESTAMP language plpgsql IMMUTABLE STRICT
+AS $$
+BEGIN
+    RETURN date_trunc(field,t::timestamptz AT TIME ZONE 'UTC');
+END
 $$;
 
 
@@ -229,7 +238,6 @@ WHERE
  *   metahtml.url_hostname(url)
  *   jsonb->'timestamp.published'->best->'value'->>'lo'
  *   jsonb->'content'->'best'->>'value'
- */
 
 
 BEGIN;
@@ -324,7 +332,7 @@ BEGIN;
     DROP FUNCTION metahtml.metahtml_rollup_hostname_update_f;
     DROP FUNCTION metahtml.metahtml_rollup_hostname_delete_f;
 COMMIT;
-
+*/
 
 /* deleteme
 CREATE TABLE urls_summary (

@@ -33,10 +33,11 @@ def load_adblocks(force_reload = False):
         return
 
     # load the raw rules from the files
+    logging.info('loading adblock rules')
     import glob
     for filename in glob.glob('rules/ad/*.txt'):
         with open(filename) as f:
-            logging.info('loading '+filename)
+            logging.debug('loading '+filename)
             for line in f:
                 if '##' in line and '#?#' not in line:
                     hostnames,pattern = line.split('##',maxsplit=1)

@@ -14,8 +14,28 @@ def _add_namespace(s, namespace):
     'simplify_url(new.url)'
     >>> _add_namespace('metahtml.simplify_url(url)', 'new')
     'metahtml.simplify_url(new.url)'
+    >>> _add_namespace("date_trunc('day',accessed_at)", 'new')
+    "date_trunc('day',new.accessed_at)"
+    >>> _add_namespace("date_trunc('day',accessed_at::timestamptz)", 'new')
+    "date_trunc('day',new.accessed_at::timestamptz)"
+    >>> _add_namespace("f('a','b',c,'d',e)", 'new')
+    "f('a','b',new.c,'d',new.e)"
     '''
-    return re.sub(r'\b(\w|_)+\b([^.(]|$)', namespace+r'.\g<0>', s)
+    # NOTE:
+    # the regex below is responsible for doing the actual namespacing of names;
+    # unfortunately, some name-like strings will appear within quotation marks,
+    # but these are string literals and so shouldn't be namespaced;
+    # string literals cannot be matched with a regular expression,
+    # and so the for loop/if statement combination ensures that we only apply
+    # the namespacing to strings outside the if statements
+    chunks = s.split("'")
+    chunks_namespaced = []
+    for i,chunk in enumerate(chunks):
+        if i%2==1:
+            chunks_namespaced.append(chunk)
+        else:
+            chunks_namespaced.append(re.sub(r'([^:]|^)\s*\b([\w_]+)\b([^.(]|$)', r'\g<1>'+namespace+r'.\g<2>\g<3>', chunk))
+    return "'".join(chunks_namespaced)
 
 
 def create_rollup_str(source_table, rollup_view_name, keys, uniques):
@@ -34,22 +54,28 @@ def create_rollup_str(source_table, rollup_view_name, keys, uniques):
     rollup_table_name = rollup_view_name + '_raw'
 
 
+    # FIXME:
+    # the key columns are automatically made not null by the primary key;
+    # this causes us to not be able to insert null values into the source table,
+    # as they would cause a primary key violation in the rollup table
     '''
     -- this table stores the raw rollup summaries
     CREATE TABLE metahtml.metahtml_rollup_hostname_raw (
         hll         hll     NOT NULL,
         num         INTEGER NOT NULL,
-        hostname    TEXT    ,
+        hostname    TEXT    NOT NULL,
         PRIMARY KEY (hostname)
     );
     '''
     cmd_create_table = ('''
     CREATE TABLE '''+rollup_table_name+''' (
         '''+
-        '\n'.join([unique.name + '_hll hll NOT NULL,' for unique in uniques])+'''
+        '''
+        '''.join([unique.name + '_hll hll NOT NULL,' for unique in uniques])+'''
         num INTEGER NOT NULL,
         '''+
-        '\n'.join([key.name + ' ' + key.type + ',' for key in keys]) +
+        '''
+        '''.join([key.name + ' ' + key.type + ' NOT NULL,' for key in keys]) +
         '''
         PRIMARY KEY('''+ ','.join([key.name for key in keys]) +''')
     );
@@ -82,10 +108,12 @@ def create_rollup_str(source_table, rollup_view_name, keys, uniques):
     CREATE VIEW '''+rollup_view_name+''' AS
     SELECT
         '''+
-        '\n'.join(['floor(hll_cardinality('+unique.name+'_hll)) AS '+unique.name+'_unique,' for unique in uniques])+'''
+        '''
+        '''.join(['floor(hll_cardinality('+unique.name+'_hll)) AS '+unique.name+'_unique,' for unique in uniques])+'''
         num,
         '''+
-        ',\n'.join([key.name for key in keys]) +
+        ''',
+        '''.join([key.name for key in keys]) +
         '''
     FROM '''+rollup_table_name+';')
 
@@ -94,20 +122,22 @@ def create_rollup_str(source_table, rollup_view_name, keys, uniques):
     CREATE OR REPLACE FUNCTION metahtml.metahtml_rollup_hostname_insert_f()
     RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
     BEGIN
-        INSERT INTO metahtml.metahtml_rollup_hostname_raw (
-            hll,
-            num,
-            hostname
-            )
-        VALUES (
-            hll_add(hll_empty(),hll_hash_text(new.url)),
-            1,
-            metahtml.url_hostname(new.url)
-            )
-        ON CONFLICT (hostname)
-        DO UPDATE SET
-            hll = metahtml.metahtml_rollup_hostname_raw.hll || excluded.hll,
-            num = metahtml.metahtml_rollup_hostname_raw.num +  excluded.num;
+        IF metahtml.url_hostname(new.url) IS NOT NULL THEN
+            INSERT INTO metahtml.metahtml_rollup_hostname_raw (
+                hll,
+                num,
+                hostname
+                )
+            VALUES (
+                hll_add(hll_empty(),hll_hash_text(new.url)),
+                1,
+                metahtml.url_hostname(new.url)
+                )
+            ON CONFLICT (hostname)
+            DO UPDATE SET
+                hll = metahtml.metahtml_rollup_hostname_raw.hll || excluded.hll,
+                num = metahtml.metahtml_rollup_hostname_raw.num +  excluded.num;
+        END IF;
     RETURN NEW;
     END;
     $$;
@@ -122,26 +152,32 @@ def create_rollup_str(source_table, rollup_view_name, keys, uniques):
     CREATE OR REPLACE FUNCTION '''+rollup_table_name+'''_insert_f()
     RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
     BEGIN
-        INSERT INTO '''+rollup_table_name+''' (
-            '''+
-            '\n'.join([unique.name+'_hll,' for unique in uniques])+'''
-            num,
-            '''+
-            ',\n'.join([key.name for key in keys]) + '''
-            )
-        VALUES (
-            '''+
-            '\n'.join(['hll_add(hll_empty(), hll_hash_'+unique.type+'('+_add_namespace(unique.value,'new')+')),' for unique in uniques])+'''
-            '''+
-            '\n'.join(['1,' for unique in uniques])+'''
-            '''+
-            ',\n'.join([_add_namespace(key.value,'new') for key in keys]) + '''
-            )
-        ON CONFLICT (''' + ','.join([key.name for key in keys]) + ''')
-        DO UPDATE SET
-            '''+
-            '\n'.join([unique.name+'_hll = '+rollup_table_name+'.'+unique.name+'_hll || excluded.'+unique.name+'_hll,' for unique in uniques])+'''
-            num = '''+rollup_table_name+'''.num + excluded.num;
+        IF ''' + ' AND '.join([ _add_namespace(key.value,'new') + ' IS NOT NULL' for key in keys]) + ''' THEN
+            INSERT INTO '''+rollup_table_name+''' (
+                '''+
+                '''
+                '''.join([unique.name+'_hll,' for unique in uniques])+'''
+                num,
+                '''+
+                ''',
+                '''.join([key.name for key in keys]) + '''
+                )
+            VALUES (
+                '''+
+                '''
+                '''.join(['hll_add(hll_empty(), hll_hash_'+unique.type+'('+_add_namespace(unique.value,'new')+')),' for unique in uniques])+'''
+                1,
+                '''+
+                ''',
+                '''.join([_add_namespace(key.value,'new') for key in keys]) + '''
+                )
+            ON CONFLICT (''' + ','.join([key.name for key in keys]) + ''')
+            DO UPDATE SET
+                '''+
+                '''
+                '''.join([unique.name+'_hll = '+rollup_table_name+'.'+unique.name+'_hll || excluded.'+unique.name+'_hll,' for unique in uniques])+'''
+                num = '''+rollup_table_name+'''.num + excluded.num;
+        END IF;
         RETURN NEW;
     END;
     $$;
@@ -174,8 +210,9 @@ def create_rollup_str(source_table, rollup_view_name, keys, uniques):
     cmd_trigger_update = ('''
     CREATE OR REPLACE FUNCTION ''' + rollup_table_name + '''_update_f()
     RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
-    BEGIN'''
-        +'\n'.join(['''
+    BEGIN'''+
+        '''
+        '''.join(['''
         IF '''+_add_namespace(unique.value,'new')+''' != '''+_add_namespace(unique.value,table_name)+''' THEN
             RAISE EXCEPTION 'update would cause the value of "'''+unique.value+'''" to change, but it is a unique constraint on a rollup table';
         END IF;'''
@@ -237,23 +274,33 @@ def create_rollup_str(source_table, rollup_view_name, keys, uniques):
         count(1),
         metahtml.url_hostname(url) AS hostname
     FROM metahtml.metahtml
+    WHERE
+        metahtml.url_hostname(url) IS NOT NULL
     GROUP BY hostname;
     '''
     cmd_insert = ('''
     INSERT INTO '''+rollup_table_name+''' (
         '''+
-        '\n'.join([unique.name+'_hll,' for unique in uniques])+'''
+        '''
+        '''.join([unique.name+'_hll,' for unique in uniques])+'''
         num,
         '''+
-        ',\n'.join([key.name for key in keys]) + '''
+        ''',
+        '''.join([key.name for key in keys]) + '''
         )
     SELECT
         '''+
-        '\n'.join(['hll_add_agg(hll_hash_'+unique.type+'('+unique.value+')),' for unique in uniques])+'''
+        '''
+        '''.join(['hll_add_agg(hll_hash_'+unique.type+'('+unique.value+')),' for unique in uniques])+'''
         count(1),
         '''+
-        ',\n'.join([key.value+' AS '+key.name for key in keys]) + '''
+        ''',
+        '''.join([key.value+' AS '+key.name for key in keys]) + '''
     FROM '''+source_table+'''
+    WHERE
+        '''+
+        ''' AND
+        '''.join([key.value + ' IS NOT NULL' for key in keys]) + '''
     GROUP BY ''' + ','.join([key.name for key in keys])+''';
     ''')
 
@@ -413,17 +460,6 @@ def get_create(s):
     ...     value2 type2 AS name2
     ...     );
     ... """))
-    >>> assert(get_create("""
-    ... CREATE ROLLUP VIEW metahtml.metahtml_rollup1 ON metahtml.metahtml
-    ... KEYS(
-    ...     metahtml.url_hostname(url) text AS hostname,
-    ...     date_trunc('day',accesed_at) timestamptz AS access_day
-    ...     )
-    ... UNIQUES(
-    ...     url text AS url,
-    ...     metahtml.simplify_url(url) text AS url_simplify
-    ...     );
-    ... """))
     '''
     s = match_token(s, 'CREATE')
     s = match_token(s, 'ROLLUP')
@@ -462,42 +498,73 @@ def get_drop(s):
     return (s, t)
 
 
-if True:
-    print(create_rollup_str(
-        source_table = 'metahtml.metahtml',
-        rollup_view_name = 'metahtml.metahtml_rollup1',
-        keys = [ 
-            Key( value='metahtml.url_hostname(url)', type='text', name='hostname' ) ,
-            Key( value="date_trunc('day',accessed_at)", type='timestamptz', name='access_day' ) ,
-            ],
-        uniques = [ 
-            Key( value='url', type='text', name='url' ) ,
-            Key( value='metahtml.simplify_url(url)', type='text', name='url_simplify' ) ,
-            ],
-        ))
-    print(create_rollup_str(
-        source_table = 'metahtml.metahtml',
-        rollup_view_name = 'metahtml.metahtml_rollup2',
-        keys = [ 
-            Key( value='metahtml.url_hostname(url)', type='text', name='hostname' ) ,
-            ],
-        uniques = [ 
-            Key( value='url', type='text', name='url' ) ,
-            Key( value='metahtml.simplify_url(url)', type='text', name='url_simplify' ) ,
-            ],
-        ))
-    print(create_rollup_str(
-        source_table = 'metahtml.metahtml',
-        rollup_view_name = 'metahtml.metahtml_rollup3',
-        keys = [ 
-            Key( value="date_trunc('day',accessed_at)", type='timestamptz', name='access_day' ) ,
-            ],
-        uniques = [ 
-            Key( value='url', type='text', name='url' ) ,
-            Key( value='metahtml.simplify_url(url)', type='text', name='url_simplify' ) ,
-            ],
-        ))
-else:
-    print(drop_rollup_str('metahtml.metahtml_rollup1'))
-    print(drop_rollup_str('metahtml.metahtml_rollup2'))
-    print(drop_rollup_str('metahtml.metahtml_rollup3'))
+################################################################################
+
+if __name__=='__main__':
+
+    if True:
+        print(create_rollup_str(
+            source_table = 'metahtml.metahtml',
+            rollup_view_name = 'metahtml.metahtml_rollup1',
+            keys = [ 
+                Key( value='metahtml.url_hostname(url)', type='text', name='hostname' ) ,
+                Key( value="date_trunc('day',accessed_at)", type='timestamptz', name='access_day' ) ,
+                ],
+            uniques = [ 
+                Key( value='url', type='text', name='url' ) ,
+                Key( value='metahtml.simplify_url(url)', type='text', name='url_simplify' ) ,
+                ],
+            ))
+        print(create_rollup_str(
+            source_table = 'metahtml.metahtml',
+            rollup_view_name = 'metahtml.metahtml_rollup2',
+            keys = [ 
+                Key( value='metahtml.url_hostname(url)', type='text', name='hostname' ) ,
+                ],
+            uniques = [ 
+                Key( value='url', type='text', name='url' ) ,
+                Key( value='metahtml.simplify_url(url)', type='text', name='url_simplify' ) ,
+                ],
+            ))
+        print(create_rollup_str(
+            source_table = 'metahtml.metahtml',
+            rollup_view_name = 'metahtml.metahtml_rollup3',
+            keys = [ 
+                Key( value="date_trunc('day',accessed_at)", type='timestamptz', name='access_day' ) ,
+                ],
+            uniques = [ 
+                Key( value='url', type='text', name='url' ) ,
+                Key( value='metahtml.simplify_url(url)', type='text', name='url_simplify' ) ,
+                ],
+            ))
+
+        print(create_rollup_str(
+            source_table = 'metahtml.metahtml',
+            rollup_view_name = 'metahtml.metahtml_rollup4',
+            keys = [ 
+                Key( value="date_trunc('day',(jsonb->'timestamp.published'->'best'->'value'->>'lo')::timestamptz)", type='timestamptz', name='timestamp_published' ) ,
+                ],
+            uniques = [ 
+                Key( value='url', type='text', name='url' ) ,
+                Key( value='metahtml.simplify_url(url)', type='text', name='url_simplify' ) ,
+                ],
+            ))
+        print(create_rollup_str(
+            source_table = 'metahtml.metahtml',
+            rollup_view_name = 'metahtml.metahtml_rollup5',
+            keys = [ 
+                Key( value="date_trunc('day',(jsonb->'timestamp.published'->'best'->'value'->>'lo')::timestamptz)", type='timestamptz', name='timestamp_published' ) ,
+                Key( value='metahtml.url_hostname(url)', type='text', name='hostname' ) ,
+                ],
+            uniques = [ 
+                Key( value='url', type='text', name='url' ) ,
+                Key( value='metahtml.simplify_url(url)', type='text', name='url_simplify' ) ,
+                ],
+            ))
+
+    else:
+        print(drop_rollup_str('metahtml.metahtml_rollup1'))
+        print(drop_rollup_str('metahtml.metahtml_rollup2'))
+        print(drop_rollup_str('metahtml.metahtml_rollup3'))
+        print(drop_rollup_str('metahtml.metahtml_rollup4'))
+        print(drop_rollup_str('metahtml.metahtml_rollup5'))
