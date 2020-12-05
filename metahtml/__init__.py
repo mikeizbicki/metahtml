@@ -42,10 +42,9 @@ def parse(html, url, fast=False):
     # extract and decode any ld+json elements within the html;
     # these will be parsed for properties later;
     # we use multiple json docs since each is able to handle different types of malformed input
-    import orjson
     import ujson
     import simplejson
-    json_libs = [orjson,ujson,simplejson]
+    json_libs = [ujson,simplejson]
 
     parser.ldjsons = []
     for element in cxpath_ldjson(parser.doc):
