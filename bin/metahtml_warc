@@ -12,6 +12,7 @@ import gzip
 import json
 import sqlalchemy
 import tempfile
+import traceback
 from warcio.archiveiterator import ArchiveIterator
 import wget
 
@@ -70,27 +71,58 @@ def process_warc_from_disk(connection, warc_path, id_source):
                     # extract the meta
                     try:
                         meta = metahtml.parse(html, url)
+
+                    # if there was an error in metahtml, log it
                     except Exception as e:
                         logging.warn('url='+url+' exception='+str(e))
-                        meta = { 'exception' : str(e) }
+                        meta = { 
+                            'exception' : {
+                                'str(e)' : str(e),
+                                'type' : type(e).__name__,
+                                'location' : 'metahtml',
+                                'traceback' : traceback.format_exc()
+                                }
+                            }
+                        import pprint
+                        pprint.pprint(meta)
+                        asd
 
                     # insert into database
-                    meta_json = json.dumps(
-                        dict(meta),
-                        indent=4,
-                        sort_keys=True,
-                        default=str
-                        )
-                    sql = sqlalchemy.sql.text('''
-                        INSERT INTO metahtml.metahtml (accessed_at, id_source, url, jsonb) VALUES 
-                            (:accessed_at, :id_source, :url, :jsonb);
-                        ''')
-                    res = connection.execute(sql,{
-                        'accessed_at' : accessed_at,
-                        'id_source' : id_source,
-                        'url' : url,
-                        'jsonb' : meta_json
-                        })
+                    try:
+                        meta_json = json.dumps(meta, default=str)
+                        sql = sqlalchemy.sql.text('''
+                            INSERT INTO metahtml.metahtml (accessed_at, id_source, url, jsonb) VALUES 
+                                (:accessed_at, :id_source, :url, :jsonb);
+                            ''')
+                        res = connection.execute(sql,{
+                            'accessed_at' : accessed_at,
+                            'id_source' : id_source,
+                            'url' : url,
+                            'jsonb' : meta_json
+                            })
+
+                    # if there was an error while inserting, log it
+                    except Exception as e:
+                        logging.warn('url='+url+' exception='+str(e))
+                        meta = { 
+                            'exception' : {
+                                'str(e)' : str(e),
+                                'type' : type(e).__name__,
+                                'location' : 'metahtml',
+                                'traceback' : traceback.format_exc()
+                                }
+                            }
+                        meta_json = json.dumps(meta, default=str)
+                        sql = sqlalchemy.sql.text('''
+                            INSERT INTO metahtml.metahtml (accessed_at, id_source, url, jsonb) VALUES 
+                                (:accessed_at, :id_source, :url, :jsonb);
+                            ''')
+                        res = connection.execute(sql,{
+                            'accessed_at' : accessed_at,
+                            'id_source' : id_source,
+                            'url' : url,
+                            'jsonb' : meta_json
+                            })
 
 
 if __name__ == '__main__':
