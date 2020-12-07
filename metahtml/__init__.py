@@ -118,6 +118,9 @@ def get_version_info():
     returns a dictionary containing the hash and date of the running code
 
     FIXME:
+    should we abort running of the program if there are uncommitted git files?
+
+    FIXME:
     if the library is not contained within a git repo, then the returned value will be undefined;
     this should only be a problem if at somepoint in the future I implement the ability to
     pip install this library and forget to modify this code
