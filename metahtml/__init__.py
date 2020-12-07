@@ -29,6 +29,7 @@ def parse(html, url, fast=False):
     parser.url = url
     parser.url_parsed = urlparse(url)
     parser.meta = defaultdict(lambda: None)
+    parser.meta['version'] = version
 
     # parse the raw html using lxml;
     # lxml fails whenever the html is empty, so we pass it a minimal html document;
@@ -110,3 +111,44 @@ def simplify_meta(meta):
             pass
 
     return ret
+
+
+def get_version_info():
+    '''
+    returns a dictionary containing the hash and date of the running code
+
+    FIXME:
+    if the library is not contained within a git repo, then the returned value will be undefined;
+    this should only be a problem if at somepoint in the future I implement the ability to
+    pip install this library and forget to modify this code
+
+    NOTE:
+    this code contains a minor race condition;
+    if the git HEAD is changed after the program starts but before this code is run,
+    then the wrong results will be returned;
+    this bug is mitigated by immediately calling the function and storing the results in a global,
+    but there is still a short window (10ms-ish?) for the bug to appear;
+    by simply not committing new code at the same time as running code,
+    this bug should not appear in practice
+    '''
+    import pathlib
+    import subprocess
+
+    git_dir = str(pathlib.Path(__file__).parent.parent.absolute() / '.git')
+
+    # get the hash
+    p = subprocess.Popen(['git', '--git-dir='+git_dir, 'log' , '-1', '--format=%H'], stdout=subprocess.PIPE)
+    commit_hash, err = p.communicate()
+
+    # get the timestamp
+    p = subprocess.Popen(['git', '--git-dir='+git_dir, 'log' , '-1', '--format=%cd', '--date=iso'], stdout=subprocess.PIPE)
+    commit_timestamp, err = p.communicate()
+
+    # return the version info
+    return {
+        'hash': commit_hash.decode('utf-8').strip(),
+        'timestamp' : commit_timestamp.decode('utf-8').strip()
+        }
+
+version = get_version_info()
+logging.info("version=",version)
