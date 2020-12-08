@@ -55,7 +55,7 @@ def parse(html, url, fast=False):
             except Exception as e:
                 # FIXME:
                 # these warning messages should get added into the parser.meta somehow
-                logging.warn('url='+url+' '+lib.__name__+': '+"e="+e.__repr__())
+                logging.warning('url='+url+' '+lib.__name__+': '+"e="+e.__repr__())
 
     # remove ads
     metahtml.adblock.rm_ads(parser)
