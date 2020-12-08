@@ -30,95 +30,102 @@ def process_all_warcs_from_url(connection, cc_url):
 
 
 def process_warc_from_url(connection, warc_url):
-    with connection.begin() as trans:
+    '''
+    FIXME:
+    ideally, this function would be wrapped in a transaction;
+    but this causes deadlocks when it is run concurrently with other instances of itself
+    '''
+    # create a new entry in the metahtml.source table for this bulk insertion
+    try:
+        sql = sqlalchemy.sql.text('''
+        INSERT INTO metahtml.source (name) VALUES (:name) RETURNING id;
+        ''')
+        res = connection.execute(sql,{'name':warc_url})
+        id_source = res.first()['id']
+        logging.info('id_source='+str(id_source))
 
-        # create a new entry in the metahtml.source table for this bulk insertion
-        try:
-            sql = sqlalchemy.sql.text('''
-            INSERT INTO metahtml.source (name) VALUES (:name) RETURNING id;
-            ''')
-            res = connection.execute(sql,{'name':warc_url})
-            id_source = res.first()['id']
-            logging.info('id_source='+str(id_source))
+    # if an entry already exists in metahtml.source,
+    # then we have already inserted this warc and can safely skip the file
+    except sqlalchemy.exc.IntegrityError:
+        logging.info('skipping warc_url='+warc_url)
+        return
 
-        # if an entry already exists in metahtml.source,
-        # then we have already inserted this warc and can safely skip the file
-        except sqlalchemy.exc.IntegrityError:
-            logging.info('skipping warc_url='+warc_url)
-            return
-
-        # process the warc file in a temporary directory;
-        # the downloaded warc file will be stored in this directory and automatically deleted 
-        with tempfile.TemporaryDirectory() as tempdir:
-            logging.info('downloading url '+warc_url+' to '+tempdir)
-            warc_path = wget.download(warc_url, out=tempdir)
-            return process_warc_from_disk(connection, warc_path, id_source)
+    # process the warc file in a temporary directory;
+    # the downloaded warc file will be stored in this directory and automatically deleted 
+    with tempfile.TemporaryDirectory() as tempdir:
+        logging.info('downloading url '+warc_url+' to '+tempdir)
+        warc_path = wget.download(warc_url, out=tempdir)
+        return process_warc_from_disk(connection, warc_path, id_source)
 
 
 def process_warc_from_disk(connection, warc_path, id_source):
-    with connection.begin() as trans:
-        with open(warc_path, 'rb') as stream:
-            for record in ArchiveIterator(stream):
-                if record.rec_type == 'response':
+    '''
+    FIXME:
+    ideally, this function would be wrapped in a transaction;
+    but this causes deadlocks when it is run concurrently with other instances of itself
+    '''
+    with open(warc_path, 'rb') as stream:
+        for record in ArchiveIterator(stream):
+            if record.rec_type == 'response':
 
-                    # extract the information from the warc archive
-                    url = record.rec_headers.get_header('WARC-Target-URI')
-                    accessed_at = record.rec_headers.get_header('WARC-Date')
-                    html = record.content_stream().read()
-                    logging.debug("url="+url)
+                # extract the information from the warc archive
+                url = record.rec_headers.get_header('WARC-Target-URI')
+                accessed_at = record.rec_headers.get_header('WARC-Date')
+                html = record.content_stream().read()
+                logging.debug("url="+url)
 
-                    # extract the meta
-                    try:
-                        meta = metahtml.parse(html, url)
+                # extract the meta
+                try:
+                    meta = metahtml.parse(html, url)
 
-                    # if there was an error in metahtml, log it
-                    except Exception as e:
-                        logging.warn('url='+url+' exception='+str(e))
-                        meta = { 
-                            'exception' : {
-                                'str(e)' : str(e),
-                                'type' : type(e).__name__,
-                                'location' : 'metahtml',
-                                'traceback' : traceback.format_exc()
-                                }
+                # if there was an error in metahtml, log it
+                except Exception as e:
+                    logging.warn('url='+url+' exception='+str(e))
+                    meta = { 
+                        'exception' : {
+                            'str(e)' : str(e),
+                            'type' : type(e).__name__,
+                            'location' : 'metahtml',
+                            'traceback' : traceback.format_exc()
                             }
+                        }
 
-                    # insert into database
-                    try:
-                        meta_json = json.dumps(meta, default=str)
-                        sql = sqlalchemy.sql.text('''
-                            INSERT INTO metahtml.metahtml (accessed_at, id_source, url, jsonb) VALUES 
-                                (:accessed_at, :id_source, :url, :jsonb);
-                            ''')
-                        res = connection.execute(sql,{
-                            'accessed_at' : accessed_at,
-                            'id_source' : id_source,
-                            'url' : url,
-                            'jsonb' : meta_json
-                            })
+                # insert into database
+                try:
+                    meta_json = json.dumps(meta, default=str)
+                    sql = sqlalchemy.sql.text('''
+                        INSERT INTO metahtml.metahtml (accessed_at, id_source, url, jsonb) VALUES 
+                            (:accessed_at, :id_source, :url, :jsonb);
+                        ''')
+                    res = connection.execute(sql,{
+                        'accessed_at' : accessed_at,
+                        'id_source' : id_source,
+                        'url' : url,
+                        'jsonb' : meta_json
+                        })
 
-                    # if there was an error while inserting, log it
-                    except Exception as e:
-                        logging.warn('url='+url+' exception='+str(e))
-                        meta = { 
-                            'exception' : {
-                                'str(e)' : str(e),
-                                'type' : type(e).__name__,
-                                'location' : 'metahtml',
-                                'traceback' : traceback.format_exc()
-                                }
+                # if there was an error while inserting, log it
+                except Exception as e:
+                    logging.warn('url='+url+' exception='+str(e))
+                    meta = { 
+                        'exception' : {
+                            'str(e)' : str(e),
+                            'type' : type(e).__name__,
+                            'location' : 'metahtml',
+                            'traceback' : traceback.format_exc()
                             }
-                        meta_json = json.dumps(meta, default=str)
-                        sql = sqlalchemy.sql.text('''
-                            INSERT INTO metahtml.metahtml (accessed_at, id_source, url, jsonb) VALUES 
-                                (:accessed_at, :id_source, :url, :jsonb);
-                            ''')
-                        res = connection.execute(sql,{
-                            'accessed_at' : accessed_at,
-                            'id_source' : id_source,
-                            'url' : url,
-                            'jsonb' : meta_json
-                            })
+                        }
+                    meta_json = json.dumps(meta, default=str)
+                    sql = sqlalchemy.sql.text('''
+                        INSERT INTO metahtml.metahtml (accessed_at, id_source, url, jsonb) VALUES 
+                            (:accessed_at, :id_source, :url, :jsonb);
+                        ''')
+                    res = connection.execute(sql,{
+                        'accessed_at' : accessed_at,
+                        'id_source' : id_source,
+                        'url' : url,
+                        'jsonb' : meta_json
+                        })
 
 
 if __name__ == '__main__':
