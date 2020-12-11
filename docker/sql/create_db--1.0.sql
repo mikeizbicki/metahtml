@@ -379,81 +379,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-/*
- * deprecated functions
- */
-
-CREATE OR REPLACE FUNCTION url_hostpath_simplify(url TEXT)
-RETURNS TEXT language plpgsql IMMUTABLE STRICT SET search_path=metahtml
-AS $$
-BEGIN
-    RETURN btree_sanitize(host_simplify(url_host(url)) || path_simplify(url_path(url)));
-END 
-$$;
-
-do $$
-BEGIN
-    assert( url_hostpath_simplify('https://example.com') = 'example.com');
-    assert( url_hostpath_simplify('https://example.com/') = 'example.com');
-    assert( url_hostpath_simplify('https://example.com/#test') = 'example.com');
-    assert( url_hostpath_simplify('https://example.com/?param=12') = 'example.com');
-    assert( url_hostpath_simplify('https://example.com/path/to') = 'example.com/path/to');
-    assert( url_hostpath_simplify('https://example.com/path/to/') = 'example.com/path/to');
-    assert( url_hostpath_simplify('https://example.com/path/to/#test') = 'example.com/path/to');
-    assert( url_hostpath_simplify('https://example.com/path/to/?param=12') = 'example.com/path/to');
-END;
-$$ LANGUAGE plpgsql;
-
-
-CREATE OR REPLACE FUNCTION url_pathquery(url TEXT)
-RETURNS TEXT language plpgsql IMMUTABLE STRICT SET search_path=metahtml
-AS $$
-DECLARE
-    url_without_scheme TEXT = url_remove_scheme(url);
-BEGIN
-    RETURN COALESCE(SUBSTRING(url_without_scheme, '[^/?]+([/?].*)'),'/');
-END 
-$$;
-
-do $$
-BEGIN
-    assert( url_pathquery('https://cnn.com') = '/');
-    assert( url_pathquery('https://cnn.com/') = '/');
-    assert( url_pathquery('https://www.cnn.com/2020/12/09/tech/facebook-antitrust-lawsuit-ftc-attorney-generals/index.html') = '/2020/12/09/tech/facebook-antitrust-lawsuit-ftc-attorney-generals/index.html');
-    assert( url_pathquery('http://cnn.com') = '/');
-    assert( url_pathquery('http://cnn.com/') = '/');
-    assert( url_pathquery('http://www.cnn.com/2020/12/09/tech/facebook-antitrust-lawsuit-ftc-attorney-generals/index.html') = '/2020/12/09/tech/facebook-antitrust-lawsuit-ftc-attorney-generals/index.html');
-    assert( url_pathquery('cnn.com') = '/');
-    assert( url_pathquery('cnn.com/') = '/');
-    assert( url_pathquery('www.cnn.com/2020/12/09/tech/facebook-antitrust-lawsuit-ftc-attorney-generals/index.html') = '/2020/12/09/tech/facebook-antitrust-lawsuit-ftc-attorney-generals/index.html');
-END;
-$$ LANGUAGE plpgsql;
-
-
-
-CREATE OR REPLACE FUNCTION simplify_url(url TEXT)
-RETURNS TEXT language plpgsql IMMUTABLE STRICT SET search_path=metahtml
-AS $$
-BEGIN
-    RETURN btree_sanitize(host_simplify(url_host(url)) || url_pathquery(url));
-END 
-$$;
-
-do $$
-BEGIN
-    assert( simplify_url('https://cnn.com') = 'cnn.com/');
-    assert( simplify_url('https://cnn.com/') = 'cnn.com/');
-    assert( simplify_url('https://www.cnn.com/2020/12/09/tech/facebook-antitrust-lawsuit-ftc-attorney-generals/index.html') = 'cnn.com/2020/12/09/tech/facebook-antitrust-lawsuit-ftc-attorney-generals/index.html');
-    assert( simplify_url('http://cnn.com') = 'cnn.com/');
-    assert( simplify_url('http://cnn.com/') = 'cnn.com/');
-    assert( simplify_url('http://www.cnn.com/2020/12/09/tech/facebook-antitrust-lawsuit-ftc-attorney-generals/index.html') = 'cnn.com/2020/12/09/tech/facebook-antitrust-lawsuit-ftc-attorney-generals/index.html');
-    assert( simplify_url('cnn.com') = 'cnn.com/');
-    assert( simplify_url('cnn.com/') = 'cnn.com/');
-    assert( simplify_url('www.cnn.com/2020/12/09/tech/facebook-antitrust-lawsuit-ftc-attorney-generals/index.html') = 'cnn.com/2020/12/09/tech/facebook-antitrust-lawsuit-ftc-attorney-generals/index.html');
-END;
-$$ LANGUAGE plpgsql;
-
-
 
 /*******************************************************************************
  */
@@ -492,13 +417,13 @@ WHERE
 */
 
 
-CREATE INDEX metahtml_url_accessed ON metahtml (simplify_url(url) text_pattern_ops, accessed_at);
+CREATE INDEX metahtml_url_accessed ON metahtml (url_hostpathquery_key(url) text_pattern_ops, accessed_at);
 /*
 SELECT count(*)
 FROM metahtml m
 WHERE
-    --simplify_url(url) like 'reuters.com/%' AND
-    accessed_at = (SELECT max(accessed_at) FROM metahtml WHERE simplify_url(url)=simplify_url(m.url));
+    --url_hostpathquery_key(url) like 'reuters.com/%' AND
+    accessed_at = (SELECT max(accessed_at) FROM metahtml WHERE url_hostpathquery_key(url)=url_hostpathquery_key(m.url));
 */
 
 /*
