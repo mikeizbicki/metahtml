@@ -27,7 +27,7 @@ RUN cd /tmp \
  && rm -rf /tmp/rum
 
 # install project
-COPY https://api.github.com/repos/mikeizbicki/metahtml/git/refs/heads/master /tmp/metahtml.version
+ADD https://api.github.com/repos/mikeizbicki/metahtml/git/refs/heads/master /tmp/metahtml.version
 RUN cd /tmp \
  && git clone https://github.com/mikeizbicki/metahtml \
  && cd metahtml \
