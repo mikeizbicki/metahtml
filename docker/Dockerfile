@@ -31,7 +31,6 @@ ADD https://api.github.com/repos/mikeizbicki/metahtml/git/refs/heads/master /tmp
 RUN cd /tmp \
  && git clone https://github.com/mikeizbicki/metahtml \
  && cd metahtml \
- && pip3 install -r requirements.txt
-
-COPY sql/create_db--1.0.sql /docker-entrypoint-initdb.d/
-COPY sql/rollup.sql /docker-entrypoint-initdb.d/
+ && pip3 install -r requirements.txt \
+ && cp docker/sql/create_db--1.0.sql /docker-entrypoint-initdb.d \
+ && python3 -u docker/sql/rollup.py > /docker-entrypoint-initdb.d/rollup.sql 
