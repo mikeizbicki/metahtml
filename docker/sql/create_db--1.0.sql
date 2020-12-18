@@ -185,8 +185,8 @@ RETURNS TEXT language plpgsql IMMUTABLE STRICT SET search_path=metahtml
 AS $$
 BEGIN
     RETURN COALESCE(
-        SUBSTRING(host, 'www\d*\.(.*)'),
-        SUBSTRING(host, 'm\.(.*)'),
+        SUBSTRING(host, '^www\d*\.(.*)'),
+        SUBSTRING(host, '^m\.(.*)'),
         host
     );
 END 
@@ -203,6 +203,7 @@ BEGIN
     assert( host_simplify('www.bbc.co.uk') = 'bbc.co.uk');
     assert( host_simplify('en.wikipedia.org') = 'en.wikipedia.org');
     assert( host_simplify('m.wikipedia.org') = 'wikipedia.org');
+    assert( host_simplify('naenara.com.kp') = 'naenara.com.kp');
 END;
 $$ LANGUAGE plpgsql;
 
