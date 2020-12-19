@@ -55,19 +55,25 @@ def parse(html, url, fast=False):
             except Exception as e:
                 # FIXME:
                 # these warning messages should get added into the parser.meta somehow
-                logging.warn('url='+url+' '+lib.__name__+': '+"e="+e.__repr__())
+                logging.warning('url='+url+' '+lib.__name__+': '+"e="+e.__repr__())
 
     # remove ads
     metahtml.adblock.rm_ads(parser)
 
     # extract the properties
-    def calculate_property(property):
+    def calculate_property(property, property_name=None):
+        '''
+        helper function to add the specified property to the meta dictionary
+        '''
+        if property_name is None:
+            property_name = property
         module = importlib.import_module('metahtml.property.'+property)
-        logging.debug('property='+property)
-        parser.meta[property] = module.Extractor.extract(parser)
+        logging.debug('property_name='+property_name)
+        parser.meta[property_name] = module.Extractor.extract(parser)
 
     calculate_property('timestamp.published')
     calculate_property('type')
+    calculate_property('links','links.all')
 
     if parser.meta['type']['best']['value'] == 'article':
         calculate_property('language')
@@ -79,16 +85,16 @@ def parse(html, url, fast=False):
             calculate_property('author')
             calculate_property('title')
             calculate_property('description')
-            calculate_property('links')
 
             # extract the content;
             # this function is allowed to arbitrarily modify parser.doc,
-            # and so it must come last
-            #metahtml.content.extract(parser)
+            # and so it must come after properties that depend on the entire document
             calculate_property('content')
 
-            # FIXME:
-            # calculate the links of the article html?
+            # calculate the links of just the article's html content;
+            # this must come after calculating the content because 
+            # the content calculation deletes the irrelevant items from parser.doc
+            calculate_property('links','links.content')
     else:
         parser.meta['timestamp.published'] = None
 
@@ -116,6 +122,9 @@ def simplify_meta(meta):
 def get_version_info():
     '''
     returns a dictionary containing the hash and date of the running code
+
+    FIXME:
+    should we abort running of the program if there are uncommitted git files?
 
     FIXME:
     if the library is not contained within a git repo, then the returned value will be undefined;
