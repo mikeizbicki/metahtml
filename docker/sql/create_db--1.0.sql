@@ -59,6 +59,8 @@ $$;
 
 /*
  * remove the scheme from an input url
+ *
+ * FIXME: what to do for mailto:blah@gmail.com ?
  */
 CREATE OR REPLACE FUNCTION url_remove_scheme(url TEXT)
 RETURNS TEXT language plpgsql IMMUTABLE STRICT SET search_path=metahtml
