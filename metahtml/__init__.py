@@ -88,10 +88,12 @@ def parse(html, url, fast=False):
 
             # extract the content;
             # this function is allowed to arbitrarily modify parser.doc,
-            # and so it must come last
+            # and so it must come after properties that depend on the entire document
             calculate_property('content')
 
-            # calculate the links of just the article's html
+            # calculate the links of just the article's html content;
+            # this must come after calculating the content because 
+            # the content calculation deletes the irrelevant items from parser.doc
             calculate_property('links','links.content')
     else:
         parser.meta['timestamp.published'] = None
