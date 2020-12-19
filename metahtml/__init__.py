@@ -61,13 +61,19 @@ def parse(html, url, fast=False):
     metahtml.adblock.rm_ads(parser)
 
     # extract the properties
-    def calculate_property(property):
+    def calculate_property(property, property_name=None):
+        '''
+        helper function to add the specified property to the meta dictionary
+        '''
+        if property_name is None:
+            property_name = property
         module = importlib.import_module('metahtml.property.'+property)
-        logging.debug('property='+property)
-        parser.meta[property] = module.Extractor.extract(parser)
+        logging.debug('property_name='+property_name)
+        parser.meta[property_name] = module.Extractor.extract(parser)
 
     calculate_property('timestamp.published')
     calculate_property('type')
+    calculate_property('links','links.all')
 
     if parser.meta['type']['best']['value'] == 'article':
         calculate_property('language')
@@ -79,16 +85,14 @@ def parse(html, url, fast=False):
             calculate_property('author')
             calculate_property('title')
             calculate_property('description')
-            calculate_property('links')
 
             # extract the content;
             # this function is allowed to arbitrarily modify parser.doc,
             # and so it must come last
-            #metahtml.content.extract(parser)
             calculate_property('content')
 
-            # FIXME:
-            # calculate the links of the article html?
+            # calculate the links of just the article's html
+            calculate_property('links','links.content')
     else:
         parser.meta['timestamp.published'] = None
 

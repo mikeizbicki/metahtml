@@ -62,17 +62,18 @@ class Extractor(BaseExtractor):
 
 
 ################################################################################
-# helper code below taken from https://gist.github.com/tyndyll/e254ae3da2d0427371733443152c1337
 
 from urllib.parse import parse_qs
 from urllib.parse import urlencode
 from urllib.parse import urlparse
 
-params_to_remove = [
+# query parameters that will get removed from the query strings
+params_to_remove = list(set([
+    # taken from: https://maxchadwick.xyz/tracking-query-params-registry/
     "mkt_tok",
     "utm_source",  # identifies which site sent the traffic, and is a required parameter
     "utm_medium",  # identifies what type of link was used, such as cost per click or email
-    "utm_campaign",#	identifies a specific product promotion or strategic campaign
+    "utm_campaign",# identifies a specific product promotion or strategic campaign
     "utm_term",    # identifies search terms
     "utm_content", # identifies what specifically was clicked to bring the user to the site
     "sc_country",
@@ -84,18 +85,52 @@ params_to_remove = [
     "sc_funnel",
     "sc_medium",
     "sc_segment",
-]
+
+    # taken from: https://gist.github.com/tyndyll/e254ae3da2d0427371733443152c1337
+    "fbclid",
+    "gclid",
+    "gclsrc",
+    "utm_content",
+    "utm_term",
+    "utm_campaign",
+    "utm_medium",
+    "utm_source",
+    "_ga",
+    "mc_cid",
+    "mc_eid",
+    "_bta_tid",
+    "_bta_c",
+    "trk_contact",
+    "trk_msg",
+    "trk_module",
+    "trk_sid",
+    "gdfms",
+    "gdftrk",
+    "gdffi",
+    "_ke",
+    "redirect_log_mongo_id",
+    "redirect_mongo_id",
+    "sb_referer_host",
+    "mkwid",
+    "pcrid",
+    "ef_id",
+    "s_kwcid",
+    "msclkid",
+]))
 
 
 def remove_tracker_params(query_string):
     """
     Given a query string from a URL, strip out the known trackers
+
     >>> remove_tracker_params("utm_campaign=2018-05-31&utm_medium=email&utm_source=courtside-20180531")
     ''
     >>> remove_tracker_params("a=b&utm_campaign=2018-05-31&utm_medium=email&utm_source=courtside-20180531")
     'a=b'
     >>> remove_tracker_params("type=test&type=test2")
     'type=test&type=test2'
+    >>> remove_tracker_params("c=d&a=b")
+    'a=b&c=d'
     """
 
     params = []
@@ -104,15 +139,17 @@ def remove_tracker_params(query_string):
             # value will be a list, extract each one out
             for value in values:
                 params.append((param, value))
+    params.sort()
     return urlencode(params)
 
 
 def clean_url(url):
     """
     Given a URL, return it with the UTM parameters removed
+    It will also clean the UTM parameters from fragments
+
     >>> clean_url("https://dribbble.com/stories/2018/05/29/an-interview-with-user-interface-designer-olga?utm_campaign=2018-05-31&utm_medium=email&utm_source=courtside-20180531")
     'https://dribbble.com/stories/2018/05/29/an-interview-with-user-interface-designer-olga'
-    It will also clean the UTM parameters from fragments
     >>> clean_url("https://blog.mozvr.com/introducing-hubs-a-new-way-to-get-together-online/?sample_rate=0.001#utm_source=desktop-snippet&utm_medium=snippet&utm_campaign=MozillaHubsIntro&utm_term=8322&utm_content=PRE")
     'https://blog.mozvr.com/introducing-hubs-a-new-way-to-get-together-online/?sample_rate=0.001'
     """
