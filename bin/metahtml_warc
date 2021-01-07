@@ -35,16 +35,16 @@ def process_warc_from_url(connection, warc_url):
     ideally, this function would be wrapped in a transaction;
     but this causes deadlocks when it is run concurrently with other instances of itself
     '''
-    # create a new entry in the metahtml.source table for this bulk insertion
+    # create a new entry in the source table for this bulk insertion
     try:
         sql = sqlalchemy.sql.text('''
-        INSERT INTO metahtml.source (name) VALUES (:name) RETURNING id;
+        INSERT INTO source (name) VALUES (:name) RETURNING id;
         ''')
         res = connection.execute(sql,{'name':warc_url})
         id_source = res.first()['id']
         logging.info('id_source='+str(id_source))
 
-    # if an entry already exists in metahtml.source,
+    # if an entry already exists in source,
     # then we have already inserted this warc and can safely skip the file
     except sqlalchemy.exc.IntegrityError:
         logging.info('skipping warc_url='+warc_url)
@@ -94,7 +94,7 @@ def process_warc_from_disk(connection, warc_path, id_source):
                 try:
                     meta_json = json.dumps(meta, default=str)
                     sql = sqlalchemy.sql.text('''
-                        INSERT INTO metahtml.metahtml (accessed_at, id_source, url, jsonb) VALUES 
+                        INSERT INTO metahtml (accessed_at, id_source, url, jsonb) VALUES 
                             (:accessed_at, :id_source, :url, :jsonb);
                         ''')
                     res = connection.execute(sql,{
@@ -117,7 +117,7 @@ def process_warc_from_disk(connection, warc_path, id_source):
                         }
                     meta_json = json.dumps(meta, default=str)
                     sql = sqlalchemy.sql.text('''
-                        INSERT INTO metahtml.metahtml (accessed_at, id_source, url, jsonb) VALUES 
+                        INSERT INTO metahtml (accessed_at, id_source, url, jsonb) VALUES 
                             (:accessed_at, :id_source, :url, :jsonb);
                         ''')
                     res = connection.execute(sql,{
