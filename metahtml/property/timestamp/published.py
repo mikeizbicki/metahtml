@@ -250,6 +250,7 @@ class Extractor(TimestampExtractor):
         ( 'informationclearinghouse.info',  '//font[@face="Times New Roman"]/p' ),
         ( 'infox.ru',                       '//time[@itemprop="datePublished"]/@datetime'),
         ( 'insta.shared.to',                '//p[@class="fs"]' ),
+        ( 'instagram-engineering.com',      '//None' ), # FIXME: this should be None
         ( 'iranchamber.com',                '//td[@class="fontdate"]' ),
         ( 'iris-france.org',                '//div[@class="date"]/text()'),
         ( 'islamsounnah.com',               '//meta[@property="article:published_time"]/@content'),

@@ -15,7 +15,7 @@ import metahtml.adblock
 
 cxpath_ldjson = lxml.etree.XPath('//script[@type="application/ld+json"]')
 
-def parse(html, url, fast=False):
+def parse(html, url, property_filter=None, fast=False):
     '''
     return the dictionary of meta information for a given html/url combination
     '''
@@ -30,6 +30,7 @@ def parse(html, url, fast=False):
     parser.url_parsed = urlparse(url)
     parser.meta = defaultdict(lambda: None)
     parser.meta['version'] = version
+    parser.meta['url'] = url
 
     # parse the raw html using lxml;
     # lxml fails whenever the html is empty, so we pass it a minimal html document;
@@ -58,7 +59,8 @@ def parse(html, url, fast=False):
                 logging.warning('url='+url+' '+lib.__name__+': '+"e="+e.__repr__())
 
     # remove ads
-    metahtml.adblock.rm_ads(parser)
+    if not fast:
+        metahtml.adblock.rm_ads(parser)
 
     # extract the properties
     def calculate_property(property, property_name=None):
@@ -67,9 +69,10 @@ def parse(html, url, fast=False):
         '''
         if property_name is None:
             property_name = property
-        module = importlib.import_module('metahtml.property.'+property)
-        logging.debug('property_name='+property_name)
-        parser.meta[property_name] = module.Extractor.extract(parser)
+        if property_filter is None or property_name in property_filter:
+            module = importlib.import_module('metahtml.property.'+property)
+            logging.debug('property_name='+property_name)
+            parser.meta[property_name] = module.Extractor.extract(parser)
 
     calculate_property('timestamp.published')
     calculate_property('type')
@@ -105,16 +108,32 @@ def parse(html, url, fast=False):
     return parser.meta
 
 
+def parse_for_testing(html, url, fast=False, debug=False):
+    property_filter = ['language', 'timestamp.modified', 'timestamp.published', 'type']
+    meta = parse(html, url, property_filter, fast)
+    if debug:
+        return meta
+    else:
+        return simplify_meta(meta)
+
+
 def simplify_meta(meta):
     '''
     removes the verbose/debug information from the meta dictionary
     '''
+    import json
     ret = {}
     for k in meta:
         try:
             ret[k] = meta[k]['best']['value']
         except (TypeError,KeyError) as e:
-            pass
+            ret[k] = meta[k]
+
+    del ret['version']
+    del ret['process_time']
+
+    # convert datetime objects into strings
+    ret = json.loads(json.dumps(dict(ret), default=str))
 
     return ret
 

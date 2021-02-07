@@ -2,6 +2,24 @@
 
 This library extracts metadata from html.
 
+## Downloading
+
+It is not recommended to perform a standard git clone on this repo.
+
+This repo has a very large (multi-gigabyte) test suite.
+Therefore, a standard `git clone` will download a large number of unneeded files.
+Instead, I recommend using the following procedure for performing a partial clone.
+
+```
+$ git clone --filter=blob:none --no-checkout https://github.com/mikeizbicki/metahtml
+$ cd metahtml
+$ git sparse-checkout init
+$ git sparse-checkout set '!/tests/.cache' '/*'
+$ git checkout master
+```
+
+For detailed on what these commands are doing, see [this github blog post](https://github.blog/2020-01-13-highlights-from-git-2-25/).
+
 ## How to add support for a new hostname
 
 The test cases for each hostname are stored in the file `tests/golden.csv`.

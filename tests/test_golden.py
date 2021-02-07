@@ -199,14 +199,16 @@ def insert_golden_tests(urls, overwrite=False, verbose=False, recursively_added_
                 meta = metahtml.parse(html, url)
 
                 # add all alternate language urls as test cases
-                for altlang_url in meta['altlang_urls']:
-                    new_urls.add(altlang_url['url'])
+                if meta['altlang_urls']:
+                    for altlang_url in meta['altlang_urls']:
+                        new_urls.add(altlang_url['url'])
 
                 # if the url is not the canonical url,
                 # then we need to add the canonical url as a test case instead of this url
-                if meta['url_canonical']['url'] != url:
-                    new_urls.add(meta['url_canonical']['url'])
-                    add_url = False
+                if meta['url_canonical']:
+                    if meta['url_canonical']['url'] != url:
+                        new_urls.add(meta['url_canonical']['url'])
+                        add_url = False
 
                 # simplify hostname for sorting purposes
                 hostname = url_parsed.hostname
@@ -232,8 +234,8 @@ def insert_golden_tests(urls, overwrite=False, verbose=False, recursively_added_
                         'is_article' : is_article,
                         'timestamp.published' : metahtml.property.timestamp.published.Extractor.result_to_str(meta['timestamp.published']),
                         'timestamp.modified' : metahtml.property.timestamp.__common__.TimestampExtractor.result_to_str(meta['timestamp.modified']),
-                        'lang' : metahtml.property.language.Extractor.result_to_str(meta['lang']),
-                        'title' : metahtml.title.title2str(meta['title']),
+                        'language' : metahtml.property.language.Extractor.result_to_str(meta['lang']),
+                        'title' : meta['title'],
                         })
 
     # sort and remove duplicates
