@@ -21,6 +21,12 @@ import metahtml.property.timestamp.__common__
 
 
 ################################################################################
+# settings
+
+cache_dir = 'tests/.cache'
+golden_dir = 'tests/.golden'
+
+################################################################################
 # utility functions for caching webpages
 
 def url2filename(url):
@@ -37,7 +43,7 @@ def url2filename(url):
     return re.sub(r'[/:><"|*?&]','_',url)[:196] + hashlib.md5(url.encode()).hexdigest()[:8]
 
 
-def get_cached_webpages(url, dates=None, cache_dir='tests/.cache'):
+def get_cached_webpages(url, dates=None):
     '''
     If the url does not exit in the cache,
     then this function first downloads the html and stores it in the cache.
@@ -89,8 +95,6 @@ def get_cached_webpages(url, dates=None, cache_dir='tests/.cache'):
 ################################################################################
 # test cases
 
-golden_dir = 'tests/.golden'
-
 def generate_test(url, verbose=True, fast=True, save=False, debug=False):
     '''
     Prints the simplified meta for the url to stdout.
@@ -128,8 +132,25 @@ def generate_test(url, verbose=True, fast=True, save=False, debug=False):
 def get_tests():
     '''
     Returns a list of test cases.
+
+    NOTE:
+    The returned test cases are guaranteed to exist in both the golden_dir and the cache_dir.
+    The true values are stored in the golden_dir, and these should exist in all clones of the repo.
+    The raw html for running the code is stored in the cache_dir.
+    Because this can be a very large amount of data,
+    it is possible to do a sparse clone and not acquire all this data.
+    This function does not generate test cases for those tests that have not been downloaded.
     '''
-    return glob.glob(os.path.join(os.path.join(os.path.join(golden_dir,'*')),'*'))
+    raw_tests = glob.glob(os.path.join(os.path.join(os.path.join(golden_dir,'*')),'*'))
+
+    def has_cache(test_file):
+        date = os.path.basename(test_file)
+        url_filename = os.path.basename(os.path.dirname(test_file))
+        cache_file = os.path.join(os.path.join(cache_dir, url_filename), date)
+        print("cache_file=",cache_file)
+        return os.path.exists(cache_file)
+
+    return list(filter(has_cache, raw_tests))
 
 
 @pytest.mark.parametrize('test_file',get_tests(), ids=id)
