@@ -125,7 +125,8 @@ def simplify_meta(meta):
     ret = {}
     for k in meta:
         try:
-            ret[k] = meta[k]['best']['value']
+            if meta[k]['best'] is not None:
+                ret[k] = meta[k]['best']['value']
         except (TypeError,KeyError) as e:
             ret[k] = meta[k]
 

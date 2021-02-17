@@ -129,7 +129,7 @@ def generate_test(url, verbose=True, fast=True, save=False, debug=False):
                 f.write(output)
 
 
-def get_tests():
+def get_tests(cache_filter=True):
     '''
     Returns a list of test cases.
 
@@ -143,11 +143,13 @@ def get_tests():
     '''
     raw_tests = glob.glob(os.path.join(os.path.join(os.path.join(golden_dir,'*')),'*'))
 
+    if not cache_filter:
+        return raw_tests
+
     def has_cache(test_file):
         date = os.path.basename(test_file)
         url_filename = os.path.basename(os.path.dirname(test_file))
         cache_file = os.path.join(os.path.join(cache_dir, url_filename), date)
-        print("cache_file=",cache_file)
         return os.path.exists(cache_file)
 
     return list(filter(has_cache, raw_tests))
