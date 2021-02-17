@@ -7,10 +7,7 @@ The output can then be used to bulk load the tests into a database.
 import json
 import glob
 
-tests = []
 for filename in glob.glob('tests/.golden/*/*'):
     with open(filename) as f:
         test = json.loads(f.read())
-        tests.append(test)
-
-print(json.dumps(tests))
+        print(json.dumps(test))
