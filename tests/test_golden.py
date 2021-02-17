@@ -96,7 +96,7 @@ def get_cached_webpages(url, dates=None):
 ################################################################################
 # test cases
 
-def generate_test(url, verbose=True, fast=True, save=False, debug=False, save_full=False):
+def generate_test(url, verbose=True, fast=True, save=False, debug=False, full=False, save_full=False):
     '''
     Prints the simplified meta for the url to stdout.
     If save is True, it also generates a golden test from the result.
@@ -104,7 +104,7 @@ def generate_test(url, verbose=True, fast=True, save=False, debug=False, save_fu
     '''
     if save:
         fast = False
-        debug = False
+        full = False
 
     for date, html in get_cached_webpages(url):
 
@@ -132,7 +132,7 @@ def generate_test(url, verbose=True, fast=True, save=False, debug=False, save_fu
             with open(test_path,'x', encoding='utf-8', newline='\n') as f:
                 f.write(output)
 
-        if save_full:
+        if full or save_full:
             meta = metahtml.parse(html, url)
             output = json.dumps(
                 dict(meta),
@@ -140,9 +140,14 @@ def generate_test(url, verbose=True, fast=True, save=False, debug=False, save_fu
                 )
             url_dir = os.path.join(golden_full_dir,url_filename)
             os.makedirs(url_dir, exist_ok=True)
-            path = os.path.join(url_dir,date)
-            with open(path,'x', encoding='utf-8', newline='\n') as f:
-                f.write(output)
+            full_path = os.path.join(url_dir,date)
+            if full:
+                print("full_path=",full_path)
+                print(output)
+
+            if save_full:
+                with open(full_path,'x', encoding='utf-8', newline='\n') as f:
+                    f.write(output)
 
 
 def get_tests(cache_filter=True):
@@ -245,6 +250,7 @@ if __name__=='__main__':
     parser.add_argument('--save', action='store_true')
     parser.add_argument('--slow', action='store_true')
     parser.add_argument('--debug', action='store_true')
+    parser.add_argument('--full', action='store_true')
     args = parser.parse_args()
 
-    generate_test(args.url, True, not args.slow, args.save, args.debug)
+    generate_test(args.url, not args.full, not args.slow, args.save, args.debug, args.full)

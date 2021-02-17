@@ -61,7 +61,7 @@ test_path= tests/.golden/http___www.windermeresun.com_2020_01_10_conseqences-of-
 }
 ```
 
-The library is able to extract considerably more information as well if you pass the `--debug` flag,
+The library is able to extract considerably more information as well if you pass the `--full` flag,
 but this extra information is not included in the test cases.
 
 There are currently about 2000 domain names that the metahtml library has test cases for.
