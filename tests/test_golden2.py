@@ -25,6 +25,7 @@ import metahtml.property.timestamp.__common__
 
 cache_dir = 'tests/.cache'
 golden_dir = 'tests/.golden'
+golden_full_dir = 'tests/.golden_full'
 
 ################################################################################
 # utility functions for caching webpages
@@ -95,7 +96,7 @@ def get_cached_webpages(url, dates=None):
 ################################################################################
 # test cases
 
-def generate_test(url, verbose=True, fast=True, save=False, debug=False):
+def generate_test(url, verbose=True, fast=True, save=False, debug=False, save_full=False):
     '''
     Prints the simplified meta for the url to stdout.
     If save is True, it also generates a golden test from the result.
@@ -114,7 +115,6 @@ def generate_test(url, verbose=True, fast=True, save=False, debug=False):
             default=str
             )
 
-        # display the result
         if verbose:
             print("url=",url)
             print("date=",date)
@@ -123,6 +123,18 @@ def generate_test(url, verbose=True, fast=True, save=False, debug=False):
         if save:
             url_filename = url2filename(url)
             url_dir = os.path.join(golden_dir,url_filename)
+            os.makedirs(url_dir, exist_ok=True)
+            path = os.path.join(url_dir,date)
+            with open(path,'x', encoding='utf-8', newline='\n') as f:
+                f.write(output)
+
+        if save_full:
+            meta = metahtml.parse(html, url)
+            output = json.dumps(
+                dict(meta),
+                default=str
+                )
+            url_dir = os.path.join(golden_full_dir,url_filename)
             os.makedirs(url_dir, exist_ok=True)
             path = os.path.join(url_dir,date)
             with open(path,'x', encoding='utf-8', newline='\n') as f:
@@ -215,7 +227,7 @@ def convert_csv(filter_str=None, filter_key=None, verified_only=True):
             num_processed += 1
     return tests
 
-#convert_csv()
+convert_csv()
 
 ################################################################################
 # initialize the test cases
