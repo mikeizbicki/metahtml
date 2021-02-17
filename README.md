@@ -107,8 +107,20 @@ Finally, commit the changes and issue the pull request.
 
 ### If the output is incorrect
 
-The most common way for the output to be incorrect is to have missing `timestamp.published` or `timestamp.modified` fields in the output.
-In order to fix this problem, you need to write an xpath that can extract the information from the given webpage, and add it to either the `metahtml/property/timestamp/published.py` or `metahtml/property/timestamp/modified.py` files.
+If the problem is the `language` field, then let me know.
+
+* I'll have to fix this myself.
+
+If the problem is that there is that the `timestamp.published` `timestamp.modified` fields are missing or incorrect:
+* In order to fix this problem, you need to write an xpath that can extract the information from the given webpage, and add it to either the `metahtml/property/timestamp/published.py` or `metahtml/property/timestamp/modified.py` files.
+
+If the problem is that the `type` field is incorrect:
+
+* This field should be automatically determined based on the `timestamp.published` field.
+  If there is a timestamp, then the `type` field should always say `article`;
+  if there is no timestamp, then it can say anything else besides `article`.
+  If this behavior isn't working correctly,
+  let me know and I'll fix it myself.
 
 ## Pull request check list
 

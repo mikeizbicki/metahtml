@@ -30,14 +30,3 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
-
-  docker:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: db
-      run: |
-        cd docker
-        docker build -t db .
-        docker run --name db -e POSTGRES_PASSWORD=password -d db
-        docker stop db
