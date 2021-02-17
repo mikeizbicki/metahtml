@@ -129,7 +129,7 @@ def generate_test(url, verbose=True, fast=True, save=False, debug=False, save_fu
             print(output)
 
         if save:
-            with open(path,'x', encoding='utf-8', newline='\n') as f:
+            with open(test_path,'x', encoding='utf-8', newline='\n') as f:
                 f.write(output)
 
         if save_full:
