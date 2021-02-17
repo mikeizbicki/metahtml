@@ -20,119 +20,106 @@ $ git checkout master
 
 For detailed on what these commands are doing, see [this github blog post](https://github.blog/2020-01-13-highlights-from-git-2-25/).
 
-## How to add support for a new hostname
+## Testing overview
 
-The test cases for each hostname are stored in the file `tests/golden.csv`.
-These test cases are generated in a semi-automated fashion that requires human review.
+The file `tests/test_golden.py` provides a simple command line interface for extracting information from a webpage.
+For example, we can extract information from https://www.cnn.com/2020/03/28/politics/trump-executive-order-ready-reserve-military-coronavirus/index.html with the command
+```
+$ python3 tests/test_golden.py 'https://www.cnn.com/2020/03/28/politics/trump-executive-order-ready-reserve-military-coronavirus/index.html'
+```
+and get output like
+```
+url= https://www.cnn.com/2020/03/28/politics/trump-executive-order-ready-reserve-military-coronavirus/index.html
+date= 2020-07-13
+{
+    "language": "en",
+    "timestamp.modified": {
+        "hi": "2020-03-28 17:11:14.999999+00:00",
+        "lo": "2020-03-28 17:11:14+00:00"
+    },
+    "timestamp.published": {
+        "hi": "2020-03-28 13:09:30.999999+00:00",
+        "lo": "2020-03-28 13:09:30+00:00"
+    },
+    "type": "article",
+    "url": "https://www.cnn.com/2020/03/28/politics/trump-executive-order-ready-reserve-military-coronavirus/index.html"
+}
+```
+Most of these fields are self explanatory, but the `timestamp` fields are slightly confusing.
+The accuracy of the timestamp that an article has been published/modified on varies on different websites, and the `hi` and `lo` fields are used to specify the range that the article may have been published on.
+For example, the cnn.com webpage above specifies the article timestamp accuracy down to the second, but the following webpage specifies the accuracy only down to the day.
+```
+$ python3 tests/test_golden.py 'http://www.windermeresun.com/2020/01/10/conseqences-of-qasem-soleimanis-death/'
+url= http://www.windermeresun.com/2020/01/10/conseqences-of-qasem-soleimanis-death/
+date= 2020-06-29
+{
+    "language": "en-us",
+    "timestamp.published": {
+        "hi": "2020-01-10 23:59:59.999999",
+        "lo": "2020-01-10 00:00:00"
+    },
+    "type": "article",
+    "url": "http://www.windermeresun.com/2020/01/10/conseqences-of-qasem-soleimanis-death/"
+}
+```
 
-Adding support for a new hostname requires taking the following steps.
+The library is able to extract considerably more information as well if you pass the `--debug` flag,
+but this extra information is not included in the test cases.
 
-1. Generate test cases for the URLs by running the command
-   ```
-   $ python3 tests/test_golden.py --insert_urls URL1 URL2 URL3 URL4 URL5
-   ```
-   where `URL1` etc are the URLs to be added.
-   This command inserts at least one line into `tests/golden.csv` for each URL.
-   Depending on the URL, it may also insert translated versions of the webpage as well.
+There are currently about 2000 domain names that the metahtml library has test cases for.
 
-   If you have the URLs in a file called `URLS_FILE` (formatted with one URL per line),
-   then you can run the command
-   ```
-   $ cat URLS_FILE | xargs python3 tests/test_golden.py --insert_urls
-   ```
-   to insert every URL in the file.
+## How to add new test cases
 
-1. Open `tests/golden.csv` in excel.
-   Find the lines for each of your inserted urls and edit each field using the following instructions.
+Test cases for a website consist of 2 files: 
+1. A file containing the raw html data for the webpage (stored in the `tests/.cache/HASHED_URL/DATE` directory),
+   where `HASHED_URL` is the url of the webpage with special characters (like `:/?&`) removed so that it is a valid filename,
+   and `DATE` is the date the file was downloaded. 
+   Storing the webpages is necessary because webpages change over time,
+   and we want to ensure that the test cases do not change.
+   In order to account for changes over time, we also store the date of the file as well.
+   This way we can have multiple versions of the same webpage in the tests.
+   Caching the files also greatly speeds up the testing process,
+   since downloading thousands of webpages can take a long time.
+2. A "golden test" file in `tests/.golden/HASHED_URL/DATE`.
+   This file contains the output of the `tests/test_golden.py` python program.
+   This file is only created after a human annotator has manually verified that the output for the program is correct for the given url.
 
-   * `timestamp_published` / `timestamp_modified`:
-     If these fields contain values, then verify that these values match the values displayed on the website.
+In order to create a new test case, run the command
+```
+$ python3 tests/test_golden.py 'URL'
+```
+where `URL` is the url you are testing.
+You must include the single quotation marks, or your terminal may mangle the url string before it gets passed to python.
 
-     If these fields are blank,
-     then find the xpath that refers to the article's publication timestamp,
-     and add it to the `xpaths` variable in the `get_timestamp_published`/`get_timestamp_modified` functions within the `metahtml/timestamp.py` file.
+### If the output is correct
 
-     You can find an xpath reference at https://www.w3schools.com/xml/xpath_syntax.asp
+You need to create a commit with the new test case files, and create a pull request.
+You should be able to add the correct files to the staging area with the commands
+```
+$ git add .
+```
+This will add all of the currently uncommitted files.
+Before committing, run 
+```
+$ git status
+```
+to ensure that the only files that were added were the two test case files described above.
+If extraneous files get added, I cannot accept your pull request.
+Finally, commit the changes and issue the pull request.
 
-     Some examples to pay attention to:
+### If the output is incorrect
 
-     1. BBC uses FB's OG to annotate title, but not date https://www.bbc.com/news/world-asia-50640033
+The most common way for the output to be incorrect is to have missing `timestamp.published` or `timestamp.modified` fields in the output.
+In order to fix this problem, you need to write an xpath that can extract the information from the given webpage, and add it to either the `metahtml/property/timestamp/published.py` or `metahtml/property/timestamp/modified.py` files.
 
-     1. Stripes uses DC/OG meta data for title, but not date.
-        Within the text area, there are extra words that get ignored by the parsing functions.
-        https://www.stripes.com/news/us/navy-officer-receives-first-waiver-to-pentagon-transgender-policy-1.629896
-     
-     1. Don't use the innermost tag, use the semantically correct tag: https://theintercept.com/drone-papers/target-africa/
+## Pull request check list
 
-   * `title`:
-      Remove category labels and website names from both the left and right of the title.
-      For example:
+In order for me to accept a pull request, there needs to be at least 5 new test cases added for each hostname:
+1. 1 test case for the hostname by itself (this should not have any timestamps)
+1. 2 test cases for article urls (these should must have timestamps, and the timestamps should ideally be many years apart)
+1. 2 test cases for "category" urls that contain lists of many other urls (these should not have timestamps)
 
-      1. ```
-         The week in charts - Chipping away at Huawei | Graphic detail | The Economist
-         ```
-         should be changed to
-         ```
-         Chipping away at Huawei
-         ```
-         There is a category label on the left and two on the right that get removed.
-
-      1. Note that just because a title contains a `-` doesn't mean that it should be trimmed at that location.
-         The following title should not be modified at all:
-         ```
-         Donald Trump-Kim Jong-un Summit Depends on One Word
-         ```
-         Similarly, the title below should not be modified
-         ```
-         Journalist Who Lived in Kim Jong-un's North Korea: "All Paths Lead to Catastrophe"
-         ```
-         as the `:` is part of the title.
-         Othertimes, however, the `:` will separate the title from a category.
-         For example,
-         ```
-         Donald Trump Is a Menace to the World: Opinion - DER SPIEGEL
-         ```
-         should be changed to
-         ```
-         Donald Trump Is a Menace to the World
-         ```
-
-      1. ```
-         Overnight Defense — Presented by Boeing — House chairmen demand answers on Open Skies Treaty | China warns US to stay out of South China Sea | Army conducting security assessment of TikTok | TheHill
-         ```
-         should be changed to
-         ```
-         House chairmen demand answers on Open Skies Treaty | China warns US to stay out of South China Sea | Army conducting security assessment of TikTok 
-         ```
-         This article had three subjects embedded in it!
-         All of these subjects must be kept.
-
-      1. ```
-         Paradoxe coréen, par Jean-Michel Frodon (Le Monde diplomatique, mars 2019)
-         ```
-         should be changed to
-         ```
-         Paradoxe coréen
-         ```
-         This title had lots of metadata in it like the author's name and publication date; those should be removed.
-
-
-   * `human_annotator` :
-     Write your name in this field, but only after you are sure that the line is correct.
-
-1. Create a pull request with your changes.
-   Your add command should look like
-   ```
-   $ git add metahtml/timestamp.py tests/golden.csv tests/.cache
-   ```
-   and your git commit message should look like
-   ```
-   Added support for: hostname1 hostname2 hostname3
-   ```
-   where `hostnameX` are the hostnames added in the commit.
-   There should be no punctuation between the hostnames.
-
-
+<!--
 ## Notes
 
 Some websites aggregate from other websites, but appear to be their own news source.
@@ -162,3 +149,4 @@ https://pypi.org/project/jusText/ (has lots of links to other libs)
 https://github.com/dalab/web2text
 https://github.com/dragnet-org/dragne
 
+-->
