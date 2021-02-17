@@ -29,8 +29,7 @@ $ python3 tests/test_golden.py 'https://www.cnn.com/2020/03/28/politics/trump-ex
 ```
 and get output like
 ```
-url= https://www.cnn.com/2020/03/28/politics/trump-executive-order-ready-reserve-military-coronavirus/index.html
-date= 2020-07-13
+test_path= tests/.golden/https___www.cnn.com_2020_03_28_politics_trump-executive-order-ready-reserve-military-coronavirus_index.htmla7ac3bf6/2020-07-13
 {
     "language": "en",
     "timestamp.modified": {
@@ -50,8 +49,7 @@ The accuracy of the timestamp that an article has been published/modified on var
 For example, the cnn.com webpage above specifies the article timestamp accuracy down to the second, but the following webpage specifies the accuracy only down to the day.
 ```
 $ python3 tests/test_golden.py 'http://www.windermeresun.com/2020/01/10/conseqences-of-qasem-soleimanis-death/'
-url= http://www.windermeresun.com/2020/01/10/conseqences-of-qasem-soleimanis-death/
-date= 2020-06-29
+test_path= tests/.golden/http___www.windermeresun.com_2020_01_10_conseqences-of-qasem-soleimanis-death_8cdd1101/2020-06-29
 {
     "language": "en-us",
     "timestamp.published": {

@@ -107,6 +107,14 @@ def generate_test(url, verbose=True, fast=True, save=False, debug=False, save_fu
         debug = False
 
     for date, html in get_cached_webpages(url):
+
+        # generate the test path
+        url_filename = url2filename(url)
+        url_dir = os.path.join(golden_dir,url_filename)
+        os.makedirs(url_dir, exist_ok=True)
+        test_path = os.path.join(url_dir,date)
+
+        # generate the test information
         meta = metahtml.parse_for_testing(html, url, fast=fast, debug=debug)
         output = json.dumps(
             dict(meta),
@@ -115,16 +123,12 @@ def generate_test(url, verbose=True, fast=True, save=False, debug=False, save_fu
             default=str
             )
 
+        # print/save as specified in the options
         if verbose:
-            print("url=",url)
-            print("date=",date)
+            print("test_path=",test_path)
             print(output)
 
         if save:
-            url_filename = url2filename(url)
-            url_dir = os.path.join(golden_dir,url_filename)
-            os.makedirs(url_dir, exist_ok=True)
-            path = os.path.join(url_dir,date)
             with open(path,'x', encoding='utf-8', newline='\n') as f:
                 f.write(output)
 
