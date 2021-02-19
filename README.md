@@ -1,4 +1,4 @@
-# html\_parser [![ContinuousIntegration Status](https://github.com/mikeizbicki/metahtml/workflows/tests/badge.svg)](https://github.com/mikeizbicki/metahtml/actions)
+# metahtml [![ContinuousIntegration Status](https://github.com/mikeizbicki/metahtml/workflows/tests/badge.svg)](https://github.com/mikeizbicki/metahtml/actions)
 
 This library extracts metadata from a webpage.
 This meta-information includes:
