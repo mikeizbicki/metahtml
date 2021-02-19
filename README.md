@@ -1,6 +1,26 @@
 # html\_parser [![ContinuousIntegration Status](https://github.com/mikeizbicki/metahtml/workflows/tests/badge.svg)](https://github.com/mikeizbicki/metahtml/actions)
 
-This library extracts metadata from html.
+This library extracts metadata from a webpage.
+This meta-information includes:
+1. type (article, list of articles, etc.)
+1. language
+1. publication time
+1. modification time (if modified since published)
+1. author name
+1. canonical url
+1. urls of translations into other languages
+1. links
+1. images
+1. meta description
+1. article text
+
+All of this information is encoded in the HTML at various locations.
+The problem is that there are many standards for encoding this information,
+and even major websites like the BBC often do not follow the standards exactly.
+Therefore, existing tools for extracting this information are frequently wrong.
+
+The key unique feature of this library is that it has 1000s of test cases for different webpages.
+These test cases give us a high confidence that the information extracted from the webpage is correct.
 
 ## Downloading
 
