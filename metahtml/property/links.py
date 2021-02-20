@@ -154,7 +154,14 @@ def clean_url(url):
     'https://blog.mozvr.com/introducing-hubs-a-new-way-to-get-together-online/?sample_rate=0.001'
     """
 
-    parsed = urlparse(url)
-    parsed = parsed._replace(query=remove_tracker_params(parsed.query))
-    parsed = parsed._replace(fragment=remove_tracker_params(parsed.fragment))
-    return parsed.geturl()
+    try:
+        parsed = urlparse(url)
+        parsed = parsed._replace(query=remove_tracker_params(parsed.query))
+        parsed = parsed._replace(fragment=remove_tracker_params(parsed.fragment))
+        return parsed.geturl()
+
+    # ValueError is thrown by urlparse whenever url is not valid;
+    # in this case, we just return the original url without removing trackers
+    except ValueError:
+        return url
+
