@@ -2,7 +2,7 @@
 
 This library extracts metadata from a webpage.
 This meta-information includes:
-1. type (article, list of articles, etc.)
+1. type (article, not article)
 1. language
 1. publication time
 1. modification time (if modified since published)
