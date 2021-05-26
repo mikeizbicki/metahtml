@@ -111,7 +111,9 @@ class Extractor(BaseExtractor):
             if hostname in url_parsed.hostname:
 
                 # we've found a broken webpage;
-                # therefore, we delete all the results
+                # therefore, we delete all the previous results;
+                # if the language is None, then langid will get triggered,
+                # otherwise we'll set the language manually
                 results.clear()
                 if language is not None:
                     results.append({
