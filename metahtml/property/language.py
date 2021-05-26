@@ -96,8 +96,10 @@ class Extractor(BaseExtractor):
         broken_hostnames = [
             ('buchlesengerat.blogspot.com', 'de'),
             ('digitaljournal.com',          'en'),
+            ('hindi.moneycentral.com',      'hi'),
             ('hljxinwen.cn',                'ko'),
             ('hljxinwen.dbw.cn',            'ko'),
+            ('kr.xinhuanet.com',            'ko'),
             ('krcnr.cn',                    'ko'), # this has some non-korean translations on other domains; we should add those
             ('napolitoday.it',              'it'),
             ('news-medical.net',            None), # has at least 'fr','it', 'pt', 'es' as valid values; these appear to be direct translations, so this is a good candidate for linking translations
