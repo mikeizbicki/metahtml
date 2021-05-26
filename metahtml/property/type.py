@@ -264,6 +264,8 @@ class Extractor(BaseExtractor):
         ( 'news.kakaku.com', r'^/prdnews/page=8/?$' ),
         ( 'news.un.org', r'^/es/node?$' ),
         ( 'plaza.rakuten.co.jp', r'^/[a-zA-Z0-9]*/$' ),
+        ( 'program.thaipbs.or.th', r'^/30SecondSomething' ),
+        ( 'program.thaipbs.or.th', r'^/MyanmarPolitics/stories$' ),
         ( 'scvo.org', r'^/coronavirus-covid-19-information-guidance/?$' ),
         ( 'scvo.org', r'^/coronavirus-covid-19-information-guidance/resources/?$' ),
         ( 'scvo.org', r'^/support/running-your-organisation/leaving-lockdown/?$' ),
