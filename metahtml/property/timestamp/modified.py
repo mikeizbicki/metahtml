@@ -15,6 +15,7 @@ class Extractor(TimestampExtractor):
         ( 'arabic.rt.com',                  '(//time)[3]'),
         ( 'artgnews.com',                   '(//div[@class="info_area"]/span[@class="date"]/span)[2]' ),
         ( 'asiae.co.kr',                    '(//div[@class="articleInfo"]/div/em)[2]'),
+        ( 'bangkokpost.com',                '//div[@class="article-info"]/div[@class="row"]/div[1]/p[2]'),
         ( 'buzzfeednews.com',               '//p[@class="news-article-header__timestamps-updated"]'),
         ( 'consilium.europa.eu',            '//div[@class="time-wrapper"]/time/@datetime'),
         ( 'cronicaglobal.elespanol.com',    '(//div[@class="news_ext_date"]/time)[2]'),

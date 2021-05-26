@@ -58,6 +58,7 @@ class Extractor(TimestampExtractor):
         ( 'baobeibaobei.com',               '//div[@class="news-writer"]/span/text()'),
         ( 'baoquocte.vn',                   '//div[@class="dateUp"]/span[@class="format_time"]'),
         ( 'baotintuc.vn',                   '//meta[@itemprop="datePublished"]/@content'),
+        ( 'bangkokpost.com',                '//div[@class="article-info"]/div[@class="row"]/div[1]/p'),
         ( 'bbc.co.uk',                      '(//div[@class="date date--v2"])[1]' ),
         ( 'bbc.co.uk',                      '(//div[contains(@class,"date--v2")])[1]' ),
         ( 'bbc.co.uk',                      '//meta[@name="dcterms.created"]/@content'),
