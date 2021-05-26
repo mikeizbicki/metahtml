@@ -96,7 +96,7 @@ class Extractor(BaseExtractor):
         broken_hostnames = [
             ('buchlesengerat.blogspot.com', 'de'),
             ('digitaljournal.com',          'en'),
-            ('hindi.moneycentral.com',      'hi'),
+            ('hindi.moneycontrol.com',      'hi'),
             ('hljxinwen.cn',                'ko'),
             ('hljxinwen.dbw.cn',            'ko'),
             ('kr.xinhuanet.com',            'ko'),
