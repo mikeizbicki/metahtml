@@ -1,9 +1,18 @@
 '''
 '''
 
-import langid
+from urllib.parse import urlparse
 
 from metahtml.property.__common__ import BaseExtractor
+
+# configure langid
+# the library mistakenly calls many english language webpages as latin and chinese as quetchua;
+# latin webpages are very rare, however, so we explicitly disable latin as a prediction language;
+# langid does not support directly disabling a language,
+# it only supports enabling languages,
+# so we enable all languages that it supports except 'la'
+import langid
+langid.set_languages(['af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br', 'bs', 'ca', 'cs', 'cy', 'da', 'de', 'dz', 'el', 'en', 'eo', 'es', 'et', 'eu', 'fa', 'fi', 'fo', 'fr', 'ga', 'gl', 'gu', 'he', 'hi', 'hr', 'ht', 'hu', 'hy', 'id', 'is', 'it', 'ja', 'jv', 'ka', 'kk', 'km', 'kn', 'ko', 'ku', 'ky', 'lb', 'lo', 'lt', 'lv', 'mg', 'mk', 'ml', 'mn', 'mr', 'ms', 'mt', 'nb', 'ne', 'nl', 'nn', 'no', 'oc', 'or', 'pa', 'pl', 'ps', 'pt', 'ro', 'ru', 'rw', 'se', 'si', 'sk', 'sl', 'sq', 'sr', 'sv', 'sw', 'ta', 'te', 'th', 'tl', 'tr', 'ug', 'uk', 'ur', 'vi', 'vo', 'wa', 'xh', 'zh', 'zu'])
 
 class Extractor(BaseExtractor):
     jsonpaths = []
@@ -74,12 +83,51 @@ class Extractor(BaseExtractor):
 
     @staticmethod
     def custom_patterns(parser, results):
+
+        # some domains have broken labels for their language;
+        # for these domains we hardcode the language;
+        # NOTE:
+        # in the future, we should switch this to using a better machine learning label detection approach,
+        # but for now we simply hard code these values to ensure the test cases are high quality;
+        # if the language value is None,
+        # then langid will be used to determine the language automatically;
+        # this is useful for domains that can have multiple languages present,
+        # but langid isn't accurate enough that we should rely on it when we don't have to
+        broken_hostnames = [
+            ('buchlesengerat.blogspot.com', 'de'),
+            ('digitaljournal.com',          'en'),
+            ('hljxinwen.cn',                'ko'),
+            ('hljxinwen.dbw.cn',            'ko'),
+            ('krcnr.cn',                    'ko'), # this has some non-korean translations on other domains; we should add those
+            ('napolitoday.it',              'it'),
+            ('news-medical.net',            None), # has at least 'fr','it', 'pt', 'es' as valid values; these appear to be direct translations, so this is a good candidate for linking translations
+            ('patterico.com',               'en'),
+            ('people.com.cn',               'zh'),
+            ('posttoday.com',               'th'),
+            ('www.ce.cn',                   'zh'), # we normally don't include the www. so that it captures any subdomains as well, but this has a small name (so it would capture too much), and there are subdomains in other languages that we don't want to capture; FIXME: we should add test cases for the other languages
+            ]
+        url_parsed = urlparse(parser.url)
+        for hostname, language in broken_hostnames:
+            if hostname in url_parsed.hostname:
+
+                # we've found a broken webpage;
+                # therefore, we delete all the results
+                results.clear()
+                if language is not None:
+                    results.append({
+                        'value' : language,
+                        'pattern' : 'broken_hostname',
+                        'is_valid_for_hostname' : True,
+                        })
+
         # use the langid library to automatically detect the language
         # this is computationally expensive, but it can always be done
         if len(results)==0:
             alltext = parser.doc.text_content()
+            languages = langid.classify(alltext)
             result = {
-                'value' : langid.classify(alltext)[0],
+                'value' : languages[0],
+                'raw_languages' : languages,
                 'pattern' : 'langid',
                 'is_valid_for_hostname' : True,
                 }
