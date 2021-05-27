@@ -250,6 +250,7 @@ class Extractor(BaseExtractor):
         ( 'gcphn.org.au', r'^/practice-support/?$' ),
         ( 'gcphn.org.au', r'^/practice-support/covid-19/?$' ),
         ( 'hannity.com', r'^/media-room/?$' ),
+        ( 'innnews.co.th', r'^/e-sport/$'),
         ( 'imf.org', r'^/external/french/?$' ),
         ( 'klima.tagesschau.de', r'^/thema/un-sicherheitsrat/?$' ),
         ( 'klima.tagesschau.de', r'^/thema/un-sicherheitsrat/index.html' ),
