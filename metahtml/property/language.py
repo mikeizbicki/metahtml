@@ -101,6 +101,7 @@ class Extractor(BaseExtractor):
             ('hljxinwen.dbw.cn',            'ko'),
             ('kr.xinhuanet.com',            'ko'),
             ('krcnr.cn',                    'ko'), # this has some non-korean translations on other domains; we should add those
+            ('mgronline.com',               'th'),
             ('napolitoday.it',              'it'),
             ('news-medical.net',            None), # has at least 'fr','it', 'pt', 'es' as valid values; these appear to be direct translations, so this is a good candidate for linking translations
             ('patterico.com',               'en'),
