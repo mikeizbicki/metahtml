@@ -107,6 +107,7 @@ class Extractor(BaseExtractor):
             ('patterico.com',               'en'),
             ('people.com.cn',               'zh'),
             ('posttoday.com',               'th'),
+            ('thumbsup.in.th',              'th'),
             ('www.ce.cn',                   'zh'), # we normally don't include the www. so that it captures any subdomains as well, but this has a small name (so it would capture too much), and there are subdomains in other languages that we don't want to capture; FIXME: we should add test cases for the other languages
             ]
         url_parsed = urlparse(parser.url)
