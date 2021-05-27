@@ -407,6 +407,7 @@ class Extractor(TimestampExtractor):
         ( 'politico.com',                   '//time[@itemprop="datePublished"]/@datetime'),
         ( 'politicususa.com',               '//a/time[@class="entry-date published updated"]/@datetime'),
         ( 'pourquoidocteur.fr',             '//div[@class="date mb10"]'),
+        ( 'prachatai.com',                  '//span[@class="submitted-by"]'),
         ( 'pressafrik.com',                 '//div[@class="access"]' ),
         ( 'prtimes.jp',                     '//time[@class="time icon-time-release-svn"]/@datetime' ),
         ( 'pttcomic.com',                   '//span[@class="post-time"]'),
