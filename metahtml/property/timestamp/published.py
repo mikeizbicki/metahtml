@@ -429,6 +429,7 @@ class Extractor(TimestampExtractor):
         ( 'russian.news.cn',                '//div[@class="info"]/text()'),
         ( 'russland.news',                  '//abbr[@itemprop="datePublished"]/@title'),
         ( 'ruthfullyyours.com',             '//div/p[@id="single-byline"]'),
+        ( 'ryt9.com',                       '//p[@class="date-time"]'),
         ( 'salon.com',                      '//meta[@property="article:published_time"]/@content'),
         ( 'sana.sy',                        '//meta[@property="article:published_time"]/@content' ),
         ( 'santemagazine.fr',               '//time/@datetime'),
