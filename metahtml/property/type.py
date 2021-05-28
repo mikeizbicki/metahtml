@@ -264,6 +264,7 @@ class Extractor(BaseExtractor):
         ( 'mundoplast.com', r'^/tag-chemical-representada-corquimia/?$' ),
         ( 'news.kakaku.com', r'^/prdnews/page=8/?$' ),
         ( 'news.un.org', r'^/es/node?$' ),
+        ( 'pattayaone.news', r'^/learning-365/$' ),
         ( 'plaza.rakuten.co.jp', r'^/[a-zA-Z0-9]*/$' ),
         ( 'program.thaipbs.or.th', r'^/30SecondSomething' ),
         ( 'program.thaipbs.or.th', r'^/MyanmarPolitics/stories$' ),
