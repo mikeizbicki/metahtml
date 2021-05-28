@@ -101,11 +101,13 @@ class Extractor(BaseExtractor):
             ('hljxinwen.dbw.cn',            'ko'),
             ('kr.xinhuanet.com',            'ko'),
             ('krcnr.cn',                    'ko'), # this has some non-korean translations on other domains; we should add those
+            ('mgronline.com',               'th'),
             ('napolitoday.it',              'it'),
             ('news-medical.net',            None), # has at least 'fr','it', 'pt', 'es' as valid values; these appear to be direct translations, so this is a good candidate for linking translations
             ('patterico.com',               'en'),
             ('people.com.cn',               'zh'),
             ('posttoday.com',               'th'),
+            ('thumbsup.in.th',              'th'),
             ('www.ce.cn',                   'zh'), # we normally don't include the www. so that it captures any subdomains as well, but this has a small name (so it would capture too much), and there are subdomains in other languages that we don't want to capture; FIXME: we should add test cases for the other languages
             ]
         url_parsed = urlparse(parser.url)
