@@ -71,7 +71,7 @@ def get_cached_webpages(url, dates=None):
         date = datetime.datetime.now().strftime('%Y-%m-%d')
         path = os.path.join(url_dir,date)
         paths = [ path ]
-        r = requests.get(url,headers={'User-Agent':'NovichenkoBot'},verify=False)
+        r = requests.get(url,headers={'User-Agent':'Mozilla/5.0 (X11; Linux i686; rv:88.0) Gecko/20100101 Firefox/88.0'},verify=False)
         if r.status_code != 200:
             raise ValueError('status=',r.status_code,'for url=',url)
         html = r.text
