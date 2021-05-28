@@ -33,6 +33,7 @@ class Extractor(TimestampExtractor):
         ( 'islamsounnah.com',               '//meta[@property="article:modified_time"]/@content'),
         ( 'lessentiel.lu',                  '//div[@class="published clearfix"]/p/span'),
         ( 'lindependant.fr',                '//span[@class="article-detail-infos-modified"]/time/@content'),
+        ( 'mediamatters.org',               '(//p[@class="dateline"])[2]/time/@datetime' ),
         ( 'minwonnews.com',                 '(//div[@class="info_area"]/span[@class="date"]/span)[2]' ),
         ( 'newindianexpress.com',           '(//p[@class="ArticlePublish margin-bottom-10"]/span)[2]'),
         ( 'news.asiantown.net',             '//div[@id="b_by"]/@data-t' ),

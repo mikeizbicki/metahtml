@@ -87,7 +87,10 @@ def parse(html, url, property_filter=None, fast=False):
                 logging.warning('url='+url+' '+lib.__name__+': '+"e="+e.__repr__())
 
     # remove ads
-    if not fast:
+    hostnames_adblock_breaks = [
+        'archive.thinkprogress.org',
+        ]
+    if not fast and parser.url_parsed.hostname not in hostnames_adblock_breaks:
         metahtml.adblock.rm_ads(parser)
 
     # extract the properties
