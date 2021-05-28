@@ -31,6 +31,7 @@ try:
 # if the project is not installed,
 # then we fallback to get_version_info()
 except DistributionNotFound:
+    import os
     __version__ = 'uninstalled.' + os.popen('TZ=utc git log -1 --date="format-local:%Y%m%d%H%M%S" --format=format:"%cd+%h"').read()
 
 # log the version
