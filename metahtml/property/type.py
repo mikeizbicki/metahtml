@@ -274,6 +274,7 @@ class Extractor(BaseExtractor):
         ( 'smnyct.org', r'^/informacion-general/?$' ),
         ( 'state.gov', r'^/press-releases/$' ),
         ( 'telegraph.co.uk', r'^/news/world/?$' ),
+        ( 'thaienquirer.com', r'^/current-affair/$'),
         ( 'thanhnien.vn', r'^/doi-song/$' ),
         ( 'thethaiger.com', r'^/thai-th/?$' ),
         ( 'treasury.gov', r'^/press-center/?$' ),
