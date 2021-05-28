@@ -5,10 +5,12 @@ import setuptools
 with open("README.md", "r", encoding="utf-8") as fh: 
     long_description = fh.read()
 
+import os
+version = '0.0.1.dev' + os.popen('TZ=utc git log -1 --date="format-local:%Y%m%d%H%M%S" --format=format:"%cd+%h"').read()
+
 setuptools.setup(
     name="metahtml",
-    use_scm_version=True,
-    setup_requires=['setuptools_scm'],
+    version=version,
     author="Mike Izbicki",
     author_email="mike@izbicki.me",
     description="Extracts metadata and content from html webpages",

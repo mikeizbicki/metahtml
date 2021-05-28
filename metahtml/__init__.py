@@ -32,7 +32,7 @@ try:
 # then we fallback to get_version_info()
 except DistributionNotFound:
     from setuptools_scm import get_version
-    __version__ = get_version() + '-uninstalled'
+    __version__ = 'must run pip install for proper version'
 
 # log the version
 logging.info("version=", __version__)
