@@ -1,17 +1,45 @@
 '''
+This is the main interface to the metahtml library.
+
+NOTE:
+all metainformation extracted with the parse function contains the library's version;
+this makes it easy to compare multiple parses of the same html file and determine which is the most accurate
 '''
 
+# imports
+from collections import defaultdict
 import importlib
+import logging
 import lxml
 import lxml.html
 import lxml.etree
-from urllib.parse import urlparse
-from collections import defaultdict
-import logging
 import time
+from urllib.parse import urlparse
 
 import metahtml.adblock
 
+################################################################################
+# set the __version__ variable
+################################################################################
+
+# is the project has been installed with pip,
+# then we set __version__ to the version specified in setup.py
+from pkg_resources import get_distribution, DistributionNotFound
+try:
+    __version__ = get_distribution(__name__).version
+
+# if the project is not installed,
+# then we fallback to get_version_info()
+except DistributionNotFound:
+    from setuptools_scm import get_version
+    __version__ = get_version() + '-uninstalled'
+
+# log the version
+logging.info("version=", __version__)
+
+################################################################################
+# parse functions
+################################################################################
 
 cxpath_ldjson = lxml.etree.XPath('//script[@type="application/ld+json"]')
 
@@ -29,7 +57,7 @@ def parse(html, url, property_filter=None, fast=False):
     parser.url = url
     parser.url_parsed = urlparse(url)
     parser.meta = defaultdict(lambda: None)
-    parser.meta['version'] = version
+    parser.meta['version'] = __version__
     parser.meta['url'] = url
 
     # parse the raw html using lxml;
@@ -137,47 +165,3 @@ def simplify_meta(meta):
     ret = json.loads(json.dumps(dict(ret), default=str))
 
     return ret
-
-
-def get_version_info():
-    '''
-    returns a dictionary containing the hash and date of the running code
-
-    FIXME:
-    should we abort running of the program if there are uncommitted git files?
-
-    FIXME:
-    if the library is not contained within a git repo, then the returned value will be undefined;
-    this should only be a problem if at somepoint in the future I implement the ability to
-    pip install this library and forget to modify this code
-
-    NOTE:
-    this code contains a minor race condition;
-    if the git HEAD is changed after the program starts but before this code is run,
-    then the wrong results will be returned;
-    this bug is mitigated by immediately calling the function and storing the results in a global,
-    but there is still a short window (10ms-ish?) for the bug to appear;
-    by simply not committing new code at the same time as running code,
-    this bug should not appear in practice
-    '''
-    import pathlib
-    import subprocess
-
-    git_dir = str(pathlib.Path(__file__).parent.parent.absolute() / '.git')
-
-    # get the hash
-    p = subprocess.Popen(['git', '--git-dir='+git_dir, 'log' , '-1', '--format=%H'], stdout=subprocess.PIPE)
-    commit_hash, err = p.communicate()
-
-    # get the timestamp
-    p = subprocess.Popen(['git', '--git-dir='+git_dir, 'log' , '-1', '--format=%cd', '--date=iso'], stdout=subprocess.PIPE)
-    commit_timestamp, err = p.communicate()
-
-    # return the version info
-    return {
-        'hash': commit_hash.decode('utf-8').strip(),
-        'timestamp' : commit_timestamp.decode('utf-8').strip()
-        }
-
-version = get_version_info()
-logging.info("version=",version)
