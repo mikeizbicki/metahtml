@@ -35,7 +35,7 @@ except DistributionNotFound:
     __version__ = 'uninstalled.' + os.popen('TZ=utc git log -1 --date="format-local:%Y%m%d%H%M%S" --format=format:"%cd+%h"').read()
 
 # log the version
-logging.info("version=", __version__)
+logging.info("version="+str(__version__))
 
 ################################################################################
 # parse functions
