@@ -9,6 +9,8 @@ This is because the lxml parser is super slow when handling tens of thousands of
 and so we must manually create our own parser.
 '''
 
+import os
+import glob
 import logging
 import lxml
 import lxml.cssselect
@@ -34,8 +36,8 @@ def load_adblocks(force_reload = False):
 
     # load the raw rules from the files
     logging.info('loading adblock rules')
-    import glob
-    for filename in glob.glob('rules/ad/*.txt'):
+    globpath = os.path.join(os.path.dirname(__file__), 'rules/*')
+    for filename in glob.glob(globpath):
         with open(filename) as f:
             logging.debug('loading '+filename)
             for line in f:
