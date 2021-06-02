@@ -99,11 +99,15 @@ class Extractor(BaseExtractor):
             ('hindi.moneycontrol.com',      'hi'),
             ('hljxinwen.cn',                'ko'),
             ('hljxinwen.dbw.cn',            'ko'),
+            ('koratdaily.com',              'th'),
             ('kr.xinhuanet.com',            'ko'),
             ('krcnr.cn',                    'ko'), # this has some non-korean translations on other domains; we should add those
+            ('lokwannee.com',               'th'),
             ('mgronline.com',               'th'),
+            ('mthai.com',                   'th'),
             ('napolitoday.it',              'it'),
             ('news-medical.net',            None), # has at least 'fr','it', 'pt', 'es' as valid values; these appear to be direct translations, so this is a good candidate for linking translations
+            ('pattayablatt.com',            'de'),
             ('patterico.com',               'en'),
             ('people.com.cn',               'zh'),
             ('posttoday.com',               'th'),
