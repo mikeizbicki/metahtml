@@ -150,6 +150,10 @@ In order for me to accept a pull request, there needs to be at least 5 new test 
 1. 2 test cases for "category" urls that contain lists of many other urls (these should not have timestamps)
 
 <!--
+
+Only contains Month/Day
+https://www.healthcarefinancenews.com/news/five-blues-plans-launch-evio-profit-company-focused-lowering-drug-prices
+
 ## Notes
 
 Some websites aggregate from other websites, but appear to be their own news source.

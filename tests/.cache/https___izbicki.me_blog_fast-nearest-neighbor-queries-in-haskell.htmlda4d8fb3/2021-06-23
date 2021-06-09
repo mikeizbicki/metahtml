@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        
+        <title>Fast Nearest Neighbor Queries in Haskell</title>
+        <link rel="stylesheet" type="text/css" href="/css/default.css" />
+        <link rel="stylesheet" type="text/css" href="/css/code.css" />
+        <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-36396447-1', 'auto');
+          ga('require', 'displayfeatures');
+          ga('send', 'pageview');
+        </script>
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <a class=nav href="/">main page</a>
+                <a class=nav> / </a>
+                <a class=nav href="/research.html">research</a>
+                <a class=nav> / </a>
+                <a class=nav href="/cv.pdf">cv</a>
+                <a class=nav> / </a>
+                <a class=nav href="http://github.com/mikeizbicki">github</a>
+                <!--<a class=icon id=github   href="http://github.com/mikeizbicki"></a>-->
+
+            <!--<a class=icon href="/">izbicki.me</a>-->
+            </div>
+            <div id="navigation">
+            <!--<a class=icon id=rss      href="/feed.rss"></a>-->
+                <a class=icon id=rss href="/feed.rss"></a>
+            </div>
+            &nbsp;
+        </div>
+
+        <div id="content">
+        <!---->
+        <!--<h1>Fast Nearest Neighbor Queries in Haskell</h1>-->
+        <!---->
+
+            <h1>Fast Nearest Neighbor Queries in Haskell
+
+</h1>
+<div class="info">
+    
+        posted on 2015-07-21
+    
+    
+    
+</div>
+<!--Nearest neighbor queries are an important task in machine learning.-->
+<p>Two weeks ago at <a href="http://icml.cc/2015/">ICML</a>, I presented a method for making nearest neighbor queries faster. The paper is called <a href="http://izbicki.me/public/papers/icml2015-faster-cover-trees.pdf">Faster Cover Trees</a> and discusses some algorithmic improvements to the cover tree data structure. You can find the code in the <a href="http://github.com/mikeizbicki/hlearn">HLearn</a> library on github.</p>
+<p>The implementation was written entirely in Haskell, and it is the fastest existing method for nearest neighbor queries in arbitrary <a href="https://en.wikipedia.org/wiki/Metric_space">metric spaces</a>. (If you want a non-Haskell interface, the repo comes with a standalone program called <code>hlearn-allknn</code> for finding nearest neighbors.) <!--This is a rather unorthodox choice for numerical computing.--> In this blog post, I want to discuss four lessons learned about using Haskell to write high performance numeric code. <!--
+They are:
+
+* [Lesson 1](#lesson1) Polymorphic code is slower than it needs to be.
+
+* [Lesson 2](#lesson2) High performance Haskell code must be written for specific versions of GHC.
+
+* [Lesson 3](#lesson3) Immutability and laziness can make numeric applications faster.
+
+* [Lesson 4](#lesson4) Haskell's standard libraries were not designed for fast numeric computing.
+--> But before we get to those details, letâs see some benchmarks.</p>
+<h3 id="the-benchmarks">The benchmarks</h3>
+<!--
+I believe my Haskell code is the fastest existing method for nearest neighbor queries (with of course some caveats described below).
+It is also the *only* tool that supports:
+approximate queries,
+parallel queries,
+and queries in arbitrary metric spaces.
+-->
+<!--These benchmarks compare the speed of nearest neighbor search using HLearn's cover trees against other machine learning libraries by finding the nearest neighbor of each point in the dataset.-->
+<p>The benchmark task is to find the nearest neighbor of every point in the given dataset. Weâll use the four largest datasets in the <a href="https://bitbucket.org/zoqbits/benchmark-data">mlpack benchmark suite</a> and the <a href="https://en.wikipedia.org/wiki/Euclidean_distance">Euclidean distance</a>. (HLearn supports other distance metrics, but most of the compared libraries do not.) <!--Experiments were conducted on an AWS EC2 `c3.8xlarge` instance with 16 true cores (32 with hyperthreads).--> You can find more details about the compared libraries and instructions for reproducing the benchmarks in the repoâs <a href="https://github.com/mikeizbicki/HLearn/blob/master/bench/allknn">bench/allknn</a> folder.</p>
+<!--The first chart compares run times for finding the nearest neighbor of every point in the popular [MNIST dataset](http://yann.lecun.com/exdb/mnist/) using a single CPU core:-->
+<div class="inset">
+<p><strong>the runtime of finding every nearest neighbor</strong></p>
+<p><img src="../img/hlearn-allknn/mnist.png" /> <img src="../img/hlearn-allknn/tinyImages.png" /> <img src="../img/hlearn-allknn/twitter.png" /> <img src="../img/hlearn-allknn/yearpredict.png" /></p>
+</div>
+<p>Notice that HLearnâs cover trees perform the fastest on each dataset except for YearPredict. But HLearn can use all the cores on your computer to parallelize the task. Hereâs how performance scales with the number of CPUs on an AWS EC2 <code>c3.8xlarge</code> instance with 16 true cores:</p>
+<div class="inset">
+<div class="figure">
+<img src="../img/hlearn-allknn/yearpredict-parallel.png" />
+
+</div>
+</div>
+<p>With parallelism, HLearn is now also the fastest on the YearPredict dataset by a wide margin. (FLANN is the only other library supporting parallelism, but in my tests with this dataset parallelism actually slowed it down for some reason.)</p>
+<p>You can find a lot more cover tree specific benchmarks in the <a href="http://izbicki.me/public/papers/icml2015-faster-cover-trees.pdf">Faster Cover Trees</a> paper.</p>
+<!--
+Of these libraries, only FLANN and HLearn support parallel nearest neighbor queries.
+Here's how parallelism scales with the number of processors:
+
+![]()
+
+FLANN was specifically designed to speedup approximate nearest neighbor search rather than exact nearest neighbor search.
+But as you can see, HLearn remains competitive in this regime:
+
+![]()
+
+*Note:*
+Technically, HLearn and FLANN have two different notions of an approximate nearest neighbor query.
+FLANN guarantees that $1/\epsilon$ of the neighbors found will be exact matches, but makes no guarantees on how close the non-exact matches will be to their true nearest neighbors.
+HLearn, on the other hand, guarantees that the nearest neighbor found for all datapoints will be within $\epsilon$ distance of the true nearest neighbor.
+This is a slightly harder (and in my opinion) more useful task.
+-->
+<!--
+I've only selected the four largest datasets to show you performance figures on.
+All the other benchmarks finish so quickly (less than about 5 minutes) that performance comparisons aren't meaningful.
+
+Notice that on the MNIST dataset above, FLANN was competitive with HLearn.
+But on this Twitter dataset, FLANN is extremely slow:
+
+![](/img/hlearn-allknn/twitter.png)
+
+On the TinyImages dataset, no other libraries are competitive with HLearn:
+
+![](/img/hlearn-allknn/tinyImages.png)
+
+Of course, HLearn's cover trees don't always beat the competition.
+Kd-trees do particularly well on the YearPredict dataset shown below.
+But even in this case, HLearn's parallelism makes it rather competitive.
+
+![](/img/hlearn-allknn/yearpredict.png)
+
+-->
+<h3 id="the-lessons-learned">The lessons learned</h3>
+<p>The <a href="https://wiki.haskell.org/Performance">Haskell Wikiâs guide to performance</a> explains the basics of writing fast code. But unfortunately, there are many details that the wiki doesnât cover. <!----> <!--I learned a lot about high performance Haskell code from this project... too many details to share in one blog post.--> So Iâve selected four lessons from this project that I think summarize the state-of-the-art in high performance Haskell coding. <!--In this section, I want to share a few lessons I learned about writing very high performance Haskell code.--> <!--
+Now let's dive into the implementation details.
+The Haskell source is divided into four main files:
+
+* [executables/hlearn-allknn/Main.hs]() contains the executable code of the `hlearn-allknn` program.
+
+* [src/HLearn/Data/SpaceTree.hs]() contains a generic interface for working with data structures designed to speed up nearest neighbor search
+
+* [src/HLearn/Data/SpaceTree/Algorithms.hs]() contains the code for nearest neighbor traversals over any space tree
+
+* [src/HLearn/Data/SpaceTree/CoverTree.hs]() contains the actual cover tree implementation details
+
+I encountered four main hurdles when implementing this code, and let's discuss each in turn.
+--></p>
+<p><strong>Lesson 1:</strong> <em>Polymorphic code in GHC is slower than it needs to be.</em></p>
+<p>Haskell makes generic programming using polymorphism simple. My implementation of the cover tree takes full advantage of this. The <code>CoverTree_</code> type implements the data structure that speeds up nearest neighbor queries. It is defined in the module <a href="https://github.com/mikeizbicki/HLearn/blob/master/src/HLearn/Data/SpaceTree/CoverTree.hs">HLearn.Data.SpaceTree.CoverTree</a> as:</p>
+<pre><code>data CoverTree_
+        ( childC :: * -&gt; * ) -- the container type to store children in
+        ( leafC  :: * -&gt; * ) -- the container type to store leaves in
+        ( dp     :: *      ) -- the type of the data points
+    = Node
+        { nodedp                :: !dp
+        , level                 :: {-#UNPACK#-}!Int
+        , nodeWeight            :: !(Scalar dp)
+        , numdp                 :: !(Scalar dp)
+        , maxDescendentDistance :: !(Scalar dp)
+        , children              :: !(childC (CoverTree_ childC leafC dp))
+        , leaves                :: !(leafC dp)
+        }</code></pre>
+<p>Notice that every field except for <code>level</code> is polymorphic. A roughly equivalent C++ struct (using <a href="http://stackoverflow.com/questions/2565097/higher-kinded-types-with-c">higher kinded templates</a>) would look like:</p>
+<pre><code>template &lt; template &lt;typename&gt; typename childC
+         , template &lt;typename&gt; typename leafC
+         , typename dp
+         &gt;
+struct CoverTree_
+{
+    dp                                  *nodedp;
+    int                                  level;
+    dp::Scalar                          *nodeWeight;
+    dp::Scalar                          *numdp;
+    dp::Scalar                          *maxDescendentDistance;
+    childC&lt;CoverTree_&lt;childC,leafC,dp&gt;&gt; *children;
+    leafC&lt;dp&gt;                           *leaves;
+}</code></pre>
+<p>Notice all of those nasty pointers in the C++ code above. These pointers destroy cache performance for two reasons. First, the pointers take up a significant amount of memory. This memory fills up the cache, blocking the data we actually care about from entering cache. Second, the memory the pointers reference can be in arbitrary locations. This causes the <a href="https://en.wikipedia.org/wiki/Instruction_prefetch">CPU prefetcher</a> to load the wrong data into cache.</p>
+<p>The solution to make the C++ code faster is obvious: remove the pointers. In Haskell terminology, we call this <a href="https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/pragmas.html#unpack-pragma">unpacking</a> the fields of the <code>Node</code> constructor. Unfortunately, due to a bug in GHC (see issues <a href="https://ghc.haskell.org/trac/ghc/ticket/3990">#3990</a> and <a href="https://ghc.haskell.org/trac/ghc/ticket/7647">#7647</a> and a <a href="https://www.reddit.com/r/haskell/comments/29onpf/why_does_ghc_always_box_polymorphic_fields_in/">reddit discussion</a>), these polymorphic fields cannot currently be unpacked. <!--Hopefully this post provides some extra motivation to the GHC devs to implement this optimization :)--> In principle, GHCâs polymorphism can be made a zero-cost abstraction similar to templates in C++; but weâre not yet there in practice.</p>
+<p>As a temporary work around, HLearn provides a variant of the cover tree specialized to work on unboxed vectors. It is defined in the module <a href="https://github.com/mikeizbicki/HLearn/blob/master/src/HLearn/Data/SpaceTree/CoverTree_Specialized.hs">HLearn.Data.SpaceTree.CoverTree_Specialized</a> as:</p>
+<pre><code>data CoverTree_
+        ( childC :: * -&gt; * ) -- must be set to: BArray
+        ( leafC  :: * -&gt; * ) -- must be set to: UArray
+        ( dp     :: *      ) -- must be set to: Labaled' (UVector &quot;dyn&quot; Float) Int
+    = Node
+        { nodedp                :: {-#UNPACK#-}!(Labeled' (UVector &quot;dyn&quot; Float) Int)
+        , nodeWeight            :: {-#UNPACK#-}!Float
+        , level                 :: {-#UNPACK#-}!Int
+        , numdp                 :: {-#UNPACK#-}!Float
+        , maxDescendentDistance :: {-#UNPACK#-}!Float
+        , children              :: {-#UNPACK#-}!(BArray (CoverTree_ exprat childC leafC dp))
+        , leaves                :: {-#UNPACK#-}!(UArray dp)
+        }</code></pre>
+<p>Since the <code>Node</code> constructor no longer has polymorphic fields, all of its fields can be unpacked. The <code>hlearn-allknn</code> program imports this specialized cover tree type, giving a 10-30% speedup depending on the dataset. Itâs a shame that I have to maintain two separate versions of the same code to get this speedup.</p>
+<p><strong>Lesson 2:</strong> <em>High performance Haskell code must be written for specific versions of GHC.</em></p>
+<p>Because Haskell code is so high level, it requires aggressive compiler optimizations to perform well. Normally, GHC combined with LLVM does an <em>amazing</em> job with these optimizations. But in complex code, sometimes these optimizations donât get applied when you expect them. Even worse, different versions of GHC apply these optimizations differently. And worst of all, debugging problems related to GHCâs optimizer is <em>hard</em>.</p>
+<p>I discovered this a few months ago when GHC 7.10 was released. I decided to upgrade HLearnâs code base to take advantage of the new compilerâs features. This upgrade caused a number of performance regressions which took me about a week to fix. The most insidious example happened in the <code>findNeighbor</code> function located within the <a href="https://github.com/mikeizbicki/HLearn/blob/master/src/HLearn/Data/SpaceTree/Algorithms.hs">HLearn.Data.SpaceTree.Algorithms</a> module. The inner loop of this function looks like:</p>
+<pre><code>go (Labeled' t dist) (Neighbor n distn) = if dist*Îµ &gt; maxdist
+    then Neighbor n distn
+    else inline foldr' go leafres
+        $ sortBy (\(Labeled' _ d1) (Labeled' _ d2) -&gt; compare d2 d1)
+        $ map (\t' -&gt; Labeled' t' (distanceUB q (stNode t') (distnleaf+stMaxDescendentDistance t)))
+        $ toList
+        $ stChildren t
+    where
+        leafres@(Neighbor _ distnleaf) = inline foldr'
+            (\dp n@(Neighbor _ distn') -&gt; cata dp (distanceUB q dp distn') n)
+            (cata (stNode t) dist (Neighbor n distn))
+            (stLeaves t)
+
+        maxdist = distn+stMaxDescendentDistance t</code></pre>
+<p>For our purposes right now, the important thing to note is that <code>go</code> contains two calls to <code>foldr'</code>: one folds over the <code>CoverTree_</code>âs <code>childC</code>, and one over the <code>leafC</code>. In GHC 7.8, this wasnât a problem. The compiler correctly specialized both functions to the appropriate container type, resulting in fast code.</p>
+<p>But for some reason, GHC 7.10 did not want to specialize these functions. It decided to pass around huge class dictionaries for each function call, which is a <a href="https://wiki.haskell.org/Performance/Overloading">well known cause of slow Haskell code</a>. In my case, it resulted in more than a 20 times slowdown! Finding the cause of this slowdown was a painful exercise in reading GHCâs intermediate language <a href="https://ghc.haskell.org/trac/ghc/wiki/Commentary/Compiler/CoreSynType">core</a>. The <a href="http://www.haskellforall.com/2012/10/hello-core.html">typical tutorials</a> on debugging core use trivial examples of only a dozen or so lines of core code. But in my case, the core of the <code>hlearn-allknn</code> program was several hundred thousand lines long. Deciphering this core to find the slowdownâs cause was one of my more painful Haskell experiences. A tool that analyzed core to find function calls that contained excessive dictionary passing would make writing high performance Haskell code <em>much</em> easier.</p>
+<p>Once I found the cause of the slowdown, fixing it was trivial. All I had to do was call the <a href="https://hackage.haskell.org/package/base-4.8.0.0/docs/GHC-Exts.html#v:inline"><code>inline</code> function</a> on both calls to <code>foldr</code>. In my experience, this is a common theme in writing high performance Haskell code: Finding the cause of problems is hard, but fixing them is easy.</p>
+<p><strong>Lesson 3:</strong> <em>Immutability and laziness can make numeric code faster.</em></p>
+<p>The standard advice in writing numeric Haskell code is to avoid laziness. This is usually true, but I want to provide an interesting counter example.</p>
+<p>This lesson relates to the same <code>go</code> function above, and in particular the call to <code>sortBy</code>. <code>sortBy</code> is a standard Haskell function that uses a lazy merge sort. Lazy merge sort is a slow algorithmâtypically more than 10 times slower than in-place quicksort. Profiling <code>hlearn-allknn</code> shows that the most expensive part of nearest neighbor search is calculating distances (taking about 80% of the run time), and the second most expensive part is the call to <code>sortBy</code> (taking about 10% of the run time). But I nevertheless claim that this lazy merge sort is actually making HLearnâs nearest neighbor queries much faster due to its immutability and its laziness.</p>
+<p>Weâll start with immutability since it is pretty straightforward. Immutability makes parallelism easier and faster because thereâs no need for separate threads to place locks on any of the containers.</p>
+<p>Laziness is a bit trickier. If the explanation below doesnât make sense, reading Section 2 of <a href="http://izbicki.me/public/papers/icml2015-faster-cover-trees.pdf">the paper</a> where I discuss how a cover tree works might help. Letâs say weâre trying to find the nearest neighbor to a data point weâve named <code>q</code>. We can first sort the children according to their distance from <code>q</code>, then look for the nearest neighbors in the sorted children. The key to the cover treeâs performance is that we donât have to look in all of the subtrees. If we can prove that a subtree will never contain a point closer to <code>q</code> than a point weâve already found, then we âpruneâ that subtree. Because of pruning, we will usually not descend into every child. So sorting the entire container of children is a waste of timeâwe should only sort the ones we actually visit. A lazy sort gives us this property for free! And thatâs why lazy merge sort is faster than an in-place quick sort for this application.</p>
+<p><strong>Lesson 4:</strong> <em>Haskellâs standard libraries were not designed for fast numeric computing.</em></p>
+<p>While developing this cover tree implementation, I encountered many limitations in Haskellâs standard libraries. To work around these limitations, I created an alternative standard library called <a href="http://github.com/mikeizbicki/subhask">SubHask</a>. I have a lot to say about these limitations, but here Iâll restrict myself to the most important point for nearest neighbor queries: SubHask lets you safely create unboxed arrays of unboxed vectors, but the standard library does not. (Unboxed containers, like the <code>UNPACK</code> pragma mentioned above, let us avoid the overhead of indirections caused by the Haskell runtime. The Haskell wiki has a <a href="https://wiki.haskell.org/Arrays#Unboxed_arrays">good explanation</a>.) <!--This greatly improves cache performance.--> In my experiments, this simple optimization let me reduce cache misses by around 30%, causing the program to run about twice as fast!</p>
+<p>The distinction between an array and a vector is important in SubHaskâarrays are generic containers, and vectors are elements of a <a href="https://en.wikipedia.org/wiki/Vector_space">vector space</a>. This distinction is what lets SubHask safely unbox vectors. Let me explain:</p>
+<p>In SubHask, unboxed arrays are represented using the <code>UArray :: * -&gt; *</code> type in <a href>SubHask.Algebra.Array</a>. For example, <code>UArray Int</code> is the type of an unboxed array of ints. Arrays can have arbitrary length, and this makes it impossible to unbox an unboxed array. Vectors, on the other hand, must have a fixed dimension. Unboxed vectors in SubHask are represented using the <code>UVector :: k -&gt; * -&gt; *</code> type in <a href>SubHask.Algebra.Vector</a>. The first type parameter <code>k</code> is a phantom type that specifies the dimension of the vector. So a vector of floats with 20 dimensions could be represented using the type <code>UVector 20 Float</code>. But often the size of a vector is not known at compile time. In this case, SubHask lets you use a string to identify the dimension of a vector. In <code>hlearn-allknn</code>, the data points are represented using the type <code>UVector &quot;dyn&quot; Float</code>. The compiler then statically guarantees that every variable of type <code>UVector &quot;dyn&quot; Float</code> will have the same dimension. This trick is what lets us create the type <code>UArray (UVector &quot;dyn&quot; Float)</code>. <!--That's a very high-level explanation, but hopefully it makes sense.--></p>
+<p>The <code>hlearn-allknn</code> program exploits this unboxing by setting the <code>leafC</code> parameter of <code>CoverTree_</code> to <code>UArray</code>. Then, we call the function <code>packCT</code> which rearranges the nodes in <code>leafC</code> to use the <a href="https://en.wikipedia.org/wiki/Cache-oblivious_algorithm">cache oblivious</a> <a href="http://blogs.msdn.com/b/devdev/archive/2007/06/12/cache-oblivious-data-structures.aspx">van Embde Boas</a> tree layout. Unboxing by itself gives a modest 5% performance gain from the reduced overhead in the Haskell run time system; but unpacking combined with this data rearrangement actually cuts runtime in half!</p>
+<p>Unfortunately, due to some current limitations in GHC, Iâm still leaving some performance on the table. The <code>childC</code> parameter to <code>CoverTree_</code> cannot be <code>UArray</code> because <code>CoverTree_</code>s can have a variable size depending on their number of children. Therefore, <code>childC</code> is typically set to the boxed array type <code>BArray</code>. The GHC limitation is that the run time system gives us no way to control where the elements of a <code>BArray</code> exist in memory. Therefore, we do not get the benefits of the CPU prefetcher. Iâve proposed a solution that involves adding new primops to the GHC compiler (see feature request <a href="https://ghc.haskell.org/trac/ghc/ticket/10652">#10652</a>). Since there are typically more elements within the <code>childC</code> than the <code>leafC</code> on any given cover tree, I estimate that the speedup due to better cache usage of <code>BArray</code>s would be even larger than the speedup reported above. <!--I estimate that these primops would reduce `hlearn-allknn`'s cache misses by at least 5-10%, causing a 10-20% speed improvement.--></p>
+<!--
+In mathematical languages like Matlab and R, the vector type represents elements in a [vector space](https://en.wikipedia.org/wiki/Vector_space).
+Vector spaces are arguably the most fundamental concept in modern numerical computing.
+But for some reason in C++ and Haskell, the vector type has nothing to do with vector spaces.
+Vectors in these languages are just poorly named arrays.
+This isn't a huge problem in C++ because the numerical programmer in C++ typically represents elements of a vector space as a raw pointer to an array of `float`s in memory.
+But in Haskell, this representation is not possible.
+-->
+<!--
+**Lesson 4:** *Mutable containers are expensive in Haskell.*
+
+Cover trees come with an algorithm called "dual tree nearest neighbor search" which in theory speeds up nearest neighbor queries by a log factor.
+I was unable to implement this algorithm in Haskell, however, because it requires mutable state.
+Haskell evangelists like to point out that imperative algorithms are easy to implement using the `ST` monad.
+But unfortunately, GHC's garbage collector makes [using mutable arrays very expensive](http://blog.ezyang.com/2014/05/ghc-and-mutable-arrays-a-dirty-little-secret/).
+
+Fortunately, there was no need for me to implement this dual tree nearest neighbor algorithm.
+In practice, it is usually slower than the single tree algorithm, which was easy to implement.
+
+**Lesson 5:** *The inherrent performance cost of using Haskell is negligible.*
+
+The previous four lessons describe
+
+There are two cost centers when using Haskell that will not every be significantly improved.
+The first is garbage collection.
+
+The second is
+-->
+<h3 id="conclusion">Conclusion</h3>
+<!--My current implementation is not as fast as it could be.-->
+<!--I estimate that if I rewrote everything in C, I could make the code between 20-50% faster.-->
+<p>My experience is that Haskell can be amazingly fast, but it takes a <em>lot</em> of work to get this speed. Iâd guess that it took about 10 times as much work to create my Haskell-based cover tree than it would have taken to create a similar C-based implementation. <!--I'd guess that I could have written a C implementation of my faster cover trees with about 10% of the work that the Haskell implementation took.--> (Iâm roughly as proficient in each language.) Furthermore, because of the current limitations in GHC I pointed out above, the C version would be just a bit faster.</p>
+<p>So then why did I use Haskell? To make cover trees 10 times easier for programmers to <em>use</em>.</p>
+<!--There are a number of rather automatic ways to use data structures like cover trees to speed up numeric code.-->
+<p>Cover trees can make almost all machine learning algorithms faster. For example, theyâve sped up SVMs, clustering, dimensionality reduction, and reinforcement learning. But most libraries do not take advantage of this optimization because it is relatively time consuming for a programmer to do by hand. Fortunately, the fundamental techniques are simple enough that they can be implemented as a compiler optimization pass, and Haskell has great support for libraries that implement their own optimizations. So Real Soon Now (TM) I hope to show you all how cover trees can speed up your Haskell-based machine learning without any programmer involvement at all. <!--But that's just a teaser of what's coming in the future.--> <!--
+But I'm still glad I made the choice to implement the cover tree in Haskell instead of C.
+The reason is that *using* the cover tree in Haskell is easier than using an equivalent C version would be.
+There are a number of rather automatic ways to use data structures like cover trees to speed up numeric code.
+For example, cover trees have been used to speed up SVMs, clustering, dimensionality reduction, and reinforcement learning.
+These techniques are simple enough that they can be implemented as a compiler optimization pass,
+and Haskell has great support for libraries that implement their own optimizations.
+But that's just a teaser of what's coming in the future.
+--></p>
+
+        </div>
+
+        
+        <div id="relatedposts">
+        
+        <div>
+        <h2></h2>
+        <b style="font-size:20px">related posts</b>
+        <!--<div><h2>related posts</h2></div>-->
+        <span class=allposts>(<a href="/#allposts">view all posts</a>)</span>
+        </div>
+
+        <div class=cat2>
+
+<a name="computer science"></a>
+<div class=catnamedesc>
+<span class=catname>computer science</span>
+
+<span class=allposts>(<a href="/#computer science">view all posts in category</a>)</span>
+
+
+
+</div>
+
+
+<div class=catinside>
+
+
+
+<div class=cat2>
+
+<a name="haskell"></a>
+<div class=catnamedesc>
+<span class=catname>haskell</span>
+
+
+
+</div>
+
+
+<div class=catinside>
+
+<ul class=postlist>
+
+
+
+
+
+<li>
+<table class=posttable>
+    <tr>
+        <td valign=top nowrap><span class=date>(2015-07-21)</span></td>
+        <td valign=top nowrap> - </td>
+        <td valign=top><span class=curpost>Fast Nearest Neighbor Queries in Haskell</span></td>
+    </tr>
+</table>
+</li>
+
+
+
+
+
+
+<li>
+<table class=posttable>
+    <tr>
+        <td valign=top nowrap><span class=date>(2014-09-17)</span></td>
+        <td valign=top nowrap> - </td>
+        <td valign=top><a class=post href="/blog/error-messages-in-ghc-vs-g%2B%2B.html">Beginner error messages in C++ vs Haskell 
+        
+        </a> </td>
+    </tr>
+</table>
+</li>
+
+<li>
+<table class=posttable>
+    <tr>
+        <td valign=top nowrap><span class=date>(2014-09-15)</span></td>
+        <td valign=top nowrap> - </td>
+        <td valign=top><a class=post href="/blog/avl-tree-runtimes-c%2B%2B-vs-haskell.html">Comparing AVL Trees in C++ and Haskell 
+        
+        </a> </td>
+    </tr>
+</table>
+</li>
+
+<li>
+<table class=posttable>
+    <tr>
+        <td valign=top nowrap><span class=date>(2014-09-10)</span></td>
+        <td valign=top nowrap> - </td>
+        <td valign=top><a class=post href="/blog/polymorphism-in-haskell-vs-c%2B%2B.html">Polymorphism in Haskell vs C++ 
+        
+        </a> </td>
+    </tr>
+</table>
+</li>
+
+<li>
+<table class=posttable>
+    <tr>
+        <td valign=top nowrap><span class=date>(2013-07-29)</span></td>
+        <td valign=top nowrap> - </td>
+        <td valign=top><a class=post href="/blog/functors-and-monads-for-analyzing-data.html">Functors and monads for analyzing data 
+        
+        </a> </td>
+    </tr>
+</table>
+</li>
+
+<li>
+<table class=posttable>
+    <tr>
+        <td valign=top nowrap><span class=date>(2013-06-11)</span></td>
+        <td valign=top nowrap> - </td>
+        <td valign=top><a class=post href="/blog/hlearns-code-is-shorter-and-clearer-than-wekas.html">HLearn's code is shorter and clearer than Weka's 
+        
+        </a> </td>
+    </tr>
+</table>
+</li>
+
+<li>
+<table class=posttable>
+    <tr>
+        <td valign=top nowrap><span class=date>(2013-06-03)</span></td>
+        <td valign=top nowrap> - </td>
+        <td valign=top><a class=post href="/blog/hlearn-cross-validates-400x-faster-than-weka.html">HLearn cross-validates >400x faster than Weka 
+        
+        </a> </td>
+    </tr>
+</table>
+</li>
+
+<li>
+<table class=posttable>
+    <tr>
+        <td valign=top nowrap><span class=date>(2013-05-09)</span></td>
+        <td valign=top nowrap> - </td>
+        <td valign=top><a class=post href="/blog/markov-networks-monoids-and-futurama.html">Markov Networks, Monoids, and Futurama 
+        
+        </a> </td>
+    </tr>
+</table>
+</li>
+
+<li>
+<table class=posttable>
+    <tr>
+        <td valign=top nowrap><span class=date>(2013-01-08)</span></td>
+        <td valign=top nowrap> - </td>
+        <td valign=top><a class=post href="/blog/the-categorical-distributions-algebraic-structure.html">The categorical distribution's algebraic structure 
+        
+        </a> </td>
+    </tr>
+</table>
+</li>
+
+<li>
+<table class=posttable>
+    <tr>
+        <td valign=top nowrap><span class=date>(2013-01-04)</span></td>
+        <td valign=top nowrap> - </td>
+        <td valign=top><a class=post href="/blog/nuclear-weapon-statistics-using-monoids-groups-and-modules-in-haskell.html">Nuclear weapon statistics using monoids, groups, and modules in Haskell 
+        
+        </a> </td>
+    </tr>
+</table>
+</li>
+
+<li>
+<table class=posttable>
+    <tr>
+        <td valign=top nowrap><span class=date>(2012-11-25)</span></td>
+        <td valign=top nowrap> - </td>
+        <td valign=top><a class=post href="/blog/gausian-distributions-are-monoids.html">Gausian distributions form a monoid 
+        
+        </a> </td>
+    </tr>
+</table>
+</li>
+
+<li>
+<table class=posttable>
+    <tr>
+        <td valign=top nowrap><span class=date>(2012-03-22)</span></td>
+        <td valign=top nowrap> - </td>
+        <td valign=top><a class=post href="/blog/using-hmms-in-haskell-for-bioinformatics.html">Using HMMs in Haskell for Bioinformatics 
+        
+        </a> </td>
+    </tr>
+</table>
+</li>
+
+
+</ul>
+
+
+
+
+<div class=cat2>
+
+<a name="typeparams"></a>
+<div class=catnamedesc>
+<span class=catname>typeparams</span>
+
+<span class=allposts>(<a href="/#typeparams">view all posts in category</a>)</span>
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+<div class=cat2>
+
+<a name="pokerpirate"></a>
+<div class=catnamedesc>
+<span class=catname>pokerpirate</span>
+
+<span class=allposts>(<a href="/#pokerpirate">view all posts in category</a>)</span>
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+</div>
+
+
+        <script type="text/javascript">
+        var images=
+            [ { "img":"/img/popular/ingredients-2.jpg"
+              //, "url":"/posts/fun/how-i-serve-150-free-lunches-for-less-than-20-cents-each-using-homebrew-equipment.html" 
+              , "url":"/blog/how-i-serve-150-free-lunches-for-less-than-20-cents-each-using-homebrew-equipment.html" 
+              , "txt":"food not bombs"
+              }
+            , { "img":"/img/scroll/vaydaber-7.jpg"
+              // , "url":"/posts/religion/scrolls.html"
+              , "url":"/blog/ancient-hebrew-torah-scrolls.html"
+              , "txt":"my collection of \"ancient\" hebrew scrolls"
+              }
+            , { "img":"/img/popular/ak47-2.jpg"
+              //, "url":"/posts/fun/turning-an-ak-47-into-a-serving-ladle.html"
+              , "url":"/blog/turning-an-ak-47-into-a-serving-ladle.html"
+              , "txt":"turning an ak47 into a serving ladle"
+              }
+            , { "img":"/img/popular/coins-all.jpg"
+              , "url":"/blog/how-to-create-an-unfair-coin-and-prove-it-with-math.html"
+              //, "url":"/posts/computer-science/how-to-create-an-unfair-coin-and-prove-it-with-math.html"
+              , "txt":"create an unfair coin and prove it with math"
+              }
+            , { "img":"/img/popular/settlers.jpg"
+              , "url":"/blog/how-to-cheat-at-settlers-of-catan-by-loading-the-dice-and-prove-it-with-p-values.html"
+              , "txt":"cheating at settlers of catan with loaded dice and p-values"
+              }
+            ];
+
+        function mkImage() {
+            var i=Math.floor(Math.random()*(images.length));
+            while (document.URL.indexOf(images[i].url) != -1) {
+                i=Math.floor(Math.random()*(images.length));
+            }
+            var ret="<div id=ppfooter>"
+                   +"<div class=popularpost>"
+                   +    "<a href='"+images[i].url+"'>"
+                   +    "<img class=popularpost src='"+images[i].img+"'/>"
+                   +    "<div class=popularposttitle>"+images[i].txt+"</a></div>"
+                   +    "</a>"
+                   +"</div>"
+                   +"</div>"
+            return ret;
+        }
+
+        document.write(mkImage());
+
+        </script>
+        
+
+
+        <div id="footer">
+            All content is licensed under the <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">creative commons attribution-sharealike</a>.
+            <br/>
+
+            You can contact me at <a href="mailto:mike@izbicki.me">mike@izbicki.me</a> for just about anything.
+        </div>
+    </body>
+</html>

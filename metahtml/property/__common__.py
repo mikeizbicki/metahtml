@@ -169,8 +169,17 @@ class BaseExtractor():
                 #if not url in found_urls:
                     #continue
 
+            # get the value from the match;
+            # most websites store the value directly in the specified location,
+            # but some websites store the value as a list with one element
+            # (e.g. https://cn.reuters.com/news/picture/pictures-report-idCNRTXBCF81),
+            # and we must extract the value from this list
+            value = match.value
+            if type(value) is list and len(value) == 1:
+                value = value[0]
+
             # the match was not rejected, so we parse the match from the match
-            result = cls.str_to_result(match.value)
+            result = cls.str_to_result(value)
             if result is not None:
                 result['is_valid_for_hostname'] = True
                 result['pattern'] = 'ld+json'

@@ -17,6 +17,8 @@ import time
 from urllib.parse import urlparse
 
 import metahtml.adblock
+import metahtml.content
+ExtractorConfig_recall = metahtml.content.ExtractorConfig_recall
 
 ################################################################################
 # set the __version__ variable
@@ -35,7 +37,7 @@ except DistributionNotFound:
     __version__ = 'uninstalled.' + os.popen('TZ=utc git log -1 --date="format-local:%Y%m%d%H%M%S" --format=format:"%cd+%h"').read()
 
 # log the version
-logging.info("version=", __version__)
+logging.info("version="+str(__version__))
 
 ################################################################################
 # parse functions
@@ -43,7 +45,7 @@ logging.info("version=", __version__)
 
 cxpath_ldjson = lxml.etree.XPath('//script[@type="application/ld+json"]')
 
-def parse(html, url, property_filter=None, fast=False):
+def parse(html, url, property_filter=None, fast=False, extractor_config=metahtml.content.ExtractorConfig()):
     '''
     return the dictionary of meta information for a given html/url combination
     '''
@@ -87,7 +89,10 @@ def parse(html, url, property_filter=None, fast=False):
                 logging.warning('url='+url+' '+lib.__name__+': '+"e="+e.__repr__())
 
     # remove ads
-    if not fast:
+    hostnames_adblock_breaks = [
+        'archive.thinkprogress.org',
+        ]
+    if not fast and parser.url_parsed.hostname not in hostnames_adblock_breaks:
         metahtml.adblock.rm_ads(parser)
 
     # extract the properties
@@ -103,6 +108,7 @@ def parse(html, url, property_filter=None, fast=False):
             parser.meta[property_name] = module.Extractor.extract(parser)
 
     calculate_property('timestamp.published')
+    #parser.meta['timestamp.published'] = { 'filtered': ''}
     calculate_property('type')
     calculate_property('links','links.all')
 
@@ -120,7 +126,9 @@ def parse(html, url, property_filter=None, fast=False):
             # extract the content;
             # this function is allowed to arbitrarily modify parser.doc,
             # and so it must come after properties that depend on the entire document
-            calculate_property('content')
+            parser.meta['content'] = {
+                'best' : metahtml.content.extract_content(parser, config=extractor_config)
+            }
 
             # calculate the links of just the article's html content;
             # this must come after calculating the content because 
