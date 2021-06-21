@@ -103,6 +103,7 @@ def parse(html, url, property_filter=None, fast=False, force_parsing=True):
             parser.meta[property_name] = module.Extractor.extract(parser)
 
     calculate_property('timestamp.published')
+    #parser.meta['timestamp.published'] = { 'filtered': ''}
     calculate_property('type')
     calculate_property('links','links.all')
 

@@ -13,10 +13,14 @@ import chardet
 import codecs
 import re
 import requests
+sys.path.append('')
 import metahtml
+import trafilatura
+from newspaper import parsers
 from math import *
 from difflib import SequenceMatcher
 from getopt import getopt, GetoptError
+
 
 help_message = '''
 This is cleaneval.py version 1.0 -- Copyright (C) 2008 by Stefan Evert
@@ -46,50 +50,77 @@ option -u is specified, no distinction is made between types <p>, <h> and <l>).
 If the third argument is given, full alignments will be written to separate
 files in directory <align_dir>.
 '''
-def __get_url(raw_html):
-    id_attr = raw_html.index("id=")
-    url_start = id_attr + 4
-    url_end = raw_html.index("\"", url_start)
-    url = raw_html[url_start:url_end]
-    return url 
 
+re_find_URL = re.compile('https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()!@:%_\\+.~#?&\\/\\/=]*)') # regex detecting url
+
+def __get_url(raw_html):
+    '''
+    Extract url from a raw html
+    Argument:
+        raw_html    String  Raw downloaded html input
+    Return:
+        url         String  Url found in raw_html. If no url is found, return empty string
+    >>> __get_url('')
+    ''
+    >>> __get_url('<html><body><h1>No URL in this file</h1></body></html>')
+    ''
+    >>> __get_url('<html><body><div><a href="#">http://www.abc.com</a></div></body></html>')
+    'http://www.abc.com'
+    '''
+    match_obj = re.search(re_find_URL, raw_html)
+    if match_obj:
+        url = match_obj.group(0)
+        return url
+    else:
+        return ''
 
 def slurp_file(filename):
-    with open(filename, 'rb') as src_file:
-        detection = chardet.detect(src_file.read())
-    encoding = 'ascii'
-    if detection['encoding'] != 'ascii':
-        if detection['encoding'] == 'Windows-1254':
-            encoding = 'ISO 8859-9'
-        elif detection['encoding'] == 'CP949':
-            encoding = 'ISO 8859-1'
-        else:
-            encoding = detection['encoding']
+    encoding = __get_encoding(filename)
     with open(filename, 'r', encoding=encoding) as fh:
         body = fh.read()
         fh.close()
         return body
+
+def __get_encoding(filename):
+    encoding = 'ascii'
+    with open(filename, 'rb') as src_file:
+        detection = chardet.detect(src_file.read())
+        src_file.close()
+    if detection['encoding'] != 'ascii':
+        encoding = 'ISO 8859-9'
+    elif detection['encoding'] == 'Windows-1254':
+        encoding = 'ISO 8859-1'
+    else:
+        encoding = detection['encoding']
+    return encoding
+
+def __check_encoding(path):
+    files = os.listdir(path)
+    for filename in files:
+        file_path = path+'/'+filename
+        encoding = __get_encoding(file_path)
+        if encoding != 'utf-8':
+            print(encoding)
 
 re_URL = re.compile("^\s*URL.*$", re.MULTILINE)
 re_TAG = re.compile("(<[phl]>)", re.IGNORECASE)
 re_WS = re.compile("\s+")
 re_CTRL = re.compile("[\x00-\x1F]+")
 re_HI = re.compile("[\x80-\xFF]+")
+re_CLEAN_URL = re.compile("^\s*##.*$", re.MULTILINE) #For frsv gold dataset
 
 def normalize(text, ascii=False, unlabelled=False):
-	text = re_URL.sub("", text)           # remove URL line at start of gold standard files
-	text = re_CTRL.sub(" ", text)         # replace any control characters by spaces (includes newlines)
-
-	if unlabelled:
-		text = re_TAG.sub("\n<p> ", text) # start each segment on new line, normalise tags
-	else:
-		text = re_TAG.sub("\n\g<1> ", text)  # only break lines before segment markers
-
-	text = re_WS.sub(" ", text)           # normalise whitespace (including line breaks) to single spaces
-	if ascii:
-		text = re_HI.sub("", text)        # delete non-ASCII characters (to avoid charset problems)
-
-	return text
+    text = re_URL.sub("", text)           # remove URL line at start of gold standard files
+    text = re_CLEAN_URL.sub("", text)
+    text = re_CTRL.sub(" ", text)         # replace any control characters by spaces (includes newlines)
+    if unlabelled:
+        text = re_TAG.sub("\n<p> ", text) # start each segment on new line, normalise tags
+    else:
+        text = re_TAG.sub("\n\g<1> ", text)  # only break lines before segment markers
+        text = re_WS.sub(" ", text)           # normalise whitespace (including line breaks) to single spaces
+        if ascii:
+            text = re_HI.sub("", text)        # delete non-ASCII characters (to avoid charset problems)
+        return text
 
 ## return diff as list of tuples ("equal"/"insert"/"delete", [text words], [gold words])
 def make_diff(alignment, text_w, gold_w):
@@ -149,44 +180,28 @@ def write_alignment(diff, filename):
 	fh = file(filename, "w")
 	for tag, text_seg, gold_seg in diff:
 		if tag == "delete":
-			print >> fh, "<" * 40, "(false positive)"
-			print >> fh, " ".join(text_seg)
+			print("<" * 40, "(false positive)", file=fh)
+			print(" ".join(text_seg), file=fh)
 		if tag == "insert":
-			print >> fh, ">" * 40, "(false negative)"
-			print >> fh, " ".join(gold_seg)
+			print(">" * 40, "(false negative)", file=fh)
+			print(" ".join(gold_seg), file=fh)
 		if tag == "equal":
-			print >> fh, "=" * 40
-			print >> fh, " ".join(gold_seg)
+			print("=" * 40, file=fh)
+			print(" ".join(gold_seg), file=fh)
 	fh.close()
 
-try:
-    options, args = getopt(sys.argv[1:], "tnsau")
-except GetoptError:
-	print >> sys.stderr, help_message
-	sys.exit(2)
-
-#if len(args) not in (2,3):
-#	print(help_message, file=sys.stderr)
-#	sys.exit(2)
-
-#text_dir = args[0]
-#gold_dir = args[1]
-#align_dir = args[2] if len(args) > 2 else None
-
-#opt_total = ('-t', '') in options
-opt_total = True
-opt_noheader = ('-n', '') in options
-opt_summary = ('-s', '') in options
-opt_unlabelled = ('-u', '') in options
-opt_ascii = ('-a', '') in options
-
-
-
-
-def do_cleaneval(url, gold_html, cleaned_html):
+def do_cleaneval(gold_html, cleaned_html):
     '''
-    add docstring with test cases
+    Arguments:
+        gold_html       String  the gold standard html
+        cleaned_html    String  the cleaned html returned from a library
+    Return:
+        eval_list       tuple   representing score on cleaned text evaluation comparing with the gold standard
+
+    >>> do_cleaneval(' <h> header <p> content', '<h> header <p> content') 
+    (100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 5, 0, 0, 2, 0, 0)
     '''
+    cleaned_html = normalize(cleaned_html)
     text_words = re_WS.split(cleaned_html)
     gold_words = re_WS.split(gold_html)
     alignment = SequenceMatcher(None, text_words, gold_words)
@@ -195,21 +210,73 @@ def do_cleaneval(url, gold_html, cleaned_html):
     return eval_list
 
 def clean_cleaneval(raw_html):
-    cleaned_html = normalize(raw_html, opt_ascii, opt_unlabelled)
-    return cleaned_html
+    '''
+    Traditional Cleaneval does not clean any html, just return the raw html
+    >>> clean_cleaneval('<h2>Hello</h2><p> world!</p>')
+    '<h2>Hello</h2><p> world!</p>'
+    '''
+    return raw_html
 
 def clean_metahtml(raw_html):
+    '''
+    Arguments:
+        raw_html        String  Raw downloaded html input
+    Return:
+        cleaned_html    String  Cleaned html by metahtml library
+    >>> clean_metahtml('<text id="http://medicine.ucsf.edu/housestaff/handbook/HospH2002_C7.htm" title="HEMATOLOGY / ONCOLOGY" encoding="windows-1252"> <html> <head> <meta name=Generator content="Microsoft Office HTML Filter 2.0"> <meta http-equiv=Content-Type content="text/html; charset=windows-1252"> <meta name=Originator content="Microsoft Word 9"> <title>HEMATOLOGY / ONCOLOGY</title> <style> <!-- p.MsoNormal, li.MsoNormal, div.MsoNormal { margin:0in; margin-bottom:.0001pt; font-size:10.0pt; font-family:"Times New Roman";}')
+    ''
+    '''
     url = __get_url(raw_html)
     res = metahtml.parse(raw_html, url, None, False, True)
     cleaned_html = res['content']['best']['value']['text']
     return cleaned_html
 
-def cleaneval_from_files(gold_path, raw_path, list_of_libraries = [ lambda x: x ], eval_method=do_cleaneval):
+def clean_trafilatura_no_fallback(raw_html):
+    '''                                                          
+    Arguments:
+        raw_html        String  Raw downloaded html input
+    Return:
+        cleaned_html    String  Cleaned html by trafilatura library only
+    Faster than with fallback option but less content extracted
+    >>> clean_trafilatura_no_fallback('<div><h3>Test Header</h3><p>Content 123</p></div>')
+    'Content 123'
+    '''
+    url = __get_url(raw_html)
+    try:
+        cleaned_html = trafilatura.extract(raw_html, url, no_fallback=True)
+    except Exception:
+        cleaned_html = ''
+    return cleaned_html
+
+def clean_newspaper3k(raw_html):
+    '''
+    Arguments:
+        raw_html        String  Raw downloaded html input
+    Return:
+        cleaned_html    String  Cleaned html by newspaper3k library
+    '''
+    parser = parsers.Parser()
+    cleaned_html = parser.fromstring(raw_html)
+    return cleaned_html.text_content()
+
+def clean_trafilatura_with_fallback(raw_html):
+    '''
+    Arguments:
+        raw_html        String  Raw downloaded html input
+    Return:
+        cleaned_html    String  Cleaned html by trafilatura library with fallback by justtext and readability-lxml
+    Slower but more content extracted. We opt the doctest for this function as there is a required minimum file size
+    '''
+    url = __get_url(raw_html)
+    cleaned_html = trafilatura.extract(raw_html, url)
+    return cleaned_html
+
+def cleaneval_from_files(gold_path, raw_path, list_of_libraries = [ lambda x: x ], eval_method=do_cleaneval, opt_total=True, opt_noheader=False, opt_summary=True, opt_ascii=False, opt_unlabelled=False):
     '''
     gold_path is the path to the directory containing the gold standard files
     raw_path is the path to the directory containing the raw files
     '''
-    n_processed = 0
+    n_processed = {} 
     raw_files = os.listdir(raw_path)
     n_files = len(raw_files)
     eval_list = {}
@@ -218,6 +285,7 @@ def cleaneval_from_files(gold_path, raw_path, list_of_libraries = [ lambda x: x 
     for library in list_of_libraries:
         sum[library.__name__] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         ss[library.__name__] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        n_processed[library.__name__] = 0
     for filename in raw_files:
         raw_file = raw_path + '/' + filename
         gold_standard_file = gold_path + '/' + filename
@@ -225,17 +293,21 @@ def cleaneval_from_files(gold_path, raw_path, list_of_libraries = [ lambda x: x 
             continue  # original and cleaned files don't always match in CleanEval gold standard
         raw_html = slurp_file(raw_file)
         gold_html = normalize(slurp_file(gold_standard_file), opt_ascii, opt_unlabelled)
-        url = __get_url(raw_html)
         for library in list_of_libraries:
             cleaned_html = library(raw_html)
-            eval_list[library.__name__] = eval_method(url, gold_html, cleaned_html)
+            if cleaned_html is None:
+                continue
+            eval_list[library.__name__] = eval_method(gold_html, cleaned_html)
+            if not opt_total:
+                print(raw_file+ " ("+library.__name__+")" + "\t" + ("%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%d\t%d\t%d\t%d\t%d\t%d" % eval_list[library.__name__]))
             for i, x in enumerate(eval_list[library.__name__]):
                 sum[library.__name__][i] += x
                 ss[library.__name__][i] += x ** 2
-        n_processed += 1
-    if n_processed < n_files:
-        print("Warning: %d files not found in gold standard (skipped)" % (n_files - n_processed), file=sys.stderr)
-    print("Library\tF\tP\tR\tF.tag\tP.tag\tR.tag\tTP\tFP\tFN\tTP.tag\tFP.tag\tFN.tag")
+            n_processed[library.__name__] += 1
+    for library in list_of_libraries:
+        if n_processed[library.__name__] < n_files:
+            print("Warning: %d files skipped for %s" % (n_files - n_processed[library.__name__], library.__name__))
+    print("Library\t\t\tF\tP\tR\tF.tag\tP.tag\tR.tag\tTP\tFP\tFN\tTP.tag\tFP.tag\tFN.tag")
     for library in list_of_libraries:
         tp = sum[library.__name__][6]
         fp = sum[library.__name__][7]
@@ -244,84 +316,4 @@ def cleaneval_from_files(gold_path, raw_path, list_of_libraries = [ lambda x: x 
         tag_fp = sum[library.__name__][10]
         tag_fn = sum[library.__name__][11]
         result = __evaluate(tp, fp, fn, tag_tp, tag_fp, tag_fn)
-        print(library.__name__ + "\t" + ("%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%d\t%d\t%d\t%d\t%d\t%d" % result))
-
-#    if not os.access(gold_file, os.R_OK):
-#        continue  # original and cleaned files don't always match in CleanEval gold standard
-#    if do_metahtml:
-#        res, gold = eval_metahtml(text_file, gold_file, opt_ascii, opt_unlabelled)
-#        if not res['content']:
-#            continue
-#        else:
-#            text = res['content']['best']['value']['text']
-#    else:
-#        text = normalize(slurp_file(text_file), opt_ascii, opt_unlabelled)
-#        gold = normalize(slurp_file(gold_file), opt_ascii, opt_unlabelled)
-#    text_words = re_WS.split(text)
-#    gold_words = re_WS.split(gold)
-#    alignment = SequenceMatcher(None, text_words, gold_words)
-#    diff = make_diff(alignment, text_words, gold_words)
-#    eval_list = evaluate(diff)
-#    if not opt_total:
-#        print(filename + "\t" + ("%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%d\t%d\t%d\t%d\t%d\t%d" % eval_list))
-#    for i, x in enumerate(eval_list):
-#        sum[i] += x
-#        ss[i] += x ** 2
-#    if align_dir:
-#        align_file = align_dir + "/" + os.path.splitext(filename)[0] + ".align"
-#        write_alignment(diff, align_file)
-#		
-#    n_processed += 1
-#if n_processed < n_files:
-#    print("Warning: %d files not found in gold standard (skipped)" % (n_files - n_processed), file=sys.stderr)
-#
-### calculate micro-averaged word-level accuracy / tag accuracy
-#tp = sum[6]
-#fp = sum[7]
-#fn = sum[8]
-#n_text = tp + fp if tp + fp > 0 else 1
-#n_gold = tp + fn if tp + fn > 0 else 1
-#precision = float(tp) / n_text
-#recall = float(tp) / n_gold
-#precision_plus_recall = precision + recall if precision + recall > 0 else 1
-#f_score = 2 * precision * recall / precision_plus_recall
-#
-#tag_tp = sum[9]
-#tag_fp = sum[10]
-#tag_fn = sum[11]
-#tags_text = tag_tp + tag_fp if tag_tp + tag_fp > 0 else 1
-#tags_gold = tag_tp + tag_fn if tag_tp + tag_fn > 0 else 1
-#tag_precision = float(tag_tp) / tags_text
-#tag_recall = float(tag_tp) / tags_gold
-#precision_plus_recall = tag_precision + tag_recall if tag_precision + tag_recall > 0 else 1
-#tag_f_score = 2 * tag_precision * tag_recall / precision_plus_recall
-#
-#if opt_total:
-#	eval_list = (100 * f_score, 100 * precision, 100 * recall, 100 * tag_f_score, 100 * tag_precision, 100 * tag_recall, tp, fp, fn, tag_tp, tag_fp, tag_fn)
-#	print("total" + "\t" + ("%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%d\t%d\t%d\t%d\t%d\t%d" % eval_list))
-#	
-#mean = [ x / n_files for x in sum ]
-#sd = [ sqrt((x - n_files * y ** 2) / (n_files - 1)) for x, y in zip(ss, mean) ]
-#
-#if opt_summary:
-#	is_labelled = "unlabelled" if opt_unlabelled else "labelled"
-#	if n_processed < n_files:
-#		print >> sys.stderr, "Evaluation report for on %d out of %d files:" % (n_processed, n_files)
-#	else:
-#		print >> sys.stderr, "Evaluation report for on %d files:" % (n_files)		
-#	print >> sys.stderr, "Word-level accuracy (macro-averaged):"
-#	print >> sys.stderr, "  F-score:   %6.2f%% %s %.2f%%" % (mean[0], '+/-', sd[0])
-#	print >> sys.stderr, "  Precision: %6.2f%% %s %.2f%%" % (mean[1], '+/-', sd[1])
-#	print >> sys.stderr, "  Recall:    %6.2f%% %s %.2f%%" % (mean[2], '+/-', sd[2])
-##	print >> sys.stderr, "Segmentation accuracy (%s):" % (is_labelled)
-##	print >> sys.stderr, "  F-score:   %6.2f%% %s %.2f%%" % (mean[3], '+/-', sd[3])
-#	print >> sys.stderr, "  Precision: %6.2f%% %s %.2f%%" % (mean[4], '+/-', sd[4])
-#	print >> sys.stderr, "  Recall:    %6.2f%% %s %.2f%%" % (mean[5], '+/-', sd[5])
-#	print >> sys.stderr, "Word-level accuracy (micro-averaged):"
-#	print >> sys.stderr, "  F-score:   %6.2f%%" % (100 * f_score)
-#	print >> sys.stderr, "  Precision: %6.2f%%" % (100 * precision)
-#	print >> sys.stderr, "  Recall:    %6.2f%%" % (100 * recall)
-#	print >> sys.stderr, "Segmentation accuracy (%s, micro-averaged):" % (is_labelled)
-#	print >> sys.stderr, "  F-score:   %6.2f%%" % (100 * tag_f_score)
-#	print >> sys.stderr, "  Precision: %6.2f%%" % (100 * tag_precision)
-#	print >> sys.stderr, "  Recall:    %6.2f%%" % (100 * tag_recall)
+        print(library.__name__ + "\t\t" + ("%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%d\t%d\t%d\t%d\t%d\t%d" % result))
