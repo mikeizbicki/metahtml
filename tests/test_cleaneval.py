@@ -102,11 +102,11 @@ def __check_encoding(path):
         if encoding != 'utf-8':
             print(encoding)
 
-re_URL = re.compile("^\s*URL.*$", re.MULTILINE)
-re_TAG = re.compile("(<[phl]>)", re.IGNORECASE)
-re_WS = re.compile("\s+")
-re_CTRL = re.compile("[\x00-\x1F]+")
-re_HI = re.compile("[\x80-\xFF]+")
+re_URL = re.compile(r"^\s*URL.*$", re.MULTILINE)
+re_TAG = re.compile(r"(<[phl]>)", re.IGNORECASE)
+re_WS = re.compile(r"\s+")
+re_CTRL = re.compile(r"[\x00-\x1F]+")
+re_HI = re.compile(r"[\x80-\xFF]+")
 re_CLEAN_URL = re.compile("^\s*##.*$", re.MULTILINE) #For frsv gold dataset
 
 def normalize(text, ascii=False, unlabelled=False):
