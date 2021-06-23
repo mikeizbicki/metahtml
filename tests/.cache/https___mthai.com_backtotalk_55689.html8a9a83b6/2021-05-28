@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-US">
+<head>
+  <!-- rapid7 -->
+  <meta name="insight-app-sec-validation" content="221f5f34-92e2-4376-a522-c3d50632d8e4">
+  <!-- Anymind - ATS tag -->
+  <script type="application/javascript" src="//anymind360.com/js/561/ats.js"></script>
+  <meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge"><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={licenseKey:"a290aa7a3e",applicationID:"784704509"};window.NREUM||(NREUM={}),__nr_require=function(e,t,n){function r(n){if(!t[n]){var i=t[n]={exports:{}};e[n][0].call(i.exports,function(t){var i=e[n][1][t];return r(i||t)},i,i.exports)}return t[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var i=0;i<n.length;i++)r(n[i]);return r}({1:[function(e,t,n){function r(){}function i(e,t,n){return function(){return o(e,[u.now()].concat(c(arguments)),t?null:this,n),t?void 0:this}}var o=e("handle"),a=e(7),c=e(8),f=e("ee").get("tracer"),u=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var d=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],p="api-",l=p+"ixn-";a(d,function(e,t){s[t]=i(p+t,!0,"api")}),s.addPageAction=i(p+"addPageAction",!0),s.setCurrentRouteName=i(p+"routeName",!0),t.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,t){var n={},r=this,i="function"==typeof t;return o(l+"tracer",[u.now(),e,n],r),function(){if(f.emit((i?"":"no-")+"fn-start",[u.now(),r,i],n),i)try{return t.apply(this,arguments)}catch(e){throw f.emit("fn-err",[arguments,this,e],n),e}finally{f.emit("fn-end",[u.now()],n)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,t){m[t]=i(l+t)}),newrelic.noticeError=function(e,t){"string"==typeof e&&(e=new Error(e)),o("err",[e,u.now(),!1,t])}},{}],2:[function(e,t,n){function r(){return c.exists&&performance.now?Math.round(performance.now()):(o=Math.max((new Date).getTime(),o))-a}function i(){return o}var o=(new Date).getTime(),a=o,c=e(9);t.exports=r,t.exports.offset=a,t.exports.getLastTimestamp=i},{}],3:[function(e,t,n){function r(e){return!(!e||!e.protocol||"file:"===e.protocol)}t.exports=r},{}],4:[function(e,t,n){function r(e,t){var n=e.getEntries();n.forEach(function(e){"first-paint"===e.name?d("timing",["fp",Math.floor(e.startTime)]):"first-contentful-paint"===e.name&&d("timing",["fcp",Math.floor(e.startTime)])})}function i(e,t){var n=e.getEntries();n.length>0&&d("lcp",[n[n.length-1]])}function o(e){e.getEntries().forEach(function(e){e.hadRecentInput||d("cls",[e])})}function a(e){if(e instanceof m&&!g){var t=Math.round(e.timeStamp),n={type:e.type};t<=p.now()?n.fid=p.now()-t:t>p.offset&&t<=Date.now()?(t-=p.offset,n.fid=p.now()-t):t=p.now(),g=!0,d("timing",["fi",t,n])}}function c(e){d("pageHide",[p.now(),e])}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var f,u,s,d=e("handle"),p=e("loader"),l=e(6),m=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){f=new PerformanceObserver(r);try{f.observe({entryTypes:["paint"]})}catch(v){}u=new PerformanceObserver(i);try{u.observe({entryTypes:["largest-contentful-paint"]})}catch(v){}s=new PerformanceObserver(o);try{s.observe({type:"layout-shift",buffered:!0})}catch(v){}}if("addEventListener"in document){var g=!1,w=["click","keydown","mousedown","pointerdown","touchstart"];w.forEach(function(e){document.addEventListener(e,a,!1)})}l(c)}},{}],5:[function(e,t,n){function r(e,t){if(!i)return!1;if(e!==i)return!1;if(!t)return!0;if(!o)return!1;for(var n=o.split("."),r=t.split("."),a=0;a<r.length;a++)if(r[a]!==n[a])return!1;return!0}var i=null,o=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var c=navigator.userAgent,f=c.match(a);f&&c.indexOf("Chrome")===-1&&c.indexOf("Chromium")===-1&&(i="Safari",o=f[1])}t.exports={agent:i,version:o,match:r}},{}],6:[function(e,t,n){function r(e){function t(){e(a&&document[a]?document[a]:document[i]?"hidden":"visible")}"addEventListener"in document&&o&&document.addEventListener(o,t,!1)}t.exports=r;var i,o,a;"undefined"!=typeof document.hidden?(i="hidden",o="visibilitychange",a="visibilityState"):"undefined"!=typeof document.msHidden?(i="msHidden",o="msvisibilitychange"):"undefined"!=typeof document.webkitHidden&&(i="webkitHidden",o="webkitvisibilitychange",a="webkitVisibilityState")},{}],7:[function(e,t,n){function r(e,t){var n=[],r="",o=0;for(r in e)i.call(e,r)&&(n[o]=t(r,e[r]),o+=1);return n}var i=Object.prototype.hasOwnProperty;t.exports=r},{}],8:[function(e,t,n){function r(e,t,n){t||(t=0),"undefined"==typeof n&&(n=e?e.length:0);for(var r=-1,i=n-t||0,o=Array(i<0?0:i);++r<i;)o[r]=e[t+r];return o}t.exports=r},{}],9:[function(e,t,n){t.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,t,n){function r(){}function i(e){function t(e){return e&&e instanceof r?e:e?u(e,f,a):a()}function n(n,r,i,o,a){if(a!==!1&&(a=!0),!l.aborted||o){e&&a&&e(n,r,i);for(var c=t(i),f=v(n),u=f.length,s=0;s<u;s++)f[s].apply(c,r);var p=d[h[n]];return p&&p.push([b,n,r,c]),c}}function o(e,t){y[e]=v(e).concat(t)}function m(e,t){var n=y[e];if(n)for(var r=0;r<n.length;r++)n[r]===t&&n.splice(r,1)}function v(e){return y[e]||[]}function g(e){return p[e]=p[e]||i(n)}function w(e,t){s(e,function(e,n){t=t||"feature",h[n]=t,t in d||(d[t]=[])})}var y={},h={},b={on:o,addEventListener:o,removeEventListener:m,emit:n,get:g,listeners:v,context:t,buffer:w,abort:c,aborted:!1};return b}function o(e){return u(e,f,a)}function a(){return new r}function c(){(d.api||d.feature)&&(l.aborted=!0,d=l.backlog={})}var f="nr@context",u=e("gos"),s=e(7),d={},p={},l=t.exports=i();t.exports.getOrSetContext=o,l.backlog=d},{}],gos:[function(e,t,n){function r(e,t,n){if(i.call(e,t))return e[t];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,t,{value:r,writable:!0,enumerable:!1}),r}catch(o){}return e[t]=r,r}var i=Object.prototype.hasOwnProperty;t.exports=r},{}],handle:[function(e,t,n){function r(e,t,n,r){i.buffer([e],r),i.emit(e,t,n)}var i=e("ee").get("handle");t.exports=r,r.ee=i},{}],id:[function(e,t,n){function r(e){var t=typeof e;return!e||"object"!==t&&"function"!==t?-1:e===window?0:a(e,o,function(){return i++})}var i=1,o="nr@id",a=e("gos");t.exports=r},{}],loader:[function(e,t,n){function r(){if(!E++){var e=x.info=NREUM.info,t=l.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&t))return u.abort();f(h,function(t,n){e[t]||(e[t]=n)});var n=a();c("mark",["onload",n+x.offset],null,"api"),c("timing",["load",n]);var r=l.createElement("script");r.src="https://"+e.agent,t.parentNode.insertBefore(r,t)}}function i(){"complete"===l.readyState&&o()}function o(){c("mark",["domContent",a()+x.offset],null,"api")}var a=e(2),c=e("handle"),f=e(7),u=e("ee"),s=e(5),d=e(3),p=window,l=p.document,m="addEventListener",v="attachEvent",g=p.XMLHttpRequest,w=g&&g.prototype;if(d(p.location)){NREUM.o={ST:setTimeout,SI:p.setImmediate,CT:clearTimeout,XHR:g,REQ:p.Request,EV:p.Event,PR:p.Promise,MO:p.MutationObserver};var y=""+location,h={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1208.min.js"},b=g&&w&&w[m]&&!/CriOS/.test(navigator.userAgent),x=t.exports={offset:a.getLastTimestamp(),now:a,origin:y,features:{},xhrWrappable:b,userAgent:s};e(1),e(4),l[m]?(l[m]("DOMContentLoaded",o,!1),p[m]("load",r,!1)):(l[v]("onreadystatechange",i),p[v]("onload",r)),c("mark",["firstbyte",a.getLastTimestamp()],null,"api");var E=0}},{}],"wrap-function":[function(e,t,n){function r(e,t){function n(t,n,r,f,u){function nrWrapper(){var o,a,s,p;try{a=this,o=d(arguments),s="function"==typeof r?r(o,a):r||{}}catch(l){i([l,"",[o,a,f],s],e)}c(n+"start",[o,a,f],s,u);try{return p=t.apply(a,o)}catch(m){throw c(n+"err",[o,a,m],s,u),m}finally{c(n+"end",[o,a,p],s,u)}}return a(t)?t:(n||(n=""),nrWrapper[p]=t,o(t,nrWrapper,e),nrWrapper)}function r(e,t,r,i,o){r||(r="");var c,f,u,s="-"===r.charAt(0);for(u=0;u<t.length;u++)f=t[u],c=e[f],a(c)||(e[f]=n(c,s?f+r:r,i,f,o))}function c(n,r,o,a){if(!m||t){var c=m;m=!0;try{e.emit(n,r,o,t,a)}catch(f){i([f,n,r,o],e)}m=c}}return e||(e=s),n.inPlace=r,n.flag=p,n}function i(e,t){t||(t=s);try{t.emit("internal-error",e)}catch(n){}}function o(e,t,n){if(Object.defineProperty&&Object.keys)try{var r=Object.keys(e);return r.forEach(function(n){Object.defineProperty(t,n,{get:function(){return e[n]},set:function(t){return e[n]=t,t}})}),t}catch(o){i([o],n)}for(var a in e)l.call(e,a)&&(t[a]=e[a]);return t}function a(e){return!(e&&e instanceof Function&&e.apply&&!e[p])}function c(e,t){var n=t(e);return n[p]=e,o(e,n,s),n}function f(e,t,n){var r=e[t];e[t]=c(r,n)}function u(){for(var e=arguments.length,t=new Array(e),n=0;n<e;++n)t[n]=arguments[n];return t}var s=e("ee"),d=e(8),p="nr@original",l=Object.prototype.hasOwnProperty,m=!1;t.exports=r,t.exports.wrapFunction=c,t.exports.wrapInPlace=f,t.exports.argsToArray=u},{}]},{},["loader"]);</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="profile" href="http://gmpg.org/xfn/11">
+
+<link rel="shortcut icon" href="https://mthai.com/app/themes/tiwanon/dist/images/favicon_2457a24d.ico" type="image/x-icon" />
+
+<!-- Web Application Manifest -->
+<link rel="manifest" href="/manifest.json">
+
+<!-- Add to homescreen for Chrome on Android -->
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="icon" sizes="192x192" href="https://img-ha.mthcdn.com/Qr3ez79HsBzsJkFRR9T97G7s6V0=/mthai.com/app/themes/tiwanon/dist/images/mthai-192x192_cdcf14b6.png">
+
+<!-- Add to homescreen for Safari on iOS -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="MThai">
+<link rel="apple-touch-icon" href="https://img-ha.mthcdn.com/WU6pBeXOEAVhwlnA9CGLaFkN6Fk=/mthai.com/app/themes/tiwanon/dist/images/apple-touch-icon_4e6835d1.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://img-ha.mthcdn.com/JuBx8nDome8PZXKDLQvyYK8M-V8=/mthai.com/app/themes/tiwanon/dist/images/apple-touch-icon-180x180_76e6d9f5.png">
+
+<!-- Disable tap highlight on IE -->
+<meta name="msapplication-tap-highlight" content="no">
+
+<!-- Tile icon for Win8 (144x144 + title color) -->
+<meta name="application-name" content="MThai">
+<meta name="msapplication-square70x70logo" content="https://img-ha.mthcdn.com/gKdD0PGLW9EvpgHVS9nx15QKxnc=/mthai.com/app/themes/tiwanon/dist/images/ms-touch-icon-70x70_28612c4c.png">
+<meta name="msapplication-square150x150logo" content="https://img-ha.mthcdn.com/W038lRLWYndZ5BYDoNjWXzB0YcU=/mthai.com/app/themes/tiwanon/dist/images/ms-touch-icon-150x150_a428f43b.png">
+<meta name="msapplication-wide310x150logo" content="https://img-ha.mthcdn.com/BB8SkNqlId7uzp0nNvLQm_o8zws=/mthai.com/app/themes/tiwanon/dist/images/ms-touch-icon-310x150_41c17eb7.png">
+<meta name="msapplication-square310x310logo" content="https://img-ha.mthcdn.com/hqqMa_-lklb2m1HKlx99WK6Kmjw=/mthai.com/app/themes/tiwanon/dist/images/ms-touch-icon-310x310_123df1a0.png">
+<meta name="msapplication-TileColor" content="#ffffff">
+
+<!-- Color the status bar on mobile devices -->
+<meta name="theme-color" content="#eb622c">
+
+<meta name='robots' content='max-image-preview:large' />
+
+	<!-- This site is optimized with the Yoast SEO plugin v14.9 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>รู้ไหม? ใครคือคนคิดให้ทำ การบ้าน คนแรกของโลก</title>
+	<meta name="description" content="[BACKTOTALK ] เห็นน้องๆ หลายคนชอบบ่นว่าการบ้านเยอะ และรู้หรือไหมว่าคนที่สั่งให้ทำการบ้าน หรือ Homework คนแรกของโลกเป็นใคร และเรื่องราวของการบ้านมันเกิดขึ้นได้อย่างไร วันนี้เราจะไปดูคำตอบกันค่ะ... รู้ไหม? ใครคือคนคิดให้ทำ การบ้าน คนแรกของโลก" />
+	<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+	<link rel="canonical" href="https://mthai.com/backtotalk/55689.html" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="รู้ไหม? ใครคือคนคิดให้ทำ การบ้าน คนแรกของโลก" />
+	<meta property="og:description" content="[BACKTOTALK ] เห็นน้องๆ หลายคนชอบบ่นว่าการบ้านเยอะ และรู้หรือไหมว่าคนที่สั่งให้ทำการบ้าน หรือ Homework คนแรกของโลกเป็นใคร และเรื่องราวของการบ้านมันเกิดขึ้นได้อย่างไร วันนี้เราจะไปดูคำตอบกันค่ะ... รู้ไหม? ใครคือคนคิดให้ทำ การบ้าน คนแรกของโลก" />
+	<meta property="og:url" content="https://mthai.com/backtotalk/55689.html" />
+	<meta property="og:site_name" content="MThai.com" />
+	<meta property="article:publisher" content="https://www.facebook.com/mthaidotcom/" />
+	<meta property="article:published_time" content="2020-06-27T20:18:00+00:00" />
+	<meta property="article:modified_time" content="2020-07-01T09:23:33+00:00" />
+	<meta property="og:image" content="https://mthai.com/app/uploads/2020/07/photo-1560785496-3c9d27877182.jpg" />
+	<meta property="og:image:width" content="967" />
+	<meta property="og:image:height" content="725" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:creator" content="@mthai" />
+	<meta name="twitter:site" content="@mthai" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://mthai.com/#organization","name":"MThai","url":"https://mthai.com/","sameAs":["https://www.facebook.com/mthaidotcom/","https://www.instagram.com/mthaidotcom/","https://www.youtube.com/channel/UCPJZ_H1hSIkNV8oYGugcSQw","https://th.wikipedia.org/wiki/\u0e40\u0e2d\u0e47\u0e21\u0e44\u0e17\u0e22","https://twitter.com/mthai"],"logo":{"@type":"ImageObject","@id":"https://mthai.com/#logo","inLanguage":"en-US","url":"https://mthai.com/app/uploads/2021/02/Logo-mthai-04.png","width":526,"height":496,"caption":"MThai"},"image":{"@id":"https://mthai.com/#logo"}},{"@type":"WebSite","@id":"https://mthai.com/#website","url":"https://mthai.com/","name":"MThai.com","description":"MThai New Normal","publisher":{"@id":"https://mthai.com/#organization"},"potentialAction":[{"@type":"SearchAction","target":"https://mthai.com/?s={search_term_string}","query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"ImageObject","@id":"https://mthai.com/backtotalk/55689.html#primaryimage","inLanguage":"en-US","url":"https://mthai.com/app/uploads/2020/07/photo-1560785496-3c9d27877182.jpg","width":967,"height":725},{"@type":"WebPage","@id":"https://mthai.com/backtotalk/55689.html#webpage","url":"https://mthai.com/backtotalk/55689.html","name":"\u0e23\u0e39\u0e49\u0e44\u0e2b\u0e21? \u0e43\u0e04\u0e23\u0e04\u0e37\u0e2d\u0e04\u0e19\u0e04\u0e34\u0e14\u0e43\u0e2b\u0e49\u0e17\u0e33 \u0e01\u0e32\u0e23\u0e1a\u0e49\u0e32\u0e19 \u0e04\u0e19\u0e41\u0e23\u0e01\u0e02\u0e2d\u0e07\u0e42\u0e25\u0e01","isPartOf":{"@id":"https://mthai.com/#website"},"primaryImageOfPage":{"@id":"https://mthai.com/backtotalk/55689.html#primaryimage"},"datePublished":"2020-06-27T20:18:00+00:00","dateModified":"2020-07-01T09:23:33+00:00","description":"[BACKTOTALK ] \u0e40\u0e2b\u0e47\u0e19\u0e19\u0e49\u0e2d\u0e07\u0e46 \u0e2b\u0e25\u0e32\u0e22\u0e04\u0e19\u0e0a\u0e2d\u0e1a\u0e1a\u0e48\u0e19\u0e27\u0e48\u0e32\u0e01\u0e32\u0e23\u0e1a\u0e49\u0e32\u0e19\u0e40\u0e22\u0e2d\u0e30 \u0e41\u0e25\u0e30\u0e23\u0e39\u0e49\u0e2b\u0e23\u0e37\u0e2d\u0e44\u0e2b\u0e21\u0e27\u0e48\u0e32\u0e04\u0e19\u0e17\u0e35\u0e48\u0e2a\u0e31\u0e48\u0e07\u0e43\u0e2b\u0e49\u0e17\u0e33\u0e01\u0e32\u0e23\u0e1a\u0e49\u0e32\u0e19 \u0e2b\u0e23\u0e37\u0e2d Homework \u0e04\u0e19\u0e41\u0e23\u0e01\u0e02\u0e2d\u0e07\u0e42\u0e25\u0e01\u0e40\u0e1b\u0e47\u0e19\u0e43\u0e04\u0e23 \u0e41\u0e25\u0e30\u0e40\u0e23\u0e37\u0e48\u0e2d\u0e07\u0e23\u0e32\u0e27\u0e02\u0e2d\u0e07\u0e01\u0e32\u0e23\u0e1a\u0e49\u0e32\u0e19\u0e21\u0e31\u0e19\u0e40\u0e01\u0e34\u0e14\u0e02\u0e36\u0e49\u0e19\u0e44\u0e14\u0e49\u0e2d\u0e22\u0e48\u0e32\u0e07\u0e44\u0e23 \u0e27\u0e31\u0e19\u0e19\u0e35\u0e49\u0e40\u0e23\u0e32\u0e08\u0e30\u0e44\u0e1b\u0e14\u0e39\u0e04\u0e33\u0e15\u0e2d\u0e1a\u0e01\u0e31\u0e19\u0e04\u0e48\u0e30... \u0e23\u0e39\u0e49\u0e44\u0e2b\u0e21? \u0e43\u0e04\u0e23\u0e04\u0e37\u0e2d\u0e04\u0e19\u0e04\u0e34\u0e14\u0e43\u0e2b\u0e49\u0e17\u0e33 \u0e01\u0e32\u0e23\u0e1a\u0e49\u0e32\u0e19 \u0e04\u0e19\u0e41\u0e23\u0e01\u0e02\u0e2d\u0e07\u0e42\u0e25\u0e01","inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://mthai.com/backtotalk/55689.html"]}]},{"@type":["Article","NewsArticle"],"@id":"https://mthai.com/backtotalk/55689.html#article","isPartOf":{"@id":"https://mthai.com/backtotalk/55689.html#webpage"},"author":{"@id":"https://mthai.com/#/schema/person/bcfd1092135d45b553dffba1adb4fc5f"},"headline":"\u0e23\u0e39\u0e49\u0e44\u0e2b\u0e21? \u0e43\u0e04\u0e23\u0e04\u0e37\u0e2d\u0e04\u0e19\u0e04\u0e34\u0e14\u0e43\u0e2b\u0e49\u0e17\u0e33 \u0e01\u0e32\u0e23\u0e1a\u0e49\u0e32\u0e19 \u0e04\u0e19\u0e41\u0e23\u0e01\u0e02\u0e2d\u0e07\u0e42\u0e25\u0e01","datePublished":"2020-06-27T20:18:00+00:00","dateModified":"2020-07-01T09:23:33+00:00","mainEntityOfPage":{"@id":"https://mthai.com/backtotalk/55689.html#webpage"},"commentCount":0,"publisher":{"@id":"https://mthai.com/#organization"},"image":{"@id":"https://mthai.com/backtotalk/55689.html#primaryimage"},"keywords":"\u0e01\u0e32\u0e23\u0e1a\u0e49\u0e32\u0e19","articleSection":"BACKTOTALK","inLanguage":"en-US","potentialAction":[{"@type":"CommentAction","name":"Comment","target":["https://mthai.com/backtotalk/55689.html#respond"]}]},{"@type":"Person","@id":"https://mthai.com/#/schema/person/bcfd1092135d45b553dffba1adb4fc5f","name":"Sine-In","image":{"@type":"ImageObject","@id":"https://mthai.com/#personlogo","inLanguage":"en-US","url":"https://mthai.com/app/uploads/2020/07/New-Project-5.png","caption":"Sine-In"}}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel='stylesheet' id='wp-block-library-css'  href='https://mthai.com/wp/wp-includes/css/dist/block-library/style.min.css' type='text/css' media='all' />
+<link rel='stylesheet' id='tiwanon-style-css'  href='https://mthai.com/app/themes/tiwanon/dist/styles/main_06c27951.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wpgallery-style-css'  href='https://mthai.com/app/plugins/mthai-wp-gallery/dist/css/style.min.css' type='text/css' media='all' />
+<script type='text/javascript' src='https://mthai.com/wp/wp-includes/js/jquery/jquery.min.js' id='jquery-core-js'></script>
+<script type='text/javascript' src='https://mthai.com/wp/wp-includes/js/jquery/jquery-migrate.min.js' id='jquery-migrate-js'></script>
+			<meta property="fb:pages" content="18079440675" />
+							<meta property="ia:markup_url" content="https://mthai.com/backtotalk/55689.html?ia_markup=1" />
+				<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><link rel="amphtml" href="https://mthai.com/backtotalk/55689.html/amp">
+
+
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "NewsArticle",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https:\/\/mthai.com\/backtotalk\/55689.html"      },
+      "headline": "\u0e23\u0e39\u0e49\u0e44\u0e2b\u0e21? \u0e43\u0e04\u0e23\u0e04\u0e37\u0e2d\u0e04\u0e19\u0e04\u0e34\u0e14\u0e43\u0e2b\u0e49\u0e17\u0e33 \u0e01\u0e32\u0e23\u0e1a\u0e49\u0e32\u0e19 \u0e04\u0e19\u0e41\u0e23\u0e01\u0e02\u0e2d\u0e07\u0e42\u0e25\u0e01",
+      "image": [
+        "https:\/\/img-ha.mthcdn.com\/qXWeeG82DEbUt3HulHsQVGOzCwg=\/mthai.com\/app\/uploads\/2020\/07\/photo-1560785496-3c9d27877182.jpg"       ],
+      "datePublished": "2020-06-28T03:18:00+07:00",
+      "dateModified": "2020-07-01T16:23:33+07:00",
+	  "author": {
+        "@type": "Person",
+        "name": "Sine-In"      },
+       "publisher": {
+        "@type": "Organization",
+        "name": "MThai.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://img-ha.mthcdn.com/6lMypSiV7ZErbZr5Lby-DtM7VJ8=/mthai.com/app/themes/tiwanon/dist/images/mthai-logo_a534e67a.png"
+        }
+      },
+      "description": "\u0e40\u0e2b\u0e47\u0e19\u0e19\u0e49\u0e2d\u0e07\u0e46 \u0e2b\u0e25\u0e32\u0e22\u0e04\u0e19\u0e0a\u0e2d\u0e1a\u0e1a\u0e48\u0e19\u0e27\u0e48\u0e32\u0e01\u0e32\u0e23\u0e1a\u0e49\u0e32\u0e19\u0e40\u0e22\u0e2d\u0e30 \u0e41\u0e25\u0e30\u0e23\u0e39\u0e49\u0e2b\u0e23\u0e37\u0e2d\u0e44\u0e2b\u0e21\u0e27\u0e48\u0e32\u0e04\u0e19\u0e17\u0e35\u0e48\u0e2a\u0e31\u0e48\u0e07\u0e43\u0e2b\u0e49\u0e17\u0e33\u0e01\u0e32\u0e23\u0e1a\u0e49\u0e32\u0e19 \u0e2b\u0e23\u0e37\u0e2d Homework \u0e04\u0e19\u0e41\u0e23\u0e01\u0e02\u0e2d\u0e07\u0e42\u0e25\u0e01\u0e40\u0e1b\u0e47\u0e19\u0e43\u0e04\u0e23 \u0e41\u0e25\u0e30\u0e40\u0e23\u0e37\u0e48\u0e2d\u0e07\u0e23\u0e32\u0e27\u0e02\u0e2d\u0e07\u0e01\u0e32\u0e23\u0e1a\u0e49\u0e32\u0e19\u0e21\u0e31\u0e19\u0e40\u0e01\u0e34\u0e14\u0e02\u0e36\u0e49\u0e19\u0e44\u0e14\u0e49\u0e2d\u0e22\u0e48\u0e32\u0e07\u0e44\u0e23 \u0e27\u0e31\u0e19\u0e19\u0e35\u0e49\u0e40\u0e23\u0e32\u0e08\u0e30\u0e44\u0e1b\u0e14\u0e39\u0e04\u0e33\u0e15\u0e2d\u0e1a\u0e01\u0e31\u0e19\u0e04\u0e48\u0e30... \u0e23\u0e39\u0e49\u0e44\u0e2b\u0e21? \u0e43\u0e04\u0e23\u0e04\u0e37\u0e2d\u0e04\u0e19\u0e04\u0e34\u0e14\u0e43\u0e2b\u0e49\u0e17\u0e33 \u0e01\u0e32\u0e23\u0e1a\u0e49\u0e32\u0e19 \u0e04\u0e19\u0e41\u0e23\u0e01\u0e02\u0e2d\u0e07\u0e42\u0e25\u0e01"    }
+ </script>
+
+ <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "MThai",
+        "item": "https://mthai.com"
+      },{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "BACKTOTALK",
+		"item": "https:\/\/mthai.com\/backtotalk"      },{
+        "@type": "ListItem",
+        "position": 3,
+        "name": "\u0e23\u0e39\u0e49\u0e44\u0e2b\u0e21? \u0e43\u0e04\u0e23\u0e04\u0e37\u0e2d\u0e04\u0e19\u0e04\u0e34\u0e14\u0e43\u0e2b\u0e49\u0e17\u0e33 \u0e01\u0e32\u0e23\u0e1a\u0e49\u0e32\u0e19 \u0e04\u0e19\u0e41\u0e23\u0e01\u0e02\u0e2d\u0e07\u0e42\u0e25\u0e01"      }]
+    }
+  </script>
+
+
+
+
+
+<!-- Google Tag Manager -->
+<script>
+	(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-MJ7DBRF');
+	</script>
+<!-- End Google Tag Manager -->
+
+<script type="text/javascript">
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-1682552-2', 'auto');
+					ga('set', 'dimension1', "Sine-In");
+		ga('send', 'pageview');
+</script>
+
+    <script type="text/javascript">
+    var _paq = _paq || [];
+    _paq.push(['trackPageView']);
+    (function() {
+    _paq.push(['setTrackerUrl', 'https://mthai.com/app/themes/tiwanon/tracker.php']);
+    _paq.push(['setSiteId', 1]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src='https://mthai.com/app/themes/tiwanon/tracker.js'; s.parentNode.insertBefore(g,s);
+    })();
+    </script>
+
+<script type="text/javascript">
+    var PWT={};
+	var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+    PWT.jsLoaded = function(){
+        (function() {
+			var gads = document.createElement('script');
+			gads.async = true;
+            var useSSL = 'https:' == document.location.protocol; 
+            gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+            var node = document.getElementsByTagName('script')[0];
+            node.parentNode.insertBefore(gads, node);
+        })();
+    };
+    (function() {
+        var purl = window.location.href;
+        if( window.matchMedia( "(min-width: 1024px)" ).matches) {
+            var url = '//ads.pubmatic.com/AdServer/js/pwt/157012/872';
+        } else {
+            var url = '//ads.pubmatic.com/AdServer/js/pwt/157012/901';
+        }
+        var profileVersionId = '';
+        if(purl.indexOf('pwtv=')>0){
+            var regexp = /pwtv=(.*?)(&|$)/g;
+            var matches = regexp.exec(purl);
+            if(matches.length >= 2 && matches[1].length > 0){
+                profileVersionId = '/'+matches[1];
+            }
+        }
+        var wtads = document.createElement('script');
+        wtads.async = true;
+        wtads.type = 'text/javascript';
+        wtads.src = url+profileVersionId+'/pwt.js';
+        var node = document.getElementsByTagName('script')[0];
+        node.parentNode.insertBefore(wtads, node);
+    })();
+</script>
+<script>
+	var top_slot;
+	var top_home_slot;
+	var top_mthai_trend_slot;
+	var top_mthai_tell_slot;
+	var top_mthai_chilltalk_slot;
+	var top_mthai_fanghuwaitalk_slot;
+	var top_mthai_backtotalk_slot;
+	var rec_slot1;
+	var rec_slot2;
+	var rec_trend_slot1;
+	var rec_trend_slot2;
+	var rec_tell_slot1;
+	var rec_tell_slot2;
+	var rec_chilltalk_slot1;
+	var rec_chilltalk_slot2;
+	var rec_fanghuwaitalk_slot1;
+	var rec_fanghuwaitalk_slot2;
+	var rec_backtotalk_slot1;
+	var rec_backtotalk_slot2;
+	var rec_between_slot = [];
+	var billboard_slot;
+	var billboard_home_slot;
+	var billboard_home_slot2;
+	var billboard_trend_slot;
+	var billboard_tell_slot;
+	var billboard_chilltalk_slot;
+	var billboard_fanghuwaitalk_slot;
+	var billboard_backtotalk_slot;
+	var gallery_slot;
+	var coverpage_slot;
+	var adhesion_slot;
+	var top_mthai_76354_slot;
+	var rec_76354_slot1;
+	
+	googletag.cmd.push(function() {
+		var top_sizeMapping = googletag.sizeMapping().
+		addSize([1000, 0], [[970, 250], [980, 90], [970, 90], [728, 90]]).
+		addSize([320, 0], [[320, 150], [320, 100]]).
+		build();
+		var top_defineSlot = [[970, 250], [970, 90], [980, 90], [728, 90], [320, 150], [320, 100]];
+
+		var billboard_sizeMapping = googletag.sizeMapping().
+		addSize([1000, 0], [[970, 250]]).
+		addSize([320, 0], [[320, 150]]).
+		build();
+		var billboard_defineSlot = [[970, 250], [320, 150]];
+
+		var rectangle_sizeMapping = googletag.sizeMapping().
+		addSize([320, 0], [[200, 200], [300, 250], [250, 250]]).
+		build();
+		var rectangle_defineSlot = [[200, 200], [300, 250], [250, 250]];
+					top_mthai_backtotalk_slot = googletag.defineSlot('/10983686/MThai/MThai_BackToTalk/MT_BackTo_Top', top_defineSlot, 'dfp-topbanner-mthai-backtotalk').
+				defineSizeMapping(top_sizeMapping).
+				addService(googletag.pubads());
+
+			rec_backtotalk_slot1 = googletag.defineSlot('/10983686/MThai/MThai_BackToTalk/MT_BackTo_Rec1', rectangle_defineSlot, 'dfp-backtotalk-rectangle-1').
+				defineSizeMapping(rectangle_sizeMapping).
+				addService(googletag.pubads());
+
+			rec_backtotalk_slot2 = googletag.defineSlot('/10983686/MThai/MThai_BackToTalk/MT_BackTo_Rec2', rectangle_defineSlot, 'dfp-backtotalk-rectangle-2').
+				defineSizeMapping(rectangle_sizeMapping).
+				addService(googletag.pubads());	
+
+			billboard_backtotalk_slot = googletag.defineSlot('/10983686/MThai/MThai_BackToTalk/MT_BackTo_Billboard', billboard_defineSlot, 'dfp-backtotalk-billboard').
+				defineSizeMapping(billboard_sizeMapping).
+				addService(googletag.pubads());					
+		
+					rec_between_slot.push(googletag.defineSlot('/10983686/MThai/MThai_Between_Paragraph/MThai_BTW0', rectangle_defineSlot, 'MThai_BTW0').
+				defineSizeMapping(rectangle_sizeMapping).
+				addService(googletag.pubads()));
+
+			rec_between_slot.push(googletag.defineSlot('/10983686/MThai/MThai_Between_Paragraph/MThai_BTW1', rectangle_defineSlot, 'MThai_BTW1').
+				defineSizeMapping(rectangle_sizeMapping).
+				addService(googletag.pubads()));
+
+			rec_between_slot.push(googletag.defineSlot('/10983686/MThai/MThai_Between_Paragraph/MThai_BTW2', rectangle_defineSlot, 'MThai_BTW2').
+				defineSizeMapping(rectangle_sizeMapping).
+				addService(googletag.pubads()));
+
+			var map_gallery = googletag.sizeMapping().
+				addSize([1024, 0], [[728, 90], [970, 90], [980, 90]]).
+				addSize([0, 0], [[320, 100], [320, 50]]).
+				build();
+			gallery_slot = googletag.defineSlot('/10983686/MThai/MThai_News/MT_News_Gallery', [[320, 100], [980, 90], [728, 90], [320, 50], [970, 90]], 'dfp-gallery').
+				defineSizeMapping(map_gallery).
+				addService(googletag.pubads());			
+			
+		
+		// adhesion
+		if(  window.matchMedia("(max-width: 640px)").matches ) {
+			var map_adhesion = googletag.sizeMapping().
+				addSize([640, 0], []).
+				addSize([0, 0], [320, 50]).
+				build();
+			adhesion_slot = googletag.defineSlot('/10983686/MThai/MThai_News/MT_News_AdhesionMB', [320, 50], 'dfp-adhesion').
+				defineSizeMapping(map_adhesion).
+				addService(googletag.pubads());
+			googletag.pubads().refresh([adhesion_slot]);
+		}
+
+		// A) Enable with defaults.
+		googletag.pubads().enableLazyLoad();
+		// B) Enable without lazy fetching. Additional calls override previous
+		// ones.
+		googletag.pubads().enableLazyLoad({fetchMarginPercent: -1});
+		// C) Enable lazy loading with...
+		googletag.pubads().enableLazyLoad({
+			// Fetch slots within 5 viewports.
+			fetchMarginPercent: 500,
+			// Render slots within 2 viewports.
+			renderMarginPercent: 200,
+			// Double the above values on mobile, where viewports are smaller
+			// and users tend to scroll faster.
+			mobileScaling: 2.0
+		});
+
+		googletag.pubads()
+												.setTargeting('pages', ['content'])
+					.setTargeting('content_id', ['mthai_55689'])
+																	.setTargeting('mthai_category', ["backtotalk"])
+						.setTargeting('mthai_section', ['mthai']);
+		googletag.enableServices();
+		
+		document.querySelectorAll(".gallery figure a").forEach(function (qSelect) {
+			qSelect.addEventListener( "click", function() {
+				googletag.pubads().refresh([gallery_slot]);
+				/*
+				var refresh_ads_gallery = setInterval(function() { googletag.pubads().refresh([gallery_slot]); }, 5000);
+				window.addEventListener( "scroll", function() {
+					clearInterval(refresh_ads_gallery);
+				});
+				*/
+			});
+		});
+	});
+</script>
+	<!--Start Ads Teads-->
+	<script async src="https://mthai.com/app/themes/tiwanon/resources/assets/scripts/prebid/prebid4.11.0.js"></script>
+	<script>
+		var FAILSAFE_TIMEOUT = 10000;
+		var PREBID_TIMEOUT = 10000;
+
+		adUnits = [{
+				code: 'MT_ALL_Rec',
+				sizes: [[300, 250]],
+				bids: [{
+					bidder: 'teads',
+					params: { 
+						placementId: 132251,
+						pageId: 121837
+					}
+				}],
+				mediaTypes: {
+					banner: {
+						sizes: [[300, 250]]
+					},
+					native: {
+						image: {
+							sizes: [300, 250]
+						}
+					},
+					video: {
+						context: 'outstream',
+						playerSize: [640, 480]
+					},
+				}
+			},{
+				code: 'MThai_BTW0',
+				sizes: [[300, 250]],
+				bids: [{
+					bidder: 'teads',
+					params: { 
+						placementId: 121332,
+						pageId: 111599
+					}
+				}],
+				mediaTypes: {
+					banner: {
+						sizes: [[300, 250]]
+					},
+					native: {
+						image: {
+							sizes: [300, 250]
+						}
+					},
+					video: {
+						context: 'outstream',
+						playerSize: [640, 480]
+					},
+				}
+			},{
+				code: 'MThai_BTW1',
+				sizes: [[300, 250]],
+				bids: [{
+					bidder: 'teads',
+					params: { 
+						placementId: 121332,
+						pageId: 111599
+					}
+				}],
+				mediaTypes: {
+					banner: {
+						sizes: [[300, 250]]
+					},
+					native: {
+						image: {
+							sizes: [300, 250]
+						}
+					},
+					video: {
+						context: 'outstream',
+						playerSize: [640, 480]
+					},
+				}
+			},{
+				code: 'MThai_BTW2',
+				sizes: [[300, 250]],
+				bids: [{
+					bidder: 'teads',
+					params: { 
+						placementId: 121332,
+						pageId: 111599
+					}
+				}],
+				mediaTypes: {
+					banner: {
+						sizes: [[300, 250]]
+					},
+					native: {
+						image: {
+							sizes: [300, 250]
+						}
+					},
+					video: {
+						context: 'outstream',
+						playerSize: [640, 480]
+					},
+				}
+			}];
+
+		var pbjs = pbjs || {};
+		pbjs.que = pbjs.que || [];
+
+		var googletag = googletag || {};
+		googletag.cmd = googletag.cmd || [];
+		/*googletag.cmd.push(function() {
+			googletag.pubads().disableInitialLoad();
+		});*/
+
+		pbjs.que.push(function() {
+			pbjs.addAdUnits(adUnits);
+			pbjs.requestBids({
+				bidsBackHandler: sendAdserverRequest,
+				timeout: PREBID_TIMEOUT
+			});
+		});
+
+		function sendAdserverRequest() {
+			if (pbjs.adserverRequestSent) return;
+			pbjs.adserverRequestSent = true;
+			googletag.cmd.push(function() {
+				pbjs.que.push(function() {
+					pbjs.setTargetingForGPTAsync();
+					googletag.pubads().refresh([rec_slot1,rec_between_slot[0],rec_between_slot[1],rec_between_slot[2]]);
+					//console.log('used ads teads');
+				});
+			});
+		}
+
+		setTimeout(function() {
+			sendAdserverRequest();
+		}, FAILSAFE_TIMEOUT);    
+	</script>
+	<!--End Ads Teads-->
+
+							     
+</head>
+
+<body class="post-template-default single single-post postid-55689 single-format-standard group-blog">
+<div id="page" class="site">
+	<a class="skip-link screen-reader-text" href="#main">Skip to content</a>
+
+	<header id="masthead" class="site-header">
+    <div class="column banner-wrap">
+      <div class="placeholder-topbanner" id="dfp-topbanner-mthai-backtotalk">
+        <script type="text/javascript">
+        googletag.cmd.push(function() {
+          googletag.display('dfp-topbanner-mthai-backtotalk');
+        });
+        </script>
+      </div>
+    </div>
+		<div class="site-branding-container">
+			<div class="site-branding">
+			<nav class="social-navigation" aria-label="Social Links Menu">
+					</nav><!-- .social-navigation -->
+	
+	<div class="site-logo">
+		<a href="https://mthai.com/" rel="home" class="btn">
+			<img src="https://img-ha.mthcdn.com/6lMypSiV7ZErbZr5Lby-DtM7VJ8=/mthai.com/app/themes/tiwanon/dist/images/mthai-logo_a534e67a.png" alt="MThai.com" class="bar-logo">
+			<img src="https://img-ha.mthcdn.com/aTljdI_c_5I3O7nQKQoDEX64WUY=/mthai.com/app/themes/tiwanon/dist/images/mthai-logo-2020_6583ca7c.png" alt="MThai.com" class="big-logo">
+		</a>
+	</div>
+
+							<p class="site-title"><a href="https://mthai.com/" rel="home">MThai.com</a></p>
+			
+				<p class="site-description">
+				MThai New Normal			</p>
+		
+	<div class="main-navigation-wrap">
+		<div class="search-form">
+    <button id="btn-search-icon" class="btn"><i class="fas fa-search fa-lg"></i></button>
+    <nav id="search-box" class="search-navigation hidden" >
+      <script async src="https://cse.google.com/cse.js?cx=2ce360b3cbb723495"></script>
+      <style>.google-search {width:100%;}</style>
+      <div class="google-search">
+        <div class="gcse-search"></div>
+      </div>
+      <button id="btn-close-search" class="btn-close-search" ><i class="fas fa-times"></i></button>
+    </nav>
+</div>
+
+					<button id="btn-menu" class="btn" type="button"><i class="fas fa-bars fa-lg"></i></button>
+			<nav id="site-navigation" class="main-navigation hidden" aria-label="Top Menu">
+				<button id="btn-close-menu" class="btn" type="button"><i class="fas fa-times"></i></button>
+				<div class="menu-primary-menu-container"><ul id="menu-primary-menu" class="main-menu"><li id="menu-item-55793" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-55793"><a href="https://mthai.com/trend">TREND</a></li>
+<li id="menu-item-55790" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-55790"><a href="https://mthai.com/chill">CHILL</a></li>
+<li id="menu-item-55789" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-55789"><a href="https://mthai.com/backtotalk">BACKTOTALK</a></li>
+<li id="menu-item-55791" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-55791"><a href="https://mthai.com/interviews">INTERVIEWS</a></li>
+<li id="menu-item-55792" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-55792"><a href="https://mthai.com/tell">TELL</a></li>
+<li id="menu-item-55919" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-55919"><a href="https://mthai.com/contact-us">CONTACT US</a></li>
+</ul></div>				<div>
+									<a class="badge badge-pill badge-secondary" href="https://mthai.com/news">
+						NEWS					</a>
+									<a class="badge badge-pill badge-secondary" href="https://lotto.mthai.com/">
+						LOTTO					</a>
+									<a class="badge badge-pill badge-secondary" href="https://mthai.com/travel">
+						TRAVEL					</a>
+									<a class="badge badge-pill badge-secondary" href="https://mthai.com/women">
+						WOMEN					</a>
+									<a class="badge badge-pill badge-secondary" href="https://mthai.com/movie">
+						MOVIE					</a>
+									<a class="badge badge-pill badge-secondary" href="https://mthai.com/campus">
+						CAMPUS					</a>
+									<a class="badge badge-pill badge-secondary" href="https://auto.mthai.com/">
+						AUTO					</a>
+									<a class="badge badge-pill badge-secondary" href="https://mthai.com/tech">
+						TECH					</a>
+									<a class="badge badge-pill badge-secondary" href="https://mthai.com/decor">
+						DECOR					</a>
+									<a class="badge badge-pill badge-secondary" href="https://mthai.com/men">
+						MEN					</a>
+									<a class="badge badge-pill badge-secondary" href="https://mthai.com/other">
+						Other					</a>
+								</div>
+			</nav><!-- #site-navigation -->
+			</div>
+	
+</div><!-- .site-branding -->
+		</div><!-- .layout-wrap -->
+	</header><!-- #masthead -->
+	<div id="content" class="site-content">	<section id="primary" class="content-area">
+		<main id="main" class="site-main">
+
+		
+<article id="post-55689" class="main-article post-55689 post type-post status-publish format-standard has-post-thumbnail hentry category-backtotalk tag-29486">
+  <div class="entry-header-wrap" >
+    <header class="entry-header">
+<div class="entry-feature-image">
+      <div class="post-thumbnail">
+              <img width="967" height="725" src="https://mthai.com/app/uploads/2020/07/photo-1560785496-3c9d27877182.jpg" class="attachment-full size-full wp-post-image" alt="การบ้าน" loading="lazy" srcset="https://mthai.com/app/uploads/2020/07/photo-1560785496-3c9d27877182.jpg 967w, https://mthai.com/app/uploads/2020/07/photo-1560785496-3c9d27877182-300x225.jpg 300w, https://mthai.com/app/uploads/2020/07/photo-1560785496-3c9d27877182-768x576.jpg 768w" sizes="(max-width: 967px) 100vw, 967px" />          </div>
+  </div>
+
+<div class="entry-header-meta">
+  <h1 class="entry-title">รู้ไหม? ใครคือคนคิดให้ทำ การบ้าน คนแรกของโลก</h1>
+    <div class="entry-meta">
+    <span class="posted-on"> <i class="far fa-clock"></i> <a href="https://mthai.com/backtotalk/55689.html" rel="bookmark"><time class="entry-date published" datetime="2020-06-28T03:18:00+07:00">June 28, 2020</time><time class="updated" datetime="2020-07-01T16:23:33+07:00">July 1, 2020</time></a></span>    <span class="viewed">
+      <i class="far fa-eye"></i>
+      2,629      VIEW
+    </span>
+    <span class="cat-links"><a href="https://mthai.com/backtotalk" rel="category tag">BACKTOTALK</a></span>    <span class="tags-links"> , <a href="https://mthai.com/tag/%e0%b8%81%e0%b8%b2%e0%b8%a3%e0%b8%9a%e0%b9%89%e0%b8%b2%e0%b8%99" rel="tag">การบ้าน</a></span>        
+      </div><!-- .meta-info -->
+  </div>
+</header>  </div>
+      <div class="entry-content content-inner-between">
+              <div class="banner-wrap1">
+        <div class="placeholder-rectangle1" id="dfp-backtotalk-rectangle-1">
+          <script type="text/javascript">
+          googletag.cmd.push(function() {
+            googletag.display("dfp-backtotalk-rectangle-1");
+          });
+          </script>
+        </div>
+      </div>   
+        
+<p>เห็นน้องๆ หลายคนชอบบ่นว่าการบ้านเยอะ และรู้หรือไหมว่าคนที่สั่งให้ทำการบ้าน หรือ Homework คนแรกของโลกเป็นใคร และเรื่องราวของการบ้านมันเกิดขึ้นได้อย่างไร วันนี้เราจะไปดูคำตอบกันค่ะ&#8230;</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://img-ha.mthcdn.com/HZiWDXeoZ-AnI4nM5in3uyU7vTA=/teen.mthai.com/app/uploads/2016/05/20150708160410221.jpg"><img src="https://img-ha.mthcdn.com/HZiWDXeoZ-AnI4nM5in3uyU7vTA=/teen.mthai.com/app/uploads/2016/05/20150708160410221.jpg" alt="20150708160410221" class="wp-image-112073"/></a></figure></div>
+
+
+
+<h3><strong>ใครเป็นคนคิดการบ้านคนแรกของโลก!</strong></h3>
+
+
+
+<p>เป้าหมายพื้นฐานของการสั่งการบ้านเป็นเช่นเดียวกับการเรียนการสอนในห้องคือ เพื่อเพิ่มพูนทักษะ พัฒนาความรู้ความสามารถและทักษะของผู้เรียน อย่างไรก็ตาม ผู้ที่ต่อต้านการสั่งการบ้านกลับมองว่า การบ้านนั้นเป็นแค่การยัดเยียดความรู้ให้ผู้เรียน โดยไม่ทำให้ผู้เรียนมีความเข้าใจในเนื้อหา เป็นงานหยาบๆ ที่ออกแบบมาเพื่อขโมยเวลามาจากเด็กโดยไม่ก่อประโยชน์ที่เป็นรูปธรรม&nbsp;การบ้านอาจจะถูกออกแบบมา เพื่อเพิ่มเติมในสิ่งที่นักเรียนได้เรียนไปแล้ว&nbsp;และเตรียมตัวให้ผู้เรียนพร้อมต่อบทเรียนถัดไปที่ยากขึ้น และซับซ้อนมากขึ้น, เพิ่มเติมความรู้ให้ผู้เรียน โดยการประยุกต์ใช้ความรู้ต่อสถานการณ์ต่างๆ หรือ การสนธิความรู้ในหลายๆ แขนงในการแก้ปัญหาเพียงปัญหาเดียว การบ้านยังคงสร้างโอกาสให้ ผู้ปกครองได้ติดตามดูแลการเรียนของลูกได้อีกด้วย</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://img-ha.mthcdn.com/2JjAm-ntNnUJ3uAkW7Uca020vl8=/teen.mthai.com/app/uploads/2016/05/20150708160507227.jpg"><img src="https://img-ha.mthcdn.com/2JjAm-ntNnUJ3uAkW7Uca020vl8=/teen.mthai.com/app/uploads/2016/05/20150708160507227.jpg" alt="20150708160507227" class="wp-image-112074"/></a><figcaption>Roberto Nevilis</figcaption></figure></div>
+
+
+
+<p>ประวัติศาสตร์ของการบ้าน มีความเชื่อว่า เมื่อปี คศ. 1095 ณ เมือง Venice ประเทศฝรั่งเศสการบ้านครั้งแรกนั้น ถูกคิดค้นโดยนาย<strong> Roberto Nevilis </strong>ซึ่งในสมัยนั้น นักเรียนที่จะได้รับการศึกษาอย่างเป็นทางการจะต้องมีผลการเรียนที่ดี ฉะนั้นนาย Nevilis จึงมีความต้องการที่จะทำให้นักเรียนของเค้า เข้าใจถึงเนื้อหาที่สอนได้อย่างลึกซึ้ง และนำมาสู่การบ้านนั่นเอง ข้อมูลบางที่ก็ระบุว่า การที่เขาสั่งการบ้านนักเรียนนั้น เหตุเพราะเขาต้องการลงโทษนักเรียนแต่ไม่ว่าจะจุดประสงค์ใด การทำการบ้านก็ถือเป็นการทบทวนสิ่งที่เรียนทั้งหมดในวันนั้นๆ ว่าเราเข้าใจในเนื้อหาที่ครูสอนได้มากน้อยแค่ไหนจริงมั๊ยคะ?</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter"><a href="https://img-ha.mthcdn.com/kY71EQi5mdUs6AAK_9gr6wP4mRY=/teen.mthai.com/app/uploads/2016/05/20131122182342227.jpg"><img src="https://img-ha.mthcdn.com/kY71EQi5mdUs6AAK_9gr6wP4mRY=/teen.mthai.com/app/uploads/2016/05/20131122182342227.jpg" alt="20131122182342227" class="wp-image-112072"/></a></figure></div>
+
+
+
+<p>ข้อมูลและภาพจาก&nbsp;<a href="https://th.wikipedia.org/wiki/%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99">wikipedia</a>,&nbsp;<a href="https://www.facebook.com/VoooDoooGuy/photos/pb.1414674582178602.-2207520000.1464624187./1468454686800591/?type=3&amp;theater">VoooDoooGuy</a></p>
+  </div><!-- .entry-content -->
+
+   
+ <div class="banner-wrap2">
+  <div class="placeholder-rectangle2" id="dfp-backtotalk-rectangle-2">
+    <script type="text/javascript">
+    googletag.cmd.push(function() {
+      googletag.display("dfp-backtotalk-rectangle-2");
+    });
+    </script>
+  </div>
+</div>
+
+  
+<div class="creater-wrap" >
+  <div class="author-bio">
+    <header>WRITER</header>
+    <div class="author-meta" >
+      <div class="author-image">
+        <a class="url fn n" href="https://mthai.com/author/sine-in"><span class="author vcard" itemprop="author" itemscope itemtype="https://schema.org/Person">
+          <img src="https://mthai.com/app/uploads/2020/07/New-Project-5-150x150.png" width="120" height="120" alt="Sine-In" class="avatar avatar-120 wp-user-avatar wp-user-avatar-120 alignnone photo" />        </span></a>
+      </div>
+      <div class="author-description">
+        <h3 class="author-title">
+          <span class="author-heading">
+            <a class="url fn n" href="https://mthai.com/author/sine-in">Sine-In</a>
+          </span>
+        </h3>
+        <span class="author-desc"></span>
+      </div>
+    </div>
+  </div><!-- .author-bio -->
+</div>
+
+  <div class="row column billboard-wrap">
+    <div class="placeholder-billboard" id="dfp-backtotalk-billboard"></div>
+    <script>
+      googletag.cmd.push(function() {
+        googletag.display('dfp-backtotalk-billboard');
+      });
+    </script>
+  </div>  
+</article><!-- #post-${ID} -->
+<div class="post-related-container">
+  <h2 class="post-headline-primary">RELATED</h2>
+  
+  <div class="post-related masonry">
+            <div class="masonry-item">
+      <div class="masonry-content">
+        <a href="https://mthai.com/campus/55503.html" title="วิธีการเขียนรายงาน ฉบับสมบูรณ์ เขียนรายงานอย่างไร ให้ครบถ้วนที่สุด">
+          <img width="1200" height="630" src="https://img-ha.mthcdn.com/MZM6Wz64snvv0aZFp2QoTgTUiHE=/mthai.com/app/uploads/2020/07/report.jpg" class="attachment- size- wp-post-image" alt="วิธีการเขียนรายงาน ฉบับสมบูรณ์ เขียนรายงานอย่างไร ให้ครบถ้วนที่สุด" loading="lazy" srcset="https://img-ha.mthcdn.com/MZM6Wz64snvv0aZFp2QoTgTUiHE=/mthai.com/app/uploads/2020/07/report.jpg 1200w, https://img-ha.mthcdn.com/dXWNOPMO7cWNVNpm3UnPXGqe178=/mthai.com/app/uploads/2020/07/report-300x158.jpg 300w, https://img-ha.mthcdn.com/Sqa_7R324bJGIaquf9k_l7RJlRk=/mthai.com/app/uploads/2020/07/report-1024x538.jpg 1024w, https://img-ha.mthcdn.com/Wpos-LDM1fw0OS8KJyZyfduRiTE=/mthai.com/app/uploads/2020/07/report-768x403.jpg 768w" sizes="(max-width: 1200px) 100vw, 1200px" />        </a>
+          <h3 class="masonry-title"><a href="https://mthai.com/campus/55503.html" title="วิธีการเขียนรายงาน ฉบับสมบูรณ์ เขียนรายงานอย่างไร ให้ครบถ้วนที่สุด" rel="bookmark">วิธีการเขียนรายงาน ฉบับสมบูรณ์ เขียนรายงานอย่างไร ให้ครบถ้วนที่สุด</a></h3>          <p class="masonry-description">
+            วิธีการเขียนรายงาน ฉบับสมบูรณ์ เขียนรายงานอย่างไร ให้ครบถ้วนที่สุด การทำรายงานวิชาต่าง ๆ ต้องมีอะไรบ้าง ขั้นตอนการทำรายงาน           </p>
+      </div>
+    </div>
+                <div class="masonry-item">
+      <div class="masonry-content">
+        <a href="https://mthai.com/campus/54770.html" title="คำเป็น คำตาย คืออะไร? พร้อมวิธีจำง่ายๆ ไปตอบโจทย์ในข้อสอบ">
+          <img width="2560" height="1517" src="https://img-ha.mthcdn.com/uDLfPNK94jDyQmkz0Am-AJ_IoMA=/mthai.com/app/uploads/2020/05/Thai-3-scaled.jpg" class="attachment- size- wp-post-image" alt="คำเป็น คำตาย คืออะไร? พร้อมวิธีจำง่ายๆ ไปตอบโจทย์ในข้อสอบ" loading="lazy" srcset="https://img-ha.mthcdn.com/uDLfPNK94jDyQmkz0Am-AJ_IoMA=/mthai.com/app/uploads/2020/05/Thai-3-scaled.jpg 2560w, https://img-ha.mthcdn.com/WEB1k4GSI747EhBU6Zf8g1ygflE=/mthai.com/app/uploads/2020/05/Thai-3-300x178.jpg 300w, https://img-ha.mthcdn.com/K1hXHedajPCRngifGMW2Spx5vWw=/mthai.com/app/uploads/2020/05/Thai-3-1024x607.jpg 1024w, https://img-ha.mthcdn.com/1ma4qlE6ZuRA7ERuS3lztBfYz7c=/mthai.com/app/uploads/2020/05/Thai-3-768x455.jpg 768w, https://img-ha.mthcdn.com/HD7gBob5dyUhxIz2_e_U_aUO4NA=/mthai.com/app/uploads/2020/05/Thai-3-1536x910.jpg 1536w, https://img-ha.mthcdn.com/8_h-MjQ6GM5uv66ZoxocJ2G2Nqw=/mthai.com/app/uploads/2020/05/Thai-3-2048x1213.jpg 2048w" sizes="(max-width: 2560px) 100vw, 2560px" />        </a>
+          <h3 class="masonry-title"><a href="https://mthai.com/campus/54770.html" title="คำเป็น คำตาย คืออะไร? พร้อมวิธีจำง่ายๆ ไปตอบโจทย์ในข้อสอบ" rel="bookmark">คำเป็น คำตาย คืออะไร? พร้อมวิธีจำง่ายๆ ไปตอบโจทย์ในข้อสอบ</a></h3>          <p class="masonry-description">
+            คำเป็น คำตาย หมายถึงอะไร และสังเกต อย่างไรถึงรู้ว่า อันนี้คำเป็น อันนี้คำตาย           </p>
+      </div>
+    </div>
+                <div class="masonry-item">
+      <div class="masonry-content">
+        <a href="https://mthai.com/campus/50853.html" title="ทฤษฎี 21 วัน คืออะไร? ทำไมวัยรุ่นต้องทำให้ติดจนเป็นนิสัย">
+          <img width="960" height="540" src="https://img-ha.mthcdn.com/Q1RuDVQZaHcEeHatiFuLurMmyXE=/mthai.com/app/uploads/2019/04/21.png" class="attachment- size- wp-post-image" alt="ทฤษฎี 21 วัน คืออะไร? ทำไมวัยรุ่นต้องทำให้ติดจนเป็นนิสัย" loading="lazy" srcset="https://img-ha.mthcdn.com/Q1RuDVQZaHcEeHatiFuLurMmyXE=/mthai.com/app/uploads/2019/04/21.png 960w, https://img-ha.mthcdn.com/Ws_DUyWbUbtV2Lrw2SXbtnlSIcQ=/mthai.com/app/uploads/2019/04/21-300x169.png 300w, https://img-ha.mthcdn.com/iMUOFfjlMERTtY23vmg9CUrNdSU=/mthai.com/app/uploads/2019/04/21-768x432.png 768w" sizes="(max-width: 960px) 100vw, 960px" />        </a>
+          <h3 class="masonry-title"><a href="https://mthai.com/campus/50853.html" title="ทฤษฎี 21 วัน คืออะไร? ทำไมวัยรุ่นต้องทำให้ติดจนเป็นนิสัย" rel="bookmark">ทฤษฎี 21 วัน คืออะไร? ทำไมวัยรุ่นต้องทำให้ติดจนเป็นนิสัย</a></h3>          <p class="masonry-description">
+            เคยได้ยินเรื่อง &#8220;ทฤษฎี 21 วัน&#8221; กันบ้างไหมคะ? ที่มีแนวคิดว่า ถ้าเราทำอะไรที่ตั้งใจสักอย่าง ติดต่อกันซ้ำๆ อย่างน้อย 21 วัน มันจะกลายเป็นนิสัย แถมมีบางคนใช้แล้วได้ผลด้วยนะคะ ได้ยินแบบนี้แล้ว น่าสนใจ…          </p>
+      </div>
+    </div>
+                <div class="masonry-item">
+      <div class="masonry-content">
+        <a href="https://mthai.com/campus/50823.html" title="7 วิธีลดความตื่นเต้น เมื่อต้องพูดหน้าชั้นเรียน">
+          <img width="960" height="540" src="https://img-ha.mthcdn.com/RJJ6AawSRRESHoOm0da5UDOqx00=/mthai.com/app/uploads/2019/05/panic-cover.jpg" class="attachment- size- wp-post-image" alt="7 วิธีลดความตื่นเต้น เมื่อต้องพูดหน้าชั้นเรียน" loading="lazy" srcset="https://img-ha.mthcdn.com/RJJ6AawSRRESHoOm0da5UDOqx00=/mthai.com/app/uploads/2019/05/panic-cover.jpg 960w, https://img-ha.mthcdn.com/PW12EJMX4S7zfp_6JA1ye8XhPMs=/mthai.com/app/uploads/2019/05/panic-cover-300x169.jpg 300w, https://img-ha.mthcdn.com/W2GvZYqUAT46C1xP5OuZAmq8Iy0=/mthai.com/app/uploads/2019/05/panic-cover-768x432.jpg 768w" sizes="(max-width: 960px) 100vw, 960px" />        </a>
+          <h3 class="masonry-title"><a href="https://mthai.com/campus/50823.html" title="7 วิธีลดความตื่นเต้น เมื่อต้องพูดหน้าชั้นเรียน" rel="bookmark">7 วิธีลดความตื่นเต้น เมื่อต้องพูดหน้าชั้นเรียน</a></h3>          <p class="masonry-description">
+            เชื่อว่าหลายคนมีปัญหาการออกไปพูดหน้าชั้นเรียน มักจะตื่นเต้นที่ต้องพูดต่อหน้าคนเป็นจำนวนมาก พูดจาตะกุกตะกัก กลัวทำได้ไม่ดี ขาดความมั่นใจ ฯลฯ แต่ก็หลีกเลี่ยงไม่ได้ และจะทำอย่างไรถึงจะลดอาการการออกไปพูดหน้าชั้นแบบไม่สั่น ไม่ประหม่าได้  วันนี้เรามีวิธีแก้ไขมาฝากกัน&#8230; 7 วิธีลดความตื่นเต้น เมื่อต้องพูดหน้าชั้นเรียน 1. เตรียมพร้อม…          </p>
+      </div>
+    </div>
+                <div class="masonry-item">
+      <div class="masonry-content">
+        <a href="https://mthai.com/campus/50780.html" title="10 วิธีเด็ดสำหรับวัยมัธยม ฝึกฝนตัวเองอย่างไร ให้ได้เกรดดีขึ้น">
+          <img width="960" height="540" src="https://img-ha.mthcdn.com/avZruuZpdAJ-6E6gAEcSdh3Z_PM=/mthai.com/app/uploads/2019/09/trick-.jpg" class="attachment- size- wp-post-image" alt="10 วิธีเด็ดสำหรับวัยมัธยม ฝึกฝนตัวเองอย่างไร ให้ได้เกรดดีขึ้น" loading="lazy" srcset="https://img-ha.mthcdn.com/avZruuZpdAJ-6E6gAEcSdh3Z_PM=/mthai.com/app/uploads/2019/09/trick-.jpg 960w, https://img-ha.mthcdn.com/yeOJZpRkSccjg_Wb4JOq89lIqLI=/mthai.com/app/uploads/2019/09/trick--300x169.jpg 300w, https://img-ha.mthcdn.com/IPqns4pD4TLxwoGnmw1zrTsWmPo=/mthai.com/app/uploads/2019/09/trick--768x432.jpg 768w" sizes="(max-width: 960px) 100vw, 960px" />        </a>
+          <h3 class="masonry-title"><a href="https://mthai.com/campus/50780.html" title="10 วิธีเด็ดสำหรับวัยมัธยม ฝึกฝนตัวเองอย่างไร ให้ได้เกรดดีขึ้น" rel="bookmark">10 วิธีเด็ดสำหรับวัยมัธยม ฝึกฝนตัวเองอย่างไร ให้ได้เกรดดีขึ้น</a></h3>          <p class="masonry-description">
+            น้องๆ หลายคนยังแบ่งเวลากันไม่ค่อยเป็น ทำให้ช่วงใกล้สอบจะเจอปัญหาเดิมๆ คือทำคะแนนสอบไม่ดี เพราะอ่านหนังสือไม่ทัน ในขณะที่เพื่อนบางคนเขาสามารถทำคะแนนออกมาได้ดี ทั้งๆ ทีเรามี 24 ชั่วโมงใน 1 วันเท่ากัน แต่ก็ไม่ต้องน้อยใจไป วันนี้ทีนเอ็มไทยมีวิธีการแบ่งเวลาฝึกฝนตัวเอง ซึ่งสำคัญมากสำหรับวัยมัธยม…          </p>
+      </div>
+    </div>
+                <div class="masonry-item">
+      <div class="masonry-content">
+        <a href="https://mthai.com/campus/50778.html" title="คำสามัญ คำสุภาพ ที่หลายคนอาจยังไม่เคยรู้">
+          <img width="1200" height="677" src="https://img-ha.mthcdn.com/ufWyB33wzl5Y7HiPemQLdz54XpM=/" class="attachment- size- wp-post-image" alt="คำสามัญ คำสุภาพ ที่หลายคนอาจยังไม่เคยรู้" loading="lazy" srcset="https://img-ha.mthcdn.com/Y1CWiZd-ylodztBkQLG2GqgRGow=/mthai.com/app/uploads/2020/01/mali-cover.jpg 1200w, https://img-ha.mthcdn.com/IYyschWVfcpeN8bhhdQ0ioKTw0U=/mthai.com/app/uploads/2020/01/mali-cover-300x169.jpg 300w, https://img-ha.mthcdn.com/GuiRSMJf3-P8w7rzPn-NDqnqsAk=/mthai.com/app/uploads/2020/01/mali-cover-1024x578.jpg 1024w, https://img-ha.mthcdn.com/4QRoZuMnIab1lHaYDFHmP6-RUnE=/mthai.com/app/uploads/2020/01/mali-cover-768x433.jpg 768w" sizes="(max-width: 1200px) 100vw, 1200px" />        </a>
+          <h3 class="masonry-title"><a href="https://mthai.com/campus/50778.html" title="คำสามัญ คำสุภาพ ที่หลายคนอาจยังไม่เคยรู้" rel="bookmark">คำสามัญ คำสุภาพ ที่หลายคนอาจยังไม่เคยรู้</a></h3>          <p class="masonry-description">
+            เรื่องน่ารู้ภาษาไทย ที่น้องๆ หลายคนมักเจอในข้อสอบ หรืออาจเจอเวลาที่ทำการบ้านส่งอาจารย์ นั้นก็คือ&nbsp;คำสามัญ หมายถึง คำที่ใช้เรียกสิ่งต่างๆ&nbsp;โดยทั่วไป เช่น สัตว์&nbsp;ช้าง&nbsp;แมว&nbsp;อาหาร และ คำสุภาพ เดิมเป็นคำที่คิดขึ้นเพื่อเลี่ยงคำหยาบ คำที่ไม่สมควรใช้กราบบังคมทูลพระมหากษัตริย์ ปัจจุบันคำสุภาพ หมายถึง…          </p>
+      </div>
+    </div>
+                <div class="masonry-item">
+      <div class="masonry-content">
+        <a href="https://mthai.com/campus/46220.html" title="พร้อมมั้ย? ขึ้นชั้นเรียนใหม่ จัดระเบียบชีวิตนักเรียนใหม่ เพื่อคะแนน 4.00">
+          <img src="https://img-ha.mthcdn.com/qcpAvw3QZ61eXbSykHmXROBhn_c=/mthai.com/app/themes/tiwanon/dist/images/default-thumbnail_4131506a.png" alt="พร้อมมั้ย? ขึ้นชั้นเรียนใหม่ จัดระเบียบชีวิตนักเรียนใหม่ เพื่อคะแนน 4.00">        </a>
+          <h3 class="masonry-title"><a href="https://mthai.com/campus/46220.html" title="พร้อมมั้ย? ขึ้นชั้นเรียนใหม่ จัดระเบียบชีวิตนักเรียนใหม่ เพื่อคะแนน 4.00" rel="bookmark">พร้อมมั้ย? ขึ้นชั้นเรียนใหม่ จัดระเบียบชีวิตนักเรียนใหม่ เพื่อคะแนน 4.00</a></h3>          <p class="masonry-description">
+            เปิดเทอมนี้ นอกจากชุดนักเรียน กระเป๋า รองเท้า เครื่องเขียนชุดใหม่แล้ว น้องๆ เตรียมความพร้อมกับความรู้ใหม่ๆ กันหรือยังคะ? ถ้ายังละก็ ต้องมาติดตาม 8 เคล็ดลับจัดระเบียบชีวิตนักเรียน ตั้งแต่ต้นเทอมกันเลย เพื่อคะแนนปลายเทอมจะได้ 4.00 กันไปครอง ลองอ่านและนำไปปรับใช้กันดูนะคะ…          </p>
+      </div>
+    </div>
+                <div class="masonry-item">
+      <div class="masonry-content">
+        <a href="https://mthai.com/campus/46202.html" title="จัดโต๊ะหนังสือแบบไหน ให้น่านั่งทำการบ้าน">
+          <img width="960" height="540" src="https://img-ha.mthcdn.com/uQRU2Avwysv_EPzH-9lmEhONUbg=/mthai.com/app/uploads/2019/05/idea.jpg" class="attachment- size- wp-post-image" alt="จัดโต๊ะหนังสือแบบไหน ให้น่านั่งทำการบ้าน" loading="lazy" srcset="https://img-ha.mthcdn.com/uQRU2Avwysv_EPzH-9lmEhONUbg=/mthai.com/app/uploads/2019/05/idea.jpg 960w, https://img-ha.mthcdn.com/6f9BUVuO_vmzI3Tper39XKw5qlw=/mthai.com/app/uploads/2019/05/idea-300x169.jpg 300w, https://img-ha.mthcdn.com/1JICjp4W99_lrBdvZdNd1sgFI9g=/mthai.com/app/uploads/2019/05/idea-768x432.jpg 768w" sizes="(max-width: 960px) 100vw, 960px" />        </a>
+          <h3 class="masonry-title"><a href="https://mthai.com/campus/46202.html" title="จัดโต๊ะหนังสือแบบไหน ให้น่านั่งทำการบ้าน" rel="bookmark">จัดโต๊ะหนังสือแบบไหน ให้น่านั่งทำการบ้าน</a></h3>          <p class="masonry-description">
+            การจัดโต๊ะหนังสือที่ดี จะทำให้เราอยากมานั่งอ่านหนังสือ ทำการบ้านได้มากขึ้น จริงนะคะ และเป็น 1 ใน เคล็ดลับจัดระเบียบชีวิตนักเรียน เพื่อคะแนนปลายเทอมจะได้ 4.00 ซะด้วย แบบนี้จะไม่น่าสนใจได้ยังไง วันนี้ทีนเอ็มไทยเลยขอนำเทคนิคการจัดโต๊ะหนังสือ และภาพตัวอย่างโต๊ะหนังสือสวยๆ มาเป็นตัวเลือกให้น้องๆ ได้ลองไปจัดกันตามกัน ลองอ่านและนำไปปรับใช้กันดูนะคะ ไม่ยากอย่างที่คิด…          </p>
+      </div>
+    </div>
+                <div class="masonry-item">
+      <div class="masonry-content">
+        <a href="https://mthai.com/campus/46184.html" title="กลอนแปด คืออะไร? ลักษณะแผนผังกลอนแปด ที่ควรรู้">
+          <img width="2560" height="1707" src="https://img-ha.mthcdn.com/UfOYkgBsipFRWbOnvUsU_HS0VCY=/mthai.com/app/uploads/2019/05/cover-2-scaled.jpg" class="attachment- size- wp-post-image" alt="กลอนแปด คืออะไร? ลักษณะแผนผังกลอนแปด ที่ควรรู้" loading="lazy" srcset="https://img-ha.mthcdn.com/UfOYkgBsipFRWbOnvUsU_HS0VCY=/mthai.com/app/uploads/2019/05/cover-2-scaled.jpg 2560w, https://img-ha.mthcdn.com/CfrtFaeebm2B_wMAjXbkjICnEmQ=/mthai.com/app/uploads/2019/05/cover-2-300x200.jpg 300w, https://img-ha.mthcdn.com/9PD-fRqQuBwTOyp4oRJ2K9aWPnI=/mthai.com/app/uploads/2019/05/cover-2-1024x683.jpg 1024w, https://img-ha.mthcdn.com/x7qps9VGLw7me_-CTN-SgXABgII=/mthai.com/app/uploads/2019/05/cover-2-768x512.jpg 768w, https://img-ha.mthcdn.com/uUSfaKd0z2IfosHen9pH9i8_zLE=/mthai.com/app/uploads/2019/05/cover-2-1536x1024.jpg 1536w, https://img-ha.mthcdn.com/qjJa6FOYiS2yWzQNWHimcC-TuEs=/mthai.com/app/uploads/2019/05/cover-2-2048x1365.jpg 2048w" sizes="(max-width: 2560px) 100vw, 2560px" />        </a>
+          <h3 class="masonry-title"><a href="https://mthai.com/campus/46184.html" title="กลอนแปด คืออะไร? ลักษณะแผนผังกลอนแปด ที่ควรรู้" rel="bookmark">กลอนแปด คืออะไร? ลักษณะแผนผังกลอนแปด ที่ควรรู้</a></h3>          <p class="masonry-description">
+            กลอนแปด ที่เรียนและท่องจำกันมายาวนาน ตั้งแต่สมัยประถมศึกษาจนถึงระดับมัธยมศึกษา แต่หลายคนก็คืนความรู้คุณครูกันไปหมดแล้ว เพราะไม่ค่อยได้นำมาใช้ วันนี้ทีนเอ็มไทยขอนำความรู้เรื่องกลอน กลอนแปดคืออะไร? ลักษณะแผนผังกลอนแปด ที่ควรรู้ บทหนึ่งมีกี่บาท การสัมผัสนอกสัมผัสใน และการกำหนดเสียงคำท้ายวรรคสำคัญใช้เสียงไหนได้ไม่ได้ มาติดตามกันเลยค่ะ กลอนแปด คืออะไร?…          </p>
+      </div>
+    </div>
+          </div>
+</div><!-- .post-related -->
+
+		<div class="categories">
+            <a class="category-item" 
+      style="background-image: url(https://img-ha.mthcdn.com/-qOSoK16nEBK1n5EkYgEcfDRBek=/mthai.com/app/uploads/2020/07/cat_backtotalk.jpg) "      href="https://mthai.com/backtotalk"
+    >
+      <span>#BACKTOTALK</span>
+    </a>
+              <a class="category-item" 
+      style="background-image: url(https://img-ha.mthcdn.com/Cff-sNVxm0z6kyWfxcEYT19h2Qo=/mthai.com/app/uploads/2020/07/cat_chill.jpg) "      href="https://mthai.com/chill"
+    >
+      <span>#CHILL</span>
+    </a>
+                                  <a class="category-item" 
+      style="background-image: url(https://img-ha.mthcdn.com/7QBqJgow2uTwqGomZtYrC4d3w1M=/mthai.com/app/uploads/2020/07/cat_interviews.png) "      href="https://mthai.com/interviews"
+    >
+      <span>#INTERVIEWS</span>
+    </a>
+                                      <a class="category-item" 
+      style="background-image: url(https://img-ha.mthcdn.com/udtbvcuMgyH8fE22Mk6PfpB1qaA=/mthai.com/app/uploads/2020/07/cat_tell.jpg) "      href="https://mthai.com/tell"
+    >
+      <span>#TELL</span>
+    </a>
+        </div>
+		</main><!-- #main -->
+	</section><!-- #primary -->
+
+
+	</div><!-- #content -->
+
+	<footer id="colophon" class="site-footer">
+				
+		<div class="footer-navigation"><ul id="menu-footer-menu" class="menu"><li id="menu-item-55929" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-privacy-policy menu-item-55929"><a href="https://mthai.com/privacy-policy">นโยบายสิทธิส่วนบุคคล</a></li>
+<li id="menu-item-55920" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-55920"><a href="https://mthai.com/contact-us">ติดต่อเรา</a></li>
+<li id="menu-item-55921" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-55921"><a href="https://mthai.com/about-us">เกี่ยวกับเอ็มไทย</a></li>
+</ul></div>		<!-- .social-navigation -->
+		
+		
+		<div class="site-info">
+			<span>Copyright © 2016 MThai.com All rights reserved. หมายเลขทะเบียนการค้าอิเล็กทรอนิกส์ : 0127114707040</span>
+		</div><!-- .site-info -->
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+
+	<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="pswp__bg"></div>
+		<div class="pswp__scroll-wrap">
+			<div class="pswp__container">
+	            <div class="pswp__item"></div>
+	            <div class="pswp__item"></div>
+	            <div class="pswp__item"></div>
+	        </div>
+			<div class="pswp__ui pswp__ui--hidden">
+				<div class="pswp__top-bar">
+				<!--  Controls are self-explanatory. Order can be changed. -->
+					<div class="pswp__counter"></div>
+					<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+					<button class="pswp__button pswp__button--share" title="Share"></button>
+					<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+					<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+					<!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+					<!-- element will get class pswp__preloader--active when preloader is running -->
+					<div class="pswp__preloader">
+						<div class="pswp__preloader__icn">
+							<div class="pswp__preloader__cut">
+								<div class="pswp__preloader__donut"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+					<div class="pswp__share-tooltip"></div>
+				</div>
+				<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+				</button>
+				<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+				</button>
+
+				<div class="pswp__caption">
+					<div class="pswp__caption__center"></div>
+				</div>
+			</div>
+		</div>
+		<div id="dfp-gallery" class="placeholder-gallery">
+			<script type="text/javascript">
+				googletag.cmd.push(function() {
+					googletag.display('dfp-gallery');
+				});
+			</script>
+		</div>
+	</div>
+
+
+<div class="dfp-footer-block">
+	<div id="dfp-adhesion" class="placeholder-adhesion">
+		<script type="text/javascript">
+			if(  window.matchMedia("(max-width: 640px)").matches ) {
+				googletag.cmd.push(function() {
+					googletag.display('dfp-adhesion');
+				});
+			}
+		</script>
+	</div>
+</div>
+
+        <script type="text/javascript">
+            let cust_login = document.getElementById("loginform");
+            if(cust_login !== null) {
+                var recaptcha_script = document.createElement('script');
+                recaptcha_script.setAttribute('src','https://www.google.com/recaptcha/api.js');
+                document.head.appendChild(recaptcha_script);                
+            }
+        </script>
+        <script type='text/javascript' id='tiwanon-js-js-extra'>
+/* <![CDATA[ */
+var ad_settings = {"show_inbetween":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' id="tiwanon-js" async="async" src='https://mthai.com/app/themes/tiwanon/dist/scripts/main_06c27951.js' id='tiwanon-js-js'></script>
+<script type='text/javascript' id="wpgallery-js" async="async" src='https://mthai.com/app/plugins/mthai-wp-gallery/dist/js/app.min.js' id='wpgallery-js-js'></script>
+<script type='text/javascript' id="wp-embed-js" async="async" src='https://mthai.com/wp/wp-includes/js/wp-embed.min.js' id='wp-embed-js'></script>
+
+
+	<!--ADOP-->
+	<script src="https://compass.adop.cc/ST/ee78f8a1-b124-4dfe-90b6-19038fcfbd8b"></script>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MJ7DBRF"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam-cell.nr-data.net","licenseKey":"a290aa7a3e","applicationID":"784704509","transactionName":"NVRVZhcEXxVVWkJdXgwedlERDF4IG0pfWlYOVA==","queueTime":0,"applicationTime":710,"atts":"GRNWEF8eTBs=","errorBeacon":"bam-cell.nr-data.net","agent":""}</script></body>
+</html>
+
+<!-- Performance optimized by Redis Object Cache. Learn more: https://wprediscache.com -->

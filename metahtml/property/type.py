@@ -95,6 +95,7 @@ class Extractor(BaseExtractor):
         ( 'state.gov', r'^/press-releases/$' ),
         ( 'syrianews.cc', r'^/syria-news-editors-twitter-timeline-get-inspired/?$' ),
         ( 'telegraph.co.uk', r'^/news/world/?$' ),
+        ( 'thaienquirer.com', r'^/current-affair/$'),
         ( 'thanhnien.vn', r'^/doi-song/$' ),
         ( 'thethaiger.com', r'^/thai-th/?$' ),
         ( 'treasury.gov', r'^/press-center/?$' ),
