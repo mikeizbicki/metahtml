@@ -79,6 +79,7 @@ class Extractor(BaseExtractor):
         ( 'marca.com', r'^/claro-mx/?$' ),
         ( 'money.udn.com', r'^/money/story//0' ),
         ( 'mundoplast.com', r'^/tag-chemical-representada-corquimia/?$' ),
+        ( 'nature.com', r'/nature/articles' ),
         ( 'news.kakaku.com', r'^/prdnews/page=8/?$' ),
         ( 'news.un.org', r'^/es/node?$' ),
         ( 'pattayaone.news', r'^/learning-365/$' ),
