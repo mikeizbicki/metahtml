@@ -17,6 +17,7 @@ import time
 from urllib.parse import urlparse
 
 import metahtml.adblock
+import metahtml.content
 
 ################################################################################
 # set the __version__ variable
@@ -43,7 +44,8 @@ logging.info("version="+str(__version__))
 
 cxpath_ldjson = lxml.etree.XPath('//script[@type="application/ld+json"]')
 
-def parse(html, url, property_filter=None, fast=False):
+            
+def parse(html, url, property_filter=None, fast=False, extractor_config=metahtml.content.ExtractorConfig()):
     '''
     return the dictionary of meta information for a given html/url combination
     '''
@@ -123,7 +125,9 @@ def parse(html, url, property_filter=None, fast=False):
             # extract the content;
             # this function is allowed to arbitrarily modify parser.doc,
             # and so it must come after properties that depend on the entire document
-            calculate_property('content')
+            parser.meta['content'] = {
+                'best' : metahtml.content.simple_extractor(parser, config=extractor_config)
+            }
 
             # calculate the links of just the article's html content;
             # this must come after calculating the content because 

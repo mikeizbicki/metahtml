@@ -11,11 +11,15 @@ bad_tags = [
     'nav',
     #'form',
     'svg',
-    'figure',
-    'aside',
+    #'figure',
+    #'aside',
     ]
 xpath_rm_nodes = '|'.join('(descendant-or-self::'+tag+')' for tag in bad_tags)
 cxpath_rm_nodes = lxml.etree.XPath(xpath_rm_nodes)
+
+cxpath_rm_figure = lxml.etree.XPath('descendant-or-self::figure')
+cxpath_rm_aside  = lxml.etree.XPath('descendant-or-self::aside')
+cxpath_rm_form   = lxml.etree.XPath('descendant-or-self::form')
 
 # FIXME:
 # Should we really remove everything within forms?
@@ -76,14 +80,39 @@ article_cleaner.allow_tags = (
     tags_code +
     tags_list +
     tags_table +
-    ['br'] # FIXME: replace <br> with <p>?
+    ['br']
     )
 
-def simple_extractor(parser):
+
+class ExtractorConfig:
+    '''
+    These configuration settings control the precision/recall tradeoff of the simple_extractor function.
+    See the inline comments of that function for the semantics of what these settings control.
+    In general, changing a boolean setting to True will cause more text to be removed.
+    '''
+    filter_main = True
+    filter_section = False
+    filter_article = True
+    filter_article_length_threshold = 2.0
+    filter_article_minptags = 2 
+    filter_article_minlen = 1000
+
+    rm_header = True
+    rm_figure = True
+    rm_aside = True
+    rm_form = False
+
+    div_to_p = True
+    div_to_p_length_threshold = 20
+
+    rm_header_lists = True
+    rm_footer_lists = True
+
+
+def simple_extractor(parser, config=ExtractorConfig()):
     doc = parser.doc
     url_parsed = parser.url_parsed
-    #url_parsed = urlparse(url)
-    confidence = 'lo'
+    filters = []
 
     # delete nodes that never contain content
     for node in cxpath_script_style_comments(doc):
@@ -91,118 +120,132 @@ def simple_extractor(parser):
 
     # the <main> tag indicates the main body of html5 text;
     # if present, restrict our search just to this tag
-    mains = list(cxpath_main(doc))
-    if len(mains)==1:
-        doc = mains[0]
-        confidence = 'hi'
+    if config.filter_main:
+        mains = list(cxpath_main(doc))
+        if len(mains)==1:
+            doc = mains[0]
+            filters.append('filter_main')
 
-    '''
-    FIXME:
-    should we include this?
     # the <section> tag indicates the section body of html5 text;
     # if present, restrict our search just to this tag
-    sections = list(cxpath_section(doc))
-    if len(sections)==1:
-        doc = sections[0]
-        confidence = 'hi'
-    '''
+    if config.filter_section:
+        sections = list(cxpath_section(doc))
+        if len(sections)==1:
+            doc = sections[0]
+            filters.append('filter_section')
 
     # the <article> tag indicates that an article is present;
     # unlike the main tag, there is commonly more than 1 <article> tag per page;
     # these multiple <article> tags occur on category pages that link to many articles,
     # and in "related pages" sections;
-    # in both of these cases, only small snippets of the actual article are in the html;;
+    # in both of these cases, only small snippets of the actual article are in the html;
     # in the former case, we want to extract nothing;
     # in the latter case, we want to extract only the large main article;
     # we achieve both goals by using the article tag only if its length is greater than twice 
     # the average of all other article tags
     # FIXME:
-    # the twice heuristic hasn't been tested and other numbers might reduce false positives/negatives
-    # FIXME:
     # these checks should be in the article_type.py file as well
-    articles = list(cxpath_article(doc))
-    if len(articles)==1:
-        # some webpages use the <article> tag only around related articles links,
-        # and not around the main article;
-        # counting for <p> tags ensures we don't miss the main article on these pages
-        article = articles[0]
-        article_text = text_content(article)
-        if len(cxpath_p(article))>1 or len(article_text)>1000:
-            doc = articles[0]
-            confidence = 'hi'
-    elif len(articles)>1:
-        articles_lens = []
-        for article in articles:
-            articles_lens.append(len(text_content(article)))
-        largest = max(articles_lens)
-        mean_minus_largest = (sum(articles_lens) - largest) / (len(articles_lens) - 1)
-        if largest > mean_minus_largest*2:
-            largest_index = articles_lens.index(largest)
-            doc = articles[largest_index]
-            confidence = 'hi'
+    if config.filter_article:
+        articles = list(cxpath_article(doc))
+        if len(articles)==1:
+            # some webpages use the <article> tag only around related articles links,
+            # and not around the main article;
+            # counting for <p> tags ensures we don't miss the main article on these pages
+            article = articles[0]
+            article_text = text_content(article)
+            if len(cxpath_p(article))>=config.filter_article_minptags or len(article_text)>=config.filter_article_minlen:
+                doc = articles[0]
+                filters.append('filter_article')
+        elif len(articles)>1:
+            articles_lens = []
+            for article in articles:
+                articles_lens.append(len(text_content(article)))
+            largest = max(articles_lens)
+            mean_minus_largest = (sum(articles_lens) - largest) / (len(articles_lens) - 1)
+            if largest > mean_minus_largest*config.filter_article_length_threshold:
+                largest_index = articles_lens.index(largest)
+                doc = articles[largest_index]
+                filters.append('filter_article')
 
-    # remove nodes that are semantically unrelated to the article's content;
+    # remove nodes that are semantically unrelated to the article's content
     # FIXME:
-    # should we be storing the figure/aside tags separately for later processing?
-    for node in list(cxpath_rm_nodes(doc)):
-        node.getparent().remove(node)
+    # use remove_node_keep_tail?
+    if config.rm_header:
+        for node in list(cxpath_rm_nodes(doc)):
+            node.getparent().remove(node)
+            filters.append('rm_header')
+
+    if config.rm_figure:
+        for node in list(cxpath_rm_figure(doc)):
+            node.getparent().remove(node)
+            filters.append('rm_figure')
+
+    if config.rm_aside:
+        for node in list(cxpath_rm_aside(doc)):
+            node.getparent().remove(node)
+            filters.append('rm_aside')
+
+    if config.rm_form:
+        for node in list(cxpath_rm_form(doc)):
+            node.getparent().remove(node)
+            filters.append('rm_form')
 
     # change <div> tags to <p> tags if they don't contain block elements;
     # many webpages do not use <p> tags at all and only use <div> tags,
     # and this conversion lets us capture the text on these pages
     # FIXME:
     # should we only do this if there are no/few <p> tags?
-    for div in doc.iterdescendants('div'):
-    #for div in list(cxpath_div(doc)):
-        # compute has_block
-        has_block = False
-        for descendant in div.iterdescendants():
-            if descendant.tag in tags_section + tags_list + tags_block + ['div']:
-                next_br = descendant.getnext() is not None and descendant.getnext().tag == 'br'
-                prev_br = descendant.getprevious() is not None and descendant.getprevious().tag == 'br'
-                if not (next_br or prev_br):
-                    has_block = True
+    if config.div_to_p:
+        for div in doc.iterdescendants('div'):
 
-        # compute div_text
-        div_text = ''
-        div_text_threshold = 20
-        if div.text is not None:
-            div_text += div.text.strip()
-        for child in div.getchildren():
-            if child.tag not in ['div']+tags_block+tags_section+tags_list:
-                div_text += ' ' + text_content(child)
-            else:
-                child_tail = ''
-                if child.tail is not None:
-                    child_tail = child.tail.strip()
-                div_text += child_tail
-            if len(div_text)>div_text_threshold:
-                break
+            # compute whether the div contains a block element descendent
+            has_block = False
+            for descendant in div.iterdescendants():
+                if descendant.tag in tags_section + tags_list + tags_block + ['div']:
+                    next_br = descendant.getnext() is not None and descendant.getnext().tag == 'br'
+                    prev_br = descendant.getprevious() is not None and descendant.getprevious().tag == 'br'
+                    if not (next_br or prev_br):
+                        has_block = True
 
-        # process div 
-        if len(div_text)>div_text_threshold or not has_block:
-            div.tag = 'p'
-            # replace <br> tags with a series of <p> tags
-            # 
-            #   <div>a<br>b<a>c</a>d<br>e</div>
-            #
-            # becomes
-            #
-            #   <p>a</p>
-            #   <p>b<a>c</a>d</p>
-            #   <p>e</p>
-            children = list(div.getchildren())
-            for child in children:
-                div.remove(child)
-            for child in children:
-                if child.tag in ['br']: #,'div']+tags_block+tags_section+tags_list:
-                    new_div = lxml.etree.Element('p')
-                    new_div.set('created_from_div_br','true')
-                    new_div.text = child.tail
-                    div.addnext(new_div)
-                    div = new_div
+            # compute the text content of the div
+            div_text = ''
+            if div.text is not None:
+                div_text += div.text.strip()
+            for child in div.getchildren():
+                if child.tag not in ['div']+tags_block+tags_section+tags_list:
+                    div_text += ' ' + text_content(child)
                 else:
-                    div.append(child)
+                    child_tail = ''
+                    if child.tail is not None:
+                        child_tail = child.tail.strip()
+                    div_text += child_tail
+                if len(div_text)>config.div_to_p_length_threshold:
+                    break
+
+            # process div 
+            if len(div_text)>config.div_to_p_length_threshold or not has_block:
+                div.tag = 'p'
+                # replace <br> tags with a series of <p> tags
+                # 
+                #   <div>a<br>b<a>c</a>d<br>e</div>
+                #
+                # becomes
+                #
+                #   <p>a</p>
+                #   <p>b<a>c</a>d</p>
+                #   <p>e</p>
+                children = list(div.getchildren())
+                for child in children:
+                    div.remove(child)
+                for child in children:
+                    if child.tag in ['br']: #,'div']+tags_block+tags_section+tags_list:
+                        new_div = lxml.etree.Element('p')
+                        new_div.set('created_from_div_br','true')
+                        new_div.text = child.tail
+                        div.addnext(new_div)
+                        div = new_div
+                    else:
+                        div.append(child)
 
     # clean the html to remove all unwanted tags
     # FIXME: breaks some webpages for unknown reason
@@ -219,15 +262,14 @@ def simple_extractor(parser):
         has_text = doc.text is not None and doc.text.strip() != ''
         if not has_text and len(doc)==0:
             remove_node_keep_tail(doc)
-            #doc.getparent().remove(doc)
         return doc
     doc = go(doc)
 
-    # lists that don't come after at least 2 <p> tags are probably header info
+    # lists that don't come after content are probably header info
     # FIXME: removes too much
     # file:///home/user/proj/metahtml/tests/.cache/https___www.businessinsider.com_trump-deploys-hospital-ship-mercy-to-los-angeles-2020-344984c01/2020-06-16.diff.html
     # file:///home/user/proj/metahtml/tests/.cache/https___www.sunsigns.org_famousbirthdays_profile_ayatollah-ruhollah-khomeini_b65082cc/2020-07-03.diff.html
-    allow_lists = False
+    allow_lists = not config.rm_header_lists
     nodes_to_remove = []
     for node in doc.iter():
         if not allow_lists and node.tag in tags_list:
@@ -244,7 +286,9 @@ def simple_extractor(parser):
                     allow_lists = True
     for node in nodes_to_remove:
         if node.getparent() is not None:
+            # FIXME: remove_node_keep_tail?
             node.getparent().remove(node)
+            filters.append('rm_header_lists')
     
     # lists/headers at the end of the page without following <p> tags are probably footer info
     # FIXME: removes too little
@@ -262,7 +306,7 @@ def simple_extractor(parser):
     # file:///home/user/proj/metahtml/tests/.cache/https___www.thefamouspeople.com_profiles_ayatollah-khomeini-12.phpb8cbce93/2020-07-07
     # (the html is broken, no </li> tags) file:///home/user/proj/metahtml/tests/.cache/https___www.scientificamerican.com_article_how-does-chlorine-added-t_cdc79060/2020-06-12
     # file:///home/user/proj/metahtml/tests/.cache/https___www.semana.com_deportes_articulo_en-grave-peligro-hermetismo-sobre-estado-de-salud-de-kim-jong-un-tras-cirugia_664851c8fcfae6/2020-05-31.metahtml.html
-    allow_lists = False
+    allow_lists = not config.rm_footer_lists
     nodes_to_remove = []
     for node in reversed(list(doc.iter())):
         if not allow_lists and node.tag in tags_list + tags_header:
@@ -278,6 +322,7 @@ def simple_extractor(parser):
     for node in nodes_to_remove:
         if node.getparent() is not None:
             node.getparent().remove(node)
+            filters.append('rm_footer_lists')
 
     # remove content not contained within a <p> tag
     nodes_to_remove = []
@@ -288,14 +333,9 @@ def simple_extractor(parser):
         if node.tag in tags_inline:
             if not any(block in [ node.tag for node in itertools.chain(node.iterancestors(),node.iterdescendants()) ] for block in tags_block+tags_list):
                 nodes_to_remove.append(node)
-
         if node.tail:
             if not any(block in [ node.tag for node in node.iterancestors() ] for block in tags_block+tags_list):
                 node.tail = None
-        # FIXME:
-        # should we remove highlink density tags?
-        #if node.tag=='p' and is_highlink_density(node):
-            #nodes_to_remove.append(node)
     for node in nodes_to_remove:
         if node.getparent() is not None:
             node.getparent().remove(node)
@@ -310,7 +350,7 @@ def simple_extractor(parser):
             'text' : text,
             'html' : html,
             },
-        'confidence' : confidence,
+        'filters' : filters,
         'pattern' : 'simple_extractor',
         }
 
