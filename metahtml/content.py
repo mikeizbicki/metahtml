@@ -1,22 +1,20 @@
+from bs4 import BeautifulSoup
 import copy
 import lxml.cssselect
 import lxml.etree
 import lxml.html.clean
 import itertools
 
-bad_tags = [
+
+badtags = [
     'head',
     'header',
     'footer',
     'nav',
-    #'form',
     'svg',
-    #'figure',
-    #'aside',
     ]
-xpath_rm_nodes = '|'.join('(descendant-or-self::'+tag+')' for tag in bad_tags)
-cxpath_rm_nodes = lxml.etree.XPath(xpath_rm_nodes)
-
+xpath_rm_badtags = '|'.join('(descendant-or-self::'+tag+')' for tag in badtags)
+cxpath_rm_badtags = lxml.etree.XPath(xpath_rm_badtags)
 cxpath_rm_figure = lxml.etree.XPath('descendant-or-self::figure')
 cxpath_rm_aside  = lxml.etree.XPath('descendant-or-self::aside')
 cxpath_rm_form   = lxml.etree.XPath('descendant-or-self::form')
@@ -62,7 +60,7 @@ cxpath_script_style_comments = lxml.etree.XPath('(descendant-or-self::script)|(d
 
 tags_section = ['address','article','aside','figcaption','figure','main','section']
 tags_inline = ['a','span']
-tags_list = ['ul', 'ol', 'li', 'dl', 'dt', 'dd']
+tags_list = ['ul', 'ol', 'dl', 'li', 'dt', 'dd']
 tags_block = ['p','blockquote']
 tags_header = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
 tags_code = ['tt', 'pre', 'code']
@@ -97,7 +95,7 @@ class ExtractorConfig:
     filter_article_minptags = 2 
     filter_article_minlen = 1000
 
-    rm_header = True
+    rm_badtags = True
     rm_figure = True
     rm_aside = True
     rm_form = False
@@ -105,11 +103,26 @@ class ExtractorConfig:
     div_to_p = True
     div_to_p_length_threshold = 20
 
+    rm_noncontent_blocks = True
+
     rm_header_lists = True
     rm_footer_lists = True
 
 
-def simple_extractor(parser, config=ExtractorConfig()):
+ExtractorConfig_recall = ExtractorConfig()
+ExtractorConfig_recall.rm_figure = False 
+ExtractorConfig_recall.rm_aside = False 
+ExtractorConfig_recall.rm_header_lists = False 
+ExtractorConfig_recall.rm_footer_lists = False 
+ExtractorConfig_recall.rm_noncontent_blocks = False 
+
+
+def extract_content(parser, pretty_html=False, config=ExtractorConfig()):
+    '''
+    The main function for extracting content from an html document.
+    It is intended to be called from within the metahtml.parse function,
+    which defines the input parser parameter appropriately.
+    '''
     doc = parser.doc
     url_parsed = parser.url_parsed
     filters = []
@@ -170,8 +183,8 @@ def simple_extractor(parser, config=ExtractorConfig()):
     # remove nodes that are semantically unrelated to the article's content
     # FIXME:
     # use remove_node_keep_tail?
-    if config.rm_header:
-        for node in list(cxpath_rm_nodes(doc)):
+    if config.rm_badtags:
+        for node in list(cxpath_rm_badtags(doc)):
             node.getparent().remove(node)
             filters.append('rm_header')
 
@@ -255,15 +268,15 @@ def simple_extractor(parser, config=ExtractorConfig()):
     doc = article_cleaner.clean_html(doc)
 
     # recursively remove empty nodes
-    def go(doc):
+    def go_rm_empty(doc):
         children = list(doc.getchildren())
         for child in children:
-            child = go(child)
+            child = go_rm_empty(child)
         has_text = doc.text is not None and doc.text.strip() != ''
         if not has_text and len(doc)==0:
             remove_node_keep_tail(doc)
         return doc
-    doc = go(doc)
+    doc = go_rm_empty(doc)
 
     # lists that don't come after content are probably header info
     # FIXME: removes too much
@@ -324,26 +337,44 @@ def simple_extractor(parser, config=ExtractorConfig()):
             node.getparent().remove(node)
             filters.append('rm_footer_lists')
 
-    # remove content not contained within a <p> tag
-    nodes_to_remove = []
-    for node in doc.iter():
-        if node.tag in tags_section + ['div']:
-            node.text = None
-            node.tail = None
-        if node.tag in tags_inline:
-            if not any(block in [ node.tag for node in itertools.chain(node.iterancestors(),node.iterdescendants()) ] for block in tags_block+tags_list):
-                nodes_to_remove.append(node)
-        if node.tail:
-            if not any(block in [ node.tag for node in node.iterancestors() ] for block in tags_block+tags_list):
+    # remove block elements like divs that are unlikely to contain content
+    if config.rm_noncontent_blocks:
+        nodes_to_remove = []
+        for node in doc.iter():
+            if node.tag in tags_section + ['div']:
+                node.text = None
                 node.tail = None
-    for node in nodes_to_remove:
-        if node.getparent() is not None:
-            node.getparent().remove(node)
+            if node.tag in tags_inline:
+                if not any(block in [ node.tag for node in itertools.chain(node.iterancestors(),node.iterdescendants()) ] for block in tags_block+tags_list):
+                    nodes_to_remove.append(node)
+            if node.tail:
+                if not any(block in [ node.tag for node in node.iterancestors() ] for block in tags_block+tags_list):
+                    node.tail = None
+        for node in nodes_to_remove:
+            if node.getparent() is not None:
+                node.getparent().remove(node)
     
+    # flatten the html
+    doc = flatten_html(doc)
+    go_rm_empty(doc)
+
     # convert the parsed lxml document back into html
     strip_excess_whitespace(doc)
-    html = lxml.etree.tostring(doc,method='html',pretty_print=True).decode('utf-8')
     text = lxml_to_text(doc)
+    html = lxml.etree.tostring(doc,method='html',pretty_print=True).decode('utf-8')
+    if pretty_html:
+        # FIXME:
+        # lxml's pretty printing doesn't work if the input html contains certain types of excess whitespace;
+        # HTMLParser can remove this whitespace for us (and adds some useless tags),
+        # and the code below successfully pretty prints using this parser;
+        # ideally, we would just use HTMLParser to generate the lxml doc variable,
+        # but for some reason this breaks lots of code;
+        # so as a temporary fix we use HTMLParser just as a postprocessor
+        parser = lxml.etree.HTMLParser(remove_blank_text=True,recover=False)
+        doc = lxml.etree.HTML(html, parser=parser)
+        doc = list(doc.getchildren())[0]
+        doc = list(doc.getchildren())[0]
+        html = lxml.etree.tostring(doc,method='html',pretty_print=True).decode('utf-8')
 
     return {
         'value' : {
@@ -355,6 +386,79 @@ def simple_extractor(parser, config=ExtractorConfig()):
         }
 
 ################################################################################
+
+
+def flatten_html_doctests(html):
+    '''
+    this function is useful for testing flatten_html
+    '''
+    doc = lxml.html.fromstring(html)
+    doc = flatten_html(doc)
+    return lxml.etree.tostring(doc).decode('utf-8')
+
+
+def flatten_html(doc):
+    '''
+    flatten the html structure so that all block elements appear at the outermost layer;
+    block elements that are ancestors of other block elements will be deleted;
+    if there are non-block element children of these deleted elements,
+    those children will get placed into a <p> tag.
+    For examples of webpages that need this transformation, see:
+    https://insidesources.com/boltons-exit-is-happy-news-in-north-korea/
+    FIXME:
+    this should use the tag variables defined above,
+    but that requires refactoring those variables
+
+    >>> flatten_html_doctests('<article><p>a</p></article>')
+    '<article><p>a</p></article>'
+
+    >>> flatten_html_doctests('<article><p>a</p>b<p>c</p>d</article>')
+    '<article><p>a</p><p>b</p><p>c</p><p>d</p></article>'
+
+    >>> flatten_html_doctests('<article><p>a<p>b</p>c<p>d</p>e</p></article>')
+    '<article><p>a</p><p>b</p><p>c</p><p>d</p><p>e</p></article>'
+
+    '''
+    tags_to_flatten = ['ul', 'ol', 'dl', 'p','blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'tt', 'pre', 'code', 'table','tr','td','th','colgroup','col','tbody','thead','tfoot','caption','tbody']
+    flattened_blocks = []
+    def go_flatten(node, root=None):
+        if root is None:
+            root = node
+        #if node.tag in tags_list:
+            #root = node
+        children = list(node.getchildren())
+        for child in children:
+            child = go_flatten(child,root)
+        if node.tag in tags_to_flatten:
+            if node is not root:
+                root.addprevious(node)
+            if node.tail:
+                new_node = lxml.etree.Element(node.tag)
+                new_node.text = node.tail
+                node.tail = None
+                node.addnext(new_node)
+            has_text = text_content(node).strip() != ''
+            if not has_text:
+                remove_node_keep_tail(node)
+        return node
+    for node in doc.iterchildren():
+        go_flatten(node)
+        #for desc in node.iter():
+            #if desc.getparent() == doc or node.getparent() is None:
+                #pass
+            #else:
+                #if node.tag in tags_to_flatten:
+                    #node.getparent().addprevious(node)
+        #if node.tag in tags_to_flatten:
+            #has_block_descendent = False
+            #for desc in node.iter():
+                #if desc.tag in tags_to_flatten:
+                    #has_block_descendent = True
+                    #break
+            #if not has_block_descendent:
+                #flattened_blocks.append(node)
+    #doc.children = flattened_blocks
+    return doc
 
 # FIXME: remove all calls to this function?
 def text_content(node):

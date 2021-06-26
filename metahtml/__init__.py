@@ -18,6 +18,7 @@ from urllib.parse import urlparse
 
 import metahtml.adblock
 import metahtml.content
+ExtractorConfig_recall = metahtml.content.ExtractorConfig_recall
 
 ################################################################################
 # set the __version__ variable
@@ -126,7 +127,7 @@ def parse(html, url, property_filter=None, fast=False, extractor_config=metahtml
             # this function is allowed to arbitrarily modify parser.doc,
             # and so it must come after properties that depend on the entire document
             parser.meta['content'] = {
-                'best' : metahtml.content.simple_extractor(parser, config=extractor_config)
+                'best' : metahtml.content.extract_content(parser, config=extractor_config)
             }
 
             # calculate the links of just the article's html content;
