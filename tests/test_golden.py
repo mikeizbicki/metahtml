@@ -176,8 +176,8 @@ def get_tests(cache_filter=True):
     return list(filter(has_cache, raw_tests))
 
 
-@pytest.mark.parametrize('test_file',get_tests(), ids=id)
-def test_golden(test_file):
+@pytest.mark.parametrize('test_file', get_tests(), ids=id)
+def test_golden(test_file, full=False):
     '''
     This function gets called by pytest for each golden test case.
     It checks that for each url/date combination,
@@ -194,6 +194,8 @@ def test_golden(test_file):
 
     # compute the meta from scratch
     [(date, html)] = get_cached_webpages(url, [date])
+    if full:
+        metahtml.parse(html, url, fast=False)
     meta = metahtml.parse_for_testing(html, url, fast=False)
 
     # run the test

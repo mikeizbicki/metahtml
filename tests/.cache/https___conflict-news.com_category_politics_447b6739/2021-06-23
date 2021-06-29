@@ -1,0 +1,1830 @@
+<!doctype html >
+<!--[if IE 8]>    <html class="ie8" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en-US"> <!--<![endif]-->
+<head><script>if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script>class RocketLazyLoadScripts{constructor(e){this.triggerEvents=e,this.eventOptions={passive:!0},this.userEventListener=this.triggerListener.bind(this),this.delayedScripts={normal:[],async:[],defer:[]},this.allJQueries=[]}_addUserInteractionListener(e){this.triggerEvents.forEach((t=>window.addEventListener(t,e.userEventListener,e.eventOptions)))}_removeUserInteractionListener(e){this.triggerEvents.forEach((t=>window.removeEventListener(t,e.userEventListener,e.eventOptions)))}triggerListener(){this._removeUserInteractionListener(this),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",this._loadEverythingNow.bind(this)):this._loadEverythingNow()}async _loadEverythingNow(){this._delayEventListeners(),this._delayJQueryReady(this),this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async),await this._triggerDOMContentLoaded(),await this._triggerWindowLoad(),window.dispatchEvent(new Event("rocket-allScriptsLoaded"))}_registerAllDelayedScripts(){document.querySelectorAll("script[type=rocketlazyloadscript]").forEach((e=>{e.hasAttribute("src")?e.hasAttribute("async")&&!1!==e.async?this.delayedScripts.async.push(e):e.hasAttribute("defer")&&!1!==e.defer||"module"===e.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(e):this.delayedScripts.normal.push(e):this.delayedScripts.normal.push(e)}))}async _transformScript(e){return await this._requestAnimFrame(),new Promise((t=>{const n=document.createElement("script");let i;[...e.attributes].forEach((e=>{let t=e.nodeName;"type"!==t&&("data-rocket-type"===t&&(t="type",i=e.nodeValue),n.setAttribute(t,e.nodeValue))})),e.hasAttribute("src")&&this._isValidScriptType(i)?(n.addEventListener("load",t),n.addEventListener("error",t)):(n.text=e.text,t()),e.parentNode.replaceChild(n,e)}))}_isValidScriptType(e){return!e||""===e||"string"==typeof e&&["text/javascript","text/x-javascript","text/ecmascript","text/jscript","application/javascript","application/x-javascript","application/ecmascript","application/jscript","module"].includes(e.toLowerCase())}async _loadScriptsFromList(e){const t=e.shift();return t?(await this._transformScript(t),this._loadScriptsFromList(e)):Promise.resolve()}_preloadAllScripts(){var e=document.createDocumentFragment();[...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async].forEach((t=>{const n=t.getAttribute("src");if(n){const t=document.createElement("link");t.href=n,t.rel="preload",t.as="script",e.appendChild(t)}})),document.head.appendChild(e)}_delayEventListeners(){let e={};function t(t,n){!function(t){function n(n){return e[t].eventsToRewrite.indexOf(n)>=0?"rocket-"+n:n}e[t]||(e[t]={originalFunctions:{add:t.addEventListener,remove:t.removeEventListener},eventsToRewrite:[]},t.addEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.add.apply(t,arguments)},t.removeEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.remove.apply(t,arguments)})}(t),e[t].eventsToRewrite.push(n)}function n(e,t){const n=e[t];Object.defineProperty(e,t,{get:n||function(){},set:n=>{e["rocket"+t]=n}})}t(document,"DOMContentLoaded"),t(window,"DOMContentLoaded"),t(window,"load"),t(window,"pageshow"),t(document,"readystatechange"),n(document,"onreadystatechange"),n(window,"onload"),n(window,"onpageshow")}_delayJQueryReady(e){let t=window.jQuery;Object.defineProperty(window,"jQuery",{get:()=>t,set(n){if(n&&n.fn&&!e.allJQueries.includes(n)){n.fn.ready=n.fn.init.prototype.ready=function(t){e.domReadyFired?t.bind(document)(n):document.addEventListener("rocket-DOMContentLoaded",(()=>t.bind(document)(n)))};const t=n.fn.on;n.fn.on=n.fn.init.prototype.on=function(){if(this[0]===window){function e(e){return e.split(" ").map((e=>"load"===e||0===e.indexOf("load.")?"rocket-jquery-load":e)).join(" ")}"string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=e(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach((t=>{delete Object.assign(arguments[0],{[e(t)]:arguments[0][t]})[t]}))}return t.apply(this,arguments),this},e.allJQueries.push(n)}t=n}})}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._requestAnimFrame(),document.rocketonreadystatechange&&document.rocketonreadystatechange()}async _triggerWindowLoad(){await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-load")),await this._requestAnimFrame(),window.rocketonload&&window.rocketonload(),await this._requestAnimFrame(),this.allJQueries.forEach((e=>e(window).trigger("rocket-jquery-load"))),window.dispatchEvent(new Event("rocket-pageshow")),await this._requestAnimFrame(),window.rocketonpageshow&&window.rocketonpageshow()}_handleDocumentWrite(){const e=new Map;document.write=document.writeln=function(t){const n=document.currentScript,i=document.createRange(),r=n.parentElement;let a=e.get(n);void 0===a&&(a=n.nextSibling,e.set(n,a));const o=document.createDocumentFragment();i.setStart(o,0),o.appendChild(i.createContextualFragment(t)),r.insertBefore(o,a)}}async _requestAnimFrame(){return new Promise((e=>requestAnimationFrame(e)))}static run(){const e=new RocketLazyLoadScripts(["keydown","mousemove","touchmove","touchstart","touchend","touchcancel","touchforcechange","wheel"]);e._addUserInteractionListener(e)}}RocketLazyLoadScripts.run();
+</script>
+    <title>POLITICS Archives - Conflict News</title><style id="rocket-critical-css">:root{--wp-admin-theme-color:#007cba;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-20:#005a87}.clearfix{*zoom:1}.clearfix:after,.clearfix:before{display:table;content:'';line-height:0}.clearfix:after{clear:both}.clearfix{*zoom:1}.clearfix:before,.clearfix:after{display:table;content:"";line-height:0}.clearfix:after{clear:both}html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}a{background-color:transparent}img{border:0}input{color:inherit;font:inherit;margin:0}html input[type="button"],input[type="submit"]{-webkit-appearance:button}input::-moz-focus-inner{border:0;padding:0}input{line-height:normal}body{visibility:visible!important}*{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}*:before,*:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}img{max-width:100%;width:auto\9;height:auto}.td-main-content-wrap,.td-category-grid{background-color:#fff}.td-container,.tdc-row{width:1068px;margin-right:auto;margin-left:auto}.td-container:before,.tdc-row:before,.td-container:after,.tdc-row:after{display:table;content:'';line-height:0}.td-container:after,.tdc-row:after{clear:both}.td-pb-row{*zoom:1;margin-right:-24px;margin-left:-24px;position:relative}.td-pb-row:before,.td-pb-row:after{display:table;content:''}.td-pb-row:after{clear:both}.td-pb-row [class*="td-pb-span"]{display:block;min-height:1px;float:left;padding-right:24px;padding-left:24px;position:relative}@media (min-width:1019px) and (max-width:1140px){.td-pb-row [class*="td-pb-span"]{padding-right:20px;padding-left:20px}}@media (min-width:768px) and (max-width:1018px){.td-pb-row [class*="td-pb-span"]{padding-right:14px;padding-left:14px}}@media (max-width:767px){.td-pb-row [class*="td-pb-span"]{padding-right:0;padding-left:0;float:none;width:100%}}.td-ss-main-sidebar{-webkit-backface-visibility:hidden;-webkit-perspective:1000}.td-pb-span4{width:33.33333333%}.td-pb-span8{width:66.66666667%}.td-pb-span12{width:100%}.wpb_row{margin-bottom:0}@media (min-width:1019px) and (max-width:1140px){.td-container,.tdc-row{width:980px}.td-pb-row{margin-right:-20px;margin-left:-20px}}@media (min-width:768px) and (max-width:1018px){.td-container,.tdc-row{width:740px}.td-pb-row{margin-right:-14px;margin-left:-14px}}@media (max-width:767px){.td-container,.tdc-row{width:100%;padding-left:20px;padding-right:20px}.td-pb-row{width:100%;margin-left:0;margin-right:0}}.td-header-wrap{position:relative;z-index:2000}.td-header-row{*zoom:1;font-family:'Open Sans',arial,sans-serif}.td-header-row:before,.td-header-row:after{display:table;content:''}.td-header-row:after{clear:both}.td-header-row [class*="td-header-sp"]{display:block;min-height:1px;float:left;padding-right:24px;padding-left:24px}@media (min-width:1019px) and (max-width:1140px){.td-header-row [class*="td-header-sp"]{padding-right:20px;padding-left:20px}}@media (min-width:768px) and (max-width:1018px){.td-header-row [class*="td-header-sp"]{padding-right:14px;padding-left:14px}}@media (max-width:767px){.td-header-row [class*="td-header-sp"]{padding-right:0;padding-left:0;float:none;width:100%}}.td-header-gradient:before{content:"";background:transparent url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAMBAMAAABRpcpkAAAAD1BMVEUAAAAAAAAAAAAAAAAAAABPDueNAAAABXRSTlMGAhQQCyEd++8AAAAUSURBVAjXY1AAQgMgdABCCBAAQQAT6AFRBPHcWgAAAABJRU5ErkJggg==');width:100%;height:12px;position:absolute;left:0;bottom:-12px;z-index:1}@media (max-width:767px){#td-header-search-button{display:none}}#td-header-search-button-mob{display:none}@media (max-width:767px){#td-header-search-button-mob{display:block}}@media (min-width:768px){.td-drop-down-search .td-search-form{margin:20px}}.td-header-wrap .td-drop-down-search{position:absolute;top:100%;right:0;visibility:hidden;opacity:0;transform:translate3d(0,20px,0);-webkit-transform:translate3d(0,20px,0);background-color:#fff;-webkit-box-shadow:0 2px 6px rgba(0,0,0,0.2);box-shadow:0 2px 6px rgba(0,0,0,0.2);border-top:0;width:342px}.td-header-wrap .td-drop-down-search .btn{position:absolute;height:32px;min-width:67px;line-height:17px;padding:7px 15px 8px;text-shadow:none;vertical-align:top;right:20px;margin:0!important}.td-header-wrap .td-drop-down-search:before{position:absolute;top:-9px;right:19px;display:block;content:'';width:0;height:0;border-style:solid;border-width:0 5.5px 6px 5.5px;border-color:transparent transparent #4db2ec transparent}.td-header-wrap .td-drop-down-search:after{position:absolute;top:-3px;display:block;content:'';right:0;left:0;margin:0 auto;width:100%;height:3px;background-color:#4db2ec}.td-header-wrap #td-header-search{width:235px;height:32px;margin:0;border-right:0;line-height:17px;border-color:#eaeaea!important}@media (max-width:767px){.td-header-wrap #td-header-search{width:91%;font-size:16px}}.td-banner-wrap-full{position:relative}.td-header-menu-wrap-full{z-index:9998;position:relative}@media (max-width:767px){.td-header-wrap .td-header-menu-wrap-full,.td-header-wrap .td-header-menu-wrap,.td-header-wrap .td-header-main-menu{background-color:#222!important;height:54px!important}.header-search-wrap .td-icon-search{color:#fff!important}}.td-header-wrap .td-header-menu-wrap-full{background-color:#fff}.td-header-main-menu{position:relative;z-index:999;padding-right:48px}@media (max-width:767px){.td-header-main-menu{padding-right:64px;padding-left:2px}}.sf-menu,.sf-menu ul,.sf-menu li{margin:0;list-style:none}@media (max-width:767px){.sf-menu{display:none}}.sf-menu ul{position:absolute;top:-999em;width:10em}.sf-menu>li.td-normal-menu>ul.sub-menu{left:-15px}@media (min-width:768px) and (max-width:1018px){.sf-menu>li.td-normal-menu>ul.sub-menu{left:-5px}}.sf-menu ul li{width:100%}.sf-menu li{float:left;position:relative}.sf-menu .td-menu-item>a{display:block;position:relative}.sf-menu>li>a{padding:0 14px;line-height:48px;font-size:14px;color:#000;font-weight:700;text-transform:uppercase;-webkit-backface-visibility:hidden}@media (min-width:768px) and (max-width:1018px){.sf-menu>li>a{padding:0 9px;font-size:11px}}.sf-menu>li>a:after{background-color:transparent;content:'';width:0;height:3px;position:absolute;bottom:0;left:0;right:0;margin:0 auto;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}#td-header-menu{display:inline-block;vertical-align:top}.td-normal-menu ul{box-shadow:1px 1px 4px rgba(0,0,0,0.15)}.sf-menu .td-normal-menu ul{padding:15px 0}@media (min-width:768px) and (max-width:1018px){.sf-menu .td-normal-menu ul{padding:8px 0}}.sf-menu ul{background-color:#fff}.sf-menu ul .td-menu-item>a{padding:7px 30px;font-size:12px;line-height:20px;color:#111}@media (min-width:768px) and (max-width:1018px){.sf-menu ul .td-menu-item>a{padding:5px 16px 6px;font-size:11px}}.sf-menu .sub-menu{-webkit-backface-visibility:hidden}.header-search-wrap{position:absolute;top:0;right:0;z-index:999}.header-search-wrap .td-icon-search{display:inline-block;font-size:19px;width:48px;line-height:48px;text-align:center}@media (min-width:768px) and (max-width:1018px){.header-search-wrap .td-icon-search{font-size:15px}}@media (max-width:767px){.header-search-wrap .td-icon-search{height:54px;width:54px;line-height:54px;font-size:22px;margin-right:2px}}#td-outer-wrap{overflow:hidden}@media (max-width:767px){#td-outer-wrap{margin:auto;width:100%;-webkit-transform-origin:50% 200px 0;transform-origin:50% 200px 0}}#td-top-mobile-toggle{display:none}@media (max-width:767px){#td-top-mobile-toggle{display:inline-block;position:relative}}#td-top-mobile-toggle a{display:inline-block}#td-top-mobile-toggle i{font-size:27px;width:64px;line-height:54px;height:54px;display:inline-block;padding-top:1px;color:#fff}.td-menu-background{background-repeat:no-repeat;background-size:cover;background-position:center top;position:fixed;top:0;display:block;width:100%;height:113%;z-index:9999;visibility:hidden;transform:translate3d(-100%,0,0);-webkit-transform:translate3d(-100%,0,0)}.td-menu-background:before{content:'';width:100%;height:100%;position:absolute;top:0;left:0;opacity:0.98;background:#313b45;background:-webkit-gradient(left top,left bottom,color-stop(0%,#313b45),color-stop(100%,#3393b8));background:linear-gradient(to bottom,#313b45 0%,#3393b8 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#313b45', endColorstr='#3393b8', GradientType=0)}#td-mobile-nav{padding:0;position:absolute;width:100%;height:auto;top:0;z-index:9999;visibility:hidden;transform:translate3d(-99%,0,0);-webkit-transform:translate3d(-99%,0,0);left:-1%;font-family:-apple-system,".SFNSText-Regular","San Francisco","Roboto","Segoe UI","Helvetica Neue","Lucida Grande",sans-serif}#td-mobile-nav .td_display_err{text-align:center;color:#fff;border:none;-webkit-box-shadow:0 0 8px rgba(0,0,0,0.16);box-shadow:0 0 8px rgba(0,0,0,0.16);margin:-9px -30px 24px;font-size:14px;border-radius:0;padding:12px;position:relative;background-color:rgba(255,255,255,0.06);display:none}#td-mobile-nav input:invalid{box-shadow:none!important}#td-mobile-nav{height:1px;overflow:hidden}#td-mobile-nav .td-menu-socials{padding:0 65px 0 20px;overflow:hidden;height:60px}.td-mobile-close{position:absolute;right:1px;top:0;z-index:1000}.td-mobile-close .td-icon-close-mobile{height:70px;width:70px;line-height:70px;font-size:21px;color:#fff;top:4px;position:relative}.td-mobile-content{padding:20px 20px 0}.td-mobile-container{padding-bottom:20px;position:relative}.td-mobile-content ul{list-style:none;margin:0;padding:0}.td-mobile-content li{float:none;margin-left:0;-webkit-touch-callout:none}.td-mobile-content li a{display:block;line-height:21px;font-size:21px;color:#fff;margin-left:0;padding:12px 30px 12px 12px;font-weight:bold}.td-mobile-content .td-icon-menu-right{display:none;position:absolute;top:10px;right:-4px;z-index:1000;font-size:14px;padding:6px 12px;float:right;color:#fff;-webkit-transform-origin:50% 48% 0px;transform-origin:50% 48% 0px;transform:rotate(-90deg);-webkit-transform:rotate(-90deg)}.td-mobile-content .td-icon-menu-right:before{content:'\e83d'}.td-mobile-content .sub-menu{max-height:0;overflow:hidden;opacity:0}.td-mobile-content .sub-menu a{padding:9px 26px 9px 36px!important;line-height:19px;font-size:16px;font-weight:normal}.td-mobile-content .menu-item-has-children a{width:100%;z-index:1}.td-mobile-container{opacity:1}#td-mobile-nav .td-login-animation{opacity:0;position:absolute;top:0;width:100%}#td-mobile-nav .td-login-animation .td-login-inputs{height:76px}.td-search-wrap-mob{padding:0;position:absolute;width:100%;height:auto;top:0;text-align:center;z-index:9999;visibility:hidden;color:#fff;font-family:-apple-system,".SFNSText-Regular","San Francisco","Roboto","Segoe UI","Helvetica Neue","Lucida Grande",sans-serif}.td-search-wrap-mob .td-drop-down-search{opacity:0;visibility:hidden;-webkit-backface-visibility:hidden;position:relative}.td-search-wrap-mob #td-header-search-mob{color:#fff;font-weight:bold;font-size:26px;height:40px;line-height:36px;border:0;background:transparent;outline:0;margin:8px 0;padding:0;text-align:center}.td-search-wrap-mob .td-search-input{margin:0 5%;position:relative}.td-search-wrap-mob .td-search-input span{opacity:0.8;font-size:12px}.td-search-wrap-mob .td-search-input:before,.td-search-wrap-mob .td-search-input:after{content:'';position:absolute;display:block;width:100%;height:1px;background-color:#fff;bottom:0;left:0;opacity:0.2}.td-search-wrap-mob .td-search-input:after{opacity:0.8;transform:scaleX(0);-webkit-transform:scaleX(0)}.td-search-wrap-mob .td-search-form{margin-bottom:30px}.td-search-background{background-repeat:no-repeat;background-size:cover;background-position:center top;position:fixed;top:0;display:block;width:100%;height:113%;z-index:9999;transform:translate3d(100%,0,0);-webkit-transform:translate3d(100%,0,0);visibility:hidden}.td-search-background:before{content:'';width:100%;height:100%;position:absolute;top:0;left:0;opacity:0.98;background:#313b45;background:-webkit-gradient(left top,left bottom,color-stop(0%,#313b45),color-stop(100%,#3393b8));background:linear-gradient(to bottom,#313b45 0%,#3393b8 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#313b45', endColorstr='#3393b8', GradientType=0)}.td-search-close{text-align:right;z-index:1000}.td-search-close .td-icon-close-mobile{height:70px;width:70px;line-height:70px;font-size:21px;color:#fff;position:relative;top:4px;right:0}#td-mobile-nav label{position:absolute;top:26px;left:10px;font-size:17px;color:#fff;opacity:0.6}.td-login-inputs{position:relative}body{font-family:Verdana,Geneva,sans-serif;font-size:14px;line-height:21px}a{color:#4db2ec;text-decoration:none}ul{padding:0}ul li{line-height:24px;margin-left:21px}h1,h3{font-family:'Roboto',sans-serif;color:#111111;font-weight:400;margin:6px 0}h3>a{color:#111111}h1{font-size:32px;line-height:40px;margin-top:33px;margin-bottom:23px}h3{font-size:22px;line-height:30px;margin-top:27px;margin-bottom:17px}input[type=submit]{font-family:'Roboto',sans-serif;font-size:13px;background-color:#222222;border-radius:0;color:#fff;border:none;padding:8px 15px;font-weight:500}input[type=text]{font-size:12px;line-height:21px;color:#444;border:1px solid #e1e1e1;width:100%;max-width:100%;height:34px;padding:3px 9px}@media (max-width:767px){input[type=text]{font-size:16px}}input[type=password]{width:100%;position:relative;top:0;display:inline-table;vertical-align:middle;font-size:12px;line-height:21px;color:#444;border:1px solid #ccc;max-width:100%;height:34px;padding:3px 9px;margin-bottom:10px}@media (max-width:767px){input[type=password]{font-size:16px}}.entry-title{word-wrap:break-word}.td-module-thumb{position:relative;margin-bottom:13px}.td-module-thumb .entry-thumb{display:block}.td-module-meta-info{font-family:'Open Sans',arial,sans-serif;font-size:11px;margin-bottom:7px;line-height:1;min-height:17px}.td-post-author-name{font-weight:bold;display:inline-block;position:relative;top:2px}.td-post-author-name a{color:#000}.td-post-author-name span{color:#ccc;margin:0 2px 0 2px;font-weight:normal}.td-post-date{color:#aaa;display:inline-block;position:relative;top:2px}.td-module-comments{position:relative;float:right;font-family:'Open Sans',arial,sans-serif;font-size:10px;font-weight:600;text-align:center;line-height:1}.td-module-comments a{color:#fff;background-color:#000;display:inline-block;min-width:17px;padding:3px 4px 4px 5px;position:relative}.td-module-comments a:after{position:absolute;bottom:-3px;left:0;content:'';width:0;height:0;border-style:solid;border-width:3px 3px 0 0;border-color:#000 transparent transparent transparent}.td-excerpt{font-size:13px;color:#777;font-family:'Open Sans',arial,sans-serif;margin-top:9px}.td-read-more{display:inline-block;font-family:'Roboto',sans-serif;margin-bottom:20px}.td-read-more a{background-color:#4db2ec;color:#fff;display:inline-block;font-size:13px;font-weight:500;line-height:1;padding:10px 15px}.td-page-title{font-size:30px;line-height:38px;margin:-9px 0 19px 0}@media (min-width:768px) and (max-width:1018px){body .td-page-title{font-size:26px;line-height:34px;margin:-2px 0 19px 0}}@media (max-width:767px){body .td-page-title{font-size:24px;line-height:32px}}.td-main-content-wrap{padding-bottom:40px}@media (max-width:767px){.td-main-content-wrap{padding-bottom:26px}}.td-ss-main-sidebar{perspective:unset!important}.td-crumb-container{min-height:35px;margin-bottom:9px;padding-top:21px}@media (min-width:768px) and (max-width:1018px){.td-crumb-container{padding-top:16px}}@media (max-width:767px){.td-crumb-container{padding-top:11px}}.entry-crumbs{font-family:'Open Sans',arial,sans-serif;font-size:12px;color:#c3c3c3;line-height:18px;padding-top:1px;padding-bottom:2px}.entry-crumbs a{color:#c3c3c3}.entry-crumbs .td-bread-sep{font-size:8px;margin:0 5px}@font-face{font-family:'newspaper';src:url(http://conflict-news.com/wp-content/themes/Newspaper/images/icons/newspaper.eot?17);src:url(http://conflict-news.com/wp-content/themes/Newspaper/images/icons/newspaper.eot?17#iefix) format('embedded-opentype'),url(http://conflict-news.com/wp-content/themes/Newspaper/images/icons/newspaper.woff?17) format('woff'),url(http://conflict-news.com/wp-content/themes/Newspaper/images/icons/newspaper.ttf?17) format('truetype'),url(http://conflict-news.com/wp-content/themes/Newspaper/images/icons/newspaper.svg?17#newspaper) format('svg');font-weight:normal;font-style:normal;font-display:swap}[class^="td-icon-"]:before,[class*=" td-icon-"]:before{font-family:'newspaper';speak:none;font-style:normal;font-weight:normal;font-variant:normal;text-transform:none;line-height:1;text-align:center;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}[class*="td-icon-"]{line-height:1;text-align:center;display:inline-block}.td-icon-right:before{content:'\e803'}.td-icon-menu-down:before{content:'\e806'}.td-icon-search:before{content:'\e80a'}.td-icon-menu-right:before{content:'\e80d'}.td-icon-read-down:before{content:'\e83d'}.td-icon-mobile:before{content:'\e83e'}.td-icon-close-mobile:before{content:'\e900'}.td-icon-modal-back:before{content:'\e901'}.clearfix{*zoom:1}.clearfix:before,.clearfix:after{display:table;content:"";line-height:0}.clearfix:after{clear:both}.tdc_zone{margin:0}#td-mobile-nav .td-register-section{position:absolute;top:0;color:#fff;width:100%;z-index:-1}#td-mobile-nav .td-register-section a{color:#fff}#td-mobile-nav .td-register-section .td-icon-read-down{font-size:23px;transform:rotate(90deg);-webkit-transform:rotate(90deg);line-height:74px;width:74px}#td-mobile-nav .td-register-section .td-login-input{color:#fff;font-weight:normal;font-size:17px;height:40px;line-height:40px;border:0;background:transparent;outline:0;margin:18px 0;position:relative;border-bottom:1px solid rgba(255,255,255,0.2);border-radius:0;box-shadow:none}#td-mobile-nav .td-register-section .td-login-form-wrap{padding:0 30px}#td-mobile-nav .td-register-section .td-login-button{display:block;text-align:center;width:100%;text-transform:uppercase;line-height:50px;color:#000;border:none;-webkit-box-shadow:0 0 8px rgba(0,0,0,0.36);box-shadow:0 0 8px rgba(0,0,0,0.36);margin:17px 0 15px;font-size:17px;border-radius:0;background-color:#fff;opacity:0.8;text-shadow:none}#td-mobile-nav .td-register-section .td-login-info-text{text-align:center;margin-bottom:20px}#td-mobile-nav .td-login-title{position:absolute;top:0;padding:0 50px;text-align:center;line-height:74px;text-transform:uppercase;width:100%;font-size:17px;height:74px;overflow:hidden;z-index:-1}#td-mobile-nav .td-login-panel-title{text-align:center;font-size:16px;padding:30px 10px}#td-mobile-nav .td-login-panel-title span{display:inline-block;font-size:28px;font-weight:bold;width:100%;margin-bottom:10px}.td_block_wrap{margin-bottom:48px;position:relative;clear:both}@media (max-width:767px){.td_block_wrap{margin-bottom:32px}}.td_module_flex_1 .td-excerpt{margin:20px 0 0;line-height:21px}.td_module_flex_1 .td-read-more{margin:20px 0 0}.mfp-hide{display:none!important}.white-popup-block{position:relative;margin:0 auto;max-width:500px;min-height:500px;font-family:'Open Sans',arial,sans-serif;text-align:center;color:#fff;vertical-align:top;-webkit-box-shadow:0px 0px 20px 0px rgba(0,0,0,0.2);box-shadow:0px 0px 20px 0px rgba(0,0,0,0.2);padding:0 0 24px;overflow:hidden}.white-popup-block:after{content:'';width:100%;height:100%;position:absolute;top:0;left:0;display:block;background:rgba(0,69,130,0.8);background:-webkit-gradient(left bottom,right top,color-stop(0%,rgba(0,69,130,0.8)),color-stop(100%,rgba(38,134,146,0.8)));background:linear-gradient(45deg,rgba(0,69,130,0.8) 0%,rgba(38,134,146,0.8) 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#2a80cb', endColorstr='#42bdcd', GradientType=1);z-index:-2}.white-popup-block:before{content:'';width:100%;height:100%;position:absolute;top:0;left:0;display:block;background-size:cover;background-position:top;background-repeat:no-repeat;z-index:-3}#login_pass-mob,#login_pass{display:none!important}.td-container-wrap{background-color:#fff;margin-left:auto;margin-right:auto}.wpb_button{display:inline-block;font-family:'Open Sans',arial,sans-serif;font-weight:600;line-height:24px;text-shadow:none;border:none;border-radius:0;margin-bottom:21px}body.td-animation-stack-type0 .td-animation-stack .entry-thumb{opacity:0}.clearfix{*zoom:1}.clearfix:before,.clearfix:after{display:table;content:"";line-height:0}.clearfix:after{clear:both}html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}a{background-color:transparent}h1{font-size:2em;margin:0.67em 0}img{border:0}input{color:inherit;font:inherit;margin:0}html input[type="button"],input[type="submit"]{-webkit-appearance:button}input::-moz-focus-inner{border:0;padding:0}input{line-height:normal}.td-header-sp-logo img{margin:auto;position:absolute;top:0;bottom:0;left:0;right:0}.td-main-menu-logo{display:none;float:left;margin-right:10px;height:48px}@media (max-width:767px){.td-main-menu-logo{display:block;margin-right:0;height:0}}.td-main-menu-logo a{line-height:48px}.td-main-menu-logo img{padding:3px 0;position:relative;vertical-align:middle;max-height:48px}@media (max-width:767px){.td-main-menu-logo img{margin:auto;bottom:0;top:0;left:0;right:0;position:absolute;padding:0}}@media (max-width:1140px){.td-main-menu-logo img{max-width:180px}}.td-visual-hidden{border:0;width:1px;height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute}.td-header-top-menu-full{position:relative;z-index:9999}@media (max-width:767px){.td-header-top-menu-full{display:none}}.td-header-style-10 .td-header-top-menu-full{background-color:#fff;border-bottom:1px solid #e0e0e0}.td-header-style-10 .td-header-top-menu-full .td-header-top-menu{color:#000}.td-header-style-10 .td-header-top-menu-full a{color:#000}.td-header-style-10 .td-logo-wrap-full{min-height:130px;line-height:130px}@media (max-width:767px){.td-header-style-10 .td-logo-wrap-full{line-height:90px;min-height:90px}}.td-header-style-10 .td-logo-wrap-full a{position:relative;z-index:1;line-height:130px;display:inline-block;vertical-align:middle;width:100%}@media (max-width:767px){.td-header-style-10 .td-logo-wrap-full a{line-height:90px}}@media (max-width:767px){.td-header-style-10 .td-main-menu-logo .td-main-logo{display:none}}.td-header-style-10 .td-header-sp-logo{text-align:center}.td-header-style-10 .td-header-sp-logo img{z-index:1;display:block;position:relative}.td-header-style-10 .header-search-wrap .td-icon-search{color:#000}@media (max-width:767px){.td-header-style-10 .header-search-wrap .td-icon-search{color:#fff}}.td-header-style-10 .td-header-menu-wrap-full{position:relative}.td-header-style-10 .td-header-main-menu{padding-left:48px}@media (max-width:767px){.td-header-style-10 .td-header-main-menu{padding-left:2px}}.td-header-style-10 #td-header-menu{display:table;margin:0 auto}@media (max-width:767px){.td-header-style-10 #td-header-menu{display:block}}.td-header-top-menu{color:#fff;font-size:11px}.td-header-top-menu a{color:#fff}@media (min-width:1019px) and (max-width:1140px){.td-header-top-menu{overflow:visible}}.td-header-sp-top-menu{line-height:28px;padding:0!important;z-index:1000;float:left}@media (max-width:767px){.td-header-sp-top-menu{display:none!important}}.td-header-sp-top-widget{position:relative;line-height:28px;text-align:right;padding-left:0!important;padding-right:0!important}@media (max-width:767px){.td-header-sp-top-widget{width:100%;text-align:center}}.top-bar-style-1 .td-header-sp-top-widget{float:right}.td-grid-style-1 .td-meta-info-container{bottom:0}.td-grid-style-1 .td-module-thumb a:last-child:before{bottom:0;content:"";display:block;height:70%;width:100%;position:absolute;z-index:1;background:-webkit-gradient(linear,left top,left bottom,color-stop(40%,rgba(0,0,0,0)),color-stop(100%,rgba(0,0,0,0.7)));background:-webkit-linear-gradient(top,rgba(0,0,0,0) 40%,rgba(0,0,0,0.7) 100%);background:linear-gradient(to bottom,rgba(0,0,0,0) 40%,rgba(0,0,0,0.7) 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#b3000000', GradientType=0)}@media (max-width:767px){.td-grid-style-1 .td-module-thumb a:last-child:before{height:130%!important}}.td-grid-style-1 .td-big-thumb .td-big-grid-meta{width:80%;margin:0 0 0 20px}@media (max-width:767px){.td-grid-style-1 .td-big-thumb .td-big-grid-meta{width:90%;margin-left:15px}}.td-grid-style-1 .td-big-thumb .entry-title{font-size:27px;font-weight:500;line-height:34px}@media (max-width:767px){.td-grid-style-1 .td-big-thumb .td-module-meta-info{margin-bottom:18px}}.td-grid-style-1.td-hover-1 .td-module-thumb a:last-child:before{bottom:0;content:"";display:block;height:100%;width:100%;position:absolute}.td-big-grid-post{position:relative;overflow:hidden}.td-big-grid-post .td-meta-info-container{position:absolute;z-index:1;width:100%}.td-big-grid-post .td-meta-align{width:100%}.td-big-grid-post .td-post-author-name a,.td-big-grid-post .td-post-author-name span,.td-big-grid-post .td-post-date{color:#fff;text-shadow:1px 1px 1px rgba(0,0,0,0.3)}.td-big-grid-post .entry-title{margin:0;word-wrap:break-word}.td-big-grid-post .entry-title a{color:#fff;text-shadow:1px 1px 3px rgba(0,0,0,0.2)}.td-big-grid-post .td-module-meta-info{margin:11px 0 20px 20px;min-height:0;z-index:1}@media (max-width:767px){.td-big-grid-post .td-module-meta-info{margin-left:17px}}.td-big-grid-post .td-big-grid-meta{z-index:1}.td-big-grid-post.td-big-thumb .td-big-grid-meta{font-size:27px}@media (max-width:1140px){.td-big-grid-post.td-big-thumb .td-big-grid-meta .entry-title{line-height:1.3}}@media (min-width:1019px) and (max-width:1140px){.td-big-grid-post.td-big-thumb .td-big-grid-meta .entry-title{font-size:80%}}@media (min-width:768px) and (max-width:1018px){.td-big-grid-post.td-big-thumb .td-big-grid-meta .entry-title{font-size:16px}}@media (max-width:767px){.td-big-grid-post.td-big-thumb .td-big-grid-meta .entry-title{font-size:22px}}.td-big-grid-post .td-module-thumb{overflow:hidden;margin:0}.td-big-grid-post .td-module-thumb img{max-width:none}@media (min-width:1019px) and (max-width:1140px){.td-big-grid-post .entry-thumb{width:100%}}@media (min-width:768px) and (max-width:1018px){.td-big-grid-post .entry-thumb{width:100%}}@media (max-width:767px){.td-big-grid-post .entry-thumb{width:100%}}.td-big-grid-post .td-module-thumb{background-color:#e5e5e5}.td-big-grid-post .td-post-author-name,.td-big-grid-post .td-post-date{top:0}@media (max-width:767px){.td_block_big_grid_1,.td_block_big_grid_4{margin-left:-20px;margin-right:-20px}}@media (max-width:767px){.td_block_wrap .td-big-grid-wrapper .td-big-grid-scroll{overflow-x:auto;white-space:nowrap;font-size:0;overflow-y:hidden;padding-top:3px;z-index:0;-webkit-overflow-scrolling:touch;transform:translate3d(0,0,0)}.td_block_wrap .td-big-grid-wrapper .td-big-grid-scroll .td-big-grid-post{margin-left:3px;margin-right:0;margin-bottom:0}.td_block_wrap .td-big-grid-wrapper .td-big-grid-scroll .td-big-grid-post:first-child{margin-left:0}}@media (max-width:767px){.td_block_wrap .td-big-grid-wrapper .td-big-grid-scroll .td-module-thumb{width:100%;height:170px}}@media (max-width:767px){.td_block_wrap .td-big-grid-wrapper .td-big-grid-scroll .td-big-grid-post{display:inline-block;white-space:normal;float:none;vertical-align:top;width:80%}}.td_block_big_grid_1 .td-big-grid-post{float:left}.td_block_big_grid_1 .td-big-thumb{margin-right:3px}.td_block_big_grid_1 .td-big-thumb .td-module-thumb{width:532px;height:399px}@media (min-width:1019px) and (max-width:1140px){.td_block_big_grid_1 .td-big-thumb .td-module-thumb{width:504px;height:355px}}@media (min-width:768px) and (max-width:1018px){.td_block_big_grid_1 .td-big-thumb .td-module-thumb{width:374px;height:271px}}@media (max-width:767px){.td_block_big_grid_1 .td-big-thumb .td-module-thumb{width:100%;height:auto}}@media (max-width:767px){.td_block_big_grid_1 .td-big-grid-post-0{width:100%;float:none}}.td_block_big_grid_1 .td-big-grid-post-1,.td_block_big_grid_1 .td-big-grid-post-3{margin-right:3px}.td_block_big_grid_1 .td-big-grid-post-1,.td_block_big_grid_1 .td-big-grid-post-2{margin-bottom:3px}@media (max-width:767px){.td_block_big_grid_1 .td-module-empty{display:none!important}}.td_block_big_grid_1 .td-module-empty .td-module-thumb{width:265px;height:198px}@media (min-width:1019px) and (max-width:1140px){.td_block_big_grid_1 .td-module-empty .td-module-thumb{width:235px;height:176px}}@media (min-width:768px) and (max-width:1018px){.td_block_big_grid_1 .td-module-empty .td-module-thumb{width:180px;height:134px}}.td_block_big_grid_4{margin-right:-3px}@media (max-width:767px){.td_block_big_grid_4{margin-right:-20px}}.td_block_big_grid_4 .td-big-grid-post{width:50%;float:left}@media (max-width:767px){.td_block_big_grid_4 .td-big-grid-post{width:100%;float:none}}@media (max-width:767px){.td_block_big_grid_4 .td-big-grid-post:first-child{padding-bottom:3px}}.td_block_big_grid_4 .td-module-thumb{height:399px}@media (min-width:1019px) and (max-width:1140px){.td_block_big_grid_4 .td-module-thumb{height:350px}}@media (min-width:768px) and (max-width:1018px){.td_block_big_grid_4 .td-module-thumb{height:280px}}@media (max-width:767px){.td_block_big_grid_4 .td-module-thumb{width:100%;height:220px}}.td_block_big_grid_4 .td-big-thumb{padding-right:3px}@media (max-width:767px){.td_block_big_grid_4 .td-big-thumb{padding-right:0}}.td-pulldown-filter-list{display:none}.td-category-header{background-color:#fff;clear:both}.td-category-header .td-container{position:relative}.td-category-header .td-page-title{text-transform:uppercase;font-weight:700;margin-top:-2px;margin-bottom:0}.td-category-header .td-category-pulldown-filter{position:absolute;top:49px;right:0}@media (min-width:768px) and (max-width:1018px){.td-category-header .td-category-pulldown-filter{top:46px}}@media (max-width:767px){.td-category-header .td-category-pulldown-filter{top:50px;right:10px}}.td-category-header .td-pulldown-filter-display-option{background-color:#222222;color:#fff;font-family:'Roboto',sans-serif;text-transform:uppercase;padding:5px 13px 4px 13px;font-size:11px;white-space:nowrap}.td-category-header .td-icon-menu-down{font-size:9px;margin-left:5px;position:relative;top:-1px}.td-category-header .td-pulldown-filter-list{position:absolute;z-index:2;right:0;background-color:#222222;padding:6px 0;text-align:left;margin:4px 0 0;min-width:113px}.td-category-header .td-pulldown-filter-list a{background-color:transparent!important}.td-category-header .td-pulldown-filter-item{list-style:none;margin-left:0;line-height:1}.td-category-header .td-pulldown-category-filter-link{padding:0 13px;display:inline-block;font-size:10px;line-height:24px;width:100%;color:#fff;text-transform:none}@-moz-document url-prefix(){.td-category-header .td-pulldown-filter-display-option{padding:4px 13px 5px 13px}}@media (max-width:767px){.category .td-crumb-container{margin-bottom:3px;padding-top:15px}}@media (max-width:767px){.category .td-category-grid .td_block_wrap{padding-bottom:40px}}.td_category_template_1 .td-category-header{padding-bottom:18px}@media (max-width:1018px){.td_category_template_1 .td-category-header{padding-bottom:14px}}@media (max-width:767px){.td_category_template_1 .td-category-pulldown-filter{display:none}}.td-footer-page{padding:0;background-color:transparent!important}.clearfix{*zoom:1}.clearfix:before,.clearfix:after{display:table;content:'';line-height:0}.clearfix:after{clear:both}</style><link rel="preload" href="https://conflict-news.com/wp-content/cache/min/1/b974849a4a1777af7618e753a74cf3a6.css" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" media="all" data-minify="1" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="pingback" href="https://conflict-news.com/xmlrpc.php" />
+    <meta name='robots' content='noindex, follow' />
+
+	<!-- This site is optimized with the Yoast SEO plugin v16.5 - https://yoast.com/wordpress/plugins/seo/ -->
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="POLITICS Archives - Conflict News" />
+	<meta property="og:url" content="https://conflict-news.com/category/politics/" />
+	<meta property="og:site_name" content="Conflict News" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://conflict-news.com/#organization","name":"Conflict-News","url":"https://conflict-news.com/","sameAs":[],"logo":{"@type":"ImageObject","@id":"https://conflict-news.com/#logo","inLanguage":"en-US","url":"https://conflict-news.com/wp-content/uploads/2021/02/conflict-news-logo-1-1-300x110-1.png","contentUrl":"https://conflict-news.com/wp-content/uploads/2021/02/conflict-news-logo-1-1-300x110-1.png","width":300,"height":110,"caption":"Conflict-News"},"image":{"@id":"https://conflict-news.com/#logo"}},{"@type":"WebSite","@id":"https://conflict-news.com/#website","url":"https://conflict-news.com/","name":"Conflict News","description":"News Blog","publisher":{"@id":"https://conflict-news.com/#organization"},"potentialAction":[{"@type":"SearchAction","target":"https://conflict-news.com/?s={search_term_string}","query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"CollectionPage","@id":"https://conflict-news.com/category/politics/#webpage","url":"https://conflict-news.com/category/politics/","name":"POLITICS Archives - Conflict News","isPartOf":{"@id":"https://conflict-news.com/#website"},"breadcrumb":{"@id":"https://conflict-news.com/category/politics/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://conflict-news.com/category/politics/"]}]},{"@type":"BreadcrumbList","@id":"https://conflict-news.com/category/politics/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://conflict-news.com/"},{"@type":"ListItem","position":2,"name":"POLITICS"}]}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel="amphtml" href="https://conflict-news.com/category/politics/amp/" /><meta name="generator" content="AMP for WP 1.0.77.8"/><link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link href='https://fonts.gstatic.com' crossorigin rel='preconnect' />
+<link rel="alternate" type="application/rss+xml" title="Conflict News &raquo; Feed" href="https://conflict-news.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Conflict News &raquo; Comments Feed" href="https://conflict-news.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Conflict News &raquo; POLITICS Category Feed" href="https://conflict-news.com/category/politics/feed/" />
+		<script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/conflict-news.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.7.2"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([55357,56424,8205,55356,57212],[55357,56424,8203,55356,57212])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	
+
+
+<link rel='preload'   href='https://fonts.googleapis.com/css?family=Open+Sans%3A400%2C600%2C700%7CRoboto%3A400%2C500%2C700%7CRoboto+Condensed%3A700%2C400&#038;display=swap&#038;ver=10.3' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" type='text/css' media='all' />
+
+<style id='td-theme-inline-css' type='text/css'>
+    
+        @media (max-width: 767px) {
+            .td-header-desktop-wrap {
+                display: none;
+            }
+        }
+        @media (min-width: 767px) {
+            .td-header-mobile-wrap {
+                display: none;
+            }
+        }
+    
+	
+</style>
+
+
+
+
+
+<script type='text/javascript' src='https://conflict-news.com/wp-includes/js/jquery/jquery.min.js?ver=3.5.1' id='jquery-core-js'></script>
+<script type='text/javascript' src='https://conflict-news.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<link rel="https://api.w.org/" href="https://conflict-news.com/wp-json/" /><link rel="alternate" type="application/json" href="https://conflict-news.com/wp-json/wp/v2/categories/90" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://conflict-news.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://conflict-news.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.7.2" />
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript">var ajaxurl = "https://conflict-news.com/wp-admin/admin-ajax.php";</script><meta name="msvalidate.01" content="897E5B36591AFA5EB577AAE688822AC1" />
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script type="rocketlazyloadscript" async src="https://www.googletagmanager.com/gtag/js?id=UA-161427009-1"></script>
+<script type="rocketlazyloadscript">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-161427009-1');
+</script><script type="rocketlazyloadscript" data-ad-client="ca-pub-6588769550086663" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="google-site-verification" content="K-nOS2JM4MdDbV-HR8Dy6ZClQlzFt-QCLPpX27X8tiE" />
+
+
+
+ <meta name="msvalidate.01" content="897E5B36591AFA5EB577AAE688822AC1" />
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script type="rocketlazyloadscript" async src="https://www.googletagmanager.com/gtag/js?id=UA-159294856-1"></script>
+<script type="rocketlazyloadscript">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-159294856-1');
+</script>
+<style type="text/css">
+.sfs-subscriber-count, .sfs-count, .sfs-count span, .sfs-stats { -webkit-box-sizing: initial; -moz-box-sizing: initial; box-sizing: initial; }
+.sfs-subscriber-count { width: 88px; overflow: hidden; height: 26px; color: #424242; font: 9px Verdana, Geneva, sans-serif; letter-spacing: 1px; }
+.sfs-count { width: 86px; height: 17px; line-height: 17px; margin: 0 auto; background: #ccc; border: 1px solid #909090; border-top-color: #fff; border-left-color: #fff; }
+.sfs-count span { display: inline-block; height: 11px; line-height: 12px; margin: 2px 1px 2px 2px; padding: 0 2px 0 3px; background: #e4e4e4; border: 1px solid #a2a2a2; border-bottom-color: #fff; border-right-color: #fff; }
+.sfs-stats { font-size: 6px; line-height: 6px; margin: 1px 0 0 1px; word-spacing: 2px; text-align: center; text-transform: uppercase; }
+</style>
+<!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script><![endif]-->
+        <script type="rocketlazyloadscript">
+        window.tdb_globals = {"wpRestNonce":"e983e056e2","wpRestUrl":"https:\/\/conflict-news.com\/wp-json\/","permalinkStructure":"\/%postname%\/","isAjax":false,"isAdminBarShowing":false,"autoloadScrollPercent":50};
+    </script>
+    			<script type="rocketlazyloadscript">
+				window.tdwGlobal = {"adminUrl":"https:\/\/conflict-news.com\/wp-admin\/","wpRestNonce":"e983e056e2","wpRestUrl":"https:\/\/conflict-news.com\/wp-json\/","permalinkStructure":"\/%postname%\/"};
+			</script>
+			
+<!-- JS generated by theme -->
+
+<script>
+    
+    
+
+	    var tdBlocksArray = []; //here we store all the items for the current page
+
+	    //td_block class - each ajax block uses a object of this class for requests
+	    function tdBlock() {
+		    this.id = '';
+		    this.block_type = 1; //block type id (1-234 etc)
+		    this.atts = '';
+		    this.td_column_number = '';
+		    this.td_current_page = 1; //
+		    this.post_count = 0; //from wp
+		    this.found_posts = 0; //from wp
+		    this.max_num_pages = 0; //from wp
+		    this.td_filter_value = ''; //current live filter value
+		    this.is_ajax_running = false;
+		    this.td_user_action = ''; // load more or infinite loader (used by the animation)
+		    this.header_color = '';
+		    this.ajax_pagination_infinite_stop = ''; //show load more at page x
+	    }
+
+
+        // td_js_generator - mini detector
+        (function(){
+            var htmlTag = document.getElementsByTagName("html")[0];
+
+	        if ( navigator.userAgent.indexOf("MSIE 10.0") > -1 ) {
+                htmlTag.className += ' ie10';
+            }
+
+            if ( !!navigator.userAgent.match(/Trident.*rv\:11\./) ) {
+                htmlTag.className += ' ie11';
+            }
+
+	        if ( navigator.userAgent.indexOf("Edge") > -1 ) {
+                htmlTag.className += ' ieEdge';
+            }
+
+            if ( /(iPad|iPhone|iPod)/g.test(navigator.userAgent) ) {
+                htmlTag.className += ' td-md-is-ios';
+            }
+
+            var user_agent = navigator.userAgent.toLowerCase();
+            if ( user_agent.indexOf("android") > -1 ) {
+                htmlTag.className += ' td-md-is-android';
+            }
+
+            if ( -1 !== navigator.userAgent.indexOf('Mac OS X')  ) {
+                htmlTag.className += ' td-md-is-os-x';
+            }
+
+            if ( /chrom(e|ium)/.test(navigator.userAgent.toLowerCase()) ) {
+               htmlTag.className += ' td-md-is-chrome';
+            }
+
+            if ( -1 !== navigator.userAgent.indexOf('Firefox') ) {
+                htmlTag.className += ' td-md-is-firefox';
+            }
+
+            if ( -1 !== navigator.userAgent.indexOf('Safari') && -1 === navigator.userAgent.indexOf('Chrome') ) {
+                htmlTag.className += ' td-md-is-safari';
+            }
+
+            if( -1 !== navigator.userAgent.indexOf('IEMobile') ){
+                htmlTag.className += ' td-md-is-iemobile';
+            }
+
+        })();
+
+
+
+
+        var tdLocalCache = {};
+
+        ( function () {
+            "use strict";
+
+            tdLocalCache = {
+                data: {},
+                remove: function (resource_id) {
+                    delete tdLocalCache.data[resource_id];
+                },
+                exist: function (resource_id) {
+                    return tdLocalCache.data.hasOwnProperty(resource_id) && tdLocalCache.data[resource_id] !== null;
+                },
+                get: function (resource_id) {
+                    return tdLocalCache.data[resource_id];
+                },
+                set: function (resource_id, cachedData) {
+                    tdLocalCache.remove(resource_id);
+                    tdLocalCache.data[resource_id] = cachedData;
+                }
+            };
+        })();
+
+    
+    
+var td_viewport_interval_list=[{"limitBottom":767,"sidebarWidth":228},{"limitBottom":1018,"sidebarWidth":300},{"limitBottom":1140,"sidebarWidth":324}];
+var td_animation_stack_effect="type0";
+var tds_animation_stack=true;
+var td_animation_stack_specific_selectors=".entry-thumb, img";
+var td_animation_stack_general_selectors=".td-animation-stack img, .td-animation-stack .entry-thumb, .post img";
+var tdc_is_installed="yes";
+var td_ajax_url="https:\/\/conflict-news.com\/wp-admin\/admin-ajax.php?td_theme_name=Newspaper&v=10.3";
+var td_get_template_directory_uri="https:\/\/conflict-news.com\/wp-content\/plugins\/td-composer\/legacy\/common";
+var tds_snap_menu="";
+var tds_logo_on_sticky="";
+var tds_header_style="10";
+var td_please_wait="Please wait...";
+var td_email_user_pass_incorrect="User or password incorrect!";
+var td_email_user_incorrect="Email or username incorrect!";
+var td_email_incorrect="Email incorrect!";
+var tds_more_articles_on_post_enable="";
+var tds_more_articles_on_post_time_to_wait="";
+var tds_more_articles_on_post_pages_distance_from_top=0;
+var tds_theme_color_site_wide="#4db2ec";
+var tds_smart_sidebar="";
+var tdThemeName="Newspaper";
+var td_magnific_popup_translation_tPrev="Previous (Left arrow key)";
+var td_magnific_popup_translation_tNext="Next (Right arrow key)";
+var td_magnific_popup_translation_tCounter="%curr% of %total%";
+var td_magnific_popup_translation_ajax_tError="The content from %url% could not be loaded.";
+var td_magnific_popup_translation_image_tError="The image #%curr% could not be loaded.";
+var tdBlockNonce="5f6c8aa4a1";
+var tdDateNamesI18n={"month_names":["January","February","March","April","May","June","July","August","September","October","November","December"],"month_names_short":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"day_names":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"day_names_short":["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]};
+var td_ad_background_click_link="";
+var td_ad_background_click_target="";
+</script>
+
+
+
+
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "item": {
+                    "@type": "WebSite",
+                    "@id": "https://conflict-news.com/",
+                    "name": "Home"
+                }
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                    "item": {
+                    "@type": "WebPage",
+                    "@id": "https://conflict-news.com/category/politics/",
+                    "name": "POLITICS"
+                }
+            }    
+        ]
+    }
+</script>
+
+<!-- Button style compiled by theme -->
+
+<style>
+    
+</style>
+
+	<style id="tdw-css-placeholder"></style><noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript><script type="rocketlazyloadscript">
+/*! loadCSS rel=preload polyfill. [c]2017 Filament Group, Inc. MIT License */
+(function(w){"use strict";if(!w.loadCSS){w.loadCSS=function(){}}
+var rp=loadCSS.relpreload={};rp.support=(function(){var ret;try{ret=w.document.createElement("link").relList.supports("preload")}catch(e){ret=!1}
+return function(){return ret}})();rp.bindMediaToggle=function(link){var finalMedia=link.media||"all";function enableStylesheet(){link.media=finalMedia}
+if(link.addEventListener){link.addEventListener("load",enableStylesheet)}else if(link.attachEvent){link.attachEvent("onload",enableStylesheet)}
+setTimeout(function(){link.rel="stylesheet";link.media="only x"});setTimeout(enableStylesheet,3000)};rp.poly=function(){if(rp.support()){return}
+var links=w.document.getElementsByTagName("link");for(var i=0;i<links.length;i++){var link=links[i];if(link.rel==="preload"&&link.getAttribute("as")==="style"&&!link.getAttribute("data-loadcss")){link.setAttribute("data-loadcss",!0);rp.bindMediaToggle(link)}}};if(!rp.support()){rp.poly();var run=w.setInterval(rp.poly,500);if(w.addEventListener){w.addEventListener("load",function(){rp.poly();w.clearInterval(run)})}else if(w.attachEvent){w.attachEvent("onload",function(){rp.poly();w.clearInterval(run)})}}
+if(typeof exports!=="undefined"){exports.loadCSS=loadCSS}
+else{w.loadCSS=loadCSS}}(typeof global!=="undefined"?global:this))
+</script></head>
+
+<body data-rsssl=1 class="archive category category-politics category-90 td-standard-pack global-block-template-1 td_category_template_1 td_category_top_posts_style_1  tdc-footer-template td-animation-stack-type0 td-full-layout" itemscope="itemscope" itemtype="https://schema.org/WebPage">
+
+        <div class="td-scroll-up"><i class="td-icon-menu-up"></i></div>
+
+    <div class="td-menu-background"></div>
+<div id="td-mobile-nav">
+    <div class="td-mobile-container">
+        <!-- mobile menu top section -->
+        <div class="td-menu-socials-wrap">
+            <!-- socials -->
+            <div class="td-menu-socials">
+                            </div>
+            <!-- close button -->
+            <div class="td-mobile-close">
+                <a href="#"><i class="td-icon-close-mobile"></i></a>
+            </div>
+        </div>
+
+        <!-- login section -->
+        
+        <!-- menu section -->
+        <div class="td-mobile-content">
+            <div class="menu-primary-container"><ul id="menu-primary" class="td-mobile-main-menu"><li id="menu-item-15" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-first menu-item-15"><a href="https://conflict-news.com/">Home</a></li>
+<li id="menu-item-194" class="menu-item menu-item-type-taxonomy menu-item-object-category current-menu-item menu-item-194"><a href="https://conflict-news.com/category/politics/">POLITICS</a></li>
+<li id="menu-item-196" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-196"><a href="https://conflict-news.com/category/war/">WAR</a></li>
+<li id="menu-item-193" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-193"><a href="https://conflict-news.com/category/business/">BUSINESS</a></li>
+<li id="menu-item-281" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-281"><a href="https://conflict-news.com/category/health/">HEALTH</a></li>
+</ul></div>        </div>
+    </div>
+
+    <!-- register/login section -->
+            <div id="login-form-mobile" class="td-register-section">
+            
+            <div id="td-login-mob" class="td-login-animation td-login-hide-mob">
+            	<!-- close button -->
+	            <div class="td-login-close">
+	                <a href="#" class="td-back-button"><i class="td-icon-read-down"></i></a>
+	                <div class="td-login-title">Sign in</div>
+	                <!-- close button -->
+		            <div class="td-mobile-close">
+		                <a href="#"><i class="td-icon-close-mobile"></i></a>
+		            </div>
+	            </div>
+	            <div class="td-login-form-wrap">
+	                <div class="td-login-panel-title"><span>Welcome!</span>Log into your account</div>
+	                <div class="td_display_err"></div>
+	                <div class="td-login-inputs"><input class="td-login-input" type="text" name="login_email" id="login_email-mob" value="" required><label>your username</label></div>
+	                <div class="td-login-inputs"><input class="td-login-input" type="password" name="login_pass" id="login_pass-mob" value="" required><label>your password</label></div>
+	                <input type="button" name="login_button" id="login_button-mob" class="td-login-button" value="LOG IN">
+	                <div class="td-login-info-text">
+	                <a href="#" id="forgot-pass-link-mob">Forgot your password?</a>
+	                </div>
+	                <div class="td-login-register-link">
+	                
+	                </div>
+	                
+	                <div class="td-login-info-text"><a class="privacy-policy-link" href="https://conflict-news.com/privacy-policy/">Privacy Policy</a></div>
+
+                </div>
+            </div>
+
+            
+            
+            
+            
+            <div id="td-forgot-pass-mob" class="td-login-animation td-login-hide-mob">
+                <!-- close button -->
+	            <div class="td-forgot-pass-close">
+	                <a href="#" class="td-back-button"><i class="td-icon-read-down"></i></a>
+	                <div class="td-login-title">Password recovery</div>
+	            </div>
+	            <div class="td-login-form-wrap">
+	                <div class="td-login-panel-title">Recover your password</div>
+	                <div class="td_display_err"></div>
+	                <div class="td-login-inputs"><input class="td-login-input" type="text" name="forgot_email" id="forgot_email-mob" value="" required><label>your email</label></div>
+	                <input type="button" name="forgot_button" id="forgot_button-mob" class="td-login-button" value="Send My Pass">
+                </div>
+            </div>
+        </div>
+    </div>    <div class="td-search-background"></div>
+<div class="td-search-wrap-mob">
+	<div class="td-drop-down-search">
+		<form method="get" class="td-search-form" action="https://conflict-news.com/">
+			<!-- close button -->
+			<div class="td-search-close">
+				<a href="#"><i class="td-icon-close-mobile"></i></a>
+			</div>
+			<div role="search" class="td-search-input">
+				<span>Search</span>
+				<input id="td-header-search-mob" type="text" value="" name="s" autocomplete="off" />
+			</div>
+		</form>
+		<div id="td-aj-search-mob" class="td-ajax-search-flex"></div>
+	</div>
+</div>
+
+    <div id="td-outer-wrap" class="td-theme-wrap">
+    
+        
+            <div class="tdc-header-wrap ">
+
+            <!--
+Header style 10
+-->
+
+<div class="td-header-wrap td-header-style-10 ">
+    
+            <div class="td-header-top-menu-full td-container-wrap ">
+            <div class="td-container td-header-row td-header-top-menu">
+                
+    <div class="top-bar-style-1">
+        
+<div class="td-header-sp-top-menu">
+
+
+	</div>
+        <div class="td-header-sp-top-widget">
+    
+    </div>    </div>
+
+<!-- LOGIN MODAL -->
+
+                <div  id="login-form" class="white-popup-block mfp-hide mfp-with-anim">
+                    <div class="td-login-wrap">
+                        <a href="#" class="td-back-button"><i class="td-icon-modal-back"></i></a>
+                        <div id="td-login-div" class="td-login-form-div td-display-block">
+                            <div class="td-login-panel-title">Sign in</div>
+                            <div class="td-login-panel-descr">Welcome! Log into your account</div>
+                            <div class="td_display_err"></div>
+                            <div class="td-login-inputs"><input class="td-login-input" type="text" name="login_email" id="login_email" value="" required><label>your username</label></div>
+	                        <div class="td-login-inputs"><input class="td-login-input" type="password" name="login_pass" id="login_pass" value="" required><label>your password</label></div>
+                            <input type="button" name="login_button" id="login_button" class="wpb_button btn td-login-button" value="Login">
+                            <div class="td-login-info-text"><a href="#" id="forgot-pass-link">Forgot your password? Get help</a></div>
+                            
+                            
+                            
+                            <div class="td-login-info-text"><a class="privacy-policy-link" href="https://conflict-news.com/privacy-policy/">Privacy Policy</a></div>
+                        </div>
+
+                        
+
+                         <div id="td-forgot-pass-div" class="td-login-form-div td-display-none">
+                            <div class="td-login-panel-title">Password recovery</div>
+                            <div class="td-login-panel-descr">Recover your password</div>
+                            <div class="td_display_err"></div>
+                            <div class="td-login-inputs"><input class="td-login-input" type="text" name="forgot_email" id="forgot_email" value="" required><label>your email</label></div>
+                            <input type="button" name="forgot_button" id="forgot_button" class="wpb_button btn td-login-button" value="Send My Password">
+                            <div class="td-login-info-text">A password will be e-mailed to you.</div>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+                            </div>
+        </div>
+    
+    <div class="td-banner-wrap-full td-logo-wrap-full  td-container-wrap ">
+        <div class="td-header-sp-logo">
+            		<a class="td-main-logo" href="https://conflict-news.com/">
+			<img class="td-retina-data"  data-retina="https://conflict-news.com/wp-content/uploads/2020/08/conflict-news-logo-1-1-300x110.png" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="CONFLICT NEWS" data-lazy-src="https://conflict-news.com/wp-content/uploads/2020/08/conflict-news-logo-1-1-300x110.png" /><noscript><img class="td-retina-data"  data-retina="https://conflict-news.com/wp-content/uploads/2020/08/conflict-news-logo-1-1-300x110.png" src="https://conflict-news.com/wp-content/uploads/2020/08/conflict-news-logo-1-1-300x110.png" alt="CONFLICT NEWS" /></noscript>
+			<span class="td-visual-hidden">Conflict News</span>
+		</a>
+	        </div>
+    </div>
+
+	<div class="td-header-menu-wrap-full td-container-wrap ">
+        
+        <div class="td-header-menu-wrap td-header-gradient ">
+			<div class="td-container td-header-row td-header-main-menu">
+				<div id="td-header-menu" role="navigation">
+    <div id="td-top-mobile-toggle"><a href="#"><i class="td-icon-font td-icon-mobile"></i></a></div>
+    <div class="td-main-menu-logo td-logo-in-header">
+                <a class="td-main-logo" href="https://conflict-news.com/">
+            <img class="td-retina-data" data-retina="https://conflict-news.com/wp-content/uploads/2020/08/conflict-news-logo-1-1-300x110.png" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="CONFLICT NEWS" data-lazy-src="https://conflict-news.com/wp-content/uploads/2020/08/conflict-news-logo-1-1-300x110.png"/><noscript><img class="td-retina-data" data-retina="https://conflict-news.com/wp-content/uploads/2020/08/conflict-news-logo-1-1-300x110.png" src="https://conflict-news.com/wp-content/uploads/2020/08/conflict-news-logo-1-1-300x110.png" alt="CONFLICT NEWS"/></noscript>
+        </a>
+        </div>
+    <div class="menu-primary-container"><ul id="menu-primary-1" class="sf-menu"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-first td-menu-item td-normal-menu menu-item-15"><a href="https://conflict-news.com/">Home</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category current-menu-item td-menu-item td-normal-menu menu-item-194"><a href="https://conflict-news.com/category/politics/">POLITICS</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category td-menu-item td-normal-menu menu-item-196"><a href="https://conflict-news.com/category/war/">WAR</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category td-menu-item td-normal-menu menu-item-193"><a href="https://conflict-news.com/category/business/">BUSINESS</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category td-menu-item td-normal-menu menu-item-281"><a href="https://conflict-news.com/category/health/">HEALTH</a></li>
+</ul></div></div>
+
+
+    <div class="header-search-wrap">
+        <div class="td-search-btns-wrap">
+            <a id="td-header-search-button" href="#" role="button" class="dropdown-toggle " data-toggle="dropdown"><i class="td-icon-search"></i></a>
+            <a id="td-header-search-button-mob" href="#" class="dropdown-toggle " data-toggle="dropdown"><i class="td-icon-search"></i></a>
+        </div>
+
+        <div class="td-drop-down-search" aria-labelledby="td-header-search-button">
+            <form method="get" class="td-search-form" action="https://conflict-news.com/">
+                <div role="search" class="td-head-form-search-wrap">
+                    <input id="td-header-search" type="text" value="" name="s" autocomplete="off" /><input class="wpb_button wpb_btn-inverse btn" type="submit" id="td-header-search-top" value="Search" />
+                </div>
+            </form>
+            <div id="td-aj-search"></div>
+        </div>
+    </div>
+			</div>
+		</div>
+	</div>
+
+    
+</div>
+            </div>
+
+            
+
+
+
+
+        <!-- subcategory -->
+        <div class="td-category-header td-container-wrap">
+            <div class="td-container">
+                <div class="td-pb-row">
+                    <div class="td-pb-span12">
+                        <div class="td-crumb-container"><div class="entry-crumbs"><span><a title="" class="entry-crumb" href="https://conflict-news.com/">Home</a></span> <i class="td-icon-right td-bread-sep td-bred-no-url-last"></i> <span class="td-bred-no-url-last">POLITICS</span></div></div>
+
+                        <h1 class="entry-title td-page-title">POLITICS</h1>
+                        
+                    </div>
+                </div>
+                <div class="td-category-pulldown-filter td-wrapper-pulldown-filter"><div class="td-pulldown-filter-display-option"><div class="td-subcat-more">Latest <i class="td-icon-menu-down"></i></div><ul class="td-pulldown-filter-list"><li class="td-pulldown-filter-item"><a class="td-pulldown-category-filter-link" id="tdi_2_61c" data-td_block_id="tdi_1_73d" href="https://conflict-news.com/category/politics/">Latest</a></li><li class="td-pulldown-filter-item"><a class="td-pulldown-category-filter-link" id="tdi_3_cb7" data-td_block_id="tdi_1_73d" href="https://conflict-news.com/category/politics/?filter_by=featured">Featured posts</a></li><li class="td-pulldown-filter-item"><a class="td-pulldown-category-filter-link" id="tdi_4_6d0" data-td_block_id="tdi_1_73d" href="https://conflict-news.com/category/politics/?filter_by=popular">Most popular</a></li><li class="td-pulldown-filter-item"><a class="td-pulldown-category-filter-link" id="tdi_5_a18" data-td_block_id="tdi_1_73d" href="https://conflict-news.com/category/politics/?filter_by=popular7">7 days popular</a></li><li class="td-pulldown-filter-item"><a class="td-pulldown-category-filter-link" id="tdi_6_aad" data-td_block_id="tdi_1_73d" href="https://conflict-news.com/category/politics/?filter_by=review_high">By review score</a></li><li class="td-pulldown-filter-item"><a class="td-pulldown-category-filter-link" id="tdi_7_111" data-td_block_id="tdi_1_73d" href="https://conflict-news.com/category/politics/?filter_by=random_posts">Random</a></li></ul></div></div>            </div>
+        </div>
+
+        
+        <!-- big grid -->
+        <div class="td-category-grid td-container-wrap">
+            <div class="td-container">
+                <div class="td-pb-row">
+                    <div class="td-pb-span12">
+                        <div class="td_block_wrap td_block_big_grid_1 tdi_8_d2d td-grid-style-1 td-hover-1 td-big-grids td-pb-border-top td_block_template_1"  data-td-block-uid="tdi_8_d2d" ><div id=tdi_8_d2d class="td_block_inner"><div class="td-big-grid-wrapper">
+        <div class="td_module_mx5 td-animation-stack td-big-grid-post-0 td-big-grid-post td-big-thumb">
+            <div class="td-module-thumb"><a href="https://conflict-news.com/coronavirus-is-pandemic-being-used-for-power-grab-in-europe/" rel="bookmark" class="td-image-wrap" title="Coronavirus: Is pandemic being used for power grab in Europe?"><img class="entry-thumb" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20410%20230'%3E%3C/svg%3E" alt="Coronavirus: Is pandemic being used for power grab in Europe?" title="Coronavirus: Is pandemic being used for power grab in Europe?" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/04/111823443_befunky-collage.jpg"  width="410" height="230" data-lazy-src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAhYAAAHOAQMAAAD+DNJPAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAADVJREFUeNrtwQENAAAAwiD7p7bHBwwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAICEA3q4AAGK1CNoAAAAAElFTkSuQmCC" /><noscript><img class="entry-thumb" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAhYAAAHOAQMAAAD+DNJPAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAADVJREFUeNrtwQENAAAAwiD7p7bHBwwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAICEA3q4AAGK1CNoAAAAAElFTkSuQmCC" alt="Coronavirus: Is pandemic being used for power grab in Europe?" title="Coronavirus: Is pandemic being used for power grab in Europe?" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/04/111823443_befunky-collage.jpg"  width="410" height="230" /></noscript></a></div>            <div class="td-meta-info-container">
+                <div class="td-meta-align">
+                    <div class="td-big-grid-meta">
+                                                <h3 class="entry-title td-module-title"><a href="https://conflict-news.com/coronavirus-is-pandemic-being-used-for-power-grab-in-europe/" rel="bookmark" title="Coronavirus: Is pandemic being used for power grab in Europe?">Coronavirus: Is pandemic being used for power grab in Europe?</a></h3>                    </div>
+                    <div class="td-module-meta-info">
+                        <span class="td-post-author-name"><a href="https://conflict-news.com/author/anshi-gupta/">Anshi gupta</a> <span>-</span> </span>                        <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2020-04-20T05:46:04+00:00" >20/04/2020</time></span>                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="td-big-grid-scroll">
+        <div class="td_module_mx6 td-animation-stack td-big-grid-post-1 td-big-grid-post td-small-thumb">
+            <div class="td-module-thumb"><a href="https://conflict-news.com/china-claims-the-world-health-organization-said-there-was-no-coronavirus-evidence-in-a-laboratory/" rel="bookmark" class="td-image-wrap" title="China claims the “World Health Organization” said there was no coronavirus evidence in a laboratory"><img class="entry-thumb" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20265%20198'%3E%3C/svg%3E" alt="China claims the “World Health Organization” said there was no coronavirus evidence in a laboratory" title="China claims the “World Health Organization” said there was no coronavirus evidence in a laboratory" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/04/BB12I2hl-265x198.jpg"  width="265" height="198" data-lazy-src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQkAAADGAQMAAAD7b+fyAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwQENAAAAwiD7p7bHBwwAAAAAAADSDhsSAAGoWlW2AAAAAElFTkSuQmCC" /><noscript><img class="entry-thumb" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQkAAADGAQMAAAD7b+fyAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwQENAAAAwiD7p7bHBwwAAAAAAADSDhsSAAGoWlW2AAAAAElFTkSuQmCC" alt="China claims the “World Health Organization” said there was no coronavirus evidence in a laboratory" title="China claims the “World Health Organization” said there was no coronavirus evidence in a laboratory" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/04/BB12I2hl-265x198.jpg"  width="265" height="198" /></noscript></a></div>            <div class="td-meta-info-container">
+                <div class="td-meta-align">
+                    <div class="td-big-grid-meta">
+                                                <h3 class="entry-title td-module-title"><a href="https://conflict-news.com/china-claims-the-world-health-organization-said-there-was-no-coronavirus-evidence-in-a-laboratory/" rel="bookmark" title="China claims the “World Health Organization” said there was no coronavirus evidence in a laboratory">China claims the “World Health Organization” said there was no coronavirus evidence in a laboratory</a></h3>                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        
+        <div class="td_module_mx6 td-animation-stack td-big-grid-post-2 td-big-grid-post td-small-thumb">
+            <div class="td-module-thumb"><a href="https://conflict-news.com/it-is-mind-boggling-that-how-pandemic-planning-never-accounted-for-a-president-like-trump/" rel="bookmark" class="td-image-wrap" title="It is “Mind-boggling” that how pandemic planning never accounted for a President like Trump"><img class="entry-thumb" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20265%20198'%3E%3C/svg%3E" alt="It is “Mind-boggling” that how pandemic planning never accounted for a President like Trump" title="It is “Mind-boggling” that how pandemic planning never accounted for a President like Trump" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/04/200414181659-01-trump-briefing-0414-large-169-265x198.jpg"  width="265" height="198" data-lazy-src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQkAAADGAQMAAAD7b+fyAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwQENAAAAwiD7p7bHBwwAAAAAAADSDhsSAAGoWlW2AAAAAElFTkSuQmCC" /><noscript><img class="entry-thumb" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQkAAADGAQMAAAD7b+fyAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwQENAAAAwiD7p7bHBwwAAAAAAADSDhsSAAGoWlW2AAAAAElFTkSuQmCC" alt="It is “Mind-boggling” that how pandemic planning never accounted for a President like Trump" title="It is “Mind-boggling” that how pandemic planning never accounted for a President like Trump" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/04/200414181659-01-trump-briefing-0414-large-169-265x198.jpg"  width="265" height="198" /></noscript></a></div>            <div class="td-meta-info-container">
+                <div class="td-meta-align">
+                    <div class="td-big-grid-meta">
+                                                <h3 class="entry-title td-module-title"><a href="https://conflict-news.com/it-is-mind-boggling-that-how-pandemic-planning-never-accounted-for-a-president-like-trump/" rel="bookmark" title="It is “Mind-boggling” that how pandemic planning never accounted for a President like Trump">It is “Mind-boggling” that how pandemic planning never accounted for a President like Trump</a></h3>                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        
+        <div class="td_module_mx6 td-animation-stack td-big-grid-post-3 td-big-grid-post td-small-thumb">
+            <div class="td-module-thumb"><a href="https://conflict-news.com/trumps-privilege-about-presidential-power-gets-pushback-across-political-spectrum-with-total-authority/" rel="bookmark" class="td-image-wrap" title="Trump&#8217;s privilege about presidential power gets pushback across political spectrum with total authority"><img class="entry-thumb" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20265%20198'%3E%3C/svg%3E" alt="Trump&#039;s privilege about presidential power gets pushback across political spectrum with total authority" title="Trump&#8217;s privilege about presidential power gets pushback across political spectrum with total authority" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/04/la-trump-press-20170117-265x198.jpg"  width="265" height="198" data-lazy-src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQkAAADGAQMAAAD7b+fyAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwQENAAAAwiD7p7bHBwwAAAAAAADSDhsSAAGoWlW2AAAAAElFTkSuQmCC" /><noscript><img class="entry-thumb" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQkAAADGAQMAAAD7b+fyAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwQENAAAAwiD7p7bHBwwAAAAAAADSDhsSAAGoWlW2AAAAAElFTkSuQmCC" alt="Trump&#039;s privilege about presidential power gets pushback across political spectrum with total authority" title="Trump&#8217;s privilege about presidential power gets pushback across political spectrum with total authority" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/04/la-trump-press-20170117-265x198.jpg"  width="265" height="198" /></noscript></a></div>            <div class="td-meta-info-container">
+                <div class="td-meta-align">
+                    <div class="td-big-grid-meta">
+                                                <h3 class="entry-title td-module-title"><a href="https://conflict-news.com/trumps-privilege-about-presidential-power-gets-pushback-across-political-spectrum-with-total-authority/" rel="bookmark" title="Trump&#8217;s privilege about presidential power gets pushback across political spectrum with total authority">Trump&#8217;s privilege about presidential power gets pushback across political spectrum with total authority</a></h3>                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        
+        <div class="td_module_mx6 td-animation-stack td-big-grid-post-4 td-big-grid-post td-small-thumb">
+            <div class="td-module-thumb"><a href="https://conflict-news.com/trump-responses-at-fauci-within-criticism-of-slow-virus-response/" rel="bookmark" class="td-image-wrap" title="Trump responses at Fauci within Criticism of Slow Virus Response"><img class="entry-thumb" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20265%20198'%3E%3C/svg%3E" alt="Trump responses at Fauci within Criticism of Slow Virus Response" title="Trump responses at Fauci within Criticism of Slow Virus Response" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/04/BB12wVU8-265x198.jpg"  width="265" height="198" data-lazy-src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQkAAADGAQMAAAD7b+fyAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwQENAAAAwiD7p7bHBwwAAAAAAADSDhsSAAGoWlW2AAAAAElFTkSuQmCC" /><noscript><img class="entry-thumb" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQkAAADGAQMAAAD7b+fyAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwQENAAAAwiD7p7bHBwwAAAAAAADSDhsSAAGoWlW2AAAAAElFTkSuQmCC" alt="Trump responses at Fauci within Criticism of Slow Virus Response" title="Trump responses at Fauci within Criticism of Slow Virus Response" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/04/BB12wVU8-265x198.jpg"  width="265" height="198" /></noscript></a></div>            <div class="td-meta-info-container">
+                <div class="td-meta-align">
+                    <div class="td-big-grid-meta">
+                                                <h3 class="entry-title td-module-title"><a href="https://conflict-news.com/trump-responses-at-fauci-within-criticism-of-slow-virus-response/" rel="bookmark" title="Trump responses at Fauci within Criticism of Slow Virus Response">Trump responses at Fauci within Criticism of Slow Virus Response</a></h3>                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        </div></div><div class="clearfix"></div></div></div> <!-- ./block -->                    </div>
+                </div>
+            </div>
+        </div>
+    
+    <div class="td-main-content-wrap td-container-wrap">
+        <div class="td-container">
+
+            <!-- content -->
+            <div class="td-pb-row">
+                                        <div class="td-pb-span8 td-main-content">
+                            <div class="td-ss-main-content">
+                                
+
+	<div class="td-block-row">
+
+	<div class="td-block-span6">
+<!-- module -->
+        <div class="td_module_1 td_module_wrap td-animation-stack">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="https://conflict-news.com/trump-says-hell-reopen-country-when-facts-and-instincts-will-declare-it-safe/" rel="bookmark" class="td-image-wrap" title="Trump says he&#8217;ll reopen country when “Facts and instincts” will declare it safe."><img class="entry-thumb" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20324%20160'%3E%3C/svg%3E" alt="Trump says he&#039;ll reopen country when “Facts and instincts” will declare it safe." title="Trump says he&#8217;ll reopen country when “Facts and instincts” will declare it safe." data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/04/BB12uAWA-324x160.jpg"  width="324" height="160" data-lazy-src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUQAAACgAQMAAABOhoelAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwTEBAAAAwiD7p/ZdCGAAAAAAAAAQBxpAAAH8le3bAAAAAElFTkSuQmCC" /><noscript><img class="entry-thumb" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUQAAACgAQMAAABOhoelAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwTEBAAAAwiD7p/ZdCGAAAAAAAAAQBxpAAAH8le3bAAAAAElFTkSuQmCC" alt="Trump says he&#039;ll reopen country when “Facts and instincts” will declare it safe." title="Trump says he&#8217;ll reopen country when “Facts and instincts” will declare it safe." data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/04/BB12uAWA-324x160.jpg"  width="324" height="160" /></noscript></a></div>                            </div>
+            <h3 class="entry-title td-module-title"><a href="https://conflict-news.com/trump-says-hell-reopen-country-when-facts-and-instincts-will-declare-it-safe/" rel="bookmark" title="Trump says he&#8217;ll reopen country when “Facts and instincts” will declare it safe.">Trump says he&#8217;ll reopen country when “Facts and instincts” will declare...</a></h3>
+            <div class="td-module-meta-info">
+                <span class="td-post-author-name"><a href="https://conflict-news.com/author/anshi-gupta/">Anshi gupta</a> <span>-</span> </span>                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2020-04-13T08:56:07+00:00" >13/04/2020</time></span>                <span class="td-module-comments"><a href="https://conflict-news.com/trump-says-hell-reopen-country-when-facts-and-instincts-will-declare-it-safe/#respond">0</a></span>            </div>
+
+            
+        </div>
+
+        
+	</div> <!-- ./td-block-span6 -->
+
+	<div class="td-block-span6">
+<!-- module -->
+        <div class="td_module_1 td_module_wrap td-animation-stack">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="https://conflict-news.com/trump-to-reveal-his-plan-to-re-open-the-country-after-this-great-pandemic/" rel="bookmark" class="td-image-wrap" title="Trump To Reveal His Plan To Re-Open The Country After This Great Pandemic"><img class="entry-thumb" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20324%20160'%3E%3C/svg%3E" alt="" title="Trump To Reveal His Plan To Re-Open The Country After This Great Pandemic" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/04/Untitled-design-57-324x160.jpg"  width="324" height="160" data-lazy-src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUQAAACgAQMAAABOhoelAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwTEBAAAAwiD7p/ZdCGAAAAAAAAAQBxpAAAH8le3bAAAAAElFTkSuQmCC" /><noscript><img class="entry-thumb" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUQAAACgAQMAAABOhoelAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwTEBAAAAwiD7p/ZdCGAAAAAAAAAQBxpAAAH8le3bAAAAAElFTkSuQmCC" alt="" title="Trump To Reveal His Plan To Re-Open The Country After This Great Pandemic" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/04/Untitled-design-57-324x160.jpg"  width="324" height="160" /></noscript></a></div>                            </div>
+            <h3 class="entry-title td-module-title"><a href="https://conflict-news.com/trump-to-reveal-his-plan-to-re-open-the-country-after-this-great-pandemic/" rel="bookmark" title="Trump To Reveal His Plan To Re-Open The Country After This Great Pandemic">Trump To Reveal His Plan To Re-Open The Country After This...</a></h3>
+            <div class="td-module-meta-info">
+                <span class="td-post-author-name"><a href="https://conflict-news.com/author/anshi-gupta/">Anshi gupta</a> <span>-</span> </span>                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2020-04-12T09:03:06+00:00" >12/04/2020</time></span>                <span class="td-module-comments"><a href="https://conflict-news.com/trump-to-reveal-his-plan-to-re-open-the-country-after-this-great-pandemic/#respond">0</a></span>            </div>
+
+            
+        </div>
+
+        
+	</div> <!-- ./td-block-span6 --></div><!--./row-fluid-->
+
+	<div class="td-block-row">
+
+	<div class="td-block-span6">
+<!-- module -->
+        <div class="td_module_1 td_module_wrap td-animation-stack">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="https://conflict-news.com/corona-has-led-to-digital-us-2020-election-campaign/" rel="bookmark" class="td-image-wrap" title="Corona Has Led To Digital US 2020 Election Campaign"><img class="entry-thumb" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20324%20160'%3E%3C/svg%3E" alt="This pandemic has also affected US elections. As there will be no rallies, No in-person fundraising, No vote advertisements" title="Corona Has Led To Digital US 2020 Election Campaign" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/04/Untitled-design-54-324x160.jpg"  width="324" height="160" data-lazy-src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUQAAACgAQMAAABOhoelAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwTEBAAAAwiD7p/ZdCGAAAAAAAAAQBxpAAAH8le3bAAAAAElFTkSuQmCC" /><noscript><img class="entry-thumb" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUQAAACgAQMAAABOhoelAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwTEBAAAAwiD7p/ZdCGAAAAAAAAAQBxpAAAH8le3bAAAAAElFTkSuQmCC" alt="This pandemic has also affected US elections. As there will be no rallies, No in-person fundraising, No vote advertisements" title="Corona Has Led To Digital US 2020 Election Campaign" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/04/Untitled-design-54-324x160.jpg"  width="324" height="160" /></noscript></a></div>                            </div>
+            <h3 class="entry-title td-module-title"><a href="https://conflict-news.com/corona-has-led-to-digital-us-2020-election-campaign/" rel="bookmark" title="Corona Has Led To Digital US 2020 Election Campaign">Corona Has Led To Digital US 2020 Election Campaign</a></h3>
+            <div class="td-module-meta-info">
+                <span class="td-post-author-name"><a href="https://conflict-news.com/author/anshi-gupta/">Anshi gupta</a> <span>-</span> </span>                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2020-04-11T08:20:02+00:00" >11/04/2020</time></span>                <span class="td-module-comments"><a href="https://conflict-news.com/corona-has-led-to-digital-us-2020-election-campaign/#respond">0</a></span>            </div>
+
+            
+        </div>
+
+        
+	</div> <!-- ./td-block-span6 -->
+
+	<div class="td-block-span6">
+<!-- module -->
+        <div class="td_module_1 td_module_wrap td-animation-stack">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="https://conflict-news.com/trump-makes-use-of-china-virus-term-again/" rel="bookmark" class="td-image-wrap" title="Trump Makes Use Of ‘China Virus’ Term Again"><img class="entry-thumb" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20324%20160'%3E%3C/svg%3E" alt="Trump Makes Use Of ‘China Virus’ Term Again" title="Trump Makes Use Of ‘China Virus’ Term Again" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/03/https___cdn.cnn_.com_cnnnext_dam_assets_200317120550-02-trump-task-force-presser-0317-324x160.jpg"  width="324" height="160" data-lazy-src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUQAAACgAQMAAABOhoelAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwTEBAAAAwiD7p/ZdCGAAAAAAAAAQBxpAAAH8le3bAAAAAElFTkSuQmCC" /><noscript><img class="entry-thumb" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUQAAACgAQMAAABOhoelAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwTEBAAAAwiD7p/ZdCGAAAAAAAAAQBxpAAAH8le3bAAAAAElFTkSuQmCC" alt="Trump Makes Use Of ‘China Virus’ Term Again" title="Trump Makes Use Of ‘China Virus’ Term Again" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/03/https___cdn.cnn_.com_cnnnext_dam_assets_200317120550-02-trump-task-force-presser-0317-324x160.jpg"  width="324" height="160" /></noscript></a></div>                            </div>
+            <h3 class="entry-title td-module-title"><a href="https://conflict-news.com/trump-makes-use-of-china-virus-term-again/" rel="bookmark" title="Trump Makes Use Of ‘China Virus’ Term Again">Trump Makes Use Of ‘China Virus’ Term Again</a></h3>
+            <div class="td-module-meta-info">
+                <span class="td-post-author-name"><a href="https://conflict-news.com/author/anshi-gupta/">Anshi gupta</a> <span>-</span> </span>                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2020-03-19T08:45:00+00:00" >19/03/2020</time></span>                <span class="td-module-comments"><a href="https://conflict-news.com/trump-makes-use-of-china-virus-term-again/#respond">0</a></span>            </div>
+
+            
+        </div>
+
+        
+	</div> <!-- ./td-block-span6 --></div><!--./row-fluid-->
+
+	<div class="td-block-row">
+
+	<div class="td-block-span6">
+<!-- module -->
+        <div class="td_module_1 td_module_wrap td-animation-stack">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="https://conflict-news.com/weak-and-pliable-neighbor-for-pakistan-came-out-from-the-afghan-peace-deal/" rel="bookmark" class="td-image-wrap" title="Weak and Pliable Neighbor for Pakistan came out from the Afghan Peace Deal"><img class="entry-thumb" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20324%20149'%3E%3C/svg%3E" alt="Weak and Pliable Neighbor for Pakistan came out from the Afghan Peace Deal" title="Weak and Pliable Neighbor for Pakistan came out from the Afghan Peace Deal" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/03/Untitled-design-6.jpg"  width="324" height="149" data-lazy-src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUQAAACgAQMAAABOhoelAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwTEBAAAAwiD7p/ZdCGAAAAAAAAAQBxpAAAH8le3bAAAAAElFTkSuQmCC" /><noscript><img class="entry-thumb" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUQAAACgAQMAAABOhoelAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwTEBAAAAwiD7p/ZdCGAAAAAAAAAQBxpAAAH8le3bAAAAAElFTkSuQmCC" alt="Weak and Pliable Neighbor for Pakistan came out from the Afghan Peace Deal" title="Weak and Pliable Neighbor for Pakistan came out from the Afghan Peace Deal" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/03/Untitled-design-6.jpg"  width="324" height="149" /></noscript></a></div>                            </div>
+            <h3 class="entry-title td-module-title"><a href="https://conflict-news.com/weak-and-pliable-neighbor-for-pakistan-came-out-from-the-afghan-peace-deal/" rel="bookmark" title="Weak and Pliable Neighbor for Pakistan came out from the Afghan Peace Deal">Weak and Pliable Neighbor for Pakistan came out from the Afghan...</a></h3>
+            <div class="td-module-meta-info">
+                <span class="td-post-author-name"><a href="https://conflict-news.com/author/anshi-gupta/">Anshi gupta</a> <span>-</span> </span>                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2020-03-07T10:46:00+00:00" >07/03/2020</time></span>                <span class="td-module-comments"><a href="https://conflict-news.com/weak-and-pliable-neighbor-for-pakistan-came-out-from-the-afghan-peace-deal/#respond">0</a></span>            </div>
+
+            
+        </div>
+
+        
+	</div> <!-- ./td-block-span6 -->
+
+	<div class="td-block-span6">
+<!-- module -->
+        <div class="td_module_1 td_module_wrap td-animation-stack">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="https://conflict-news.com/the-defense-secretary-of-us-announce-to-begin-withdrawing-troops-from-afghanistan/" rel="bookmark" class="td-image-wrap" title="The Defense Secretary Of US Announce To Begin Withdrawing Troops From Afghanistan"><img class="entry-thumb" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20229%20160'%3E%3C/svg%3E" alt="US Announce To Begin Withdrawing Troops" title="The Defense Secretary Of US Announce To Begin Withdrawing Troops From Afghanistan" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/03/5e5d3c266fde5.image_.jpg"  width="229" height="160" data-lazy-src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUQAAACgAQMAAABOhoelAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwTEBAAAAwiD7p/ZdCGAAAAAAAAAQBxpAAAH8le3bAAAAAElFTkSuQmCC" /><noscript><img class="entry-thumb" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUQAAACgAQMAAABOhoelAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwTEBAAAAwiD7p/ZdCGAAAAAAAAAQBxpAAAH8le3bAAAAAElFTkSuQmCC" alt="US Announce To Begin Withdrawing Troops" title="The Defense Secretary Of US Announce To Begin Withdrawing Troops From Afghanistan" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/03/5e5d3c266fde5.image_.jpg"  width="229" height="160" /></noscript></a></div>                            </div>
+            <h3 class="entry-title td-module-title"><a href="https://conflict-news.com/the-defense-secretary-of-us-announce-to-begin-withdrawing-troops-from-afghanistan/" rel="bookmark" title="The Defense Secretary Of US Announce To Begin Withdrawing Troops From Afghanistan">The Defense Secretary Of US Announce To Begin Withdrawing Troops From...</a></h3>
+            <div class="td-module-meta-info">
+                <span class="td-post-author-name"><a href="https://conflict-news.com/author/mohit/">Mohit Sharma</a> <span>-</span> </span>                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2020-03-04T08:52:54+00:00" >04/03/2020</time></span>                <span class="td-module-comments"><a href="https://conflict-news.com/the-defense-secretary-of-us-announce-to-begin-withdrawing-troops-from-afghanistan/#respond">0</a></span>            </div>
+
+            
+        </div>
+
+        
+	</div> <!-- ./td-block-span6 --></div><!--./row-fluid-->
+
+	<div class="td-block-row">
+
+	<div class="td-block-span6">
+<!-- module -->
+        <div class="td_module_1 td_module_wrap td-animation-stack">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="https://conflict-news.com/taliban-harmony-bargain-some-portion-of-more-extensive-us-objective-to-pull-together-on-china-defense-secretary-mark-esper-says/" rel="bookmark" class="td-image-wrap" title="Taliban harmony bargain some portion of more extensive US objective to pull together on China, Defense Secretary Mark Esper says!"><img class="entry-thumb" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20324%20149'%3E%3C/svg%3E" alt="Taliban harmony bargain some portion of more extensive US objective to pull together on China, Defense Secretary Mark Esper says!" title="Taliban harmony bargain some portion of more extensive US objective to pull together on China, Defense Secretary Mark Esper says!" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/03/Untitled-design-3-1.jpg"  width="324" height="149" data-lazy-src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUQAAACgAQMAAABOhoelAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwTEBAAAAwiD7p/ZdCGAAAAAAAAAQBxpAAAH8le3bAAAAAElFTkSuQmCC" /><noscript><img class="entry-thumb" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUQAAACgAQMAAABOhoelAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwTEBAAAAwiD7p/ZdCGAAAAAAAAAQBxpAAAH8le3bAAAAAElFTkSuQmCC" alt="Taliban harmony bargain some portion of more extensive US objective to pull together on China, Defense Secretary Mark Esper says!" title="Taliban harmony bargain some portion of more extensive US objective to pull together on China, Defense Secretary Mark Esper says!" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/03/Untitled-design-3-1.jpg"  width="324" height="149" /></noscript></a></div>                            </div>
+            <h3 class="entry-title td-module-title"><a href="https://conflict-news.com/taliban-harmony-bargain-some-portion-of-more-extensive-us-objective-to-pull-together-on-china-defense-secretary-mark-esper-says/" rel="bookmark" title="Taliban harmony bargain some portion of more extensive US objective to pull together on China, Defense Secretary Mark Esper says!">Taliban harmony bargain some portion of more extensive US objective to...</a></h3>
+            <div class="td-module-meta-info">
+                <span class="td-post-author-name"><a href="https://conflict-news.com/author/anshi-gupta/">Anshi gupta</a> <span>-</span> </span>                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2020-03-03T09:12:10+00:00" >03/03/2020</time></span>                <span class="td-module-comments"><a href="https://conflict-news.com/taliban-harmony-bargain-some-portion-of-more-extensive-us-objective-to-pull-together-on-china-defense-secretary-mark-esper-says/#respond">0</a></span>            </div>
+
+            
+        </div>
+
+        
+	</div> <!-- ./td-block-span6 -->
+
+	<div class="td-block-span6">
+<!-- module -->
+        <div class="td_module_1 td_module_wrap td-animation-stack">
+            <div class="td-module-image">
+                <div class="td-module-thumb"><a href="https://conflict-news.com/coalition-warplanes-strike-pro-government-forces-in-syrian-desert/" rel="bookmark" class="td-image-wrap" title="COALITION WARPLANES STRIKE PRO-GOVERNMENT FORCES IN SYRIAN DESERT"><img class="entry-thumb" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20324%20149'%3E%3C/svg%3E" alt="COALITION WARPLANES STRIKE PRO-GOVERNMENT FORCES IN SYRIAN DESERT" title="COALITION WARPLANES STRIKE PRO-GOVERNMENT FORCES IN SYRIAN DESERT" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/02/Untitled-design-2.jpg"  width="324" height="149" data-lazy-src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUQAAACgAQMAAABOhoelAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwTEBAAAAwiD7p/ZdCGAAAAAAAAAQBxpAAAH8le3bAAAAAElFTkSuQmCC" /><noscript><img class="entry-thumb" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUQAAACgAQMAAABOhoelAAAAA1BMVEWurq51dlI4AAAAAXRSTlMmkutdmwAAAB1JREFUWMPtwTEBAAAAwiD7p/ZdCGAAAAAAAAAQBxpAAAH8le3bAAAAAElFTkSuQmCC" alt="COALITION WARPLANES STRIKE PRO-GOVERNMENT FORCES IN SYRIAN DESERT" title="COALITION WARPLANES STRIKE PRO-GOVERNMENT FORCES IN SYRIAN DESERT" data-type="image_tag" data-img-url="https://conflict-news.com/wp-content/uploads/2020/02/Untitled-design-2.jpg"  width="324" height="149" /></noscript></a></div>                            </div>
+            <h3 class="entry-title td-module-title"><a href="https://conflict-news.com/coalition-warplanes-strike-pro-government-forces-in-syrian-desert/" rel="bookmark" title="COALITION WARPLANES STRIKE PRO-GOVERNMENT FORCES IN SYRIAN DESERT">COALITION WARPLANES STRIKE PRO-GOVERNMENT FORCES IN SYRIAN DESERT</a></h3>
+            <div class="td-module-meta-info">
+                <span class="td-post-author-name"><a href="https://conflict-news.com/author/sumit/">sumit</a> <span>-</span> </span>                <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2020-02-26T11:56:54+00:00" >26/02/2020</time></span>                <span class="td-module-comments"><a href="https://conflict-news.com/coalition-warplanes-strike-pro-government-forces-in-syrian-desert/#respond">0</a></span>            </div>
+
+            
+        </div>
+
+        
+	</div> <!-- ./td-block-span6 --></div><!--./row-fluid-->                            </div>
+                        </div>
+
+                        <div class="td-pb-span4 td-main-sidebar">
+                            <div class="td-ss-main-sidebar">
+                                                <!-- .no sidebar -->
+                                            </div>
+                        </div>
+                                    </div> <!-- /.td-pb-row -->
+        </div> <!-- /.td-container -->
+    </div> <!-- /.td-main-content-wrap -->
+
+<!-- Instagram -->
+    <div class="td-footer-template-wrap" style="position: relative">
+                <div class="td-footer-wrap ">
+            <div id="tdi_9_a13" class="tdc-zone"><div class="tdc_zone tdi_10_911  wpb_row td-pb-row"  >
+<style scoped>
+
+/* custom css */
+.tdi_10_911{
+                    min-height: 0;
+                }
+</style><div id="tdi_11_c0d" class="tdc-row stretch_row"><div class="vc_row tdi_12_ccd  wpb_row td-pb-row tdc-element-style" >
+<style scoped>
+
+/* custom css */
+.tdi_12_ccd{
+                    min-height: 0;
+                }
+/* inline tdc_css att */
+
+.tdi_12_ccd{
+padding-top:54px !important;
+padding-bottom:20px !important;
+position:relative;
+}
+
+.tdi_12_ccd .td_block_wrap{ text-align:left }
+
+/* phone */
+@media (max-width: 767px)
+{
+.tdi_12_ccd{
+padding-top:40px !important;
+}
+}
+
+/* portrait */
+@media (min-width: 768px) and (max-width: 1018px)
+{
+.tdi_12_ccd{
+padding-top:44px !important;
+}
+}
+
+</style>
+<div class="tdi_11_c0d_rand_style td-element-style" ><div class="td-element-style-before"><style>
+.tdi_11_c0d_rand_style > .td-element-style-before {
+content:'' !important;
+width:100% !important;
+height:100% !important;
+position:absolute !important;
+top:0 !important;
+left:0 !important;
+display:block !important;
+z-index:0 !important;
+opacity:0.1 !important;
+background-size:cover !important;
+background-position:center top !important;
+}
+</style></div><style>
+.tdi_11_c0d_rand_style{
+background-color:#111111 !important;
+}
+ </style></div><div class="vc_column tdi_14_9d9  wpb_column vc_column_container tdc-column td-pb-span12">
+<style scoped>
+
+/* custom css */
+.tdi_14_9d9{
+                    vertical-align: baseline;
+                }
+</style><div class="wpb_wrapper"><div class="vc_row_inner tdi_16_d39  vc_row vc_inner wpb_row td-pb-row" >
+<style scoped>
+
+/* custom css */
+.tdi_16_d39{
+                    position: relative !important;
+                    top: 0;
+                    transform: none;
+                    -webkit-transform: none;
+                }
+</style><div class="vc_column_inner tdi_18_c30  wpb_column vc_column_container tdc-inner-column td-pb-span4">
+<style scoped>
+
+/* custom css */
+.tdi_18_c30{
+                    vertical-align: baseline;
+                }
+</style><div class="vc_column-inner"><div class="wpb_wrapper"><div class="td_block_wrap td_flex_block_1 tdi_19_fdd td-pb-border-top td_block_template_2 td_flex_block"  data-td-block-uid="tdi_19_fdd" >
+<style>
+.td-theme-wrap .tdi_19_fdd .td-block-title > *,
+            .td-theme-wrap .tdi_19_fdd .td-pulldown-filter-link:hover,
+            .td-theme-wrap .tdi_19_fdd .td-subcat-item a:hover,
+            .td-theme-wrap .tdi_19_fdd .td-subcat-item .td-cur-simple-item,
+            .td-theme-wrap .tdi_19_fdd .td-subcat-dropdown:hover .td-subcat-more span,
+            .td-theme-wrap .tdi_19_fdd .td-subcat-dropdown:hover .td-subcat-more i {
+                color: #ffffff;
+            }
+
+            .td-theme-wrap .tdi_19_fdd .td-subcat-dropdown ul:after {
+                background-color: #ffffff;
+            }
+            
+            
+            .td-theme-wrap .tdi_19_fdd .td_module_wrap:hover .entry-title a,
+            .td-theme-wrap .tdi_19_fdd .td_quote_on_blocks,
+            .td-theme-wrap .tdi_19_fdd .td-opacity-cat .td-post-category:hover,
+            .td-theme-wrap .tdi_19_fdd .td-opacity-read .td-read-more a:hover,
+            .td-theme-wrap .tdi_19_fdd .td-opacity-author .td-post-author-name a:hover,
+            .td-theme-wrap .tdi_19_fdd .td-instagram-user a {
+                color: #ffffff;
+            }
+
+            .td-theme-wrap .tdi_19_fdd .td-next-prev-wrap a:hover,
+            .td-theme-wrap .tdi_19_fdd .td-load-more-wrap a:hover {
+                background-color: #ffffff;
+                border-color: #ffffff;
+            }
+
+            .td-theme-wrap .tdi_19_fdd .td-read-more a,
+            .td-theme-wrap .tdi_19_fdd .td-weather-information:before,
+            .td-theme-wrap .tdi_19_fdd .td-weather-week:before,
+            .td-theme-wrap .tdi_19_fdd .td-exchange-header:before,
+            .td-theme-wrap .td-footer-wrapper .tdi_19_fdd .td-post-category,
+            .td-theme-wrap .tdi_19_fdd .td-post-category:hover {
+                background-color: #ffffff;
+            }
+/* inline tdc_css att */
+
+/* phone */
+@media (max-width: 767px)
+{
+.tdi_19_fdd{
+margin-bottom:40px !important;
+}
+}
+
+/* portrait */
+@media (min-width: 768px) and (max-width: 1018px)
+{
+.tdi_19_fdd{
+margin-bottom:20px !important;
+}
+}
+
+</style>
+<style>
+/* custom css */
+.tdi_19_fdd .td-image-wrap{
+					padding-bottom: 70%;
+				}.tdi_19_fdd .entry-thumb{
+					background-position: center 50%;
+				}.tdi_19_fdd .td-image-container{
+				 	flex: 0 0 30%;
+				 	width: 30%;
+			    
+                	display: block; order: 0;
+                }.ie10 .tdi_19_fdd .td-image-container,
+				.ie11 .tdi_19_fdd .td-image-container{
+				 	flex: 0 0 auto;
+			    }.tdi_19_fdd .td-module-container{
+					flex-direction: row;
+				
+				    border-color: #eaeaea;
+				}.ie10 .tdi_19_fdd .td-module-meta-info,
+				.ie11 .tdi_19_fdd .td-module-meta-info{
+				 	flex: 1;
+			    }.tdi_19_fdd .td-module-meta-info{
+					padding: 0 0 0 16px;
+				
+					border-color: #eaeaea;
+				}.tdi_19_fdd .td_module_wrap{
+					padding-left: 20px;
+					padding-right: 20px;
+				
+					padding-bottom: 13px;
+					margin-bottom: 13px;
+				}.tdi_19_fdd .td_block_inner{
+					margin-left: -20px;
+					margin-right: -20px;
+				}.tdi_19_fdd .td-module-container:before{
+					bottom: -13px;
+				
+					border-color: #eaeaea;
+				}.tdi_19_fdd .td-video-play-ico{
+					width: 24px;
+					height: 24px;
+					font-size: 24px;
+				}.tdi_19_fdd .td-post-category{
+					display: none;
+				}.tdi_19_fdd .td-author-photo .avatar{
+				    width: 20px;
+				    height: 20px;
+				
+				    margin-right: 6px;
+				
+				    border-radius: 50%;
+				}.tdi_19_fdd .td-excerpt{
+					display: none;
+				
+					column-count: 1;
+				
+					column-gap: 48px;
+				}.tdi_19_fdd .td-audio-player{
+					opacity: 1;
+					visibility: visible;
+					height: auto;
+				
+					font-size: 13px;
+				}.tdi_19_fdd .td-read-more{
+					display: none;
+				}.tdi_19_fdd .td-post-author-name{
+					display: none;
+				}.tdi_19_fdd .entry-review-stars{
+					display: inline-block;
+				
+					color: #ffffff;
+				}.tdi_19_fdd .td-icon-star,
+                .tdi_19_fdd .td-icon-star-empty,
+                .tdi_19_fdd .td-icon-star-half{
+					font-size: 15px;
+				}.tdi_19_fdd .td-module-comments{
+					display: none;
+				}.tdi_19_fdd .td_module_wrap:nth-last-child(1){
+					margin-bottom: 0;
+					padding-bottom: 0;
+				}.tdi_19_fdd .td_module_wrap:nth-last-child(1) .td-module-container:before{
+					display: none;
+				}.tdi_19_fdd .td-module-title a{
+					color: #ffffff;
+				}.tdi_19_fdd .td_module_wrap:hover .td-module-title a{
+					color: #4db2ec !important;
+				}.tdi_19_fdd .td-block-title a,
+				.tdi_19_fdd .td-block-title span{
+					font-size:18px !important;
+				}.tdi_19_fdd .entry-title{
+					font-size:14px !important;line-height:1.4 !important;font-weight:500 !important;
+				}html:not([class*='ie']) .tdi_19_fdd .td-module-container:hover .entry-thumb:before{
+                    opacity: 0;
+                }
+
+/* landscape */
+@media (min-width: 1019px) and (max-width: 1140px){
+.tdi_19_fdd .td_module_wrap{
+					padding-bottom: 13px;
+					margin-bottom: 13px;
+				
+					padding-bottom: 13px !important;
+					margin-bottom: 13px !important;
+				}.tdi_19_fdd .td-module-container:before{
+					bottom: -13px;
+				}.tdi_19_fdd .td_module_wrap:nth-last-child(1){
+					margin-bottom: 0 !important;
+					padding-bottom: 0 !important;
+				}.tdi_19_fdd .td_module_wrap .td-module-container:before{
+					display: block !important;
+				}.tdi_19_fdd .td_module_wrap:nth-last-child(1) .td-module-container:before{
+					display: none !important;
+				}
+}
+
+/* portrait */
+@media (min-width: 768px) and (max-width: 1018px){
+.tdi_19_fdd .td-module-meta-info{
+					padding: 0 0 0 13px;
+				}.tdi_19_fdd .td_module_wrap{
+					width: 100%;
+					float: left;
+				
+					padding-left: 10px;
+					padding-right: 10px;
+				
+					padding-bottom: 10px;
+					margin-bottom: 10px;
+				
+					padding-bottom: 10px !important;
+					margin-bottom: 10px !important;
+				}.tdi_19_fdd .td_block_inner{
+					margin-left: -10px;
+					margin-right: -10px;
+				}.tdi_19_fdd .td-module-container:before{
+					bottom: -10px;
+				}.tdi_19_fdd .td_module_wrap:nth-last-child(1){
+					margin-bottom: 0 !important;
+					padding-bottom: 0 !important;
+				}.tdi_19_fdd .td_module_wrap .td-module-container:before{
+					display: block !important;
+				}.tdi_19_fdd .td_module_wrap:nth-last-child(1) .td-module-container:before{
+					display: none !important;
+				}.tdi_19_fdd .entry-title{
+					font-size:12px !important;line-height:1.4 !important;font-weight:500 !important;
+				}
+}
+
+/* phone */
+@media (max-width: 767px){
+.tdi_19_fdd .td_module_wrap{
+					width: 100%;
+					float: left;
+				
+					padding-bottom: 13px;
+					margin-bottom: 13px;
+				
+					padding-bottom: 13px !important;
+					margin-bottom: 13px !important;
+				}.tdi_19_fdd .td-module-container:before{
+					bottom: -13px;
+				}.tdi_19_fdd .td_module_wrap:nth-last-child(1){
+					margin-bottom: 0 !important;
+					padding-bottom: 0 !important;
+				}.tdi_19_fdd .td_module_wrap .td-module-container:before{
+					display: block !important;
+				}.tdi_19_fdd .td_module_wrap:nth-last-child(1) .td-module-container:before{
+					display: none !important;
+				}
+}
+</style><script type="rocketlazyloadscript">var block_tdi_19_fdd = new tdBlock();
+block_tdi_19_fdd.id = "tdi_19_fdd";
+block_tdi_19_fdd.atts = '{"modules_on_row":"eyJwb3J0cmFpdCI6IjEwMCUiLCJwaG9uZSI6IjEwMCUifQ==","image_size":"td_218x150","image_floated":"float_left","image_width":"30","image_height":"70","show_btn":"none","show_excerpt":"none","show_com":"none","show_author":"none","show_cat":"none","meta_padding":"eyJhbGwiOiIwIDAgMCAxNnB4IiwicG9ydHJhaXQiOiIwIDAgMCAxM3B4In0=","f_title_font_size":"eyJhbGwiOiIxNCIsInBvcnRyYWl0IjoiMTIifQ==","f_title_font_line_height":"1.4","f_title_font_weight":"500","all_modules_space":"eyJhbGwiOiIyNiIsInBvcnRyYWl0IjoiMjAiLCJwaG9uZSI6IjI2In0=","category_id":"","modules_gap":"eyJwb3J0cmFpdCI6IjIwIn0=","show_date":"","limit":"3","custom_title":"EDITOR PICKS","block_template_id":"td_block_template_2","f_header_font_size":"18","f_header_font_weight":"","header_text_color":"#ffffff","title_txt":"#ffffff","sort":"","title_txt_hover":"#4db2ec","tdc_css":"eyJwaG9uZSI6eyJtYXJnaW4tYm90dG9tIjoiNDAiLCJkaXNwbGF5IjoiIn0sInBob25lX21heF93aWR0aCI6NzY3LCJwb3J0cmFpdCI6eyJtYXJnaW4tYm90dG9tIjoiMjAiLCJkaXNwbGF5IjoiIn0sInBvcnRyYWl0X21heF93aWR0aCI6MTAxOCwicG9ydHJhaXRfbWluX3dpZHRoIjo3Njh9","rev_txt":"#ffffff","post_ids":"","video_icon":"24","separator":"","custom_url":"","title_tag":"","mc1_tl":"","mc1_el":"","category_ids":"","tag_slug":"","autors_id":"","installed_post_types":"","offset":"","show_modified_date":"","el_class":"","td_ajax_filter_type":"","td_ajax_filter_ids":"","td_filter_default_txt":"All","td_ajax_preloading":"","container_width":"","m_padding":"","modules_border_size":"","modules_border_style":"","modules_border_color":"#eaeaea","modules_divider":"","modules_divider_color":"#eaeaea","h_effect":"","image_alignment":"50","image_radius":"","hide_image":"","meta_info_align":"","meta_info_horiz":"content-horiz-left","meta_width":"","meta_margin":"","art_title":"","art_excerpt":"","excerpt_col":"1","excerpt_gap":"","art_audio":"","art_audio_size":"1.5","art_btn":"","meta_info_border_size":"","meta_info_border_style":"","meta_info_border_color":"#eaeaea","modules_category":"","modules_category_margin":"","modules_category_padding":"","modules_cat_border":"","modules_category_radius":"0","author_photo":"","author_photo_size":"","author_photo_space":"","author_photo_radius":"","show_review":"inline-block","review_size":"2.5","excerpt_middle":"","excerpt_inline":"","show_audio":"block","hide_audio":"","meta_space":"","btn_title":"","btn_margin":"","btn_padding":"","btn_border_width":"","btn_radius":"","pag_space":"","pag_padding":"","pag_border_width":"","pag_border_radius":"","prev_tdicon":"","next_tdicon":"","pag_icons_size":"","f_header_font_header":"","f_header_font_title":"Block header","f_header_font_settings":"","f_header_font_family":"","f_header_font_line_height":"","f_header_font_style":"","f_header_font_transform":"","f_header_font_spacing":"","f_header_":"","f_ajax_font_title":"Ajax categories","f_ajax_font_settings":"","f_ajax_font_family":"","f_ajax_font_size":"","f_ajax_font_line_height":"","f_ajax_font_style":"","f_ajax_font_weight":"","f_ajax_font_transform":"","f_ajax_font_spacing":"","f_ajax_":"","f_more_font_title":"Load more button","f_more_font_settings":"","f_more_font_family":"","f_more_font_size":"","f_more_font_line_height":"","f_more_font_style":"","f_more_font_weight":"","f_more_font_transform":"","f_more_font_spacing":"","f_more_":"","f_title_font_header":"","f_title_font_title":"Article title","f_title_font_settings":"","f_title_font_family":"","f_title_font_style":"","f_title_font_transform":"","f_title_font_spacing":"","f_title_":"","f_cat_font_title":"Article category tag","f_cat_font_settings":"","f_cat_font_family":"","f_cat_font_size":"","f_cat_font_line_height":"","f_cat_font_style":"","f_cat_font_weight":"","f_cat_font_transform":"","f_cat_font_spacing":"","f_cat_":"","f_meta_font_title":"Article meta info","f_meta_font_settings":"","f_meta_font_family":"","f_meta_font_size":"","f_meta_font_line_height":"","f_meta_font_style":"","f_meta_font_weight":"","f_meta_font_transform":"","f_meta_font_spacing":"","f_meta_":"","f_ex_font_title":"Article excerpt","f_ex_font_settings":"","f_ex_font_family":"","f_ex_font_size":"","f_ex_font_line_height":"","f_ex_font_style":"","f_ex_font_weight":"","f_ex_font_transform":"","f_ex_font_spacing":"","f_ex_":"","f_btn_font_title":"Article read more button","f_btn_font_settings":"","f_btn_font_family":"","f_btn_font_size":"","f_btn_font_line_height":"","f_btn_font_style":"","f_btn_font_weight":"","f_btn_font_transform":"","f_btn_font_spacing":"","f_btn_":"","mix_color":"","mix_type":"","fe_brightness":"1","fe_contrast":"1","fe_saturate":"1","mix_color_h":"","mix_type_h":"","fe_brightness_h":"1","fe_contrast_h":"1","fe_saturate_h":"1","m_bg":"","color_overlay":"","shadow_shadow_header":"","shadow_shadow_title":"Module Shadow","shadow_shadow_size":"","shadow_shadow_offset_horizontal":"","shadow_shadow_offset_vertical":"","shadow_shadow_spread":"","shadow_shadow_color":"","all_underline_color":"","all_underline_height":"","cat_bg":"","cat_bg_hover":"","cat_txt":"","cat_txt_hover":"","cat_border":"","cat_border_hover":"","meta_bg":"","author_txt":"","author_txt_hover":"","date_txt":"","ex_txt":"","com_bg":"","com_txt":"","audio_btn_color":"","audio_time_color":"","audio_bar_color":"","audio_bar_curr_color":"","shadow_m_shadow_header":"","shadow_m_shadow_title":"Meta info shadow","shadow_m_shadow_size":"","shadow_m_shadow_offset_horizontal":"","shadow_m_shadow_offset_vertical":"","shadow_m_shadow_spread":"","shadow_m_shadow_color":"","btn_bg":"","btn_bg_hover":"","btn_txt":"","btn_txt_hover":"","btn_border":"","btn_border_hover":"","pag_text":"","pag_h_text":"","pag_bg":"","pag_h_bg":"","pag_border":"","pag_h_border":"","ajax_pagination":"","ajax_pagination_infinite_stop":"","css":"","td_column_number":1,"header_color":"","color_preset":"","border_top":"","class":"tdi_19_fdd","tdc_css_class":"tdi_19_fdd","tdc_css_class_style":"tdi_19_fdd_rand_style"}';
+block_tdi_19_fdd.td_column_number = "1";
+block_tdi_19_fdd.block_type = "td_flex_block_1";
+block_tdi_19_fdd.post_count = "3";
+block_tdi_19_fdd.found_posts = "330";
+block_tdi_19_fdd.header_color = "";
+block_tdi_19_fdd.ajax_pagination_infinite_stop = "";
+block_tdi_19_fdd.max_num_pages = "110";
+tdBlocksArray.push(block_tdi_19_fdd);
+</script><div class="td-block-title-wrap"><h4 class="td-block-title"><span class="td-pulldown-size">EDITOR PICKS</span></h4></div><div id=tdi_19_fdd class="td_block_inner td-mc1-wrap">
+        <div class="td_module_flex td_module_flex_1 td_module_wrap td-animation-stack">
+            <div class="td-module-container td-category-pos-">
+                                    <div class="td-image-container">
+                                                <div class="td-module-thumb"><a href="https://conflict-news.com/vac-was-unable-to-verify-your-game-session/" rel="bookmark" class="td-image-wrap" title="Major Problem Faced By Gamers:- Vac Was Unable To Verify Your Game Session"><span class="entry-thumb td-thumb-css" data-type="css_image" data-img-url="https://conflict-news.com/wp-content/uploads/2021/06/Major-Problem-Faced-by-Gamers-vac-was-unable-to-verify-your-game-session-VAC.webp"  ></span></a></div>                    </div>
+                
+                <div class="td-module-meta-info">
+                    
+                    <h3 class="entry-title td-module-title"><a href="https://conflict-news.com/vac-was-unable-to-verify-your-game-session/" rel="bookmark" title="Major Problem Faced By Gamers:- Vac Was Unable To Verify Your Game Session">Major Problem Faced By Gamers:- Vac Was Unable To Verify Your Game Session</a></h3>
+                    
+                    <div class="td-editor-date">
+                        <a href="https://conflict-news.com/category/games/" class="td-post-category">Games</a>
+                        <span class="td-author-date">
+                                                        <span class="td-post-author-name"><a href="https://conflict-news.com/author/aniket-jain/">Aniket jain</a> <span>-</span> </span>                            <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2021-06-22T09:07:56+00:00" >22/06/2021</time></span>                                                        <span class="td-module-comments"><a href="https://conflict-news.com/vac-was-unable-to-verify-your-game-session/#respond">0</a></span>                        </span>
+                    </div>
+
+                    <div class="td-excerpt">Counter-Strike: Global Offensive (CS: GO) is a popular game with players all around the world. However, when you try to queue for matchmaking, you...</div>
+                    
+                    <div class="td-read-more">
+                        <a href="https://conflict-news.com/vac-was-unable-to-verify-your-game-session/">Read more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="td_module_flex td_module_flex_1 td_module_wrap td-animation-stack">
+            <div class="td-module-container td-category-pos-">
+                                    <div class="td-image-container">
+                                                <div class="td-module-thumb"><a href="https://conflict-news.com/bugging-out-various-forms-of-software-testing-types/" rel="bookmark" class="td-image-wrap" title="Bugging Out: Various Forms of Software Testing Types"><span class="entry-thumb td-thumb-css" data-type="css_image" data-img-url="https://conflict-news.com/wp-content/uploads/2021/06/Bugging-Out-Various-Forms-of-Software-Testing-Types.webp"  ></span></a></div>                    </div>
+                
+                <div class="td-module-meta-info">
+                    
+                    <h3 class="entry-title td-module-title"><a href="https://conflict-news.com/bugging-out-various-forms-of-software-testing-types/" rel="bookmark" title="Bugging Out: Various Forms of Software Testing Types">Bugging Out: Various Forms of Software Testing Types</a></h3>
+                    
+                    <div class="td-editor-date">
+                        <a href="https://conflict-news.com/category/featured/" class="td-post-category">Featured</a>
+                        <span class="td-author-date">
+                                                        <span class="td-post-author-name"><a href="https://conflict-news.com/author/sumit/">sumit</a> <span>-</span> </span>                            <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2021-06-21T12:17:35+00:00" >21/06/2021</time></span>                                                        <span class="td-module-comments"><a href="https://conflict-news.com/bugging-out-various-forms-of-software-testing-types/#respond">0</a></span>                        </span>
+                    </div>
+
+                    <div class="td-excerpt">Did you know that you cannot make software 100% bug-free? The goal of software testing is to identify and eliminate as many bugs as...</div>
+                    
+                    <div class="td-read-more">
+                        <a href="https://conflict-news.com/bugging-out-various-forms-of-software-testing-types/">Read more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="td_module_flex td_module_flex_1 td_module_wrap td-animation-stack">
+            <div class="td-module-container td-category-pos-">
+                                    <div class="td-image-container">
+                                                <div class="td-module-thumb"><a href="https://conflict-news.com/top-4-factors-to-consider-when-selecting-online-pharmacies/" rel="bookmark" class="td-image-wrap" title="Top 4 Factors to Consider When Selecting Online Pharmacies"><span class="entry-thumb td-thumb-css" data-type="css_image" data-img-url="https://conflict-news.com/wp-content/uploads/2021/06/Top-4-Factors-to-Consider-When-Selecting-Online-Pharmacies.webp"  ></span></a></div>                    </div>
+                
+                <div class="td-module-meta-info">
+                    
+                    <h3 class="entry-title td-module-title"><a href="https://conflict-news.com/top-4-factors-to-consider-when-selecting-online-pharmacies/" rel="bookmark" title="Top 4 Factors to Consider When Selecting Online Pharmacies">Top 4 Factors to Consider When Selecting Online Pharmacies</a></h3>
+                    
+                    <div class="td-editor-date">
+                        <a href="https://conflict-news.com/category/featured/" class="td-post-category">Featured</a>
+                        <span class="td-author-date">
+                                                        <span class="td-post-author-name"><a href="https://conflict-news.com/author/sumit/">sumit</a> <span>-</span> </span>                            <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2021-06-18T07:55:08+00:00" >18/06/2021</time></span>                                                        <span class="td-module-comments"><a href="https://conflict-news.com/top-4-factors-to-consider-when-selecting-online-pharmacies/#respond">0</a></span>                        </span>
+                    </div>
+
+                    <div class="td-excerpt">66% of American adults take a prescription drug.
+
+If you&#039;re one of those individuals, you may be looking for ways to cut down on the...</div>
+                    
+                    <div class="td-read-more">
+                        <a href="https://conflict-news.com/top-4-factors-to-consider-when-selecting-online-pharmacies/">Read more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </div></div></div></div></div><div class="vc_column_inner tdi_21_f6d  wpb_column vc_column_container tdc-inner-column td-pb-span4">
+<style scoped>
+
+/* custom css */
+.tdi_21_f6d{
+                    vertical-align: baseline;
+                }
+</style><div class="vc_column-inner"><div class="wpb_wrapper"><div class="td_block_wrap td_flex_block_1 tdi_22_cd5 td-pb-border-top td_block_template_2 td_flex_block"  data-td-block-uid="tdi_22_cd5" >
+<style>
+.td-theme-wrap .tdi_22_cd5 .td-block-title > *,
+            .td-theme-wrap .tdi_22_cd5 .td-pulldown-filter-link:hover,
+            .td-theme-wrap .tdi_22_cd5 .td-subcat-item a:hover,
+            .td-theme-wrap .tdi_22_cd5 .td-subcat-item .td-cur-simple-item,
+            .td-theme-wrap .tdi_22_cd5 .td-subcat-dropdown:hover .td-subcat-more span,
+            .td-theme-wrap .tdi_22_cd5 .td-subcat-dropdown:hover .td-subcat-more i {
+                color: #ffffff;
+            }
+
+            .td-theme-wrap .tdi_22_cd5 .td-subcat-dropdown ul:after {
+                background-color: #ffffff;
+            }
+            
+            
+            .td-theme-wrap .tdi_22_cd5 .td_module_wrap:hover .entry-title a,
+            .td-theme-wrap .tdi_22_cd5 .td_quote_on_blocks,
+            .td-theme-wrap .tdi_22_cd5 .td-opacity-cat .td-post-category:hover,
+            .td-theme-wrap .tdi_22_cd5 .td-opacity-read .td-read-more a:hover,
+            .td-theme-wrap .tdi_22_cd5 .td-opacity-author .td-post-author-name a:hover,
+            .td-theme-wrap .tdi_22_cd5 .td-instagram-user a {
+                color: #ffffff;
+            }
+
+            .td-theme-wrap .tdi_22_cd5 .td-next-prev-wrap a:hover,
+            .td-theme-wrap .tdi_22_cd5 .td-load-more-wrap a:hover {
+                background-color: #ffffff;
+                border-color: #ffffff;
+            }
+
+            .td-theme-wrap .tdi_22_cd5 .td-read-more a,
+            .td-theme-wrap .tdi_22_cd5 .td-weather-information:before,
+            .td-theme-wrap .tdi_22_cd5 .td-weather-week:before,
+            .td-theme-wrap .tdi_22_cd5 .td-exchange-header:before,
+            .td-theme-wrap .td-footer-wrapper .tdi_22_cd5 .td-post-category,
+            .td-theme-wrap .tdi_22_cd5 .td-post-category:hover {
+                background-color: #ffffff;
+            }
+/* inline tdc_css att */
+
+/* phone */
+@media (max-width: 767px)
+{
+.tdi_22_cd5{
+margin-bottom:48px !important;
+}
+}
+
+/* portrait */
+@media (min-width: 768px) and (max-width: 1018px)
+{
+.tdi_22_cd5{
+margin-bottom:20px !important;
+}
+}
+
+</style>
+<style>
+/* custom css */
+.tdi_22_cd5 .td-image-wrap{
+					padding-bottom: 70%;
+				}.tdi_22_cd5 .entry-thumb{
+					background-position: center 50%;
+				}.tdi_22_cd5 .td-image-container{
+				 	flex: 0 0 30%;
+				 	width: 30%;
+			    
+                	display: block; order: 0;
+                }.ie10 .tdi_22_cd5 .td-image-container,
+				.ie11 .tdi_22_cd5 .td-image-container{
+				 	flex: 0 0 auto;
+			    }.tdi_22_cd5 .td-module-container{
+					flex-direction: row;
+				
+				    border-color: #eaeaea;
+				}.ie10 .tdi_22_cd5 .td-module-meta-info,
+				.ie11 .tdi_22_cd5 .td-module-meta-info{
+				 	flex: 1;
+			    }.tdi_22_cd5 .td-module-meta-info{
+					padding: 0 0 0 16px;
+				
+					border-color: #eaeaea;
+				}.tdi_22_cd5 .td_module_wrap{
+					padding-left: 20px;
+					padding-right: 20px;
+				
+					padding-bottom: 13px;
+					margin-bottom: 13px;
+				}.tdi_22_cd5 .td_block_inner{
+					margin-left: -20px;
+					margin-right: -20px;
+				}.tdi_22_cd5 .td-module-container:before{
+					bottom: -13px;
+				
+					border-color: #eaeaea;
+				}.tdi_22_cd5 .td-video-play-ico{
+					width: 24px;
+					height: 24px;
+					font-size: 24px;
+				}.tdi_22_cd5 .td-post-category{
+					display: none;
+				}.tdi_22_cd5 .td-author-photo .avatar{
+				    width: 20px;
+				    height: 20px;
+				
+				    margin-right: 6px;
+				
+				    border-radius: 50%;
+				}.tdi_22_cd5 .td-excerpt{
+					display: none;
+				
+					column-count: 1;
+				
+					column-gap: 48px;
+				}.tdi_22_cd5 .td-audio-player{
+					opacity: 1;
+					visibility: visible;
+					height: auto;
+				
+					font-size: 13px;
+				}.tdi_22_cd5 .td-read-more{
+					display: none;
+				}.tdi_22_cd5 .td-post-author-name{
+					display: none;
+				}.tdi_22_cd5 .entry-review-stars{
+					display: inline-block;
+				
+					color: #ffffff;
+				}.tdi_22_cd5 .td-icon-star,
+                .tdi_22_cd5 .td-icon-star-empty,
+                .tdi_22_cd5 .td-icon-star-half{
+					font-size: 15px;
+				}.tdi_22_cd5 .td-module-comments{
+					display: none;
+				}.tdi_22_cd5 .td_module_wrap:nth-last-child(1){
+					margin-bottom: 0;
+					padding-bottom: 0;
+				}.tdi_22_cd5 .td_module_wrap:nth-last-child(1) .td-module-container:before{
+					display: none;
+				}.tdi_22_cd5 .td-module-title a{
+					color: #ffffff;
+				}.tdi_22_cd5 .td_module_wrap:hover .td-module-title a{
+					color: #4db2ec !important;
+				}.tdi_22_cd5 .td-block-title a,
+				.tdi_22_cd5 .td-block-title span{
+					font-size:18px !important;
+				}.tdi_22_cd5 .entry-title{
+					font-size:14px !important;line-height:1.4 !important;font-weight:500 !important;
+				}html:not([class*='ie']) .tdi_22_cd5 .td-module-container:hover .entry-thumb:before{
+                    opacity: 0;
+                }
+
+/* landscape */
+@media (min-width: 1019px) and (max-width: 1140px){
+.tdi_22_cd5 .td_module_wrap{
+					padding-bottom: 13px;
+					margin-bottom: 13px;
+				
+					padding-bottom: 13px !important;
+					margin-bottom: 13px !important;
+				}.tdi_22_cd5 .td-module-container:before{
+					bottom: -13px;
+				}.tdi_22_cd5 .td_module_wrap:nth-last-child(1){
+					margin-bottom: 0 !important;
+					padding-bottom: 0 !important;
+				}.tdi_22_cd5 .td_module_wrap .td-module-container:before{
+					display: block !important;
+				}.tdi_22_cd5 .td_module_wrap:nth-last-child(1) .td-module-container:before{
+					display: none !important;
+				}
+}
+
+/* portrait */
+@media (min-width: 768px) and (max-width: 1018px){
+.tdi_22_cd5 .td-module-meta-info{
+					padding: 0 0 0 13px;
+				}.tdi_22_cd5 .td_module_wrap{
+					width: 100%;
+					float: left;
+				
+					padding-left: 10px;
+					padding-right: 10px;
+				
+					padding-bottom: 10px;
+					margin-bottom: 10px;
+				
+					padding-bottom: 10px !important;
+					margin-bottom: 10px !important;
+				}.tdi_22_cd5 .td_block_inner{
+					margin-left: -10px;
+					margin-right: -10px;
+				}.tdi_22_cd5 .td-module-container:before{
+					bottom: -10px;
+				}.tdi_22_cd5 .td_module_wrap:nth-last-child(1){
+					margin-bottom: 0 !important;
+					padding-bottom: 0 !important;
+				}.tdi_22_cd5 .td_module_wrap .td-module-container:before{
+					display: block !important;
+				}.tdi_22_cd5 .td_module_wrap:nth-last-child(1) .td-module-container:before{
+					display: none !important;
+				}.tdi_22_cd5 .entry-title{
+					font-size:12px !important;line-height:1.4 !important;font-weight:500 !important;
+				}
+}
+
+/* phone */
+@media (max-width: 767px){
+.tdi_22_cd5 .td_module_wrap{
+					width: 100%;
+					float: left;
+				
+					padding-bottom: 13px;
+					margin-bottom: 13px;
+				
+					padding-bottom: 13px !important;
+					margin-bottom: 13px !important;
+				}.tdi_22_cd5 .td-module-container:before{
+					bottom: -13px;
+				}.tdi_22_cd5 .td_module_wrap:nth-last-child(1){
+					margin-bottom: 0 !important;
+					padding-bottom: 0 !important;
+				}.tdi_22_cd5 .td_module_wrap .td-module-container:before{
+					display: block !important;
+				}.tdi_22_cd5 .td_module_wrap:nth-last-child(1) .td-module-container:before{
+					display: none !important;
+				}
+}
+</style><script type="rocketlazyloadscript">var block_tdi_22_cd5 = new tdBlock();
+block_tdi_22_cd5.id = "tdi_22_cd5";
+block_tdi_22_cd5.atts = '{"modules_on_row":"eyJwb3J0cmFpdCI6IjEwMCUiLCJwaG9uZSI6IjEwMCUifQ==","image_size":"td_218x150","image_floated":"float_left","image_width":"30","image_height":"70","show_btn":"none","show_excerpt":"none","show_com":"none","show_author":"none","show_cat":"none","meta_padding":"eyJhbGwiOiIwIDAgMCAxNnB4IiwicGhvbmUiOiIwIDAgMCAxNnB4IiwicG9ydHJhaXQiOiIwIDAgMCAxM3B4In0=","f_title_font_size":"eyJhbGwiOiIxNCIsInBvcnRyYWl0IjoiMTIifQ==","f_title_font_line_height":"1.4","f_title_font_weight":"500","all_modules_space":"eyJhbGwiOiIyNiIsInBvcnRyYWl0IjoiMjAiLCJwaG9uZSI6IjI2In0=","category_id":"","modules_gap":"eyJwb3J0cmFpdCI6IjIwIn0=","show_date":"","limit":"3","custom_title":"POPULAR POSTS","block_template_id":"td_block_template_2","f_header_font_size":"18","f_header_font_weight":"","header_text_color":"#ffffff","title_txt":"#ffffff","sort":"","title_txt_hover":"#4db2ec","tdc_css":"eyJwaG9uZSI6eyJtYXJnaW4tYm90dG9tIjoiNDgiLCJkaXNwbGF5IjoiIn0sInBob25lX21heF93aWR0aCI6NzY3LCJwb3J0cmFpdCI6eyJtYXJnaW4tYm90dG9tIjoiMjAiLCJkaXNwbGF5IjoiIn0sInBvcnRyYWl0X21heF93aWR0aCI6MTAxOCwicG9ydHJhaXRfbWluX3dpZHRoIjo3Njh9","post_ids":"","rev_txt":"#ffffff","video_icon":"24","separator":"","custom_url":"","title_tag":"","mc1_tl":"","mc1_el":"","category_ids":"","tag_slug":"","autors_id":"","installed_post_types":"","offset":"","show_modified_date":"","el_class":"","td_ajax_filter_type":"","td_ajax_filter_ids":"","td_filter_default_txt":"All","td_ajax_preloading":"","container_width":"","m_padding":"","modules_border_size":"","modules_border_style":"","modules_border_color":"#eaeaea","modules_divider":"","modules_divider_color":"#eaeaea","h_effect":"","image_alignment":"50","image_radius":"","hide_image":"","meta_info_align":"","meta_info_horiz":"content-horiz-left","meta_width":"","meta_margin":"","art_title":"","art_excerpt":"","excerpt_col":"1","excerpt_gap":"","art_audio":"","art_audio_size":"1.5","art_btn":"","meta_info_border_size":"","meta_info_border_style":"","meta_info_border_color":"#eaeaea","modules_category":"","modules_category_margin":"","modules_category_padding":"","modules_cat_border":"","modules_category_radius":"0","author_photo":"","author_photo_size":"","author_photo_space":"","author_photo_radius":"","show_review":"inline-block","review_size":"2.5","excerpt_middle":"","excerpt_inline":"","show_audio":"block","hide_audio":"","meta_space":"","btn_title":"","btn_margin":"","btn_padding":"","btn_border_width":"","btn_radius":"","pag_space":"","pag_padding":"","pag_border_width":"","pag_border_radius":"","prev_tdicon":"","next_tdicon":"","pag_icons_size":"","f_header_font_header":"","f_header_font_title":"Block header","f_header_font_settings":"","f_header_font_family":"","f_header_font_line_height":"","f_header_font_style":"","f_header_font_transform":"","f_header_font_spacing":"","f_header_":"","f_ajax_font_title":"Ajax categories","f_ajax_font_settings":"","f_ajax_font_family":"","f_ajax_font_size":"","f_ajax_font_line_height":"","f_ajax_font_style":"","f_ajax_font_weight":"","f_ajax_font_transform":"","f_ajax_font_spacing":"","f_ajax_":"","f_more_font_title":"Load more button","f_more_font_settings":"","f_more_font_family":"","f_more_font_size":"","f_more_font_line_height":"","f_more_font_style":"","f_more_font_weight":"","f_more_font_transform":"","f_more_font_spacing":"","f_more_":"","f_title_font_header":"","f_title_font_title":"Article title","f_title_font_settings":"","f_title_font_family":"","f_title_font_style":"","f_title_font_transform":"","f_title_font_spacing":"","f_title_":"","f_cat_font_title":"Article category tag","f_cat_font_settings":"","f_cat_font_family":"","f_cat_font_size":"","f_cat_font_line_height":"","f_cat_font_style":"","f_cat_font_weight":"","f_cat_font_transform":"","f_cat_font_spacing":"","f_cat_":"","f_meta_font_title":"Article meta info","f_meta_font_settings":"","f_meta_font_family":"","f_meta_font_size":"","f_meta_font_line_height":"","f_meta_font_style":"","f_meta_font_weight":"","f_meta_font_transform":"","f_meta_font_spacing":"","f_meta_":"","f_ex_font_title":"Article excerpt","f_ex_font_settings":"","f_ex_font_family":"","f_ex_font_size":"","f_ex_font_line_height":"","f_ex_font_style":"","f_ex_font_weight":"","f_ex_font_transform":"","f_ex_font_spacing":"","f_ex_":"","f_btn_font_title":"Article read more button","f_btn_font_settings":"","f_btn_font_family":"","f_btn_font_size":"","f_btn_font_line_height":"","f_btn_font_style":"","f_btn_font_weight":"","f_btn_font_transform":"","f_btn_font_spacing":"","f_btn_":"","mix_color":"","mix_type":"","fe_brightness":"1","fe_contrast":"1","fe_saturate":"1","mix_color_h":"","mix_type_h":"","fe_brightness_h":"1","fe_contrast_h":"1","fe_saturate_h":"1","m_bg":"","color_overlay":"","shadow_shadow_header":"","shadow_shadow_title":"Module Shadow","shadow_shadow_size":"","shadow_shadow_offset_horizontal":"","shadow_shadow_offset_vertical":"","shadow_shadow_spread":"","shadow_shadow_color":"","all_underline_color":"","all_underline_height":"","cat_bg":"","cat_bg_hover":"","cat_txt":"","cat_txt_hover":"","cat_border":"","cat_border_hover":"","meta_bg":"","author_txt":"","author_txt_hover":"","date_txt":"","ex_txt":"","com_bg":"","com_txt":"","audio_btn_color":"","audio_time_color":"","audio_bar_color":"","audio_bar_curr_color":"","shadow_m_shadow_header":"","shadow_m_shadow_title":"Meta info shadow","shadow_m_shadow_size":"","shadow_m_shadow_offset_horizontal":"","shadow_m_shadow_offset_vertical":"","shadow_m_shadow_spread":"","shadow_m_shadow_color":"","btn_bg":"","btn_bg_hover":"","btn_txt":"","btn_txt_hover":"","btn_border":"","btn_border_hover":"","pag_text":"","pag_h_text":"","pag_bg":"","pag_h_bg":"","pag_border":"","pag_h_border":"","ajax_pagination":"","ajax_pagination_infinite_stop":"","css":"","td_column_number":1,"header_color":"","color_preset":"","border_top":"","class":"tdi_22_cd5","tdc_css_class":"tdi_22_cd5","tdc_css_class_style":"tdi_22_cd5_rand_style"}';
+block_tdi_22_cd5.td_column_number = "1";
+block_tdi_22_cd5.block_type = "td_flex_block_1";
+block_tdi_22_cd5.post_count = "3";
+block_tdi_22_cd5.found_posts = "330";
+block_tdi_22_cd5.header_color = "";
+block_tdi_22_cd5.ajax_pagination_infinite_stop = "";
+block_tdi_22_cd5.max_num_pages = "110";
+tdBlocksArray.push(block_tdi_22_cd5);
+</script><div class="td-block-title-wrap"><h4 class="td-block-title"><span class="td-pulldown-size">POPULAR POSTS</span></h4></div><div id=tdi_22_cd5 class="td_block_inner td-mc1-wrap">
+        <div class="td_module_flex td_module_flex_1 td_module_wrap td-animation-stack">
+            <div class="td-module-container td-category-pos-">
+                                    <div class="td-image-container">
+                                                <div class="td-module-thumb"><a href="https://conflict-news.com/vac-was-unable-to-verify-your-game-session/" rel="bookmark" class="td-image-wrap" title="Major Problem Faced By Gamers:- Vac Was Unable To Verify Your Game Session"><span class="entry-thumb td-thumb-css" data-type="css_image" data-img-url="https://conflict-news.com/wp-content/uploads/2021/06/Major-Problem-Faced-by-Gamers-vac-was-unable-to-verify-your-game-session-VAC.webp"  ></span></a></div>                    </div>
+                
+                <div class="td-module-meta-info">
+                    
+                    <h3 class="entry-title td-module-title"><a href="https://conflict-news.com/vac-was-unable-to-verify-your-game-session/" rel="bookmark" title="Major Problem Faced By Gamers:- Vac Was Unable To Verify Your Game Session">Major Problem Faced By Gamers:- Vac Was Unable To Verify Your Game Session</a></h3>
+                    
+                    <div class="td-editor-date">
+                        <a href="https://conflict-news.com/category/games/" class="td-post-category">Games</a>
+                        <span class="td-author-date">
+                                                        <span class="td-post-author-name"><a href="https://conflict-news.com/author/aniket-jain/">Aniket jain</a> <span>-</span> </span>                            <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2021-06-22T09:07:56+00:00" >22/06/2021</time></span>                                                        <span class="td-module-comments"><a href="https://conflict-news.com/vac-was-unable-to-verify-your-game-session/#respond">0</a></span>                        </span>
+                    </div>
+
+                    <div class="td-excerpt">Counter-Strike: Global Offensive (CS: GO) is a popular game with players all around the world. However, when you try to queue for matchmaking, you...</div>
+                    
+                    <div class="td-read-more">
+                        <a href="https://conflict-news.com/vac-was-unable-to-verify-your-game-session/">Read more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="td_module_flex td_module_flex_1 td_module_wrap td-animation-stack">
+            <div class="td-module-container td-category-pos-">
+                                    <div class="td-image-container">
+                                                <div class="td-module-thumb"><a href="https://conflict-news.com/bugging-out-various-forms-of-software-testing-types/" rel="bookmark" class="td-image-wrap" title="Bugging Out: Various Forms of Software Testing Types"><span class="entry-thumb td-thumb-css" data-type="css_image" data-img-url="https://conflict-news.com/wp-content/uploads/2021/06/Bugging-Out-Various-Forms-of-Software-Testing-Types.webp"  ></span></a></div>                    </div>
+                
+                <div class="td-module-meta-info">
+                    
+                    <h3 class="entry-title td-module-title"><a href="https://conflict-news.com/bugging-out-various-forms-of-software-testing-types/" rel="bookmark" title="Bugging Out: Various Forms of Software Testing Types">Bugging Out: Various Forms of Software Testing Types</a></h3>
+                    
+                    <div class="td-editor-date">
+                        <a href="https://conflict-news.com/category/featured/" class="td-post-category">Featured</a>
+                        <span class="td-author-date">
+                                                        <span class="td-post-author-name"><a href="https://conflict-news.com/author/sumit/">sumit</a> <span>-</span> </span>                            <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2021-06-21T12:17:35+00:00" >21/06/2021</time></span>                                                        <span class="td-module-comments"><a href="https://conflict-news.com/bugging-out-various-forms-of-software-testing-types/#respond">0</a></span>                        </span>
+                    </div>
+
+                    <div class="td-excerpt">Did you know that you cannot make software 100% bug-free? The goal of software testing is to identify and eliminate as many bugs as...</div>
+                    
+                    <div class="td-read-more">
+                        <a href="https://conflict-news.com/bugging-out-various-forms-of-software-testing-types/">Read more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="td_module_flex td_module_flex_1 td_module_wrap td-animation-stack">
+            <div class="td-module-container td-category-pos-">
+                                    <div class="td-image-container">
+                                                <div class="td-module-thumb"><a href="https://conflict-news.com/top-4-factors-to-consider-when-selecting-online-pharmacies/" rel="bookmark" class="td-image-wrap" title="Top 4 Factors to Consider When Selecting Online Pharmacies"><span class="entry-thumb td-thumb-css" data-type="css_image" data-img-url="https://conflict-news.com/wp-content/uploads/2021/06/Top-4-Factors-to-Consider-When-Selecting-Online-Pharmacies.webp"  ></span></a></div>                    </div>
+                
+                <div class="td-module-meta-info">
+                    
+                    <h3 class="entry-title td-module-title"><a href="https://conflict-news.com/top-4-factors-to-consider-when-selecting-online-pharmacies/" rel="bookmark" title="Top 4 Factors to Consider When Selecting Online Pharmacies">Top 4 Factors to Consider When Selecting Online Pharmacies</a></h3>
+                    
+                    <div class="td-editor-date">
+                        <a href="https://conflict-news.com/category/featured/" class="td-post-category">Featured</a>
+                        <span class="td-author-date">
+                                                        <span class="td-post-author-name"><a href="https://conflict-news.com/author/sumit/">sumit</a> <span>-</span> </span>                            <span class="td-post-date"><time class="entry-date updated td-module-date" datetime="2021-06-18T07:55:08+00:00" >18/06/2021</time></span>                                                        <span class="td-module-comments"><a href="https://conflict-news.com/top-4-factors-to-consider-when-selecting-online-pharmacies/#respond">0</a></span>                        </span>
+                    </div>
+
+                    <div class="td-excerpt">66% of American adults take a prescription drug.
+
+If you&#039;re one of those individuals, you may be looking for ways to cut down on the...</div>
+                    
+                    <div class="td-read-more">
+                        <a href="https://conflict-news.com/top-4-factors-to-consider-when-selecting-online-pharmacies/">Read more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </div></div></div></div></div><div class="vc_column_inner tdi_24_7ba  wpb_column vc_column_container tdc-inner-column td-pb-span4">
+<style scoped>
+
+/* custom css */
+.tdi_24_7ba{
+                    vertical-align: baseline;
+                }
+</style><div class="vc_column-inner"><div class="wpb_wrapper"><div class="td_block_wrap td_block_popular_categories tdi_25_d2a widget widget_categories td-pb-border-top td_block_template_2"  data-td-block-uid="tdi_25_d2a" >
+<style>
+.td-theme-wrap .tdi_25_d2a .td-block-title > *,
+            .td-theme-wrap .tdi_25_d2a .td-pulldown-filter-link:hover,
+            .td-theme-wrap .tdi_25_d2a .td-subcat-item a:hover,
+            .td-theme-wrap .tdi_25_d2a .td-subcat-item .td-cur-simple-item,
+            .td-theme-wrap .tdi_25_d2a .td-subcat-dropdown:hover .td-subcat-more span,
+            .td-theme-wrap .tdi_25_d2a .td-subcat-dropdown:hover .td-subcat-more i {
+                color: #ffffff;
+            }
+
+            .td-theme-wrap .tdi_25_d2a .td-subcat-dropdown ul:after {
+                background-color: #ffffff;
+            }
+            
+            
+            .td-theme-wrap .tdi_25_d2a .td_module_wrap:hover .entry-title a,
+            .td-theme-wrap .tdi_25_d2a .td_quote_on_blocks,
+            .td-theme-wrap .tdi_25_d2a .td-opacity-cat .td-post-category:hover,
+            .td-theme-wrap .tdi_25_d2a .td-opacity-read .td-read-more a:hover,
+            .td-theme-wrap .tdi_25_d2a .td-opacity-author .td-post-author-name a:hover,
+            .td-theme-wrap .tdi_25_d2a .td-instagram-user a {
+                color: #ffffff;
+            }
+
+            .td-theme-wrap .tdi_25_d2a .td-next-prev-wrap a:hover,
+            .td-theme-wrap .tdi_25_d2a .td-load-more-wrap a:hover {
+                background-color: #ffffff;
+                border-color: #ffffff;
+            }
+
+            .td-theme-wrap .tdi_25_d2a .td-read-more a,
+            .td-theme-wrap .tdi_25_d2a .td-weather-information:before,
+            .td-theme-wrap .tdi_25_d2a .td-weather-week:before,
+            .td-theme-wrap .tdi_25_d2a .td-exchange-header:before,
+            .td-theme-wrap .td-footer-wrapper .tdi_25_d2a .td-post-category,
+            .td-theme-wrap .tdi_25_d2a .td-post-category:hover {
+                background-color: #ffffff;
+            }
+/* inline tdc_css att */
+
+/* portrait */
+@media (min-width: 768px) and (max-width: 1018px)
+{
+.tdi_25_d2a{
+margin-bottom:20px !important;
+}
+}
+
+</style>
+<style>
+/* custom css */
+.tdi_25_d2a .td-cat-name{
+					color: #ffffff;
+				}.tdi_25_d2a .td-cat-no{
+					color: #ffffff;
+				}.tdi_25_d2a li:hover .td-cat-name{
+					color: #4db2ec;
+				}.tdi_25_d2a li:hover .td-cat-no{
+					color: #4db2ec;
+				}.tdi_25_d2a .td-block-title a,
+				.tdi_25_d2a .td-block-title span{
+					font-size:18px !important;
+				}
+
+/* portrait */
+@media (min-width: 768px) and (max-width: 1018px){
+.tdi_25_d2a li{
+					font-size:13px !important;line-height:26px !important;
+				}
+}
+</style><div class="td-block-title-wrap"><h4 class="td-block-title"><span class="td-pulldown-size">POPULAR CATEGORY</span></h4></div><ul class="td-pb-padding-side"><li><a href="https://conflict-news.com/category/business/"><span class="td-cat-name">BUSINESS</span><span class="td-cat-no">49</span></a></li><li><a href="https://conflict-news.com/category/technology/"><span class="td-cat-name">TECHNOLOGY</span><span class="td-cat-no">33</span></a></li><li><a href="https://conflict-news.com/category/health/"><span class="td-cat-name">HEALTH</span><span class="td-cat-no">25</span></a></li><li><a href="https://conflict-news.com/category/name-suggetions/"><span class="td-cat-name">NAME SUGGETIONS</span><span class="td-cat-no">14</span></a></li><li><a href="https://conflict-news.com/category/politics/"><span class="td-cat-name">POLITICS</span><span class="td-cat-no">13</span></a></li><li><a href="https://conflict-news.com/category/war/"><span class="td-cat-name">WAR</span><span class="td-cat-no">11</span></a></li><li><a href="https://conflict-news.com/category/entertainment/"><span class="td-cat-name">ENTERTAINMENT</span><span class="td-cat-no">10</span></a></li><li><a href="https://conflict-news.com/category/news/"><span class="td-cat-name">NEWS</span><span class="td-cat-no">7</span></a></li></ul></div></div></div></div></div></div></div></div></div><div id="tdi_26_ddd" class="tdc-row stretch_row"><div class="vc_row tdi_27_11b  wpb_row td-pb-row tdc-element-style" >
+<style scoped>
+
+/* custom css */
+.tdi_27_11b{
+                    min-height: 0;
+                }
+/* inline tdc_css att */
+
+.tdi_27_11b{
+position:relative;
+}
+
+.tdi_27_11b .td_block_wrap{ text-align:left }
+
+/* phone */
+@media (max-width: 767px)
+{
+.tdi_27_11b{
+padding-top:6px !important;
+padding-bottom:6px !important;
+}
+}
+
+</style>
+<div class="tdi_26_ddd_rand_style td-element-style" ><style>
+.tdi_26_ddd_rand_style{
+background-color:#0d0d0d !important;
+}
+ </style></div><div class="vc_column tdi_29_230  wpb_column vc_column_container tdc-column td-pb-span6">
+<style scoped>
+
+/* custom css */
+.tdi_29_230{
+                    vertical-align: baseline;
+                }
+</style><div class="wpb_wrapper"><div class="tdm_block td_block_wrap tdm_block_inline_text tdi_30_9ed tdm-content-horiz-left td-pb-border-top td_block_template_1"  data-td-block-uid="tdi_30_9ed" >
+<style>
+
+/* inline tdc_css att */
+
+.tdi_30_9ed{
+margin-top:2px !important;
+margin-bottom:0px !important;
+padding-top:8px !important;
+padding-bottom:8px !important;
+}
+
+/* phone */
+@media (max-width: 767px)
+{
+.tdi_30_9ed{
+margin-top:0px !important;
+justify-content:center !important;
+text-align:center !important;
+}
+}
+
+</style>
+<style>
+/* custom css */
+.tdi_30_9ed .tdm-descr{
+                    color: #cccccc;
+                
+					font-size:12px !important;line-height:21px !important;
+				}
+</style><p class="tdm-descr">&copy; conflict-news-2021</p></div></div></div><div class="vc_column tdi_32_3db  wpb_column vc_column_container tdc-column td-pb-span6">
+<style scoped>
+
+/* custom css */
+.tdi_32_3db{
+                    vertical-align: baseline;
+                }
+/* inline tdc_css att */
+
+.tdi_32_3db{
+justify-content:flex-end !important;
+text-align:right !important;
+}
+
+/* phone */
+@media (max-width: 767px)
+{
+.tdi_32_3db{
+justify-content:center !important;
+text-align:center !important;
+}
+}
+
+</style><div class="wpb_wrapper"><div class="td_block_wrap td_block_list_menu tdi_33_ad6 td-pb-border-top td_block_template_1 widget"  data-td-block-uid="tdi_33_ad6" >
+<style>
+
+/* inline tdc_css att */
+
+.tdi_33_ad6{
+margin-bottom:0px !important;
+padding-top:8px !important;
+padding-bottom:8px !important;
+}
+
+/* desktop */ @media(min-width: 1141px) { .tdi_33_ad6 { 
+display:inline-table !important;
+} }
+
+/* phone */
+@media (max-width: 767px)
+{
+.tdi_33_ad6{
+margin-left:16px !important;
+justify-content:center !important;
+text-align:center !important;
+display:inline-table !important;
+}
+}
+
+/* portrait */
+@media (min-width: 768px) and (max-width: 1018px)
+{
+.tdi_33_ad6{
+display:inline-table !important;
+}
+}
+
+/* landscape */
+@media (min-width: 1019px) and (max-width: 1140px)
+{
+.tdi_33_ad6{
+display:inline-table !important;
+}
+}
+
+</style>
+<style>
+/* custom css */
+.tdi_33_ad6 li{
+					display: inline-block;
+				
+					font-size:12px !important;line-height:21px !important;
+				}.tdi_33_ad6 .sub-menu{
+					display: none;
+				}.tdi_33_ad6 ul{
+					margin: 0px;
+				}.tdi_33_ad6 ul li{
+					margin-right: 16px;
+				}.tdi_33_ad6 ul li:last-child{
+					margin-right: 0;
+				}.tdi_33_ad6 a{
+					color: #cccccc;
+				}.tdi_33_ad6 a:hover{
+					color: #1aa4ce;
+				}
+</style><div class="td-block-title-wrap"></div><div id=tdi_33_ad6 class="td_block_inner td-fix-index"><div class="menu-footer-menu-container"><ul id="menu-footer-menu" class="menu"><li id="menu-item-153" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-153"><a href="https://conflict-news.com/about/">About us</a></li>
+<li id="menu-item-151" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-151"><a href="https://conflict-news.com/contact/">Contact us</a></li>
+<li id="menu-item-2036" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-privacy-policy menu-item-2036"><a href="https://conflict-news.com/privacy-policy/">Privacy Policy</a></li>
+<li id="menu-item-149" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-149"><a href="https://conflict-news.com/terms-and-conditions/">Terms and Conditions</a></li>
+<li id="menu-item-2021" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2021"><a href="https://conflict-news.com/write-for-us/">Write for Us</a></li>
+</ul></div></div></div></div></div></div></div></div></div>        </div>
+
+    </div>
+    
+</div><!--close td-outer-wrap-->
+
+
+<script type="text/javascript">var jQueryScriptOutputted = false;function initJQuery() {if (typeof(jQuery) == "undefined") {if (!jQueryScriptOutputted) {jQueryScriptOutputted = true;document.write("<scr" + "ipt type=\"text/javascript\" src=\"https://code.jquery.com/jquery-1.8.2.min.js\"></scr" + "ipt>");}setTimeout("initJQuery()", 50);}}initJQuery();</script><script type="rocketlazyloadscript" data-rocket-type="text/javascript">jQuery(document).ready(function() {
+jQuery(".4c68316a5bc306aa6031686219f9683f").click(function() {
+jQuery.post(
+"https://conflict-news.com/wp-admin/admin-ajax.php", {
+"action": "quick_adsense_onpost_ad_click",
+"quick_adsense_onpost_ad_index": jQuery(this).attr("data-index"),
+"quick_adsense_nonce": "97b65991c8",
+}, function(response) { }
+);
+});
+});
+</script>
+
+    <!--
+
+        Theme: Newspaper by tagDiv.com 2019
+        Version: 10.3 (rara)
+        Deploy mode: deploy
+        
+        uid: 60d3a1dce2606
+    -->
+
+    <script type='text/javascript' src='https://conflict-news.com/wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=7.4.4' id='wp-polyfill-js'></script>
+<script type='text/javascript' id='wp-polyfill-js-after'>
+( 'fetch' in window ) || document.write( '<script src="https://conflict-news.com/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?ver=3.0.0"></scr' + 'ipt>' );( document.contains ) || document.write( '<script src="https://conflict-news.com/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?ver=3.42.0"></scr' + 'ipt>' );( window.DOMRect ) || document.write( '<script src="https://conflict-news.com/wp-includes/js/dist/vendor/wp-polyfill-dom-rect.min.js?ver=3.42.0"></scr' + 'ipt>' );( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://conflict-news.com/wp-includes/js/dist/vendor/wp-polyfill-url.min.js?ver=3.6.4"></scr' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="https://conflict-news.com/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?ver=3.0.12"></scr' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="https://conflict-news.com/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?ver=2.0.2"></scr' + 'ipt>' );( 'objectFit' in document.documentElement.style ) || document.write( '<script src="https://conflict-news.com/wp-includes/js/dist/vendor/wp-polyfill-object-fit.min.js?ver=2.3.4"></scr' + 'ipt>' );
+</script>
+<script type='text/javascript' id='contact-form-7-js-extra'>
+/* <![CDATA[ */
+var wpcf7 = {"api":{"root":"https:\/\/conflict-news.com\/wp-json\/","namespace":"contact-form-7\/v1"},"cached":"1"};
+/* ]]> */
+</script>
+<script data-minify="1" type='text/javascript' src='https://conflict-news.com/wp-content/cache/min/1/wp-content/plugins/contact-form-7/includes/js/index.js?ver=1621458414' id='contact-form-7-js'></script>
+<script type='text/javascript' src='https://conflict-news.com/wp-includes/js/underscore.min.js?ver=1.8.3' id='underscore-js'></script>
+<script type='text/javascript' src='https://conflict-news.com/wp-content/plugins/td-cloud-library/assets/js/js_posts_autoload.min.js?ver=bb9c459bd63f43ae3fb9edbc59eb20c6' id='tdb_js_posts_autoload-js'></script>
+<script type='text/javascript' src='https://conflict-news.com/wp-content/plugins/td-composer/legacy/Newspaper/js/tagdiv_theme.min.js?ver=10.3' id='td-site-min-js'></script>
+<script type='text/javascript' id='jquery-lazyloadxt-js-extra'>
+/* <![CDATA[ */
+var a3_lazyload_params = {"apply_images":"1","apply_videos":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='//conflict-news.com/wp-content/plugins/a3-lazy-load/assets/js/jquery.lazyloadxt.extra.min.js?ver=2.4.6' id='jquery-lazyloadxt-js'></script>
+<script type='text/javascript' src='//conflict-news.com/wp-content/plugins/a3-lazy-load/assets/js/jquery.lazyloadxt.srcset.min.js?ver=2.4.6' id='jquery-lazyloadxt-srcset-js'></script>
+<script type='text/javascript' id='jquery-lazyloadxt-extend-js-extra'>
+/* <![CDATA[ */
+var a3_lazyload_extend_params = {"edgeY":"0","horizontal_container_classnames":""};
+/* ]]> */
+</script>
+<script data-minify="1" type='text/javascript' src='https://conflict-news.com/wp-content/cache/min/1/wp-content/plugins/a3-lazy-load/assets/js/jquery.lazyloadxt.extend.js?ver=1621458414' id='jquery-lazyloadxt-extend-js'></script>
+<script type='text/javascript' src='https://conflict-news.com/wp-content/plugins/td-cloud-library/assets/js/js_files_for_front.min.js?ver=bb9c459bd63f43ae3fb9edbc59eb20c6' id='tdb_js_files_for_front-js'></script>
+<script type='text/javascript' src='https://conflict-news.com/wp-includes/js/wp-embed.min.js?ver=5.7.2' id='wp-embed-js'></script>
+
+<!-- JS generated by theme -->
+
+<script type="rocketlazyloadscript">
+    
+jQuery().ready(function() {
+var pulldown_size = jQuery(".td-category-pulldown-filter:first").width();
+if (pulldown_size > 113) { jQuery(".td-category-pulldown-filter .td-pulldown-filter-list").css({"min-width": pulldown_size, "border-top": "1px solid #444"}); }
+});
+</script>
+
+	<script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+        jQuery(document).ready(function ($) {
+            //$( document ).ajaxStart(function() {
+            //});
+
+			
+            for (var i = 0; i < document.forms.length; ++i) {
+                var form = document.forms[i];
+				if ($(form).attr("method") != "get") { $(form).append('<input type="hidden" name="nZEaSWpbKRXBM" value="D79G.]8RfQIea" />'); }
+if ($(form).attr("method") != "get") { $(form).append('<input type="hidden" name="mDiScVdNagxtuEqX" value="lhVcNL@KXu" />'); }
+            }
+
+			
+            $(document).on('submit', 'form', function () {
+				if ($(this).attr("method") != "get") { $(this).append('<input type="hidden" name="nZEaSWpbKRXBM" value="D79G.]8RfQIea" />'); }
+if ($(this).attr("method") != "get") { $(this).append('<input type="hidden" name="mDiScVdNagxtuEqX" value="lhVcNL@KXu" />'); }
+                return true;
+            });
+
+			
+            jQuery.ajaxSetup({
+                beforeSend: function (e, data) {
+
+                    //console.log(Object.getOwnPropertyNames(data).sort());
+                    //console.log(data.type);
+
+                    if (data.type !== 'POST') return;
+
+                    if (typeof data.data === 'object' && data.data !== null) {
+						data.data.append("nZEaSWpbKRXBM", "D79G.]8RfQIea");
+data.data.append("mDiScVdNagxtuEqX", "lhVcNL@KXu");
+                    }
+                    else {
+                        data.data =  data.data + '&nZEaSWpbKRXBM=D79G.]8RfQIea&mDiScVdNagxtuEqX=lhVcNL@KXu';
+                    }
+                }
+            });
+
+        });
+	</script>
+	<script>window.lazyLoadOptions={elements_selector:"img[data-lazy-src],.rocket-lazyload,iframe[data-lazy-src]",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}};window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){continue}
+if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){continue}
+images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
+if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async src="https://conflict-news.com/wp-content/plugins/wp-rocket/assets/js/lazyload/16.1/lazyload.min.js"></script>
+<script type="rocketlazyloadscript">"use strict";var wprRemoveCPCSS=function wprRemoveCPCSS(){var elem;document.querySelector('link[data-rocket-async="style"][rel="preload"]')?setTimeout(wprRemoveCPCSS,200):(elem=document.getElementById("rocket-critical-css"))&&"remove"in elem&&elem.remove()};window.addEventListener?window.addEventListener("load",wprRemoveCPCSS):window.attachEvent&&window.attachEvent("onload",wprRemoveCPCSS);</script><noscript><link rel="stylesheet" href="https://conflict-news.com/wp-content/cache/min/1/b974849a4a1777af7618e753a74cf3a6.css" media="all" data-minify="1" /><link rel='stylesheet' id='google-fonts-style-css'  href='https://fonts.googleapis.com/css?family=Open+Sans%3A400%2C600%2C700%7CRoboto%3A400%2C500%2C700%7CRoboto+Condensed%3A700%2C400&#038;display=swap&#038;ver=10.3' type='text/css' media='all' /></noscript></body>
+</html>
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me - Debug: cached@1624482268 -->
