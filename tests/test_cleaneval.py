@@ -217,7 +217,47 @@ def clean_cleaneval(raw_html):
     '''
     return raw_html
 
-def clean_metahtml(raw_html):
+# List of function for different configuration of clean_metahtml
+def clean_metahtml_0(raw_html):
+    extractor_config = metahtml.content.ExtractorConfig()
+    return clean_metahtml(raw_html, extractor_config)
+
+def clean_metahtml_1(raw_html):
+    extractor_config = metahtml.content.ExtractorConfig()
+    extractor_config.filter_section = True
+    extractor_config.rm_form = True
+    return clean_metahtml(raw_html, extractor_config)
+
+def clean_metahtml_2(raw_html):
+    extractor_config = metahtml.content.ExtractorConfig()
+    extractor_config.filter_main = False
+    extractor_config.article = False
+    extractor_config.rm_badtags = False
+    extractor_config.rm_figure = False
+    extractor_config.rm_aside = False
+    extractor_config.div_to_p = False
+    extractor_config.rm_noncontent_blocks = False
+    extractor_config.rm_header_lists = False
+    extractor_config.rm_footer_lists = False
+    return clean_metahtml(raw_html, extractor_config)
+
+def clean_metahtml_3(raw_html):
+    extractor_config = metahtml.content.ExtractorConfig()
+    extractor_config.rm_header_lists = False
+    extractor_config.rm_footer_lists = False
+    return clean_metahtml(raw_html, extractor_config)
+
+def clean_metahtml_4(raw_html):
+    extractor_config = metahtml.content.ExtractorConfig()
+    extractor_config.rm_footer_lists = False
+    return clean_metahtml(raw_html, extractor_config)
+
+def clean_metahtml_5(raw_html):
+    extractor_config = metahtml.content.ExtractorConfig()
+    extractor_config.rm_header_lists = False
+    return clean_metahtml(raw_html, extractor_config)
+
+def clean_metahtml(raw_html, extractor_config=metahtml.content.ExtractorConfig()):
     '''
     Arguments:
         raw_html        String  Raw downloaded html input
@@ -227,8 +267,11 @@ def clean_metahtml(raw_html):
     ''
     '''
     url = __get_url(raw_html)
-    res = metahtml.parse(raw_html, url, None, False, True)
-    cleaned_html = res['content']['best']['value']['text']
+    res = metahtml.parse(raw_html, url, None, False, extractor_config)
+    if res['content'] is not None:
+        cleaned_html = res['content']['best']['value']['text']
+    else:
+        cleaned_html = ''
     return cleaned_html
 
 def clean_trafilatura_no_fallback(raw_html):
@@ -316,4 +359,4 @@ def cleaneval_from_files(gold_path, raw_path, list_of_libraries = [ lambda x: x 
         tag_fp = sum[library.__name__][10]
         tag_fn = sum[library.__name__][11]
         result = __evaluate(tp, fp, fn, tag_tp, tag_fp, tag_fn)
-        print(library.__name__ + "\t\t" + ("%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%d\t%d\t%d\t%d\t%d\t%d" % result))
+        print(library.__name__ + "\t\t" + ("%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%d\t%d\t%d\t%d\t%d\t%d\n" % result))
