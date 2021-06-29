@@ -19,4 +19,5 @@ setuptools.setup(
     url="https://github.com/mikeizbicki/metahtml",
     packages=setuptools.find_packages(exclude='tests'),
     python_requires='>=3.5',
+    include_package_data=True,
 )

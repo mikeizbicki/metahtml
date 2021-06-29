@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en-au">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="breakpoint" content="widescreen" media="(min-width: 1440px)" />
+<meta name="breakpoint" content="desktop" media="(min-width: 1024px) and (max-width: 1439px)" />
+
+<meta name="breakpoint" content="desktop-small" media="(min-width: 1024px) and (max-width: 1200px)" />
+
+<meta name="breakpoint" content="tablet-wide" media="(min-width: 768px) and (max-width: 1023px)" />
+<meta name="breakpoint" content="tablet" media="(min-width: 640px) and (max-width: 767px)" />
+<meta name="breakpoint" content="phone" media="(min-width: 450px) and (max-width: 639px)" />
+<meta name="breakpoint" content="phone-small" media="(max-width: 449px)" />
+<meta name="breakpoint" content="retina" media="(-webkit-min-device-pixel-ratio: 2), only screen and (   min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx)" />
+
+              <script>!function(t){function e(r){if(n[r])return n[r].exports;var o=n[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,e),o.l=!0,o.exports}var n={};e.m=t,e.c=n,e.d=function(t,n,r){e.o(t,n)||Object.defineProperty(t,n,{configurable:!1,enumerable:!0,get:r})},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="/app/assets/",e(e.s=21)}([function(t,e,n){"use strict";function r(){}function o(t){try{return t.then}catch(t){return b=t,v}}function i(t,e){try{return t(e)}catch(t){return b=t,v}}function a(t,e,n){try{t(e,n)}catch(t){return b=t,v}}function s(t){if("object"!=typeof this)throw new TypeError("Promises must be constructed via new");if("function"!=typeof t)throw new TypeError("Promise constructor's argument is not a function");this._75=0,this._83=0,this._18=null,this._38=null,t!==r&&y(t,this)}function u(t,e,n){return new t.constructor(function(o,i){var a=new s(r);a.then(o,i),f(t,new p(e,n,a))})}function f(t,e){for(;3===t._83;)t=t._18;if(s._47&&s._47(t),0===t._83)return 0===t._75?(t._75=1,void(t._38=e)):1===t._75?(t._75=2,void(t._38=[t._38,e])):void t._38.push(e);c(t,e)}function c(t,e){m(function(){var n=1===t._83?e.onFulfilled:e.onRejected;if(null===n)return void(1===t._83?l(e.promise,t._18):d(e.promise,t._18));var r=i(n,t._18);r===v?d(e.promise,b):l(e.promise,r)})}function l(t,e){if(e===t)return d(t,new TypeError("A promise cannot be resolved with itself."));if(e&&("object"==typeof e||"function"==typeof e)){var n=o(e);if(n===v)return d(t,b);if(n===t.then&&e instanceof s)return t._83=3,t._18=e,void h(t);if("function"==typeof n)return void y(n.bind(e),t)}t._83=1,t._18=e,h(t)}function d(t,e){t._83=2,t._18=e,s._71&&s._71(t,e),h(t)}function h(t){if(1===t._75&&(f(t,t._38),t._38=null),2===t._75){for(var e=0;e<t._38.length;e++)f(t,t._38[e]);t._38=null}}function p(t,e,n){this.onFulfilled="function"==typeof t?t:null,this.onRejected="function"==typeof e?e:null,this.promise=n}function y(t,e){var n=!1,r=a(t,function(t){n||(n=!0,l(e,t))},function(t){n||(n=!0,d(e,t))});n||r!==v||(n=!0,d(e,b))}var m=n(6),b=null,v={};t.exports=s,s._47=null,s._71=null,s._44=r,s.prototype.then=function(t,e){if(this.constructor!==s)return u(this,t,e);var n=new s(r);return f(this,new p(t,e,n)),n}},function(t,e){var n;n=function(){return this}();try{n=n||Function("return this")()||(0,eval)("this")}catch(t){"object"==typeof window&&(n=window)}t.exports=n},,,function(t,e,n){"use strict";"undefined"==typeof Promise&&(n(5).enable(),window.Promise=n(7)),n(8),Object.assign=n(9)},function(t,e,n){"use strict";function r(){f=!1,s._47=null,s._71=null}function o(t){function e(e){(t.allRejections||a(l[e].error,t.whitelist||u))&&(l[e].displayId=c++,t.onUnhandled?(l[e].logged=!0,t.onUnhandled(l[e].displayId,l[e].error)):(l[e].logged=!0,i(l[e].displayId,l[e].error)))}function n(e){l[e].logged&&(t.onHandled?t.onHandled(l[e].displayId,l[e].error):l[e].onUnhandled||(console.warn("Promise Rejection Handled (id: "+l[e].displayId+"):"),console.warn('  This means you can ignore any previous messages of the form "Possible Unhandled Promise Rejection" with id '+l[e].displayId+".")))}t=t||{},f&&r(),f=!0;var o=0,c=0,l={};s._47=function(t){2===t._83&&l[t._56]&&(l[t._56].logged?n(t._56):clearTimeout(l[t._56].timeout),delete l[t._56])},s._71=function(t,n){0===t._75&&(t._56=o++,l[t._56]={displayId:null,error:n,timeout:setTimeout(e.bind(null,t._56),a(n,u)?100:2e3),logged:!1})}}function i(t,e){console.warn("Possible Unhandled Promise Rejection (id: "+t+"):"),((e&&(e.stack||e))+"").split("\n").forEach(function(t){console.warn("  "+t)})}function a(t,e){return e.some(function(e){return t instanceof e})}var s=n(0),u=[ReferenceError,TypeError,RangeError],f=!1;e.disable=r,e.enable=o},function(t,e,n){"use strict";(function(e){function n(t){a.length||(i(),s=!0),a[a.length]=t}function r(){for(;u<a.length;){var t=u;if(u+=1,a[t].call(),u>f){for(var e=0,n=a.length-u;e<n;e++)a[e]=a[e+u];a.length-=u,u=0}}a.length=0,u=0,s=!1}function o(t){return function(){function e(){clearTimeout(n),clearInterval(r),t()}var n=setTimeout(e,0),r=setInterval(e,50)}}t.exports=n;var i,a=[],s=!1,u=0,f=1024,c=void 0!==e?e:self,l=c.MutationObserver||c.WebKitMutationObserver;i="function"==typeof l?function(t){var e=1,n=new l(t),r=document.createTextNode("");return n.observe(r,{characterData:!0}),function(){e=-e,r.data=e}}(r):o(r),n.requestFlush=i,n.makeRequestCallFromTimer=o}).call(e,n(1))},function(t,e,n){"use strict";function r(t){var e=new o(o._44);return e._83=1,e._18=t,e}var o=n(0);t.exports=o;var i=r(!0),a=r(!1),s=r(null),u=r(void 0),f=r(0),c=r("");o.resolve=function(t){if(t instanceof o)return t;if(null===t)return s;if(void 0===t)return u;if(!0===t)return i;if(!1===t)return a;if(0===t)return f;if(""===t)return c;if("object"==typeof t||"function"==typeof t)try{var e=t.then;if("function"==typeof e)return new o(e.bind(t))}catch(t){return new o(function(e,n){n(t)})}return r(t)},o.all=function(t){var e=Array.prototype.slice.call(t);return new o(function(t,n){function r(a,s){if(s&&("object"==typeof s||"function"==typeof s)){if(s instanceof o&&s.then===o.prototype.then){for(;3===s._83;)s=s._18;return 1===s._83?r(a,s._18):(2===s._83&&n(s._18),void s.then(function(t){r(a,t)},n))}var u=s.then;if("function"==typeof u){return void new o(u.bind(s)).then(function(t){r(a,t)},n)}}e[a]=s,0==--i&&t(e)}if(0===e.length)return t([]);for(var i=e.length,a=0;a<e.length;a++)r(a,e[a])})},o.reject=function(t){return new o(function(e,n){n(t)})},o.race=function(t){return new o(function(e,n){t.forEach(function(t){o.resolve(t).then(e,n)})})},o.prototype.catch=function(t){return this.then(null,t)}},function(t,e){!function(t){"use strict";function e(t){if("string"!=typeof t&&(t=String(t)),/[^a-z0-9\-#$%&'*+.\^_`|~]/i.test(t))throw new TypeError("Invalid character in header field name");return t.toLowerCase()}function n(t){return"string"!=typeof t&&(t=String(t)),t}function r(t){var e={next:function(){var e=t.shift();return{done:void 0===e,value:e}}};return b.iterable&&(e[Symbol.iterator]=function(){return e}),e}function o(t){this.map={},t instanceof o?t.forEach(function(t,e){this.append(e,t)},this):Array.isArray(t)?t.forEach(function(t){this.append(t[0],t[1])},this):t&&Object.getOwnPropertyNames(t).forEach(function(e){this.append(e,t[e])},this)}function i(t){if(t.bodyUsed)return Promise.reject(new TypeError("Already read"));t.bodyUsed=!0}function a(t){return new Promise(function(e,n){t.onload=function(){e(t.result)},t.onerror=function(){n(t.error)}})}function s(t){var e=new FileReader,n=a(e);return e.readAsArrayBuffer(t),n}function u(t){var e=new FileReader,n=a(e);return e.readAsText(t),n}function f(t){for(var e=new Uint8Array(t),n=new Array(e.length),r=0;r<e.length;r++)n[r]=String.fromCharCode(e[r]);return n.join("")}function c(t){if(t.slice)return t.slice(0);var e=new Uint8Array(t.byteLength);return e.set(new Uint8Array(t)),e.buffer}function l(){return this.bodyUsed=!1,this._initBody=function(t){if(this._bodyInit=t,t)if("string"==typeof t)this._bodyText=t;else if(b.blob&&Blob.prototype.isPrototypeOf(t))this._bodyBlob=t;else if(b.formData&&FormData.prototype.isPrototypeOf(t))this._bodyFormData=t;else if(b.searchParams&&URLSearchParams.prototype.isPrototypeOf(t))this._bodyText=t.toString();else if(b.arrayBuffer&&b.blob&&_(t))this._bodyArrayBuffer=c(t.buffer),this._bodyInit=new Blob([this._bodyArrayBuffer]);else{if(!b.arrayBuffer||!ArrayBuffer.prototype.isPrototypeOf(t)&&!w(t))throw new Error("unsupported BodyInit type");this._bodyArrayBuffer=c(t)}else this._bodyText="";this.headers.get("content-type")||("string"==typeof t?this.headers.set("content-type","text/plain;charset=UTF-8"):this._bodyBlob&&this._bodyBlob.type?this.headers.set("content-type",this._bodyBlob.type):b.searchParams&&URLSearchParams.prototype.isPrototypeOf(t)&&this.headers.set("content-type","application/x-www-form-urlencoded;charset=UTF-8"))},b.blob&&(this.blob=function(){var t=i(this);if(t)return t;if(this._bodyBlob)return Promise.resolve(this._bodyBlob);if(this._bodyArrayBuffer)return Promise.resolve(new Blob([this._bodyArrayBuffer]));if(this._bodyFormData)throw new Error("could not read FormData body as blob");return Promise.resolve(new Blob([this._bodyText]))},this.arrayBuffer=function(){return this._bodyArrayBuffer?i(this)||Promise.resolve(this._bodyArrayBuffer):this.blob().then(s)}),this.text=function(){var t=i(this);if(t)return t;if(this._bodyBlob)return u(this._bodyBlob);if(this._bodyArrayBuffer)return Promise.resolve(f(this._bodyArrayBuffer));if(this._bodyFormData)throw new Error("could not read FormData body as text");return Promise.resolve(this._bodyText)},b.formData&&(this.formData=function(){return this.text().then(p)}),this.json=function(){return this.text().then(JSON.parse)},this}function d(t){var e=t.toUpperCase();return g.indexOf(e)>-1?e:t}function h(t,e){e=e||{};var n=e.body;if(t instanceof h){if(t.bodyUsed)throw new TypeError("Already read");this.url=t.url,this.credentials=t.credentials,e.headers||(this.headers=new o(t.headers)),this.method=t.method,this.mode=t.mode,n||null==t._bodyInit||(n=t._bodyInit,t.bodyUsed=!0)}else this.url=String(t);if(this.credentials=e.credentials||this.credentials||"omit",!e.headers&&this.headers||(this.headers=new o(e.headers)),this.method=d(e.method||this.method||"GET"),this.mode=e.mode||this.mode||null,this.referrer=null,("GET"===this.method||"HEAD"===this.method)&&n)throw new TypeError("Body not allowed for GET or HEAD requests");this._initBody(n)}function p(t){var e=new FormData;return t.trim().split("&").forEach(function(t){if(t){var n=t.split("="),r=n.shift().replace(/\+/g," "),o=n.join("=").replace(/\+/g," ");e.append(decodeURIComponent(r),decodeURIComponent(o))}}),e}function y(t){var e=new o;return t.split(/\r?\n/).forEach(function(t){var n=t.split(":"),r=n.shift().trim();if(r){var o=n.join(":").trim();e.append(r,o)}}),e}function m(t,e){e||(e={}),this.type="default",this.status="status"in e?e.status:200,this.ok=this.status>=200&&this.status<300,this.statusText="statusText"in e?e.statusText:"OK",this.headers=new o(e.headers),this.url=e.url||"",this._initBody(t)}if(!t.fetch){var b={searchParams:"URLSearchParams"in t,iterable:"Symbol"in t&&"iterator"in Symbol,blob:"FileReader"in t&&"Blob"in t&&function(){try{return new Blob,!0}catch(t){return!1}}(),formData:"FormData"in t,arrayBuffer:"ArrayBuffer"in t};if(b.arrayBuffer)var v=["[object Int8Array]","[object Uint8Array]","[object Uint8ClampedArray]","[object Int16Array]","[object Uint16Array]","[object Int32Array]","[object Uint32Array]","[object Float32Array]","[object Float64Array]"],_=function(t){return t&&DataView.prototype.isPrototypeOf(t)},w=ArrayBuffer.isView||function(t){return t&&v.indexOf(Object.prototype.toString.call(t))>-1};o.prototype.append=function(t,r){t=e(t),r=n(r);var o=this.map[t];this.map[t]=o?o+","+r:r},o.prototype.delete=function(t){delete this.map[e(t)]},o.prototype.get=function(t){return t=e(t),this.has(t)?this.map[t]:null},o.prototype.has=function(t){return this.map.hasOwnProperty(e(t))},o.prototype.set=function(t,r){this.map[e(t)]=n(r)},o.prototype.forEach=function(t,e){for(var n in this.map)this.map.hasOwnProperty(n)&&t.call(e,this.map[n],n,this)},o.prototype.keys=function(){var t=[];return this.forEach(function(e,n){t.push(n)}),r(t)},o.prototype.values=function(){var t=[];return this.forEach(function(e){t.push(e)}),r(t)},o.prototype.entries=function(){var t=[];return this.forEach(function(e,n){t.push([n,e])}),r(t)},b.iterable&&(o.prototype[Symbol.iterator]=o.prototype.entries);var g=["DELETE","GET","HEAD","OPTIONS","POST","PUT"];h.prototype.clone=function(){return new h(this,{body:this._bodyInit})},l.call(h.prototype),l.call(m.prototype),m.prototype.clone=function(){return new m(this._bodyInit,{status:this.status,statusText:this.statusText,headers:new o(this.headers),url:this.url})},m.error=function(){var t=new m(null,{status:0,statusText:""});return t.type="error",t};var E=[301,302,303,307,308];m.redirect=function(t,e){if(-1===E.indexOf(e))throw new RangeError("Invalid status code");return new m(null,{status:e,headers:{location:t}})},t.Headers=o,t.Request=h,t.Response=m,t.fetch=function(t,e){return new Promise(function(n,r){var o=new h(t,e),i=new XMLHttpRequest;i.onload=function(){var t={status:i.status,statusText:i.statusText,headers:y(i.getAllResponseHeaders()||"")};t.url="responseURL"in i?i.responseURL:t.headers.get("X-Request-URL");var e="response"in i?i.response:i.responseText;n(new m(e,t))},i.onerror=function(){r(new TypeError("Network request failed"))},i.ontimeout=function(){r(new TypeError("Network request failed"))},i.open(o.method,o.url,!0),"include"===o.credentials&&(i.withCredentials=!0),"responseType"in i&&b.blob&&(i.responseType="blob"),o.headers.forEach(function(t,e){i.setRequestHeader(e,t)}),i.send(void 0===o._bodyInit?null:o._bodyInit)})},t.fetch.polyfill=!0}}("undefined"!=typeof self?self:this)},function(t,e,n){"use strict";function r(t){if(null===t||void 0===t)throw new TypeError("Object.assign cannot be called with null or undefined");return Object(t)}var o=Object.getOwnPropertySymbols,i=Object.prototype.hasOwnProperty,a=Object.prototype.propertyIsEnumerable;t.exports=function(){try{if(!Object.assign)return!1;var t=new String("abc");if(t[5]="de","5"===Object.getOwnPropertyNames(t)[0])return!1;for(var e={},n=0;n<10;n++)e["_"+String.fromCharCode(n)]=n;if("0123456789"!==Object.getOwnPropertyNames(e).map(function(t){return e[t]}).join(""))return!1;var r={};return"abcdefghijklmnopqrst".split("").forEach(function(t){r[t]=t}),"abcdefghijklmnopqrst"===Object.keys(Object.assign({},r)).join("")}catch(t){return!1}}()?Object.assign:function(t,e){for(var n,s,u=r(t),f=1;f<arguments.length;f++){n=Object(arguments[f]);for(var c in n)i.call(n,c)&&(u[c]=n[c]);if(o){s=o(n);for(var l=0;l<s.length;l++)a.call(n,s[l])&&(u[s[l]]=n[s[l]])}}return u}},,,,,,,,,,,,function(t,e,n){n(4),t.exports=n(22)},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});n(23);n(28)},function(t,e,n){"use strict";var r=n(24),o=(n.n(r),n(25)),i=(n.n(o),n(26)),a=n.n(i);n(27),window.loadCSS=o.loadCSS,a()()},function(t,e){!function(e,n){"use strict";var r={breakpoints:{},_isTicking:!1,_debounceLastTime:0,_namedEvents:{},_eventMatchCache:{},_globalEvents:[],onBreakpointChange:function(){var t=Array.prototype.slice.call(arguments),e=t.pop(),n=t.pop();void 0===n?r._globalEvents.push(e):(r._namedEvents[n]=[]).push(e),l()}},o=function(t){/in/.test(n.readyState)?e.setTimeout(function(){o(t)},9):t()},i=function(t,e){var n=t.className.split(" "),r=n.indexOf(e);r>-1&&(n.splice(r,1),t.className=n.join(" "))},a=function(t,e){-1===t.className.indexOf(e)&&(t.className=""!==t.className?t.className+" "+e:e)},s=function(t,e){var r="breakpoint-"+e,o=n.documentElement;t?a(o,r):i(o,r)},u=function(t){r._globalEvents.forEach(function(e){"function"==typeof e&&e(t)})},f=function(){r._isTicking||c(l),r._isTicking=!0},c=function(t,n){if(!e.requestAnimationFrame){var o=(new Date).getTime(),i=Math.max(0,16-(o-r._debounceLastTime)),a=e.setTimeout(function(){t(o+i)},i);return r._debounceLastTime=o+i,a}e.requestAnimationFrame(t,n)},l=function(){r._isTicking=!1;var t=[];for(var n in r.breakpoints){var o=r.breakpoints[n],i=e.matchMedia(o).matches;if(r._namedEvents[n]&&r._eventMatchCache[n]!==i){r._eventMatchCache[n]=i;for(var a=0;a<r._namedEvents[n].length;a++){var f=r._namedEvents[n][a];"function"==typeof f&&f(i)}}i&&t.push(n),s(i,n)}0!==t.length&&u(t)},d=function(){for(var t=n.getElementsByTagName("meta"),e=0;e<t.length;e++)if("breakpoint"===t[e].name){var o=t[e].getAttribute("content"),i=t[e].getAttribute("media");r.breakpoints[o]=i}},h=function(){d(),l(),e.addEventListener("resize",f)};void 0!==t&&t.exports?t.exports=r:e.metaQuery=r,function(){d(),l()}(),o(h)}(window,document)},function(t,e,n){(function(t){!function(t){"use strict";var n=function(e,n,r){function o(t){if(s.body)return t();setTimeout(function(){o(t)})}function i(){u.addEventListener&&u.removeEventListener("load",i),u.media=r||"all"}var a,s=t.document,u=s.createElement("link");if(n)a=n;else{var f=(s.body||s.getElementsByTagName("head")[0]).childNodes;a=f[f.length-1]}var c=s.styleSheets;u.rel="stylesheet",u.href=e,u.media="only x",o(function(){a.parentNode.insertBefore(u,n?a:a.nextSibling)});var l=function(t){for(var e=u.href,n=c.length;n--;)if(c[n].href===e)return t();setTimeout(function(){l(t)})};return u.addEventListener&&u.addEventListener("load",i),u.onloadcssdefined=l,l(i),u};e.loadCSS=n}(void 0!==t?t:this)}).call(e,n(1))},function(t,e){function n(){window.localStorage.getItem("fontsLoaded")&&(window.document.documentElement.className+=" fonts-loaded")}t.exports=n},function(t,e,n){(function(t){!function(t){"use strict";t.loadCSS||(t.loadCSS=function(){});var n=loadCSS.relpreload={};if(n.support=function(){var e;try{e=t.document.createElement("link").relList.supports("preload")}catch(t){e=!1}return function(){return e}}(),n.bindMediaToggle=function(t){function e(){t.media=n}var n=t.media||"all";t.addEventListener?t.addEventListener("load",e):t.attachEvent&&t.attachEvent("onload",e),setTimeout(function(){t.rel="stylesheet",t.media="only x"}),setTimeout(e,3e3)},n.poly=function(){if(!n.support())for(var e=t.document.getElementsByTagName("link"),r=0;r<e.length;r++){var o=e[r];"preload"!==o.rel||"style"!==o.getAttribute("as")||o.getAttribute("data-loadcss")||(o.setAttribute("data-loadcss",!0),n.bindMediaToggle(o))}},!n.support()){n.poly();var r=t.setInterval(n.poly,500);t.addEventListener?t.addEventListener("load",function(){n.poly(),t.clearInterval(r)}):t.attachEvent&&t.attachEvent("onload",function(){n.poly(),t.clearInterval(r)})}e.loadCSS=loadCSS}(void 0!==t?t:this)}).call(e,n(1))},function(t,e){function n(t){throw new Error("Cannot find module '"+t+"'.")}n.keys=function(){return[]},n.resolve=n,t.exports=n,n.id=28}]);</script>
+      <style>a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,button,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,embed,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,label,legend,li,mark,menu,nav,object,ol,output,p,pre,q,ruby,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:after,blockquote:before,q:after,q:before{content:"";content:none}table{border-collapse:collapse;border-spacing:0}td,th{text-align:left}button{border:none;background:none;cursor:pointer;color:inherit;-webkit-appearance:none;-moz-appearance:none;appearance:none}*,:after,:before{-webkit-box-sizing:border-box;box-sizing:border-box}.hide-visually{border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.hide-visually.focusable:active,.hide-visually.focusable:focus{clip:auto;height:auto;margin:0;overflow:visible;position:static;width:auto}.invisible{visibility:hidden}.hide-text{color:transparent;display:block;font:0/0 a}.breakpoint-phone-small .ph-display-none,.breakpoint-phone .ph-display-none,.ph-display-block{display:none}.breakpoint-phone-small .ph-display-block,.breakpoint-phone .ph-display-block{display:block}.flush{margin:0;padding:0}.m-xsmall{margin:1rem}.m-small{margin:2rem}.m-medium{margin:3rem}.m-large{margin:4rem}.breakpoint-phone-small .m-large,.breakpoint-phone .m-large,.breakpoint-tablet .m-large{margin:3rem}.m-xlarge{margin:6rem}.breakpoint-phone-small .m-xlarge,.breakpoint-phone .m-xlarge,.breakpoint-tablet .m-xlarge{margin:3rem}.mt-flush{margin-top:0}.mt-xsmall{margin-top:1rem}.mt-small{margin-top:2rem}.mt-medium{margin-top:3rem}.mt-large{margin-top:4rem}.breakpoint-phone-small .mt-large,.breakpoint-phone .mt-large,.breakpoint-tablet .mt-large{margin-top:3rem}.mt-xlarge{margin-top:6rem}.breakpoint-phone-small .mt-xlarge,.breakpoint-phone .mt-xlarge,.breakpoint-tablet .mt-xlarge{margin-top:3rem}.mr-flush{margin-right:0}.mr-xsmall{margin-right:1rem}.mr-small{margin-right:2rem}.mr-medium{margin-right:3rem}.mr-large{margin-right:4rem}.breakpoint-phone-small .mr-large,.breakpoint-phone .mr-large,.breakpoint-tablet .mr-large{margin-right:3rem}.mr-xlarge{margin-right:6rem}.breakpoint-phone-small .mr-xlarge,.breakpoint-phone .mr-xlarge,.breakpoint-tablet .mr-xlarge{margin-right:3rem}.mb-flush{margin-bottom:0}.mb-xsmall{margin-bottom:1rem}.mb-small{margin-bottom:2rem}.mb-medium{margin-bottom:3rem}.mb-large{margin-bottom:4rem}.breakpoint-phone-small .mb-large,.breakpoint-phone .mb-large,.breakpoint-tablet .mb-large{margin-bottom:3rem}.mb-xlarge{margin-bottom:6rem}.breakpoint-phone-small .mb-xlarge,.breakpoint-phone .mb-xlarge,.breakpoint-tablet .mb-xlarge{margin-bottom:3rem}.ml-flush{margin-left:0}.ml-xsmall{margin-left:1rem}.ml-small{margin-left:2rem}.ml-medium{margin-left:3rem}.ml-large{margin-left:4rem}.breakpoint-phone-small .ml-large,.breakpoint-phone .ml-large,.breakpoint-tablet .ml-large{margin-left:3rem}.ml-xlarge{margin-left:6rem}.breakpoint-phone-small .ml-xlarge,.breakpoint-phone .ml-xlarge,.breakpoint-tablet .ml-xlarge{margin-left:3rem}.my-flush{margin-top:0;margin-bottom:0}.my-xsmall{margin-top:1rem;margin-bottom:1rem}.my-small{margin-top:2rem;margin-bottom:2rem}.my-medium{margin-top:3rem;margin-bottom:3rem}.my-large{margin-top:4rem;margin-bottom:4rem}.breakpoint-phone-small .my-large,.breakpoint-phone .my-large,.breakpoint-tablet .my-large{margin-top:3rem;margin-bottom:3rem}.my-xlarge{margin-top:6rem;margin-bottom:6rem}.breakpoint-phone-small .my-xlarge,.breakpoint-phone .my-xlarge,.breakpoint-tablet .my-xlarge{margin-top:3rem;margin-bottom:3rem}.mx-xsmall{margin-left:1rem;margin-right:1rem}.mx-flush{margin-left:0;margin-right:0}.mx-small{margin-left:2rem;margin-right:2rem}.mx-medium{margin-left:3rem;margin-right:3rem}.mx-large{margin-left:4rem;margin-right:4rem}.breakpoint-phone-small .mx-large,.breakpoint-phone .mx-large,.breakpoint-tablet .mx-large{margin-left:3rem;margin-right:3rem}.mx-xlarge{margin-left:6rem;margin-right:6rem}.breakpoint-phone-small .mx-xlarge,.breakpoint-phone .mx-xlarge,.breakpoint-tablet .mx-xlarge{margin-left:3rem;margin-right:3rem}.mx-auto{margin-left:auto;margin-right:auto}.p-xsmall{padding:1rem}.p-small{padding:2rem}.p-medium{padding:3rem}.p-large{padding:4rem}.breakpoint-phone-small .p-large,.breakpoint-phone .p-large,.breakpoint-tablet .p-large{padding:3rem}.p-xlarge{padding:6rem}.breakpoint-phone-small .p-xlarge,.breakpoint-phone .p-xlarge,.breakpoint-tablet .p-xlarge{padding:3rem}.pt-xsmall{padding-top:1rem}.pt-flush{padding-top:0}.pt-small{padding-top:2rem}.pt-medium{padding-top:3rem}.pt-large{padding-top:4rem}.breakpoint-phone-small .pt-large,.breakpoint-phone .pt-large,.breakpoint-tablet .pt-large{padding-top:3rem}.pt-xlarge{padding-top:6rem}.breakpoint-phone-small .pt-xlarge,.breakpoint-phone .pt-xlarge,.breakpoint-tablet .pt-xlarge{padding-top:3rem}.pr-flush{padding-right:0}.pr-xsmall{padding-right:1rem}.pr-small{padding-right:2rem}.pr-medium{padding-right:3rem}.pr-large{padding-right:4rem}.breakpoint-phone-small .pr-large,.breakpoint-phone .pr-large,.breakpoint-tablet .pr-large{padding-right:3rem}.pr-xlarge{padding-right:6rem}.breakpoint-phone-small .pr-xlarge,.breakpoint-phone .pr-xlarge,.breakpoint-tablet .pr-xlarge{padding-right:3rem}.pb-flush{padding-bottom:0}.pb-xsmall{padding-bottom:1rem}.pb-small{padding-bottom:2rem}.pb-medium{padding-bottom:3rem}.pb-large{padding-bottom:4rem}.breakpoint-phone-small .pb-large,.breakpoint-phone .pb-large,.breakpoint-tablet .pb-large{padding-bottom:3rem}.pb-xlarge{padding-bottom:6rem}.breakpoint-phone-small .pb-xlarge,.breakpoint-phone .pb-xlarge,.breakpoint-tablet .pb-xlarge{padding-bottom:3rem}.pl-flush{padding-left:0}.pl-xsmall{padding-left:1rem}.pl-small{padding-left:2rem}.pl-medium{padding-left:3rem}.pl-large{padding-left:4rem}.breakpoint-phone-small .pl-large,.breakpoint-phone .pl-large,.breakpoint-tablet .pl-large{padding-left:3rem}.pl-xlarge{padding-left:6rem}.breakpoint-phone-small .pl-xlarge,.breakpoint-phone .pl-xlarge,.breakpoint-tablet .pl-xlarge{padding-left:3rem}.py-flush{padding-top:0;padding-bottom:0}.py-xsmall{padding-top:1rem;padding-bottom:1rem}.py-small{padding-top:2rem;padding-bottom:2rem}.py-medium{padding-top:3rem;padding-bottom:3rem}.py-large{padding-top:4rem;padding-bottom:4rem}.breakpoint-phone-small .py-large,.breakpoint-phone .py-large,.breakpoint-tablet .py-large{padding-top:3rem;padding-bottom:3rem}.py-xlarge{padding-top:6rem;padding-bottom:6rem}.breakpoint-phone-small .py-xlarge,.breakpoint-phone .py-xlarge,.breakpoint-tablet .py-xlarge{padding-top:3rem;padding-bottom:3rem}.px-flush{padding-left:0;padding-right:0}.px-xsmall{padding-left:1rem;padding-right:1rem}.px-small{padding-left:2rem;padding-right:2rem}.px-medium{padding-left:3rem;padding-right:3rem}.px-large{padding-left:4rem;padding-right:4rem}.breakpoint-phone-small .px-large,.breakpoint-phone .px-large,.breakpoint-tablet .px-large{padding-left:3rem;padding-right:3rem}.px-xlarge{padding-left:6rem;padding-right:6rem}.breakpoint-phone-small .px-xlarge,.breakpoint-phone .px-xlarge,.breakpoint-tablet .px-xlarge{padding-left:3rem;padding-right:3rem}.d-block{display:block}.d-inline-block{display:inline-block}.d-inline{display:inline}.d-flex{display:-webkit-box;display:-ms-flexbox;display:flex}.flex-items-center{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.flex-items-baseline{-webkit-box-align:baseline;-ms-flex-align:baseline;align-items:baseline}.flex-center{-ms-flex-item-align:center;align-self:center}.flex-left{margin-right:auto}.flex-right{margin-left:auto}.flex-space{-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.flex-wrap{-ms-flex-flow:wrap;flex-flow:wrap}.clearfix:after{clear:both;content:" ";display:block;font-size:0;height:0;visibility:hidden}html{font-size:62.5%;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:none}body{background-color:#fff;color:#333;font-family:PT Serif,Georgia,Times,Times New Roman,serif;font-size:1.6rem;line-height:1.4}.page{padding-top:8rem;padding-bottom:8rem}.breakpoint-phone-small .page,.breakpoint-phone .page,.breakpoint-tablet-wide .page,.breakpoint-tablet .page{padding-bottom:4rem}.more-articles{padding-top:6rem;padding-bottom:6rem}.card-bg{background-color:#f8f8f8}.error-message{text-align:center}.article-header{margin-bottom:6rem}.breakpoint-tablet-wide .article-header,.breakpoint-tablet .article-header{margin-bottom:4rem}.breakpoint-phone-small .article-header,.breakpoint-phone .article-header{margin-bottom:2rem}.article-header__theme{color:#e44c38;display:inline-block;font-family:Space mono,monaco,Consolas,Lucida Console,monospace;font-size:1.3rem;font-weight:700;letter-spacing:.1em;margin-bottom:4rem;position:relative;text-transform:uppercase;text-decoration:none}.breakpoint-tablet-wide .article-header__theme,.breakpoint-tablet .article-header__theme{margin-bottom:2rem}.breakpoint-phone-small .article-header__theme,.breakpoint-phone .article-header__theme{margin-bottom:1rem;font-size:1.1rem}.article-header__theme-line{background-color:#e44c38;content:"";height:3px;position:absolute;right:-11rem;top:.8rem;width:10rem}.breakpoint-phone-small .article-header__theme-line,.breakpoint-phone .article-header__theme-line{right:-6rem;top:.5rem;width:5rem}.article-header__title{font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:5.4rem;font-weight:700;line-height:6.3rem;color:#333;margin-bottom:3rem}.breakpoint-tablet-wide .article-header__title,.breakpoint-tablet .article-header__title{font-size:3.4rem;line-height:4.4rem;margin-bottom:3rem}.breakpoint-phone-small .article-header__title,.breakpoint-phone .article-header__title{font-size:2.4rem;line-height:3.2rem;margin-bottom:3rem;margin-bottom:2rem}.article-header__intro p{font-size:2rem}.breakpoint-phone-small .article-header__intro p,.breakpoint-phone .article-header__intro p{font-size:1.6rem}.article-header__intro a{color:#e44c38}.article__asset{margin-top:4rem}.breakpoint-phone-small .article__asset,.breakpoint-phone .article__asset{margin-top:2rem}.article__asset .oembed{padding-bottom:0;padding-top:0}.article__asset-feature-image,.article__asset iframe{width:100%}.article__podcast-file{color:#999;font-family:Space mono,monaco,Consolas,Lucida Console,monospace;font-size:1.4rem;margin-bottom:2rem}.breakpoint-phone-small .article__podcast-file,.breakpoint-phone .article__podcast-file{font-size:1.1rem}.article__podcast-file a{color:#e44c38;text-decoration:none}.article-credits{font-family:Space mono,monaco,Consolas,Lucida Console,monospace;font-size:1.4rem}.breakpoint-phone-small .article-credits,.breakpoint-phone .article-credits{font-size:1.1rem;margin-bottom:3rem}.article-credits__row{margin-bottom:2rem}.breakpoint-phone-small .article-credits__row,.breakpoint-phone .article-credits__row{display:inline-block;margin-bottom:0;margin-right:2rem}.breakpoint-phone-small .article-credits__row:last-child,.breakpoint-phone .article-credits__row:last-child{margin-right:0}.article-credits__label{display:block;color:#999;margin-bottom:.5rem}.article-credits__anchor{text-decoration:none;margin-bottom:.2rem;display:block;color:#e44c38}.article-credits__anchor:hover{text-decoration:underline}.article-footer{font-family:Space mono,monaco,Consolas,Lucida Console,monospace;font-size:1.4rem;margin-left:auto;margin-right:auto;margin-top:8rem;width:65rem}.breakpoint-phone-small .article-footer,.breakpoint-phone .article-footer,.breakpoint-tablet-wide .article-footer,.breakpoint-tablet .article-footer{width:100%}.breakpoint-phone-small .article-footer,.breakpoint-phone .article-footer{font-size:1.1rem;margin-top:4rem}.article-footer__line{width:17rem;height:3px;background-color:#e44c38;margin:0 auto 8rem;display:block}.breakpoint-phone-small .article-footer__line,.breakpoint-phone .article-footer__line{margin-bottom:4rem;width:11rem}.article-footer__row{margin-bottom:2rem;display:-webkit-box;display:-ms-flexbox;display:flex}.article-footer__label{text-align:right;width:14rem;display:inline-block;margin-right:3rem;color:#999}.breakpoint-phone-small .article-footer__label,.breakpoint-phone .article-footer__label{margin-right:2rem;width:11rem}.article-footer__value{display:-webkit-box;display:-ms-flexbox;display:flex}.article-footer__value a{text-decoration:none;color:#e44c38}.article-footer__value a:hover{text-decoration:underline}.article-footer__category{margin-right:1rem}.article-footer__email-button a{height:20px;padding:2px 8px 0 6px;background-color:#666;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,sans-serif;color:#fff;font-size:1.1rem;font-weight:500;border-radius:3px;cursor:pointer;display:block}.article-footer__email-button i{padding-right:4px}.article-footer__email-button a:hover{text-decoration:none;background-color:#555}.article-footer__value-item{margin-right:1rem}.article-card{background-color:#fff;display:block;text-decoration:none;-webkit-transition:all .2s ease-out;-o-transition:all .2s ease-out;transition:all .2s ease-out;height:100%}.article-card__image{position:relative}.article-card__image img{display:block;width:100%}.article-card__credit{bottom:0;color:#fff;display:block;font-family:Space mono,monaco,Consolas,Lucida Console,monospace;font-size:1.1rem;left:0;padding:3rem 1rem .5rem;position:absolute;right:0;background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0,transparent),color-stop(100,rgba(0,0,0,.5)));background-image:-webkit-linear-gradient(top,transparent,rgba(0,0,0,.5));background-image:-webkit-gradient(linear,left top,left bottom,from(transparent),to(rgba(0,0,0,.5)));background-image:-o-linear-gradient(top,transparent 0,rgba(0,0,0,.5) 100%);background-image:linear-gradient(180deg,transparent 0,rgba(0,0,0,.5))}.article-card__label,.article-card__theme{font-family:Space mono,monaco,Consolas,Lucida Console,monospace;font-size:1.3rem}.article-card__theme{margin-bottom:2rem;display:block;color:#e44c38}.article-card__label{background-color:#666;border-radius:0 2px 2px 0;color:#fff;font-family:Space mono,monaco,Consolas,Lucida Console,monospace;font-size:1.3rem;left:0;padding:.5rem 1rem;position:absolute;top:1rem}.article-card__inner{padding:2.5rem 3rem}.article-card__title{color:#333;font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.8rem;font-weight:700;margin-bottom:1.5rem;-webkit-transition:color .2s ease-out;-o-transition:color .2s ease-out;transition:color .2s ease-out}.article-card--no-image .article-card__title{font-size:2.4rem;line-height:3.2rem;margin-bottom:5rem}.article-card__copy{color:#333;font-size:1.7rem;line-height:2.6rem;margin-bottom:2rem}.article-card__author{color:#999;font-family:Space mono,monaco,Consolas,Lucida Console,monospace;font-size:1.1rem;padding-bottom:1rem}.article-card__author:last-child{padding-bottom:0}.article-card__author span{color:#e44c38;text-decoration:none}.article-card:hover{-webkit-box-shadow:0 5px 80px 0 rgba(0,0,0,.03);box-shadow:0 5px 80px 0 rgba(0,0,0,.03)}.article-card:hover .article-card__title{color:auto}
+
+/* !Important required to overrule inline css */.article-card--no-image:hover .article-card__author,.article-card--no-image:hover .article-card__author span,.article-card--no-image:hover .article-card__theme,.article-card--no-image:hover .article-card__title{color:#333!important}.article-card--missed{background-color:transparent;text-align:center}.breakpoint-phone-small .article-card--missed,.breakpoint-phone .article-card--missed{margin-bottom:1rem}.article-card--missed:hover{-webkit-box-shadow:none;box-shadow:none}.article-card--feature{background-color:transparent}.article-card--feature .article-card__image{position:static}.article-card--feature .article-card__inner{background-color:#fff;margin-top:-13rem;position:relative;z-index:1}.breakpoint-phone .article-card--feature .article-card__inner,.breakpoint-tablet-wide .article-card--feature .article-card__inner,.breakpoint-tablet .article-card--feature .article-card__inner{margin-top:-6.5rem}.breakpoint-phone-small .article-card--feature .article-card__inner{margin-top:-3.5rem}.article-card--feature .article-card__title,.article-card--with-list .article-card__title{font-size:3rem;font-weight:700;line-height:3.7rem;margin-bottom:1.5rem}.breakpoint-phone-small .article-card--feature .article-card__title,.breakpoint-phone-small .article-card--with-list .article-card__title,.breakpoint-phone .article-card--feature .article-card__title,.breakpoint-phone .article-card--with-list .article-card__title,.breakpoint-tablet .article-card--feature .article-card__title,.breakpoint-tablet .article-card--with-list .article-card__title{font-size:1.8rem;line-height:25px}.breakpoint-phone-small .article-card--feature .article-card__copy,.breakpoint-phone-small .article-card--with-list .article-card__copy,.breakpoint-phone .article-card--feature .article-card__copy,.breakpoint-phone .article-card--with-list .article-card__copy,.breakpoint-tablet .article-card--feature .article-card__copy,.breakpoint-tablet .article-card--with-list .article-card__copy{font-size:1.4rem;line-height:2rem}.article-card--feature .article-card__label{border-radius:2px 2px 0 0;left:0;top:-2.8rem}.article-group--bottom-margin{margin-bottom:7rem}.breakpoint-phone-small .article-group--bottom-margin,.breakpoint-phone .article-group--bottom-margin,.breakpoint-tablet-wide .article-group--bottom-margin,.breakpoint-tablet .article-group--bottom-margin{margin-bottom:3.5rem}.article-group__heading{color:#333;font-family:Lato,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.8rem;font-weight:900;letter-spacing:.075em;margin-bottom:4rem;padding-bottom:1.5rem;position:relative;text-align:center;text-transform:uppercase}.article-group__heading a{color:#333;text-decoration:none}.article-group__theme-line{background-color:#e44c38;bottom:0;content:"";height:3px;left:0;margin:auto;position:absolute;right:0;width:6rem}.article-group--4-items .grid-col:nth-child(4n+1),.breakpoint-tablet-wide .article-group--4-items .grid-col:nth-child(odd),.breakpoint-tablet .article-group--4-items .grid-col:nth-child(odd){clear:left}.card-wrapper{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-flow:row;flex-flow:row;-ms-flex-wrap:wrap;flex-wrap:wrap}.card-cell{-webkit-box-flex:1;-ms-flex:1;flex:1;padding-right:30px;margin-bottom:30px}.breakpoint-phone-small .card-cell,.breakpoint-phone .card-cell,.breakpoint-tablet-wide .card-cell,.breakpoint-tablet .card-cell{padding-right:20px;margin-bottom:20px}.card-wrapper--4 .card-cell{-ms-flex-preferred-size:25%;flex-basis:25%;max-width:25%}.breakpoint-phone-small .card-wrapper--4 .card-cell,.breakpoint-phone .card-wrapper--4 .card-cell,.breakpoint-tablet-wide .card-wrapper--4 .card-cell,.breakpoint-tablet .card-wrapper--4 .card-cell{max-width:59rem}.card-wrapper--3 .card-cell{-ms-flex-preferred-size:33.33%;flex-basis:33.33%}.card-wrapper--2 .card-cell{-ms-flex-preferred-size:50%;flex-basis:50%}.breakpoint-phone-small .card-wrapper--2 .card-cell,.breakpoint-phone .card-wrapper--2 .card-cell{-ms-flex-preferred-size:100%;flex-basis:100%;margin-bottom:20px}.breakpoint-tablet-wide .card-wrapper--3 .card-cell,.breakpoint-tablet .card-wrapper--3 .card-cell{-ms-flex-preferred-size:33.33%;flex-basis:33.33%;margin-bottom:20px}.breakpoint-phone-small .card-wrapper--3 .card-cell,.breakpoint-phone .card-wrapper--3 .card-cell{-ms-flex-preferred-size:100%;flex-basis:100%;margin-bottom:20px}.breakpoint-tablet-wide .card-wrapper--4 .card-cell,.breakpoint-tablet .card-wrapper--4 .card-cell{-ms-flex-preferred-size:50%;flex-basis:50%;margin-bottom:20px}.breakpoint-phone-small .card-wrapper--4 .card-cell,.breakpoint-phone .card-wrapper--4 .card-cell{-ms-flex-preferred-size:100%;flex-basis:100%;margin-bottom:20px}.story-series__title{color:#333;font-size:1.8rem;font-weight:900;letter-spacing:.075em;margin-bottom:2rem;text-transform:uppercase}.story-series__link,.story-series__title{font-family:Lato,Helvetica Neue,Helvetica,Arial,sans-serif}.story-series__link{color:#e44c38;margin-bottom:4rem;text-decoration:none;display:inline-block}.story-series__link:hover{text-decoration:underline}.about-subscribe{background-color:#fff}.about{border-right:1px solid #eee;margin-bottom:3rem;margin-top:3rem;padding-bottom:3rem;padding-right:8rem;padding-top:3rem}.breakpoint-phone-small .about,.breakpoint-phone .about,.breakpoint-tablet-wide .about,.breakpoint-tablet .about{border-right:0;padding-right:0;text-align:center;margin-bottom:2rem}.about__heading{color:#333;font-family:Lato,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:2.4rem;font-weight:900;letter-spacing:.075em;margin-bottom:2.5rem;text-align:left;text-transform:uppercase}.breakpoint-phone-small .about__heading,.breakpoint-phone .about__heading,.breakpoint-tablet-wide .about__heading,.breakpoint-tablet .about__heading{text-align:center;font-size:1.8rem;margin-bottom:1.5rem}.about__copy{color:#333;font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.8rem;line-height:3rem;margin-bottom:3rem;text-align:left}.breakpoint-phone-small .about__copy,.breakpoint-phone .about__copy,.breakpoint-tablet-wide .about__copy,.breakpoint-tablet .about__copy{text-align:left;font-size:1.6rem;line-height:2.8rem}.about__copy a{color:#e44c38;text-decoration:none}.about__copy a:hover{text-decoration:underline}.about-staff-list{-webkit-column-count:2;column-count:2;-webkit-column-gap:0;column-gap:0;margin-bottom:3rem;position:relative;padding-top:3rem}.about-staff-list:before{background-color:#e44c38;top:0;content:"";height:3px;left:0;margin:auto;position:absolute;width:40px;width:4rem}.breakpoint-phone-small .about-staff-list,.breakpoint-phone .about-staff-list{-webkit-column-count:1;column-count:1}.about-staff-list li{color:#333;font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.4rem;margin-bottom:1.5rem}.breakpoint-phone-small .about-staff-list li,.breakpoint-phone .about-staff-list li,.breakpoint-tablet-wide .about-staff-list li,.breakpoint-tablet .about-staff-list li{text-align:left}.about-staff-list a{color:#e44c38}.about__button{border-radius:2px;border:1px solid #e44c38;color:#e44c38;display:inline-block;font-family:Space mono,monaco,Consolas,Lucida Console,monospace;font-size:1.3rem;padding:1.3rem 2rem;text-decoration:none}.subscribe{padding-top:6rem;text-align:center}.breakpoint-phone-small .subscribe,.breakpoint-phone .subscribe,.breakpoint-tablet-wide .subscribe,.breakpoint-tablet .subscribe{padding-top:0;margin-bottom:6rem}.subscribe__heading{color:#333;font-family:Lato,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.8rem;font-weight:900;letter-spacing:.075em;margin-bottom:2.5rem;padding-bottom:1rem;position:relative;text-transform:uppercase}.subscribe__heading:after{background-color:#e44c38;bottom:0;content:"";height:3px;left:0;margin:auto;position:absolute;right:0;width:40px;width:4rem}.subscribe__copy{color:#333;line-height:2.8rem;margin-bottom:2.5rem}.subscribe__copy,.subscribe__form{font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.6rem}.subscribe__form{margin-bottom:2rem}.subscribe__input{border-radius:2px;border:1px solid #ccc;display:block;margin-bottom:1rem;padding:1rem;text-align:center;width:100%;font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.6rem;outline:none}.subscribe__input::-webkit-input-placeholder{font-size:1.6rem;text-align:center}.subscribe__input::-ms-input-placeholder{font-size:1.6rem;text-align:center}.subscribe__input::placeholder{font-size:1.6rem;text-align:center}.subscribe__button{background-color:#e44c38;border-radius:2px;color:#fff;display:block;margin-bottom:2rem;padding-bottom:1rem;padding-top:1rem;width:100%;-webkit-transition:background-color .2s ease-out;-o-transition:background-color .2s ease-out;transition:background-color .2s ease-out;font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.6rem;border:none;outline:none}.subscribe__button:hover{background-color:#d9422e;cursor:pointer}.subscribe__footnote{color:#333;font-family:Space mono,monaco,Consolas,Lucida Console,monospace;font-size:1.3rem}.subscribe__footnote a{color:#333;text-decoration:underline}.copy h1{font-size:2.4rem;font-weight:900;padding-bottom:2rem;text-transform:uppercase;letter-spacing:.05em}.copy h1,.copy h2{color:#333;font-family:Lato,Helvetica Neue,Helvetica,Arial,sans-serif;line-height:1.3}.copy h2{font-size:2rem;font-weight:700;padding-bottom:1.6rem}.copy h3{font-family:Lato,Helvetica Neue,Helvetica,Arial,sans-serif;font-weight:700;padding-bottom:1.7rem}.breakpoint-phone-small .copy h1,.breakpoint-phone .copy h1{font-size:1.8rem;padding-bottom:1.5rem}.breakpoint-phone-small .copy h2,.breakpoint-phone-small .copy h3,.breakpoint-phone .copy h2,.breakpoint-phone .copy h3{font-size:1.8rem;padding-bottom:1rem}.copy p+h1,.copy p+h2,.copy p+h3{padding-top:2rem}.breakpoint-phone-small .copy p+h1,.breakpoint-phone-small .copy p+h2,.breakpoint-phone-small .copy p+h3,.breakpoint-phone .copy p+h1,.breakpoint-phone .copy p+h2,.breakpoint-phone .copy p+h3{padding-top:1rem}.copy p{font-size:1.7rem;line-height:1.6;padding-bottom:1.6rem}.copy p:last-of-type{padding-bottom:0}.breakpoint-tablet-wide .copy p,.breakpoint-tablet .copy p{font-size:1.6rem}.breakpoint-phone-small .copy p,.breakpoint-phone .copy p{font-size:1.4rem}.copy blockquote{padding-left:5rem;padding-top:2.6rem;padding-bottom:4rem}.copy blockquote.display-right{float:right;padding-bottom:3rem;padding-left:3.6rem;width:30rem}.copy blockquote.display-left{float:left;padding-bottom:3rem;padding-left:0;padding-right:3.6rem;width:30rem}.breakpoint-phone-small .copy blockquote,.breakpoint-phone .copy blockquote{float:none;padding:1.2rem 0 2.6rem;width:100%}.copy blockquote p{color:#e44c38;line-height:1.5;font-size:2rem}.breakpoint-phone-small .copy blockquote p,.breakpoint-phone .copy blockquote p{font-size:1.8rem}.copy strong{font-weight:700}.copy em{font-style:italic}.copy ol,.copy ul{font-size:1.7rem;line-height:1.6;padding-left:1.9rem;padding-bottom:2rem;padding-top:2rem}.breakpoint-tablet-wide .copy ol,.breakpoint-tablet-wide .copy ul,.breakpoint-tablet .copy ol,.breakpoint-tablet .copy ul{font-size:1.6rem}.breakpoint-phone-small .copy ol,.breakpoint-phone-small .copy ul,.breakpoint-phone .copy ol,.breakpoint-phone .copy ul{font-size:1.4rem}.copy ul li{list-style:disc}.copy ol li,.copy ul li{display:list-item;padding-bottom:1.8rem}.copy ol li{list-style:decimal}.copy a{text-decoration:underline;word-wrap:break-word;word-break:break-word;-webkit-hyphens:auto;-ms-hyphens:auto;hyphens:auto;color:#e44c38}.copy img{display:block;height:auto;max-width:100%}.copy .figure{padding-top:2rem;padding-bottom:3rem}.copy .figure--align-right{padding-top:.8rem;padding-bottom:3rem;padding-left:3rem;max-width:60%;float:right}.copy .figure--align-left{padding-top:.8rem;padding-bottom:3rem;padding-right:3rem;max-width:60%;float:left}.breakpoint-phone-small .copy .figure{padding:1.2rem 0 2.6rem;float:none;max-width:100%;width:100%}.copy .figure__anchor{display:block}.copy .figure img{display:block;height:auto;width:100%;max-width:100%}.copy .figure--gallery{margin-top:3rem;margin-bottom:3rem}.copy p.figure__caption{color:#333;font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.2rem;padding-top:1rem}.figure--tweet{float:right;max-width:30rem;margin-left:3rem}.masthead-dropdown__wrapper{display:none;padding-top:1.5rem;position:absolute;left:-2rem;z-index:999}.breakpoint-phone-small .masthead-dropdown__wrapper,.breakpoint-phone .masthead-dropdown__wrapper,.breakpoint-tablet-wide .masthead-dropdown__wrapper,.breakpoint-tablet .masthead-dropdown__wrapper{display:block;position:static;padding-top:0;-webkit-transform:translateY(0);-ms-transform:translateY(0);transform:translateY(0)}.masthead-dropdown:hover .masthead-dropdown__wrapper{display:block}.masthead-dropdown__content{background-color:#fff;-webkit-box-shadow:0 5px 10px rgba(0,0,0,.1);box-shadow:0 5px 10px rgba(0,0,0,.1);padding:3rem;position:relative;text-align:left;min-width:20rem}.breakpoint-phone-small .masthead-dropdown__content,.breakpoint-phone .masthead-dropdown__content,.breakpoint-tablet-wide .masthead-dropdown__content,.breakpoint-tablet .masthead-dropdown__content{padding:1rem 2rem 0;-webkit-box-shadow:none;box-shadow:none}.masthead-dropdown__content:after,.masthead-dropdown__content:before{border-bottom:6px solid #fff;border-left:6px solid transparent;border-right:6px solid transparent;content:"";position:absolute;left:40px;left:4rem;top:-6px}.breakpoint-phone-small .masthead-dropdown__content:after,.breakpoint-phone-small .masthead-dropdown__content:before,.breakpoint-phone .masthead-dropdown__content:after,.breakpoint-phone .masthead-dropdown__content:before,.breakpoint-tablet-wide .masthead-dropdown__content:after,.breakpoint-tablet-wide .masthead-dropdown__content:before,.breakpoint-tablet .masthead-dropdown__content:after,.breakpoint-tablet .masthead-dropdown__content:before{display:none}.masthead-dropdown__list{font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.4rem}.breakpoint-phone-small .masthead-dropdown__list,.breakpoint-phone .masthead-dropdown__list,.breakpoint-tablet-wide .masthead-dropdown__list,.breakpoint-tablet .masthead-dropdown__list{font-size:1.2rem}.masthead-dropdown__list li{margin-bottom:1rem}.breakpoint-phone-small .masthead-dropdown__list li,.breakpoint-phone .masthead-dropdown__list li,.breakpoint-tablet-wide .masthead-dropdown__list li,.breakpoint-tablet .masthead-dropdown__list li{display:inline-block;margin-right:1rem;margin-bottom:.5rem}.masthead-dropdown__list li:last-child{margin-bottom:0}.masthead-dropdown__list li a{text-decoration:none;color:#666;display:inline-block}.masthead-dropdown__list li a:hover{color:#333}.footer{background-color:#333;padding-bottom:5rem;padding-top:5rem;color:#fff;font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.4rem}.breakpoint-phone-small .footer,.breakpoint-phone .footer,.breakpoint-tablet-wide .footer,.breakpoint-tablet .footer{padding-bottom:3rem}.footer a{color:#fff;text-decoration:none}.footer a:hover{text-decoration:underline}.footer__logo{height:6rem;width:30rem;display:block}.breakpoint-phone-small .footer__logo,.breakpoint-phone .footer__logo{margin-bottom:4rem;margin-left:auto;margin-right:auto}.footer__logo img{width:100%}.footer__nav{-webkit-column-count:3;column-count:3;-webkit-column-gap:0;column-gap:0}.breakpoint-phone-small .footer__nav,.breakpoint-phone .footer__nav{-webkit-column-count:2;column-count:2;-webkit-column-gap:0;column-gap:0;text-align:center}.footer__nav-item{margin-bottom:.5rem}.footer__nav-item a{text-decoration:none;color:#fff}.footer__nav-item a:hover{text-decoration:underline}.breakpoint-desktop .footer-social,.breakpoint-widescreen .footer-social{text-align:right}.breakpoint-phone-small .footer-social,.breakpoint-phone .footer-social{text-align:center}.footer-social__list-item{display:inline-block;margin-right:.5rem}.footer-social__list-item:last-child{margin-right:0}.footer-social__anchor{color:#fff;display:block;font-size:1.8rem;padding:1rem;-webkit-transition:color .2s ease-out;-o-transition:color .2s ease-out;transition:color .2s ease-out}.footer__details{font-size:1.2rem;margin-top:2rem;color:#ccc}.footer__details span{margin-right:2rem}.breakpoint-phone-small .footer__details,.breakpoint-phone .footer__details{text-align:center}.breakpoint-phone-small .footer__details span,.breakpoint-phone .footer__details span{margin-right:0;display:block;margin-bottom:.5rem}.grid-wrapper{padding-left:3rem;margin-left:auto;margin-right:auto;max-width:123rem;width:100%}.breakpoint-phone-small .grid-wrapper,.breakpoint-phone .grid-wrapper,.breakpoint-tablet-wide .grid-wrapper,.breakpoint-tablet .grid-wrapper{padding-left:2rem}.grid-wrapper .grid-wrapper{margin-left:-3rem;max-width:calc(100% + 6rem);width:calc(100% + 6rem)}.breakpoint-phone-small .grid-wrapper .grid-wrapper,.breakpoint-phone .grid-wrapper .grid-wrapper,.breakpoint-tablet-wide .grid-wrapper .grid-wrapper,.breakpoint-tablet .grid-wrapper .grid-wrapper{margin-left:-2rem;max-width:calc(100% + 4rem);width:calc(100% + 4rem)}.grid-col{float:left;padding-right:3rem;margin-bottom:3rem;width:8.33333%}.breakpoint-phone-small .grid-col,.breakpoint-phone .grid-col,.breakpoint-tablet-wide .grid-col,.breakpoint-tablet .grid-col{padding-right:2rem;margin-bottom:2rem}.breakpoint-phone-small .grid-col--bottom-flush,.breakpoint-phone .grid-col--bottom-flush,.breakpoint-tablet-wide .grid-col--bottom-flush,.breakpoint-tablet .grid-col--bottom-flush,.grid-col--bottom-flush{margin-bottom:0}.grid-col--1{width:8.33333%}.grid-col--2{width:16.66667%}.grid-col--3{width:25%}.grid-col--4{width:33.33333%}.grid-col--5{width:41.66667%}.grid-col--6{width:50%}.grid-col--7{width:58.33333%}.grid-col--8{width:66.66667%}.grid-col--9{width:75%}.grid-col--10{width:83.33333%}.grid-col--11{width:91.66667%}.grid-col--12{width:100%}.grid-col--push-1{margin-left:8.33333%}.grid-col--push-2{margin-left:16.66667%}.grid-col--push-3{margin-left:25%}.grid-col--push-4{margin-left:33.33333%}.grid-col--push-5{margin-left:41.66667%}.grid-col--push-6{margin-left:50%}.grid-col--push-7{margin-left:58.33333%}.grid-col--push-8{margin-left:66.66667%}.grid-col--push-9{margin-left:75%}.grid-col--push-10{margin-left:83.33333%}.grid-col--push-11{margin-left:91.66667%}.breakpoint-tablet-wide .tb-grid-col--push-0,.breakpoint-tablet .tb-grid-col--push-0{margin-left:0}.breakpoint-tablet-wide .tb-grid-col--1,.breakpoint-tablet .tb-grid-col--1{width:8.33333%}.breakpoint-tablet-wide .tb-grid-col--push-1,.breakpoint-tablet .tb-grid-col--push-1{margin-left:8.33333%}.breakpoint-tablet-wide .tb-grid-col--2,.breakpoint-tablet .tb-grid-col--2{width:16.66667%}.breakpoint-tablet-wide .tb-grid-col--push-2,.breakpoint-tablet .tb-grid-col--push-2{margin-left:16.66667%}.breakpoint-tablet-wide .tb-grid-col--3,.breakpoint-tablet .tb-grid-col--3{width:25%}.breakpoint-tablet-wide .tb-grid-col--push-3,.breakpoint-tablet .tb-grid-col--push-3{margin-left:25%}.breakpoint-tablet-wide .tb-grid-col--4,.breakpoint-tablet .tb-grid-col--4{width:33.33333%}.breakpoint-tablet-wide .tb-grid-col--push-4,.breakpoint-tablet .tb-grid-col--push-4{margin-left:33.33333%}.breakpoint-tablet-wide .tb-grid-col--5,.breakpoint-tablet .tb-grid-col--5{width:41.66667%}.breakpoint-tablet-wide .tb-grid-col--push-5,.breakpoint-tablet .tb-grid-col--push-5{margin-left:41.66667%}.breakpoint-tablet-wide .tb-grid-col--6,.breakpoint-tablet .tb-grid-col--6{width:50%}.breakpoint-tablet-wide .tb-grid-col--push-6,.breakpoint-tablet .tb-grid-col--push-6{margin-left:50%}.breakpoint-tablet-wide .tb-grid-col--7,.breakpoint-tablet .tb-grid-col--7{width:58.33333%}.breakpoint-tablet-wide .tb-grid-col--push-7,.breakpoint-tablet .tb-grid-col--push-7{margin-left:58.33333%}.breakpoint-tablet-wide .tb-grid-col--8,.breakpoint-tablet .tb-grid-col--8{width:66.66667%}.breakpoint-tablet-wide .tb-grid-col--push-8,.breakpoint-tablet .tb-grid-col--push-8{margin-left:66.66667%}.breakpoint-tablet-wide .tb-grid-col--9,.breakpoint-tablet .tb-grid-col--9{width:75%}.breakpoint-tablet-wide .tb-grid-col--push-9,.breakpoint-tablet .tb-grid-col--push-9{margin-left:75%}.breakpoint-tablet-wide .tb-grid-col--10,.breakpoint-tablet .tb-grid-col--10{width:83.33333%}.breakpoint-tablet-wide .tb-grid-col--push-10,.breakpoint-tablet .tb-grid-col--push-10{margin-left:83.33333%}.breakpoint-tablet-wide .tb-grid-col--11,.breakpoint-tablet .tb-grid-col--11{width:91.66667%}.breakpoint-tablet-wide .tb-grid-col--push-11,.breakpoint-tablet .tb-grid-col--push-11{margin-left:91.66667%}.breakpoint-tablet-wide .tb-grid-col--12,.breakpoint-tablet .tb-grid-col--12{width:100%}.breakpoint-phone-small .ph-grid-col--push-0,.breakpoint-phone .ph-grid-col--push-0{margin-left:0}.breakpoint-phone-small .ph-grid-col--1,.breakpoint-phone .ph-grid-col--1{width:8.33333%}.breakpoint-phone-small .ph-grid-col--push-1,.breakpoint-phone .ph-grid-col--push-1{margin-left:8.33333%}.breakpoint-phone-small .ph-grid-col--2,.breakpoint-phone .ph-grid-col--2{width:16.66667%}.breakpoint-phone-small .ph-grid-col--push-2,.breakpoint-phone .ph-grid-col--push-2{margin-left:16.66667%}.breakpoint-phone-small .ph-grid-col--3,.breakpoint-phone .ph-grid-col--3{width:25%}.breakpoint-phone-small .ph-grid-col--push-3,.breakpoint-phone .ph-grid-col--push-3{margin-left:25%}.breakpoint-phone-small .ph-grid-col--4,.breakpoint-phone .ph-grid-col--4{width:33.33333%}.breakpoint-phone-small .ph-grid-col--push-4,.breakpoint-phone .ph-grid-col--push-4{margin-left:33.33333%}.breakpoint-phone-small .ph-grid-col--5,.breakpoint-phone .ph-grid-col--5{width:41.66667%}.breakpoint-phone-small .ph-grid-col--push-5,.breakpoint-phone .ph-grid-col--push-5{margin-left:41.66667%}.breakpoint-phone-small .ph-grid-col--6,.breakpoint-phone .ph-grid-col--6{width:50%}.breakpoint-phone-small .ph-grid-col--push-6,.breakpoint-phone .ph-grid-col--push-6{margin-left:50%}.breakpoint-phone-small .ph-grid-col--7,.breakpoint-phone .ph-grid-col--7{width:58.33333%}.breakpoint-phone-small .ph-grid-col--push-7,.breakpoint-phone .ph-grid-col--push-7{margin-left:58.33333%}.breakpoint-phone .ph-grid-col--8,.breakpoint-tablet .ph-grid-col--8{width:66.66667%}.breakpoint-phone-small .ph-grid-col--push-8,.breakpoint-phone .ph-grid-col--push-8{margin-left:66.66667%}.breakpoint-phone-small .ph-grid-col--9,.breakpoint-phone .ph-grid-col--9{width:75%}.breakpoint-phone-small .ph-grid-col--push-9,.breakpoint-phone .ph-grid-col--push-9{margin-left:75%}.breakpoint-phone-small .ph-grid-col--10,.breakpoint-phone .ph-grid-col--10{width:83.33333%}.breakpoint-phone-small .ph-grid-col--push-10,.breakpoint-phone .ph-grid-col--push-10{margin-left:83.33333%}.breakpoint-phone-small .ph-grid-col--11,.breakpoint-phone .ph-grid-col--11{width:91.66667%}.breakpoint-phone-small .ph-grid-col--push-11,.breakpoint-phone .ph-grid-col--push-11{margin-left:91.66667%}.breakpoint-phone-small .ph-grid-col--12,.breakpoint-phone .ph-grid-col--12{width:100%}.home-sidebar{background-color:#fff;padding:3rem;text-align:center;height:100%}.home-sidebar__heading{color:#333;font-family:Lato,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.8rem;font-weight:900;letter-spacing:.075em;margin-bottom:4rem;padding-bottom:1rem;position:relative;text-align:center;text-transform:uppercase}.home-sidebar__theme-line{background-color:#e44c38;bottom:0;content:"";height:3px;left:0;margin:auto;position:absolute;right:0;width:6rem}.home-sidebar__copy{color:#333;display:block;font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;margin-bottom:4rem}.home-sidebar__copy,.home-sidebar__copy p{font-size:1.4rem;line-height:2rem}.home-sidebar__list li{margin-bottom:4rem}.home-sidebar__list li:last-child{margin-bottom:1rem}.breakpoint-desktop .article-plus-list-row,.breakpoint-widescreen .article-plus-list-row{display:-webkit-box;display:-ms-flexbox;display:flex;height:100%}.article-plus-list-row-item{height:100%}@font-face{font-family:FontAwesome;src:url(/wp-content/themes/the-citizen/assets/public/icons/fontawesome.woff2) format("woff2"),url(/wp-content/themes/the-citizen/assets/public/icons/fontawesome.woff) format("woff");font-weight:400;font-style:normal}.fa{display:inline-block;font:normal normal normal 14px/1 FontAwesome;font-size:inherit;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.fa-search:before{content:"\F002"}.fa-close:before,.fa-remove:before,.fa-times:before{content:"\F00D"}.fa-twitter:before{content:"\F099"}.fa-facebook-f:before,.fa-facebook:before{content:"\F09A"}.fa-globe:before{content:"\F0AC"}.fa-bars:before,.fa-navicon:before,.fa-reorder:before{content:"\F0C9"}.fa-envelope:before{content:"\F0E0"}.fa-angle-up:before{content:"\F106"}.fa-angle-down:before{content:"\F107"}.fa-facebook-official:before{content:"\F230"}.masthead{background-color:#fff}.masthead__inner{color:#fff;background-color:#e44c38;text-align:center;padding:3rem 2rem}.breakpoint-phone-small .masthead__inner,.breakpoint-phone .masthead__inner,.breakpoint-tablet-wide .masthead__inner,.breakpoint-tablet .masthead__inner{padding-top:1rem;padding-bottom:1rem}.masthead__citizen-logo{display:inline-block;margin-bottom:1rem;height:6rem;width:29rem;padding:1rem}.masthead__citizen-logo img{width:100%}.breakpoint-phone-small .masthead__citizen-logo,.breakpoint-phone .masthead__citizen-logo,.breakpoint-tablet-wide .masthead__citizen-logo,.breakpoint-tablet .masthead__citizen-logo{height:4rem;width:14.5rem;margin-bottom:0}.masthead__tagline{font-family:Lato,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.2rem;text-transform:uppercase;letter-spacing:.1em}.breakpoint-phone-small .masthead__tagline,.breakpoint-phone .masthead__tagline,.breakpoint-tablet-wide .masthead__tagline,.breakpoint-tablet .masthead__tagline{display:none}.navigation{border-bottom:1px solid #ccc;position:relative;text-align:center}.breakpoint-phone-small .navigation,.breakpoint-phone .navigation,.breakpoint-tablet-wide .navigation,.breakpoint-tablet .navigation{background-color:#fff;left:0;position:absolute;right:0;text-align:left;z-index:999}.breakpoint-phone-small .navigation-mobile-wrapper,.breakpoint-phone .navigation-mobile-wrapper,.breakpoint-tablet-wide .navigation-mobile-wrapper,.breakpoint-tablet .navigation-mobile-wrapper{max-height:0;overflow:hidden;-webkit-transition:max-height .1s ease-out;-o-transition:max-height .1s ease-out;transition:max-height .1s ease-out}.breakpoint-phone-small .navigation-mobile-wrapper--open,.breakpoint-phone .navigation-mobile-wrapper--open,.breakpoint-tablet-wide .navigation-mobile-wrapper--open,.breakpoint-tablet .navigation-mobile-wrapper--open{max-height:2500px;-webkit-transition:max-height .1s ease-in;-o-transition:max-height .1s ease-in;transition:max-height .1s ease-in}.navigation__toggle-close,.navigation__toggle-menu{display:none}.breakpoint-phone-small .navigation__toggle-menu,.breakpoint-phone .navigation__toggle-menu,.breakpoint-tablet-wide .navigation__toggle-menu,.breakpoint-tablet .navigation__toggle-menu{display:block}.navigation__toggle--active .navigation__toggle-menu{display:none}.navigation__toggle--active .navigation__toggle-close{display:block}.navigation__toggle--active{border-bottom:1px solid #ccc}.navigation__list{display:inline-block}.breakpoint-phone-small .navigation__list,.breakpoint-phone .navigation__list,.breakpoint-tablet-wide .navigation__list,.breakpoint-tablet .navigation__list{display:block;margin-top:1rem}.navigation__list-item{display:inline-block;position:relative;margin-right:3rem}.breakpoint-desktop-small .navigation__list-item{margin-right:2rem}.breakpoint-phone-small .navigation__list-item,.breakpoint-phone .navigation__list-item,.breakpoint-tablet-wide .navigation__list-item,.breakpoint-tablet .navigation__list-item{display:block;margin-bottom:1rem;width:100%}.navigation__list-item:last-child{margin-bottom:0}.navigation__anchor{color:#333;display:block;font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.5rem;padding-bottom:1.4rem;padding-top:1.4rem;position:relative;text-decoration:none;-webkit-transition:color .1s ease-in;-o-transition:color .1s ease-in;transition:color .1s ease-in}.breakpoint-phone-small .navigation__anchor,.breakpoint-phone .navigation__anchor,.breakpoint-tablet-wide .navigation__anchor,.breakpoint-tablet .navigation__anchor{font-size:1.3rem;font-weight:700;margin-left:2rem;margin-right:2rem;padding:1rem 0 .3rem;display:inline-block}.navigation__anchor--search{border:none;font-size:1.5rem}.navigation__anchor-border{background-color:#e44c38;bottom:-1px;height:0;left:0;position:absolute;right:0;-webkit-transition:height .1s ease-in;-o-transition:height .1s ease-in;transition:height .1s ease-in}.navigation__anchor--active .navigation__anchor-border,.navigation__anchor:hover .navigation__anchor-border{height:4px}.breakpoint-phone-small .navigation__anchor-border,.breakpoint-phone .navigation__anchor-border,.breakpoint-tablet-wide .navigation__anchor-border,.breakpoint-tablet .navigation__anchor-border{left:0;right:0;bottom:0;height:2px}.breakpoint-phone-small .navigation__anchor--active .navigation__anchor-border,.breakpoint-phone-small .navigation__anchor:hover .navigation__anchor-border,.breakpoint-phone .navigation__anchor--active .navigation__anchor-border,.breakpoint-phone .navigation__anchor:hover .navigation__anchor-border,.breakpoint-tablet-wide .navigation__anchor--active .navigation__anchor-border,.breakpoint-tablet-wide .navigation__anchor:hover .navigation__anchor-border,.breakpoint-tablet .navigation__anchor--active .navigation__anchor-border,.breakpoint-tablet .navigation__anchor:hover .navigation__anchor-border{height:2px}.masthead-social{display:inline-block;position:absolute;right:2rem}.breakpoint-phone-small .masthead-social,.breakpoint-phone .masthead-social,.breakpoint-tablet-wide .masthead-social,.breakpoint-tablet .masthead-social{position:static;margin-left:1rem}.masthead-social__list-item{display:inline-block;margin-right:.5rem}.masthead-social__list-item:last-child{margin-right:0}.masthead-social__anchor{font-size:1.5rem;padding:1.4rem 1rem;display:block;color:#999;-webkit-transition:color .2s ease-out;-o-transition:color .2s ease-out;transition:color .2s ease-out}.breakpoint-phone-small .masthead-social__anchor,.breakpoint-phone .masthead-social__anchor,.breakpoint-tablet-wide .masthead-social__anchor,.breakpoint-tablet .masthead-social__anchor{font-size:2rem}.masthead-social__anchor--twitter:hover{color:#1da1f2}.masthead-social__anchor--facebook:hover{color:#3a599d}.navigation__toggle{display:none;font-size:1.5rem;margin-left:auto;margin-right:auto;font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;color:#333;padding:1rem;width:100%;outline:none}.breakpoint-phone-small .navigation__toggle,.breakpoint-phone .navigation__toggle,.breakpoint-tablet-wide .navigation__toggle,.breakpoint-tablet .navigation__toggle{display:block}.oembed{padding-top:2rem;padding-bottom:3rem}.breakpoint-phone-small .oembed,.breakpoint-phone .oembed{padding-top:1.2rem;padding-bottom:2.6rem}.oembed--twitter{float:right;padding-top:0;padding-bottom:3rem;padding-left:3rem;width:30rem}.breakpoint-phone-small .oembed--twitter,.breakpoint-phone .oembed--twitter{padding-left:0;float:none;width:100%}.responsive-embed{position:relative;height:0;padding-bottom:56.25%;max-width:100%;z-index:1}.responsive-embed iframe,.responsive-embed object,.responsive-embed video{position:absolute;top:0;left:0;bottom:0;right:0;width:100%;height:100%}.page-header{margin-bottom:6rem}.breakpoint-tablet-wide .page-header,.breakpoint-tablet .page-header{margin-bottom:4rem}.breakpoint-phone-small .page-header,.breakpoint-phone .page-header{margin-bottom:2rem}.page-header__title{font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:5.4rem;font-weight:700;line-height:6.3rem;color:#333;margin-bottom:3rem;text-align:center}.breakpoint-tablet-wide .page-header__title,.breakpoint-tablet .page-header__title{font-size:3.4rem;line-height:4.4rem;margin-bottom:3rem}.breakpoint-phone-small .page-header__title,.breakpoint-phone .page-header__title{font-size:2.4rem;line-height:3.2rem;margin-bottom:1rem}.page-header__description{font-size:2rem;text-align:center}.breakpoint-phone-small .page-header__description,.breakpoint-phone .page-header__description{font-size:1.6rem}.pagination{text-align:center;padding-right:3rem}.breakpoint-phone-small .pagination,.breakpoint-phone .pagination,.breakpoint-tablet-wide .pagination,.breakpoint-tablet .pagination{padding-right:2rem}.pagination__number,.pagination__numbers{display:inline-block}.pagination__number{font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;font-weight:700;margin-right:.5rem}.pagination__number a,.pagination__number span{color:#333;display:block;text-decoration:none;text-align:center;background-color:transparent;border-radius:3px;padding:.9rem 1rem;min-width:4rem}.pagination__number span.current{color:#fff;background-color:#e44c38}.pagination__number a:hover{color:#e44c38}.people__person{text-decoration:none;color:#333;-webkit-transition:color .2s ease-out;-o-transition:color .2s ease-out;transition:color .2s ease-out;display:block}.people__person:hover{color:#e44c38}.people__person-image{display:block;width:100%;background-color:grey;margin-bottom:1rem}.people__person-image img{width:100%;margin-bottom:0;display:block}.people__person-title{font-size:1.4rem;font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;font-weight:700;display:block;min-height:5rem}.person-title{color:#333;font-family:Lato,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.8rem;font-weight:900;letter-spacing:.075em;margin-bottom:3rem;position:relative;text-align:center;text-transform:uppercase}.person__image{text-align:center;margin-bottom:2rem}.person__image img{display:inline-block}.person__image-credit{color:#333;font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.2rem;padding-top:.5rem;display:block}.person__copy{margin-bottom:3rem}.person__meta{text-align:center}.person__meta a{text-decoration:none;margin-right:2rem;color:#666}.person__meta a:hover{color:#e44c38}.person__meta a:last-child{margin-right:0}.podcasts-list-item__anchor{background-color:#fff;margin-bottom:3rem;display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-line-pack:center;align-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;text-decoration:none}.breakpoint-phone-small .podcasts-list-item__anchor,.breakpoint-phone .podcasts-list-item__anchor,.breakpoint-tablet .podcasts-list-item__anchor{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}.podcasts-list-item__image{display:block;width:17rem;height:17rem}.breakpoint-phone-small .podcasts-list-item__image,.breakpoint-phone .podcasts-list-item__image,.breakpoint-tablet .podcasts-list-item__image{-ms-flex-preferred-size:100%;flex-basis:100%;width:100%;height:auto}.podcasts-list-item__text{padding:2rem 4rem}.breakpoint-phone-small .podcasts-list-item__text,.breakpoint-phone .podcasts-list-item__text,.breakpoint-tablet .podcasts-list-item__text{padding:2rem}.podcasts-list-item__title{font-size:1.8rem;font-weight:700;display:block;color:#333;margin-bottom:1rem;font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif}.podcasts-list-item__description{color:#333}.podcast-header{padding-top:9rem;padding-bottom:3.5rem;margin-bottom:6rem}.breakpoint-tablet-wide .podcast-header,.breakpoint-tablet .podcast-header{padding-bottom:2rem;margin-bottom:4rem}.breakpoint-phone-small .podcast-header,.breakpoint-phone .podcast-header{padding-bottom:1rem;margin-bottom:2rem}.podcast-header__title{font-size:5.4rem;font-weight:700;display:block;color:#fff;font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif}.breakpoint-tablet-wide .podcast-header__title{font-size:4rem}.breakpoint-phone-small .podcast-header__title,.breakpoint-phone .podcast-header__title,.breakpoint-tablet .podcast-header__title{font-size:3rem}.breakpoint-phone-small .podcast-header__title,.breakpoint-phone .podcast-header__title{margin-bottom:3rem;text-align:center;font-size:2.5rem}.podcast__image-wrapper{width:100%;position:relative}.podcast__image{width:100%;direction:block;top:0;position:absolute}.breakpoint-phone-small .podcast__image,.breakpoint-phone .podcast__image{position:static}.podcast-episodes-heading{color:#333;display:block;font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:3rem;font-weight:700;margin-bottom:3rem}.breakpoint-phone-small .podcast-episodes-heading,.breakpoint-phone .podcast-episodes-heading,.breakpoint-tablet-wide .podcast-episodes-heading,.breakpoint-tablet .podcast-episodes-heading{font-size:2.4rem;margin-bottom:2rem}.podcast-episode{border-top:1px solid #d4d4d4;padding-top:5rem;padding-bottom:5rem}.breakpoint-phone-small .podcast-episode,.breakpoint-phone .podcast-episode{padding-top:3rem;padding-bottom:3rem}.podcast-episode__title{color:#333;display:block;font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.8rem;font-weight:700;margin-bottom:1rem}.podcast-episode__length{color:#666;font-family:Space mono,monaco,Consolas,Lucida Console,monospace;font-size:1.4rem}.podcast-episode__asset{margin-bottom:2rem;height:50rem;width:auto}.breakpoint-tablet-wide .podcast-episode__asset,.breakpoint-tablet .podcast-episode__asset{height:40rem}.breakpoint-phone-small .podcast-episode__asset,.breakpoint-phone .podcast-episode__asset{height:30rem;margin-top:2rem}.podcast-episode__asset iframe{width:100%;height:100%}.podcast-episode__toggle{font-weight:700;margin-top:3rem}.podcast-episode__toggle .off{display:none}.podcast-episode__toggle--active .off{display:block}.podcast-episode__toggle--active .on{display:none}.podcast-episode__show-notes{display:none;margin-top:2rem}.podcast-episode__show-notes--open{display:block}.search-form{font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.8rem;margin-bottom:8rem}.breakpoint-phone-small .search-form,.breakpoint-phone .search-form{margin-bottom:4rem}.field{display:-webkit-box;display:-ms-flexbox;display:flex}.search-form__input{border-radius:2px;border:1px solid #ccc;-webkit-box-flex:1;-ms-flex:1;flex:1;font-size:1.8rem;margin-right:1.5rem;padding:2rem}.breakpoint-phone-small .search-form__input,.breakpoint-phone .search-form__input{font-size:1.4rem;padding:1rem;margin-right:1rem}.search-form__button{background-color:#333;border-radius:2px;border:none;color:#fff;font-size:1.8rem;font-weight:700;padding:2rem 6rem}.search-form__button:hover{background-color:#111}.breakpoint-phone-small .search-form__button,.breakpoint-phone .search-form__button{font-size:1.4rem;padding:1rem 2rem}.search-results__heading{color:#333;font-family:Lato,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.8rem;font-weight:900;letter-spacing:.075em;text-transform:uppercase;text-align:center;margin-bottom:8rem}.breakpoint-phone-small .search-results__heading,.breakpoint-phone .search-results__heading{margin-bottom:4rem}.search-results__list li{border-top:1px solid #ccc;position:relative}.breakpoint-phone-small .search-results__list li,.breakpoint-phone .search-results__list li,.search-results__list li{padding-top:2.5rem;padding-bottom:2.5rem}.search-results__list li:first-child{border-top:none;padding-top:0}.search-results__type{color:#333;font-family:Space mono,monaco,Consolas,Lucida Console,monospace;font-size:1.3rem;text-transform:capitalize;margin-bottom:1rem;display:block}.search-results__item-body{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.breakpoint-phone-small .search-results__item-body,.breakpoint-phone .search-results__item-body{display:inline}.search-results__image{border-radius:2px;float:left;height:5.5rem;margin-right:2rem;width:5.5rem}.search-results__item-title{color:#333;font-family:Lato,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.8rem;font-weight:900;text-decoration:none}.breakpoint-phone-small .search-results__item-title,.breakpoint-phone .search-results__item-title{width:100%;display:block;margin-bottom:1rem;padding-right:0}.search-results__item-footer{font-size:1.3rem;font-family:Space mono,monaco,Consolas,Lucida Console,monospace;margin-top:1rem}.search-results__item-footer a{color:#333}.search-results__footer-item{display:inline-block;margin-right:1rem}.search-results__footer-item:last-child{margin-right:0}.subscribe-section{background-color:#e44c38;margin-bottom:7rem;padding:5rem}.breakpoint-phone-small .subscribe-section,.breakpoint-phone .subscribe-section,.breakpoint-tablet .subscribe-section{margin-bottom:4rem;padding:3rem;text-align:center}.subscribe-section__inner{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;margin-left:auto;margin-right:auto;max-width:80rem}.breakpoint-phone-small .subscribe-section__inner,.breakpoint-phone .subscribe-section__inner,.breakpoint-tablet .subscribe-section__inner{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}.subscribe-section__info{width:50%;padding-right:1.5rem}.breakpoint-phone-small .subscribe-section__info,.breakpoint-phone .subscribe-section__info,.breakpoint-tablet .subscribe-section__info{width:100%;padding-right:0}.subscribe-section__heading{color:#fff;font-family:Lato,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:3rem;font-weight:900;margin-bottom:1rem}.breakpoint-phone-small .subscribe-section__heading,.breakpoint-phone .subscribe-section__heading,.breakpoint-tablet .subscribe-section__heading{font-size:2.4rem}.subscribe-section__heading span{font-style:italic}.subscribe-section__copy{color:#fff;font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.8rem;line-height:2.8rem}.breakpoint-phone-small .subscribe-section__copy,.breakpoint-phone .subscribe-section__copy,.breakpoint-tablet .subscribe-section__copy{font-size:1.6rem;line-height:2.4rem;margin-bottom:2.5rem}.subscribe-section__form{font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.6rem;padding-left:1.5rem;width:50%}.breakpoint-phone-small .subscribe-section__form,.breakpoint-phone .subscribe-section__form,.breakpoint-tablet .subscribe-section__form{width:100%;padding-left:0}.subscribe-section__input{border-radius:2px;border:none;display:block;font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.6rem;margin-bottom:1.5rem;outline:none;padding:1rem;width:100%}.subscribe-section__input::-webkit-input-placeholder{font-size:1.6rem}.subscribe-section__input::-ms-input-placeholder{font-size:1.6rem}.subscribe-section__input::placeholder{font-size:1.6rem}.subscribe-section__button-wrapper{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.breakpoint-phone-small .subscribe-section__button-wrapper,.breakpoint-phone .subscribe-section__button-wrapper,.breakpoint-tablet .subscribe-section__button-wrapper{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}.subscribe-section__button{background-color:#333;border-radius:2px;border:none;color:#fff;display:block;font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.6rem;margin-right:2rem;outline:none;padding:1rem 4rem}.subscribe-section__button:hover{cursor:pointer}.breakpoint-phone-small .subscribe-section__button,.breakpoint-phone .subscribe-section__button,.breakpoint-tablet .subscribe-section__button{width:100%;margin-bottom:2rem;margin-right:0}.subscribe-section__footnote{color:#fff;font-family:Space mono,monaco,Consolas,Lucida Console,monospace;font-size:1.1rem}.subscribe-section__footnote a{color:#fff;text-decoration:underline}.dropcap{margin:0 .7rem -1rem -.1rem;font-size:5.2rem;float:left;line-height:1.05;font-weight:700;font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif}.breakpoint-phone-small .dropcap,.breakpoint-phone .dropcap{font-size:4.4rem}
+
+/*! Flickity v2.2.0
+https://flickity.metafizzy.co
+---------------------------------------------- */.flickity-enabled{position:relative}.flickity-enabled:focus{outline:none}.flickity-viewport{overflow:hidden;position:relative;height:100%}.flickity-slider{position:absolute;width:100%;height:100%}.flickity-enabled.is-draggable{-webkit-tap-highlight-color:transparent;tap-highlight-color:transparent;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.flickity-enabled.is-draggable .flickity-viewport{cursor:move;cursor:-webkit-grab;cursor:grab}.flickity-enabled.is-draggable .flickity-viewport.is-pointer-down{cursor:-webkit-grabbing;cursor:grabbing}.flickity-button{position:absolute;background:hsla(0,0%,100%,.75);border:none;color:#333}.flickity-button:hover{background:#fff;cursor:pointer}.flickity-button:focus{outline:none;-webkit-box-shadow:0 0 0 5px #19f;box-shadow:0 0 0 5px #19f}.flickity-button:active{opacity:.6}.flickity-button:disabled{opacity:.3;cursor:auto;pointer-events:none}.flickity-button-icon{fill:currentColor}.flickity-prev-next-button{top:50%;width:44px;height:44px;border-radius:50%;-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%)}.flickity-prev-next-button.previous{left:10px}.flickity-prev-next-button.next{right:10px}.flickity-rtl .flickity-prev-next-button.previous{left:auto;right:10px}.flickity-rtl .flickity-prev-next-button.next{right:auto;left:10px}.flickity-prev-next-button .flickity-button-icon{position:absolute;left:20%;top:20%;width:60%;height:60%}.flickity-page-dots{position:absolute;width:100%;bottom:-25px;padding:0;margin:0;list-style:none;text-align:center;line-height:1}.flickity-rtl .flickity-page-dots{direction:rtl}.flickity-page-dots .dot{display:inline-block;width:10px;height:10px;margin:0 8px;background:#333;border-radius:50%;opacity:.25;cursor:pointer}.flickity-page-dots .dot.is-selected{opacity:1}.gallery-slider{bottom:0;left:0;position:fixed;right:0;top:0;opacity:1;-webkit-transition:opacity .25s;-o-transition:opacity .25s;transition:opacity .25s;z-index:10000}.gallery-slider--closed{opacity:0}.gallery-slider__close{border-radius:50%;background-color:#fff;position:absolute;right:1rem;top:1rem;height:4.4rem;width:4.4rem;z-index:1}.gallery-slider__close svg{position:absolute;left:30%;right:30%;bottom:30%;top:30%;height:40%;width:40%}.gallery-slider__close path{fill:#333}.gallery-slide{background-color:hsla(0,0%,100%,.9);height:100vh;width:100vw}.gallery-slide:after{background-color:#e44c38;content:"";height:30px;height:3rem;width:30px;width:3rem;left:50%;top:50%;margin-left:-15px;margin-left:-1.5rem;margin-top:-15px;margin-top:-1.5rem;position:absolute;z-index:1;border-radius:100%;-webkit-animation:sk-scaleout 1s infinite ease-in-out;animation:sk-scaleout 1s infinite ease-in-out}@-webkit-keyframes sk-scaleout{0%{-webkit-transform:scale(0);transform:scale(0)}to{-webkit-transform:scale(1);transform:scale(1);opacity:0}}@keyframes sk-scaleout{0%{-webkit-transform:scale(0);transform:scale(0)}to{-webkit-transform:scale(1);transform:scale(1);opacity:0}}.gallery-slide__inner{-webkit-box-align:center;-ms-flex-align:center;align-items:center;bottom:10%;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;left:10%;position:absolute;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;right:10%;top:10%;z-index:2}.gallery-slide__content{max-width:100%}.gallery-slide__content--image,.gallery-slide__content--image+.gallery-slide__caption{opacity:0;-webkit-transition:opacity .2s;-o-transition:opacity .2s;transition:opacity .2s}.gallery-slide__content--image.flickity-lazyloaded,.gallery-slide__content--image.flickity-lazyloaded+.gallery-slide__caption{opacity:1}.gallery-slide__content--html{width:100%}.gallery-slide__caption{color:#333;font-family:Libre Franklin,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1.2rem;max-width:80rem;text-align:center}.copy .gallery,.gallery{-ms-flex-line-pack:end;align-content:flex-end;-webkit-box-align:center;-ms-flex-align:center;align-items:center;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-wrap:wrap;flex-wrap:wrap;list-style:none;margin:0 -1rem;padding:0}.copy .gallery li,.gallery li{list-style:none;padding:1rem;width:50%}.breakpoint-desktop .copy .gallery li,.breakpoint-widescreen .copy .gallery li{width:33.33333333%}.copy .gallery a,.gallery a{display:block;position:relative;overflow:hidden}.copy .gallery__zoom-icon,.gallery__zoom-icon{background-color:#e44c38;display:block;position:absolute;bottom:-.6rem;right:0}.copy .gallery__zoom-icon svg,.gallery__zoom-icon svg{width:3rem;height:3rem}.copy .gallery__zoom-icon svg circle,.gallery__zoom-icon svg circle{fill:transparent}.copy .gallery__zoom-icon svg path,.gallery__zoom-icon svg path{-webkit-transition:fill .15s ease;-o-transition:fill .15s ease;transition:fill .15s ease;fill:#fff}.gallery a:focus .copy .gallery__zoom-icon svg path,.gallery a:focus .gallery__zoom-icon svg path,.gallery a:hover .copy .gallery__zoom-icon svg path,.gallery a:hover .gallery__zoom-icon svg path{fill:#fff}.flickity-button{color:#e44c38}.gallery-slider__close path{fill:#e44c38}.flickity-page-dots{bottom:2.5rem}.flickity-page-dots .dot{background:#e44c38}</style>
+    
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="crossorigin" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" crossorigin="crossorigin" />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700,700i|Libre+Franklin:400,400i,700,700i|Lato:400,400i,700,700i,900,900i|PT+Serif:400,400i,700,700i"
+      as="style"
+      onload="this.rel='stylesheet'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700,700i|Libre+Franklin:400,400i,700,700i|Lato:400,400i,700,700i,900,900i|PT+Serif:400,400i,700,700i"
+      />
+    </noscript>
+
+        <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="apple-mobile-web-app-title" content="The Citizen" />
+
+        <script src=https://www.thecitizen.org.au/wp-content/themes/the-citizen/assets/the-citizen__public.js async></script>
+
+        <title>
+              Pacific scientists planning and planting for a warmer world – The Citizen
+          </title>
+
+              <meta property="og:site_name" content="The Citizen"/>
+      <meta property="og:url" content="https://www.thecitizen.org.au/articles/pacific-scientists-planning-and-planting-for-a-warmer-world" />
+      <meta property="twitter:site" content="@thecitizenweb" />
+      <meta property="twitter:url" content="https://www.thecitizen.org.au/articles/pacific-scientists-planning-and-planting-for-a-warmer-world" />
+
+              <meta property="og:title" content="Pacific scientists planning and planting for a warmer world" />
+        <meta property="twitter:title" content="Pacific scientists planning and planting for a warmer world" />
+      
+            <meta property="og:type" content="article" />
+    <meta property="og:title" content="Pacific scientists planning and planting for a warmer world" />
+    <meta property="twitter:title" content="Pacific scientists planning and planting for a warmer world" />
+    <meta property="og:description" content="This Earth Day, in communities around the world, the climate emergency is not some distant threat but a daily reality. The fallout is acutely felt by the people of the Pacific as they try to nurture their crops, secure water, protect shorelines and batten down against increasingly ferocious storms. Jordyn Beazley reports.&nbsp;
+" />
+    <meta property="twitter:description" content="This Earth Day, in communities around the world, the climate emergency is not some distant threat but a daily reality. The fallout is acutely felt by the people of the Pacific as they try to nurture their crops, secure water, protect shorelines and batten down against increasingly ferocious storms. Jordyn Beazley reports.&nbsp;
+" />
+    <meta property="twitter:label1" content="" />
+    <meta property="twitter:data1" content="" />
+
+          <meta property="og:image" content="https://the-citizen-web-assets-us.s3.amazonaws.com/uploads/2021/04/22175236/ulamila_lutu_cepact-1.jpg" />
+      <meta property="og:image:type" content="image/jpeg" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content="Pacific scientists planning and planting for a warmer world" />
+      <meta property="twitter:image" content="https://the-citizen-web-assets-us.s3.amazonaws.com/uploads/2021/04/22175236/ulamila_lutu_cepact-1.jpg" />
+      <meta property="twitter:image:alt" content="Pacific scientists planning and planting for a warmer world" />
+      <meta property="twitter:card" content="summary_large_image" />
+          
+    <link rel="icon" type="image/x-icon" href="https://www.thecitizen.org.au/wp-content/themes/the-citizen/assets/public/favicon/favicon.ico" />
+
+            
+    <!-- Sets inline hover colours -->
+    <style>
+          .article-card--theme-culture:hover .article-card__title,
+      .search-results__item-title
+      .article-card--theme-culture.article-card--no-image .article-card__title {
+        color: #46a839;
+      }
+      .article-card--theme-culture.article-card--no-image .article-card__author {
+        color: #46a839;
+      }
+      .search-results__item--culture:hover {
+        color: #46a839
+      }
+      .navigation__anchor--culture:hover {
+        color: #46a839;
+      }
+          .article-card--theme-health:hover .article-card__title,
+      .search-results__item-title
+      .article-card--theme-health.article-card--no-image .article-card__title {
+        color: #307a7c;
+      }
+      .article-card--theme-health.article-card--no-image .article-card__author {
+        color: #307a7c;
+      }
+      .search-results__item--health:hover {
+        color: #307a7c
+      }
+      .navigation__anchor--health:hover {
+        color: #307a7c;
+      }
+          .article-card--theme-money:hover .article-card__title,
+      .search-results__item-title
+      .article-card--theme-money.article-card--no-image .article-card__title {
+        color: #b49533;
+      }
+      .article-card--theme-money.article-card--no-image .article-card__author {
+        color: #b49533;
+      }
+      .search-results__item--money:hover {
+        color: #b49533
+      }
+      .navigation__anchor--money:hover {
+        color: #b49533;
+      }
+          .article-card--theme-people:hover .article-card__title,
+      .search-results__item-title
+      .article-card--theme-people.article-card--no-image .article-card__title {
+        color: #6160c5;
+      }
+      .article-card--theme-people.article-card--no-image .article-card__author {
+        color: #6160c5;
+      }
+      .search-results__item--people:hover {
+        color: #6160c5
+      }
+      .navigation__anchor--people:hover {
+        color: #6160c5;
+      }
+          .article-card--theme-politics:hover .article-card__title,
+      .search-results__item-title
+      .article-card--theme-politics.article-card--no-image .article-card__title {
+        color: #f5a217;
+      }
+      .article-card--theme-politics.article-card--no-image .article-card__author {
+        color: #f5a217;
+      }
+      .search-results__item--politics:hover {
+        color: #f5a217
+      }
+      .navigation__anchor--politics:hover {
+        color: #f5a217;
+      }
+          .article-card--theme-projects:hover .article-card__title,
+      .search-results__item-title
+      .article-card--theme-projects.article-card--no-image .article-card__title {
+        color: #8c8c8c;
+      }
+      .article-card--theme-projects.article-card--no-image .article-card__author {
+        color: #8c8c8c;
+      }
+      .search-results__item--projects:hover {
+        color: #8c8c8c
+      }
+      .navigation__anchor--projects:hover {
+        color: #8c8c8c;
+      }
+          .article-card--theme-science:hover .article-card__title,
+      .search-results__item-title
+      .article-card--theme-science.article-card--no-image .article-card__title {
+        color: #0f7fcc;
+      }
+      .article-card--theme-science.article-card--no-image .article-card__author {
+        color: #0f7fcc;
+      }
+      .search-results__item--science:hover {
+        color: #0f7fcc
+      }
+      .navigation__anchor--science:hover {
+        color: #0f7fcc;
+      }
+          .article-card--theme-society:hover .article-card__title,
+      .search-results__item-title
+      .article-card--theme-society.article-card--no-image .article-card__title {
+        color: #e44c38;
+      }
+      .article-card--theme-society.article-card--no-image .article-card__author {
+        color: #e44c38;
+      }
+      .search-results__item--society:hover {
+        color: #e44c38
+      }
+      .navigation__anchor--society:hover {
+        color: #e44c38;
+      }
+          .article-card--theme-sport:hover .article-card__title,
+      .search-results__item-title
+      .article-card--theme-sport.article-card--no-image .article-card__title {
+        color: #b1618f;
+      }
+      .article-card--theme-sport.article-card--no-image .article-card__author {
+        color: #b1618f;
+      }
+      .search-results__item--sport:hover {
+        color: #b1618f
+      }
+      .navigation__anchor--sport:hover {
+        color: #b1618f;
+      }
+            </style>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-40506823-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+  </head>
+  <body>
+        <header class="masthead" role="masthead">
+  <div class="masthead__inner">
+    <h1>
+      <a href="/" class="masthead__citizen-logo">
+        <img src="https://www.thecitizen.org.au/wp-content/themes/the-citizen/assets/public/masthead/citizen-logo.svg" alt="The Citizen logo" />
+      </a>
+    </h1>
+    <h2 class="masthead__tagline">A publication of the Centre for Advancing Journalism, University of Melbourne</h2>
+  </div>
+  <nav class="navigation" role="navigation">
+
+  <!-- Mobile nav toggle -->
+
+    <button class="navigation__toggle" data-view-toggle-class='{"event":"click","targetSelector":".navigation-mobile-wrapper","triggerToggleClassName":"navigation__toggle--active","targetToggleClassName":"navigation-mobile-wrapper--open"}'>
+    <span class="navigation__toggle-menu">
+      <i class="fa fa-bars" aria-hidden="true"></i> Menu
+    </span>
+    <span class="navigation__toggle-close">
+      <i class="fa fa-times" aria-hidden="true"></i> Close
+    </span>
+  </button>
+
+  <div class="navigation-mobile-wrapper">
+    <ul class="navigation__list">
+
+              
+          <!-- DISPLAY ALL THEMES other than 'Projects' -->
+                      <li class="navigation__list-item">
+              <div class="masthead-dropdown">
+                                                                  <a href="https://www.thecitizen.org.au/themes/culture" class="navigation__anchor navigation__anchor--culture ">
+                  Culture
+                  <span class="navigation__anchor-border" style="background-color: #46a839"></span>
+                </a>
+                                  <div class="masthead-dropdown__wrapper">
+                    <div class="masthead-dropdown__content">
+                      <ul class="masthead-dropdown__list">
+                                                                              <li>
+                              <a href="https://www.thecitizen.org.au/categories/film">Film</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/arts">Arts</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/theatre">Theatre</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/books">Books</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/investigation">Investigation</a>
+                            </li>
+                                                                        </ul>
+                    </div>
+                  </div>
+                              </div>
+            </li>
+                  
+          <!-- DISPLAY ALL THEMES other than 'Projects' -->
+                      <li class="navigation__list-item">
+              <div class="masthead-dropdown">
+                                                                  <a href="https://www.thecitizen.org.au/themes/health" class="navigation__anchor navigation__anchor--health ">
+                  Health
+                  <span class="navigation__anchor-border" style="background-color: #307a7c"></span>
+                </a>
+                                  <div class="masthead-dropdown__wrapper">
+                    <div class="masthead-dropdown__content">
+                      <ul class="masthead-dropdown__list">
+                                                                              <li>
+                              <a href="https://www.thecitizen.org.au/categories/medicine">Medicine</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/health">Health</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/research">Research</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/family">Family</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/wellness">Wellness</a>
+                            </li>
+                                                                        </ul>
+                    </div>
+                  </div>
+                              </div>
+            </li>
+                  
+          <!-- DISPLAY ALL THEMES other than 'Projects' -->
+                      <li class="navigation__list-item">
+              <div class="masthead-dropdown">
+                                                                  <a href="https://www.thecitizen.org.au/themes/money" class="navigation__anchor navigation__anchor--money ">
+                  Money
+                  <span class="navigation__anchor-border" style="background-color: #b49533"></span>
+                </a>
+                                  <div class="masthead-dropdown__wrapper">
+                    <div class="masthead-dropdown__content">
+                      <ul class="masthead-dropdown__list">
+                                                                              <li>
+                              <a href="https://www.thecitizen.org.au/categories/investment">Investment</a>
+                            </li>
+                                                                        </ul>
+                    </div>
+                  </div>
+                              </div>
+            </li>
+                  
+          <!-- DISPLAY ALL THEMES other than 'Projects' -->
+                      <li class="navigation__list-item">
+              <div class="masthead-dropdown">
+                                                                  <a href="https://www.thecitizen.org.au/themes/people" class="navigation__anchor navigation__anchor--people ">
+                  People
+                  <span class="navigation__anchor-border" style="background-color: #6160c5"></span>
+                </a>
+                                  <div class="masthead-dropdown__wrapper">
+                    <div class="masthead-dropdown__content">
+                      <ul class="masthead-dropdown__list">
+                                                                              <li>
+                              <a href="https://www.thecitizen.org.au/categories/newsmakers">Newsmakers</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/hidden-figures-3">Hidden Figures</a>
+                            </li>
+                                                                        </ul>
+                    </div>
+                  </div>
+                              </div>
+            </li>
+                  
+          <!-- DISPLAY ALL THEMES other than 'Projects' -->
+                      <li class="navigation__list-item">
+              <div class="masthead-dropdown">
+                                                                  <a href="https://www.thecitizen.org.au/themes/politics" class="navigation__anchor navigation__anchor--politics ">
+                  Politics
+                  <span class="navigation__anchor-border" style="background-color: #f5a217"></span>
+                </a>
+                                  <div class="masthead-dropdown__wrapper">
+                    <div class="masthead-dropdown__content">
+                      <ul class="masthead-dropdown__list">
+                                                                              <li>
+                              <a href="https://www.thecitizen.org.au/categories/federal">Federal</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/state">State</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/local">Local</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/international">International</a>
+                            </li>
+                                                                        </ul>
+                    </div>
+                  </div>
+                              </div>
+            </li>
+                  
+          <!-- DISPLAY ALL THEMES other than 'Projects' -->
+                  
+          <!-- DISPLAY ALL THEMES other than 'Projects' -->
+                      <li class="navigation__list-item">
+              <div class="masthead-dropdown">
+                                                                  <a href="https://www.thecitizen.org.au/themes/science" class="navigation__anchor navigation__anchor--science navigation__anchor--active">
+                  Science
+                  <span class="navigation__anchor-border" style="background-color: #0f7fcc"></span>
+                </a>
+                                  <div class="masthead-dropdown__wrapper">
+                    <div class="masthead-dropdown__content">
+                      <ul class="masthead-dropdown__list">
+                                                                              <li>
+                              <a href="https://www.thecitizen.org.au/categories/climate">Climate</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/environment">Environment</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/technology">Technology</a>
+                            </li>
+                                                                        </ul>
+                    </div>
+                  </div>
+                              </div>
+            </li>
+                  
+          <!-- DISPLAY ALL THEMES other than 'Projects' -->
+                      <li class="navigation__list-item">
+              <div class="masthead-dropdown">
+                                                                  <a href="https://www.thecitizen.org.au/themes/society" class="navigation__anchor navigation__anchor--society ">
+                  Society
+                  <span class="navigation__anchor-border" style="background-color: #e44c38"></span>
+                </a>
+                                  <div class="masthead-dropdown__wrapper">
+                    <div class="masthead-dropdown__content">
+                      <ul class="masthead-dropdown__list">
+                                                                              <li>
+                              <a href="https://www.thecitizen.org.au/categories/education">Education</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/indigenous">Indigenous</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/history">History</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/health">Health</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/transport">Transport</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/urban-planning">Urban Planning</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/aging">Aging</a>
+                            </li>
+                                                                        </ul>
+                    </div>
+                  </div>
+                              </div>
+            </li>
+                  
+          <!-- DISPLAY ALL THEMES other than 'Projects' -->
+                      <li class="navigation__list-item">
+              <div class="masthead-dropdown">
+                                                                  <a href="https://www.thecitizen.org.au/themes/sport" class="navigation__anchor navigation__anchor--sport ">
+                  Sport
+                  <span class="navigation__anchor-border" style="background-color: #b1618f"></span>
+                </a>
+                                  <div class="masthead-dropdown__wrapper">
+                    <div class="masthead-dropdown__content">
+                      <ul class="masthead-dropdown__list">
+                                                                              <li>
+                              <a href="https://www.thecitizen.org.au/categories/football">Football</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/cricket">Cricket</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/olympics">Olympics</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/gender">Gender</a>
+                            </li>
+                                                                        </ul>
+                    </div>
+                  </div>
+                              </div>
+            </li>
+                  
+        <!-- DISPLAY PROJECTS THEME and categories -->
+                                                                                                                        <li class="navigation__list-item">
+              <div class="masthead-dropdown">
+                                                                  <a href="https://www.thecitizen.org.au/themes/projects" class="navigation__anchor navigation__anchor--projects ">
+                  Projects
+                  <span class="navigation__anchor-border" style="background-color: #8c8c8c"></span>
+                </a>
+                                  <div class="masthead-dropdown__wrapper">
+                    <div class="masthead-dropdown__content">
+                      <ul class="masthead-dropdown__list">
+                                                                              <li>
+                              <a href="https://www.thecitizen.org.au/categories/life-after-jobkeeper">Life After JobKeeper</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/unsung-heroes-of-covid">Unsung heroes of COVID-19</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/coronavirus-casualties-spotlight-on-youth">Generation Coronavirus</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/mental">Mental</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/clayton-3168-profiles-from-the-pandemic">Clayton 3168: Lockdown on the strip</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/future-forecast-spotlight-on-the-south-west">Future Forecast: Spotlight on the south-west</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/covering-climate-now">Covering Climate Now</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/a-day-in-the-life-of-yinnar">A Day In The Life Of Yinnar</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/going-under">Going Under</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/transformation">TRANSFORMATION</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/disposable">DISPOSABLE</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/spotlight-on-deakin-election-2019">Spotlight on Deakin: Election 2019</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/creeks-of-melbourne">Creeks of Melbourne</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/taboo">Taboo</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/graveyard-shift-2">Graveyard Shift</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/perfection">Perfection</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/postcode-3010">Postcode 3010</a>
+                            </li>
+                                                                                                        <li>
+                              <a href="https://www.thecitizen.org.au/categories/table-manners-the-ethics-of-food">Table Manners: From Farm to Plate</a>
+                            </li>
+                                                                        </ul>
+                    </div>
+                  </div>
+                              </div>
+            </li>
+                                                                        
+      
+      <li class="navigation__list-item">
+                                  <div class="masthead-dropdown">
+          <a class="navigation__anchor " href="https://www.thecitizen.org.au/podcasts">
+            Podcasts
+            <span class="navigation__anchor-border"></span>
+          </a>
+                      <div class="masthead-dropdown__wrapper">
+              <div class="masthead-dropdown__content">
+                <ul class="masthead-dropdown__list">
+                                      <li>
+                      <a href="https://www.thecitizen.org.au/podcasts/the-little-red-podcast">The Little Red Podcast</a>
+                    </li>
+                                      <li>
+                      <a href="https://www.thecitizen.org.au/podcasts/the-media-files">The Media Files</a>
+                    </li>
+                                      <li>
+                      <a href="https://www.thecitizen.org.au/podcasts/change-agents">Change Agents</a>
+                    </li>
+                                      <li>
+                      <a href="https://www.thecitizen.org.au/podcasts/europe-to-date">Europe To Date</a>
+                    </li>
+                                      <li>
+                      <a href="https://www.thecitizen.org.au/podcasts/the-masterclass">The Masterclass</a>
+                    </li>
+                                      <li>
+                      <a href="https://www.thecitizen.org.au/podcasts/the-peoples-game">The People&#8217;s Game</a>
+                    </li>
+                                      <li>
+                      <a href="https://www.thecitizen.org.au/podcasts/the-unsociable-game">The Unsociable Game</a>
+                    </li>
+                                  </ul>
+              </div>
+            </div>
+                  </div>
+      </li>
+
+      <li class="navigation__list-item">
+                                  <a class="navigation__anchor " href="https://www.thecitizen.org.au/people">
+          Reporters
+          <span class="navigation__anchor-border"></span>
+        </a>
+      </li>
+
+      <li class="navigation__list-item">
+                                  <a class="navigation__anchor navigation__anchor--search " href="/search">
+          <i class="fa fa-search" aria-hidden="true"></i>
+          <span class="navigation__anchor-border"></span>
+        </a>
+      </li>
+    </ul>
+
+    <ul class="masthead-social">
+      <li class="masthead-social__list-item">
+        <a class="masthead-social__anchor masthead-social__anchor--twitter" target="_blank" href="https://twitter.com/thecitizenweb">
+          <i class="fa fa-twitter" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li class="masthead-social__list-item">
+        <a class="masthead-social__anchor masthead-social__anchor--facebook" target="_blank" href="https://www.facebook.com/thecitizen.org.au">
+          <i class="fa fa-facebook-official" aria-hidden="true"></i>
+        </a>
+      </li>
+    </ul>
+
+  </div> <!-- navigation mobile wrapper -->
+</nav>
+</header>
+
+    <section class="maincontent" role="main" id="main-content">
+        <article class="page">
+    <div class="grid-wrapper">
+      <div class="grid-row clearfix">
+        <div class="
+          grid-col
+          grid-col--10
+          tb-grid-col--12
+          ph-grid-col--12
+          grid-col--bottom-flush
+        ">
+            <div class="article-header">
+          <a href="https://www.thecitizen.org.au/themes/science" class="article-header__theme" style="color:#0f7fcc">
+        Science
+        <span class="article-header__theme-line" style="background-color:#0f7fcc"></span>
+      </a>
+    
+          <h1 class="article-header__title">
+        Pacific scientists planning and planting for a warmer world
+      </h1>
+    
+          <style>
+        .article-header__intro a {
+          color:#0f7fcc;
+        }
+      </style>
+    
+          <div class="article-header__intro copy">
+                  <p><strong>This Earth Day, in communities around the world, the climate emergency is not some distant threat but a daily reality. The fallout is acutely felt by the people of the Pacific as they try to nurture their crops, secure water, protect shorelines and batten down against increasingly ferocious storms. <em>Jordyn Beazley</em> reports.&nbsp;</strong></p>
+
+              </div>
+    
+    <!-- IF VIDEO TYPE DISPLAY VIDEO EMBED -->
+    
+    <!-- IF AUDIO TYPE DISPLAY AUDIO EMBED -->
+    
+    <!-- IF ARTICLE TYPE DISPLAY FEATURE IMAGE IF EXISTS -->
+          
+        <div class="article__asset">
+          <img class="article__asset-feature-image" src="https://the-citizen-web-assets-us.s3.amazonaws.com/uploads/2021/04/22165006/IMG_1042-scaled.jpg" alt="Pacific scientists planning and planting for a warmer world">
+        </div>
+
+                  <div class="copy">
+            <p class="figure__caption">“It’s becoming harder for countries to maintain the crops that we are sending them because there is more extreme weather": Ulamila Lutu, acting curator for Fiji's Centre for Pacific Crops and Trees.</p>
+          </div>
+        
+      
+    
+  </div>
+        </div>
+      </div>
+      <div class="grid-row clearfix">
+        <div class="
+          grid-col
+          grid-col--2
+          ph-grid-col--12
+          grid-col--bottom-flush
+        ">
+            <div class="article-credits">
+          <div class="article-credits__row">
+        <span class="article-credits__label">Story by</span>
+                  <a class="article-credits__anchor" href="https://www.thecitizen.org.au/people/jordyn-beazley" style="color:#0f7fcc ">Jordyn Beazley</a>
+              </div>
+      </div>
+&nbsp;
+        </div>
+        <div class="
+          grid-col
+          grid-col--8
+          grid-col--bottom-flush
+          ph-grid-col--12
+        ">
+
+          <div class="article-body copy">
+
+            <!-- Set theme custom colour for body links -->
+            <style>
+              .copy a,
+              .copy blockquote p,
+              .dropcap {
+                color:#0f7fcc;
+              }
+
+            </style>
+                          <p><span class="dropcap">E</span>very day a crew of biologists work their way up and down rows of plants lining a small greenhouse in the Fijian capital of Suva. The specimens of taro, breadfruit, sweet potatoes, yams, cassava and banana they tend are more than they seem.</p>
+<p>These plants are the mother stock used to harvest living tissue from which new plants are grown. In glass jars inside the laboratory of the <a href="https://pafpnet.spc.int/research-and-extension/the-centre-for-pacific-crops-and-trees-cepact">Centre for Pacific Crops and Trees</a>, the tissue is nurtured into plantlets sprouting roots and leaves. These are then bundled into sterile bags and shipped across the Pacific region, a precious insurance policy in a warming world.</p>
+<div class="figure figure--align-right">
+              <img src="https://assets.thecitizen.org.au/asset/500/0/default/0/uploads/2021/04/22164932/ulamila_lutu_cepact-scaled.jpg" alt="&ldquo;Now countries are facing the climate emergency we are actually seeing how these crops are being more resilient. So, we are building up more data as we go&rdquo;: Acting curator Centre for Pacific Crops and Trees Ulamila Lutu" width="450" height="600">
+        <p class="figure__caption">&ldquo;Now countries are facing the climate emergency we are actually seeing how these crops are being more resilient. So, we are building up more data as we go&rdquo;: Acting curator Centre for Pacific Crops and Trees Ulamila Lutu</p>
+  </div>
+<p>With recurring climate shocks such as drought, tropical cyclones and floods decimating food crops across the Pacific, the centre aims to act as guardian and nurturer of Pacific plant species. This collection &ndash; or gene bank,&nbsp; as it&rsquo;s commonly called &ndash; represents the first and only in vitro gene bank in the Pacific and is a lifeline for Pacific food security.</p>
+<p>As the region is hit harder and more frequently by extreme weather, and the window for recovery between disasters closes, the centre has its work cut out trying to meet escalating need.</p>
+<p>Gene banks, or seed banks, <a href="https://www.smithsonianmag.com/science-nature/lack-diversity-lack-funding-seed-banks-face-world-challenges-180959409/)">are facilities that preserve</a> plant seeds, cuttings, or genetic materials such as the plant tissue harvested by the centre. In their support for plant research and breeding, the banks are increasingly being used to bolster food security during the climate emergency.</p>
+<p>&ldquo;When I first started, we didn&rsquo;t have as many requests. But now with climate change we have a lot more requests from countries to send crops,&rdquo; says Ulamila Lutu, the acting curator of the Centre, which is part of the Pacific Community &ndash; a regional organisation owned and governed by 26 countries and territories across the region.</p>
+<p>&ldquo;It&rsquo;s becoming harder for countries to maintain the crops that we are sending them because there is more extreme weather.&rdquo;</p>
+<p>The centre has extended its reach to countries in Asia and the Caribbean who are also in dire need of crops.</p>
+<blockquote class="display-center">
+  <p>&ldquo;So we&rsquo;re supporting not just the Pacific, but the world over,&rdquo; says Lutu.</p>
+</blockquote>
+<p>In April last year, category 5 Tropical Cyclone Harold cut a path of destruction through Vanuatu and caused severe flooding in Fiji and Tonga, resulting in 27 deaths. One Ni-Vanuatu resident <a href="https://www.theguardian.com/world/2020/apr/10/its-all-gone-cyclone-harold-cuts-a-deadly-path-through-vanuatu">told <em>The Guardian</em></a>: &ldquo;I&rsquo;ve lived here 13 years, and I&rsquo;ve never seen anything like it &hellip; It&rsquo;s the first time in history we&rsquo;ve seen it come this high.&rdquo;</p>
+<p>The ministries of agriculture in Fiji and Vanuatu requested taro, sweet potato, yam, and banana plantlets from the centre to secure crops for regions devastated by the cyclone. The centre is still working tirelessly to deliver all 9000 plantlets ordered by Fiji.</p>
+<p>When the gene bank&rsquo;s plantlets are despatched to Pacific countries, they&rsquo;re initially kept in greenhouses the centre has helped countries to set up to ensure the young stock can acclimatise to local conditions before being sent to communities.</p>
+<p>One of the challenges facing the program now, Lutu says, is a disconnect between the capacity of the gene bank to provide crucial stocks, and the ability of communities to nurture and distribute them given limited local government resources.</p>
+<p>This speaks to the severe underfunding many Pacific countries are facing in their critical agricultural sectors as they try to respond to shifting climatic conditions and violent weather events.</p>
+<p>The situation is made plain in a recent <a href="https://www.greenclimate.fund/sites/default/files/document/21960-enhancing-resilience-agriculture-and-food-security-pacific-island-countries-through-managing.pdf">grant application</a> by the Pacific Community to the UN&rsquo;s Green Climate Fund. Arguing for support for agriculture and food security programs in Samoa, Fiji, and Solomon Islands, it explained that none of these nations had the capacity to address the threats posed by global heating.</p>
+<p>Lutu says that the increasing impacts of climate heating playing out in the region have influenced the gene bank&rsquo;s focus on finding and sharing crop species that can grow faster, produce higher yields, use less water and withstand pests, diseases and climate extremes.</p>
+<p>The centre is now working on a type of taro collected from Palau that was found to fare better in soil contaminated by sea water. Once the scientists complete testing on the plant to ensure it is not carrying any diseases, it will be available for countries to order.</p>
+<div class="figure figure--align-right">
+              <img src="https://assets.thecitizen.org.au/asset/500/0/default/0/uploads/2019/09/20201845/Covering-Climate-Now-Logo.png" alt="This story is part of Covering Climate Now, a global collaboration of more than 460 news outlets to strengthen coverage of the climate story." width="600" height="600">
+        <p class="figure__caption">This story is part of Covering Climate Now, a global collaboration of more than 460 news outlets to strengthen coverage of the climate story.</p>
+  </div>
+<p>&ldquo;Now countries are facing the climate emergency we are actually seeing how these crops are being more resilient. So, we are building up more data as we go,&rdquo; Lutu says.</p>
+<p>The centre is not alone in its bid to save plant species threatened by the climate emergency. There are about <a href="https://www.cgiar.org/news-events/news/guardians-of-diversity-the-network-of-genebanks-helping-to-feed-the-world/">1,750 gene banks</a> around the world, holding a total of around 7.4 million plant materials collected from different species.</p>
+<p>There are similar efforts evolving to save species in the natural world from spiralling levels of extinction. For instance, Australian marine biologist John &lsquo;Charlie&rsquo; Veron&rsquo;s &ldquo;coral ark&rdquo; for <a href="https://www.smh.com.au/environment/sustainability/coral-ark-bids-to-save-biodiversity-as-global-threats-to-reefs-mount-20191213-p53jw8.html">coral species in the Great Barrier Reef</a>. Rather than collecting coral species to re-plant now, Veron is conserving species to re-plant once the ocean is no longer at risk of extreme heat waves.</p>
+<p>With the Pacific region already experiencing the devastating impacts of the climate emergency as a consequence of the rise in global temperatures of 1.1 degrees above pre-industrial levels, Lutu says the question of how to support food security is an urgent issue for the centre.</p>
+<p>&ldquo;The best we can do right now is to support countries with what we have and pray it will help them survive with the conditions of climate change.&rdquo;</p>
+<p><em><strong>This week, through an initiative called <a href="https://coveringclimatenow.org/">Covering Climate Now</a>, news organisations around the world have highlighted stories from around the world of the realities of living through the climate emergency. The Citizen is a partner in the CCN initiative, lead by Columbia Journalism Review.</strong></em></p>
+<p><em><strong>&nbsp;</strong></em></p>
+
+                      </div>
+          <div class="article-footer">
+  <div class="article-footer__line" style="background-color:#0f7fcc"></div>
+      <div class="article-footer__row">
+      <span class="article-footer__label">Categories</span>
+      <span class="article-footer__value">
+                  <a class="article-footer__category" href="https://www.thecitizen.org.au/categories/agriculture" style="color:#0f7fcc">Agriculture</a>
+                  <a class="article-footer__category" href="https://www.thecitizen.org.au/categories/climate" style="color:#0f7fcc">Climate</a>
+                  <a class="article-footer__category" href="https://www.thecitizen.org.au/categories/covering-climate-now" style="color:#0f7fcc">Covering Climate Now</a>
+                  <a class="article-footer__category" href="https://www.thecitizen.org.au/categories/environment" style="color:#0f7fcc">Environment</a>
+              </span>
+    </div>
+  
+      <div class="article-footer__row">
+      <span class="article-footer__label">Date published</span>
+      <span class="article-footer__value"><datetime>April 22, 2021</datetime></span>
+    </div>
+    <div class="article-footer__row">
+    <span class="article-footer__label">Share</span>
+    <span class="article-footer__value article-footer__value--share">
+      <span class="article-footer__value-item">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </span>
+
+      <span class="article-footer__value-item">
+        <iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&layout=button&size=small&mobile_iframe=true&width=59&height=20&appId" width="59" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+      </span>
+
+      <span class="article-footer__value-item">
+        <div class="article-footer__email-button">
+          <a href="/cdn-cgi/l/email-protection#a4ccc1c8c8cbe4ccc1c8c8cb8ac7cbc99bd7d1c6cec1c7d099e5d6d0cdc7c8c19e84f4c5c7cdc2cdc784d7c7cdc1cad0cdd7d0d784d4c8c5cacacdcac384c5cac084d4c8c5cad0cdcac384c2cbd684c584d3c5d6c9c1d684d3cbd6c8c082c6cbc0dd99f2cdc1d384d0ccc184c5d6d0cdc7c8c184ccc1d6c19e84ccd0d0d4d79e8b8bd3d3d38ad0ccc1c7cdd0cddec1ca8acbd6c38ac5d18bc5d6d0cdc7c8c1d78bd4c5c7cdc2cdc789d7c7cdc1cad0cdd7d0d789d4c8c5cacacdcac389c5cac089d4c8c5cad0cdcac389c2cbd689c589d3c5d6c9c1d689d3cbd6c8c0">
+            <i class="fa fa-envelope"></i>Email
+          </a>
+        </div>
+      </span>
+
+    </span>
+  </div>
+</div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- More articles in theme -->
+    <div class="more-articles card-bg">
+    <div class="grid-wrapper">
+      <div class="grid-row">
+        <div class="article-group clearfix">
+          <h2 class="article-group__heading">
+            More stories in Science
+            <span class="article-group__theme-line" style="background-color:#0f7fcc"></span>
+          </h2>
+        </div>
+      </div>
+
+      <div class="card-wrapper card-wrapper--4">
+                  <div class="card-cell">
+                    
+  <a href="https://www.thecitizen.org.au/articles/new-tack-polio-vaccine-path-eradication" class="article-card article-card--theme-science">
+
+    <!-- IF PROMO IMAGE -->
+          <div class="article-card__image">
+                                    
+                  <div class="article-card__label" style="background-color:#0f7fcc">
+            Science
+          </div>
+        
+        <img src="https://assets.thecitizen.org.au/asset/270/175/default/0/uploads/2018/02/13211708/polio120copy-1.jpg" alt="">
+
+              </div>
+    
+    <div class="article-card__inner">
+
+      
+      <h3 class="article-card__title">New tack on polio vaccine on the path to eradication</h3>
+
+                        <p class="article-card__author">
+            Words by
+                          <span style="color:#0f7fcc">
+                Julie Milland
+              </span>
+                      </p>
+              
+    </div>
+  </a>
+          </div>
+                  <div class="card-cell">
+                    
+  <a href="https://www.thecitizen.org.au/articles/is-artificial-intelligence-going-to-put-journalists-out-of-their-jobs" class="article-card article-card--theme-science">
+
+    <!-- IF PROMO IMAGE -->
+          <div class="article-card__image">
+                                    
+                  <div class="article-card__label" style="background-color:#0f7fcc">
+            Science
+          </div>
+        
+        <img src="https://assets.thecitizen.org.au/asset/270/175/default/0/uploads/2019/05/28114303/Kennedy_Cai_Photo-2-copy.jpeg" alt="">
+
+              </div>
+    
+    <div class="article-card__inner">
+
+      
+      <h3 class="article-card__title">Is Artificial Intelligence going to put journalists out of their jobs?</h3>
+
+                        <p class="article-card__author">
+            Audio by
+                          <span style="color:#0f7fcc">
+                Else Kennedy
+              </span>
+                          <span style="color:#0f7fcc">
+                Shujing Cai
+              </span>
+                      </p>
+              
+    </div>
+  </a>
+          </div>
+                  <div class="card-cell">
+                    
+  <a href="https://www.thecitizen.org.au/articles/polios-last-stand-citizen-editor-shortlisted-for-eureka-prize" class="article-card article-card--no-image article-card--theme-science">
+
+    <!-- IF PROMO IMAGE -->
+    
+    <div class="article-card__inner">
+
+              <span class="article-card__theme" style="color:#0f7fcc">
+          Science
+        </span>
+      
+      <h3 class="article-card__title">Polio&#8217;s last stand: Citizen editor shortlisted for Eureka Prize</h3>
+
+                        <p class="article-card__author">
+            Produced by 
+                          <span style="color:#0f7fcc">
+                The Citizen Team
+              </span>
+                      </p>
+              
+    </div>
+  </a>
+          </div>
+                  <div class="card-cell">
+                    
+  <a href="https://www.thecitizen.org.au/articles/get-set-likely-re-run-last-summers-al-fresco-fiasco" class="article-card article-card--theme-science">
+
+    <!-- IF PROMO IMAGE -->
+          <div class="article-card__image">
+                                    
+                  <div class="article-card__label" style="background-color:#0f7fcc">
+            Science
+          </div>
+        
+        <img src="https://assets.thecitizen.org.au/asset/370/240/default/0/uploads/2018/02/13222015/Wasps2-1.jpeg" alt="">
+
+              </div>
+    
+    <div class="article-card__inner">
+
+      
+      <h3 class="article-card__title">Get set for a likely re-run of last summer&#8217;s al fresco fiasco</h3>
+
+                        <p class="article-card__author">
+            Words by
+                          <span style="color:#0f7fcc">
+                Kate Stanton
+              </span>
+                      </p>
+              
+    </div>
+  </a>
+          </div>
+              </div>
+
+    </div>
+  </div>
+    </section>
+
+        <div class="about-subscribe">
+  <div class="grid-wrapper clearfix">
+    <div class="grid-row">
+
+      <div class="
+        grid-col
+        grid-col--7
+        tb-grid-col--10
+        tb-grid-col--push-1
+        ph-grid-col--12
+        grid-col--bottom-flush
+      ">
+        <div class="about">
+          <h2 class="about__heading">About The Citizen</h2>
+          <p class="about__copy">THE CITIZEN is a publication of the Centre for Advancing Journalism. It has several aims. Foremost, it is a teaching tool that showcases the work of the students in the University of Melbourne’s Master of Journalism and Master of International Journalism programs, giving them real-world experience in working for publication and to deadline. <a href="/about">Find out more &rarr;</a>
+          </p>
+
+          <ul class="about-staff-list">
+            <li>Editor: <a href="/cdn-cgi/l/email-protection#543e373c353a3038312614213a3d393138367a3130217a3521">Jo Chandler</a></li>
+            <li>Reporter: Jordyn Beazley</li>
+            <li>Audio &amp; Video editor: <a href="/cdn-cgi/l/email-protection#1c707369756f7d327075715c6972757179707e32797869327d69">Louisa Lim</a></li>
+            <li>Data editor: Craig Butt</li>
+            <li>Editor-In-Chief: Andrew Dodd</li>
+            <li>Business editor: <a href="/cdn-cgi/l/email-protection#3c50495f45124f51457c4952555159505e12595849125d49">Lucy Smy</a></li>
+          </ul>
+
+          <a href="/articles/citizen-wins-best-student-journalism-publication/" class="about__button">Winner — BEST PUBLICATION 2016 Ossie Awards</a>
+        </div>
+      </div>
+
+      <div class="
+        grid-col
+        grid-col--3
+        grid-col--push-1
+        tb-grid-col--6
+        tb-grid-col--push-3
+        ph-grid-col--12
+        ph-grid-col--push-0
+        grid-col--bottom-flush
+      ">
+        <div class="subscribe">
+          <h3 class="subscribe__heading">Subscribe to The Citizen</h3>
+          <p class="subscribe__copy">Stay up to speed on the latest news and events at The Citizen.</p>
+
+          <!-- Begin Mailchimp Signup Form -->
+          <div id="mc_embed_signup">
+
+            <form action="https://thecitizen.us19.list-manage.com/subscribe/post?u=418f69b647c0508dd2c7fb833&amp;id=10cd6ce9f1" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate subscribe__form" target="_blank" novalidate>
+
+              <div id="mc_embed_signup_scroll">
+
+                <div class="mc-field-group">
+                  <input type="email" placeholder="your@email.com" value="" name="EMAIL" class="required email subscribe__input" id="mce-EMAIL">
+                </div>
+
+                <div id="mce-responses" class="clear">
+                  <div class="response" id="mce-error-response" style="display:none"></div>
+                  <div class="response" id="mce-success-response" style="display:none"></div>
+                </div>
+
+                <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_418f69b647c0508dd2c7fb833_10cd6ce9f1" tabindex="-1" value=""></div>
+
+                <div class="clear">
+                  <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button subscribe__button">
+                </div>
+
+              </div>
+            </form>
+          </div>
+
+          <!--End mc_embed_signup-->
+
+
+
+
+
+
+
+
+
+
+          <span class="subscribe__footnote">By subscribing, you agree to our <a href="http://www.unimelb.edu.au/governance/disclaimer" target="_blank">privacy policy</a>.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+        <footer class="footer" role="contentinfo">
+  <div class="grid-wrapper clearfix">
+    <div class="grid-row">
+
+      <div class="grid-col grid-col--4 tb-grid-col--6 ph-grid-col--12">
+        <div class="footer__logo">
+          <a href="http://arts.unimelb.edu.au/caj">
+            <img src="https://www.thecitizen.org.au/wp-content/themes/the-citizen/assets/public/footer/unimelb-cfaj-logo.png" alt="Centre for advancing journalism" />
+          </a>
+        </div>
+      </div>
+
+      <div class="grid-col grid-col--6 ph-grid-col--12">
+        <ul class="footer__nav">
+                                    <li class="footer__nav-item">
+                <a href="https://www.thecitizen.org.au/themes/culture">Culture</a>
+              </li>
+                          <li class="footer__nav-item">
+                <a href="https://www.thecitizen.org.au/themes/health">Health</a>
+              </li>
+                          <li class="footer__nav-item">
+                <a href="https://www.thecitizen.org.au/themes/money">Money</a>
+              </li>
+                          <li class="footer__nav-item">
+                <a href="https://www.thecitizen.org.au/themes/people">People</a>
+              </li>
+                          <li class="footer__nav-item">
+                <a href="https://www.thecitizen.org.au/themes/politics">Politics</a>
+              </li>
+                          <li class="footer__nav-item">
+                <a href="https://www.thecitizen.org.au/themes/projects">Projects</a>
+              </li>
+                          <li class="footer__nav-item">
+                <a href="https://www.thecitizen.org.au/themes/science">Science</a>
+              </li>
+                          <li class="footer__nav-item">
+                <a href="https://www.thecitizen.org.au/themes/society">Society</a>
+              </li>
+                          <li class="footer__nav-item">
+                <a href="https://www.thecitizen.org.au/themes/sport">Sport</a>
+              </li>
+                      
+          <li class="footer__nav-item">
+            <a href="https://www.thecitizen.org.au/about">About</a>
+          </li>
+          <li class="footer__nav-item">
+            <a href="https://www.thecitizen.org.au/policy">Policy</a>
+          </li>
+          <li class="footer__nav-item">
+            <a href="https://www.thecitizen.org.au/contact">Contact us</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="grid-col grid-col--2 ph-grid-col--12">
+
+
+        <ul class="footer-social">
+          <li class="footer-social__list-item">
+            <a class="footer-social__anchor footer-social__anchor--twitter" target="_blank" href="https://twitter.com/thecitizenweb">
+              <i class="fa fa-twitter" aria-hidden="true"></i>
+            </a>
+          </li>
+          <li class="footer-social__list-item">
+            <a class="footer-social__anchor footer-social__anchor--facebook" target="_blank" href="https://www.facebook.com/thecitizen.org.au">
+              <i class="fa fa-facebook-official" aria-hidden="true"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="grid-row">
+
+      <div class="grid-col grid-col--12 grid-col--bottom-flush">
+        <div class="footer__details">
+          <p>
+            <span>
+              Contact:
+              <a href="/cdn-cgi/l/email-protection#c5b1ada0a6acb1acbfa0abe8acaba3aa85b0abaca8a0a9a7eba0a1b0eba4b0"><span class="__cf_email__" data-cfemail="60140805030914091a050e4d090e060f20150e090d050c024e0504154e0115">[email&#160;protected]</span></a>
+            </span>
+            <span>Editor: Jo Chandler</span>
+            <span>Director (Centre for Advancing Journalism): Dr Andrew Dodd</span>
+
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+              <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>!function(t){function e(r){if(n[r])return n[r].exports;var o=n[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,e),o.l=!0,o.exports}var n={};e.m=t,e.c=n,e.d=function(t,n,r){e.o(t,n)||Object.defineProperty(t,n,{configurable:!1,enumerable:!0,get:r})},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="/app/assets/",e(e.s=16)}([function(t,e,n){"use strict";function r(){}function o(t){try{return t.then}catch(t){return b=t,w}}function i(t,e){try{return t(e)}catch(t){return b=t,w}}function s(t,e,n){try{t(e,n)}catch(t){return b=t,w}}function a(t){if("object"!=typeof this)throw new TypeError("Promises must be constructed via new");if("function"!=typeof t)throw new TypeError("Promise constructor's argument is not a function");this._75=0,this._83=0,this._18=null,this._38=null,t!==r&&y(t,this)}function u(t,e,n){return new t.constructor(function(o,i){var s=new a(r);s.then(o,i),f(t,new p(e,n,s))})}function f(t,e){for(;3===t._83;)t=t._18;if(a._47&&a._47(t),0===t._83)return 0===t._75?(t._75=1,void(t._38=e)):1===t._75?(t._75=2,void(t._38=[t._38,e])):void t._38.push(e);l(t,e)}function l(t,e){m(function(){var n=1===t._83?e.onFulfilled:e.onRejected;if(null===n)return void(1===t._83?c(e.promise,t._18):d(e.promise,t._18));var r=i(n,t._18);r===w?d(e.promise,b):c(e.promise,r)})}function c(t,e){if(e===t)return d(t,new TypeError("A promise cannot be resolved with itself."));if(e&&("object"==typeof e||"function"==typeof e)){var n=o(e);if(n===w)return d(t,b);if(n===t.then&&e instanceof a)return t._83=3,t._18=e,void h(t);if("function"==typeof n)return void y(n.bind(e),t)}t._83=1,t._18=e,h(t)}function d(t,e){t._83=2,t._18=e,a._71&&a._71(t,e),h(t)}function h(t){if(1===t._75&&(f(t,t._38),t._38=null),2===t._75){for(var e=0;e<t._38.length;e++)f(t,t._38[e]);t._38=null}}function p(t,e,n){this.onFulfilled="function"==typeof t?t:null,this.onRejected="function"==typeof e?e:null,this.promise=n}function y(t,e){var n=!1,r=s(t,function(t){n||(n=!0,c(e,t))},function(t){n||(n=!0,d(e,t))});n||r!==w||(n=!0,d(e,b))}var m=n(6),b=null,w={};t.exports=a,a._47=null,a._71=null,a._44=r,a.prototype.then=function(t,e){if(this.constructor!==a)return u(this,t,e);var n=new a(r);return f(this,new p(t,e,n)),n}},function(t,e){var n;n=function(){return this}();try{n=n||Function("return this")()||(0,eval)("this")}catch(t){"object"==typeof window&&(n=window)}t.exports=n},,,function(t,e,n){"use strict";"undefined"==typeof Promise&&(n(5).enable(),window.Promise=n(7)),n(8),Object.assign=n(9)},function(t,e,n){"use strict";function r(){f=!1,a._47=null,a._71=null}function o(t){function e(e){(t.allRejections||s(c[e].error,t.whitelist||u))&&(c[e].displayId=l++,t.onUnhandled?(c[e].logged=!0,t.onUnhandled(c[e].displayId,c[e].error)):(c[e].logged=!0,i(c[e].displayId,c[e].error)))}function n(e){c[e].logged&&(t.onHandled?t.onHandled(c[e].displayId,c[e].error):c[e].onUnhandled||(console.warn("Promise Rejection Handled (id: "+c[e].displayId+"):"),console.warn('  This means you can ignore any previous messages of the form "Possible Unhandled Promise Rejection" with id '+c[e].displayId+".")))}t=t||{},f&&r(),f=!0;var o=0,l=0,c={};a._47=function(t){2===t._83&&c[t._56]&&(c[t._56].logged?n(t._56):clearTimeout(c[t._56].timeout),delete c[t._56])},a._71=function(t,n){0===t._75&&(t._56=o++,c[t._56]={displayId:null,error:n,timeout:setTimeout(e.bind(null,t._56),s(n,u)?100:2e3),logged:!1})}}function i(t,e){console.warn("Possible Unhandled Promise Rejection (id: "+t+"):"),((e&&(e.stack||e))+"").split("\n").forEach(function(t){console.warn("  "+t)})}function s(t,e){return e.some(function(e){return t instanceof e})}var a=n(0),u=[ReferenceError,TypeError,RangeError],f=!1;e.disable=r,e.enable=o},function(t,e,n){"use strict";(function(e){function n(t){s.length||(i(),a=!0),s[s.length]=t}function r(){for(;u<s.length;){var t=u;if(u+=1,s[t].call(),u>f){for(var e=0,n=s.length-u;e<n;e++)s[e]=s[e+u];s.length-=u,u=0}}s.length=0,u=0,a=!1}function o(t){return function(){function e(){clearTimeout(n),clearInterval(r),t()}var n=setTimeout(e,0),r=setInterval(e,50)}}t.exports=n;var i,s=[],a=!1,u=0,f=1024,l=void 0!==e?e:self,c=l.MutationObserver||l.WebKitMutationObserver;i="function"==typeof c?function(t){var e=1,n=new c(t),r=document.createTextNode("");return n.observe(r,{characterData:!0}),function(){e=-e,r.data=e}}(r):o(r),n.requestFlush=i,n.makeRequestCallFromTimer=o}).call(e,n(1))},function(t,e,n){"use strict";function r(t){var e=new o(o._44);return e._83=1,e._18=t,e}var o=n(0);t.exports=o;var i=r(!0),s=r(!1),a=r(null),u=r(void 0),f=r(0),l=r("");o.resolve=function(t){if(t instanceof o)return t;if(null===t)return a;if(void 0===t)return u;if(!0===t)return i;if(!1===t)return s;if(0===t)return f;if(""===t)return l;if("object"==typeof t||"function"==typeof t)try{var e=t.then;if("function"==typeof e)return new o(e.bind(t))}catch(t){return new o(function(e,n){n(t)})}return r(t)},o.all=function(t){var e=Array.prototype.slice.call(t);return new o(function(t,n){function r(s,a){if(a&&("object"==typeof a||"function"==typeof a)){if(a instanceof o&&a.then===o.prototype.then){for(;3===a._83;)a=a._18;return 1===a._83?r(s,a._18):(2===a._83&&n(a._18),void a.then(function(t){r(s,t)},n))}var u=a.then;if("function"==typeof u){return void new o(u.bind(a)).then(function(t){r(s,t)},n)}}e[s]=a,0==--i&&t(e)}if(0===e.length)return t([]);for(var i=e.length,s=0;s<e.length;s++)r(s,e[s])})},o.reject=function(t){return new o(function(e,n){n(t)})},o.race=function(t){return new o(function(e,n){t.forEach(function(t){o.resolve(t).then(e,n)})})},o.prototype.catch=function(t){return this.then(null,t)}},function(t,e){!function(t){"use strict";function e(t){if("string"!=typeof t&&(t=String(t)),/[^a-z0-9\-#$%&'*+.\^_`|~]/i.test(t))throw new TypeError("Invalid character in header field name");return t.toLowerCase()}function n(t){return"string"!=typeof t&&(t=String(t)),t}function r(t){var e={next:function(){var e=t.shift();return{done:void 0===e,value:e}}};return b.iterable&&(e[Symbol.iterator]=function(){return e}),e}function o(t){this.map={},t instanceof o?t.forEach(function(t,e){this.append(e,t)},this):Array.isArray(t)?t.forEach(function(t){this.append(t[0],t[1])},this):t&&Object.getOwnPropertyNames(t).forEach(function(e){this.append(e,t[e])},this)}function i(t){if(t.bodyUsed)return Promise.reject(new TypeError("Already read"));t.bodyUsed=!0}function s(t){return new Promise(function(e,n){t.onload=function(){e(t.result)},t.onerror=function(){n(t.error)}})}function a(t){var e=new FileReader,n=s(e);return e.readAsArrayBuffer(t),n}function u(t){var e=new FileReader,n=s(e);return e.readAsText(t),n}function f(t){for(var e=new Uint8Array(t),n=new Array(e.length),r=0;r<e.length;r++)n[r]=String.fromCharCode(e[r]);return n.join("")}function l(t){if(t.slice)return t.slice(0);var e=new Uint8Array(t.byteLength);return e.set(new Uint8Array(t)),e.buffer}function c(){return this.bodyUsed=!1,this._initBody=function(t){if(this._bodyInit=t,t)if("string"==typeof t)this._bodyText=t;else if(b.blob&&Blob.prototype.isPrototypeOf(t))this._bodyBlob=t;else if(b.formData&&FormData.prototype.isPrototypeOf(t))this._bodyFormData=t;else if(b.searchParams&&URLSearchParams.prototype.isPrototypeOf(t))this._bodyText=t.toString();else if(b.arrayBuffer&&b.blob&&v(t))this._bodyArrayBuffer=l(t.buffer),this._bodyInit=new Blob([this._bodyArrayBuffer]);else{if(!b.arrayBuffer||!ArrayBuffer.prototype.isPrototypeOf(t)&&!g(t))throw new Error("unsupported BodyInit type");this._bodyArrayBuffer=l(t)}else this._bodyText="";this.headers.get("content-type")||("string"==typeof t?this.headers.set("content-type","text/plain;charset=UTF-8"):this._bodyBlob&&this._bodyBlob.type?this.headers.set("content-type",this._bodyBlob.type):b.searchParams&&URLSearchParams.prototype.isPrototypeOf(t)&&this.headers.set("content-type","application/x-www-form-urlencoded;charset=UTF-8"))},b.blob&&(this.blob=function(){var t=i(this);if(t)return t;if(this._bodyBlob)return Promise.resolve(this._bodyBlob);if(this._bodyArrayBuffer)return Promise.resolve(new Blob([this._bodyArrayBuffer]));if(this._bodyFormData)throw new Error("could not read FormData body as blob");return Promise.resolve(new Blob([this._bodyText]))},this.arrayBuffer=function(){return this._bodyArrayBuffer?i(this)||Promise.resolve(this._bodyArrayBuffer):this.blob().then(a)}),this.text=function(){var t=i(this);if(t)return t;if(this._bodyBlob)return u(this._bodyBlob);if(this._bodyArrayBuffer)return Promise.resolve(f(this._bodyArrayBuffer));if(this._bodyFormData)throw new Error("could not read FormData body as text");return Promise.resolve(this._bodyText)},b.formData&&(this.formData=function(){return this.text().then(p)}),this.json=function(){return this.text().then(JSON.parse)},this}function d(t){var e=t.toUpperCase();return _.indexOf(e)>-1?e:t}function h(t,e){e=e||{};var n=e.body;if(t instanceof h){if(t.bodyUsed)throw new TypeError("Already read");this.url=t.url,this.credentials=t.credentials,e.headers||(this.headers=new o(t.headers)),this.method=t.method,this.mode=t.mode,n||null==t._bodyInit||(n=t._bodyInit,t.bodyUsed=!0)}else this.url=String(t);if(this.credentials=e.credentials||this.credentials||"omit",!e.headers&&this.headers||(this.headers=new o(e.headers)),this.method=d(e.method||this.method||"GET"),this.mode=e.mode||this.mode||null,this.referrer=null,("GET"===this.method||"HEAD"===this.method)&&n)throw new TypeError("Body not allowed for GET or HEAD requests");this._initBody(n)}function p(t){var e=new FormData;return t.trim().split("&").forEach(function(t){if(t){var n=t.split("="),r=n.shift().replace(/\+/g," "),o=n.join("=").replace(/\+/g," ");e.append(decodeURIComponent(r),decodeURIComponent(o))}}),e}function y(t){var e=new o;return t.split(/\r?\n/).forEach(function(t){var n=t.split(":"),r=n.shift().trim();if(r){var o=n.join(":").trim();e.append(r,o)}}),e}function m(t,e){e||(e={}),this.type="default",this.status="status"in e?e.status:200,this.ok=this.status>=200&&this.status<300,this.statusText="statusText"in e?e.statusText:"OK",this.headers=new o(e.headers),this.url=e.url||"",this._initBody(t)}if(!t.fetch){var b={searchParams:"URLSearchParams"in t,iterable:"Symbol"in t&&"iterator"in Symbol,blob:"FileReader"in t&&"Blob"in t&&function(){try{return new Blob,!0}catch(t){return!1}}(),formData:"FormData"in t,arrayBuffer:"ArrayBuffer"in t};if(b.arrayBuffer)var w=["[object Int8Array]","[object Uint8Array]","[object Uint8ClampedArray]","[object Int16Array]","[object Uint16Array]","[object Int32Array]","[object Uint32Array]","[object Float32Array]","[object Float64Array]"],v=function(t){return t&&DataView.prototype.isPrototypeOf(t)},g=ArrayBuffer.isView||function(t){return t&&w.indexOf(Object.prototype.toString.call(t))>-1};o.prototype.append=function(t,r){t=e(t),r=n(r);var o=this.map[t];this.map[t]=o?o+","+r:r},o.prototype.delete=function(t){delete this.map[e(t)]},o.prototype.get=function(t){return t=e(t),this.has(t)?this.map[t]:null},o.prototype.has=function(t){return this.map.hasOwnProperty(e(t))},o.prototype.set=function(t,r){this.map[e(t)]=n(r)},o.prototype.forEach=function(t,e){for(var n in this.map)this.map.hasOwnProperty(n)&&t.call(e,this.map[n],n,this)},o.prototype.keys=function(){var t=[];return this.forEach(function(e,n){t.push(n)}),r(t)},o.prototype.values=function(){var t=[];return this.forEach(function(e){t.push(e)}),r(t)},o.prototype.entries=function(){var t=[];return this.forEach(function(e,n){t.push([n,e])}),r(t)},b.iterable&&(o.prototype[Symbol.iterator]=o.prototype.entries);var _=["DELETE","GET","HEAD","OPTIONS","POST","PUT"];h.prototype.clone=function(){return new h(this,{body:this._bodyInit})},c.call(h.prototype),c.call(m.prototype),m.prototype.clone=function(){return new m(this._bodyInit,{status:this.status,statusText:this.statusText,headers:new o(this.headers),url:this.url})},m.error=function(){var t=new m(null,{status:0,statusText:""});return t.type="error",t};var T=[301,302,303,307,308];m.redirect=function(t,e){if(-1===T.indexOf(e))throw new RangeError("Invalid status code");return new m(null,{status:e,headers:{location:t}})},t.Headers=o,t.Request=h,t.Response=m,t.fetch=function(t,e){return new Promise(function(n,r){var o=new h(t,e),i=new XMLHttpRequest;i.onload=function(){var t={status:i.status,statusText:i.statusText,headers:y(i.getAllResponseHeaders()||"")};t.url="responseURL"in i?i.responseURL:t.headers.get("X-Request-URL");var e="response"in i?i.response:i.responseText;n(new m(e,t))},i.onerror=function(){r(new TypeError("Network request failed"))},i.ontimeout=function(){r(new TypeError("Network request failed"))},i.open(o.method,o.url,!0),"include"===o.credentials&&(i.withCredentials=!0),"responseType"in i&&b.blob&&(i.responseType="blob"),o.headers.forEach(function(t,e){i.setRequestHeader(e,t)}),i.send(void 0===o._bodyInit?null:o._bodyInit)})},t.fetch.polyfill=!0}}("undefined"!=typeof self?self:this)},function(t,e,n){"use strict";function r(t){if(null===t||void 0===t)throw new TypeError("Object.assign cannot be called with null or undefined");return Object(t)}var o=Object.getOwnPropertySymbols,i=Object.prototype.hasOwnProperty,s=Object.prototype.propertyIsEnumerable;t.exports=function(){try{if(!Object.assign)return!1;var t=new String("abc");if(t[5]="de","5"===Object.getOwnPropertyNames(t)[0])return!1;for(var e={},n=0;n<10;n++)e["_"+String.fromCharCode(n)]=n;if("0123456789"!==Object.getOwnPropertyNames(e).map(function(t){return e[t]}).join(""))return!1;var r={};return"abcdefghijklmnopqrst".split("").forEach(function(t){r[t]=t}),"abcdefghijklmnopqrst"===Object.keys(Object.assign({},r)).join("")}catch(t){return!1}}()?Object.assign:function(t,e){for(var n,a,u=r(t),f=1;f<arguments.length;f++){n=Object(arguments[f]);for(var l in n)i.call(n,l)&&(u[l]=n[l]);if(o){a=o(n);for(var c=0;c<a.length;c++)s.call(n,a[c])&&(u[a[c]]=n[a[c]])}}return u}},,,,,,,function(t,e,n){n(4),t.exports=n(17)},function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});n(18);n(20)},function(t,e,n){"use strict";var r=n(19),o=n.n(r),i=[{family:"PT Serif",style:"normal",weight:400},{family:"PT Serif",style:"normal",weight:700},{family:"PT Serif",style:"italic",weight:400},{family:"PT Serif",style:"italic",weight:700},{family:"Space mono",style:"normal",weight:400},{family:"Space mono",style:"normal",weight:700},{family:"Space mono",style:"italic",weight:400},{family:"Space mono",style:"italic",weight:700},{family:"Libre Franklin",style:"normal",weight:400},{family:"Libre Franklin",style:"normal",weight:700},{family:"Libre Franklin",style:"italic",weight:400},{family:"Libre Franklin",style:"italic",weight:700},{family:"Lato",style:"normal",weight:400},{family:"Lato",style:"normal",weight:700},{family:"Lato",style:"normal",weight:900},{family:"Lato",style:"italic",weight:400},{family:"Lato",style:"italic",weight:700},{family:"Lato",style:"italic",weight:900}];!function(t){if(!window.localStorage.getItem("fontsLoaded")){var e=t.map(function(t){return new o.a(t.family,{weight:t.weight,style:t.style}).load(null,1500)});Promise.all(e).then(function(){window.document.documentElement.className+=" fonts-loaded",window.localStorage.setItem("fontsLoaded",!0)},function(){window.document.documentElement.className+=" fonts-loaded"})}}(i)},function(t,e,n){!function(){function e(t,e){document.addEventListener?t.addEventListener("scroll",e,!1):t.attachEvent("scroll",e)}function n(t){document.body?t():document.addEventListener?document.addEventListener("DOMContentLoaded",function e(){document.removeEventListener("DOMContentLoaded",e),t()}):document.attachEvent("onreadystatechange",function e(){"interactive"!=document.readyState&&"complete"!=document.readyState||(document.detachEvent("onreadystatechange",e),t())})}function r(t){this.a=document.createElement("div"),this.a.setAttribute("aria-hidden","true"),this.a.appendChild(document.createTextNode(t)),this.b=document.createElement("span"),this.c=document.createElement("span"),this.h=document.createElement("span"),this.f=document.createElement("span"),this.g=-1,this.b.style.cssText="max-width:none;display:inline-block;position:absolute;height:100%;width:100%;overflow:scroll;font-size:16px;",this.c.style.cssText="max-width:none;display:inline-block;position:absolute;height:100%;width:100%;overflow:scroll;font-size:16px;",this.f.style.cssText="max-width:none;display:inline-block;position:absolute;height:100%;width:100%;overflow:scroll;font-size:16px;",this.h.style.cssText="display:inline-block;width:200%;height:200%;font-size:16px;max-width:none;",this.b.appendChild(this.h),this.c.appendChild(this.f),this.a.appendChild(this.b),this.a.appendChild(this.c)}function o(t,e){t.a.style.cssText="max-width:none;min-width:20px;min-height:20px;display:inline-block;overflow:hidden;position:absolute;width:auto;margin:0;padding:0;top:-999px;white-space:nowrap;font-synthesis:none;font:"+e+";"}function i(t){var e=t.a.offsetWidth,n=e+100;return t.f.style.width=n+"px",t.c.scrollLeft=n,t.b.scrollLeft=t.b.scrollWidth+100,t.g!==e&&(t.g=e,!0)}function s(t,n){function r(){var t=o;i(t)&&t.a.parentNode&&n(t.g)}var o=t;e(t.b,r),e(t.c,r),i(t)}function a(t,e){var n=e||{};this.family=t,this.style=n.style||"normal",this.weight=n.weight||"normal",this.stretch=n.stretch||"normal"}function u(){if(null===h)if(f()&&/Apple/.test(window.navigator.vendor)){var t=/AppleWebKit\/([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))/.exec(window.navigator.userAgent);h=!!t&&603>parseInt(t[1],10)}else h=!1;return h}function f(){return null===y&&(y=!!document.fonts),y}function l(){if(null===p){var t=document.createElement("div");try{t.style.font="condensed 100px sans-serif"}catch(t){}p=""!==t.style.font}return p}function c(t,e){return[t.style,t.weight,l()?t.stretch:"","100px",e].join(" ")}var d=null,h=null,p=null,y=null;a.prototype.load=function(t,e){var i=this,a=t||"BESbswy",l=0,h=e||3e3,p=(new Date).getTime();return new Promise(function(t,e){if(f()&&!u()){var y=new Promise(function(t,e){function n(){(new Date).getTime()-p>=h?e():document.fonts.load(c(i,'"'+i.family+'"'),a).then(function(e){1<=e.length?t():setTimeout(n,25)},function(){e()})}n()}),m=new Promise(function(t,e){l=setTimeout(e,h)});Promise.race([m,y]).then(function(){clearTimeout(l),t(i)},function(){e(i)})}else n(function(){function n(){var e;(e=-1!=b&&-1!=w||-1!=b&&-1!=v||-1!=w&&-1!=v)&&((e=b!=w&&b!=v&&w!=v)||(null===d&&(e=/AppleWebKit\/([0-9]+)(?:\.([0-9]+))/.exec(window.navigator.userAgent),d=!!e&&(536>parseInt(e[1],10)||536===parseInt(e[1],10)&&11>=parseInt(e[2],10))),e=d&&(b==g&&w==g&&v==g||b==_&&w==_&&v==_||b==T&&w==T&&v==T)),e=!e),e&&(x.parentNode&&x.parentNode.removeChild(x),clearTimeout(l),t(i))}function u(){if((new Date).getTime()-p>=h)x.parentNode&&x.parentNode.removeChild(x),e(i);else{var t=document.hidden;!0!==t&&void 0!==t||(b=f.a.offsetWidth,w=y.a.offsetWidth,v=m.a.offsetWidth,n()),l=setTimeout(u,50)}}var f=new r(a),y=new r(a),m=new r(a),b=-1,w=-1,v=-1,g=-1,_=-1,T=-1,x=document.createElement("div");x.dir="ltr",o(f,c(i,"sans-serif")),o(y,c(i,"serif")),o(m,c(i,"monospace")),x.appendChild(f.a),x.appendChild(y.a),x.appendChild(m.a),document.body.appendChild(x),g=f.a.offsetWidth,_=y.a.offsetWidth,T=m.a.offsetWidth,u(),s(f,function(t){b=t,n()}),o(f,c(i,'"'+i.family+'",sans-serif')),s(y,function(t){w=t,n()}),o(y,c(i,'"'+i.family+'",serif')),s(m,function(t){v=t,n()}),o(m,c(i,'"'+i.family+'",monospace'))})})},t.exports=a}()},function(t,e){function n(t){throw new Error("Cannot find module '"+t+"'.")}n.keys=function(){return[]},n.resolve=n,t.exports=n,n.id=20}]);</script>
+      </body>
+</html><!-- WP Fastest Cache file was created in 0.47924304008484 seconds, on 19-06-21 2:22:21 --><!-- via php -->

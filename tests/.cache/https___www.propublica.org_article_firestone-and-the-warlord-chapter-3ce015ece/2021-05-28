@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    
+            
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+    <!-- NR JS -->
+    <script>window.NREUM||(NREUM={}),__nr_require=function(t,n,e){function r(e){if(!n[e]){var o=n[e]={exports:{}};t[e][0].call(o.exports,function(n){var o=t[e][1][n];return r(o||n)},o,o.exports)}return n[e].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<e.length;o++)r(e[o]);return r}({1:[function(t,n,e){function r(t){try{s.console&&console.log(t)}catch(n){}}var o,i=t("ee"),a=t(15),s={};try{o=localStorage.getItem("__nr_flags").split(","),console&&"function"==typeof console.log&&(s.console=!0,o.indexOf("dev")!==-1&&(s.dev=!0),o.indexOf("nr_dev")!==-1&&(s.nrDev=!0))}catch(c){}s.nrDev&&i.on("internal-error",function(t){r(t.stack)}),s.dev&&i.on("fn-err",function(t,n,e){r(e.stack)}),s.dev&&(r("NR AGENT IN DEVELOPMENT MODE"),r("flags: "+a(s,function(t,n){return t}).join(", ")))},{}],2:[function(t,n,e){function r(t,n,e,r,s){try{p?p-=1:o(s||new UncaughtException(t,n,e),!0)}catch(f){try{i("ierr",[f,c.now(),!0])}catch(d){}}return"function"==typeof u&&u.apply(this,a(arguments))}function UncaughtException(t,n,e){this.message=t||"Uncaught error with no additional information",this.sourceURL=n,this.line=e}function o(t,n){var e=n?null:c.now();i("err",[t,e])}var i=t("handle"),a=t(16),s=t("ee"),c=t("loader"),f=t("gos"),u=window.onerror,d=!1,l="nr@seenError",p=0;c.features.err=!0,t(1),window.onerror=r;try{throw new Error}catch(h){"stack"in h&&(t(8),t(7),"addEventListener"in window&&t(5),c.xhrWrappable&&t(9),d=!0)}s.on("fn-start",function(t,n,e){d&&(p+=1)}),s.on("fn-err",function(t,n,e){d&&!e[l]&&(f(e,l,function(){return!0}),this.thrown=!0,o(e))}),s.on("fn-end",function(){d&&!this.thrown&&p>0&&(p-=1)}),s.on("internal-error",function(t){i("ierr",[t,c.now(),!0])})},{}],3:[function(t,n,e){t("loader").features.ins=!0},{}],4:[function(t,n,e){function r(t){}if(window.performance&&window.performance.timing&&window.performance.getEntriesByType){var o=t("ee"),i=t("handle"),a=t(8),s=t(7),c="learResourceTimings",f="addEventListener",u="resourcetimingbufferfull",d="bstResource",l="resource",p="-start",h="-end",m="fn"+p,w="fn"+h,v="bstTimer",y="pushState",g=t("loader");g.features.stn=!0,t(6);var b=NREUM.o.EV;o.on(m,function(t,n){var e=t[0];e instanceof b&&(this.bstStart=g.now())}),o.on(w,function(t,n){var e=t[0];e instanceof b&&i("bst",[e,n,this.bstStart,g.now()])}),a.on(m,function(t,n,e){this.bstStart=g.now(),this.bstType=e}),a.on(w,function(t,n){i(v,[n,this.bstStart,g.now(),this.bstType])}),s.on(m,function(){this.bstStart=g.now()}),s.on(w,function(t,n){i(v,[n,this.bstStart,g.now(),"requestAnimationFrame"])}),o.on(y+p,function(t){this.time=g.now(),this.startPath=location.pathname+location.hash}),o.on(y+h,function(t){i("bstHist",[location.pathname+location.hash,this.startPath,this.time])}),f in window.performance&&(window.performance["c"+c]?window.performance[f](u,function(t){i(d,[window.performance.getEntriesByType(l)]),window.performance["c"+c]()},!1):window.performance[f]("webkit"+u,function(t){i(d,[window.performance.getEntriesByType(l)]),window.performance["webkitC"+c]()},!1)),document[f]("scroll",r,{passive:!0}),document[f]("keypress",r,!1),document[f]("click",r,!1)}},{}],5:[function(t,n,e){function r(t){for(var n=t;n&&!n.hasOwnProperty(u);)n=Object.getPrototypeOf(n);n&&o(n)}function o(t){s.inPlace(t,[u,d],"-",i)}function i(t,n){return t[1]}var a=t("ee").get("events"),s=t(18)(a,!0),c=t("gos"),f=XMLHttpRequest,u="addEventListener",d="removeEventListener";n.exports=a,"getPrototypeOf"in Object?(r(document),r(window),r(f.prototype)):f.prototype.hasOwnProperty(u)&&(o(window),o(f.prototype)),a.on(u+"-start",function(t,n){var e=t[1],r=c(e,"nr@wrapped",function(){function t(){if("function"==typeof e.handleEvent)return e.handleEvent.apply(e,arguments)}var n={object:t,"function":e}[typeof e];return n?s(n,"fn-",null,n.name||"anonymous"):e});this.wrapped=t[1]=r}),a.on(d+"-start",function(t){t[1]=this.wrapped||t[1]})},{}],6:[function(t,n,e){var r=t("ee").get("history"),o=t(18)(r);n.exports=r,o.inPlace(window.history,["pushState","replaceState"],"-")},{}],7:[function(t,n,e){var r=t("ee").get("raf"),o=t(18)(r),i="equestAnimationFrame";n.exports=r,o.inPlace(window,["r"+i,"mozR"+i,"webkitR"+i,"msR"+i],"raf-"),r.on("raf-start",function(t){t[0]=o(t[0],"fn-")})},{}],8:[function(t,n,e){function r(t,n,e){t[0]=a(t[0],"fn-",null,e)}function o(t,n,e){this.method=e,this.timerDuration=isNaN(t[1])?0:+t[1],t[0]=a(t[0],"fn-",this,e)}var i=t("ee").get("timer"),a=t(18)(i),s="setTimeout",c="setInterval",f="clearTimeout",u="-start",d="-";n.exports=i,a.inPlace(window,[s,"setImmediate"],s+d),a.inPlace(window,[c],c+d),a.inPlace(window,[f,"clearImmediate"],f+d),i.on(c+u,r),i.on(s+u,o)},{}],9:[function(t,n,e){function r(t,n){d.inPlace(n,["onreadystatechange"],"fn-",s)}function o(){var t=this,n=u.context(t);t.readyState>3&&!n.resolved&&(n.resolved=!0,u.emit("xhr-resolved",[],t)),d.inPlace(t,y,"fn-",s)}function i(t){g.push(t),h&&(x?x.then(a):w?w(a):(E=-E,O.data=E))}function a(){for(var t=0;t<g.length;t++)r([],g[t]);g.length&&(g=[])}function s(t,n){return n}function c(t,n){for(var e in t)n[e]=t[e];return n}t(5);var f=t("ee"),u=f.get("xhr"),d=t(18)(u),l=NREUM.o,p=l.XHR,h=l.MO,m=l.PR,w=l.SI,v="readystatechange",y=["onload","onerror","onabort","onloadstart","onloadend","onprogress","ontimeout"],g=[];n.exports=u;var b=window.XMLHttpRequest=function(t){var n=new p(t);try{u.emit("new-xhr",[n],n),n.addEventListener(v,o,!1)}catch(e){try{u.emit("internal-error",[e])}catch(r){}}return n};if(c(p,b),b.prototype=p.prototype,d.inPlace(b.prototype,["open","send"],"-xhr-",s),u.on("send-xhr-start",function(t,n){r(t,n),i(n)}),u.on("open-xhr-start",r),h){var x=m&&m.resolve();if(!w&&!m){var E=1,O=document.createTextNode(E);new h(a).observe(O,{characterData:!0})}}else f.on("fn-end",function(t){t[0]&&t[0].type===v||a()})},{}],10:[function(t,n,e){function r(t){var n=this.params,e=this.metrics;if(!this.ended){this.ended=!0;for(var r=0;r<d;r++)t.removeEventListener(u[r],this.listener,!1);if(!n.aborted){if(e.duration=a.now()-this.startTime,4===t.readyState){n.status=t.status;var i=o(t,this.lastSize);if(i&&(e.rxSize=i),this.sameOrigin){var c=t.getResponseHeader("X-NewRelic-App-Data");c&&(n.cat=c.split(", ").pop())}}else n.status=0;e.cbTime=this.cbTime,f.emit("xhr-done",[t],t),s("xhr",[n,e,this.startTime])}}}function o(t,n){var e=t.responseType;if("json"===e&&null!==n)return n;var r="arraybuffer"===e||"blob"===e||"json"===e?t.response:t.responseText;return h(r)}function i(t,n){var e=c(n),r=t.params;r.host=e.hostname+":"+e.port,r.pathname=e.pathname,t.sameOrigin=e.sameOrigin}var a=t("loader");if(a.xhrWrappable){var s=t("handle"),c=t(11),f=t("ee"),u=["load","error","abort","timeout"],d=u.length,l=t("id"),p=t(14),h=t(13),m=window.XMLHttpRequest;a.features.xhr=!0,t(9),f.on("new-xhr",function(t){var n=this;n.totalCbs=0,n.called=0,n.cbTime=0,n.end=r,n.ended=!1,n.xhrGuids={},n.lastSize=null,p&&(p>34||p<10)||window.opera||t.addEventListener("progress",function(t){n.lastSize=t.loaded},!1)}),f.on("open-xhr-start",function(t){this.params={method:t[0]},i(this,t[1]),this.metrics={}}),f.on("open-xhr-end",function(t,n){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&n.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid)}),f.on("send-xhr-start",function(t,n){var e=this.metrics,r=t[0],o=this;if(e&&r){var i=h(r);i&&(e.txSize=i)}this.startTime=a.now(),this.listener=function(t){try{"abort"===t.type&&(o.params.aborted=!0),("load"!==t.type||o.called===o.totalCbs&&(o.onloadCalled||"function"!=typeof n.onload))&&o.end(n)}catch(e){try{f.emit("internal-error",[e])}catch(r){}}};for(var s=0;s<d;s++)n.addEventListener(u[s],this.listener,!1)}),f.on("xhr-cb-time",function(t,n,e){this.cbTime+=t,n?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof e.onload||this.end(e)}),f.on("xhr-load-added",function(t,n){var e=""+l(t)+!!n;this.xhrGuids&&!this.xhrGuids[e]&&(this.xhrGuids[e]=!0,this.totalCbs+=1)}),f.on("xhr-load-removed",function(t,n){var e=""+l(t)+!!n;this.xhrGuids&&this.xhrGuids[e]&&(delete this.xhrGuids[e],this.totalCbs-=1)}),f.on("addEventListener-end",function(t,n){n instanceof m&&"load"===t[0]&&f.emit("xhr-load-added",[t[1],t[2]],n)}),f.on("removeEventListener-end",function(t,n){n instanceof m&&"load"===t[0]&&f.emit("xhr-load-removed",[t[1],t[2]],n)}),f.on("fn-start",function(t,n,e){n instanceof m&&("onload"===e&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=a.now()))}),f.on("fn-end",function(t,n){this.xhrCbStart&&f.emit("xhr-cb-time",[a.now()-this.xhrCbStart,this.onload,n],n)})}},{}],11:[function(t,n,e){n.exports=function(t){var n=document.createElement("a"),e=window.location,r={};n.href=t,r.port=n.port;var o=n.href.split("://");!r.port&&o[1]&&(r.port=o[1].split("/")[0].split("@").pop().split(":")[1]),r.port&&"0"!==r.port||(r.port="https"===o[0]?"443":"80"),r.hostname=n.hostname||e.hostname,r.pathname=n.pathname,r.protocol=o[0],"/"!==r.pathname.charAt(0)&&(r.pathname="/"+r.pathname);var i=!n.protocol||":"===n.protocol||n.protocol===e.protocol,a=n.hostname===document.domain&&n.port===e.port;return r.sameOrigin=i&&(!n.hostname||a),r}},{}],12:[function(t,n,e){function r(){}function o(t,n,e){return function(){return i(t,[f.now()].concat(s(arguments)),n?null:this,e),n?void 0:this}}var i=t("handle"),a=t(15),s=t(16),c=t("ee").get("tracer"),f=t("loader"),u=NREUM;"undefined"==typeof window.newrelic&&(newrelic=u);var d=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],l="api-",p=l+"ixn-";a(d,function(t,n){u[n]=o(l+n,!0,"api")}),u.addPageAction=o(l+"addPageAction",!0),u.setCurrentRouteName=o(l+"routeName",!0),n.exports=newrelic,u.interaction=function(){return(new r).get()};var h=r.prototype={createTracer:function(t,n){var e={},r=this,o="function"==typeof n;return i(p+"tracer",[f.now(),t,e],r),function(){if(c.emit((o?"":"no-")+"fn-start",[f.now(),r,o],e),o)try{return n.apply(this,arguments)}catch(t){throw c.emit("fn-err",[arguments,this,t],e),t}finally{c.emit("fn-end",[f.now()],e)}}}};a("setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,n){h[n]=o(p+n)}),newrelic.noticeError=function(t){"string"==typeof t&&(t=new Error(t)),i("err",[t,f.now()])}},{}],13:[function(t,n,e){n.exports=function(t){if("string"==typeof t&&t.length)return t.length;if("object"==typeof t){if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if(!("undefined"!=typeof FormData&&t instanceof FormData))try{return JSON.stringify(t).length}catch(n){return}}}},{}],14:[function(t,n,e){var r=0,o=navigator.userAgent.match(/Firefox[\/\s](\d+\.\d+)/);o&&(r=+o[1]),n.exports=r},{}],15:[function(t,n,e){function r(t,n){var e=[],r="",i=0;for(r in t)o.call(t,r)&&(e[i]=n(r,t[r]),i+=1);return e}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],16:[function(t,n,e){function r(t,n,e){n||(n=0),"undefined"==typeof e&&(e=t?t.length:0);for(var r=-1,o=e-n||0,i=Array(o<0?0:o);++r<o;)i[r]=t[n+r];return i}n.exports=r},{}],17:[function(t,n,e){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],18:[function(t,n,e){function r(t){return!(t&&t instanceof Function&&t.apply&&!t[a])}var o=t("ee"),i=t(16),a="nr@original",s=Object.prototype.hasOwnProperty,c=!1;n.exports=function(t,n){function e(t,n,e,o){function nrWrapper(){var r,a,s,c;try{a=this,r=i(arguments),s="function"==typeof e?e(r,a):e||{}}catch(f){l([f,"",[r,a,o],s])}u(n+"start",[r,a,o],s);try{return c=t.apply(a,r)}catch(d){throw u(n+"err",[r,a,d],s),d}finally{u(n+"end",[r,a,c],s)}}return r(t)?t:(n||(n=""),nrWrapper[a]=t,d(t,nrWrapper),nrWrapper)}function f(t,n,o,i){o||(o="");var a,s,c,f="-"===o.charAt(0);for(c=0;c<n.length;c++)s=n[c],a=t[s],r(a)||(t[s]=e(a,f?s+o:o,i,s))}function u(e,r,o){if(!c||n){var i=c;c=!0;try{t.emit(e,r,o,n)}catch(a){l([a,e,r,o])}c=i}}function d(t,n){if(Object.defineProperty&&Object.keys)try{var e=Object.keys(t);return e.forEach(function(e){Object.defineProperty(n,e,{get:function(){return t[e]},set:function(n){return t[e]=n,n}})}),n}catch(r){l([r])}for(var o in t)s.call(t,o)&&(n[o]=t[o]);return n}function l(n){try{t.emit("internal-error",n)}catch(e){}}return t||(t=o),e.inPlace=f,e.flag=a,e}},{}],ee:[function(t,n,e){function r(){}function o(t){function n(t){return t&&t instanceof r?t:t?c(t,s,i):i()}function e(e,r,o,i){if(!l.aborted||i){t&&t(e,r,o);for(var a=n(o),s=h(e),c=s.length,f=0;f<c;f++)s[f].apply(a,r);var d=u[y[e]];return d&&d.push([g,e,r,a]),a}}function p(t,n){v[t]=h(t).concat(n)}function h(t){return v[t]||[]}function m(t){return d[t]=d[t]||o(e)}function w(t,n){f(t,function(t,e){n=n||"feature",y[e]=n,n in u||(u[n]=[])})}var v={},y={},g={on:p,emit:e,get:m,listeners:h,context:n,buffer:w,abort:a,aborted:!1};return g}function i(){return new r}function a(){(u.api||u.feature)&&(l.aborted=!0,u=l.backlog={})}var s="nr@context",c=t("gos"),f=t(15),u={},d={},l=n.exports=o();l.backlog=u},{}],gos:[function(t,n,e){function r(t,n,e){if(o.call(t,n))return t[n];var r=e();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return t[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(t,n,e){function r(t,n,e,r){o.buffer([t],r),o.emit(t,n,e)}var o=t("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(t,n,e){function r(t){var n=typeof t;return!t||"object"!==n&&"function"!==n?-1:t===window?0:a(t,i,function(){return o++})}var o=1,i="nr@id",a=t("gos");n.exports=r},{}],loader:[function(t,n,e){function r(){if(!x++){var t=b.info=NREUM.info,n=l.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&n))return u.abort();f(y,function(n,e){t[n]||(t[n]=e)}),c("mark",["onload",a()+b.offset],null,"api");var e=l.createElement("script");e.src="https://"+t.agent,n.parentNode.insertBefore(e,n)}}function o(){"complete"===l.readyState&&i()}function i(){c("mark",["domContent",a()+b.offset],null,"api")}function a(){return E.exists&&performance.now?Math.round(performance.now()):(s=Math.max((new Date).getTime(),s))-b.offset}var s=(new Date).getTime(),c=t("handle"),f=t(15),u=t("ee"),d=window,l=d.document,p="addEventListener",h="attachEvent",m=d.XMLHttpRequest,w=m&&m.prototype;NREUM.o={ST:setTimeout,SI:d.setImmediate,CT:clearTimeout,XHR:m,REQ:d.Request,EV:d.Event,PR:d.Promise,MO:d.MutationObserver};var v=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1071.min.js"},g=m&&w&&w[p]&&!/CriOS/.test(navigator.userAgent),b=n.exports={offset:s,now:a,origin:v,features:{},xhrWrappable:g};t(12),l[p]?(l[p]("DOMContentLoaded",i,!1),d[p]("load",r,!1)):(l[h]("onreadystatechange",o),d[h]("onload",r)),c("mark",["firstbyte",s],null,"api");var x=0,E=t(17)},{}]},{},["loader",2,10,4,3]);
+    ;NREUM.info={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",licenseKey:"9b0cb93cab",applicationID:"32644292",sa:1}
+    </script>
+
+    <!-- Critical JS -->
+    <script>window.PP={};window.PP.utils={};window.PP.config={};PP.config.donateBanner={secondsUntilShown:0.25,daysForDonateBarDismissal:3};;(function(win,undefined){win.PP=win.PP||{};win.PP.utils=win.PP.utils||{};var PP=win.PP;// loadJS: load a JS file asynchronously. Included from https://github.com/filamentgroup/loadJS/
+function loadJS(src,cb){"use strict";var ref=window.document.getElementsByTagName("script")[0];var script=window.document.createElement("script");script.src=src;script.async=true;ref.parentNode.insertBefore(script,ref);if(cb&&typeof cb==="function"){script.onload=cb}return script}PP.utils.loadJS=loadJS;// cookie function from https://github.com/filamentgroup/cookie/
+function cookie(name,value,days){// if value is undefined, get the cookie value
+if(value===undefined){var cookiestring="; "+window.document.cookie;var cookies=cookiestring.split("; "+name+"=");if(cookies.length===2){return cookies.pop().split(";").shift()}return null}else{var expires;var domain;// if value is a false boolean, we'll treat that as a delete
+if(value===false){days=-1}if(days){var date=new Date;date.setTime(date.getTime()+days*24*60*60*1000);expires="; expires="+date.toGMTString()}else{expires=""}// check if we're in dev, if not, lets make it a domain-wide cookie
+if(location.hostname=="localhost"||location.hostname=="127.0.0.1"){domain=""}else{domain="; domain=.propublica.org"}window.document.cookie=name+"="+value+expires+domain+"; path=/"}}// expose it
+PP.utils.cookie=cookie;// basic logging function
+function log(logLine){const logOn=new URLSearchParams(window.location.search).get("__pp-debug");if(logOn!==null){console.log(logLine)}}// expose it
+PP.utils.log=log})(this);;(function(win,undefined){// Enable JS strict mode
+"use strict";// Environment variables
+var PP=win.PP,utils=PP.utils,docClasses=[];// if ( "sessionStorage" in window ) {
+//
+//     // Font loading!
+//     var fontsClass = "fonts-loaded";
+//
+//     if ( sessionStorage.getItem( "fontsLoaded" ) === "loaded" ) {
+//         docClasses.push( fontsClass );
+//     } else {
+//         // Okay! Let’s watch for font events!
+//         var tiemposText = new FontFaceObserver( "Tiempos Text", {
+//             weight: 400
+//         } );
+//         var tiemposTextItalic = new FontFaceObserver( "Tiempos Text", {
+//             style: "italic",
+//             weight: 400
+//         } );
+//         var tiemposTextBold = new FontFaceObserver( "Tiempos Text", {
+//             weight: 700
+//         } );
+//         var tiemposTextBoldItalic = new FontFaceObserver( "Tiempos Text", {
+//             style: "italic",
+//             weight: 700
+//         } );
+//         var graphik = new FontFaceObserver( "Graphik", {
+//             weight: 400
+//         } );
+//         var graphikItalic = new FontFaceObserver( "Graphik", {
+//             style: "italic",
+//             weight: 400
+//         } );
+//         var graphikBold = new FontFaceObserver( "Graphik", {
+//             weight: 700
+//         } );
+//         var graphikBoldItalic = new FontFaceObserver( "Graphik", {
+//             style: "italic",
+//             weight: 700
+//         } );
+//
+//         // When the fonts above are loaded, we'll attach a .fonts-loaded class to the document. (Per https://www.filamentgroup.com/lab/font-events.html) We'll also append the class to the `html`.
+//         win.Promise
+//             .all( [
+//                 tiemposText.load(),
+//                 tiemposTextItalic.load(),
+//                 tiemposTextBold.load(),
+//                 tiemposTextBoldItalic.load(),
+//                 graphik.load(),
+//                 graphikItalic.load(),
+//                 graphikBold.load(),
+//                 graphikBoldItalic.load()
+//             ] )
+//             .then( function() {
+//                 win.document.documentElement.className += " " + fontsClass;
+//                 sessionStorage.setItem( "fontsLoaded" , "loaded" );
+//             } );
+//     }
+// }
+// Add scoping classes to HTML element
+win.document.documentElement.className+=" "+docClasses.join(" ")})(this);
+//# sourceMappingURL=initial.js.map
+</script>
+
+    <!-- DFP JS -->
+    <script src="https://htlbid.com/v3/propublica.org/htlbid.js"></script>
+    <script>window.htlbid = window.htlbid || {};
+htlbid.cmd = htlbid.cmd || [];
+htlbid.cmd.push(function() {
+    htlbid.layout("universal"); // Leave as "universal" or add custom layout
+        htlbid.setTargeting("is_testing", "no");
+        htlbid.setTargeting("is_home", "no"); // Set to "yes" on the homepage
+});
+</script>
+
+    <!-- JS -->
+    <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)</script>
+
+    <!-- Chartbeat -->
+    <script>
+        var _sf_async_config = window._sf_async_config = (window._sf_async_config || {});
+        _sf_async_config.uid = 1577;
+        _sf_async_config.domain = 'propublica.org';
+        _sf_async_config.useCanonical = true;
+        _sf_async_config.useCanonicalDomain = true;
+                _sf_async_config.sections = 'Firestone and the Warlord';
+                _sf_async_config.authors = 'T. Christian Miller';
+    </script>
+
+    <!-- OTHER -->
+    <link rel="shortcut icon" type="image/x-icon" href="https://assets.propublica.org/static/prod/v4/images/favicon.ico">
+    <link rel="icon" type="image/png" href="https://assets.propublica.org/static/prod/v4/images/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="https://assets.propublica.org/static/prod/v4/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://assets.propublica.org/static/prod/v4/images/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="https://assets.propublica.org/static/prod/v4/images/favicon-128x128.png" sizes="128x128">
+    <link rel="icon" type="image/png" href="https://assets.propublica.org/static/prod/v4/images/favicon-196x196.png" sizes="196x196">
+    <link rel="apple-touch-icon" href="https://assets.propublica.org/static/prod/v4/images/apple-touch-icon-180x180.png" sizes="180x180">
+    <meta name="application-name" content="ProPublica">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta name="msapplication-TileImage" content="https://assets.propublica.org/static/prod/v4/images/mstile-144x144.png">
+    <meta name="msapplication-square70x70logo" content="https://assets.propublica.org/static/prod/v4/images/mstile-70x70.png">
+    <meta name="msapplication-square150x150logo" content="https://assets.propublica.org/static/prod/v4/images/mstile-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="https://assets.propublica.org/static/prod/v4/images/mstile-310x150.png">
+    <meta name="msapplication-square310x310logo" content="https://assets.propublica.org/static/prod/v4/images/mstile-310x310.png">
+
+    <!-- START EXPRESSIONENGINE CUSTOM HEADER CONTENT -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="canonical" href="https://www.propublica.org/article/firestone-and-the-warlord-chapter-3">
+	<link rel="stylesheet" href="//static.propublica.org/projects/firestone-liberia/assets/css/main.css?20141125174656">
+	<script src="//static.propublica.org/projects/firestone-liberia/assets/js/lib/modernizr.custom.js?20141125174656"></script>
+	<script src="//static.propublica.org/assets/social/socialsnippet.js?20141125174656"></script>
+	<script>
+		window.SITE_CDN_LIBERIA = "//static.propublica.org/projects/firestone-liberia";
+		(function() {
+			var config = {
+				kitId: 'ynw7wlm',
+				scriptTimeout: 3000
+			};
+			var h=document.getElementsByTagName("html")[0];h.className+=" wf-loading";var t=setTimeout(function(){h.className=h.className.replace(/(\s|^)wf-loading(\s|$)/g," ");h.className+=" wf-inactive"},config.scriptTimeout);var tk=document.createElement("script"),d=false;tk.src='//use.typekit.net/'+config.kitId+'.js';tk.type="text/javascript";tk.async="true";tk.onload=tk.onreadystatechange=function(){var a=this.readyState;if(d||a&&a!="complete"&&a!="loaded")return;d=true;clearTimeout(t);try{Typekit.load(config)}catch(b){}};var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(tk,s)
+		})();
+		propublica.views.socialLI = propublica.views.socialSection.extend({
+			cssClass: 'social-widget',
+			tag: 'li'
+		});
+	</script>
+
+	<!-- END EXPRESSIONENGINE CUSTOM HEADER CONTENT -->
+
+<title>Firestone and the Warlord: Tough Talk in the Jungle — ProPublica</title><meta name="description" content="ProPublica is an independent, non-profit newsroom that produces investigative journalism in the public interest.">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="robots" content="all">
+<meta content="T. Christian Miller" property="author">
+<meta content="Firestone and the Warlord: Tough Talk in the Jungle" property="headline">
+<meta content="13320939444" property="fb:profile_id">
+<meta content="229862657130557" property="fb:app_id">
+<meta content="en_US" property="og:locale">
+<meta content="ProPublica" property="og:site_name">
+<meta content="article" property="og:type">
+<meta content="https://www.propublica.org/article/firestone-and-the-warlord-chapter-3?token=WIrdj5V0ewz5E_g-SIpqZqJucCdPqKuB" property="og:url">
+<meta content="Firestone and the Warlord: Tough Talk in the Jungle" property="og:title">
+<meta content="ProPublica is an independent, non-profit newsroom that produces investigative journalism in the public interest." property="og:description">
+<meta content="https://assets.propublica.org/2017-pp-open-graph-1200x630.jpg" property="og:image">
+<meta content="https://vimeo.com/propublica" property="og:see_also">
+<meta content="https://www.pinterest.ie/propublica" property="og:see_also">
+<meta content="https://www.instagram.com/propublica" property="og:see_also">
+<meta content="https://www.linkedin.com/company/propublica/" property="og:see_also">
+<meta content="https://github.com/propublica" property="og:see_also">
+<meta content="https://www.youtube.com/user/propublica" property="og:see_also">
+<meta content="https://en.wikipedia.org/wiki/ProPublica" property="og:see_also">
+<meta content="https://www.facebook.com/propublica/" property="og:see_also">
+<meta content="https://twitter.com/propublica" property="og:see_also">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@propublica">
+<meta name="twitter:creator" content="@propublica">
+<meta name="twitter:title" content="Firestone and the Warlord: Tough Talk in the Jungle">
+<meta name="twitter:description" content="ProPublica is an independent, non-profit newsroom that produces investigative journalism in the public interest.">
+<meta name="twitter:image" content="https://assets.propublica.org/2017-pp-open-graph-1200x630.jpg">
+<link href="https://www.propublica.org/article/firestone-and-the-warlord-chapter-3" rel="canonical">
+<link href="https://www.propublica.org/" rel="home">
+<link type="text/plain" href="https://www.propublica.org/humans.txt?token=wirdj5v0ewz5e_g-sipqzqjuccdpqkub" rel="author"></head>
+
+<body id="www-propublica-org" class="article">
+
+        <script src="//www.propublica.org/js/public/assets/beacons.js"></script>
+    <script src="//connect.facebook.net/en_US/all.js"></script>
+    <div id="fb-root"></div>
+    <script>
+	    FB.init({
+	        appId: '229862657130557', // App ID
+	        status: true, // check login status
+	        cookie: true, // enable cookies to allow the server to access the session
+	        xfbml: true // parse XFBML
+	    });
+    </script>
+    <script src="https://www.propublica.org/js/public/assets/all.js"></script>
+
+    
+	<!-- START EXPRESSIONENGINE BODY CONTENT -->
+
+  <script src="//connect.facebook.net/en_US/all.js"></script>
+    <div id="fb-root"></div>
+    <script>
+      FB.init({
+        appId      : '229862657130557', // App ID
+        status     : true, // check login status
+        cookie     : true, // enable cookies to allow the server to access the session
+        xfbml      : true  // parse XFBML
+      });
+    </script>
+
+
+	<div id="bookmark-modal" class="modal modal-mask">
+		<section class="dialog-box">
+			<a class="close" href="#">close</a>
+			<h1>Save Your Spot</h1>
+			<form id="bookmark-form">
+				<p>Enter your email address and we’ll send you a bookmark to your current spot. It remembers what page you’re on and how far you’ve scrolled, so you can pick up right where you left off.</p>
+				<div class="group">
+					<label for="bookmark-email-addr">Email Address</label>
+					<input type="email" value="" id="bookmark-email-addr" name="EMAIL" placeholder="you@youraddress.com" class="required email">
+					<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
+				</div>
+				<p><a id="send-bookmark-email" class="button" href="#">Send Bookmark</a></p>
+				<p class="note">Your email address won’t be saved or used for marketing.</p>
+			</form>
+			<!--
+			<section class="message success">
+				<h1>Bookmark sent!</h1>
+				<p>We’ve sent a special link to you. Check your inbox. TKTKTKTKTK</p>
+			</section>
+			-->
+		</section>
+	</div><!-- end #bookmark-modal -->
+
+
+	<div id="toc-modal" class="modal modal-mask">
+		<div class="dialog-box">
+			<a class="close" href="#">close</a>
+			
+			<h1>Chapters</h1>
+
+			<ul class="toc-contents">
+				<li><a href="/article/firestone-and-the-warlord-intro/">Introduction</a></li>
+				<li><span class="chapter">I.</span><a href="/article/firestone-and-the-warlord-chapter-1/">Warlord on the Rise</a></li>
+				<li><span class="chapter">II.</span><a href="/article/firestone-and-the-warlord-chapter-2/">A Century of Blood, Sweat and Profits</a></li>
+				<li><span class="chapter">III.</span><a href="/article/firestone-and-the-warlord-chapter-3/">Tough Talk in the Jungle</a></li>
+				<li><span class="chapter">IV.</span><a href="/article/firestone-and-the-warlord-chapter-4/">Deal with the Devil</a></li>
+				<li><span class="chapter">V.</span><a href="/article/firestone-and-the-warlord-chapter-5/">Money and Menace</a></li>
+				<li><span class="chapter">VI.</span><a href="/article/firestone-and-the-warlord-chapter-6/">Raining Hell</a></li>
+				<li><span class="chapter">VII.</span><a href="/article/firestone-and-the-warlord-chapter-7/">A Traumatized Nation</a></li>				
+			</ul>
+				
+			<h1>Other Resources</h1>
+
+			<ul class="toc-contents">
+				<li><a href="/article/firestone-and-the-warlord-documents">Key Documents</a></li>
+				<li><a href="/article/firestone-and-the-warlord-timeline">Key Events</a></li>
+				<li><a href="/article/firestone-and-the-warlord-people">Key People</a></li>
+				<li><a href="/article/firestone-and-the-warlord-video">Video Gallery</a></li>
+				<li><a href="/article/firestone-and-the-warlord-book-club">Book Club</a></li>
+				<li><a href="/article/firestone-and-the-warlord-editors-note">Editor’s Note</a></li>
+				<li><a href="/article/firestone-and-the-warlord-how-we-reported">How We Reported</a></li>
+				<li><a href="/article/firestone-and-the-warlord-response">Firestone’s Response</a></li>
+				<li><a href="//www.amazon.com/Firestone-Warlord-Kindle-Single-Christian-ebook/dp/B00PQVWND0">Kindle Single</a></li>
+				<li><a href="/article/firestone-and-the-warlord-print">Print Version</a></li>
+			</ul>
+
+		</div>
+	</div> 
+	<!-- end #toc-modal -->
+
+
+	<div id="page-body" class="chapter"><!-- we can't edit body tag, so use this to add a body-like class instead -->
+
+	<noapp>
+
+	<header role="banner">
+	    <h1><a href="https://www.propublica.org">ProPublica</a></h1>
+		<nav> 
+			<ul class="main-nav">
+				<li class="guide"><a class="guide-toggle">Reader Guide</a></li>
+				<li class="toc modal-link" data-modal-id="toc-modal"><a href="#">Index</a></li>
+			</ul>
+			<ul class="tools-nav">
+				<li class="modal-link read-later bookmark labelled" data-modal-id="bookmark-modal"><a href="#">Save Your Spot</a></li>
+				<li class="facebook social-widget ss-fb" data-title="Firestone and the Warlord" data-img="" data-txt="Investigating the role of a global corporation in Liberia's brutal civil war: Firestone and the #Warlord" data-desc="" data-url="https://www.propublica.org/firestone" data-hashtag=""><a href="#">Share on Facebook</a></li>
+				<li class="twitter social-widget ss-tw" data-txt="Investigating the role of a global corporation in Liberia's brutal civil war: Firestone and the #Warlord" data-url="https://www.propublica.org/firestone" data-hashtag=""><a href="#">Share on Twitter</a></li>
+				<!-- <li class="comment"><a href="#disqus_thread">Comment</a></li> -->
+				<li class="donate"><a href="https://www.propublica.org/site/donate9/" target="_blank">Donate</a></li>
+			</ul>
+		</nav>
+	</header><!-- end header[role="banner"] -->
+	</noapp>
+
+
+
+
+
+
+
+
+
+
+	
+
+
+	<main role="main">
+		<div id="article-top"></div> 
+
+		<article>
+
+		    <header>
+
+				<div class="title-set">
+					<div class="titles">
+						<h1><span class="chapter-number">III.</span> Tough Talk in the Jungle</h1>
+						
+					</div><!-- end .titles -->
+				</div><!-- end .title-set -->
+
+			</header><!-- end article header -->
+
+			<div class="wrapper">
+
+				<aside class="reader-guide closed" id="chapter-guide">
+
+	<a id="close-chapter-guide"></a><!-- TODO: remove and add icon via CSS -->
+
+	<section>
+		<h2>Key People in This Chapter</h2>
+		<ul class="people">
+			
+			
+			
+			
+			<li id="guide-person-chipley">
+				<h3>Matthew Chipley</h3>
+				<img src="//static.propublica.org/projects/firestone-liberia/assets/img/people-generic.svg" alt="Matthew Chipley">
+				<p>A senior Taylor commander, Chipley was raised on the Firestone plantation. He participated in Operation Octopus.</p>
+			</li>
+			
+			
+			
+			<li id="guide-person-cohen">
+				<h3>Herman “Hank” Cohen</h3>
+				<img src="//static.propublica.org/projects/firestone-liberia/assets/img/people-generic.svg" alt="Herman “Hank” Cohen">
+				<p>The State Department’s top Africa official, Cohen tried to negotiate a peaceful end to the civil war.</p>
+			</li>
+			
+			
+			
+			
+			
+			<li id="guide-person-de-vos">
+				<h3>Peter Jon de Vos</h3>
+				<img src="//static.propublica.org/projects/firestone-liberia/assets/img/people-generic.svg" alt="Peter Jon de Vos">
+				<p>De Vos was the U.S. ambassador to Liberia from 1990 to 1992.</p>
+			</li>
+			
+			
+			
+			<li id="guide-person-doe">
+				<h3>Samuel Doe</h3>
+				<img src="//static.propublica.org/projects/firestone-liberia/assets/img/people-samuel-doe.jpg" alt="Samuel Doe">
+				<p>Liberian army Master Sgt. Samuel Doe seized power in a coup in 1980. He was overthrown in 1990.</p>
+			</li>
+			
+			
+			
+			<li id="guide-person-ensminger">
+				<h3>Donald Ensminger</h3>
+				<img src="//static.propublica.org/projects/firestone-liberia/assets/img/people-donald-ensminger.jpg" alt="Donald Ensminger">
+				<p>A Firestone general manager, Ensminger was opposed to recognizing Charles Taylor as president.</p>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			<li id="guide-person-gerhart">
+				<h3>Ken Gerhart</h3>
+				<img src="//static.propublica.org/projects/firestone-liberia/assets/img/people-ken-gerhart.jpg" alt="Ken Gerhart">
+				<p>Gerhart ran a Firestone bottling plant in Liberia and kept in close touch with the embassy.</p>
+			</li>
+			
+			
+			
+			<li id="guide-person-johnson">
+				<h3>Prince Yormie Johnson</h3>
+				<img src="//static.propublica.org/projects/firestone-liberia/assets/img/people-generic.svg" alt="Prince Yormie Johnson">
+				<p>Johnson was a Taylor commander who founded his own warring faction and killed Doe.</p>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li id="guide-person-padmore">
+				<h3>Gerald Padmore</h3>
+				<img src="//static.propublica.org/projects/firestone-liberia/assets/img/people-generic.svg" alt="Gerald Padmore">
+				<p>A Harvard-educated lawyer born in Liberia, Firestone hired him to represent it after Taylor’s invasion.</p>
+			</li>
+			
+			
+			
+			
+			
+			<li id="guide-person-pollee">
+				<h3>Mary Pollee</h3>
+				<img src="//static.propublica.org/projects/firestone-liberia/assets/img/people-mary-pollee.jpg" alt="Mary Pollee">
+				<p>Liberian soldiers raped Pollee and killed her husband. Taylor rebels raped her 13-year-old daughter, who died.</p>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			<li id="guide-person-richardson">
+				<h3>John “JT” Richardson</h3>
+				<img src="//static.propublica.org/projects/firestone-liberia/assets/img/people-john-richardson.jpg" alt="John “JT” Richardson">
+				<p>Richardson was a top Taylor advisor who lived on the Firestone plantation during Operation Octopus.</p>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			<li id="guide-person-sawyer">
+				<h3>Amos Sawyer</h3>
+				<img src="//static.propublica.org/projects/firestone-liberia/assets/img/people-amos-sawyer.jpg" alt="Amos Sawyer">
+				<p>A Liberian intellectual, Sawyer was the president of the interim government which opposed Taylor.</p>
+			</li>
+			
+			
+			
+			
+			
+			<li id="guide-person-taylor">
+				<h3>Charles Taylor</h3>
+				<img src="//static.propublica.org/projects/firestone-liberia/assets/img/people-charles-taylor.jpg" alt="Charles Taylor">
+				<p>Educated in the U.S., Taylor plunged Liberia into civil war. He was later convicted of war crimes.</p>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		</ul>	
+		<a href="/article/firestone-and-the-warlord-people">View all people</a>
+	</section>
+
+	<section>
+		<h2>Key Events in This Chapter</h2>
+		<ol class="timeline">
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li id="guide-event-1988-05-01" class="story">
+				<h3>1988</h3>
+				<p>Bridgestone Corp. acquires Firestone Tire & Rubber Co.</p>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li id="guide-event-1990-05-01" class="story">
+				<h3>1990</h3>
+				<p>Herman "Hank" Cohen, the State Department’s top official for Africa, tries to negotiate with Charles Taylor to seek a peaceful resolution.</p>
+			</li>
+			
+			
+			
+			
+			
+			<li id="guide-event-1990-06-05" class="story">
+				<h3>June 5, 1990</h3>
+				<p>Charles Taylor’s forces invade the Firestone plantation.</p>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<li id="guide-event-1990-07-01" class="story">
+				<h3>1990</h3>
+				<p>Charles Taylor begins first attack on Monrovia. Gets within 500 yards of presidential mansion before retreating.</p>
+			</li>
+			
+			
+			
+			<li id="guide-event-1990-08-01" class="story">
+				<h3>1990</h3>
+				<p>West African allied force sends in soldier to counter Taylor’s forces.</p>
+			</li>
+			
+			
+			
+			<li id="guide-event-1990-09-09" class="story">
+				<h3>September 9, 1990</h3>
+				<p>Liberian President Samuel Doe tortured, mutilated and killed.</p>
+			</li>
+			
+			
+			
+			<li id="guide-event-1990-10-01" class="story">
+				<h3>1990</h3>
+				<p>In the fall of 1990, Liberian plantation workers begin starving to death. Hospital records 10 to 15 deaths a day at one point.</p>
+			</li>
+			
+			
+			
+			<li id="guide-event-1990-10-01" class="story">
+				<h3>1990</h3>
+				<p>Firestone’s Donald Ensminger writes brusque letters to Charles Taylor asking to visit the plantation.</p>
+			</li>
+			
+			
+			
+			<li id="guide-event-1990-10-20" class="story">
+				<h3>October 20, 1990</h3>
+				<p>Charles Taylor forms a rebel government called the National Patriotic Reconstruction Assembly Government.</p>
+			</li>
+			
+			
+			
+			<li id="guide-event-1990-10-26" class="story">
+				<h3>October 26, 1990</h3>
+				<p>Human Rights Watch issues a report criticizing Taylor forces for putting one ethnic group "at risk of genocide."</p>
+			</li>
+			
+			
+			
+			<li id="guide-event-1990-11-28" class="story">
+				<h3>November 28, 1990</h3>
+				<p>Bamako Accord signed in Mali, formally creating Liberia’s interim government and the "no peace, no war" ceasefire.</p>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			<li id="guide-event-1991-01-12" class="story">
+				<h3>January 12, 1991</h3>
+				<p>The U.S. State Department annual human rights report is released to Congress. The report blamed Charles Taylor’s forces for killing civilians, raping women and forcing hundreds of thousands of people to become refugees during 1990.</p>
+			</li>
+			
+			
+			
+			<li id="guide-event-1991-02-01" class="story">
+				<h3>1991</h3>
+				<p>Firestone executives return to assess damage to the plantation for first time since June 1990.</p>
+			</li>
+			
+			
+			
+			<li id="guide-event-1991-04-06" class="story">
+				<h3>April 6, 1991</h3>
+				<p>U.S. Ambassador Peter Jon De Vos and Firestone plantation manager Donald Ensminger meet Charles Taylor in Gbarnga.</p>
+			</li>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		</ol>
+		<a href="/article/firestone-and-the-warlord-timeline">View all events</a>
+	</section>
+
+</aside>
+
+
+				<div class="content"><!-- start .content -->
+
+					<noapp>
+<figure class="medium illo">
+	<span data-picture="" data-alt="">
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/matt-rota-illo-chapter-3-480*437-fcfc9d.jpg"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/matt-rota-illo-chapter-3-960*874-fcfc9d.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/matt-rota-illo-chapter-3-900*820-fcfc9d.jpg" data-media="(min-width: 37.5em)"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/matt-rota-illo-chapter-3-1800*1639-fcfc9d.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+<noscript>
+<img src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/matt-rota-illo-chapter-3-480*437-fcfc9d.jpg" alt="" />
+</noscript>
+</span>
+
+	<figcaption><span class="credit">(Matt Rota for ProPublica)</span></figcaption>
+</figure>
+</noapp>
+
+<p><span class="dropcap">A</span>fter chasing the Firestone managers out in June 1990, Taylor took over the colonnaded grandeur of House 53. The message was unmistakable: The company that had dominated the country for so long, that held power over its leaders and its laborers, had been vanquished. </p>
+
+<p>The stately mansion was often chaotic and frenzied. Cronies and bodyguards lounged in the hallways. Sycophants waited for an audience. Battle commanders rushed in and out.</p>
+
+<p>Taylor’s goal was to seize Monrovia, which held half the country’s population, most of its major financial and political institutions and most important, the executive mansion – Doe’s presidential residence, a menacing, fortified structure overlooking the Atlantic Ocean.</p>
+
+<aside class="quote direct">
+	<blockquote>
+		<p>The easy answer for Firestone would have been to just say, ‘We're out of here.’</p>
+		<cite>Gerald Padmore, former consultant for Firestone</cite>
+	</blockquote>
+</aside>
+
+<p>Taylor staged his attack from the Firestone plantation. He was confident enough of his success that he announced he would occupy the mansion by early July.</p>
+
+<p>His men battled to within 500 yards of the executive mansion where Doe had holed up with his men. That was as far as he would get. As the two sides traded mortar- and small-arms fire, Taylor suddenly called a halt to the operation. The United States had reached out to him to plead for peace.</p>
+
+<p>Cohen, the State Department’s top Africa hand, talked with Taylor several times by satellite phone to negotiate a ceasefire. He even visited Taylor at a rearguard base in Ivory Coast, where he found Taylor seated on a throne, surrounded by child soldiers. Behind him was a portrait of President John F. Kennedy and his wife, Jacqueline.</p>
+
+<p>“He had visions of being a great statesman,” Cohen said. “He saw himself like that. ‘I’m gonna take over Liberia and make it into a new country.’ ”</p>
+
+<p>The bid for peace failed, and Liberia faded further as a concern for the United States. Cohen said his superiors made that clear to him.</p>
+
+<p>“The feeling was that we didn’t want to have Liberia as our adopted child,” Cohen said. “We were not going to take charge of Liberia.”</p>
+
+<p>Into the void stepped an alliance of West African nations led by Nigeria, the regional heavyweight. In August 1990, the alliance deployed some 7,000 peacekeepers, known as ECOMOG.</p>
+
+<p>The peacekeepers succeeded in halting Taylor. But they did not save Liberia’s president. Doe was captured and killed by the head of a rival rebel faction led by Prince Johnson, one of Taylor’s former generals.</p>
+
+<noapp>
+<figure class="medium">
+	<span data-picture="" data-alt="">
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-man-jumping-near-body-corbis-42-20117519-480*320-890ede.jpg"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-man-jumping-near-body-corbis-42-20117519-960*640-890ede.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-man-jumping-near-body-corbis-42-20117519-900*600-890ede.jpg" data-media="(min-width: 37.5em)"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-man-jumping-near-body-corbis-42-20117519-1800*1200-890ede.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+<noscript>
+<img src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-man-jumping-near-body-corbis-42-20117519-480*320-890ede.jpg" alt="" />
+</noscript>
+</span>
+
+	<figcaption>Fighting in the streets of Monrovia. <span class="credit">(Patrick Robert/Sygma/Corbis)</span></figcaption>
+</figure>
+</noapp>
+
+<p>A notorious, vicious drunk, Johnson <a href="https://www.youtube.com/watch?v=yaLSzjfyUiA">had himself filmed</a> as he ordered his men to torture Doe. While he sat behind a desk with two open cans of Budweiser beer, a young woman fanning him from behind, Johnson ordered his men to strip Doe. The portly president kneeled before Johnson in his underwear, quivering, sobbing, begging. Johnson’s men hacked off his ears. Blood poured down his torso. Doe’s body was later found dumped outside a medical clinic.</p>
+
+<p>Amos Sawyer, a Liberian intellectual, would emerge as the president of an interim government named at a meeting of leading Liberian politicians, activists and religious leaders.</p>
+
+<p>By November, an uneasy ceasefire had settled across the country. Liberians called it “no peace, no war.”</p>
+
+<p>Taylor, unimpressed by the peacekeepers and the new interim president, went about the business of governing.</p>
+
+<p>He now controlled almost all of Liberia. In typically grandiose fashion, Taylor named his territory Greater Liberia — though it was better known by its eponymous nickname, Taylorland. He declared himself president.</p>
+
+<p>As his capital, he chose the village of Gbarnga in the flatlands of northern Liberia, a scruffy regional trading center. </p>
+
+<noapp>
+<figure class="inset-small">
+	<span data-picture="" data-alt="">
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-boy-with-gun-corbis-0000259605-050-480*696-817100.jpg"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-boy-with-gun-corbis-0000259605-050-960*1392-817100.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-boy-with-gun-corbis-0000259605-050-900*1305-817100.jpg" data-media="(min-width: 37.5em)"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-boy-with-gun-corbis-0000259605-050-1800*2609-817100.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+<noscript>
+<img src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-boy-with-gun-corbis-0000259605-050-480*696-817100.jpg" alt="" />
+</noscript>
+</span>
+
+	<figcaption>Children too young to carry rifles were often given grenades. <span class="credit">(Patrick Robert/Sygma/Corbis)</span></figcaption>
+</figure>
+</noapp>
+
+<p>Taylor turned a long, low single-story house on an airy hill overlooking the village into his executive mansion. From the outside, it was modest and unpretentious. Inside was rococo furniture and walls of varnished wood.</p>
+
+<p>He formed a legislative body for Taylorland, the National Patriotic Reconstruction Assembly Government, or NPRAG. He appointed a Cabinet of ministers (frequently fired, sometimes beaten) and created a judicial system (hardly independent). He even hired a lobbyist in Washington, D.C.</p>
+
+<p>He also built his army — eventually amassing perhaps 10,000 fighters and child soldiers armed with machine guns, mortars and artillery cannon.</p>
+
+<p>His dreams stretched wide as Liberia’s sky.</p>
+
+<p>“I’m not a soldier. I’m an economist. I came here believing in the very democratic principles that the United States is built on today,” he told television cameras. “All I want to do is to bring back some sanity, some fair play in the country.”</p>
+
+<p>For a while, a group of Firestone’s Liberian managers worked with Taylor to run the plantation. But they couldn’t maintain the millions of rubber trees. They had no ships to transport the rubber, no sales network to sell it. The farm’s hydroelectric plant supplied electricity only haphazardly.</p>
+
+<p>By February 1991, the plantation was in danger of falling apart. A group of former Firestone workers met Taylor on the veranda of House 53. Their message: They wanted Firestone back. </p>
+
+<p>“The employees were not benefiting,” said Victor Bestman, the Liberian estates manager. Taylor’s associates “sold the rubber, enriched themselves and how they divided it nobody knows.”</p>
+
+<p>Taylor grew to realize that he needed Firestone. Symbolically, the company’s return would amount to a bright neon sign indicating that Taylorland was open for business. Politically, its jobs and supplies of food would ensure that residents did not rise up in dissent.</p>
+
+<p>“We needed Firestone to keep people busy,” Richardson said.</p>
+
+<p>When Firestone abandoned Liberia, it made Taylor seethe.</p>
+
+<p>“There’s a little war, and then you run off, and there’s no food, no medicine, complete breakdown,” Taylor would later tell one Firestone executive at a meeting. “That’s inexcusable.”</p>
+
+<p>For its own part, Firestone was in no mood to kowtow to a guerrilla leader who had threatened its managers and killed its workers. </p>
+
+<p>In October 1990, Ensminger sent a <a href="https://www.documentcloud.org/documents/1310625-ex88.html#document/p1/a187547">brusque letter</a> addressing Taylor as “Commander-in-Chief” — not President. He requested a meeting, and a guarantee that the Firestone personnel who attended the meeting would be safe. A week later, Ensminger sent a follow-up <a href="https://www.documentcloud.org/documents/1362152-01-letterfromdonaldensmingertocharlestaylor.html">aide memoire</a> – a term typically used in diplomatic circles to outline discussion points. </p>
+
+<noapp>
+<figure class="inset left">
+	<span data-picture="" data-alt="">
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-Donald_Ensminger_Akron_Beacon_Journal_PC_after_first_evacuation-360*286-27ea44.jpg"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-Donald_Ensminger_Akron_Beacon_Journal_PC_after_first_evacuation-360*286-27ea44.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-Donald_Ensminger_Akron_Beacon_Journal_PC_after_first_evacuation-360*286-27ea44.jpg" data-media="(min-width: 37.5em)"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-Donald_Ensminger_Akron_Beacon_Journal_PC_after_first_evacuation-360*286-27ea44.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+<noscript>
+<img src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-Donald_Ensminger_Akron_Beacon_Journal_PC_after_first_evacuation-360*286-27ea44.jpg" alt="" />
+</noscript>
+</span>
+
+	<figcaption>Donald Ensminger, then the general manager of the Firestone plantation, said he tried to take a hard line against Taylor. <span class="credit">(Ott Gang/The Akron Beacon Journal)</span></figcaption>
+</figure>
+</noapp>
+
+<p>In it, Ensminger laid out Firestone’s conditions for returning to Liberia. At the top of the list: Firestone “cannot resume operations unless its employees, both Liberian and expatriate, have sufficient assurances that peace, law and order will be restored in Liberia to ensure their own safety and that of the members of their families from physical harm.”</p>
+
+<p>Ensminger demanded better financial terms to lower the company’s tax liabilities. And he noted that Firestone would not recognize the “legitimacy” of any political or military authority so as to avoid “interfering in the internal affairs of Liberia.”</p>
+
+<p> “The existing situation raises questions as to whether, when and how operations could be resumed in Liberia,” Ensminger wrote.</p>
+
+<p>Today, Ensminger said he thought the company should not have attempted to negotiate with Taylor.</p>
+
+<p>“Taylor was not a recognized government of Liberia. There was no reason or legality for negotiation with Taylor,” Ensminger said in the interview. “It was only that we were trying to figure out a way to get to the plantation and resume operations.”</p>
+
+<p>The missive did little to improve Taylor’s disposition.</p>
+
+<p>Ensminger’s attitude was, “ ‘We want our plantation back. You have no business there. We want everything. Our trucks back. We want this, that and everything else,’ ” said Richardson, Taylor’s adviser. </p>
+
+<p>Taylor was prepared to wait. If Firestone wanted its rubber plantation back, it would have to bend – and pay.</p>
+
+<h3 id="the-investment">The Investment</h3>
+
+<p>Back in Akron, Ensminger and other managers began strategizing about how to get the plantation running again.</p>
+
+<p>In 1988, the Japanese tire conglomerate Bridgestone had acquired Firestone for $2.65 billion — the largest purchase of a U.S. company by a Japanese one at the time. </p>
+
+<p>Business analysts judged the deal a disaster. Bridgestone moved too slowly to make necessary cuts. The company hemorrhaged money. Between 1990 and 1992, the new U.S. subsidiary, called Bridgestone/Firestone, lost $1 billion, according to one history of the company. </p>
+
+<p>On Bridgestone’s balance sheet, Firestone’s Liberian plantation wasn’t a large item, generating about $104 million in revenue and $15.6 million in profits in 1989, the year before the civil war. But the 15 percent profit margin the plantation achieved that year was a bright spot on a corporate ledger drowning in red ink.</p>
+
+<p>Top managers “were under a lot of pressure from Akron to get the plantation going,” said Ken Gerhart, the Firestone manager who ran the company’s soda bottling plant in Monrovia. The plantation “was very, very profitable. It was very efficient.”</p>
+
+<p>The company found alternative sources of rubber in Asia after the plantation’s abandonment, but the latex produced in Liberia was considered to be among the finest in the world, in part because of the company’s tight quality control. The plantation supplied about 40 percent of the U.S. market for latex, and 10 percent of the world market. </p>
+
+<p>The value of the plantation itself – the land, the trees, the factories, buildings, vehicles and equipment – was estimated at nearly $200 million. If Firestone pulled out for good, those assets would be unsalvageable. Even a temporary interruption posed risks: There was no assurance that Liberia would allow the company back, especially under the favorable conditions of the original deal cut in 1926.</p>
+
+<p>To figure out how to deal with Taylor and return to Liberia, Firestone hired a young Liberian-born lawyer with impressive credentials. Gerald Padmore had graduated from Yale and then Harvard Law School. He had returned to Liberia to serve in President Tolbert’s government. As the acting minister of finance, he sat across the table from Firestone in rubber contract negotiations.</p>
+
+<p>Later, he switched to Firestone’s side and began advising company leaders on whether to return to Liberia. Firestone agreed to have Padmore answer questions for the company about events in the early 1990s.</p>
+
+<noapp>
+<figure class="medium">
+	<span data-picture="" data-alt="">
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-food-water-line-corbis-0000280880-001-480*332-07fa7e.jpg"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-food-water-line-corbis-0000280880-001-960*663-07fa7e.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-food-water-line-corbis-0000280880-001-900*622-07fa7e.jpg" data-media="(min-width: 37.5em)"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-food-water-line-corbis-0000280880-001-1800*1244-07fa7e.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+<noscript>
+<img src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-food-water-line-corbis-0000280880-001-480*332-07fa7e.jpg" alt="" />
+</noscript>
+</span>
+
+	<figcaption>Families were often short of food during Liberia's years of internal strife. <span class="credit">(Patrick Robert/Sygma/Corbis)</span></figcaption>
+</figure>
+</noapp>
+
+<p>“It was a real dilemma for the company,” Padmore said. There was “a lot of, I would say, soul-searching, and really tough, tough decision-making that had to be done.”</p>
+
+<p>As Padmore saw it, there were two competing governments in Liberia, neither of which had been formally recognized by the United States. Firestone’s operations straddled the lines of control. The plantation sat in Taylorland. But the company shipped its rubber and latex from Monrovia. To move from the plantation to the port, company employees had to pass through numerous roadblocks and withstand entreaties for bribes at each stop. Who made the rules? Who got the company’s taxes? </p>
+
+<p>Padmore said much of Firestone’s determination to return to Liberia was driven by concern for its Liberian workforce. Firestone had stopped making rice shipments to the plantation in June 1990, and so men, women and children were surviving on sugar cane and rotting bananas. During one period that fall, the company’s medical director was recording 10 to 15 deaths a day, according to a sworn deposition. </p>
+
+<p>The plantation and its trees were also a worry. Rubber trees must be very carefully tended and harvested to prevent them from dying. Firestone had received word that Liberians had descended on the plantation to illegally harvest latex from the company’s trees. They were “slaughter tapping” — an industry term for extracting so much sap that the tree dies.</p>
+
+<p>“We’re hearing stories from our employees that they’re distressed,” Padmore recalled. “We’re hearing stories that our assets are being looted or destroyed. It’s a question of do we abandon Liberia, as many other major businesses had done, or will there be a future, and how do we get back on?”</p>
+
+<p>Padmore said the “easy answer” for Firestone would have been to abandon the plantation. Several companies fled Liberia at the start of the war. Others had chosen to stay, according to a State department cable. </p>
+
+<p>Padmore said it was tempting for Firestone to say, “ ‘We’re out of here. It’s risky. It’s scary. Economically, it doesn’t make any sense.’ ”</p>
+
+<p>“In a sense, that would have been morally satisfying, that you could safely be back in the United States. But if you felt a sense of responsibility to Liberia, and, most importantly, to the workers, your teammates, really, the people you’ve worked with for years, who were distressed—some of them were killed—you’d say, ‘Well, let’s go back and see if we can help them,’” Padmore continued.</p>
+
+<noapp>
+<figure class="medium">
+	<span data-picture="" data-alt="">
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-rubber-dripping-from-tree_UofWisconsin-480*379-3a95ce.png"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-rubber-dripping-from-tree_UofWisconsin-820*648-3a95ce.png" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-rubber-dripping-from-tree_UofWisconsin-820*648-3a95ce.png" data-media="(min-width: 37.5em)"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-rubber-dripping-from-tree_UofWisconsin-820*648-3a95ce.png" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+<noscript>
+<img src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-rubber-dripping-from-tree_UofWisconsin-480*379-3a95ce.png" alt="" />
+</noscript>
+</span>
+
+	<figcaption>The raw latex that helped build an empire. <span class="credit">(From the American Geographical Society Library, University of Wisconsin-Milwaukee Libraries)</span></figcaption>
+</figure>
+</noapp>
+
+<p>“I think those were all good decisions, because, for me, Liberia outlasts the temporary rulers it may have. It’s a country. It’s ordinary people whose lives are terribly important. They don’t have the ability or the means, as I fortunately did, to fly off to the United States and be safe. They’ve got to worry about their kids. For me, it’s the right choice. Stay as long as you can,” Padmore said.</p>
+
+<p>Padmore acknowledged that Firestone’s employees had experienced Taylor’s violence. His soldiers had threatened Ensminger. Gerhart was put on a hit list, and his personal driver had the soles of his feet cut off with machetes by Taylor’s men. Firestone expats witnessed Taylor’s fighters savaging people in Harbel.</p>
+
+<p>“We knew there had been fighting, there had been killing, and there had been some ethnic reprisal killings,” Padmore said. “But at that time, from the information available to me, and, I think, to Firestone, Taylor did not appear to be conducting genocidal activities.”</p>
+
+<p>In the interview, Ensminger said that was “laughable.”</p>
+
+<p>“Firestone knew full well and was getting reports from the State Department and from the ambassador and from Liberians,” he said. “They knew full well that atrocities and human rights violations were committed.”</p>
+
+<p>In October 1990, Human Rights Watch <a href="https://www.documentcloud.org/documents/1362171-dos-1991-may17-monrov-04137.html#document/p5/a187252">reported</a> that Taylor soldiers had committed widespread killing and torture. Two-thirds of Doe’s tribe, the Krahn, had fled the country. Those who remained, the report said, were “at risk of genocide.”</p>
+
+<p>In early 1991, the U.S. State Department released its report on human rights violations in 1990, a congressionally-mandated assessment for every country in the world. For Liberia, it read like a gore novel.</p>
+
+<p>All the warring factions, including government soldiers, had committed atrocities. Each time Taylor took over a new province, his forces hunted and killed hundreds of men, women and children from the Mandingo and Krahn ethnic groups, which were seen as sympathetic to Doe. Emergency food centers set up to feed starving Liberians became grotesque snares. Those in line were forced to produce identity cards. The Krahn were killed. In one particularly nasty practice, Taylor’s men set up a highway checkpoint called “No Return.” More than 2,000 people were killed there.</p>
+
+<p>“The overall human rights situation in Liberia in 1990 was appalling,” <a href="https://archive.org/stream/countryreportson1990unit%22%20%5Cl%20%22page/192/mode/2up">the report read</a>. “All combatants routinely engaged in indiscriminate killing and abuse of civilians, looting, and ethnically based executions.”</p>
+
+<p>“Leaders of all the armed groups did little or nothing to stop the killings   </p>
+
+<p>and, in some cases, may have encouraged them or been directly responsible for the abuses.”</p>
+
+<p>Official data, painstakingly compiled years later by Liberia’s Truth and Reconciliation Commission from the testimony of thousands of Liberians, attempted to quantify the human damage. By December 1990, Taylor’s forces alone had committed nearly 40,000 human rights violations. The toll included more than 6,400 killings, 800 kidnappings and 600 rapes, according to a ProPublica analysis of the data.</p>
+
+<noapp>
+<figure class="inset">
+	<span data-picture="" data-alt="">
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-MarryPollie-closeup-gilbertson-480*320-fa867e.jpg"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-MarryPollie-closeup-gilbertson-960*640-fa867e.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-MarryPollie-closeup-gilbertson-900*600-fa867e.jpg" data-media="(min-width: 37.5em)"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-MarryPollie-closeup-gilbertson-1800*1200-fa867e.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+<noscript>
+<img src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-MarryPollie-closeup-gilbertson-480*320-fa867e.jpg" alt="" />
+</noscript>
+</span>
+
+	<figcaption>Mary Pollee's family was decimated by both government and rebel forces. <span class="credit">(Ashley Gilbertson for ProPublica)</span></figcaption>
+</figure>
+</noapp>
+
+<p>Mary Pollee said she was one victim of Taylor’s fighters. From the Firestone plantation, she fled to a city held by Taylor’s rebels. The fighters stole her food. They took her clothes. They threatened her with guns. And then one day, they grabbed her 13-year-old daughter and raped and killed her.</p>
+
+<p>Pollee — her husband, a son, and a daughter now buried — went mad.</p>
+
+<p> “I was like somebody going crazy,” said Pollee. She began weeping at the memory in her living room, the cicadas outside whirring, the sun beating. “I was not to myself, oh.”</p>
+
+<p>In Ohio, Firestone executives continued to discuss what to do. Initially, they decided to wait to see if the conflict would resolve itself. But as those hopes faded, Firestone made its final decision. </p>
+
+<p>The company would go back to Liberia. </p>
+
+<p>“Completely justifiable,” Padmore called the decision.</p>
+
+<p>“Had I had a crystal ball and an ability to say that’s going to happen, I would have told Firestone in January of 1992, ‘Don’t go back,’ but we didn’t know that would happen. We were hopeful that good things were going to happen.”</p>
+
+<p>He added: “Had [Firestone executives] not taken those decisions, I think Liberia would be much the worse for it today.”</p>
+
+<h3 id="america-works-for-firestone">America Works for Firestone</h3>
+
+<p>In February 1991, Ensminger flew to Liberia to reach out to Taylor. Over the coming months, the company resumed feeding its workers. It <a href="https://www.documentcloud.org/documents/1362158-07-letterfromjohnrvispotoministernmornorkonmana.html#document/p1/a187549">sent shipment</a>s of rice to Taylor and to the interim government. It even <a href="https://www.documentcloud.org/documents/1362158-07-letterfromjohnrvispotoministernmornorkonmana.html">hired Taylor forces</a> to guard House 53.</p>
+
+<p>Taylor ignored the entreaties.</p>
+
+<p>Said Richardson: “They just wanted what’s for Firestone to be for Firestone.”</p>
+
+<noapp>
+<figure class="inset">
+	<span data-picture="" data-alt="">
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-John-Richardson-frontline-480*270-edeef7.jpg"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-John-Richardson-frontline-960*540-edeef7.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-John-Richardson-frontline-900*506-edeef7.jpg" data-media="(min-width: 37.5em)"></span>
+<span data-src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-John-Richardson-frontline-1800*1013-edeef7.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+<noscript>
+<img src="//static.propublica.org/projects/firestone-liberia/assets/img/generated/3-John-Richardson-frontline-480*270-edeef7.jpg" alt="" />
+</noscript>
+</span>
+
+	<figcaption>John T. Richardson was one of Taylor's top aides.<span class="credit">(FRONTLINE)</span></figcaption>
+</figure>
+</noapp>
+
+<p>In April 1991, U.S. Ambassador <a href="https://history.state.gov/departmenthistory/people/de-vos-peter-john">Peter Jon de Vos</a> secured a meeting with Taylor in Gbarnga. He invited Ensminger along for the journey.</p>
+
+<p>De Vos was a proponent of Firestone and Taylor reaching an accommodation. After the meeting, a <a href="https://www.dropbox.com/s/apzunhuvwx003z2/DOS_1991_April09_Monrov_02977.pdf?dl=0">cable</a> noted that “De Vos pressed Taylor” to talk with Firestone officials.</p>
+
+<p>“We are encouraging (Taylor Labor Minister Nyundeh) Monkonmlah and Firestone to reach accommodation since inactivity at the plantation benefits no one,” one embassy official wrote <a href="https://www.documentcloud.org/documents/1362171-dos-1991-may17-monrov-04137.html">in another cable</a>.</p>
+
+<p>A news broadcast from the time showed that the meeting disintegrated quickly. With cameras rolling, Taylor received De Vos in an anteroom furnished with a gilded white and gold Louis XV couch and chairs covered in plastic. Dark wood paneling rose above red carpet. Impeccable, Taylor wore a dark suit, with a white pocket square and red tie. </p>
+
+<p>De Vos, dressed in a rumpled suit and bow tie, and large, square glasses, was sweating profusely. He greeted Taylor. Then, he introduced Ensminger, tan, fit and mustachioed.</p>
+
+<p>“This is Mr. Ensminger, the director general of Firestone,” De Vos said.</p>
+
+<p>Taylor looked puzzled. “Oh, he works for the embassy now?”</p>
+
+<p>“No, America works for him,” De Vos replied.</p>
+
+<aside class="quote direct left">
+	<blockquote>
+		<p>Firestone knew full well and was getting reports from the State Department and from the ambassador and from Liberians. They knew full well that atrocities and human rights violations were committed.</p>
+		<cite>Donald Ensminger, general manager for the Firestone plantation </cite>
+	</blockquote>
+</aside>
+
+<p>Within minutes, Taylor began to harangue Ensminger. He questioned why Firestone was using the port in Monrovia rather than the port that he controlled.</p>
+
+<p> “My biggest problem with Firestone is that instead of trying to play economic games, they’ve been trying to play political games,” Taylor told the U.S. ambassador at one point. </p>
+
+<p>The camera panned to Ensminger. He sat silently. He wore a tight smile on his face. </p>
+
+<p>In behind-the-scenes talks, Richardson discussed matters directly with Ensminger. Richardson recalled asking Ensminger to provide back pay to the workers. Richardson said Ensminger denied the request.</p>
+
+<p> “He was a very arrogant son of whatever,” Richardson said.</p>
+
+<p>Ensminger told a different story. He said that he and his team had repeatedly tried and failed to meet with Taylor. The reason? Taylor’s ministers demanded a bribe even to see the guerilla leader.</p>
+
+<p>“They wanted money before they would talk to us,” he said.</p>
+
+<p>Ensminger said he refused to pay.</p>
+
+<p>“Look we are a concessionaire of the country of Liberia. We’ve been here for many years. We’ve operated and made taxes and given every other means of support that’s legal,” he said he told the rebels. “Now you come in and try to take over the government and want us to recognize you and receive all the dues that a government should receive. If that happens, we’ll be glad to work with you. But that hasn’t happened.”</p>
+
+<p>By summer 1991, Ensminger had arrived at an impasse. </p>
+
+<p>That’s when Firestone executives from Akron decided to pay a visit. </p>
+
+
+				</div><!-- end .content -->
+
+				<footer>
+					<div id="article-bottom"></div>
+					
+					<nav class="pagination group" id="article-footer-nav">
+
+	 
+	<a class="previous-page" rel="previous" href="/article/firestone-and-the-warlord-chapter-2">
+		<span>Previous</span> 
+		<em> A Century of Blood, Sweat and Profits</em>
+	</a> 
+	 
+	
+	 
+	<a class="next-page" rel="next" href="/article/firestone-and-the-warlord-chapter-4">
+		<span>Next</span> 
+		<em> Deal with the Devil</em>
+	</a> 
+	 
+
+</nav>
+
+					
+				    <section id="comments">
+	<div id="disqus_thread"></div>
+	<script>
+		var disqus_shortname = 'propublica';
+		var disqus_url = 'http://www.propublica.org/article/firestone-and-the-warlord-chapter-3';
+		var disqus_title = 'Tough Talk in the Jungle';
+		var disqus_identifier = '26904';
+
+		/* * * DON'T EDIT BELOW THIS LINE * * */
+		(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+		})();
+	</script>
+	<noscript>
+		<p>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></p>
+	</noscript>
+	<p><a href="https://disqus.com" class="dsq-brlink">Comments powered by <span class="logo-disqus">Disqus</span></a></p>
+</section><!-- end #comments -->
+					
+
+				</footer>
+
+			</div><!-- end .wrapper -->
+
+		</article>
+
+	</main><!-- end main[role="main"] -->
+
+
+  <footer role="contentinfo">
+
+		<nav> 
+			<ul class="main-nav">
+				<li class="guide modal-link guide-toggle"><a href="#">Reader Guide</a></li>
+				<li class="toc modal-link" data-modal-id="toc-modal"><a href="#">Index</a></li>
+			</ul>
+		</nav>
+
+  </footer><!-- end footer[role="contentinfo"] --> 
+
+</div><!-- end #page-body -->
+
+<!-- start footer scripts -->
+
+<script src="//static.propublica.org/projects/firestone-liberia/assets/js/main.js?20141125174656"></script>
+<!-- end footer scripts -->
+
+<!-- END EXPRESSIONENGINE BODY CONTENT -->
+
+
+<script type="application/ld+json">{"@context":"http://schema.org","@graph":[{"@type":"NewsArticle","articleSection":"Firestone and the Warlord","author":{"@id":"https://www.propublica.org#identity"},"copyrightHolder":{"@id":"https://www.propublica.org#identity"},"copyrightYear":"2014","creator":["T. Christian Miller"],"dateModified":"2020-03-04T21:39:33-05:00","datePublished":"2014-11-18T15:30:00-05:00","description":"ProPublica is an independent, non-profit newsroom that produces investigative journalism in the public interest.","headline":"Firestone and the Warlord: Tough Talk in the Jungle","image":{"@type":"ImageObject","url":"https://assets.propublica.org/2017-pp-open-graph-1200x630.jpg"},"inLanguage":"en-us","mainEntityOfPage":"https://www.propublica.org/article/firestone-and-the-warlord-chapter-3","name":"Firestone and the Warlord: Tough Talk in the Jungle","publisher":{"@id":"https://www.propublica.org#creator"},"thumbnailUrl":"https://assets.propublica.org/2017-pp-open-graph-1200x630.jpg","url":"https://www.propublica.org/article/firestone-and-the-warlord-chapter-3"},{"@id":"https://www.propublica.org#identity","@type":"NewsMediaOrganization","address":{"@type":"PostalAddress","addressCountry":"US","addressLocality":"New York","addressRegion":"NY","postalCode":"10013","streetAddress":"155 Avenue of the Americas, 13th Floor"},"description":"ProPublica is an independent, non-profit newsroom that produces investigative journalism in the public interest.","email":"info@propublica.org","name":"ProPublica","sameAs":["https://twitter.com/propublica","https://www.facebook.com/propublica/","https://en.wikipedia.org/wiki/ProPublica","https://www.youtube.com/user/propublica","https://github.com/propublica","https://www.linkedin.com/company/propublica/","https://www.instagram.com/propublica","https://www.pinterest.ie/propublica","https://vimeo.com/propublica"],"telephone":"1-212-514-5250","url":"https://www.propublica.org"},{"@id":"#creator","@type":"Organization"},{"@type":"BreadcrumbList","description":"Breadcrumbs list","itemListElement":[{"@type":"ListItem","item":"https://www.propublica.org","name":"Homepage","position":1},{"@type":"ListItem","item":"https://www.propublica.org/article/firestone-and-the-warlord-chapter-3","name":"Firestone and the Warlord: Tough Talk in the Jungle","position":2}],"name":"Breadcrumbs"}]}</script></body>
+</html>

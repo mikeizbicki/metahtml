@@ -1,0 +1,4289 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    
+            
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+    <!-- NR JS -->
+    <script>window.NREUM||(NREUM={}),__nr_require=function(t,n,e){function r(e){if(!n[e]){var o=n[e]={exports:{}};t[e][0].call(o.exports,function(n){var o=t[e][1][n];return r(o||n)},o,o.exports)}return n[e].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<e.length;o++)r(e[o]);return r}({1:[function(t,n,e){function r(t){try{s.console&&console.log(t)}catch(n){}}var o,i=t("ee"),a=t(15),s={};try{o=localStorage.getItem("__nr_flags").split(","),console&&"function"==typeof console.log&&(s.console=!0,o.indexOf("dev")!==-1&&(s.dev=!0),o.indexOf("nr_dev")!==-1&&(s.nrDev=!0))}catch(c){}s.nrDev&&i.on("internal-error",function(t){r(t.stack)}),s.dev&&i.on("fn-err",function(t,n,e){r(e.stack)}),s.dev&&(r("NR AGENT IN DEVELOPMENT MODE"),r("flags: "+a(s,function(t,n){return t}).join(", ")))},{}],2:[function(t,n,e){function r(t,n,e,r,s){try{p?p-=1:o(s||new UncaughtException(t,n,e),!0)}catch(f){try{i("ierr",[f,c.now(),!0])}catch(d){}}return"function"==typeof u&&u.apply(this,a(arguments))}function UncaughtException(t,n,e){this.message=t||"Uncaught error with no additional information",this.sourceURL=n,this.line=e}function o(t,n){var e=n?null:c.now();i("err",[t,e])}var i=t("handle"),a=t(16),s=t("ee"),c=t("loader"),f=t("gos"),u=window.onerror,d=!1,l="nr@seenError",p=0;c.features.err=!0,t(1),window.onerror=r;try{throw new Error}catch(h){"stack"in h&&(t(8),t(7),"addEventListener"in window&&t(5),c.xhrWrappable&&t(9),d=!0)}s.on("fn-start",function(t,n,e){d&&(p+=1)}),s.on("fn-err",function(t,n,e){d&&!e[l]&&(f(e,l,function(){return!0}),this.thrown=!0,o(e))}),s.on("fn-end",function(){d&&!this.thrown&&p>0&&(p-=1)}),s.on("internal-error",function(t){i("ierr",[t,c.now(),!0])})},{}],3:[function(t,n,e){t("loader").features.ins=!0},{}],4:[function(t,n,e){function r(t){}if(window.performance&&window.performance.timing&&window.performance.getEntriesByType){var o=t("ee"),i=t("handle"),a=t(8),s=t(7),c="learResourceTimings",f="addEventListener",u="resourcetimingbufferfull",d="bstResource",l="resource",p="-start",h="-end",m="fn"+p,w="fn"+h,v="bstTimer",y="pushState",g=t("loader");g.features.stn=!0,t(6);var b=NREUM.o.EV;o.on(m,function(t,n){var e=t[0];e instanceof b&&(this.bstStart=g.now())}),o.on(w,function(t,n){var e=t[0];e instanceof b&&i("bst",[e,n,this.bstStart,g.now()])}),a.on(m,function(t,n,e){this.bstStart=g.now(),this.bstType=e}),a.on(w,function(t,n){i(v,[n,this.bstStart,g.now(),this.bstType])}),s.on(m,function(){this.bstStart=g.now()}),s.on(w,function(t,n){i(v,[n,this.bstStart,g.now(),"requestAnimationFrame"])}),o.on(y+p,function(t){this.time=g.now(),this.startPath=location.pathname+location.hash}),o.on(y+h,function(t){i("bstHist",[location.pathname+location.hash,this.startPath,this.time])}),f in window.performance&&(window.performance["c"+c]?window.performance[f](u,function(t){i(d,[window.performance.getEntriesByType(l)]),window.performance["c"+c]()},!1):window.performance[f]("webkit"+u,function(t){i(d,[window.performance.getEntriesByType(l)]),window.performance["webkitC"+c]()},!1)),document[f]("scroll",r,{passive:!0}),document[f]("keypress",r,!1),document[f]("click",r,!1)}},{}],5:[function(t,n,e){function r(t){for(var n=t;n&&!n.hasOwnProperty(u);)n=Object.getPrototypeOf(n);n&&o(n)}function o(t){s.inPlace(t,[u,d],"-",i)}function i(t,n){return t[1]}var a=t("ee").get("events"),s=t(18)(a,!0),c=t("gos"),f=XMLHttpRequest,u="addEventListener",d="removeEventListener";n.exports=a,"getPrototypeOf"in Object?(r(document),r(window),r(f.prototype)):f.prototype.hasOwnProperty(u)&&(o(window),o(f.prototype)),a.on(u+"-start",function(t,n){var e=t[1],r=c(e,"nr@wrapped",function(){function t(){if("function"==typeof e.handleEvent)return e.handleEvent.apply(e,arguments)}var n={object:t,"function":e}[typeof e];return n?s(n,"fn-",null,n.name||"anonymous"):e});this.wrapped=t[1]=r}),a.on(d+"-start",function(t){t[1]=this.wrapped||t[1]})},{}],6:[function(t,n,e){var r=t("ee").get("history"),o=t(18)(r);n.exports=r,o.inPlace(window.history,["pushState","replaceState"],"-")},{}],7:[function(t,n,e){var r=t("ee").get("raf"),o=t(18)(r),i="equestAnimationFrame";n.exports=r,o.inPlace(window,["r"+i,"mozR"+i,"webkitR"+i,"msR"+i],"raf-"),r.on("raf-start",function(t){t[0]=o(t[0],"fn-")})},{}],8:[function(t,n,e){function r(t,n,e){t[0]=a(t[0],"fn-",null,e)}function o(t,n,e){this.method=e,this.timerDuration=isNaN(t[1])?0:+t[1],t[0]=a(t[0],"fn-",this,e)}var i=t("ee").get("timer"),a=t(18)(i),s="setTimeout",c="setInterval",f="clearTimeout",u="-start",d="-";n.exports=i,a.inPlace(window,[s,"setImmediate"],s+d),a.inPlace(window,[c],c+d),a.inPlace(window,[f,"clearImmediate"],f+d),i.on(c+u,r),i.on(s+u,o)},{}],9:[function(t,n,e){function r(t,n){d.inPlace(n,["onreadystatechange"],"fn-",s)}function o(){var t=this,n=u.context(t);t.readyState>3&&!n.resolved&&(n.resolved=!0,u.emit("xhr-resolved",[],t)),d.inPlace(t,y,"fn-",s)}function i(t){g.push(t),h&&(x?x.then(a):w?w(a):(E=-E,O.data=E))}function a(){for(var t=0;t<g.length;t++)r([],g[t]);g.length&&(g=[])}function s(t,n){return n}function c(t,n){for(var e in t)n[e]=t[e];return n}t(5);var f=t("ee"),u=f.get("xhr"),d=t(18)(u),l=NREUM.o,p=l.XHR,h=l.MO,m=l.PR,w=l.SI,v="readystatechange",y=["onload","onerror","onabort","onloadstart","onloadend","onprogress","ontimeout"],g=[];n.exports=u;var b=window.XMLHttpRequest=function(t){var n=new p(t);try{u.emit("new-xhr",[n],n),n.addEventListener(v,o,!1)}catch(e){try{u.emit("internal-error",[e])}catch(r){}}return n};if(c(p,b),b.prototype=p.prototype,d.inPlace(b.prototype,["open","send"],"-xhr-",s),u.on("send-xhr-start",function(t,n){r(t,n),i(n)}),u.on("open-xhr-start",r),h){var x=m&&m.resolve();if(!w&&!m){var E=1,O=document.createTextNode(E);new h(a).observe(O,{characterData:!0})}}else f.on("fn-end",function(t){t[0]&&t[0].type===v||a()})},{}],10:[function(t,n,e){function r(t){var n=this.params,e=this.metrics;if(!this.ended){this.ended=!0;for(var r=0;r<d;r++)t.removeEventListener(u[r],this.listener,!1);if(!n.aborted){if(e.duration=a.now()-this.startTime,4===t.readyState){n.status=t.status;var i=o(t,this.lastSize);if(i&&(e.rxSize=i),this.sameOrigin){var c=t.getResponseHeader("X-NewRelic-App-Data");c&&(n.cat=c.split(", ").pop())}}else n.status=0;e.cbTime=this.cbTime,f.emit("xhr-done",[t],t),s("xhr",[n,e,this.startTime])}}}function o(t,n){var e=t.responseType;if("json"===e&&null!==n)return n;var r="arraybuffer"===e||"blob"===e||"json"===e?t.response:t.responseText;return h(r)}function i(t,n){var e=c(n),r=t.params;r.host=e.hostname+":"+e.port,r.pathname=e.pathname,t.sameOrigin=e.sameOrigin}var a=t("loader");if(a.xhrWrappable){var s=t("handle"),c=t(11),f=t("ee"),u=["load","error","abort","timeout"],d=u.length,l=t("id"),p=t(14),h=t(13),m=window.XMLHttpRequest;a.features.xhr=!0,t(9),f.on("new-xhr",function(t){var n=this;n.totalCbs=0,n.called=0,n.cbTime=0,n.end=r,n.ended=!1,n.xhrGuids={},n.lastSize=null,p&&(p>34||p<10)||window.opera||t.addEventListener("progress",function(t){n.lastSize=t.loaded},!1)}),f.on("open-xhr-start",function(t){this.params={method:t[0]},i(this,t[1]),this.metrics={}}),f.on("open-xhr-end",function(t,n){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&n.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid)}),f.on("send-xhr-start",function(t,n){var e=this.metrics,r=t[0],o=this;if(e&&r){var i=h(r);i&&(e.txSize=i)}this.startTime=a.now(),this.listener=function(t){try{"abort"===t.type&&(o.params.aborted=!0),("load"!==t.type||o.called===o.totalCbs&&(o.onloadCalled||"function"!=typeof n.onload))&&o.end(n)}catch(e){try{f.emit("internal-error",[e])}catch(r){}}};for(var s=0;s<d;s++)n.addEventListener(u[s],this.listener,!1)}),f.on("xhr-cb-time",function(t,n,e){this.cbTime+=t,n?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof e.onload||this.end(e)}),f.on("xhr-load-added",function(t,n){var e=""+l(t)+!!n;this.xhrGuids&&!this.xhrGuids[e]&&(this.xhrGuids[e]=!0,this.totalCbs+=1)}),f.on("xhr-load-removed",function(t,n){var e=""+l(t)+!!n;this.xhrGuids&&this.xhrGuids[e]&&(delete this.xhrGuids[e],this.totalCbs-=1)}),f.on("addEventListener-end",function(t,n){n instanceof m&&"load"===t[0]&&f.emit("xhr-load-added",[t[1],t[2]],n)}),f.on("removeEventListener-end",function(t,n){n instanceof m&&"load"===t[0]&&f.emit("xhr-load-removed",[t[1],t[2]],n)}),f.on("fn-start",function(t,n,e){n instanceof m&&("onload"===e&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=a.now()))}),f.on("fn-end",function(t,n){this.xhrCbStart&&f.emit("xhr-cb-time",[a.now()-this.xhrCbStart,this.onload,n],n)})}},{}],11:[function(t,n,e){n.exports=function(t){var n=document.createElement("a"),e=window.location,r={};n.href=t,r.port=n.port;var o=n.href.split("://");!r.port&&o[1]&&(r.port=o[1].split("/")[0].split("@").pop().split(":")[1]),r.port&&"0"!==r.port||(r.port="https"===o[0]?"443":"80"),r.hostname=n.hostname||e.hostname,r.pathname=n.pathname,r.protocol=o[0],"/"!==r.pathname.charAt(0)&&(r.pathname="/"+r.pathname);var i=!n.protocol||":"===n.protocol||n.protocol===e.protocol,a=n.hostname===document.domain&&n.port===e.port;return r.sameOrigin=i&&(!n.hostname||a),r}},{}],12:[function(t,n,e){function r(){}function o(t,n,e){return function(){return i(t,[f.now()].concat(s(arguments)),n?null:this,e),n?void 0:this}}var i=t("handle"),a=t(15),s=t(16),c=t("ee").get("tracer"),f=t("loader"),u=NREUM;"undefined"==typeof window.newrelic&&(newrelic=u);var d=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],l="api-",p=l+"ixn-";a(d,function(t,n){u[n]=o(l+n,!0,"api")}),u.addPageAction=o(l+"addPageAction",!0),u.setCurrentRouteName=o(l+"routeName",!0),n.exports=newrelic,u.interaction=function(){return(new r).get()};var h=r.prototype={createTracer:function(t,n){var e={},r=this,o="function"==typeof n;return i(p+"tracer",[f.now(),t,e],r),function(){if(c.emit((o?"":"no-")+"fn-start",[f.now(),r,o],e),o)try{return n.apply(this,arguments)}catch(t){throw c.emit("fn-err",[arguments,this,t],e),t}finally{c.emit("fn-end",[f.now()],e)}}}};a("setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,n){h[n]=o(p+n)}),newrelic.noticeError=function(t){"string"==typeof t&&(t=new Error(t)),i("err",[t,f.now()])}},{}],13:[function(t,n,e){n.exports=function(t){if("string"==typeof t&&t.length)return t.length;if("object"==typeof t){if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if(!("undefined"!=typeof FormData&&t instanceof FormData))try{return JSON.stringify(t).length}catch(n){return}}}},{}],14:[function(t,n,e){var r=0,o=navigator.userAgent.match(/Firefox[\/\s](\d+\.\d+)/);o&&(r=+o[1]),n.exports=r},{}],15:[function(t,n,e){function r(t,n){var e=[],r="",i=0;for(r in t)o.call(t,r)&&(e[i]=n(r,t[r]),i+=1);return e}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],16:[function(t,n,e){function r(t,n,e){n||(n=0),"undefined"==typeof e&&(e=t?t.length:0);for(var r=-1,o=e-n||0,i=Array(o<0?0:o);++r<o;)i[r]=t[n+r];return i}n.exports=r},{}],17:[function(t,n,e){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],18:[function(t,n,e){function r(t){return!(t&&t instanceof Function&&t.apply&&!t[a])}var o=t("ee"),i=t(16),a="nr@original",s=Object.prototype.hasOwnProperty,c=!1;n.exports=function(t,n){function e(t,n,e,o){function nrWrapper(){var r,a,s,c;try{a=this,r=i(arguments),s="function"==typeof e?e(r,a):e||{}}catch(f){l([f,"",[r,a,o],s])}u(n+"start",[r,a,o],s);try{return c=t.apply(a,r)}catch(d){throw u(n+"err",[r,a,d],s),d}finally{u(n+"end",[r,a,c],s)}}return r(t)?t:(n||(n=""),nrWrapper[a]=t,d(t,nrWrapper),nrWrapper)}function f(t,n,o,i){o||(o="");var a,s,c,f="-"===o.charAt(0);for(c=0;c<n.length;c++)s=n[c],a=t[s],r(a)||(t[s]=e(a,f?s+o:o,i,s))}function u(e,r,o){if(!c||n){var i=c;c=!0;try{t.emit(e,r,o,n)}catch(a){l([a,e,r,o])}c=i}}function d(t,n){if(Object.defineProperty&&Object.keys)try{var e=Object.keys(t);return e.forEach(function(e){Object.defineProperty(n,e,{get:function(){return t[e]},set:function(n){return t[e]=n,n}})}),n}catch(r){l([r])}for(var o in t)s.call(t,o)&&(n[o]=t[o]);return n}function l(n){try{t.emit("internal-error",n)}catch(e){}}return t||(t=o),e.inPlace=f,e.flag=a,e}},{}],ee:[function(t,n,e){function r(){}function o(t){function n(t){return t&&t instanceof r?t:t?c(t,s,i):i()}function e(e,r,o,i){if(!l.aborted||i){t&&t(e,r,o);for(var a=n(o),s=h(e),c=s.length,f=0;f<c;f++)s[f].apply(a,r);var d=u[y[e]];return d&&d.push([g,e,r,a]),a}}function p(t,n){v[t]=h(t).concat(n)}function h(t){return v[t]||[]}function m(t){return d[t]=d[t]||o(e)}function w(t,n){f(t,function(t,e){n=n||"feature",y[e]=n,n in u||(u[n]=[])})}var v={},y={},g={on:p,emit:e,get:m,listeners:h,context:n,buffer:w,abort:a,aborted:!1};return g}function i(){return new r}function a(){(u.api||u.feature)&&(l.aborted=!0,u=l.backlog={})}var s="nr@context",c=t("gos"),f=t(15),u={},d={},l=n.exports=o();l.backlog=u},{}],gos:[function(t,n,e){function r(t,n,e){if(o.call(t,n))return t[n];var r=e();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return t[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(t,n,e){function r(t,n,e,r){o.buffer([t],r),o.emit(t,n,e)}var o=t("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(t,n,e){function r(t){var n=typeof t;return!t||"object"!==n&&"function"!==n?-1:t===window?0:a(t,i,function(){return o++})}var o=1,i="nr@id",a=t("gos");n.exports=r},{}],loader:[function(t,n,e){function r(){if(!x++){var t=b.info=NREUM.info,n=l.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&n))return u.abort();f(y,function(n,e){t[n]||(t[n]=e)}),c("mark",["onload",a()+b.offset],null,"api");var e=l.createElement("script");e.src="https://"+t.agent,n.parentNode.insertBefore(e,n)}}function o(){"complete"===l.readyState&&i()}function i(){c("mark",["domContent",a()+b.offset],null,"api")}function a(){return E.exists&&performance.now?Math.round(performance.now()):(s=Math.max((new Date).getTime(),s))-b.offset}var s=(new Date).getTime(),c=t("handle"),f=t(15),u=t("ee"),d=window,l=d.document,p="addEventListener",h="attachEvent",m=d.XMLHttpRequest,w=m&&m.prototype;NREUM.o={ST:setTimeout,SI:d.setImmediate,CT:clearTimeout,XHR:m,REQ:d.Request,EV:d.Event,PR:d.Promise,MO:d.MutationObserver};var v=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1071.min.js"},g=m&&w&&w[p]&&!/CriOS/.test(navigator.userAgent),b=n.exports={offset:s,now:a,origin:v,features:{},xhrWrappable:g};t(12),l[p]?(l[p]("DOMContentLoaded",i,!1),d[p]("load",r,!1)):(l[h]("onreadystatechange",o),d[h]("onload",r)),c("mark",["firstbyte",s],null,"api");var x=0,E=t(17)},{}]},{},["loader",2,10,4,3]);
+    ;NREUM.info={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",licenseKey:"9b0cb93cab",applicationID:"32644292",sa:1}
+    </script>
+
+    <!-- Critical JS -->
+    <script>window.PP={};window.PP.utils={};window.PP.config={};PP.config.donateBanner={secondsUntilShown:0.25,daysForDonateBarDismissal:3};;(function(win,undefined){win.PP=win.PP||{};win.PP.utils=win.PP.utils||{};var PP=win.PP;// loadJS: load a JS file asynchronously. Included from https://github.com/filamentgroup/loadJS/
+function loadJS(src,cb){"use strict";var ref=window.document.getElementsByTagName("script")[0];var script=window.document.createElement("script");script.src=src;script.async=true;ref.parentNode.insertBefore(script,ref);if(cb&&typeof cb==="function"){script.onload=cb}return script}PP.utils.loadJS=loadJS;// cookie function from https://github.com/filamentgroup/cookie/
+function cookie(name,value,days){// if value is undefined, get the cookie value
+if(value===undefined){var cookiestring="; "+window.document.cookie;var cookies=cookiestring.split("; "+name+"=");if(cookies.length===2){return cookies.pop().split(";").shift()}return null}else{var expires;var domain;// if value is a false boolean, we'll treat that as a delete
+if(value===false){days=-1}if(days){var date=new Date;date.setTime(date.getTime()+days*24*60*60*1000);expires="; expires="+date.toGMTString()}else{expires=""}// check if we're in dev, if not, lets make it a domain-wide cookie
+if(location.hostname=="localhost"||location.hostname=="127.0.0.1"){domain=""}else{domain="; domain=.propublica.org"}window.document.cookie=name+"="+value+expires+domain+"; path=/"}}// expose it
+PP.utils.cookie=cookie;// basic logging function
+function log(logLine){const logOn=new URLSearchParams(window.location.search).get("__pp-debug");if(logOn!==null){console.log(logLine)}}// expose it
+PP.utils.log=log})(this);;(function(win,undefined){// Enable JS strict mode
+"use strict";// Environment variables
+var PP=win.PP,utils=PP.utils,docClasses=[];// if ( "sessionStorage" in window ) {
+//
+//     // Font loading!
+//     var fontsClass = "fonts-loaded";
+//
+//     if ( sessionStorage.getItem( "fontsLoaded" ) === "loaded" ) {
+//         docClasses.push( fontsClass );
+//     } else {
+//         // Okay! Let’s watch for font events!
+//         var tiemposText = new FontFaceObserver( "Tiempos Text", {
+//             weight: 400
+//         } );
+//         var tiemposTextItalic = new FontFaceObserver( "Tiempos Text", {
+//             style: "italic",
+//             weight: 400
+//         } );
+//         var tiemposTextBold = new FontFaceObserver( "Tiempos Text", {
+//             weight: 700
+//         } );
+//         var tiemposTextBoldItalic = new FontFaceObserver( "Tiempos Text", {
+//             style: "italic",
+//             weight: 700
+//         } );
+//         var graphik = new FontFaceObserver( "Graphik", {
+//             weight: 400
+//         } );
+//         var graphikItalic = new FontFaceObserver( "Graphik", {
+//             style: "italic",
+//             weight: 400
+//         } );
+//         var graphikBold = new FontFaceObserver( "Graphik", {
+//             weight: 700
+//         } );
+//         var graphikBoldItalic = new FontFaceObserver( "Graphik", {
+//             style: "italic",
+//             weight: 700
+//         } );
+//
+//         // When the fonts above are loaded, we'll attach a .fonts-loaded class to the document. (Per https://www.filamentgroup.com/lab/font-events.html) We'll also append the class to the `html`.
+//         win.Promise
+//             .all( [
+//                 tiemposText.load(),
+//                 tiemposTextItalic.load(),
+//                 tiemposTextBold.load(),
+//                 tiemposTextBoldItalic.load(),
+//                 graphik.load(),
+//                 graphikItalic.load(),
+//                 graphikBold.load(),
+//                 graphikBoldItalic.load()
+//             ] )
+//             .then( function() {
+//                 win.document.documentElement.className += " " + fontsClass;
+//                 sessionStorage.setItem( "fontsLoaded" , "loaded" );
+//             } );
+//     }
+// }
+// Add scoping classes to HTML element
+win.document.documentElement.className+=" "+docClasses.join(" ")})(this);
+//# sourceMappingURL=initial.js.map
+</script>
+
+    <!-- DFP JS -->
+    <script src="https://htlbid.com/v3/propublica.org/htlbid.js"></script>
+    <script>window.htlbid = window.htlbid || {};
+htlbid.cmd = htlbid.cmd || [];
+htlbid.cmd.push(function() {
+    htlbid.layout("universal"); // Leave as "universal" or add custom layout
+        htlbid.setTargeting("is_testing", "no");
+        htlbid.setTargeting("is_home", "no"); // Set to "yes" on the homepage
+});
+</script>
+
+    <!-- JS -->
+    <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)</script>
+
+    <!-- Chartbeat -->
+    <script>
+        var _sf_async_config = window._sf_async_config = (window._sf_async_config || {});
+        _sf_async_config.uid = 1577;
+        _sf_async_config.domain = 'propublica.org';
+        _sf_async_config.useCanonical = true;
+        _sf_async_config.useCanonicalDomain = true;
+                _sf_async_config.sections = 'Lost Mothers';
+                _sf_async_config.authors = 'Nina Martin';
+    </script>
+
+    <!-- OTHER -->
+    <link rel="shortcut icon" type="image/x-icon" href="https://assets.propublica.org/static/prod/v4/images/favicon.ico">
+    <link rel="icon" type="image/png" href="https://assets.propublica.org/static/prod/v4/images/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="https://assets.propublica.org/static/prod/v4/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://assets.propublica.org/static/prod/v4/images/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="https://assets.propublica.org/static/prod/v4/images/favicon-128x128.png" sizes="128x128">
+    <link rel="icon" type="image/png" href="https://assets.propublica.org/static/prod/v4/images/favicon-196x196.png" sizes="196x196">
+    <link rel="apple-touch-icon" href="https://assets.propublica.org/static/prod/v4/images/apple-touch-icon-180x180.png" sizes="180x180">
+    <meta name="application-name" content="ProPublica">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta name="msapplication-TileImage" content="https://assets.propublica.org/static/prod/v4/images/mstile-144x144.png">
+    <meta name="msapplication-square70x70logo" content="https://assets.propublica.org/static/prod/v4/images/mstile-70x70.png">
+    <meta name="msapplication-square150x150logo" content="https://assets.propublica.org/static/prod/v4/images/mstile-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="https://assets.propublica.org/static/prod/v4/images/mstile-310x150.png">
+    <meta name="msapplication-square310x310logo" content="https://assets.propublica.org/static/prod/v4/images/mstile-310x310.png">
+
+    <!-- START EXPRESSIONENGINE CUSTOM HEADER CONTENT -->
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="canonical" href="https://www.propublica.org/article/lost-mothers-maternal-health-died-childbirth-pregnancy/">
+	<link rel="stylesheet" href="https://static.propublica.org/projects/maternal-mortality/assets/css/gallery.css?20171004112727">
+	<script src="https://static.propublica.org/projects/maternal-mortality/assets/js/lib/modernizr.custom.js?20171004112727"></script>
+	<script src="https://static.propublica.org/projects/maternal-mortality/assets/js/lib/socialsnippet.js?20171004112727"></script>
+	<script>
+		propublica.views.socialLI = propublica.views.socialSection.extend({
+			cssClass: 'social-widget',
+			tag: 'li'
+		});
+	</script>
+	<script src="//www.propublica.org/js/public/assets/google_ads_boot.js?20171004112727"></script>
+	<script>
+		(function(){
+			var o = function(it) { return it.replace(/\s+/g, "_") };
+			googletag.pubads().setTargeting('type',    o('story'));
+		})();
+	</script>
+	<script src="//www.propublica.org/js/public/assets/google_ads.js?20171004112727"></script>
+
+
+	<!-- END EXPRESSIONENGINE CUSTOM HEADER CONTENT -->
+
+<title>Lost Mothers — ProPublica</title><meta name="description" content="An estimated 700 to 900 women in the U.S. died from pregnancy-related causes in 2016. We have identified 120 of them so far.">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="robots" content="all">
+<meta content="Nina Martin" property="author">
+<meta content="Lost Mothers" property="headline">
+<meta content="13320939444" property="fb:profile_id">
+<meta content="229862657130557" property="fb:app_id">
+<meta content="en_US" property="og:locale">
+<meta content="ProPublica" property="og:site_name">
+<meta content="article" property="og:type">
+<meta content="https://www.propublica.org/article/lost-mothers-maternal-health-died-childbirth-pregnancy?token=HM_vaeiiqqmnZ9h19EC5CdgRYKiACk6M" property="og:url">
+<meta content="Lost Mothers" property="og:title">
+<meta content="An estimated 700 to 900 women in the U.S. died from pregnancy-related causes in 2016. We have identified 120 of them so far." property="og:description">
+<meta content="https://assets.propublica.org/2017-pp-open-graph-1200x630.jpg" property="og:image">
+<meta content="https://vimeo.com/propublica" property="og:see_also">
+<meta content="https://www.pinterest.ie/propublica" property="og:see_also">
+<meta content="https://www.instagram.com/propublica" property="og:see_also">
+<meta content="https://www.linkedin.com/company/propublica/" property="og:see_also">
+<meta content="https://github.com/propublica" property="og:see_also">
+<meta content="https://www.youtube.com/user/propublica" property="og:see_also">
+<meta content="https://en.wikipedia.org/wiki/ProPublica" property="og:see_also">
+<meta content="https://www.facebook.com/propublica/" property="og:see_also">
+<meta content="https://twitter.com/propublica" property="og:see_also">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@propublica">
+<meta name="twitter:creator" content="@propublica">
+<meta name="twitter:title" content="Lost Mothers">
+<meta name="twitter:description" content="An estimated 700 to 900 women in the U.S. died from pregnancy-related causes in 2016. We have identified 120 of them so far.">
+<meta name="twitter:image" content="https://assets.propublica.org/2017-pp-open-graph-1200x630.jpg">
+<link href="https://www.propublica.org/article/lost-mothers-maternal-health-died-childbirth-pregnancy" rel="canonical">
+<link href="https://www.propublica.org/" rel="home">
+<link type="text/plain" href="https://www.propublica.org/humans.txt?token=hm_vaeiiqqmnz9h19ec5cdgrykiack6m" rel="author"></head>
+
+<body id="www-propublica-org" class="article">
+
+        <script src="//www.propublica.org/js/public/assets/beacons.js"></script>
+    <script src="//connect.facebook.net/en_US/all.js"></script>
+    <div id="fb-root"></div>
+    <script>
+	    FB.init({
+	        appId: '229862657130557', // App ID
+	        status: true, // check login status
+	        cookie: true, // enable cookies to allow the server to access the session
+	        xfbml: true // parse XFBML
+	    });
+    </script>
+    <script src="https://www.propublica.org/js/public/assets/all.js"></script>
+
+    
+	<!-- START EXPRESSIONENGINE BODY CONTENT -->
+
+  <script src="//connect.facebook.net/en_US/all.js"></script>
+    <div id="fb-root"></div>
+    <script>
+      FB.init({
+        appId      : '229862657130557', // App ID
+        status     : true, // check login status
+        cookie     : true, // enable cookies to allow the server to access the session
+        xfbml      : true  // parse XFBML
+      });
+    </script>
+
+	<!-- we can't edit body tag, so use custom bodyclass value in YAML if needed -->
+	<div id="page-body" class="gallery">
+
+	<pp-special>
+	<header role="banner">
+	    <h1><a href="https://www.propublica.org">ProPublica</a></h1>
+	    
+		<nav>
+			<ul class="social-links">
+				<li class="facebook social-widget ss-fb" data-title="Lost Mothers" data-img="https://www.propublica.org/images/ngen/gypsy_og_image/20170713-lost-mothers-1200x630.jpg" data-txt="An estimated 700 to 900 women in the U.S. died from pregnancy-related causes in 2016. We have identified 134 of them so far." data-desc="An estimated 700 to 900 women in the U.S. died from pregnancy-related causes in 2016. We have identified 134 of them so far." data-url="https://www.propublica.org/article/lost-mothers-maternal-health-died-childbirth-pregnancy" data-hashtag=""><a href="#">Share on Facebook</a></li>
+				<li class="twitter social-widget ss-tw" data-txt="Lost Mothers" data-url="https://www.propublica.org/article/lost-mothers-maternal-health-died-childbirth-pregnancy" data-hashtag=""><a href="#">Share on Twitter</a></li>
+				<li class="comment"><a href="#disqus_thread">Comment</a></li>
+			</ul>
+			<ul class="donate-links">
+				<li class="tab"><a href="https://www.propublica.org/site/donate3/">Donate</a></li>
+			</ul>
+		</nav>
+	</header><!-- end header[role="banner"] -->
+</pp-special>
+
+	<main role="main" class="content">
+		<div id="article-top"></div>
+		<article>
+			<header class="titles">
+				<h1 class="hed">Lost Mothers</h1>
+				<h2 class="dek">An estimated 700 to 900 women in the U.S. died from pregnancy-related causes in 2016. We have identified 134 of them so far.</h2>
+				<p class="byline">by Nina Martin, ProPublica, Emma Cillekens and Alessandra Freitas, special to ProPublica</p>
+				<time class="datestamp" datetime="2017-07-17">July 17, 2017</time>
+			</header>
+			<div class="article-body">
+				<div class="body-text">
+					<p class="intro">The U.S. has the highest rate of maternal mortality in the developed world. Yet these deaths of women from causes related to pregnancy or childbirth are almost invisible. When a new or expectant mother dies, her obituary rarely mentions the circumstances. Her identity is shrouded by medical institutions, regulators and state maternal mortality review committees. Her loved ones mourn her loss in private. The lessons to be learned from her death are often lost as well.</p>
+
+<pp-special>
+<aside class="promo medium right">
+	<a href="https://www.propublica.org/article/die-in-childbirth-maternal-death-rate-health-care-system"><img src="https://www.propublica.org/images/ngen/gypsy_big_image/20170512-maternal-mortality-630x420.jpg" /></a>
+	<h2><a href="https://www.propublica.org/article/die-in-childbirth-maternal-death-rate-health-care-system">The Last Person You’d Expect to Die in Childbirth</a></h2>
+	<h3>The U.S. has the worst rate of maternal deaths in the developed world, and 60 percent are preventable. The death of Lauren Bloomstein, a neonatal nurse, in the hospital where she worked illustrates a profound disparity: The health care system focuses on babies but often ignores their mothers.</h3>
+	<h2><a href="https://www.propublica.org/getinvolved/item/help-propublica-and-npr-investigate-maternal-mortality">Do You Know Someone Who Died or Nearly Died in Childbirth? Help Us Investigate Maternal Health</a></h2>
+</aside>
+</pp-special>
+
+<p>The inability, or unwillingness, of states and the federal government to track maternal deaths has been called “<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5001799/">an international embarrassment</a>.” To help fill this gap, ProPublica and NPR have spent the last few months searching social media and other sources for mothers who died, trying to understand what happened to them and why. So far, we’ve identified 134 pregnancy- and childbirth-related deaths for 2016 out of an estimated U.S. total of 700 to 900. Together these women form a picture of maternal mortality that is more racially, economically, geographically and medically diverse than many people might expect. Their ages ranged from 16 to 43; their causes of death, from hemorrhage to infection, complications of pre-existing medical conditions, and suicide. We were struck by how many perished in the postpartum period, by the number of heart-related deaths, by the contributing role sometimes played by severe depression and mood disorders — and by the many missed opportunities to save lives.</p>
+
+<p>ProPublica and NPR plan to expand our 2016 photo gallery as we find more women and hear from more families. If you know of someone who died, please tell us <a href="https://www.propublica.org/getinvolved/item/help-propublica-and-npr-investigate-maternal-mortality">here</a>. Meanwhile, we highlight 16 women with portraits of their lives and deaths. Their stories are a reminder of just how much is lost when a mother dies. Examined together, these private tragedies point to a much bigger public health problem, and underscore the potential repercussions for women and families as Republicans in Congress push to revamp the health care system and roll back Medicaid.</p>
+
+<div class="vignette" id="vignette-amanda-rose-kotrba">
+
+<header>
+	<h2>January 26</h2>
+	<h3>Amanda Rose Kotrba</h3>
+</header>
+
+<figure class="portrait small left">
+	<span data-picture="" data-alt="">
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/amanda-rose-kotrba-303*303-ebdf3d.jpg"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/amanda-rose-kotrba-303*303-ebdf3d.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/amanda-rose-kotrba-303*303-ebdf3d.jpg" data-media="(min-width: 37.5em)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/amanda-rose-kotrba-303*303-ebdf3d.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+    <noscript>
+      <img src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/amanda-rose-kotrba-303*303-ebdf3d.jpg" alt="" />
+    </noscript>
+  </span>
+
+</figure>
+
+<p><strong>Amanda Rose Kotrba</strong> never got over the frightening birth of her son, back in 2008. Late in her third trimester, she had developed a problem with her placenta — the organ that supplies nutrients to the developing fetus — and lost most of her amniotic fluid, resulting in an emergency Cesarean section. Seven years and a couple of miscarriages later, she was pregnant again. “She was scared,” her mother, Connie Holyfield, said. “She kept telling me that she was scared.”</p>
+
+<p>Amanda was no shrinking violet — “feisty” and “headstrong” is how Connie described her 30-year-old daughter. She worked as a security guard and had a side business cleaning apartments in the Orange Park, Florida, complex where she and her longtime boyfriend lived with their son. She didn’t have private health insurance or a car, but Medicaid covered her maternity care and provided transportation to prenatal appointments; other times, Connie would drive her. Toward the end of her ninth month, Amanda’s visits to the doctor and the emergency room became more frequent. “She started having some bleeding, some back pain and some stomach pain,” Connie said. “She kept telling me she didn’t feel right.” Amanda worried that her placenta was failing again. But the doctors and nurses who examined her always sent her home.</p>
+
+<p>On Sunday, Jan. 24, Amanda was overcome by searing pain; when Connie arrived at the hospital, her daughter was undergoing another emergency C-section. Amanda had suffered a placental abruption — the organ had become detached from the walls of the uterus — and major bleeding. Her newborn daughter had a collapsed lung, and Amanda was so ill she could barely glance at the baby. After a few hours, she seemed to rally. Then, when Connie went to take a photo of the baby to bring back to her room, Amanda texted her: “More blood.” As Connie was signing consent forms for more emergency surgeries, Amanda gasped, “Mom, I’m not gonna make it.” She died 36 hours later, her body so ravaged that, her mother said, “She didn’t even look like the same person.”</p>
+
+</div>
+
+<div class="vignette" id="vignette-emily-cook-dyches">
+
+<header>
+	<h2>February 24</h2>
+	<h3>Emily Cook Dyches</h3>
+</header>
+
+<figure class="portrait large">
+	<span data-picture="" data-alt="">
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/emily-cook-dyches-480*320-c882c7.jpg"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/emily-cook-dyches-960*640-c882c7.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/emily-cook-dyches-900*600-c882c7.jpg" data-media="(min-width: 37.5em)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/emily-cook-dyches-1800*1200-c882c7.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+    <noscript>
+      <img src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/emily-cook-dyches-480*320-c882c7.jpg" alt="" />
+    </noscript>
+  </span>
+
+	<figcaption>Emily Cook Dyches, her husband Eric, and their fifth child, Trey.</figcaption>
+</figure>
+
+<p>Thirty-nine-year-old <strong>Emily Cook Dyches</strong> of Salem, Utah, “was the mom who learned your kids’ names and asked about them when she saw you,” her husband Eric <a href="http://theemilyeffect.org/about/">wrote</a> last year. “She was the neighbor with the untidy house and smiling children. She was the mom who worried about not measuring up, but always put her best foot forward.” Emily and Eric met in third grade and married while attending Brigham Young University in 1998. She taught elementary school for a few years and worked as a piano instructor and photographer, but her most important job, she believed, was raising her kids — teaching them “not only practical life lessons, but more importantly eternal lessons, centered on how one can progressively become more like the Savior in word and deed,” as her <a href="http://www.walkerspanishfork.com/obit/emily-cook-dyches/">obituary</a> put it.</p>
+
+<p>After she nearly died delivering her fifth baby, Trey, in March 2015, she recovered physically, but emotionally she was never the same. When breastfeeding proved difficult, “her anxiety about Trey’s health went through the roof,” Eric said. “She was worried about him developing and growing and surviving.” She began having panic attacks. “I’ve heard it described that it’s like you’re in a jetliner and you feel like the jetliner’s going down,” Eric said. The attacks were so bad he took her to the emergency room a couple of times, but the medical system “is just not equipped to handle that type of emergency.”</p>
+
+<p>Antidepressants helped, and Emily’s condition seemed to stabilize for a time. But in retrospect, Eric said, “she wasn’t fully there, even though I thought we were functioning at a pretty good level.” When Trey was about nine months old, “she came to me and essentially just said, ‘It’s coming back.’” Emily agreed to check into a psychiatric hospital and stayed for 11 nights. (As she and Eric later learned, their insurance wouldn’t have covered visits to an outpatient facility anyway.) The experience was “very similar to incarceration,” Eric said. Emily couldn’t even wear an underwire bra, for fear she might use the wire to harm herself. Still, she got better, and the first couple of weeks after she was discharged felt to Eric like “a second honeymoon.” Then she regressed. On Feb. 24, after spending the day with her parents, she had a panic attack during a car ride. Her father pulled the car to the side of the freeway to console her, but before he could stop her, she opened the door and ran into oncoming traffic.</p>
+
+<p>According to <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3428236/">researchers</a> in Georgia, Michigan and <a href="https://www.ncbi.nlm.nih.gov/pubmed/27824771">other states</a>, mental health disorders have become a leading contributor to maternal deaths among white women in the months after childbirth. Eric doesn’t believe his wife was trying to harm herself. “She was disoriented. She wasn’t sure where she was going.” He does believe she needed more help than her family and community could provide. A few weeks after her death, he started a foundation in her honor, <a href="http://theemilyeffect.org/">The Emily Effect</a>, to help other women suffering from perinatal mood disorders, with a special focus on improving maternal care in Utah.</p>
+
+</div>
+
+<div class="vignette" id="vignette-brittany-renee-haefke">
+
+<header>
+	<h2>March 2</h2>
+	<h3>Brittany Haefke</h3>
+</header>
+
+<figure class="portrait small right">
+	<span data-picture="" data-alt="">
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/brittany-haefke-329*329-a793c7.jpg"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/brittany-haefke-329*329-a793c7.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/brittany-haefke-329*329-a793c7.jpg" data-media="(min-width: 37.5em)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/brittany-haefke-329*329-a793c7.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+    <noscript>
+      <img src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/brittany-haefke-329*329-a793c7.jpg" alt="" />
+    </noscript>
+  </span>
+
+</figure>
+
+<p>At 23, <strong>Brittany Haefke</strong> was a stay-at-home single mom with a 6-year-old daughter and a 3-year-old son. She’d struggled with depression and drugs over the years, chronicling her ups and downs in her diaries, according to her mother, Deneen Haefke. But her kids helped keep her grounded. Nothing made her happier than playing ball with them or teaching them to ride their bikes. “You could just see the joy in her face,” Deneen said. “You couldn’t rip her away from them.”</p>
+
+<p>Just hours after the birth of her third child, Cole, on Feb. 11, 2016, Brittany had so much trouble breathing that doctors put her on oxygen. She was so swollen, Deneen said, “she still kind of looked like she was pregnant.” The hospital staff ran some tests, but when Brittany heard the results she was so upset that she checked out and refused to tell her mother what the doctors had said. Back at the home the family shared in Floral City, Florida, Brittany withdrew into herself. “She did not even try to bond with [the baby],” Deneen said. Her swelling grew worse, and she started having chest pains. “I asked her every day, ‘Please let me take you to the doctor.’ She would refuse.” One morning, Brittany called her mother from a friend’s house: She was on her way to the hospital and didn’t think she’d be coming home. She died a few hours later from pregnancy-induced heart failure — the diagnosis, Deneen believes, that doctors had given her three weeks before. The condition is often treatable, but recovery can be long and uncertain, and Brittany’s Medicaid benefits were set to expire a couple of months after she delivered.</p>
+
+<p>Her final journal entries reflected that she was tired of fighting. “I think she gave up on life,” Deneen said. Her mother buried the diaries with her.</p>
+
+</div>
+
+<div class="vignette" id="vignette-marqwetta-johnson">
+
+<header>
+	<h2>April 8</h2>
+	<h3>Marqwetta Johnson</h3>
+</header>
+
+<figure class="portrait small left">
+	<span data-picture="" data-alt="">
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/marqwetta-johnson-1-400*400-dc9854.jpg"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/marqwetta-johnson-1-400*400-dc9854.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/marqwetta-johnson-1-400*400-dc9854.jpg" data-media="(min-width: 37.5em)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/marqwetta-johnson-1-400*400-dc9854.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+    <noscript>
+      <img src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/marqwetta-johnson-1-400*400-dc9854.jpg" alt="" />
+    </noscript>
+  </span>
+
+</figure>
+
+<p><strong>Marqwetta Johnson</strong> of Tulsa, Oklahoma, had no idea when she collapsed that she was six weeks pregnant with twins. At 42, she had seven children, including a daughter with a learning disability, a son with autism, and twin 3-year-olds. The family was poor, but Marqwetta was patient and loving, said her eldest, 23-year-old Jamal. “She would tell me, ‘Whatever you decide to do, do the best you can at it.’” With his mother’s encouragement, he earned his undergraduate degree at Oral Roberts University in 2015, then headed to China to study international relations and Mandarin. He called her from there on April 7, 2016. “She was fine, laughing and telling me to make sure I did my Chinese homework.”</p>
+
+<p>The next morning, Marqwetta complained of pain in her abdomen and began to bleed. Rushed to the hospital, she was diagnosed with an <a href="http://www.webmd.com/baby/guide/pregnancy-ectopic-pregnancy">ectopic pregnancy</a>. One or more fertilized eggs had implanted in her fallopian tube instead of her uterus and burst, leading to hemorrhage and cardiac arrest. Marqwetta was older and overweight, traits associated with higher rates of pregnancy complications. Another risk factor was poverty. “She did not go to the doctor very often,” Jamal said. “I think people have a fear of going to see the doctor because of the cost associated with it. The uncertainty and the fear of, ‘Well if there is something wrong, it’s gonna be more expensive for me to try to fix what’s wrong.’” His mother’s sudden death left his younger siblings “like sheep without the shepherd,” he said. “That’s when it was my turn to stand up and say, ‘No, everything’s going to be okay.’” Jamal flew back to Tulsa and, fearing that the state would put his brothers and sister into foster care, launched a <a href="https://www.gofundme.com/jvyeh5sc">GoFundMe campaign</a> to help him gain custody of them. He raised almost $20,000, enough to rent a house, hire a lawyer, and keep his family intact. He also got married and is expecting a child of his own. If he could see his mother one last time, he said, “I would tell her that all of her babies are okay. Including me.”</p>
+
+<figure class="portrait x-large">
+	<span data-picture="" data-alt="">
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/marqwetta-johnson-2-480*320-8c7549.jpg"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/marqwetta-johnson-2-960*640-8c7549.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/marqwetta-johnson-2-900*600-8c7549.jpg" data-media="(min-width: 37.5em)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/marqwetta-johnson-2-1733*1155-8c7549.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+    <noscript>
+      <img src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/marqwetta-johnson-2-480*320-8c7549.jpg" alt="" />
+    </noscript>
+  </span>
+
+	<figcaption>Marqwetta Johnson’s children, from left: Alexis, Micah, Jamal (holding Julian), Jeremiah, and twins Zachariah and Malachi.</figcaption>
+</figure>
+
+</div>
+
+<div class="vignette" id="vignette-kira-dixon-johnson">
+
+<header>
+	<h2>April 13</h2>
+	<h3>Kira Dixon Johnson</h3>
+</header>
+
+<figure class="portrait medium right">
+	<span data-picture="" data-alt="">
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/kira-dixon-johnson-480*480-e45f43.jpg"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/kira-dixon-johnson-959*959-e45f43.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/kira-dixon-johnson-900*900-e45f43.jpg" data-media="(min-width: 37.5em)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/kira-dixon-johnson-959*959-e45f43.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+    <noscript>
+      <img src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/kira-dixon-johnson-480*480-e45f43.jpg" alt="" />
+    </noscript>
+  </span>
+
+	<figcaption>Kira Dixon Johnson with her husband and first born son, both named Charles.</figcaption>
+</figure>
+
+<p>The YouTube <a href="https://www.youtube.com/watch?v=KwaHao0dl2Q">video</a> commemorating <strong>Kira Dixon Johnson’s</strong> life shows a vibrant woman who seemed to be in perpetual motion — racing cars and jet skis, piloting a plane, splashing in the ocean with her firstborn, Charles, in her arms. She spoke five languages and started a chain of English-language schools in China in the 2000s, then worked in the restaurant business in her native Atlanta. There she fell in love with Charles Johnson IV, from a prominent family of educators and civil rights lawyers. (His mother, the one-time TV judge <a href="http://www.thehatchettfirm.com/">Glenda Hatchett</a>, represented the family of Philando Castile, gunned down by a police officer in Minnesota last July.) “She was literally the closest thing I’ve ever met to Wonder Woman,” her husband said. “She was superhuman to me.”</p>
+
+<p>Kira was six months pregnant with her second son, Langston, when the couple moved to Los Angeles to pursue various business projects. She had delivered her first child by emergency C-section, and, hoping to avoid another trauma, she chose doctors affiliated with one of the city’s premier hospitals, Cedars-Sinai Medical Center. The delivery “was supposed to be a walk in the park,” Charles said. But soon after her scheduled C-section, Kira, 39, began to hemorrhage. Obstetric bleeding is one of the most common causes of maternal deaths in the U.S.; 70 percent of such deaths are preventable, researchers in California have found. In Kira’s case, her family contends, the medical team delayed treatment too long. Her abdominal cavity filled with blood and she died 12 hours after giving birth.</p>
+
+<p>Charles sued the hospital and doctors this past spring in Los Angeles County Superior Court. The family hopes that the case will help spotlight the issue of maternal mortality among blacks, who die at a much higher rate than other women. “I owe it to my wife,” he said. “I owe it to my sons.” The hospital and doctors denied the allegations in court papers, contending that any negligence on their part was “not a substantial factor” in Kira’s death. In a statement, the hospital commended Kira’s family for “demonstrating important leadership in raising awareness of preventable maternal deaths,” adding: “[W]e thoroughly investigate any situation where there are concerns about a patient’s medical care. Based on our findings, we make any changes that are needed so that we can continue to provide the highest quality care to our patients.”</p>
+
+</div>
+
+<div class="vignette" id="vignette-amy-bartlett">
+
+<header>
+	<h2>May 15</h2>
+	<h3>Amy Bartlett</h3>
+</header>
+
+<figure class="portrait medium left">
+	<span data-picture="" data-alt="">
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/amy-bartlett-480*480-138416.jpg"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/amy-bartlett-480*480-138416.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/amy-bartlett-480*480-138416.jpg" data-media="(min-width: 37.5em)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/amy-bartlett-480*480-138416.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+    <noscript>
+      <img src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/amy-bartlett-480*480-138416.jpg" alt="" />
+    </noscript>
+  </span>
+
+	<figcaption>Amy Bartlett with husband Joe and sons Jackson (top) and Hayden.</figcaption>
+</figure>
+
+<p><strong>Amy Bartlett</strong> was the Yellowstone National Park spokeswoman who went on the news to explain why it was a stupid idea to take <a href="https://www.reuters.com/article/us-usa-yellowstone-bison-idUSKCN0PX2PZ20150723">selfies with a giant bison</a> or why scientists were sure the mega-volcano under the park <a href="https://time.com/49654/yellowstone-volcano-eruption-denied/">was not about to blow</a>. Yellowstone wasn’t just her job, it was her life: She met and married her husband, Jerry, there, made her home on the park’s Montana border, and named her kids Jackson (for the Wyoming resort town to the south of the park), Hayden (for the valley) and Ella Faith (for the geyser). Ella was born May 7, 2016.</p>
+
+<p>At 41, Amy was thrilled to finally have a daughter. But a week after going home, while Jerry was putting the boys to bed, Amy suddenly began feeling strange — pain in her neck and jaw, a galloping heartbeat, extremely high blood-pressure readings on her home monitor. First she called her mother, then a friend who was coordinator of emergency medical services for the park. They told her the same thing: Her symptoms sounded like a heart attack. She needed to get to the hospital right away. Amy and Jerry both had EMS training, so they recognized the symptoms, too. But Amy was in excellent health, it was the middle of the night, and they lived more than an hour away from the medical center in Bozeman — a long way to go for a false alarm.</p>
+
+<p>Amy opted to phone one more person, an on-call doctor at the hospital who suggested she rest a few minutes, then re-measure her blood pressure. As she lay down and began nursing, Jerry snuggled into bed beside her. At first, he thought she had fallen asleep; then he realized she had stopped breathing. An autopsy revealed a <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3424780/">spontaneous coronary artery dissection</a>, or SCAD, in which one of the main arteries to the heart suddenly splits. Once mistakenly thought to be quite rare, SCAD is now recognized as one of a series of heart conditions that may be triggered by pregnancy hormones, even in women who are otherwise healthy. The condition isn’t preventable, but if he and Amy had ever heard of it, Jerry said, they might have been able to save her life. “Neither of us wanted to believe this could be happening to her,” he said.</p>
+
+</div>
+
+<div class="vignette" id="vignette-krystine-toledo-gonzalez">
+
+<header>
+	<h2>May 17</h2>
+	<h3>Krystine Toledo-Gonzalez</h3>
+</header>
+
+<figure class="portrait medium right">
+	<span data-picture="" data-alt="">
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/krystine-toledo-gonzalez-480*480-891dd4.jpg"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/krystine-toledo-gonzalez-960*960-891dd4.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/krystine-toledo-gonzalez-900*900-891dd4.jpg" data-media="(min-width: 37.5em)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/krystine-toledo-gonzalez-960*960-891dd4.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+    <noscript>
+      <img src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/krystine-toledo-gonzalez-480*480-891dd4.jpg" alt="" />
+    </noscript>
+  </span>
+
+	<figcaption>Krystine Toledo-Gonzalez with her husband, Luis.</figcaption>
+</figure>
+
+<p><strong>Krystine Toledo-Gonzalez</strong> loved to dance and hang out with friends — “things I would never, ever do if it wasn’t for her,” said her husband, Luis. “She was always pushing me to do more. We pushed each other.” They met in Miami in the mid-2000s and moved to Georgia a few years later to work and raise a family. He was a manager at Costco Wholesale; she was a part-time post-operative nurse in the Northside Hospital system and took care of their three kids, ages 2 to 16.</p>
+
+<p>Krystine had given birth to her youngest child by emergency C-section, something she didn’t want to go through again. When she found out she was expecting another baby, she was determined to have a <a href="http://www.childbirthconnection.org/giving-birth/vbac/">VBAC (vaginal birth after cesarean)</a>. Many ob/gyns and hospitals refuse to perform VBACs because of concerns that the uterus could rupture, so she had to go to Northside’s main hospital in Atlanta, which delivers 15,000 babies a year — more than any other medical center in the U.S.</p>
+
+<p>Krystine had a slight fever but the delivery went fine. Then doctors discovered that she had developed a cold sore, so they decided to put her in isolation for a few days, Luis said. When she began complaining of pain in her abdomen, the first assumption was that she was having indigestion — gas trapped in her gut because she wasn’t able to walk around as much as she wanted. The pain worsened and her condition deteriorated. By the time she was diagnosed with a staph infection, Luis said, doctors couldn’t save her. She died at the age of 30, six days after her daughter was born.</p>
+
+<p>“Northside Hospital shares in the loss of Krystine Toledo-Gonzalez,” the hospital said in a statement. “Privacy laws prevent us from providing any comments or additional information.”</p>
+
+</div>
+
+<div class="vignette" id="vignette-lynn-aguibitin-welker">
+
+<header>
+	<h2>May 27</h2>
+	<h3>Lynn Aguibitin Welker</h3>
+</header>
+
+<figure class="portrait medium left">
+	<span data-picture="" data-alt="">
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/lynn-aguibitin-welker-480*480-98fa16.jpg"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/lynn-aguibitin-welker-960*960-98fa16.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/lynn-aguibitin-welker-900*900-98fa16.jpg" data-media="(min-width: 37.5em)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/lynn-aguibitin-welker-1800*1800-98fa16.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+    <noscript>
+      <img src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/lynn-aguibitin-welker-480*480-98fa16.jpg" alt="" />
+    </noscript>
+  </span>
+
+	<figcaption>Lynn Welker shortly before the birth of her daughter, Savannah Angel.</figcaption>
+</figure>
+
+<p><strong>Lynn Aguibitin Welker</strong> didn’t realize she was pregnant until her fifth month for a very good reason; she’d had her fallopian tubes tied after the birth of her second child. At 38, she worked in the preschool at Mission College in Santa Clara, Calif. “She was a great teacher, passionate about doing that,” said her husband, Eric, who met her in high school in the early 1990s when they were both in Junior ROTC. At school and at home, she was constantly making music and art. She wanted her daughter, 8-year-old Jordan, and son, Noah, 5, “to think crazy, whimsical ideas,” Eric said. “She was very much about raising kids who can see the potential in things.”</p>
+
+<p>Finding out she was pregnant again “was a nice surprise,” he said. Then, two weeks later, an ultrasound revealed that the baby had <a href="https://www.cdc.gov/ncbddd/heartdefects/hlhs.html">hypoplastic left heart syndrome</a>, a severe congenital defect that would require open-heart surgery soon after birth. Lynn “started to blame herself a little bit,” Eric said. She had chronic high blood pressure, and though doctors tried to reassure her, she worried that her anti-hypertensive medication might have hurt the baby.</p>
+
+<p>For the next few months, she and her physicians did what they could to give the baby the best chance at a healthy life. On May 27, 2016, Lynn had a C-section at the University of California, San Francisco Medical Center and neonatal specialists whisked away the fragile newborn, Savannah Angel. Lynn seemed fine. Then she crashed, and doctors couldn’t bring her back.</p>
+
+<p>According to the autopsy, she had major blockages in her arteries that had gone unnoticed for years, leading to a massive coronary. The news was better for Savannah. After two surgeries, she’s strong and healthy, beginning to crawl and babbling her first words — “Da-da” and “Ma-ma-ma-ma.” “She’s doing great,” Eric said. “It’s been a good example of resilience for me to see.”</p>
+
+</div>
+
+<div class="vignette" id="vignette-laura-lenss">
+
+<header>
+	<h2>June 15</h2>
+	<h3>Laura Lenss</h3>
+</header>
+
+<figure class="portrait medium right">
+	<span data-picture="" data-alt="">
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/laura-lenss-480*480-0498a0.jpg"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/laura-lenss-960*960-0498a0.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/laura-lenss-900*900-0498a0.jpg" data-media="(min-width: 37.5em)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/laura-lenss-1800*1800-0498a0.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+    <noscript>
+      <img src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/laura-lenss-480*480-0498a0.jpg" alt="" />
+    </noscript>
+  </span>
+
+</figure>
+
+<p><strong>Laura Lenss</strong>, a 38-year-old architect in Seattle, “was like a Renaissance woman,” her older sister Kristina Lenss said. “She was absolutely an expert at every single thing she did, whether it was architecture or building furniture or cooking or illustrating or making clothes or making movies. You name it.” Motherhood was Laura’s most absorbing project; she had one son, 3-year-old Henry, and was eagerly awaiting the arrival of his brother, whom she planned to name Wally. At her final prenatal appointment, her doctor suggested an induction that day. Laura texted Kristina that she was in the hospital eating a salad and then she would have the baby.</p>
+
+<p>Labor went extremely quickly — less than an hour, Kristina said. Laura suffered a third-degree <a href="https://www.babycenter.com/0_perineal-tears_1451354.bc">tear in her perineum</a>, or vaginal area, but told her sister she wasn’t worried; the same thing had happened with Henry. Back home with the baby after one night in the hospital, “she was so excited,” Kristina said. “She said, ‘I’m just so in love. He’s perfect. He’s beautiful.’”</p>
+
+<p>Soon, though, Laura was complaining about severe pain in her neck and shoulders. In a photo taken at Wally’s first pediatric appointment on June 14, she looked swollen and exhausted. That night, Laura was so self-conscious about her bloated appearance that she didn’t want to Facetime with her family. She made an appointment with her doctor for the next morning, but when her parents came to pick her up, they took one look and called 911. She died on the operating table a few hours later from complications of a strep A infection that began in her perineal wound.</p>
+
+<p>“We’ve been crying ever since,” Kristina said. “We cry every day.”</p>
+
+</div>
+
+<div class="vignette" id="vignette-larissa-rochelle-icemen">
+
+<header>
+	<h2>June 30</h2>
+	<h3>Larissa Icemen</h3>
+</header>
+
+<figure class="portrait small left">
+	<span data-picture="" data-alt="">
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/larissa-icemen-479*479-38a00c.jpg"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/larissa-icemen-479*479-38a00c.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/larissa-icemen-479*479-38a00c.jpg" data-media="(min-width: 37.5em)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/larissa-icemen-479*479-38a00c.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+    <noscript>
+      <img src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/larissa-icemen-479*479-38a00c.jpg" alt="" />
+    </noscript>
+  </span>
+
+</figure>
+
+<p>At 25, <strong>Larissa Icemen</strong> was sweet but shy — the result, her mother-in-law Roberta Russette thought, of growing up in rough circumstances in Minneapolis’s Native American community. At big gatherings, she often kept to herself, and at home, she focused on her kids. She was pregnant with her fourth child.</p>
+
+<p>On the morning of Feb. 6, 2016, in her 38th week, her husband Landen took her to University of Minnesota Masonic Children’s Hospital for what they expected would be another smooth delivery. Soon after they arrived, Larissa began vomiting and went into cardiac arrest. Doctors delivered her healthy son by emergency C-section, then rushed her to another hospital, where she underwent surgery for an <a href="http://afesupport.org/">amniotic fluid embolism</a>, a rare complication believed to occur when amniotic fluid or other fetal material — sometimes as tiny as a fingernail or a hair — enters the mother’s bloodstream, triggering a massive allergic-like response.</p>
+
+<p>The embolism caused Larissa’s heart to stop several times, depriving her brain of oxygen. When her condition stabilized, she was transferred to a nursing home. She couldn’t walk or talk, but she responded to her caregivers and family enough to give them hope. “She would have these really fighting moments… these bright spots,” Roberta said. “Then she would slip. All of a sudden she would get an infection out of nowhere.” She languished for almost five months. “We didn’t speak about it,” Roberta said. “We just knew she wasn’t going to fight anymore.”</p>
+
+</div>
+
+<div class="vignette" id="vignette-amanda-eva-garcia">
+
+<header>
+	<h2>July 13</h2>
+	<h3>Amanda Eva Garcia</h3>
+</header>
+
+<figure class="portrait medium right">
+	<span data-picture="" data-alt="">
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/amanda-eva-garcia-480*480-2008ea.jpg"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/amanda-eva-garcia-502*502-2008ea.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/amanda-eva-garcia-502*502-2008ea.jpg" data-media="(min-width: 37.5em)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/amanda-eva-garcia-502*502-2008ea.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+    <noscript>
+      <img src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/amanda-eva-garcia-480*480-2008ea.jpg" alt="" />
+    </noscript>
+  </span>
+
+	<figcaption>Amanda Garcia with daughters Zoey (in car seat) and June.</figcaption>
+</figure>
+
+<p>Twenty-six-year-old <strong>Amanda Eva Garcia</strong> lived in Texas, where <a href="https://www.texastribune.org/2017/02/28/texas-maternal-deaths-absent-legislative-agenda/">maternal deaths</a> have <a href="https://www.propublica.org/article/a-spike-in-rates-of-pregnancy-related-deaths-in-texas-spurs-soul-searching">increased sharply</a> in recent years. One of 16 siblings, “she came from a really hard life,” said Zak Tiemann, her boyfriend since 2011. She was sweet-natured and excitable, with a raucous laugh that burst out of nowhere — “little things put a big smile on her face.” She especially doted on her 9-year-old daughter, June, and their 2-year-old, Zoey. “Her mom abilities were so good,” Zak said. “She was the best mom I’ve ever seen.”</p>
+
+<p>Amanda didn’t earn enough in her assembly-line job making foam food containers to afford insurance, so like more than half of women who give birth in Texas, she got her care through Medicaid. After delivering her third daughter, Zayleeana, by C-section on July 5, 2016, she and the kids went to stay with Zak’s mom while he picked up work in San Antonio, 35 miles away.</p>
+
+<p>A couple of days after leaving the hospital, Amanda’s stomach started to ache. She lost her appetite: “She wasn’t eating her food. She was just throwing it in the trash,” Zak said. She turned pale and complained of feeling hot even though, to Zak’s touch, “her body felt real, real cold.” Eight days after giving birth, she could no longer stand up. An ambulance took her to Guadalupe Regional Medical Center, where doctors told Zak that her organs were failing. She passed away a couple of hours later.</p>
+
+</div>
+
+<div class="vignette" id="vignette-sheriah-oshiro-directo-freitas">
+
+<header>
+	<h2>August 14</h2>
+	<h3>Sheriah Freitas</h3>
+</header>
+
+<figure class="portrait small left">
+	<span data-picture="" data-alt="">
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/sheriah-freitas-291*291-3f4a62.jpg"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/sheriah-freitas-291*291-3f4a62.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/sheriah-freitas-291*291-3f4a62.jpg" data-media="(min-width: 37.5em)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/sheriah-freitas-291*291-3f4a62.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+    <noscript>
+      <img src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/sheriah-freitas-291*291-3f4a62.jpg" alt="" />
+    </noscript>
+  </span>
+
+</figure>
+
+<p><strong>Sheriah Freitas</strong> met her husband Deitton, a soldier in the U.S. Army, at a Walgreens in Hawaii, where she was working in the cosmetics department. He loved her beautiful eyes — “they’re like blue and green and gray with brown in them” — and her big personality. “She was fierce. She was strong-minded and confident.” Pregnant with her first child at 25, she appeared to be doing exceptionally well. “We went to every appointment, every ultrasound, everything was perfect,” Deitton said. Still, he couldn’t help fretting, especially after they received transfer orders to Fort Benning, Georgia, thousands of miles from their families. “I just worried about my wife all the time.”</p>
+
+<p>Sheriah went into labor three weeks early, on Aug. 13, 2016, but the couple was more excited than concerned. “We were making jokes all day,” Deitton said.</p>
+
+<p>Then the mood shifted. Doctors said labor wasn’t progressing properly and that Sheriah needed a C-section. After the surgery, she held baby Luther — they’d settled on his name while she was in labor — for a few minutes. Then she began to bleed uncontrollably.</p>
+
+<p>Sheriah had developed an amniotic fluid embolism. Doctors don’t know how to predict or prevent them; up to 80 percent of mothers who develop amniotic fluid embolisms die. Soon Sheriah went into cardiac arrest; Deitton held her hand and prayed while doctors worked frantically to revive her. He was still clutching her hand when she died.</p>
+
+</div>
+
+<div class="vignette" id="vignette-audrey-cher-lockett-labranche">
+
+<header>
+	<h2>September 4</h2>
+	<h3>Audrey Lockett LaBranche</h3>
+</header>
+
+<figure class="portrait small right">
+	<span data-picture="" data-alt="">
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/audrey-lockett-labranche-306*306-d13d85.jpg"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/audrey-lockett-labranche-306*306-d13d85.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/audrey-lockett-labranche-306*306-d13d85.jpg" data-media="(min-width: 37.5em)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/audrey-lockett-labranche-306*306-d13d85.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+    <noscript>
+      <img src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/audrey-lockett-labranche-306*306-d13d85.jpg" alt="" />
+    </noscript>
+  </span>
+
+</figure>
+
+<p><strong>Audrey Lockett LaBranche</strong> was a dynamo with a huge smile, a constantly changing assortment of colorful hairstyles, and vast reserves of energy, ambition and faith. She was the founder and proprietor of LaBranche’s Childcare Center, in Chicago Heights, Illinois, which provided care for 60 kids at a time, from babies in diapers to latch-key tweens, as well as support for their harried parents.</p>
+
+<p>Under the name Audrey Cher, she had a side career as a Christian neo-soul/funk singer and songwriter and released her debut solo album, “<a href="https://www.amazon.com/Intro-Audrey-Cher/dp/B01HDE6E46">The Intro</a>,” last year. Her busy household included her husband of 21 years, a teenage son and daughter and 7-year-old twins. “I’m overwhelmed with Love &amp; thanks,” she posted on Facebook last summer, pregnant with her fifth child. “I’m thankful for my life’s journey and I would not trade anything for the path I walked to get to where I am today.”</p>
+
+<p>Her final pregnancy felt especially improbable. In 2015, Audrey had developed multiple blood clots that traveled to her lungs and nearly killed her. After months of medication and rest, she’d made a complete recovery. Then, as she announced on Facebook in January 2016, “God decided to surprise us.” The pregnancy was anything but easy. Audrey was 39, overweight and had thyroid disease. She was on blood thinners to prevent clots, but she experienced frequent <a href="http://www.whattoexpect.com/pregnancy/symptoms-and-solutions/braxton-hicks-contractions.aspx">Braxton Hicks contractions</a> (uterine contractions that mimic labor) that made her uncomfortable and worried that the clots might be coming back. Late in the pregnancy, after a falling out with her longtime ob/gyn, she switched to a new doctor. “It was stressful to have to go under the care of someone who did not know her history,” her mother, Kathleen Lockett, said. But after that, things seemed to proceed smoothly, and baby Mathias was born by C-section in late August 2016, weighing eight pounds.</p>
+
+<p>A couple of days after returning home, Audrey started complaining of a headache and problems with her C-section incision. At the local hospital, she was told that her sinuses were probably acting up, Kathleen said. The headache grew worse, and on Friday, Sept. 2, Audrey’s husband Marcus reported on <a href="https://www.facebook.com/mark.labranche.18">Facebook</a> that she had been rushed to a trauma center in Chicago: “My wife has suffered severe hemorrhaging in her brain that has left her in a lifeless state.” He was determined to stay hopeful. “Satan is a confirmed fool if he thinks this will shake my faith!”</p>
+
+<p>But on Sept. 4, he acknowledged that Audrey still hadn’t shown any signs of improvement. She died that afternoon.</p>
+
+</div>
+
+<div class="vignette" id="vignette-marlene-dominguez-hicks">
+
+<header>
+	<h2>September 6</h2>
+	<h3>Marlene Dominguez-Hicks</h3>
+</header>
+
+<figure class="portrait large">
+	<span data-picture="" data-alt="">
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/marlene-dominguez-hicks-480*320-c7be56.jpg"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/marlene-dominguez-hicks-960*640-c7be56.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/marlene-dominguez-hicks-900*600-c7be56.jpg" data-media="(min-width: 37.5em)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/marlene-dominguez-hicks-1154*769-c7be56.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+    <noscript>
+      <img src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/marlene-dominguez-hicks-480*320-c7be56.jpg" alt="" />
+    </noscript>
+  </span>
+
+	<figcaption>Marlene Dominguez-Hicks with husband Alex and daughters Alyssa (left) and Alana.</figcaption>
+</figure>
+
+<p><strong>Marlene Dominguez-Hicks</strong>, 33, was the pride of her Filipino-immigrant parents — valedictorian of her high school class, B.A. from Stanford, M.D. from Meharry Medical College in Nashville.</p>
+
+<p>She and her family — husband Alex, daughters Alyssa and Alana — were living in Houston, where she was in a radiology program at the University of Texas Health Science Center and looking forward to the birth of Alex Jr. Two weeks before the baby was due, she could still run up the stairs of her town house, <a href="http://www.houstonchronicle.com/news/houston-texas/houston/article/A-pregnant-doctor-a-rare-disease-a-tragic-turn-10875969.php">declaring</a> to her husband, “I feel great.” In her maternity photos taken around the same time, she wore a long white dress, a crown of flowers, and a radiant glow.</p>
+
+<p>She spent Labor Day at the park and the zoo with her husband and kids. Alex urged Marlene, “Slow down if you need to,” but she insisted she was fine. The next day, she made her rounds as usual — she figured she might as well work up to the end, since her job was conveniently located in the hospital where she planned to give birth. After dinner, the girls were in bed and Alex was downstairs when he heard what sounded like books falling off a shelf. He found Marlene lying on the bathroom floor, unconscious, blood trickling from her mouth.</p>
+
+<p>Paramedics did their best to revive her, but by the time they reached the hospital, she was gone. Doctors couldn’t save the baby, either — he’d been without oxygen too long. The diagnosis was <a href="http://www.myheartsisters.com/">peripartum cardiomyopathy</a>, a type of heart failure that is induced by pregnancy and can strike from the middle of the second trimester into the postpartum period. It is treatable, but the symptoms — fatigue, swelling, shortness of breath — mimic the normal discomforts of pregnancy and so are often ignored. Once considered quite uncommon, peripartum cardiomyopathy is now <a href="https://www.cdc.gov/reproductivehealth/maternalinfanthealth/pmss.html">estimated</a> to cause about 11 percent of maternal deaths and can have a genetic component. That weighs on Alex’s mind. “When I take the girls to the doctor, I’m always going to ask him or her to check their hearts.”</p>
+
+</div>
+
+<div class="vignette" id="vignette-joonyper-light">
+
+<header>
+	<h2>November 18</h2>
+	<h3>Joonyper Light</h3>
+</header>
+
+<figure class="portrait small left">
+	<span data-picture="" data-alt="">
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/joonyper-light-411*411-7c2a21.jpg"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/joonyper-light-411*411-7c2a21.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/joonyper-light-411*411-7c2a21.jpg" data-media="(min-width: 37.5em)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/joonyper-light-411*411-7c2a21.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+    <noscript>
+      <img src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/joonyper-light-411*411-7c2a21.jpg" alt="" />
+    </noscript>
+  </span>
+
+	<figcaption>Joonyper Light and her newborn son, Monte.</figcaption>
+</figure>
+
+<p><strong>Joonyper Light</strong> was many things — a punk rocker, a college student, a jewelry crafter, a budding businesswoman. She was also a 21-year-old heroin addict with a history of bipolar disorder and depression who was trying hard to change her life.</p>
+
+<p>When she found out she was pregnant, “she got even more adamant” about beating her addiction, and entered a drug treatment program, her fiancé Matt Stock said. But the emotional ups and downs of pregnancy “led to even more of a struggle.” Getting clean in Springfield, Missouri, meant starting over with a whole new group of friends. “She didn’t have too many support systems. She felt alone. Felt bad about me being really her only true support system and putting everything on me.” As difficult as the prenatal period was, Matt said, Joonyper was “terrified of postpartum. She would always tell me, ‘I don’t know how I’m going to deal with this. I’m scared of how I’m going to be during that phase.’”</p>
+
+<p>Their son Monte, born in September 2016, “lit up her life,” Matt said. Still, with Matt working full-time installing solar panels, “there was just not a whole lot of time for her to get to her rehab,” he said. Meanwhile, she worried about taking medications like antidepressants that would get in her breast milk. “She would act fine on the outside but be hurting on the inside.”</p>
+
+<p>The stress and depression became “just too much for her to handle,” he said. Matt came home one night in November to find Joonyper on the bathroom floor, dead of an overdose. She wasn’t unique; maternal mortality review committees in Texas, Colorado and Philadelphia have found that overdoses linked to mood disorders make up an increasing number of maternal deaths. “This was a relapse. This was not an ongoing thing,” Matt wrote on Facebook a couple of days later. Also: “I need help. I really don’t know how to deal with this.”</p>
+
+</div>
+
+<div class="vignette" id="vignette-christen-grace-vogel">
+
+<header>
+	<h2>December 1</h2>
+	<h3>Christen Vogel</h3>
+</header>
+
+<figure class="portrait large">
+	<span data-picture="" data-alt="">
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/christen-vogel-480*320-9cb0be.jpg"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/christen-vogel-960*640-9cb0be.jpg" data-media="(-webkit-min-device-pixel-ratio: 1.3), (min-resolution: 124.8dpi)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/christen-vogel-900*600-9cb0be.jpg" data-media="(min-width: 37.5em)"></span>
+    <span data-src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/christen-vogel-1437*958-9cb0be.jpg" data-media="(min-width: 37.5em) and (-webkit-min-device-pixel-ratio: 1.3), (min-width: 37.5em) and (min-resolution: 124.8dpi)"></span>
+    <noscript>
+      <img src="https://static.propublica.org/projects/maternal-mortality/assets/images/generated/christen-vogel-480*320-9cb0be.jpg" alt="" />
+    </noscript>
+  </span>
+
+	<figcaption>Christen Vogel and her husband, Daniel.</figcaption>
+</figure>
+
+<p><strong>Christen Vogel</strong>, 21, and her mother, Pamela Gore, were as close as some sisters. They lived two hours apart in North Carolina, but they talked several times a day, and Pam regularly drove to Camp Lejeune, where Christen’s husband was a Marine, to attend her daughter’s prenatal appointments. “I was looking forward to being “not a ‘grandma’ but a ‘Pamma,’” Pam said.</p>
+
+<p>The only shadow of a problem emerged in Christen’s 38th week. She texted her mom to say she didn’t want to come home for her maternity photo shoot because she was afraid she might go into premature labor. She told her husband she had a headache, and when he urged her to see a doctor, she said she would try taking some medicine first. On the night of Nov. 30, Christen got out of bed and decided to take a bath. “That was her soothing measure,” Pam said. “If she had a headache, she’d get in the bath. If she had a stomach ache, she’d get in the bath.” When her husband woke up around 5:00 the next morning, he found her unresponsive in the tub. Neither she nor the baby survived.</p>
+
+<p>The question no one seemed able to answer was why. Her heart and other organs were normal, an autopsy showed. The only substances in her bloodstream were caffeine and acetaminophen. The final death certificate listed the cause of death as “undetermined.”</p>
+
+<p>The lack of finality was devastating for Pam, who started a <a href="https://www.gofundme.com/s6427-second-opinion">GoFundMe campaign</a> this past April to pay for an independent pathologist to review the records. “I have two other daughters who have hopes of having families in their future,” she wrote. “If this was caused from something that we could have prevented, I need to know.” Donors eventually contributed more than $3,300, but she’s still looking for a pathologist willing to take the case.</p>
+
+</div>
+
+<hr />
+
+<aside class="methodology">
+
+<h2>What we did</h2>
+
+<p>To compile our list of women who died from pregnancy- and childbirth-related causes, ProPublica scoured social media — primarily public posts on Facebook and Twitter and the crowdfunding sites GoFundMe and YouCaring — and then verified the women’s basic information using obituaries and public records. Other names came to us through patient advocacy organizations and through a <a href="https://www.propublica.org/getinvolved/item/help-propublica-and-npr-investigate-maternal-mortality">call-out</a> shared by ProPublica and NPR. We identified more than 450 deaths since 2011, including 134 in 2016. We then worked with a team of graduate-student journalists from New York University to reach out to family members for additional information.</p>
+
+<p>In many cases, persuading family members to participate in our project was hard. As we learned, loved ones are often too consumed with grief, and sometimes with guilt, to tell their stories. They may feel a social stigma and prefer to keep the circumstances to themselves. Or they’re counseled by lawyers to stay silent. Although many women’s photographs were widely distributed on GoFundMe and other public sites, we decided only to publish pictures of women whose family members gave their permission or whose stories had been previously told in news articles.</p>
+
+<h2>How we defined a maternal death</h2>
+
+<p>We used the same <a href="https://www.cdc.gov/reproductivehealth/maternalinfanthealth/pregnancy-relatedmortality.htm">definition</a> as the Centers for Disease Control and Prevention: “the death of a woman during pregnancy or within one year of the end of pregnancy from a <a href="https://www.cdc.gov/reproductivehealth/maternalinfanthealth/pregcomplications.htm">pregnancy complication</a>, a chain of events initiated by pregnancy, or the aggravation of an unrelated condition by the physiologic effects of pregnancy.”</p>
+
+<h2>Who we didn’t find</h2>
+
+<p>While social media allowed us to find many women whose stories would have been lost in the past, this method falls short at capturing women who live and die on the margins, including homeless women and undocumented immigrants. Black expectant and new mothers, who die much more often than whites, are less likely to have their stories told on social media. It also can be difficult to determine whether the deaths of women in the later postpartum period are related to childbirth.</p>
+
+</aside>
+
+<footer>
+
+<p><strong>Correction, July 19, 2017:</strong> This story has been updated to reflect that Kristina Lenss is Laura Lenss’ older sister, not her younger sister.</p>
+
+<p><strong>Update, October 4, 2017:</strong> This story has been updated to add 14 new names of women who died in 2016 due to childbirth-related complications.</p>
+
+<p>Unless otherwise noted, all photos are provided by and used with the permission of the subject’s family. Natasha Angie photo via The Advertiser; Kalee Diane Joy Barton photo via KFDA-TV; Emily Cook Dyches photo by Maria Slade; Brittany Fleenor photo via WKYT-TV; Elizabeth (Liz) Fraga photo via The Associated Press; Ashlie Lynn Eddy Garcia photo via KWTV-TV; Briahna Gerloff via WCAU-TV; Amy Lam Wai Chi photo via The New York Times; Brandi Beaujon Logsdon photo via Pittsburgh Post-Gazette; Tanisha Malloy photo via WTVR-TV; Courtenay McVey photo via Scripps Media; Becca Barber Meissner photo via WCCO-TV; Carrie Million Naas photo via The Virginian-Pilot; Evelyn Ruth Mae Rethford photo via Tri-City Herald.</p>
+
+<hr />
+
+<p><a href="https://www.propublica.org/site/author/nina_martin">Nina Martin</a> covers gender and sexuality for ProPublica. She has been a reporter and editor specializing in women’s, legal and health issues for more than 30 years.</p>
+
+<p>Emma Cillekens and Alessandra Freitas are students in the NYU Arthur L. Carter Journalism Institute graduate studies program. Other students in the program who contributed to this article were Clare Church, Alexander Gonzalez, Lauren Gurley, Nina Hedevang, Eli Kurland and Razi Syed.</p>
+
+<p>NPR’s Renee Montagne and ProPublica’s Derek Kravitz and Adriana Gallardo also contributed reporting.</p>
+
+<p>Design and production by Rob Weychert and David Sleight.</p>
+
+</footer>
+
+<hr />
+
+				</div>
+				<div id="gallery" class="gallery-wrap-outer">
+					<div class="gallery-wrap-inner">
+						<figure class="gallery">
+	<ul class="mothers">
+	
+	
+	
+	
+		<li id="tanisha-malloy" class="entry " tabindex="6">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-01-03-tanisha-malloy.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Tanisha Malloy</h3>
+					<ul>
+						<li class="location">Chesapeake, VA</li>
+						<li class="died">Died: <time datetime="2016-01-03">1/3/2016</time></li>
+						
+						<li class="age">Age: 33</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/pilotonline/obituary.aspx?page=lifestory&pid=177216728">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="jeneva-beiler" class="entry " tabindex="7">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Jeneva Beiler</h3>
+					<ul>
+						<li class="location">Lancaster, PA</li>
+						<li class="died">Died: <time datetime="2016-01-05">1/5/2016</time></li>
+						
+						<li class="age">Age: 29</li>
+						
+						
+						<li class="obit"><a href="http://lancasteronline.com/obituaries/jeneva-e-beiler/article_2f16811c-2a08-516b-aaba-ea3d4f80754a.html">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="briahna-gerloff" class="entry " tabindex="8">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-01-23-briahna-gerloff.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Briahna Gerloff</h3>
+					<ul>
+						<li class="location">Pottstown, PA</li>
+						<li class="died">Died: <time datetime="2016-01-23">1/23/2016</time></li>
+						
+						<li class="age">Age: 18</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/briahna-gerloff-obituary?pid=1000000177476671&view=guestbook">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="amanda-rose-kotrba" class="entry has-vignette" tabindex="9">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-01-26-amanda-rose-kotrba.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Amanda Rose Kotrba</h3>
+					<ul>
+						<li class="location">Orange Park, FL</li>
+						<li class="died">Died: <time datetime="2016-01-26">1/26/2016</time></li>
+						
+						<li class="age">Age: 30</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/amanda-kotrba-obituary?pid=1000000177485796&view=guestbook">Read the obituary</a></li>
+						
+						
+						<li class="vignette"><a class="scroll-link" href="#vignette-amanda-rose-kotrba">Read her story</a></li>
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="renee-nichole-saylor" class="entry " tabindex="10">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Renee Nichole Saylor</h3>
+					<ul>
+						<li class="location">Buffalo, NY</li>
+						<li class="died">Died: <time datetime="2016-02-01">2/1/2016</time></li>
+						
+						<li class="age">Age: http://buffalonews.com/2016/02/03/renee-nichole-saylor/</li>
+						
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="cassia-rott" class="entry " tabindex="11">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-02-08-cassia-rott.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Cassia Rott</h3>
+					<ul>
+						<li class="location">Clay Center, KS</li>
+						<li class="died">Died: <time datetime="2016-02-08">2/8/2016</time></li>
+						
+						<li class="age">Age: 36</li>
+						
+						
+						<li class="obit"><a href="http://www.nsrfh.com/home/obituary/3595882">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="amanda-nichole-little" class="entry " tabindex="12">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Amanda Nichole Little</h3>
+					<ul>
+						<li class="location">Elizabethtown, KY</li>
+						<li class="died">Died: <time datetime="2016-02-16">2/16/2016</time></li>
+						
+						<li class="age">Age: 28</li>
+						
+						
+						<li class="obit"><a href="http://www.manakeefuneralhome.com/obituaries/Amanda-Little/#!/Obituary">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="megan-rebecca-seney" class="entry " tabindex="13">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-02-21-megan-rebecca-seney.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Megan Rebecca Seney</h3>
+					<ul>
+						<li class="location">Newport News, VA</li>
+						<li class="died">Died: <time datetime="2016-02-21">2/21/2016</time></li>
+						
+						<li class="age">Age: 31</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/dailypress/obituary.aspx?page=lifestory&pid=177914852">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="emily-cook-dyches" class="entry has-vignette" tabindex="14">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-02-24-emily-cook-dyches.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Emily Cook Dyches</h3>
+					<ul>
+						<li class="location">Salem, UT</li>
+						<li class="died">Died: <time datetime="2016-02-24">2/24/2016</time></li>
+						
+						<li class="age">Age: 39</li>
+						
+						
+						<li class="obit"><a href="http://www.heraldextra.com/lifestyles/announcements/obituaries/emily-cook-dyches/article_44592022-715f-5a8d-9775-e944acfabd6b.html">Read the obituary</a></li>
+						
+						
+						<li class="vignette"><a class="scroll-link" href="#vignette-emily-cook-dyches">Read her story</a></li>
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="shanta-waller" class="entry " tabindex="15">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Shanta Waller</h3>
+					<ul>
+						<li class="location">Spotsylvania, VA</li>
+						<li class="died">Died: <time datetime="2016-03-01">3/1/2016</time></li>
+						
+						
+						<li class="obit"><a href="http://www.albennettandsonfuneralhome.com/memsol.cgi?page=timeline&user_id=1758422">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="brittany-renee-haefke" class="entry has-vignette" tabindex="16">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-03-02-brittany-renee-haefke.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Brittany Renee Haefke</h3>
+					<ul>
+						<li class="location">Floral City, FL</li>
+						<li class="died">Died: <time datetime="2016-03-02">3/2/2016</time></li>
+						
+						<li class="age">Age: 23</li>
+						
+						
+						<li class="obit"><a href="http://www.vindy.com/news/tributes/2016/mar/19/brittany-renee-haefk/">Read the obituary</a></li>
+						
+						
+						<li class="vignette"><a class="scroll-link" href="#vignette-brittany-renee-haefke">Read her story</a></li>
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="allison-bree-senser" class="entry " tabindex="17">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Allison Bree Senser</h3>
+					<ul>
+						<li class="location">Columbus, OH</li>
+						<li class="died">Died: <time datetime="2016-03-02">3/2/2016</time></li>
+						
+						<li class="age">Age: 35</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/dispatch/obituary.aspx?pid=177930053">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="jennifer-lynne-knarr" class="entry " tabindex="18">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Jennifer Lynne Knarr</h3>
+					<ul>
+						<li class="location">Bozeman, MT</li>
+						<li class="died">Died: <time datetime="2016-03-11">3/11/2016</time></li>
+						
+						<li class="age">Age: 34</li>
+						
+						
+						<li class="obit"><a href="http://www.bozemandailychronicle.com/obituaries/jennifer-lynne-knarr/article_e4240d12-453d-54a3-8f7f-6dd9d98829d1.html">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="stephanie-lauren-stills" class="entry " tabindex="19">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Stephanie Lauren Stills</h3>
+					<ul>
+						<li class="location">Oklahoma City, OK</li>
+						<li class="died">Died: <time datetime="2016-03-15">3/15/2016</time></li>
+						
+						<li class="age">Age: 22</li>
+						
+						
+						<li class="obit"><a href="http://legacy.newsok.com/obituaries/oklahoman/obituary.aspx?pid=178093224">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="ashley-renee-macarthur-raine-porter" class="entry " tabindex="20">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Ashley Renée MacArther (Raine) Porter</h3>
+					<ul>
+						<li class="location">Lake Jackson, TX</li>
+						<li class="died">Died: <time datetime="2016-03-19">3/19/2016</time></li>
+						
+						<li class="age">Age: 24</li>
+						
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="tiffany-lynn-miller" class="entry " tabindex="21">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Tiffany Lynn Miller</h3>
+					<ul>
+						<li class="location">Laconia, IN</li>
+						<li class="died">Died: <time datetime="2016-03-22">3/22/2016</time></li>
+						
+						<li class="age">Age: 25</li>
+						
+						
+						<li class="obit"><a href="http://www.cesarfuneralhome.com/notices/Tiffany-Miller">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="domaniek-shepherd" class="entry " tabindex="22">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-03-22-domaniek-shepherd.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Domaniek Shepherd</h3>
+					<ul>
+						<li class="location">Dallas, TX</li>
+						<li class="died">Died: <time datetime="2016-03-22">3/22/2016</time></li>
+						
+						<li class="age">Age: 38</li>
+						
+						
+						<li class="obit"><a href="http://www.restlandfuneralhome.com/obituaries/Domaniek-Shepherd/#!/Obituary">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="ashley-nicole-melton" class="entry " tabindex="23">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Ashley Nicole Melton</h3>
+					<ul>
+						<li class="location">Port Wentworth, GA</li>
+						<li class="died">Died: <time datetime="2016-03-25">3/25/2016</time></li>
+						
+						<li class="age">Age: 27</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/savannah/obituary.aspx?pid=179469141">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="becca-barber-meissner" class="entry " tabindex="24">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-03-26-becca-barber-meissner.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Becca Barber Meissner</h3>
+					<ul>
+						<li class="location">Manitowoc, WI</li>
+						<li class="died">Died: <time datetime="2016-03-26">3/26/2016</time></li>
+						
+						<li class="age">Age: 26</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/becca-meissner-obituary?pid=1000000179459835&view=guestbook">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="rodshecka-e-piggie" class="entry " tabindex="25">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Rodshecka E. Piggie</h3>
+					<ul>
+						<li class="location">Memphis, TN</li>
+						<li class="died">Died: <time datetime="2016-04-08">4/8/2016</time></li>
+						
+						<li class="age">Age: 22</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/commercialappeal/obituary.aspx?pid=179587192">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="marqwetta-johnson" class="entry has-vignette" tabindex="26">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-04-08-marqwetta-johnson.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Marqwetta Johnson</h3>
+					<ul>
+						<li class="location">Muskogee, OK</li>
+						<li class="died">Died: <time datetime="2016-04-08">4/8/2016</time></li>
+						
+						<li class="age">Age: 42</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/marqwetta-johnson-obituary?pid=1000000179565832&view=guestbook">Read the obituary</a></li>
+						
+						
+						<li class="vignette"><a class="scroll-link" href="#vignette-marqwetta-johnson">Read her story</a></li>
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="hailey-abigail-senior" class="entry " tabindex="27">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Hailey Abigail Senior</h3>
+					<ul>
+						<li class="location">New Braunfels, TX</li>
+						<li class="died">Died: <time datetime="2016-04-08">4/8/2016</time></li>
+						
+						<li class="age">Age: 20</li>
+						
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="julia-duvall" class="entry " tabindex="28">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-04-11-julia-duvall.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Julia Duvall</h3>
+					<ul>
+						<li class="location">Oakland, CA</li>
+						<li class="died">Died: <time datetime="2016-04-11">4/11/2016</time></li>
+						
+						<li class="age">Age: 29</li>
+						
+						
+						<li class="obit"><a href="http://www.advertisergleam.com/obituaries/julia-duvall/article_e00d896c-1141-11e6-bc65-bfe800b2d3a6.html">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="ashlie-lynn-eddy-garcia" class="entry " tabindex="29">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-04-12-ashlie-lynn-eddy-garcia.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Ashlie Lynn Eddy Garcia</h3>
+					<ul>
+						<li class="location">Oklahoma City, OK</li>
+						<li class="died">Died: <time datetime="2016-04-12">4/12/2016</time></li>
+						
+						<li class="age">Age: 25</li>
+						
+						
+						<li class="obit"><a href="http://www.ruddfuneralhome.com/notices/Ashlie-Garcia">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="julia-price-chester" class="entry " tabindex="30">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Julia Price Chester</h3>
+					<ul>
+						<li class="location">Florence, AL</li>
+						<li class="died">Died: <time datetime="2016-04-13">4/13/2016</time></li>
+						
+						<li class="age">Age: 28</li>
+						
+						
+						<li class="obit"><a href="http://www.timesdaily.com/obituaries/julia-p-chester/article_ed579fb3-7e52-5916-8ebd-a0c4a29dfc32.html">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="kira-dixon-johnson" class="entry has-vignette" tabindex="31">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-04-13-kira-dixon-johnson.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Kira Dixon Johnson</h3>
+					<ul>
+						<li class="location">Los Angeles, CA</li>
+						<li class="died">Died: <time datetime="2016-04-13">4/13/2016</time></li>
+						
+						<li class="age">Age: 39</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/atlanta/obituary.aspx?page=lifestory&pid=179681402">Read the obituary</a></li>
+						
+						
+						<li class="vignette"><a class="scroll-link" href="#vignette-kira-dixon-johnson">Read her story</a></li>
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="kimberly-labar" class="entry " tabindex="32">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Kimberly LaBar</h3>
+					<ul>
+						<li class="location">East Stroudsburg, NC</li>
+						<li class="died">Died: <time datetime="2016-04-25">4/25/2016</time></li>
+						
+						<li class="age">Age: 27</li>
+						
+						
+						<li class="obit"><a href="http://www.bensing-thomasfuneralhome.com/obituaries/obituary-listings?obId=873874#/obituaryInfo">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="jamie-shreiner" class="entry " tabindex="33">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Jamie Shreiner</h3>
+					<ul>
+						<li class="location">Payson, AZ</li>
+						<li class="died">Died: <time datetime="2016-04-27">4/27/2016</time></li>
+						
+						<li class="age">Age: 33</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/jamie-shreiner-obituary?pid=1000000179864250&view=guestbook">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="brittany-fleenor" class="entry " tabindex="34">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-04-29-brittany-fleenor.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Brittany Fleenor</h3>
+					<ul>
+						<li class="location">Williamsburg, KY</li>
+						<li class="died">Died: <time datetime="2016-04-29">4/29/2016</time></li>
+						
+						<li class="age">Age: 29</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/brittany-fleenor-obituary?pid=1000000179850776&view=guestbook">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="kerrie-jones-fessler" class="entry " tabindex="35">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Kerrie Jones Fessler</h3>
+					<ul>
+						<li class="location">Paso Robles, CA</li>
+						<li class="died">Died: <time datetime="2016-05-02">5/2/2016</time></li>
+						
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="elizabeth-liz-fraga" class="entry " tabindex="36">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-05-06-elizabeth-liz-fraga.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Elizabeth (Liz) Fraga</h3>
+					<ul>
+						<li class="location">Milford, MA</li>
+						<li class="died">Died: <time datetime="2016-05-06">5/6/2016</time></li>
+						
+						<li class="age">Age: 26</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/bostonglobe/obituary.aspx?n=elizabeth-and-juliet-fraga-liz&pid=179980620&fhid=15458">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="sheree-boyer" class="entry " tabindex="37">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Sheree Boyer</h3>
+					<ul>
+						<li class="location">Mobile, AL</li>
+						<li class="died">Died: <time datetime="2016-05-12">5/12/2016</time></li>
+						
+						<li class="age">Age: 27</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/sheree-boyer-obituary?pid=1000000180010187&view=guestbook">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="courtenay-mcvey" class="entry " tabindex="38">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-05-14-courtenay-mcvey.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Courtenay McVey</h3>
+					<ul>
+						<li class="location">Florence, AZ</li>
+						<li class="died">Died: <time datetime="2016-05-14">5/14/2016</time></li>
+						
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="natasha-angie" class="entry " tabindex="39">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-05-15-natasha-angie.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Natasha Angie</h3>
+					<ul>
+						<li class="location">Las Vegas, NV</li>
+						<li class="died">Died: <time datetime="2016-05-15">5/15/2016</time></li>
+						
+						<li class="age">Age: 28</li>
+						
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="amy-bartlett" class="entry has-vignette" tabindex="40">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-05-15-amy-bartlett.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Amy Bartlett</h3>
+					<ul>
+						<li class="location">Corwin Springs, MT</li>
+						<li class="died">Died: <time datetime="2016-05-15">5/15/2016</time></li>
+						
+						<li class="age">Age: 41</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/amy-bartlett-obituary?pid=1000000180028970">Read the obituary</a></li>
+						
+						
+						<li class="vignette"><a class="scroll-link" href="#vignette-amy-bartlett">Read her story</a></li>
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="krystine-toledo-gonzalez" class="entry has-vignette" tabindex="41">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-05-17-krystine-toledo-gonzalez.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Krystine Toledo-Gonzalez</h3>
+					<ul>
+						<li class="location">Sugar Hill, GA</li>
+						<li class="died">Died: <time datetime="2016-05-17">5/17/2016</time></li>
+						
+						<li class="age">Age: 30</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/krystine-toledo-gonzalez-obituary?pid=1000000180040865&view=guestbook">Read the obituary</a></li>
+						
+						
+						<li class="vignette"><a class="scroll-link" href="#vignette-krystine-toledo-gonzalez">Read her story</a></li>
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="dinelle-tynisha-constantine" class="entry " tabindex="42">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Dinelle Tynisha Constantine</h3>
+					<ul>
+						<li class="location">Frederick, MD</li>
+						<li class="died">Died: <time datetime="2016-05-26">5/26/2016</time></li>
+						
+						<li class="age">Age: 33</li>
+						
+						
+						<li class="obit"><a href="http://www.staufferfuneralhome.com/notices/Dinelle-Constantine">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="lynn-aguibitin-welker" class="entry has-vignette" tabindex="43">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-05-27-lynn-aguibitin-welker.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Lynn Aguibitin Welker</h3>
+					<ul>
+						<li class="location">San Jose, CA</li>
+						<li class="died">Died: <time datetime="2016-05-27">5/27/2016</time></li>
+						
+						<li class="age">Age: 38</li>
+						
+						
+						<li class="obit"><a href="http://obits.dignitymemorial.com/dignity-memorial/obituary.aspx?n=Lynn-Welker&lc=2463&pid=180221353&mid=6956816">Read the obituary</a></li>
+						
+						
+						<li class="vignette"><a class="scroll-link" href="#vignette-lynn-aguibitin-welker">Read her story</a></li>
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="megan-michelle-mckee" class="entry " tabindex="44">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-05-28-megan-michelle-mckee.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Megan Michelle McKee</h3>
+					<ul>
+						<li class="location">Catonsville, MD</li>
+						<li class="died">Died: <time datetime="2016-05-28">5/28/2016</time></li>
+						
+						<li class="age">Age: 24</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/baltimoresun/obituary.aspx?pid=180191733">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="mercedes-rivera" class="entry " tabindex="45">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Mercedes Rivera</h3>
+					<ul>
+						<li class="location">Brooklyn, NY</li>
+						<li class="died">Died: <time datetime="2016-05-28">5/28/2016</time></li>
+						
+						<li class="age">Age: 16</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/mercedes-rivera-obituary?pid=1000000180292380&view=guestbook">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="melissa-temsook-knott" class="entry " tabindex="46">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Melissa Temsook Knott</h3>
+					<ul>
+						<li class="location">Metairie, LA</li>
+						<li class="died">Died: <time datetime="2016-05-31">5/31/2016</time></li>
+						
+						<li class="age">Age: 34</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/melissa-knott-obituary?pid=1000000180259541&view=guestbook">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="paula-nicola-nikki-shoemake-patterson" class="entry " tabindex="47">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-06-01-paula-nicola-nikki-shoemake-patterson.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Paula Nicola (Nikki) Shoemake-Patterson</h3>
+					<ul>
+						<li class="location">Starkville, MS</li>
+						<li class="died">Died: <time datetime="2016-06-01">6/1/2016</time></li>
+						
+						<li class="age">Age: 40</li>
+						
+						
+						<li class="obit"><a href="http://www.welchfuneralhomes.com/book-of-memories/2528334/Patterson-Paula/obituary.php">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="brandi-beaujon-logsdon" class="entry " tabindex="48">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-06-03-brandi-beaujon-logsdon.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Brandi Beaujon Logsdon</h3>
+					<ul>
+						<li class="location">Johnstown, PA</li>
+						<li class="died">Died: <time datetime="2016-06-03">6/3/2016</time></li>
+						
+						<li class="age">Age: 25</li>
+						
+						
+						<li class="obit"><a href="http://obituaries.tribdem.com/story/brandi-logsdon-beaujon-1990-2016-790127051">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="staci-kelly-ness-mann" class="entry " tabindex="49">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Staci Kelly Ness Mann</h3>
+					<ul>
+						<li class="location">Blue Anchor, NJ</li>
+						<li class="died">Died: <time datetime="2016-06-03">6/3/2016</time></li>
+						
+						<li class="age">Age: 39</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/courierpostonline/obituary.aspx?n=staci-kelly-mann&pid=180228019&fhid=9366">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="erica-patterson" class="entry " tabindex="50">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Erica Patterson</h3>
+					<ul>
+						<li class="location">Chicago, IL</li>
+						<li class="died">Died: <time datetime="2016-06-04">6/4/2016</time></li>
+						
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="evelyn-mae-power-rethford" class="entry " tabindex="51">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-06-07-evelyn-mae-power-rethford.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Evelyn Mae Power Rethford</h3>
+					<ul>
+						<li class="location">Kennewick, WA</li>
+						<li class="died">Died: <time datetime="2016-06-07">6/7/2016</time></li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/tricityherald/obituary.aspx?pid=180337316">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="tammy-annette-norman-hogan" class="entry " tabindex="52">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Tammy Annette Norman Hogan</h3>
+					<ul>
+						<li class="location">Wortham, TX</li>
+						<li class="died">Died: <time datetime="2016-06-10">6/10/2016</time></li>
+						
+						<li class="age">Age: 24</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/tammy-hogan-obituary?pid=1000000180373118&view=guestbook">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="laura-lenss" class="entry has-vignette" tabindex="53">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-06-15-laura-lenss.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Laura Lenss</h3>
+					<ul>
+						<li class="location">Seattle, WA</li>
+						<li class="died">Died: <time datetime="2016-06-15">6/15/2016</time></li>
+						
+						<li class="age">Age: 38</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/seattletimes/obituary.aspx?pid=180439504">Read the obituary</a></li>
+						
+						
+						<li class="vignette"><a class="scroll-link" href="#vignette-laura-lenss">Read her story</a></li>
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="sharry-buhanan-decker" class="entry " tabindex="54">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-06-16-sharry-buhanan-decker.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Sharry Buhanan-Decker</h3>
+					<ul>
+						<li class="location">Sandy, UT</li>
+						<li class="died">Died: <time datetime="2016-06-16">6/16/2016</time></li>
+						
+						<li class="age">Age: 29</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/thespectrum/obituary.aspx?pid=180407153">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="traci-burnley-chocol" class="entry " tabindex="55">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-06-18-traci-burnley-chocol.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Traci Burnley Chocol</h3>
+					<ul>
+						<li class="location">Denver, CO</li>
+						<li class="died">Died: <time datetime="2016-06-18">6/18/2016</time></li>
+						
+						<li class="age">Age: 49</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/gazette/obituary.aspx?pid=180530350">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="latoya-machon-jones" class="entry " tabindex="56">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>LaToya Machon Jones</h3>
+					<ul>
+						<li class="location">Pflugerville, TX</li>
+						<li class="died">Died: <time datetime="2016-06-22">6/22/2016</time></li>
+						
+						<li class="age">Age: 30</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/statesman/obituary.aspx?page=lifestory&pid=180460889">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="felicia-lofty" class="entry " tabindex="57">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Felicia Lofty</h3>
+					<ul>
+						<li class="location">Whitwell, TN</li>
+						<li class="died">Died: <time datetime="2016-06-27">6/27/2016</time></li>
+						
+						<li class="age">Age: 22</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/felicia-lofty-obituary?pid=1000000180503389&view=guestbook">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="allison-parker-goldstein" class="entry " tabindex="58">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-06-28-allison-parker-goldstein.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Allison Parker Goldstein</h3>
+					<ul>
+						<li class="location">Richmond, VA</li>
+						<li class="died">Died: <time datetime="2016-06-28">6/28/2016</time></li>
+						
+						
+						<li class="obit"><a href="http://www.morrissett.com/allison.html">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="sadie-lynn-cole-palma" class="entry " tabindex="59">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Sadie Lynn Cole Palma</h3>
+					<ul>
+						<li class="location">South Portland, ME</li>
+						<li class="died">Died: <time datetime="2016-06-29">6/29/2016</time></li>
+						
+						<li class="age">Age: 20</li>
+						
+						
+						<li class="obit"><a href="http://obituaries.pressherald.com/obituaries/mainetoday-pressherald/obituary.aspx?page=lifestory&pid=180583663">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="larissa-rochelle-icemen" class="entry has-vignette" tabindex="60">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-06-30-larissa-rochelle-icemen.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Larissa Rochelle Icemen</h3>
+					<ul>
+						<li class="location">Minneapolis, MN</li>
+						<li class="died">Died: <time datetime="2016-06-30">6/30/2016</time></li>
+						
+						<li class="age">Age: 25</li>
+						
+						
+						
+						<li class="vignette"><a class="scroll-link" href="#vignette-larissa-rochelle-icemen">Read her story</a></li>
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="shelly-susanne-wolf-posivenko" class="entry " tabindex="61">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Shelly Susanne Wolf Posivenko</h3>
+					<ul>
+						<li class="location">Carrollton, GA</li>
+						<li class="died">Died: <time datetime="2016-07-01">7/1/2016</time></li>
+						
+						<li class="age">Age: 38</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/shelly-posivenko-obituary?pid=1000000180545516&view=guestbook">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="selah-boyer" class="entry " tabindex="62">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Selah Boyer</h3>
+					<ul>
+						<li class="location">Tucson, AZ</li>
+						<li class="died">Died: <time datetime="2016-07-02">7/2/2016</time></li>
+						
+						<li class="age">Age: 33</li>
+						
+						
+						<li class="obit"><a href="http://obits.dignitymemorial.com/dignity-memorial/obituary.aspx?n=Selah-Boyer&lc=4654&pid=180608370&mid=7001947">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="cree-brianne-erwin" class="entry " tabindex="63">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Cree Brianne Erwin</h3>
+					<ul>
+						<li class="location">Battle Creek, MI</li>
+						<li class="died">Died: <time datetime="2016-07-03">7/3/2016</time></li>
+						
+						<li class="age">Age: 24</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/battlecreek/obituary.aspx?page=lifestory&pid=180622754">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="tierra-hughes" class="entry " tabindex="64">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Tierra Hughes</h3>
+					<ul>
+						<li class="location">Roanoke, VA</li>
+						<li class="died">Died: <time datetime="2016-07-04">7/4/2016</time></li>
+						
+						<li class="age">Age: 25</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/tierra-hughes-obituary?pid=1000000180581392&view=guestbook">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="michelle-lee-sullivan" class="entry " tabindex="65">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-07-08-michelle-lee-sullivan.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Michelle Lee Sullivan</h3>
+					<ul>
+						<li class="location">Rogers, MN</li>
+						<li class="died">Died: <time datetime="2016-07-08">7/8/2016</time></li>
+						
+						<li class="age">Age: 30</li>
+						
+						
+						<li class="obit"><a href="http://iagenweb.org/boards/mitchell/obituaries/index.cgi?read=604118">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="erin-michelle-avery" class="entry " tabindex="66">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Erin Michelle Avery</h3>
+					<ul>
+						<li class="location">Garner, NC</li>
+						<li class="died">Died: <time datetime="2016-07-09">7/9/2016</time></li>
+						
+						<li class="age">Age: 31</li>
+						
+						
+						<li class="obit"><a href="http://www.wakefuneral.com/obituaries/Erin-Avery/#!/Obituary">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="chaphley-ornevil-jacques" class="entry " tabindex="67">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-07-09-chaphley-ornevil-jacques.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Chaphley Ornevil Jacques</h3>
+					<ul>
+						<li class="location">York, PA</li>
+						<li class="died">Died: <time datetime="2016-07-09">7/9/2016</time></li>
+						
+						<li class="age">Age: 41</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/chaphley-jacques-obituary?pid=1000000180724955&view=guestbook">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="amanda-eva-garcia" class="entry has-vignette" tabindex="68">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-07-13-amanda-eva-garcia.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Amanda Eva Garcia</h3>
+					<ul>
+						<li class="location">Seguin, TX</li>
+						<li class="died">Died: <time datetime="2016-07-13">7/13/2016</time></li>
+						
+						<li class="age">Age: 26</li>
+						
+						
+						
+						<li class="vignette"><a class="scroll-link" href="#vignette-amanda-eva-garcia">Read her story</a></li>
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="gabriela-rojas" class="entry " tabindex="69">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Gabriela Rojas</h3>
+					<ul>
+						<li class="location">Napa, CA</li>
+						<li class="died">Died: <time datetime="2016-07-19">7/19/2016</time></li>
+						
+						<li class="age">Age: 27</li>
+						
+						
+						<li class="obit"><a href="http://napavalleyregister.com/news/local/lawsuit-follows-death-of-napa-woman-after-childbirth/article_b8ba7957-b55a-5ae2-bd13-009909c1cee6.html">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="jessica-faumui-masalosalo" class="entry " tabindex="70">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-07-22-jessica-faumui-masalosalo.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Jessica Faumui-Masalosalo</h3>
+					<ul>
+						<li class="location">Anchorage, AK</li>
+						<li class="died">Died: <time datetime="2016-07-22">7/22/2016</time></li>
+						
+						<li class="age">Age: 25</li>
+						
+						
+						<li class="obit"><a href="http://www.memorialsolutions.com/memsol.cgi?user_id=1831448">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="joy-gray-barbat-rusin" class="entry " tabindex="71">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-07-22-joy-gray-barbat-rusin.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Joy Gray Barbat Rusin</h3>
+					<ul>
+						<li class="location">San Diego, CA</li>
+						<li class="died">Died: <time datetime="2016-07-22">7/22/2016</time></li>
+						
+						<li class="age">Age: 31</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/greenwichtime/obituary.aspx?page=lifestory&pid=181108693">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="meagan-duarte" class="entry " tabindex="72">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-07-27-meagan-duarte.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Meagan Duarte</h3>
+					<ul>
+						<li class="location">Northampton, PA</li>
+						<li class="died">Died: <time datetime="2016-07-27">7/27/2016</time></li>
+						
+						<li class="age">Age: 29</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/mcall/obituary.aspx?pid=180819656">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="khanita-moore-gordon" class="entry " tabindex="73">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Khanita Moore-Gordon</h3>
+					<ul>
+						<li class="location">Omaha, NE</li>
+						<li class="died">Died: <time datetime="2016-07-27">7/27/2016</time></li>
+						
+						<li class="age">Age: 29</li>
+						
+						
+						<li class="obit"><a href="http://www.omaha.com/obits/moore-gordon-khanita/article_88a4da83-7311-55fa-bec4-98aa38cc8629.html">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="lameisha-nichole-haynes" class="entry " tabindex="74">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>LaMeisha Nichole Haynes</h3>
+					<ul>
+						<li class="location">Folsom, LA</li>
+						<li class="died">Died: <time datetime="2016-07-30">7/30/2016</time></li>
+						
+						<li class="age">Age: 28</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/lameisha-haynes-obituary?pid=1000000180989946&view=guestbook">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="amanda-mandy-keefer" class="entry " tabindex="75">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Amanda (Mandy) Keefer</h3>
+					<ul>
+						<li class="location">Kissimmee, FL</li>
+						<li class="died">Died: <time datetime="2016-07-30">7/30/2016</time></li>
+						
+						<li class="age">Age: 28</li>
+						
+						
+						<li class="obit"><a href="http://florida.funeral.com/2016/08/01/amanda-nicole-keefer/">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="deanna-gioia" class="entry " tabindex="76">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-07-31-deanna-gioia.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Deanna Gioia</h3>
+					<ul>
+						<li class="location">Staten Island, NY</li>
+						<li class="died">Died: <time datetime="2016-07-31">7/31/2016</time></li>
+						
+						<li class="age">Age: 35</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/deanna-gioia-obituary?pid=1000000180884440&view=guestbook">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="amy-lam-wai-chi" class="entry " tabindex="77">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-08-01-amy-lam-wai-chi.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Amy Lam Wai Chi</h3>
+					<ul>
+						<li class="location">New York City, NY</li>
+						<li class="died">Died: <time datetime="2016-08-01">8/1/2016</time></li>
+						
+						<li class="age">Age: 34</li>
+						
+						
+						<li class="obit"><a href="https://www.facebook.com/notes/amy-lam-wai-chi-the-kwoks/in-memory-of-amy-lam-wai-chi/1077896475630086">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="melissa-allen" class="entry " tabindex="78">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Melissa Allen</h3>
+					<ul>
+						<li class="location">Tyngsboro, MA</li>
+						<li class="died">Died: <time datetime="2016-08-06">8/6/2016</time></li>
+						
+						<li class="age">Age: 31</li>
+						
+						
+						<li class="obit"><a href="https://www.facebook.com/492085680810869/posts/1247270188625744">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="sonia-jimenez" class="entry " tabindex="79">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Sonia Jimenez</h3>
+					<ul>
+						<li class="location">Hughson, CA</li>
+						<li class="died">Died: <time datetime="2016-08-09">8/9/2016</time></li>
+						
+						<li class="age">Age: 36</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/sonia-jimenez-obituary?pid=1000000181049222&view=guestbook">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="kylie-joy-hendress" class="entry " tabindex="80">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Kylie Joy Hendress</h3>
+					<ul>
+						<li class="location">Brookston, IN</li>
+						<li class="died">Died: <time datetime="2016-08-11">8/11/2016</time></li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/jconline/obituary.aspx?page=lifestory&pid=181061496">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="sheriah-oshiro-directo-freitas" class="entry has-vignette" tabindex="81">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-08-14-sheriah-oshiro-directo-freitas.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Sheriah Oshiro-Directo Freitas</h3>
+					<ul>
+						<li class="location">Ft. Benning, GA</li>
+						<li class="died">Died: <time datetime="2016-08-14">8/14/2016</time></li>
+						
+						<li class="age">Age: 25</li>
+						
+						
+						
+						<li class="vignette"><a class="scroll-link" href="#vignette-sheriah-oshiro-directo-freitas">Read her story</a></li>
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="stacy-ann-gottwaldt" class="entry " tabindex="82">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-08-16-stacy-ann-gottwaldt.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Stacy Ann Gottwaldt</h3>
+					<ul>
+						<li class="location">Coon Rapids, MN</li>
+						<li class="died">Died: <time datetime="2016-08-16">8/16/2016</time></li>
+						
+						<li class="age">Age: 41</li>
+						
+						
+						<li class="obit"><a href="http://obits.dignitymemorial.com/dignity-memorial/obituary.aspx?n=Stacy-Gottwaldt&lc=7235&pid=181127194&mid=7054980">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="gina-decena" class="entry " tabindex="83">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Gina Decena</h3>
+					<ul>
+						<li class="location">Twain Harte, CA</li>
+						<li class="died">Died: <time datetime="2016-08-20">8/20/2016</time></li>
+						
+						<li class="age">Age: 39</li>
+						
+						
+						<li class="obit"><a href="http://www.mymotherlode.com/news/obituaries/272021/decena-gina.html">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="steaphanie-gayle-boswell-shoulars" class="entry " tabindex="84">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Steaphanie Gayle Boswell Shoulars</h3>
+					<ul>
+						<li class="location">Lucama, NC</li>
+						<li class="died">Died: <time datetime="2016-08-21">8/21/2016</time></li>
+						
+						<li class="age">Age: 24</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/steaphanie-shoulars-obituary?pid=1000000181175214&view=guestbook">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="amy-mckillip-hines" class="entry " tabindex="85">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Amy McKillip Hines</h3>
+					<ul>
+						<li class="location">Clovis, NM</li>
+						<li class="died">Died: <time datetime="2016-08-22">8/22/2016</time></li>
+						
+						<li class="age">Age: 33</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/easternnewmexiconews/obituary.aspx?pid=181186552">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="rheanna-denise-buxton" class="entry " tabindex="86">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Rheanna Denise Buxton</h3>
+					<ul>
+						<li class="location">Douglasville, GA</li>
+						<li class="died">Died: <time datetime="2016-08-23">8/23/2016</time></li>
+						
+						<li class="age">Age: 27</li>
+						
+						
+						<li class="obit"><a href="http://www.times-georgian.com/obituaries/rheanna-denise-buxton/article_ca5d26c6-6a61-11e6-8281-bb0bcade7428.html">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="carrie-million-naas" class="entry " tabindex="87">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-08-29-carrie-million-naas.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Carrie Million Naas</h3>
+					<ul>
+						<li class="location">Chesapeake, VA</li>
+						<li class="died">Died: <time datetime="2016-08-29">8/29/2016</time></li>
+						
+						<li class="age">Age: 39</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/pilotonline/obituary.aspx?pid=181264722">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="dahlia-salinas-tatman" class="entry " tabindex="88">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Dahlia Salinas Tatman</h3>
+					<ul>
+						<li class="location">San Diego, CA</li>
+						<li class="died">Died: <time datetime="2016-08-30">8/30/2016</time></li>
+						
+						<li class="age">Age: 39</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/sandiegouniontribune/obituary.aspx?page=lifestory&pid=181304165">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="heather-mills" class="entry " tabindex="89">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Heather Mills</h3>
+					<ul>
+						<li class="location">Turlock, CA</li>
+						<li class="died">Died: <time datetime="2016-09-03">9/3/2016</time></li>
+						
+						<li class="age">Age: 31</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/modestobee/obituary.aspx?pid=182240593">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="audrey-cher-lockett-labranche" class="entry has-vignette" tabindex="90">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-09-04-audrey-cher-lockett-labranche.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Audrey (Cher) Lockett LaBranche</h3>
+					<ul>
+						<li class="location">Crete, IL</li>
+						<li class="died">Died: <time datetime="2016-09-04">9/4/2016</time></li>
+						
+						<li class="age">Age: 39</li>
+						
+						
+						
+						<li class="vignette"><a class="scroll-link" href="#vignette-audrey-cher-lockett-labranche">Read her story</a></li>
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="cara-cuevas" class="entry " tabindex="91">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-09-06-cara-cuevas.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Cara Cuevas</h3>
+					<ul>
+						<li class="location">Ulster Park, NY</li>
+						<li class="died">Died: <time datetime="2016-09-06">9/6/2016</time></li>
+						
+						<li class="age">Age: 30</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/dailyfreeman/obituary.aspx?pid=181340454">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="marlene-dominguez-hicks" class="entry has-vignette" tabindex="92">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-09-06-marlene-dominguez-hicks.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Marlene Dominguez-Hicks</h3>
+					<ul>
+						<li class="location">Houston, TX</li>
+						<li class="died">Died: <time datetime="2016-09-06">9/6/2016</time></li>
+						
+						<li class="age">Age: 33</li>
+						
+						
+						<li class="obit"><a href="http://www.sunsetviewcemetery.com/obituaries/Marlene-Dominguez/#!/Obituary">Read the obituary</a></li>
+						
+						
+						<li class="vignette"><a class="scroll-link" href="#vignette-marlene-dominguez-hicks">Read her story</a></li>
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="tasneshia-rodgers" class="entry " tabindex="93">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Tasneshia Rodgers</h3>
+					<ul>
+						<li class="location">Atlanta, GA</li>
+						<li class="died">Died: <time datetime="2016-09-07">9/7/2016</time></li>
+						
+						<li class="age">Age: 40</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/tasneshia-rodgers-obituary?pid=1000000181432460&view=guestbook">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="sandra-trujillo-corral" class="entry " tabindex="94">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Sandra Trujillo-Corral</h3>
+					<ul>
+						<li class="location">Victorville, CA</li>
+						<li class="died">Died: <time datetime="2016-09-12">9/12/2016</time></li>
+						
+						<li class="age">Age: 40</li>
+						
+						
+						<li class="obit"><a href="http://forestlawn.tributes.com/obituary/show/Sandra-Corral-103967121">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="kimberly-lynn-hamblen" class="entry " tabindex="95">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Kimberly Lynn Hamblen</h3>
+					<ul>
+						<li class="location">Grand Junction, CO</li>
+						<li class="died">Died: <time datetime="2016-09-16">9/16/2016</time></li>
+						
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="brooke-sevier" class="entry " tabindex="96">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Brooke Sevier</h3>
+					<ul>
+						<li class="location">LaMesa, CA</li>
+						<li class="died">Died: <time datetime="2016-09-16">9/16/2016</time></li>
+						
+						<li class="age">Age: 30</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/sandiegouniontribune/obituary.aspx?page=lifestory&pid=181537192">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="kalee-diane-joy-barton" class="entry " tabindex="97">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-09-18-kalee-diane-joy-barton.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Kalee Diane Joy Barton</h3>
+					<ul>
+						<li class="location">Lubbock, TX</li>
+						<li class="died">Died: <time datetime="2016-09-18">9/18/2016</time></li>
+						
+						<li class="age">Age: 29</li>
+						
+						
+						<li class="obit"><a href="http://amarillo.com/obituaries/2016-09-21/kalee-diane-joy-barton">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="ashley-nicole-heaney-butler" class="entry " tabindex="98">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Ashley Nicole Heaney-Butler</h3>
+					<ul>
+						<li class="location">Bayville, NJ</li>
+						<li class="died">Died: <time datetime="2016-09-21">9/21/2016</time></li>
+						
+						<li class="age">Age: 31</li>
+						
+						
+						<li class="obit"><a href="https://www.meaningfulfunerals.net/fh/obituaries/obituary.cfm?CFID=ae70541c-1328-4aff-8e58-ced4ab0810d5&CFTOKEN=0&o_id=3897716&fh_id=14691">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="kimesha-kim-simpson" class="entry " tabindex="99">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Kimesha (Kim) Simpson</h3>
+					<ul>
+						<li class="location">Baldwin, NY</li>
+						<li class="died">Died: <time datetime="2016-09-25">9/25/2016</time></li>
+						
+						<li class="age">Age: 37</li>
+						
+						
+						<li class="obit"><a href="http://towersfuneralhomeny.com/tribute/details/1021/Kimesha-Simpson/obituary.html">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="heather-ruggles" class="entry " tabindex="100">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-09-29-heather-ruggles.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Heather Ruggles</h3>
+					<ul>
+						<li class="location">Pooler, GA</li>
+						<li class="died">Died: <time datetime="2016-09-29">9/29/2016</time></li>
+						
+						<li class="age">Age: 28</li>
+						
+						
+						<li class="obit"><a href="http://www.andersonfuneralhomebeaufortsc.com/?pagetype=obitlink&obit_id=1859111">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="heidi-rufi-grice" class="entry " tabindex="101">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-09-30-heidi-rufi-grice.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Heidi Rufi Grice</h3>
+					<ul>
+						<li class="location">Plano, TX</li>
+						<li class="died">Died: <time datetime="2016-09-30">9/30/2016</time></li>
+						
+						<li class="age">Age: 35</li>
+						
+						
+						<li class="obit"><a href="http://www.tributes.com/obituary/show/Heidi-Alisha-Grice-104004465">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="amanda-ireland-ward" class="entry " tabindex="102">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Amanda Ireland Ward</h3>
+					<ul>
+						<li class="location">Greensboro, NC</li>
+						<li class="died">Died: <time datetime="2016-10-01">10/1/2016</time></li>
+						
+						<li class="age">Age: 33</li>
+						
+						
+						<li class="obit"><a href="http://www.journalnow.com/obituaries/ward-amanda-ireland/article_d8a7edd1-1bb3-585e-83b5-7a527f188667.html">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="marilyn-marjorie-desire-shorty-charles-havlik" class="entry " tabindex="103">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-10-02-marilyn-marjorie-desire-shorty-charles-havlik.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Marilyn Marjorie Desire (Shorty) Charles-Havlik</h3>
+					<ul>
+						<li class="location">Irving, TX</li>
+						<li class="died">Died: <time datetime="2016-10-02">10/2/2016</time></li>
+						
+						<li class="age">Age: 23</li>
+						
+						
+						<li class="obit"><a href="https://www.forevermissed.com/marilyn-marjorie-desire-charles-havlik/gallery/delete_audio#about">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="blake-titsworth" class="entry " tabindex="104">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Blake Titsworth</h3>
+					<ul>
+						<li class="location">Muskogee, OK</li>
+						<li class="died">Died: <time datetime="2016-10-02">10/2/2016</time></li>
+						
+						<li class="age">Age: 23</li>
+						
+						
+						<li class="obit"><a href="http://www.biglowfunerals.com/home/index.cfm/obituaries/view/fh_id/10320/id/3915104">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="sarah-louise-lambert" class="entry " tabindex="105">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Sarah Louise Lambert</h3>
+					<ul>
+						<li class="location">Lyons, OR</li>
+						<li class="died">Died: <time datetime="2016-10-03">10/3/2016</time></li>
+						
+						<li class="age">Age: 29</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/statesmanjournal/obituary.aspx?page=lifestory&pid=181762059">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="christine-bates-madrid" class="entry " tabindex="106">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Christine Bates Madrid</h3>
+					<ul>
+						<li class="location">Las Cruces, NM</li>
+						<li class="died">Died: <time datetime="2016-10-07">10/7/2016</time></li>
+						
+						<li class="age">Age: 27</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/lcsun-news/obituary.aspx?pid=182289741">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="sonia-cardoso-dasilva" class="entry " tabindex="107">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Sonia Cardoso-DaSilva</h3>
+					<ul>
+						<li class="location">Keansburg, NJ</li>
+						<li class="died">Died: <time datetime="2016-10-08">10/8/2016</time></li>
+						
+						<li class="age">Age: 41</li>
+						
+						
+						<li class="obit"><a href="http://armitagewiggins.com/obituaries/2016/10/11/sonia-cardosa-dasilva">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="tiera-gillespie" class="entry " tabindex="108">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Tiera Gillespie</h3>
+					<ul>
+						<li class="location">Belleville, IL</li>
+						<li class="died">Died: <time datetime="2016-10-08">10/8/2016</time></li>
+						
+						<li class="age">Age: 19</li>
+						
+						
+						<li class="obit"><a href="http://www.tributes.com/obituary/show/Tiera-Gillespie-104028385">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="latisha-fruhauf" class="entry " tabindex="109">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Latisha Fruhauf</h3>
+					<ul>
+						<li class="location">Milbrook, AL</li>
+						<li class="died">Died: <time datetime="2016-10-12">10/12/2016</time></li>
+						
+						<li class="age">Age: 41</li>
+						
+						
+						<li class="obit"><a href="http://www.tributes.com/obituary/show/Latisha-Fruhauf-104041549">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="nivia-lashaundra-mcintosh" class="entry " tabindex="110">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-10-22-nivia-lashaundra-mcintosh.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Nivia Lashaundra McIntosh</h3>
+					<ul>
+						<li class="location">Jacksonville, FL</li>
+						<li class="died">Died: <time datetime="2016-10-22">10/22/2016</time></li>
+						
+						<li class="age">Age: 36</li>
+						
+						
+						<li class="obit"><a href="http://www.tswarden.com/book-of-memories/2754153/McIntosh-Nivia/service-details.php">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="denise-moore" class="entry " tabindex="111">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Denise Moore</h3>
+					<ul>
+						<li class="location">Fuquay-Varina, NC</li>
+						<li class="died">Died: <time datetime="2016-10-23">10/23/2016</time></li>
+						
+						<li class="age">Age: 39</li>
+						
+						
+						<li class="obit"><a href="http://thomasfuneral.com/obituary?id=267326">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="seveny-fuchu" class="entry " tabindex="112">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-10-26-seveny-fuchu.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Seveny Fuchu</h3>
+					<ul>
+						<li class="location">Woonsocket, RI</li>
+						<li class="died">Died: <time datetime="2016-10-26">10/26/2016</time></li>
+						
+						<li class="age">Age: 35</li>
+						
+						
+						<li class="obit"><a href="http://www.coelhofuneralhome.net/notices/Seveny-Fuchu">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="nydia-nayeli-sanchez" class="entry " tabindex="113">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Nydia Nayeli Sanchez</h3>
+					<ul>
+						<li class="location">Ft. Worth, TX</li>
+						<li class="died">Died: <time datetime="2016-10-31">10/31/2016</time></li>
+						
+						<li class="age">Age: 29</li>
+						
+						
+						<li class="obit"><a href="http://obits.dignitymemorial.com/dignity-memorial/obituary.aspx?n=Nydia-Sanchez&lc=9643&pid=182332458&uuid=7201f8ac-fad2-4193-a271-1452cf95bcc0">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="cassie-phyllis-davis-miskin" class="entry " tabindex="114">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Cassie Phyllis Davis Miskin</h3>
+					<ul>
+						<li class="location">Lehi, UT</li>
+						<li class="died">Died: <time datetime="2016-11-01">11/1/2016</time></li>
+						
+						<li class="age">Age: 30</li>
+						
+						
+						<li class="obit"><a href="http://www.wingmortuary.com/fh/obituaries/obituary.cfm?o_id=3997085&fh_id...">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="savannah-blaine-settle" class="entry " tabindex="115">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-11-01-savannah-blaine-settle.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Savannah Blaine Settle</h3>
+					<ul>
+						<li class="location">Elkin, NC</li>
+						<li class="died">Died: <time datetime="2016-11-01">11/1/2016</time></li>
+						
+						<li class="age">Age: 18</li>
+						
+						
+						<li class="obit"><a href="http://www.johnson-funeral.com/obituary/Savannah-Blaine-Settle/Elkin-NC/1668544">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="derline-derilus" class="entry " tabindex="116">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-11-04-derline-derilus.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Derline Derilus</h3>
+					<ul>
+						<li class="location">Boynton Beach, FL</li>
+						<li class="died">Died: <time datetime="2016-11-04">11/4/2016</time></li>
+						
+						<li class="age">Age: 33</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/derline-derilus-obituary?pid=1000000182444760">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="carey-morishige-martinez" class="entry " tabindex="117">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Carey Morishige-Martinez</h3>
+					<ul>
+						<li class="location">Kaneohe, HI</li>
+						<li class="died">Died: <time datetime="2016-11-05">11/5/2016</time></li>
+						
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="wendy-rodriguez" class="entry " tabindex="118">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Wendy Rodriguez</h3>
+					<ul>
+						<li class="location">Pittsburg, CA</li>
+						<li class="died">Died: <time datetime="2016-11-05">11/5/2016</time></li>
+						
+						<li class="age">Age: 22</li>
+						
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="amanda-lynn-wilkinson-lowery" class="entry " tabindex="119">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Amanda Lynn Wilkinson Lowery</h3>
+					<ul>
+						<li class="location">Eastman, GA</li>
+						<li class="died">Died: <time datetime="2016-11-10">11/10/2016</time></li>
+						
+						<li class="age">Age: 36</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/macon/obituary.aspx?pid=182495265">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="ivelisse-perez-ivy-vargas" class="entry " tabindex="120">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-11-10-ivelisse-perez-ivy-vargas.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Ivelisse Pérez (Ivy) Vargas</h3>
+					<ul>
+						<li class="location">Perth Amboy, NJ</li>
+						<li class="died">Died: <time datetime="2016-11-10">11/10/2016</time></li>
+						
+						<li class="age">Age: 39</li>
+						
+						
+						<li class="obit"><a href="http://www.gustavjnovakfh.com/notices/IvelisseIvy-Vargas">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="stephanie-macias" class="entry " tabindex="121">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-11-11-stephanie-macias.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Stephanie Macias</h3>
+					<ul>
+						<li class="location">Las Vegas, NV</li>
+						<li class="died">Died: <time datetime="2016-11-11">11/11/2016</time></li>
+						
+						<li class="age">Age: 24</li>
+						
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="joonyper-light" class="entry has-vignette" tabindex="122">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-11-18-joonyper-light.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Joonyper Light</h3>
+					<ul>
+						<li class="location">Springfield, MO</li>
+						<li class="died">Died: <time datetime="2016-11-18">11/18/2016</time></li>
+						
+						<li class="age">Age: 21</li>
+						
+						
+						
+						<li class="vignette"><a class="scroll-link" href="#vignette-joonyper-light">Read her story</a></li>
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="felicia-jane-sageser" class="entry " tabindex="123">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-11-18-felicia-jane-sageser.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Felicia Jane Sageser</h3>
+					<ul>
+						<li class="location">Greensburg, IN</li>
+						<li class="died">Died: <time datetime="2016-11-18">11/18/2016</time></li>
+						
+						<li class="age">Age: 25</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/felicia-sageser-obituary?pid=1000000182641156">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="sandra-lopez" class="entry " tabindex="124">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Sandra Lopez</h3>
+					<ul>
+						<li class="location">San Diego, CA</li>
+						<li class="died">Died: <time datetime="2016-11-22">11/22/2016</time></li>
+						
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="marie-riley-sipes" class="entry " tabindex="125">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Marie Riley Sipes</h3>
+					<ul>
+						<li class="location">Fort Mill, SC</li>
+						<li class="died">Died: <time datetime="2016-11-22">11/22/2016</time></li>
+						
+						<li class="age">Age: 36</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/thestate/obituary.aspx?n=marie-sipes&pid=182806946&fhid=29353">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="kamilah-thompson" class="entry " tabindex="126">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Kamilah Thompson</h3>
+					<ul>
+						<li class="location">Miami, FL</li>
+						<li class="died">Died: <time datetime="2016-11-30">11/30/2016</time></li>
+						
+						<li class="age">Age: 37</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/kamilah-thompson-obituary?pid=1000000182990852&view=guestbook">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="mindy-sloan-velasquez" class="entry " tabindex="127">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-11-30-mindy-sloan-velasquez.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Mindy Sloan Velasquez</h3>
+					<ul>
+						<li class="location">Johnson City, TN</li>
+						<li class="died">Died: <time datetime="2016-11-30">11/30/2016</time></li>
+						
+						<li class="age">Age: 35</li>
+						
+						
+						<li class="obit"><a href="http://www.johnsoncitypress.com/Obituary/2016/12/03/Mindy-Sloan-Velasquez.html">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="christen-grace-vogel" class="entry has-vignette" tabindex="128">
+	
+			<div class="entry-outer">
+			
+				
+				<img class="portrait" src="https://static.propublica.org/projects/maternal-mortality/assets/images/2016-12-01-christen-grace-vogel.jpg" />
+				
+			
+				<div class="entry-inner">
+					<h3>Christen Grace Vogel</h3>
+					<ul>
+						<li class="location">Jacksonville, NC</li>
+						<li class="died">Died: <time datetime="2016-12-01">12/1/2016</time></li>
+						
+						<li class="age">Age: 21</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/christen-vogel-obituary?pid=1000000182936343&view=guestbook">Read the obituary</a></li>
+						
+						
+						<li class="vignette"><a class="scroll-link" href="#vignette-christen-grace-vogel">Read her story</a></li>
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="ivy-nicole-gernhard" class="entry " tabindex="129">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Ivy Nicole Gernhard</h3>
+					<ul>
+						<li class="location">Middleburg, FL</li>
+						<li class="died">Died: <time datetime="2016-12-05">12/5/2016</time></li>
+						
+						<li class="age">Age: 33</li>
+						
+						
+						<li class="obit"><a href="http://obits.dignitymemorial.com/dignity-memorial/obituary.aspx?n=Ivy-Gernhard&lc=2465&pid=183036090&mid=7200039">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="tabatha-baxley" class="entry " tabindex="130">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Tabatha Baxley</h3>
+					<ul>
+						<li class="location">Milton, FL</li>
+						<li class="died">Died: <time datetime="2016-12-07">12/7/2016</time></li>
+						
+						<li class="age">Age: 29</li>
+						
+						
+						<li class="obit"><a href="http://www.lewisfuneralhomes.net/book-of-memories/2791115/Baxley-Tabatha/obituary.php">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="rory-nunley" class="entry " tabindex="131">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Rory Nunley</h3>
+					<ul>
+						<li class="location">Allen, TX</li>
+						<li class="died">Died: <time datetime="2016-12-08">12/8/2016</time></li>
+						
+						<li class="age">Age: 43</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/name/rory-nunley-obituary?pid=1000000183083773">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="kalayla-baert" class="entry " tabindex="132">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Kalayla Baert</h3>
+					<ul>
+						<li class="location">Wasilla, AK</li>
+						<li class="died">Died: <time datetime="2016-12-18">12/18/2016</time></li>
+						
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="courdeja-keshaune-deja-west" class="entry " tabindex="133">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Courdeja Keshaune (Deja) West</h3>
+					<ul>
+						<li class="location">Charlottesville, VA</li>
+						<li class="died">Died: <time datetime="2016-12-18">12/18/2016</time></li>
+						
+						<li class="age">Age: 18</li>
+						
+						
+						<li class="obit"><a href="http://www.dailyprogress.com/obituaries/west-courdeja-keshaune/article_62f5aae6-602f-51b7-bed1-42649f7800f0.html">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="christina-randell-penrose-willis" class="entry " tabindex="134">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Christina Randell Penrose-Willis</h3>
+					<ul>
+						<li class="location">Glendale, AZ</li>
+						<li class="died">Died: <time datetime="2016-12-20">12/20/2016</time></li>
+						
+						<li class="age">Age: 35</li>
+						
+						
+						<li class="obit"><a href="http://www.heritagefuneralchapels.com/obituaries/Christina-Randell-Penrose-Willis?obId=1266460#/obituaryInfo">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="marla-anne-wingate" class="entry " tabindex="135">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Marla Anne Wingate</h3>
+					<ul>
+						<li class="location">Pataskala, OH</li>
+						<li class="died">Died: <time datetime="2016-12-20">12/20/2016</time></li>
+						
+						<li class="age">Age: 35</li>
+						
+						
+						<li class="obit"><a href="http://www.schoedinger.com/obituaries/Marla-Wingate/#!/Obituary">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="catherine-gaskins" class="entry " tabindex="136">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Catherine Gaskins</h3>
+					<ul>
+						<li class="location">Muncie, IN</li>
+						<li class="died">Died: <time datetime="2016-12-21">12/21/2016</time></li>
+						
+						<li class="age">Age: 37</li>
+						
+						
+						<li class="obit"><a href="https://www.legacy.com/obituaries/indystar/obituary.aspx?page=lifestory&pid=183238422">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="tricia-joy-drake-pless" class="entry " tabindex="137">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Tricia Joy Drake Pless</h3>
+					<ul>
+						<li class="location">Elberton, GA</li>
+						<li class="died">Died: <time datetime="2016-12-23">12/23/2016</time></li>
+						
+						<li class="age">Age: 37</li>
+						
+						
+						<li class="obit"><a href="http://www.berryfh.com/obituaries/Tricia-Joy-Drake-Pless?obId=1260045#/obituaryInfo">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="jennifer-mae-lanning" class="entry " tabindex="138">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Jennifer Mae Lanning</h3>
+					<ul>
+						<li class="location">McKinney, TX</li>
+						<li class="died">Died: <time datetime="2016-12-25">12/25/2016</time></li>
+						
+						<li class="age">Age: 39</li>
+						
+						
+						<li class="obit"><a href="https://www.turrentinejacksonmorrow.com/obituaries/jennifer-mae-and-isabella-lanning">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	
+	
+		<li id="susan-gacheri-eldad" class="entry " tabindex="139">
+	
+			<div class="entry-outer">
+			
+				<img class="portrait" width="150" height="150" src="https://static.propublica.org/projects/maternal-mortality/assets/images/no-photo.min.svg" />
+			
+				<div class="entry-inner">
+					<h3>Susan Gacheri Eldad</h3>
+					<ul>
+						<li class="location">Atlanta, GA</li>
+						<li class="died">Died: <time datetime="2016-12-30">12/30/2016</time></li>
+						
+						<li class="age">Age: 39</li>
+						
+						
+						<li class="obit"><a href="http://www.westcobbfuneralhome.com/obituaries/Susan-Eldad/#!/TributeWall">Read the obituary</a></li>
+						
+						
+					</ul>
+				</div>
+			</div>
+		</li>
+	
+	</ul>
+</figure>
+
+					</div>
+				</div>
+			</div>
+		</article>
+		
+		<div id="article-bottom"></div>
+		<div class="comments">
+		    <section id="comments">
+	<div id="disqus_thread"></div>
+	<script>
+		var disqus_shortname = 'propublica';
+		var disqus_url = 'https://www.propublica.org/article/lost-mothers-maternal-health-died-childbirth-pregnancy/';
+		var disqus_title = 'Lost Mothers';
+		var disqus_identifier = '28968';
+
+		/* * * DON'T EDIT BELOW THIS LINE * * */
+		(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+		})();
+	</script>
+	<noscript>
+		<p>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></p>
+	</noscript>
+	<p><a href="https://disqus.com" class="dsq-brlink">Comments powered by <span class="logo-disqus">Disqus</span></a></p>
+</section><!-- end #comments -->
+
+		</div>
+		
+	</main><!-- end main[role="main"] -->
+
+  <footer role="contentinfo">
+  </footer><!-- end footer[role="contentinfo"] --> 
+
+</div><!-- end #page-body -->
+
+<!-- start footer scripts -->
+
+<script src="https://static.propublica.org/projects/maternal-mortality/assets/js/main.js?20171004112727"></script>
+
+
+
+<!-- end footer scripts -->
+
+<!-- END EXPRESSIONENGINE BODY CONTENT -->
+
+
+<script type="application/ld+json">{"@context":"http://schema.org","@graph":[{"@type":"NewsArticle","articleSection":"Lost Mothers","author":{"@id":"https://www.propublica.org#identity"},"copyrightHolder":{"@id":"https://www.propublica.org#identity"},"copyrightYear":"2017","creator":["Nina Martin"],"dateModified":"2020-02-29T12:22:15-05:00","datePublished":"2017-07-17T08:00:00-04:00","description":"An estimated 700 to 900 women in the U.S. died from pregnancy-related causes in 2016. We have identified 120 of them so far.","headline":"Lost Mothers","image":{"@type":"ImageObject","url":"https://assets.propublica.org/2017-pp-open-graph-1200x630.jpg"},"inLanguage":"en-us","mainEntityOfPage":"https://www.propublica.org/article/lost-mothers-maternal-health-died-childbirth-pregnancy","name":"Lost Mothers","publisher":{"@id":"https://www.propublica.org#creator"},"thumbnailUrl":"https://assets.propublica.org/2017-pp-open-graph-1200x630.jpg","url":"https://www.propublica.org/article/lost-mothers-maternal-health-died-childbirth-pregnancy"},{"@id":"https://www.propublica.org#identity","@type":"NewsMediaOrganization","address":{"@type":"PostalAddress","addressCountry":"US","addressLocality":"New York","addressRegion":"NY","postalCode":"10013","streetAddress":"155 Avenue of the Americas, 13th Floor"},"description":"ProPublica is an independent, non-profit newsroom that produces investigative journalism in the public interest.","email":"info@propublica.org","name":"ProPublica","sameAs":["https://twitter.com/propublica","https://www.facebook.com/propublica/","https://en.wikipedia.org/wiki/ProPublica","https://www.youtube.com/user/propublica","https://github.com/propublica","https://www.linkedin.com/company/propublica/","https://www.instagram.com/propublica","https://www.pinterest.ie/propublica","https://vimeo.com/propublica"],"telephone":"1-212-514-5250","url":"https://www.propublica.org"},{"@id":"#creator","@type":"Organization"},{"@type":"BreadcrumbList","description":"Breadcrumbs list","itemListElement":[{"@type":"ListItem","item":"https://www.propublica.org","name":"Homepage","position":1},{"@type":"ListItem","item":"https://www.propublica.org/article/lost-mothers-maternal-health-died-childbirth-pregnancy","name":"Lost Mothers","position":2}],"name":"Breadcrumbs"}]}</script></body>
+</html>

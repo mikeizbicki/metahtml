@@ -1,0 +1,676 @@
+  <!DOCTYPE html>
+ <html  lang="en" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# ">
+ <head>
+  <meta charset="utf-8" /><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={licenseKey:"20900de36d",applicationID:"93665228"};window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var i=e[n]={exports:{}};t[n][0].call(i.exports,function(e){var i=t[n][1][e];return r(i||e)},i,i.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var i=0;i<n.length;i++)r(n[i]);return r}({1:[function(t,e,n){function r(){}function i(t,e,n){return function(){return o(t,[u.now()].concat(f(arguments)),e?null:this,n),e?void 0:this}}var o=t("handle"),a=t(8),f=t(9),c=t("ee").get("tracer"),u=t("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var d=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],p="api-",l=p+"ixn-";a(d,function(t,e){s[e]=i(p+e,!0,"api")}),s.addPageAction=i(p+"addPageAction",!0),s.setCurrentRouteName=i(p+"routeName",!0),e.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(t,e){var n={},r=this,i="function"==typeof e;return o(l+"tracer",[u.now(),t,n],r),function(){if(c.emit((i?"":"no-")+"fn-start",[u.now(),r,i],n),i)try{return e.apply(this,arguments)}catch(t){throw c.emit("fn-err",[arguments,this,t],n),t}finally{c.emit("fn-end",[u.now()],n)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,e){m[e]=i(l+e)}),newrelic.noticeError=function(t,e){"string"==typeof t&&(t=new Error(t)),o("err",[t,u.now(),!1,e])}},{}],2:[function(t,e,n){function r(t){if(NREUM.init){for(var e=NREUM.init,n=t.split("."),r=0;r<n.length-1;r++)if(e=e[n[r]],"object"!=typeof e)return;return e=e[n[n.length-1]]}}e.exports={getConfiguration:r}},{}],3:[function(t,e,n){function r(){return f.exists&&performance.now?Math.round(performance.now()):(o=Math.max((new Date).getTime(),o))-a}function i(){return o}var o=(new Date).getTime(),a=o,f=t(10);e.exports=r,e.exports.offset=a,e.exports.getLastTimestamp=i},{}],4:[function(t,e,n){function r(t){return!(!t||!t.protocol||"file:"===t.protocol)}e.exports=r},{}],5:[function(t,e,n){function r(t,e){var n=t.getEntries();n.forEach(function(t){"first-paint"===t.name?d("timing",["fp",Math.floor(t.startTime)]):"first-contentful-paint"===t.name&&d("timing",["fcp",Math.floor(t.startTime)])})}function i(t,e){var n=t.getEntries();n.length>0&&d("lcp",[n[n.length-1]])}function o(t){t.getEntries().forEach(function(t){t.hadRecentInput||d("cls",[t])})}function a(t){if(t instanceof m&&!g){var e=Math.round(t.timeStamp),n={type:t.type};e<=p.now()?n.fid=p.now()-e:e>p.offset&&e<=Date.now()?(e-=p.offset,n.fid=p.now()-e):e=p.now(),g=!0,d("timing",["fi",e,n])}}function f(t){d("pageHide",[p.now(),t])}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var c,u,s,d=t("handle"),p=t("loader"),l=t(7),m=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){c=new PerformanceObserver(r);try{c.observe({entryTypes:["paint"]})}catch(v){}u=new PerformanceObserver(i);try{u.observe({entryTypes:["largest-contentful-paint"]})}catch(v){}s=new PerformanceObserver(o);try{s.observe({type:"layout-shift",buffered:!0})}catch(v){}}if("addEventListener"in document){var g=!1,h=["click","keydown","mousedown","pointerdown","touchstart"];h.forEach(function(t){document.addEventListener(t,a,!1)})}l(f)}},{}],6:[function(t,e,n){function r(t,e){if(!i)return!1;if(t!==i)return!1;if(!e)return!0;if(!o)return!1;for(var n=o.split("."),r=e.split("."),a=0;a<r.length;a++)if(r[a]!==n[a])return!1;return!0}var i=null,o=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var f=navigator.userAgent,c=f.match(a);c&&f.indexOf("Chrome")===-1&&f.indexOf("Chromium")===-1&&(i="Safari",o=c[1])}e.exports={agent:i,version:o,match:r}},{}],7:[function(t,e,n){function r(t){function e(){t(a&&document[a]?document[a]:document[i]?"hidden":"visible")}"addEventListener"in document&&o&&document.addEventListener(o,e,!1)}e.exports=r;var i,o,a;"undefined"!=typeof document.hidden?(i="hidden",o="visibilitychange",a="visibilityState"):"undefined"!=typeof document.msHidden?(i="msHidden",o="msvisibilitychange"):"undefined"!=typeof document.webkitHidden&&(i="webkitHidden",o="webkitvisibilitychange",a="webkitVisibilityState")},{}],8:[function(t,e,n){function r(t,e){var n=[],r="",o=0;for(r in t)i.call(t,r)&&(n[o]=e(r,t[r]),o+=1);return n}var i=Object.prototype.hasOwnProperty;e.exports=r},{}],9:[function(t,e,n){function r(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,i=n-e||0,o=Array(i<0?0:i);++r<i;)o[r]=t[e+r];return o}e.exports=r},{}],10:[function(t,e,n){e.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(t,e,n){function r(){}function i(t){function e(t){return t&&t instanceof r?t:t?u(t,c,a):a()}function n(n,r,i,o,a){if(a!==!1&&(a=!0),!l.aborted||o){t&&a&&t(n,r,i);for(var f=e(i),c=v(n),u=c.length,s=0;s<u;s++)c[s].apply(f,r);var p=d[w[n]];return p&&p.push([b,n,r,f]),f}}function o(t,e){y[t]=v(t).concat(e)}function m(t,e){var n=y[t];if(n)for(var r=0;r<n.length;r++)n[r]===e&&n.splice(r,1)}function v(t){return y[t]||[]}function g(t){return p[t]=p[t]||i(n)}function h(t,e){l.aborted||s(t,function(t,n){e=e||"feature",w[n]=e,e in d||(d[e]=[])})}var y={},w={},b={on:o,addEventListener:o,removeEventListener:m,emit:n,get:g,listeners:v,context:e,buffer:h,abort:f,aborted:!1};return b}function o(t){return u(t,c,a)}function a(){return new r}function f(){(d.api||d.feature)&&(l.aborted=!0,d=l.backlog={})}var c="nr@context",u=t("gos"),s=t(8),d={},p={},l=e.exports=i();e.exports.getOrSetContext=o,l.backlog=d},{}],gos:[function(t,e,n){function r(t,e,n){if(i.call(t,e))return t[e];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:r,writable:!0,enumerable:!1}),r}catch(o){}return t[e]=r,r}var i=Object.prototype.hasOwnProperty;e.exports=r},{}],handle:[function(t,e,n){function r(t,e,n,r){i.buffer([t],r),i.emit(t,e,n)}var i=t("ee").get("handle");e.exports=r,r.ee=i},{}],id:[function(t,e,n){function r(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:a(t,o,function(){return i++})}var i=1,o="nr@id",a=t("gos");e.exports=r},{}],loader:[function(t,e,n){function r(){if(!R++){var t=M.info=NREUM.info,e=v.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&e))return u.abort();c(E,function(e,n){t[e]||(t[e]=n)});var n=a();f("mark",["onload",n+M.offset],null,"api"),f("timing",["load",n]);var r=v.createElement("script");0===t.agent.indexOf("http://")||0===t.agent.indexOf("https://")?r.src=t.agent:r.src=l+"://"+t.agent,e.parentNode.insertBefore(r,e)}}function i(){"complete"===v.readyState&&o()}function o(){f("mark",["domContent",a()+M.offset],null,"api")}var a=t(3),f=t("handle"),c=t(8),u=t("ee"),s=t(6),d=t(4),p=t(2),l=p.getConfiguration("ssl")===!1?"http":"https",m=window,v=m.document,g="addEventListener",h="attachEvent",y=m.XMLHttpRequest,w=y&&y.prototype,b=!d(m.location);NREUM.o={ST:setTimeout,SI:m.setImmediate,CT:clearTimeout,XHR:y,REQ:m.Request,EV:m.Event,PR:m.Promise,MO:m.MutationObserver};var x=""+location,E={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1209.min.js"},O=y&&w&&w[g]&&!/CriOS/.test(navigator.userAgent),M=e.exports={offset:a.getLastTimestamp(),now:a,origin:x,features:{},xhrWrappable:O,userAgent:s,disabled:b};if(!b){t(1),t(5),v[g]?(v[g]("DOMContentLoaded",o,!1),m[g]("load",r,!1)):(v[h]("onreadystatechange",i),m[h]("onload",r)),f("mark",["firstbyte",a.getLastTimestamp()],null,"api");var R=0}},{}],"wrap-function":[function(t,e,n){function r(t,e){function n(e,n,r,c,u){function nrWrapper(){var o,a,s,p;try{a=this,o=d(arguments),s="function"==typeof r?r(o,a):r||{}}catch(l){i([l,"",[o,a,c],s],t)}f(n+"start",[o,a,c],s,u);try{return p=e.apply(a,o)}catch(m){throw f(n+"err",[o,a,m],s,u),m}finally{f(n+"end",[o,a,p],s,u)}}return a(e)?e:(n||(n=""),nrWrapper[p]=e,o(e,nrWrapper,t),nrWrapper)}function r(t,e,r,i,o){r||(r="");var f,c,u,s="-"===r.charAt(0);for(u=0;u<e.length;u++)c=e[u],f=t[c],a(f)||(t[c]=n(f,s?c+r:r,i,c,o))}function f(n,r,o,a){if(!m||e){var f=m;m=!0;try{t.emit(n,r,o,e,a)}catch(c){i([c,n,r,o],t)}m=f}}return t||(t=s),n.inPlace=r,n.flag=p,n}function i(t,e){e||(e=s);try{e.emit("internal-error",t)}catch(n){}}function o(t,e,n){if(Object.defineProperty&&Object.keys)try{var r=Object.keys(t);return r.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(o){i([o],n)}for(var a in t)l.call(t,a)&&(e[a]=t[a]);return e}function a(t){return!(t&&t instanceof Function&&t.apply&&!t[p])}function f(t,e){var n=e(t);return n[p]=t,o(t,n,s),n}function c(t,e,n){var r=t[e];t[e]=f(r,n)}function u(){for(var t=arguments.length,e=new Array(t),n=0;n<t;++n)e[n]=arguments[n];return e}var s=t("ee"),d=t(9),p="nr@original",l=Object.prototype.hasOwnProperty,m=!1;e.exports=r,e.exports.wrapFunction=f,e.exports.wrapInPlace=c,e.exports.argsToArray=u},{}]},{},["loader"]);</script>
+<meta name="title" content="Too Little, Too Late? Facebook Reverses Course and Says It Won&#039;t Censor COVID &#039;Man-Made&#039; Claims | MRCTV" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="og:site_name" content="MRCTV" />
+<link rel="canonical" href="https://www.mrctv.org/blog/too-little-too-late-facebook-reverses-course-and-claims-it-wont-censor-covid-man-made-claims" />
+<meta name="description" content="&quot;Facebook must end their fraudulent fact-check program now that we know how dangerous it is,&quot; MRC Founder and President Brent Bozell tweeted on Thursday." />
+<meta name="twitter:site" content="@mrctv" />
+<meta property="fb:app_id" content="265118744841732" />
+<meta property="og:title" content="Too Little, Too Late? Facebook Reverses Course and Says It Won&#039;t Censor COVID &#039;Man-Made&#039; Claims" />
+<meta property="og:locale" content="en_US" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="og:description" content=" &quot;Facebook must end their fraudulent fact-check program now that we know how dangerous it is,&quot; MRC Founder and President Brent Bozell tweeted on Thursday." />
+<meta name="twitter:title" content="Too Little, Too Late? Facebook Reverses Course and Says It Won&#039;t Censor COVID &#039;Man-Made&#039; Claims" />
+<meta name="og:image" content="https://cdn.mrctv.org/files/styles/medium/s3/2021-05/Screen%20Shot%202021-05-27%20at%204.14.12%20PM.png?h=d9700e55" />
+<meta name="twitter:image" content="https://cdn.mrctv.org/files/styles/medium/s3/2021-05/Screen%20Shot%202021-05-27%20at%204.14.12%20PM.png?h=d9700e55" />
+<meta name="og:url" content="https://www.mrctv.org/blog/too-little-too-late-facebook-reverses-course-and-claims-it-wont-censor-covid-man-made-claims" />
+<meta name="og:type" content="article" />
+<link rel="shortcut icon" href="/themes/custom/mrctv8/favicon.ico" type="image/vnd.microsoft.icon" />
+<link rel="revision" href="https://www.mrctv.org/blog/too-little-too-late-facebook-reverses-course-and-claims-it-wont-censor-covid-man-made-claims" />
+<link rel="amphtml" href="https://www.mrctv.org/blog/too-little-too-late-facebook-reverses-course-and-claims-it-wont-censor-covid-man-made-claims?amp" />
+
+  <title>Too Little, Too Late? Facebook Reverses Course and Says It Won&#039;t Censor COVID &#039;Man-Made&#039; Claims | MRCTV</title>
+  <link rel="stylesheet" media="all" href="/core/modules/system/css/components/align.module.css?qsqno8" />
+<link rel="stylesheet" media="all" href="/core/modules/system/css/components/fieldgroup.module.css?qsqno8" />
+<link rel="stylesheet" media="all" href="/core/modules/system/css/components/container-inline.module.css?qsqno8" />
+<link rel="stylesheet" media="all" href="/core/modules/system/css/components/clearfix.module.css?qsqno8" />
+<link rel="stylesheet" media="all" href="/core/modules/system/css/components/details.module.css?qsqno8" />
+<link rel="stylesheet" media="all" href="/core/modules/system/css/components/hidden.module.css?qsqno8" />
+<link rel="stylesheet" media="all" href="/core/modules/system/css/components/item-list.module.css?qsqno8" />
+<link rel="stylesheet" media="all" href="/core/modules/system/css/components/js.module.css?qsqno8" />
+<link rel="stylesheet" media="all" href="/core/modules/system/css/components/nowrap.module.css?qsqno8" />
+<link rel="stylesheet" media="all" href="/core/modules/system/css/components/position-container.module.css?qsqno8" />
+<link rel="stylesheet" media="all" href="/core/modules/system/css/components/progress.module.css?qsqno8" />
+<link rel="stylesheet" media="all" href="/core/modules/system/css/components/reset-appearance.module.css?qsqno8" />
+<link rel="stylesheet" media="all" href="/core/modules/system/css/components/resize.module.css?qsqno8" />
+<link rel="stylesheet" media="all" href="/core/modules/system/css/components/sticky-header.module.css?qsqno8" />
+<link rel="stylesheet" media="all" href="/core/modules/system/css/components/system-status-counter.css?qsqno8" />
+<link rel="stylesheet" media="all" href="/core/modules/system/css/components/system-status-report-counters.css?qsqno8" />
+<link rel="stylesheet" media="all" href="/core/modules/system/css/components/system-status-report-general-info.css?qsqno8" />
+<link rel="stylesheet" media="all" href="/core/modules/system/css/components/tablesort.module.css?qsqno8" />
+<link rel="stylesheet" media="all" href="/core/modules/system/css/components/tree-child.module.css?qsqno8" />
+<link rel="stylesheet" media="all" href="/modules/custom/mrctv_admin/css/mrctv_admin.css?qsqno8" />
+<link rel="stylesheet" media="all" href="/core/modules/views/css/views.module.css?qsqno8" />
+<link rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" />
+<link rel="stylesheet" media="all" href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i|Libre+Baskerville:400,400i,700|Libre+Franklin:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Oswald:300,400,700" />
+<link rel="stylesheet" media="all" href="/themes/custom/mrctv8/dist/styles/main.css?qsqno8" />
+<link rel="stylesheet" media="print" href="/themes/custom/mrctv8/dist/styles/print.css?qsqno8" />
+
+  
+<!--[if lte IE 8]>
+<script src="/core/assets/vendor/html5shiv/html5shiv.min.js?v=3.7.3"></script>
+<![endif]-->
+<script src="/themes/custom/mrctv8/dist/scripts/header.js?qsqno8"></script>
+
+  <meta name="google-site-verification" content="pCsw-Jgn03xbW81Cv1In3RVc-BZYmq401yQH0ezBSws" />
+  <script type="text/javascript" async="async" data-noptimize="1" data-cfasync="false" src="//scripts.mediavine.com/tags/mrc-tv.js"></script>
+  <meta http-equiv="Content-Security-Policy" content="block-all-mixed-content" />
+</head>
+<body class="path-node page-node-type-blog navbar-is-fixed-top">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W9XQN7"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <a href="#main-content" class="visually-hidden focusable skip-link">
+    Skip to main content
+  </a>
+  
+    <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
+    
+    
+<nav class="" id="nav-mobile" role="navigation">
+   
+
+              <ul class="menu nav navbar-nav nav-mobile">
+                            <li class="expanded dropdown">
+        <a href="/" target="" data-drupal-link-system-path="&lt;front&gt;">Home</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="/blog" target="" data-drupal-link-system-path="blog">Blog</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="/videos" target="" data-drupal-link-system-path="videos">Video</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="https://www.mrc.org/newsletter/preferences?utm_source=mrctv&amp;utm_medium=menu_top&amp;utm_content=subscribe&amp;utm_campaign=mrctv">Subscribe</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="https://www.mrctv.org/join-the-movement?utm_source=mrctv&amp;utm_medium=menu&amp;utm_campaign=donate%29">Donate</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="https://www.mrctv.org/contact/feedback">Contact</a>
+                  </li>
+        </ul>
+  
+
+
+ </nav>
+ 
+<div id="wrapper">
+          <nav class="navbar navbar-default navbar-fixed-top" id="navbar" role="navigation">
+                     <div class="container-fluid-dark">
+            <div class="navbar-collapse collapse">
+                 <div class="region region-navigation-above">
+     
+<div class="hidden-xs">    
+
+              <ul class="menu nav navbar-nav nav-mrc-network">
+                            <li class="expanded dropdown">
+        <a href="http://www.mrc.org/" target="_blank">Media Research Center</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="http://www.cnsnews.com/" target="_blank">CNSNews.com</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="http://www.newsbusters.org/" target="_blank">NewsBusters</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="http://www.newsbusters.org/business" target="_blank">MRC Business</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="http://www.newsbusters.org/culture" target="_blank">MRC Culture</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="http://www.newsbusters.org/latino" target="_blank">MRC Latino</a>
+                  </li>
+        </ul>
+  
+
+</div>
+
+  </div>
+
+            </div>
+         </div>
+      
+      <div class="container-fluid">
+         <div class="navbar-header"></div>
+         
+         <div class="navbar-mobile"><a id="js-navbar-toggle"><span></span></a></div>
+         
+           <div class="region region-navigation">
+          
+<a class="navbar-brand" href="/"><img src="https://mrc7.s3.amazonaws.com/MRCTVStandard_Logo.png" alt="Logo" title="MRCTV" /></a>
+
+<div class="hidden-xs"> 
+
+              <ul class="menu nav navbar-nav navbar-left nav-main">
+                            <li class="expanded dropdown">
+        <a href="/index.php/" data-drupal-link-system-path="&lt;front&gt;">Home</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="/index.php/blog" target="" data-drupal-link-system-path="blog">Blog</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="/index.php/videos" target="" data-drupal-link-system-path="videos">Video</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="https://www.mrc.org/newsletter/preferences?utm_source=mrctv&amp;utm_medium=menu_top&amp;utm_content=subscribe&amp;utm_campaign=mrctv">Subscribe</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="https://www.mrctv.org/donate?utm_source=mrctv&amp;utm_medium=menu&amp;utm_campaign=donate">Donate</a>
+                  </li>
+        </ul>
+  
+
+</div>
+ 
+<div class="hidden-xs">
+
+              <ul class="menu nav navbar-nav navbar-right nav-social">
+                    
+                  <li class="expanded dropdown search">
+            <span id="sb-search" class="sb-search">
+               <gcse:search></gcse:search>
+               <input class="sb-search-submit" type="submit" value="">
+               <span class="sb-icon-search"></span>
+                            </span>
+        </li>
+        
+                  
+                
+                                <li class="expanded dropdown store">
+           <a href="https://mrc-store.com/">Store</a>
+                           </li>      
+            
+                
+                                <li class="expanded dropdown facebook">
+           <a href="http://www.facebook.com/mrctv" target="">Facebook</a>
+                           </li>      
+            
+                
+                                <li class="expanded dropdown twitter">
+           <a href="https://www.twitter.com/mrctv" target="">Twitter</a>
+                           </li>      
+            
+                
+                                <li class="expanded dropdown podcast">
+           <a href="https://mrctv.podomatic.com">Podcast</a>
+                           </li>      
+            
+                
+                                <li class="expanded dropdown youtube">
+           <a href="https://www.youtube.com/c/mrctv">Youtube</a>
+                           </li>      
+            
+        </ul>
+  
+
+
+<ul class="menu nav navbar-nav navbar-right nav-share addthis_toolbox">
+   <li>
+      <a class="addthis_button_facebook facebook" title="Facebook" href="#"><i class="fa fa-facebook"></i> Share This</a>
+   </li>
+   <li>
+	   <a class="addthis_button_twitter twitter" addthis:title="" title="Tweet" href="#"><i class="fa fa-twitter"></i> Tweet This</a>
+   </li>
+   <li>
+	   <a class="button_donate donate" title="Donate" href="/donate" target="_blank"><i class="fa fa-dollar"></i> Donate</a>
+   </li>
+ </ul>
+ </div>
+
+  </div>
+
+   
+                        </div>
+    </nav>
+  
+  <div role="main" class="main-container container-node container js-quickedit-main-content">
+    <div class="row row-main">
+     
+                              <div class="col-sm-12" role="heading">
+              <div class="region region-header">
+    <section class="block block-views block-views-blocknotification-bar-block-1 clearfix">
+  
+    
+
+      <div class="views-element-container form-group"><div class="view view-notification-bar view-id-notification_bar view-display-id-block_1 js-view-dom-id-4720e7a003b9e9f8350b362e404b7f5913110bd6eba4b59ee3d00d1745da0f8f">
+  
+    
+      
+      <div class="view-content">
+          <div class="views-row">
+
+
+
+
+
+
+
+</div>
+    <div class="views-row">
+
+
+
+
+
+
+
+</div>
+    <div class="views-row">
+
+
+
+
+
+
+
+</div>
+
+    </div>
+  
+          </div>
+</div>
+
+  </section>
+
+
+  </div>
+
+            <div class="spacer-25"></div>
+          </div>
+                    
+            
+                  <section class="node-content has-sidebar-right">
+
+                                      <div class="highlighted">  <div class="region region-highlighted">
+    <div data-drupal-messages-fallback class="hidden"></div>
+
+  </div>
+</div>
+                  
+                        
+                
+                                      
+                  
+                          <a id="main-content"></a>
+            <div class="region region-content">
+        <h1 class="page-header"><span>Too Little, Too Late? Facebook Reverses Course and Says It Won&#039;t Censor COVID &#039;Man-Made&#039; Claims</span>
+</h1>
+
+  
+<article data-history-node-id="560446" role="article" about="/blog/too-little-too-late-facebook-reverses-course-and-claims-it-wont-censor-covid-man-made-claims" class="blog full clearfix">
+
+            
+   <div class="node-meta">
+<div class="clearfix">
+   <div class="col-sm-5 col-xs-12">
+      <div class="container-avatar">
+            <div class="field field--name-user-picture field--type-image field--label-hidden field--item">  <img src="https://cdn.mrctv.org/files/styles/avatar/s3/avatars/2017-06/Kangadis1.jpg?h=e4b79e59" width="100" height="100" alt="" typeof="foaf:Image" class="img-responsive" />
+
+
+</div>
+      </div>
+      
+      <div class="meta-info">
+         <div class="username"><a href="/author/nick-kangadis" hreflang="en">Nick Kangadis</a></div>
+         <div><time datetime="2021-05-27T16:04:45-0400">May. 27. 2021</time></div>
+      </div>
+   </div>
+   
+   <div class="col-sm-2 col-xs-6">
+      <div class="counts view-count">
+         <number>79</number>
+         <small>views</small>
+      </div>
+   </div>
+   
+   <div class="col-sm-2 col-xs-6">
+      <div class="counts share-count">
+         <number class="share-counter" data-url="http://www.mrctv.org/blog/too-little-too-late-facebook-reverses-course-and-claims-it-wont-censor-covid-man-made-claims">0</number>
+         <small>shares</small>
+      </div>
+   </div>
+   
+   <div class="col-sm-3 col-xs-12">
+      <div class="social-tools">
+         <ul>
+            <li class="facebook"><a class="addthis_button_facebook" title="Facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+            <li class="twitter"><a class="addthis_button_twitter" addthis:title="" title="Tweet" href="#"><i class="fa fa-twitter"></i></a></li>
+            <li class="email"><a class="addthis_button_email" addthis:title="" title="Email" href="#"><i class="fa fa-envelope"></i></a></li>
+      </div>
+   </div>
+</div>
+</div>
+
+<div class="content">
+   
+            <div class="field field--name-body field--type-text-with-summary field--label-hidden field--item">
+<p>Too little, too late.</p>
+
+<p>Facebook announced on Wednesday that they will “no longer remove the claim that COVID-19 is man-made or manufactured from our apps” after more and more questions are being raised concerning the origin of the Chinese coronavirus.</p>
+
+<p>According to a <a href="https://about.fb.com/news/2020/04/covid-19-misinfo-update/">statement</a> from Facebook:</p>
+
+<blockquote>
+<p>In light of ongoing investigations into the origin of COVID-19 and in consultation with public health experts, we will no longer remove the claim that COVID-19 is man-made or manufactured from our apps. We’re continuing to work with health experts to keep pace with the evolving nature of the pandemic and regularly update our policies as new facts and trends emerge.</p>
+</blockquote>
+
+<p>Media Research Center (MRC) Founder and President Brent Bozell took to Twitter to call out Facebook and their fact-checkers for having “actively suppressed valid debate about the origins of Covid,” while also calling on Facebook to end “their fraudulent fact-check program.”</p>
+
+<div data-oembed-url="https://twitter.com/BrentBozell/status/1397922390571503622">
+<div style="max-width:320px;margin:auto;"><!-- You're using demo endpoint of Iframely API commercially. Max-width is limited to 320px. Please get your own API key at https://iframely.com. -->
+<blockquote align="center" class="twitter-tweet" data-dnt="true">
+<p dir="ltr" lang="en" xml:lang="en">We now have PROOF that Facebook's fact-checker program actively suppressed valid debate about the origins of Covid and instead promoted Chinese propaganda.<br />
+<br />
+Facebook must end their fraudulent fact-check program now that we know how dangerous it is.</p>
+— Brent Bozell (@BrentBozell) <a href="https://twitter.com/BrentBozell/status/1397922390571503622?ref_src=twsrc%5Etfw">May 27, 2021</a></blockquote>
+<script async="" charset="utf-8" src="https://platform.twitter.com/widgets.js"></script></div>
+</div>
+
+<p>Bozell continued in the Twitter thread saying that Facebook’s backtracking is “another reason to remove the protections Facebook and others receive from section 230.”</p>
+
+<div data-oembed-url="https://twitter.com/BrentBozell/status/1397922393373376529">
+<div style="max-width:320px;margin:auto;"><!-- You're using demo endpoint of Iframely API commercially. Max-width is limited to 320px. Please get your own API key at https://iframely.com. -->
+<blockquote align="center" class="twitter-tweet" data-conversation="none" data-dnt="true">
+<p dir="ltr" lang="en" xml:lang="en">Facebook, which claims to be fighting "misinformation" essentially admitted today that THEY have been spreading misinformation for over a year. Yet another reason to remove the protections Facebook and others receive from section 230.</p>
+— Brent Bozell (@BrentBozell) <a href="https://twitter.com/BrentBozell/status/1397922393373376529?ref_src=twsrc%5Etfw">May 27, 2021</a></blockquote>
+<script async="" charset="utf-8" src="https://platform.twitter.com/widgets.js"></script></div>
+</div>
+
+<p>It’s all well and good that Facebook has reversed course and will no longer censor their users comments and posts concerning that one aspect of COVID discourse. But, the social media giant needs to answer for their overt censorship of what they like to call “misinformation.”</p>
+
+<p>What good is a fact-checker if they jump the gun and label people and their comments basically as liars only for Facebook to change their tune and admit that they don’t know very much at all?</p>
+
+</div>
+      
+      
+      <div class="field field--name-field-tags field--type-entity-reference field--label-hidden field--items">
+              <div class="field--item"><div about="/tag/facebook" typeof="schema:Thing">
+  
+      <h2><a href="/tag/facebook">
+            <div property="schema:name" class="field field--name-name field--type-string field--label-hidden field--item">facebook</div>
+      </a></h2>
+      <span property="schema:name" content="facebook" class="hidden"></span>
+
+  
+</div>
+</div>
+              <div class="field--item"><div about="/tag/big-tech-censorship" typeof="schema:Thing">
+  
+      <h2><a href="/tag/big-tech-censorship">
+            <div property="schema:name" class="field field--name-name field--type-string field--label-hidden field--item">Big Tech Censorship</div>
+      </a></h2>
+      <span property="schema:name" content="Big Tech Censorship" class="hidden"></span>
+
+  
+</div>
+</div>
+              <div class="field--item"><div about="/index.php/tag/covid-19" typeof="schema:Thing">
+  
+      <h2><a href="/index.php/tag/covid-19">
+            <div property="schema:name" class="field field--name-name field--type-string field--label-hidden field--item">COVID-19</div>
+      </a></h2>
+      <span property="schema:name" content="COVID-19" class="hidden"></span>
+
+  
+</div>
+</div>
+              <div class="field--item"><div about="/tag/chinese-coronavirus" typeof="schema:Thing">
+  
+      <h2><a href="/tag/chinese-coronavirus">
+            <div property="schema:name" class="field field--name-name field--type-string field--label-hidden field--item">Chinese Coronavirus</div>
+      </a></h2>
+      <span property="schema:name" content="Chinese Coronavirus" class="hidden"></span>
+
+  
+</div>
+</div>
+              <div class="field--item"><div about="/tag/man-made-virus" typeof="schema:Thing">
+  
+      <h2><a href="/tag/man-made-virus">
+            <div property="schema:name" class="field field--name-name field--type-string field--label-hidden field--item">Man-Made Virus</div>
+      </a></h2>
+      <span property="schema:name" content="Man-Made Virus" class="hidden"></span>
+
+  
+</div>
+</div>
+              <div class="field--item"><div about="/index.php/tag/manufactured-virus" typeof="schema:Thing">
+  
+      <h2><a href="/index.php/tag/manufactured-virus">
+            <div property="schema:name" class="field field--name-name field--type-string field--label-hidden field--item">Manufactured Virus</div>
+      </a></h2>
+      <span property="schema:name" content="Manufactured Virus" class="hidden"></span>
+
+  
+</div>
+</div>
+              <div class="field--item"><div about="/index.php/tag/brent-bozell" typeof="schema:Thing">
+  
+      <h2><a href="/index.php/tag/brent-bozell">
+            <div property="schema:name" class="field field--name-name field--type-string field--label-hidden field--item">Brent Bozell</div>
+      </a></h2>
+      <span property="schema:name" content="Brent Bozell" class="hidden"></span>
+
+  
+</div>
+</div>
+              <div class="field--item"><div about="/index.php/tag/facebook-statement" typeof="schema:Thing">
+  
+      <h2><a href="/index.php/tag/facebook-statement">
+            <div property="schema:name" class="field field--name-name field--type-string field--label-hidden field--item">Facebook Statement</div>
+      </a></h2>
+      <span property="schema:name" content="Facebook Statement" class="hidden"></span>
+
+  
+</div>
+</div>
+          </div>
+  
+</div>
+
+      </article>
+   <div style="border: 1px solid #b3b3b3; padding: 10px; margin-top:15px;">
+	<div id="intranet_donate_2"></div>
+</div>   <div class="spacer-25"></div>
+   <div class="social-buttons-bottom text-right">
+      <a class="addthis_button_facebook btn btn-facebook" title="Facebook" href="#">Share <i
+            class="fa fa-facebook"></i></a>
+      <a class="addthis_button_twitter btn btn-twitter" addthis:title="" title="Tweet" href="#">Tweet <i
+            class="fa fa-twitter"></i></a>
+   </div>
+
+   <div class="mrc-shopify">
+      <h3 class="with-underline">MRC Merch</h3>
+      <div id="below-content-shopify">
+         <div class="shopify-button">
+            <div id="intranet_shopify_2"></div>
+         </div>
+         <div class="shopify-button">
+            <div id="intranet_shopify_3"></div>
+         </div>
+      </div>
+   </div>
+
+   
+
+  </div>
+
+                
+         
+                              
+               
+      </section>
+
+                                  <div class="region region-sidebar-second">
+    <section class="block block-simple-block block-simple-blockadn-mid clearfix">
+  
+    
+
+      
+<div id="intranet_mid"></div>
+
+
+  </section>
+
+<section class="block block-simple-block block-simple-blockmrc-store clearfix">
+  
+    
+
+      
+<h2 class="text-center d-block">MRC Merch</h2>
+
+    <div id="intranet_shopify_1"></div>
+
+
+  </section>
+
+<section class="block block-simple-block block-simple-blockadn-long clearfix">
+  
+    
+
+      
+<div id="intranet_long"></div>
+
+
+  </section>
+
+
+  </div>
+
+                  </div>
+  </div>
+
+      <footer id="footer" role="contentinfo">
+        <div class="region region-footer">
+     
+              <ul class="menu nav menu-footer">
+                            <li class="expanded dropdown">
+        <a href="/" target="" data-drupal-link-system-path="&lt;front&gt;">Home</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="/about" target="" data-drupal-link-system-path="node/500031">About</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="/blog" target="" data-drupal-link-system-path="blog">Blog</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="/videos" target="" data-drupal-link-system-path="videos">Video</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="https://www.mrc.org/newsletter/preferences?utm_source=mrctv&amp;utm_medium=menu_top&amp;utm_content=subscribe&amp;utm_campaign=mrctv" target="_blank">Subscribe</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="https://www.mrctv.org/donate?utm_source=mrctv&amp;utm_medium=footer_menu&amp;utm_campaign=donate">Donate</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="/contact/feedback" title="Link to the contact form" data-drupal-link-system-path="contact-us">Contact</a>
+                  </li>
+        </ul>
+  
+
+
+ 
+              <ul class="menu nav menu-footer-secondary">
+                            <li class="expanded dropdown">
+        <a href="http://www.cnsnews.com/" target="_blank">CNSNews.com</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="http://www.newsbusters.org/" target="_blank">NewsBusters</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="http://www.mrc.org/business" target="_blank">MRC Business</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="http://www.mrc.org/culture" target="_blank">MRC Culture</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="http://mrc.org/action" target="_blank">Take Action</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="http://www.mrc.org/jobs" target="_blank">Jobs</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="http://www.intermarkets.net/advertiser-solutions/portfolio/mrctv" target="_blank">Advertise</a>
+                  </li>
+        </ul>
+  
+
+
+<section class="block block-simple-block block-simple-blockfooter-logo clearfix">
+  
+    
+
+      
+<p><a href="http://www.mrc.org"><img src="https://mrc7.s3.amazonaws.com/MRCStandard_Logo_White.png" width="150" /></a></p>
+
+
+  </section>
+
+ 
+              <ul class="menu nav menu-footer-tertiary">
+                            <li class="expanded dropdown">
+        <a href="/index.php/privacy-policy" target="" data-drupal-link-system-path="node/500021">Privacy Policy</a>
+                  </li>
+                        <li class="expanded dropdown">
+        <a href="/index.php/terms" target="" data-drupal-link-system-path="node/500026">Terms of Use</a>
+                  </li>
+        </ul>
+  
+
+
+<section class="block block-simple-block block-simple-blockcfc-description clearfix">
+  
+    
+
+      
+<div class="cfc">
+<p>The mission of the <a href="http://www.mrc.org" target="_blank">Media Research Center</a> is to create a media culture in America where truth and liberty flourish. The MRC is a research and education organization operating under <a href="http://www.mrc.org/static/about-us" target="_blank">Section 501(c)(3)</a> of the Internal Revenue Code, and <a href="https://www.mrc.org/action/join-the-movement" target="_blank">contributions</a> to the MRC are tax-deductible.</p>
+</div>
+
+
+  </section>
+
+
+  </div>
+
+    </footer>
+  </div>
+  </div>
+
+  
+  <script type="application/json" data-drupal-selector="drupal-settings-json">{"path":{"baseUrl":"\/","scriptPath":null,"pathPrefix":"","currentPath":"node\/560446","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"en"},"pluralDelimiter":"\u0003","bootstrap":{"forms_has_error_value_toggle":1,"modal_animation":1,"modal_backdrop":"true","modal_focus_input":1,"modal_keyboard":1,"modal_select_text":1,"modal_show":1,"modal_size":"","popover_enabled":1,"popover_animation":1,"popover_auto_close":1,"popover_container":"body","popover_content":"","popover_delay":"0","popover_html":0,"popover_placement":"right","popover_selector":"","popover_title":"","popover_trigger":"click","tooltip_enabled":1,"tooltip_animation":1,"tooltip_container":"body","tooltip_delay":"0","tooltip_html":0,"tooltip_placement":"auto left","tooltip_selector":"","tooltip_trigger":"hover"},"mrctv":{"node":{"id":"560446","type":"blog","author":"Nick Kangadis"}},"statistics":{"data":{"nid":"560446"},"url":"\/core\/modules\/statistics\/statistics.php"},"disqusComments":"mrctvcomments","user":{"uid":0,"permissionsHash":"e94ffa40a43d8406872a93d3c253be35aebbccc277e601682938da95bbb5457d"}}</script>
+<script src="/core/assets/vendor/domready/ready.min.js?v=1.0.8"></script>
+<script src="/core/assets/vendor/jquery/jquery.min.js?v=3.2.1"></script>
+<script src="/core/assets/vendor/underscore/underscore-min.js?v=1.8.3"></script>
+<script src="/core/assets/vendor/jquery/jquery-extend-3.4.0.js?v=3.2.1"></script>
+<script src="/core/assets/vendor/jquery-once/jquery.once.min.js?v=2.2.0"></script>
+<script src="/core/misc/drupalSettingsLoader.js?v=8.7.8"></script>
+<script src="/core/misc/drupal.js?v=8.7.8"></script>
+<script src="/core/misc/drupal.init.js?v=8.7.8"></script>
+<script src="/modules/custom/mrctv_admin/js/mrctv_admin.js?v=1"></script>
+<script src="/themes/contrib/bootstrap/js/drupal.bootstrap.js?qsqno8"></script>
+<script src="/themes/contrib/bootstrap/js/attributes.js?qsqno8"></script>
+<script src="/themes/contrib/bootstrap/js/theme.js?qsqno8"></script>
+<script src="/themes/custom/mrctv8/dist/scripts/main.js?qsqno8"></script>
+<script src="https://mrc7.s3.amazonaws.com/intranet/deliverable/intranet.js" defer async type="text/javascript"></script>
+<script src="https://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-524c6b0b00ed3e43"></script>
+<script src="/themes/contrib/bootstrap/js/popover.js?qsqno8"></script>
+<script src="/themes/contrib/bootstrap/js/tooltip.js?qsqno8"></script>
+<script src="/core/modules/statistics/statistics.js?v=8.7.8"></script>
+<script src="/core/misc/debounce.js?v=8.7.8"></script>
+<script src="/core/assets/vendor/jquery.cookie/jquery.cookie.min.js?v=1.4.1"></script>
+<script src="/core/misc/form.js?v=8.7.8"></script>
+<script src="/themes/contrib/bootstrap/js/misc/form.js?qsqno8"></script>
+<script src="/modules/contrib/disqus/js/disqus.js?v=1.x"></script>
+<script src="/modules/contrib/disqus/js/disqus.settings.js?v=1.x"></script>
+
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam-cell.nr-data.net","licenseKey":"20900de36d","applicationID":"93665228","transactionName":"M1YAN0FRD0NUVhdcCwocIwBHWQ5eGkUCUgE7UAMAW1U=","queueTime":0,"applicationTime":14,"atts":"HxEDQQlLHE0=","errorBeacon":"bam-cell.nr-data.net","agent":""}</script></body>
+</html>
