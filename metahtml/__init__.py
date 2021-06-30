@@ -126,9 +126,10 @@ def parse(html, url, property_filter=None, fast=False, extractor_config=metahtml
             # extract the content;
             # this function is allowed to arbitrarily modify parser.doc,
             # and so it must come after properties that depend on the entire document
-            parser.meta['content'] = {
-                'best' : metahtml.content.extract_content(parser, config=extractor_config)
-            }
+            if not property_filter or 'content' in property_filter:
+                parser.meta['content'] = {
+                    'best' : metahtml.content.extract_content(parser, config=extractor_config)
+                }
 
             # calculate the links of just the article's html content;
             # this must come after calculating the content because 

@@ -16,9 +16,7 @@ import pprint
 # the sys import is needed so that we can import from the current project
 import sys
 sys.path.append('.')
-import metahtml.property.language
-import metahtml.property.timestamp.__common__
-
+import metahtml
 
 ################################################################################
 # settings
@@ -238,7 +236,6 @@ def convert_csv(filter_str=None, filter_key=None, verified_only=True):
             num_processed += 1
     return tests
 
-convert_csv()
 
 ################################################################################
 # initialize the test cases
