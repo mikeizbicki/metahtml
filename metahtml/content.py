@@ -33,10 +33,6 @@ cxpath_article = lxml.etree.XPath('descendant-or-self::article')
 cxpath_div = lxml.etree.XPath('descendant-or-self::div')
 cxpath_script_style_comments = lxml.etree.XPath('(descendant-or-self::script)|(descendant-or-self::style)|(descendant-or-self::comment())')
 
-# FIXME:
-# currently, this removes all <div> tags;
-# for most webpages, content is contained within a <p> tag within a <div> tag,
-# but if not <p> is present, then the content will be deleted
 # FIXME: uses <br> to separate paragraphs
 # some webpages don't store content within <p> tags;
 # file:///home/user/proj/metahtml/tests/.cache/https___abc13.com_politics_president-trump-meets-with-kim-jong-un-at-summit_5159138_1f916455/2020-06-23
@@ -100,6 +96,8 @@ class ExtractorConfig:
     rm_aside = True
     rm_form = False
 
+    clean_html = True
+
     div_to_p = True
     div_to_p_length_threshold = 20
 
@@ -108,6 +106,9 @@ class ExtractorConfig:
     rm_header_lists = True
     rm_footer_lists = True
 
+    rm_empty_tags = True
+    flatten_html = True
+    rm_whitespace = True
 
 ExtractorConfig_recall = ExtractorConfig()
 ExtractorConfig_recall.rm_figure = False 
@@ -203,6 +204,20 @@ def extract_content(parser, pretty_html=False, config=ExtractorConfig()):
             node.getparent().remove(node)
             filters.append('rm_form')
 
+    # split div/p tags on br tags
+    for tag in doc.iterdescendants('div','p'):
+        last_br = None
+        for child in tag.iterchildren():
+            if child.tag=='br':
+                child.tag = tag.tag
+                child.text = child.tail
+                child.tail = None
+                last_br = child
+            elif last_br is not None:
+                last_br.append(child)
+            else:
+                pass
+
     # change <div> tags to <p> tags if they don't contain block elements;
     # many webpages do not use <p> tags at all and only use <div> tags,
     # and this conversion lets us capture the text on these pages
@@ -265,18 +280,12 @@ def extract_content(parser, pretty_html=False, config=ExtractorConfig()):
     # file:///home/user/proj/metahtml/tests/.cache/https___www.public.fr_News_Lionel-Messi-Menace-par-Daesh-1444943dd2edccb/2020-07-05.diff.html
     # FIXME: table gets converted into <p>
     # file:///home/user/proj/metahtml/tests/.cache/https___www.uppersia.com_Iran-hotels_natanz-hotels.htmle84d1498/2020-07-01.diff.html
-    doc = article_cleaner.clean_html(doc)
+    if config.clean_html:
+        doc = article_cleaner.clean_html(doc)
 
     # recursively remove empty nodes
-    def go_rm_empty(doc):
-        children = list(doc.getchildren())
-        for child in children:
-            child = go_rm_empty(child)
-        has_text = doc.text is not None and doc.text.strip() != ''
-        if not has_text and len(doc)==0:
-            remove_node_keep_tail(doc)
-        return doc
-    doc = go_rm_empty(doc)
+    if config.rm_empty_tags:
+        doc = go_rm_empty(doc)
 
     # lists that don't come after content are probably header info
     # FIXME: removes too much
@@ -355,11 +364,13 @@ def extract_content(parser, pretty_html=False, config=ExtractorConfig()):
                 node.getparent().remove(node)
     
     # flatten the html
-    doc = flatten_html(doc)
-    go_rm_empty(doc)
+    if config.flatten_html:
+        doc = flatten_html(doc)
+        go_rm_empty(doc)
 
     # convert the parsed lxml document back into html
-    strip_excess_whitespace(doc)
+    if config.rm_whitespace:
+        strip_excess_whitespace(doc)
     text = lxml_to_text(doc)
     html = lxml.etree.tostring(doc,method='html',pretty_print=True).decode('utf-8')
     if pretty_html:
@@ -387,12 +398,32 @@ def extract_content(parser, pretty_html=False, config=ExtractorConfig()):
 
 ################################################################################
 
+def go_rm_empty(doc):
+    children = list(doc.getchildren())
+    for child in children:
+        child = go_rm_empty(child)
+    has_text = doc.text is not None and doc.text.strip() != ''
+    if not has_text and len(doc)==0:
+        remove_node_keep_tail(doc)
+    return doc
+
+def debugstr(node):
+    '''
+    displays more useful information about a node's contents than the default __str__ method
+    '''
+    html = lxml.etree.tostring(node,method='html').decode('utf-8')
+    #return 'node.tag='+node.tag+' node.text='+str(node.text)+' node.tail='+str(node.tail)+' len(node)='+str(len(node))+' html='+html
+    return html
+
 
 def flatten_html_doctests(html):
     '''
     this function is useful for testing flatten_html
     '''
-    doc = lxml.html.fromstring(html)
+    # for the doctests we must use the XML parser rather than the HTML parser
+    # because the HTML parser will fix some problems before the flatten_html function is called,
+    # preventing us from being able to test them
+    doc = lxml.etree.fromstring(html)
     doc = flatten_html(doc)
     return lxml.etree.tostring(doc).decode('utf-8')
 
@@ -412,15 +443,208 @@ def flatten_html(doc):
     >>> flatten_html_doctests('<article><p>a</p></article>')
     '<article><p>a</p></article>'
 
+    >>> flatten_html_doctests('<article><p><p>a</p></p></article>')
+    '<article><p>a</p></article>'
+
+    >>> flatten_html_doctests('<article><p><p><p>a</p></p></p></article>')
+    '<article><p>a</p></article>'
+
+    >>> flatten_html_doctests('<article><p><p>a</p><p>b</p><p>c</p></p></article>')
+    '<article><p>a</p><p>b</p><p>c</p></article>'
+
+    >>> flatten_html_doctests('<article><p><p><p>a</p><p>b</p><p>c</p></p></p></article>')
+    '<article><p>a</p><p>b</p><p>c</p></article>'
+
+    >>> flatten_html_doctests('<article><p>a</p><p>b</p><p>c</p></article>')
+    '<article><p>a</p><p>b</p><p>c</p></article>'
+
+    >>> flatten_html_doctests('<article><div><p>a</p><p>b</p></div><div><p>c</p><p>d</p></div></article>')
+    '<article><p>a</p><p>b</p><p>c</p><p>d</p></article>'
+
+    These doctests have nodes with tails:
+
     >>> flatten_html_doctests('<article><p>a</p>b<p>c</p>d</article>')
     '<article><p>a</p><p>b</p><p>c</p><p>d</p></article>'
 
     >>> flatten_html_doctests('<article><p>a<p>b</p>c<p>d</p>e</p></article>')
     '<article><p>a</p><p>b</p><p>c</p><p>d</p><p>e</p></article>'
 
+    >>> flatten_html_doctests('<article><p><p>a<p>b</p>c<p>d</p>e</p></p></article>')
+    '<article><p>a</p><p>b</p><p>c</p><p>d</p><p>e</p></article>'
+
+    >>> flatten_html_doctests('<article><p><p><p>a<p>b</p>c<p>d</p>e</p></p></p></article>')
+    '<article><p>a</p><p>b</p><p>c</p><p>d</p><p>e</p></article>'
+
+    >>> flatten_html_doctests('<article><p><p><p>a<p>b</p>c<p>d</p>e</p>f</p>g</p>h</article>')
+    '<article><p>a</p><p>b</p><p>c</p><p>d</p><p>e</p><p>f</p><p>g</p><p>h</p></article>'
+
+    Document root contains text
+
+    >>> flatten_html_doctests('<article>a</article>')
+    '<article><p>a</p></article>'
+
+    >>> flatten_html_doctests('<article>a<p>b</p></article>')
+    '<article><p>a</p><p>b</p></article>'
+
+    >>> flatten_html_doctests('<article>a<p>b</p><p>c</p></article>')
+    '<article><p>a</p><p>b</p><p>c</p></article>'
+
+    Tests with non-block nodes
+
+    >>> flatten_html_doctests('<article><p>a<b>a1</b>a2</p>b<p>c</p>d</article>')
+    '<article><p>a<b>a1</b>a2</p><p>b</p><p>c</p><p>d</p></article>'
+
+    >>> flatten_html_doctests('<article><p>a<b>a1<span>a2</span>a3</b>a4</p>b<p>c</p>d</article>')
+    '<article><p>a<b>a1<span>a2</span>a3</b>a4</p><p>b</p><p>c</p><p>d</p></article>'
+
+    >>> flatten_html_doctests('<article><p>a<b>a1<span>a2</span>a3</b>a4</p><span>b</span><span>c</span>d</article>')
+    '<article><p>a<b>a1<span>a2</span>a3</b>a4</p><p><span>b</span></p><p><span>c</span>d</p></article>'
+
+    >>> flatten_html_doctests('<article><p>a<b>a1<span>a2</span>a3</b>a4</p>a5<span>b</span><span>c</span>d</article>')
+    '<article><p>a<b>a1<span>a2</span>a3</b>a4</p><p>a5</p><p><span>b</span></p><p><span>c</span>d</p></article>'
+
+    >>> flatten_html_doctests('<article><p><p>a</p>b<span>c</span>d</p></article>')
+    '<article><p>a</p><p>b</p><p><span>c</span>d</p></article>'
+
+    >>> flatten_html_doctests('<article><p>a<span>b</span>c<p>d</p>e<span>f</span>g</p></article>')
+    '<article><p>a<span>b</span>c</p><p>d</p><p>e</p><p><span>f</span>g</p></article>'
+
+    >>> flatten_html_doctests('<article><p><span>b</span>c<p>d</p>e<span>f</span>g</p></article>')
+    '<article><p><span>b</span>c</p><p>d</p><p>e</p><p><span>f</span>g</p></article>'
+
+    >>> flatten_html_doctests('<article><p>a<span>b</span>c<p>d</p>e<span>f</span>g<p>h</p>i<span>j</span>k<p>l</p>m</p></article>')
+    '<article><p>a<span>b</span>c</p><p>d</p><p>e</p><p><span>f</span>g</p><p>h</p><p>i</p><p><span>j</span>k</p><p>l</p><p>m</p></article>'
+
+    These tests have lists
+
+    >>> flatten_html_doctests('<article><ol><li>a</li><li>b<span>b2</span>b3</li></ol>c<p>d</p></article>')
+    '<article><ol><li>a</li><li>b<span>b2</span>b3</li></ol><p>c</p><p>d</p></article>'
+
+    >>> flatten_html_doctests('<article><p>a<ol><li>b1</li><li>b2</li></ol>c</p><p>d</p></article>')
+    '<article><p>a</p><ol><li>b1</li><li>b2</li></ol><p>c</p><p>d</p></article>'
+
+    Span element with internal block elements
+
+    >>> flatten_html_doctests('<div>a<p>b<span>c<p>d<p>e</p>f<span>g</span>h</p>i</span>j</p>k</div>')
+    '<article><p>a</p><p>b</p><div>c</div><p>d</p><p>e</p><p>f</p><p><span>g</span>h</p><p>i</p><p>j</p><p>k</p></article>'
     '''
-    tags_to_flatten = ['ul', 'ol', 'dl', 'p','blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'tt', 'pre', 'code', 'table','tr','td','th','colgroup','col','tbody','thead','tfoot','caption','tbody']
+    #tags_to_flatten = ['ul', 'ol', 'dl', 'p','blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'tt', 'pre', 'code', 'table','tr','td','th','colgroup','col','tbody','thead','tfoot','caption','tbody']
+    #tags_to_flatten = ['ul', 'ol', 'dl'] + 
+    tags_to_flatten = ['div'] + tags_block + tags_header + tags_code + tags_section
+    tags_to_ignore = tags_list + tags_table
+
+    #print('flatten_html_doctests('+debugstr(doc))
+
+    # wrap the document in a div
+    # i.e; <article>XXX</article> becomes <article><div>XXX</div></article>
+    # this makes the go_flatten code simpler
+    doc2 = lxml.etree.Element('article')
+    div = lxml.etree.SubElement(doc2, 'div')
+    for child in doc.iterchildren():
+        div.append(child)
+    if doc.text:
+        new_p = lxml.etree.Element('p')
+        new_p.text = doc.text
+        div.addprevious(new_p)
+        doc.text = None
+    doc = doc2
+
+    # flatten the inner div
+    def go_flatten(node):
+
+        # for each child, we move it out of the current node;
+        # the append_node variable tracks the location we should move the next child to
+        append_node = node
+        has_block = False
+        for child in node.iterchildren():
+
+            # convert empty spans into divs;
+            if child.tag == 'span': # and (child.text is None or child.text.strip() == ''):
+                convert_span = False
+                for desc in child.iterdescendants():
+                    if desc.tag in tags_to_flatten + tags_to_ignore:
+                        convert_span = True
+                        break
+                if convert_span:
+                    child.tag = 'div'
+
+            # process all block tags
+            if child.tag in tags_to_flatten + tags_to_ignore:
+                has_block = True
+
+                #print("debugstr(child)=",debugstr(child))
+
+                # the .addnext method mangles the tails of the two nodes;
+                # therefore we save the tails before the call and restore them afterward
+                tail1 = append_node.tail
+                tail2 = child.tail
+                append_node.addnext(child)
+                append_node.tail = tail1
+                child.tail = tail2
+                append_node = child
+
+                # recursively flatten tags that we're not ignoring
+                if child.tag in tags_to_flatten:
+                    append_node = go_flatten(child)
+        
+                # convert tail text into a p tag
+                if child.tail is not None:
+                    new_p = lxml.etree.Element('p')
+                    new_p.text = child.tail
+                    child.tail = None
+                    append_node.addnext(new_p)
+                    append_node = new_p
+
+            # for non-block tags, place them inside a p tag if they're on the root level;
+            # otherwise, ignore them
+            elif node==div or has_block:
+                new_p = lxml.etree.Element('p')
+                new_p.append(child)
+                append_node.addnext(new_p)
+                append_node = new_p
+
+        #if node.getparent() is None:
+            #print("debugstr(node)=",debugstr(node))
+
+        # delete empty nodes
+        if len(node)==0 and (node.text is None or node.text.strip() == ''):
+            node.getparent().remove(node)
+
+        # we're done!
+        return append_node
+    go_flatten(div)
+
+    return doc
+
+    '''
     flattened_blocks = []
+    def go_flatten(node, root=None):
+        print("node.tag,node.text,node.tail=",node.tag,node.text,node.tail)
+        append_node = node #.getchildren()[0]
+        for child in node.iterchildren():
+            print("child.tag,child.text,child.tail=",child.tag,child.text,child.tail)
+            if child.tag in tags_to_flatten:
+                append_node.addnext(child)
+                append_node = child
+                html = lxml.etree.tostring(node,method='html').decode('utf-8')
+                print("html=",html)
+                go_flatten(child)
+                if child.tail:
+                    new_node = lxml.etree.Element('p')
+                    new_node.text = child.tail
+                    append_node.addnext(new_node)
+                    append_node = new_node
+                    print('QQQ')
+            else:
+                if append_node.tag != 'p':
+                    new_node = lxml.etree.Element('p')
+                    append_node.addnext(new_node)
+                    append_node = new_node
+                append_node.append(child)
+    go_flatten(doc)
+    '''
+
+    '''
     def go_flatten(node, root=None):
         if root is None:
             root = node
@@ -433,31 +657,30 @@ def flatten_html(doc):
             if node is not root:
                 root.addprevious(node)
             if node.tail:
-                new_node = lxml.etree.Element(node.tag)
+                new_node = lxml.etree.Element('p')
                 new_node.text = node.tail
                 node.tail = None
                 node.addnext(new_node)
-            has_text = text_content(node).strip() != ''
+            has_text = node.text is not None and node.text.strip() != ''
+            #has_text = text_content(node).strip() != ''
             if not has_text:
                 remove_node_keep_tail(node)
+        elif node == root:
+            new_p = lxml.etree.Element('p')
+            node.addprevious(new_p)
+            new_p.append(node)
         return node
     for node in doc.iterchildren():
         go_flatten(node)
-        #for desc in node.iter():
-            #if desc.getparent() == doc or node.getparent() is None:
-                #pass
-            #else:
-                #if node.tag in tags_to_flatten:
-                    #node.getparent().addprevious(node)
-        #if node.tag in tags_to_flatten:
-            #has_block_descendent = False
-            #for desc in node.iter():
-                #if desc.tag in tags_to_flatten:
-                    #has_block_descendent = True
-                    #break
-            #if not has_block_descendent:
-                #flattened_blocks.append(node)
-    #doc.children = flattened_blocks
+    '''
+
+    # if the outermost tag has text, we put it in a p tag
+    if doc.text is not None:
+        p = lxml.etree.Element('p')
+        p.text = doc.text.strip()
+        doc.text = None
+        doc.insert(0,p)
+
     return doc
 
 # FIXME: remove all calls to this function?
@@ -550,7 +773,7 @@ def lxml_to_text(doc):
         # FIXME:
         # instead of using the hX tag number,
         # we should use the nesting level of the h tags
-        if node.tag[0]=='h':
+        if node.tag[0]=='h' and node.tag[1] in '1234567890':
             texts.append('#'*int(node.tag[1])+' ')
         if node.text:
             texts.append(_RE_WHITESPACE.sub(' ', node.text))

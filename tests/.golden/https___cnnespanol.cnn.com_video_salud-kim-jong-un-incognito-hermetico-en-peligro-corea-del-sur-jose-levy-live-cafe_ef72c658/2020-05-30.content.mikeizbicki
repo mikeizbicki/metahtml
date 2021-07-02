@@ -1,0 +1,47 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script>
+function toggleSelectedText(e) {
+    if (e.shiftKey) {
+        var selection = window.getSelection();
+        var range = selection.getRangeAt(0);
+        var tags = "p,h1,h2,h3,h4,h5,h6,ul,ol,li,table,tr,td,th,article,main,section,figure,figcaption";
+        if (range.commonAncestorContainer.getElementsByTagName) {
+            var allWithinRangeParent = range.commonAncestorContainer.querySelectorAll(tags);
+        }
+        else {
+            //var allWithinRangeParent = [range.commonAncestorContainer.closest(tags)];
+            var allWithinRangeParent = [range.commonAncestorContainer.parentNode.closest(tags)];
+        }
+
+        for (var i=0, el; el = allWithinRangeParent[i]; i++) {
+          // The second parameter says to include the element
+          // even if it's not fully selected
+          if (selection.containsNode(el, true) ) {
+              el.classList.toggle('rm-manual');
+          }
+        }
+        window.getSelection().removeAllRanges();
+    }
+};
+
+//var article = document.body.querySelector('article');
+document.onmouseup = toggleSelectedText;
+document.captureEvents(Event.MOUSEUP);
+</script>
+
+<style>
+.rm-manual {
+    text-decoration: line-through;
+    background-color: #faa;
+}
+</style>
+        </head><body><article><p class="rm-manual">EE.UU. investiga especulaciones sobre la salud de Kim Jong Un, líder de Corea del Norte</p>
+<h1 class="rm-manual"> EE.UU. investiga especulaciones sobre la salud de Kim Jong Un, líder de Corea del Norte </h1>
+<p>Corea del Norte es uno de los gobiernos más herméticos del mundo y la
+ información que se da conocer de lo que pasa dentro de sus fronteras es
+ a cuentagotas. Una fuente le dijo a CNN que la inteligencia de EE.UU. 
+investiga la salud del líder norcoreano, <a href="https://cnnespanol.cnn.com/tag/kim-jong-un/">Kim Jong Un</a>, que posiblemente habría salido de una cirugía en estado grave. MIRA: <a href="https://cnnespanol.cnn.com/2020/04/20/fuente-kim-jong-un-esta-en-grave-peligro-despues-de-una-cirugia/">EE.UU. monitorea información de inteligencia que sugiere que el líder de Corea del Norte está en riesgo tras una cirugía</a></p>
+<p class="rm-manual"> Por <span><a href="https://cnnespanol.cnn.com/author/jose-levy/"><span>José Levy</span></a></span>, <span> <span>CNN en Español</span></span> </p>
+<p class="rm-manual"> Publicado a las 10:28 ET (14:28 GMT) 21 abril, 2020 </p>
+<p class="rm-manual"> <a href="https://cnnespanol.cnn.com/tag/kim-jong-un/">Kim Jong Un</a> </p></article> 
+</body></html>

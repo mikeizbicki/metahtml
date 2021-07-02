@@ -1,127 +1,191 @@
 #!/usr/bin/python3
 '''
+================================================================================
+INSTRUCTIONS:
+To label text as not part of a document, hold down the SHIFT key and select the text with the mouse.
+This will highlight the selected paragraphs in red to indicate they are not part of the document.
+If you select text that has already been highlighted, it will unhighlight it.
+
+Once you have completed the labeling, save the document to your $HOME folder with the default filename.
+The filename will look something like "tmpXXXXXXXX.html" and the default save location is your $HOME folder.
+Once you've finished, you will have to close firefox manually, but the test case will be recorded.
+================================================================================
 '''
 
-import os
+import ftfy
 import glob
-import lxml
-import lxml.etree
-from lxml.html.diff import htmldiff
-import pytest
+import json
+import logging
+import os
+import random
+import selenium
+import selenium.webdriver
+import tempfile
+import time
 
 # the sys import is needed so that we can import from the current project
 import sys
 sys.path.append('.')
 import metahtml
+import test_golden
 
 ################################################################################
 
-cache_dir = 'tests/.cache'
-
-def generate_content_test(filename):
-    filename_output_html = filename+'.metahtml.html'
-    filename_output_text = filename+'.metahtml.text'
-
-    #if os.path.isfile(filename_output_text):
-        #return
-
-    urlish = os.path.dirname(filename).split('/')[-1]
-    urlish = urlish.replace('___','://').replace('_','/')
-
-    with open(filename) as f:
-        html = f.read()
-        meta = metahtml.parse_all(html,urlish,fast=False)
-        with open(filename_output_html,'w') as fout:
-            html_metahtml = meta['content']['value']['html']
-            fout.write(html_metahtml)
-        with open(filename_output_text,'w') as fout:
-            fout.write(meta['content']['value']['text'])
-
-    # generate the diff
-    with open(filename+'.newspaper3k.html') as f:
-        html_newspaper = f.read()
-
-    with open(filename+'.diff.html', 'w') as f:
-        html_diff = '<style> ins { background-color: #00ff00; }\ndel {background-color: #ff0000} </style>'
-        html_diff += htmldiff(html_newspaper,html_metahtml)
-        f.write(html_diff)
+def get_unannotated_urls(lang=None, seed=0, force_relabel=False, username=None):
+    logging.info('get_unannotated_urls()')
+    paths = sorted(glob.glob('tests/.golden/*/*'))
+    urls = []
+    for path in paths:
+        if '.content' not in path:
+            if glob.glob(path+'.content.'+username) == [] or force_relabel:
+                with open(path) as f:
+                    meta = json.load(f)
+                    if meta['type'] == 'article':
+                        if lang is None or lang in meta['language']:
+                            urls.append(meta['url'])
+    logging.info('len(urls)='+str(len(urls)))
+    random.seed(seed)
+    random.shuffle(urls)
+    return urls
 
 
-@pytest.mark.parametrize('filename', glob.glob(cache_dir+'/*/*[0-9]'), ids=lambda x:x)
-def FIXME_test_content(filename):
-    filename_output_html = filename+'.newspaper3k.html'
-    filename_output_text = filename+'.newspaper3k.text'
+# this javascript code allows for annotating webpages within firefox
+javascript = '''
+<script>
+function toggleSelectedText(e) {
+    if (e.shiftKey) {
+        var selection = window.getSelection();
+        var range = selection.getRangeAt(0);
+        var tags = "p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,table,tr,td,th,article,main,section,figure,figcaption,aside,section,address,blockquote";
+        if (range.commonAncestorContainer.getElementsByTagName) {
+            var allWithinRangeParent = range.commonAncestorContainer.querySelectorAll(tags);
+        }
+        else {
+            //var allWithinRangeParent = [range.commonAncestorContainer.closest(tags)];
+            var allWithinRangeParent = [range.commonAncestorContainer.parentNode.closest(tags)];
+        }
 
-    if not os.path.isfile(filename_output_text):
+        for (var i=0, el; el = allWithinRangeParent[i]; i++) {
+          // The second parameter says to include the element
+          // even if it's not fully selected
+          if (selection.containsNode(el, true) ) {
+              el.classList.toggle('rm-manual');
+          }
+        }
+        window.getSelection().removeAllRanges();
+    }
+};
+
+//var article = document.body.querySelector('article');
+document.onmouseup = toggleSelectedText;
+document.captureEvents(Event.MOUSEUP);
+</script>
+
+<style>
+.rm-manual {
+    text-decoration: line-through;
+    background-color: #faa;
+}
+</style>
+        '''
+
+def annotate_content(url=None, *, username:str=None, seed=0, force_relabel=False, lang:str=None):
+    if not username:
+        logging.error('must supply username')
         return
 
-    urlish = os.path.dirname(filename).split('/')[-1]
-    urlish = urlish.replace('___','://').replace('_','/')
-
-    with open(filename) as f:
-        html = f.read()
-        meta,meta_full = metahtml.parse_all(html,urlish,fast=False)
-
-        def normalize(s):
-            return "".join(s.split())
-        #with open(filename_output_html) as fout:
-            #assert normalize(meta['content']['value']['html']) == normalize(fout.read())
-        with open(filename_output_text) as fout:
-            assert normalize(meta['content']['value']['text']) == normalize(fout.read())
+    if not url:
+        urls = get_unannotated_urls(lang, seed=seed, force_relabel=force_relabel, username=username)
+    else:
+        urls = [url]
+    for url in urls:
+        annotate_content_url(url, username)
 
 
-################################################################################
-# initialize the test cases
+def annotate_content_url(url, username):
+
+    # loop over all downloads of that url
+    for date, html in test_golden.get_cached_webpages(url):
+
+        # generate the test path
+        url_filename = test_golden.url2filename(url)
+        url_dir = os.path.join(test_golden.golden_dir,url_filename)
+        os.makedirs(url_dir, exist_ok=True)
+        test_path = os.path.abspath(os.path.join(url_dir,date))
+        logging.debug('test_path='+test_path)
+        cache_path = os.path.abspath(os.path.join(os.path.join(test_golden.cache_dir,url_filename),date))
+
+        # output the test case
+        with open(test_path) as f:
+            logging.info(test_path+'\n'+f.read())
+
+        # the extractor_config below controls how metahtml extracts content;
+        # these settings are designed to maximize recall while maintaining decent formatting;
+        # the formatting options are likely to cause a small recall penalty for some webpages,
+        # but this is unavoidable if we want to be able to annotate within firefox
+        extractor_config = metahtml.content.ExtractorConfig()
+        extractor_config.filter_main = True
+        extractor_config.filter_section = False
+        extractor_config.filter_article = False
+        extractor_config.rm_badtags = False
+        extractor_config.rm_figure = False
+        extractor_config.rm_aside = False
+        extractor_config.rm_form = False
+        extractor_config.div_to_p = True
+        extractor_config.div_to_p_length_threshold = 0
+        extractor_config.rm_noncontent_blocks = False
+        extractor_config.rm_header_lists = False
+        extractor_config.rm_footer_lists = False
+        extractor_config.rm_empty_tags = True
+        extractor_config.flatten_html = True
+        extractor_config.clean_html = True
+
+        # generate the test information
+        meta = metahtml.parse(html, url, extractor_config=extractor_config)
+        if not meta.get('content'):
+            raise ValueError('no content extracted from url because it was not an article; did you forget to create a test case?')
+
+        # first write the html content (plus javascript annotation code) to a temporary file;
+        # then load it in firefox for user annotation
+        with tempfile.NamedTemporaryFile(mode='wt', suffix='.html', delete=True) as f:
+            f.write(javascript)
+            f.write(meta['content']['best']['value']['html'])
+            f.flush()
+
+            # load the firefox
+            tmp_path = f.name
+            logging.debug('tmp_path='+tmp_path)
+            logging.debug('cache_path='+cache_path)
+            firefox = selenium.webdriver.Firefox()
+            #firefox.get('file://'+cache_path)
+            #firefox.execute_script('window.open("file://' + tmp_path + '","_blank");')
+            firefox.get('file://'+tmp_path)
+            firefox.execute_script('window.open("file://' + cache_path + '","_blank");')
+            firefox.switch_to.window(firefox.window_handles[0])
+
+            # wait for the user to save the annotations
+            firefox_saved_path = os.path.join(os.path.expanduser('~'), os.path.basename(tmp_path))
+            logging.info('waiting for file to be saved to '+firefox_saved_path)
+            logging.info('press CTRL+C without saving to prevent test case from being recorded')
+            while not os.path.isfile(firefox_saved_path):
+                time.sleep(0.1)
+                # if the user quits firefox instead of saving the annotations,
+                # then return without saving the annotations
+                try:
+                    _ = firefox.window_handles
+                except selenium.common.exceptions.WebDriverException:
+                    return
+
+            # done with firefox, so quit
+            firefox.quit()
+
+            # move the annotated webpage to the 'tests/.golden' folder
+            test_path_content = test_path + '.content.' + username
+            os.rename(firefox_saved_path, test_path_content)
+            logging.info('content annotations saved to '+test_path_content)
+
 
 if __name__=='__main__':
-
-    # process command line args
-    import argparse
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--generate',action='store_true')
-    args = parser.parse_args()
-
-    if args.generate:
-        #filenames = glob.glob(cache_dir+'/*washingtonpost*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*112.international*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*21stcenturywire*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*libero.it*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*accesswdun.com*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*playadelcarmennoticias.com*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*actualidad.rt.com*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*americantruthtoday.com*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*apnews.com*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*sputniknews.com*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*diariolaregion.net*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*dnyuz.com*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*dujour.com*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*eblnews.com*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*khabarhub.com*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*passeportsante*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*prpchannel*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*public.fr*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*publico.es*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*rcinet.ca*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*sunsigns*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*spicee.com*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*steelorbis.com*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*abc*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*dzuturum*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*economictimes.indiatimes*panache*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*antaranews*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*angelfalques*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*cnn*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*scientificamerican*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*uppersia*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*upi.com*/*[0-9]')
-        #filenames = glob.glob(cache_dir+'/*tishineh.com*/*[0-9]')
-        filenames = glob.glob(cache_dir+'/*/*[0-9]')
-        for i,filename in enumerate(sorted(filenames, key=len, reverse=True)):
-            print("i=",i,"filename=",filename)
-            try:
-                generate_content_test(filename)
-            except (FileNotFoundError,ValueError,RecursionError) as e:
-                with open('errors.txt','a+') as f:
-                    msg = filename+' '+repr(e)
-                    print(msg)
-                    f.write(msg+'\n')
+    logging.basicConfig(level=logging.INFO)
+    from clize import run
+    run(annotate_content)

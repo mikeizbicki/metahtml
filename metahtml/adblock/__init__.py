@@ -11,35 +11,62 @@ and so we must manually create our own parser.
 
 import os
 import glob
-import logging
 import lxml
 import lxml.cssselect
+import pickle
 import cssselect.parser
 from metahtml.utils import remove_node_keep_tail
 from collections import defaultdict,Counter
 
+# configure logging
+import logging
+logger = logging.getLogger('metahtml')
+
+# global variables
 filter_xpaths = defaultdict(lambda: [])
 filter_xpaths_compiled = {}
-
 global_filter_class = set()
 global_filter_id = set()
-
 loading_error_counts = Counter()
 
 
 def load_adblocks(force_reload = False):
+    '''
+    Adblock information will be loaded the first time this function is called.
+    Since this is an expensive operation, all subsequent calls will do nothing.
+
+    This function does not need to be called manually.
+    If adblocks have not already been loaded when the `rm_ads` function is called,
+    this function will be called automatically.
+    '''
+
+    global filter_xpaths_compiled
+    global global_filter_class
+    global global_filter_id
     
-    # if the adblocks are already loaded,
-    # then don't reload them
+    # if the adblocks are already loaded in memory, then don't reload them
     if len(global_filter_class)>0 and not force_reload:
         return
 
+    # try to load the adblocks from compiled pickle files;
+    # this is much faster than recompiling them from scratch
+    pickle_file = __file__ + '.pickle'
+    '''
+    try:
+        logger.info('depickling adblock rules')
+        with open(pickle_file, 'rb') as f:
+            global_filter_class, global_filter_id, filter_xpaths_compiled = pickle.load(f)
+        return
+    except FileNotFoundError:
+        logger.info('depickling failed')
+    '''
+
     # load the raw rules from the files
-    logging.info('loading adblock rules')
+    logger.info('compiling adblock rules (this may take a while)')
     globpath = os.path.join(os.path.dirname(__file__), 'rules/*')
     for filename in glob.glob(globpath):
         with open(filename) as f:
-            logging.debug('loading '+filename)
+            logger.debug('loading '+filename)
             for line in f:
                 if '##' in line and '#?#' not in line:
                     hostnames,pattern = line.split('##',maxsplit=1)
@@ -72,20 +99,26 @@ def load_adblocks(force_reload = False):
         rule = '|'.join(list(set(rules)))
         filter_xpaths_compiled[hostname] = lxml.etree.XPath(rule)
 
-    # FIXME:
-    # this is all temporary debugging output and should be cleaned up
-    if False:
-        print("loading_error_counts=",loading_error_counts)
-        print("len(filter_xpaths[''])=",len(set(filter_xpaths[''])))
-        print("len(set(filter( lambda x: ' ' in x, filter_xpaths[''])))=",len(set(filter( lambda x: ' ' in x, filter_xpaths['']))))
-        print("len(global_filter_class)=",len(global_filter_class))
-        print("len(global_filter_id)=",len(global_filter_id))
+    # save the pickled results
+    logger.debug('caching compiled adblock rules into pickle file')
+    with open(pickle_file, 'bw') as f:
+        pickle.dump([global_filter_class, global_filter_id, filter_xpaths_compiled], f)
 
-        print("'absolute' in global_filter_class=",'absolute' in global_filter_class)
-        print("len(filter_xpaths[''])=",len(filter_xpaths['']))
+    # debugging output and should be cleaned up
+    logger.debug("loading_error_counts="+str(loading_error_counts))
+    logger.debug("len(filter_xpaths[''])="+str(len(set(filter_xpaths['']))))
+    logger.debug("len(set(filter( lambda x: ' ' in x, filter_xpaths[''])))="+str(len(set(filter( lambda x: ' ' in x, filter_xpaths[''])))))
+    logger.debug("len(global_filter_class)="+str(len(global_filter_class)))
+    logger.debug("len(global_filter_id)="+str(len(global_filter_id)))
+    logger.debug("'absolute' in global_filter_class="+str('absolute' in global_filter_class))
+    logger.debug("len(filter_xpaths[''])="+str(len(filter_xpaths[''])))
 
 
 def rm_ads(parser):
+    '''
+    Removes all ads from `parser.doc`.
+    This permanently modifies the document for all downstream tasks.
+    '''
     load_adblocks()
     doc = parser.doc
     hostname = parser.url_parsed.hostname

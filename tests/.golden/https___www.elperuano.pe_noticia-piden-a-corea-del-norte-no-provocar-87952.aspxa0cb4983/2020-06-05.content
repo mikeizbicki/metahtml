@@ -1,0 +1,59 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script>
+function toggleSelectedText(e) {
+    if (e.shiftKey) {
+        var selection = window.getSelection();
+        var range = selection.getRangeAt(0);
+        var tags = "p,h1,h2,h3,h4,h5,h6,ul,ol,li,table,tr,td,th,article,main,section,figure,figcaption";
+        if (range.commonAncestorContainer.getElementsByTagName) {
+            var allWithinRangeParent = range.commonAncestorContainer.querySelectorAll(tags);
+        }
+        else {
+            //var allWithinRangeParent = [range.commonAncestorContainer.closest(tags)];
+            var allWithinRangeParent = [range.commonAncestorContainer.parentNode.closest(tags)];
+        }
+
+        for (var i=0, el; el = allWithinRangeParent[i]; i++) {
+          // The second parameter says to include the element
+          // even if it's not fully selected
+          if (selection.containsNode(el, true) ) {
+              el.classList.toggle('rm-manual');
+          }
+        }
+        window.getSelection().removeAllRanges();
+    }
+};
+
+//var article = document.body.querySelector('article');
+document.onmouseup = toggleSelectedText;
+document.captureEvents(Event.MOUSEUP);
+</script>
+
+<style>
+.rm-manual {
+    text-decoration: line-through;
+    background-color: #faa;
+}
+</style>
+        </head><body><article><p class="rm-manual">25/12/2019</p>
+<p class="rm-manual">Chengdu, China</p>
+<p>Responsables de Beijing, Tokio y Seúl pidieron a Corea del Norte que 
+se abstenga de “provocaciones”, refiriéndose a su programa nuclear, 
+durante una cumbre tripartita que estuvo marcada también por un tímido 
+deshielo de las relaciones entre Japón y Corea del Sur.</p>
+<p>“Hemos reafirmado que la desnuclearización de la península (coreana) y
+ la paz durable en Asia del Este son los objetivos comunes de los tres 
+países”, indicó el primer ministro chino, Li Keqiang, a la salida de 
+esta cumbre organizada en Chengdu.</p>
+<p>Corea del Norte “tiene que abstenerse de provocaciones”, señaló su 
+homólogo japonés Shizo Abe, precisando que se trata de un mensaje común 
+de Beijing, Tokio y Seúl.</p>
+<p>Pyongyang efectuó pruebas en su base de lanzamiento de cohetes de 
+Sohae, después de una serie de disparos de proyectiles en las semanas 
+anteriores pese a varias resoluciones de la ONU.</p>
+<p>El régimen de Kim Jong-un también ha hecho una serie de declaraciones
+ contundentes y ha dado un ultimátum a Washington, fijándole un plazo 
+hasta fin de año y prometiéndole un “regalo de Navidad” lleno de 
+amenazas si las negociaciones no avanzan.</p>
+<p class="rm-manual">AFP</p></article> 
+</body></html>
