@@ -14,7 +14,6 @@ import lxml.html
 import lxml.etree
 import time
 from urllib.parse import urlparse
-import ftfy
 
 import metahtml.adblock
 import metahtml.content

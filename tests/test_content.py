@@ -12,7 +12,6 @@ Once you've finished, you will have to close firefox manually, but the test case
 ================================================================================
 '''
 
-import ftfy
 import glob
 import json
 import logging

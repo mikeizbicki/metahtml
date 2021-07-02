@@ -100,9 +100,11 @@ def load_adblocks(force_reload = False):
         filter_xpaths_compiled[hostname] = lxml.etree.XPath(rule)
 
     # save the pickled results
+    '''
     logger.debug('caching compiled adblock rules into pickle file')
     with open(pickle_file, 'bw') as f:
         pickle.dump([global_filter_class, global_filter_id, filter_xpaths_compiled], f)
+    '''
 
     # debugging output and should be cleaned up
     logger.debug("loading_error_counts="+str(loading_error_counts))
