@@ -413,6 +413,7 @@ class Extractor(TimestampExtractor):
         ( 'nowthisnews.com',                '//p[@class="Bylinestyles__ArticleDate-sc-1dq0qrh-2 gqDify"]'),
         ( 'noxininfluencer.com',            '//p[@class="publised-date"]/text()'),
         ( 'npr.org',                        '//div[@class="dateblock"]/time/@datetime'),
+        ( 'nsk.se',                         '(//time[@itemprop="datePublished"]/@datetime)[1]'),
         ( 'nydailynews.com',                '//meta[@name="date"]/@content'),
         ( 'nytimes.com',                    '//meta[@property="article:published"]/@content' ),
         ( 'nytimes.com',                    '//time[@class="css-129k401 e16638kd0"]/@datetime' ), # FIXME: these won't generalize?
@@ -507,6 +508,7 @@ class Extractor(TimestampExtractor):
         ( 'sinpermiso.info',                '//meta[@name="dcterms.date"]/@content' ),
         ( 'siouxcountyradio.com',           '//p[@class="card-text text-muted"]/text()'),
         ( 'skynews.com.au',                 '//span[@class="metadata-date"]'),
+        ( 'skd.se',                         '(//time[@itemprop="datePublished"]/@datetime)[1]'),
         ( 'slateafrique.com',               '//time/@datetime'),
         ( 'smartprices.org',                '//time[@class="entry-time"]/@datetime' ),
         ( 'smartraveller.gov.au',           '//div[@class="clearfix text-formatted field field—name-field-body field—type-text-long field—label-hidden field__item"]/p' ),

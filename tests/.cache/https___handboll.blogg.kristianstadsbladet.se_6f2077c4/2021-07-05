@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="sv-SE">
+<head>
+    <meta charset="UTF-8"><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={licenseKey:"a6ee95e9f6",applicationID:"110527173"};window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var i=e[n]={exports:{}};t[n][0].call(i.exports,function(e){var i=t[n][1][e];return r(i||e)},i,i.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var i=0;i<n.length;i++)r(n[i]);return r}({1:[function(t,e,n){function r(){}function i(t,e,n){return function(){return o(t,[u.now()].concat(f(arguments)),e?null:this,n),e?void 0:this}}var o=t("handle"),a=t(8),f=t(9),c=t("ee").get("tracer"),u=t("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var d=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],p="api-",l=p+"ixn-";a(d,function(t,e){s[e]=i(p+e,!0,"api")}),s.addPageAction=i(p+"addPageAction",!0),s.setCurrentRouteName=i(p+"routeName",!0),e.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(t,e){var n={},r=this,i="function"==typeof e;return o(l+"tracer",[u.now(),t,n],r),function(){if(c.emit((i?"":"no-")+"fn-start",[u.now(),r,i],n),i)try{return e.apply(this,arguments)}catch(t){throw c.emit("fn-err",[arguments,this,t],n),t}finally{c.emit("fn-end",[u.now()],n)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,e){m[e]=i(l+e)}),newrelic.noticeError=function(t,e){"string"==typeof t&&(t=new Error(t)),o("err",[t,u.now(),!1,e])}},{}],2:[function(t,e,n){function r(t){if(NREUM.init){for(var e=NREUM.init,n=t.split("."),r=0;r<n.length-1;r++)if(e=e[n[r]],"object"!=typeof e)return;return e=e[n[n.length-1]]}}e.exports={getConfiguration:r}},{}],3:[function(t,e,n){function r(){return f.exists&&performance.now?Math.round(performance.now()):(o=Math.max((new Date).getTime(),o))-a}function i(){return o}var o=(new Date).getTime(),a=o,f=t(10);e.exports=r,e.exports.offset=a,e.exports.getLastTimestamp=i},{}],4:[function(t,e,n){function r(t){return!(!t||!t.protocol||"file:"===t.protocol)}e.exports=r},{}],5:[function(t,e,n){function r(t,e){var n=t.getEntries();n.forEach(function(t){"first-paint"===t.name?d("timing",["fp",Math.floor(t.startTime)]):"first-contentful-paint"===t.name&&d("timing",["fcp",Math.floor(t.startTime)])})}function i(t,e){var n=t.getEntries();n.length>0&&d("lcp",[n[n.length-1]])}function o(t){t.getEntries().forEach(function(t){t.hadRecentInput||d("cls",[t])})}function a(t){if(t instanceof m&&!g){var e=Math.round(t.timeStamp),n={type:t.type};e<=p.now()?n.fid=p.now()-e:e>p.offset&&e<=Date.now()?(e-=p.offset,n.fid=p.now()-e):e=p.now(),g=!0,d("timing",["fi",e,n])}}function f(t){d("pageHide",[p.now(),t])}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var c,u,s,d=t("handle"),p=t("loader"),l=t(7),m=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){c=new PerformanceObserver(r);try{c.observe({entryTypes:["paint"]})}catch(v){}u=new PerformanceObserver(i);try{u.observe({entryTypes:["largest-contentful-paint"]})}catch(v){}s=new PerformanceObserver(o);try{s.observe({type:"layout-shift",buffered:!0})}catch(v){}}if("addEventListener"in document){var g=!1,h=["click","keydown","mousedown","pointerdown","touchstart"];h.forEach(function(t){document.addEventListener(t,a,!1)})}l(f)}},{}],6:[function(t,e,n){function r(t,e){if(!i)return!1;if(t!==i)return!1;if(!e)return!0;if(!o)return!1;for(var n=o.split("."),r=e.split("."),a=0;a<r.length;a++)if(r[a]!==n[a])return!1;return!0}var i=null,o=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var f=navigator.userAgent,c=f.match(a);c&&f.indexOf("Chrome")===-1&&f.indexOf("Chromium")===-1&&(i="Safari",o=c[1])}e.exports={agent:i,version:o,match:r}},{}],7:[function(t,e,n){function r(t){function e(){t(a&&document[a]?document[a]:document[i]?"hidden":"visible")}"addEventListener"in document&&o&&document.addEventListener(o,e,!1)}e.exports=r;var i,o,a;"undefined"!=typeof document.hidden?(i="hidden",o="visibilitychange",a="visibilityState"):"undefined"!=typeof document.msHidden?(i="msHidden",o="msvisibilitychange"):"undefined"!=typeof document.webkitHidden&&(i="webkitHidden",o="webkitvisibilitychange",a="webkitVisibilityState")},{}],8:[function(t,e,n){function r(t,e){var n=[],r="",o=0;for(r in t)i.call(t,r)&&(n[o]=e(r,t[r]),o+=1);return n}var i=Object.prototype.hasOwnProperty;e.exports=r},{}],9:[function(t,e,n){function r(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,i=n-e||0,o=Array(i<0?0:i);++r<i;)o[r]=t[e+r];return o}e.exports=r},{}],10:[function(t,e,n){e.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(t,e,n){function r(){}function i(t){function e(t){return t&&t instanceof r?t:t?u(t,c,a):a()}function n(n,r,i,o,a){if(a!==!1&&(a=!0),!l.aborted||o){t&&a&&t(n,r,i);for(var f=e(i),c=v(n),u=c.length,s=0;s<u;s++)c[s].apply(f,r);var p=d[w[n]];return p&&p.push([b,n,r,f]),f}}function o(t,e){y[t]=v(t).concat(e)}function m(t,e){var n=y[t];if(n)for(var r=0;r<n.length;r++)n[r]===e&&n.splice(r,1)}function v(t){return y[t]||[]}function g(t){return p[t]=p[t]||i(n)}function h(t,e){l.aborted||s(t,function(t,n){e=e||"feature",w[n]=e,e in d||(d[e]=[])})}var y={},w={},b={on:o,addEventListener:o,removeEventListener:m,emit:n,get:g,listeners:v,context:e,buffer:h,abort:f,aborted:!1};return b}function o(t){return u(t,c,a)}function a(){return new r}function f(){(d.api||d.feature)&&(l.aborted=!0,d=l.backlog={})}var c="nr@context",u=t("gos"),s=t(8),d={},p={},l=e.exports=i();e.exports.getOrSetContext=o,l.backlog=d},{}],gos:[function(t,e,n){function r(t,e,n){if(i.call(t,e))return t[e];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:r,writable:!0,enumerable:!1}),r}catch(o){}return t[e]=r,r}var i=Object.prototype.hasOwnProperty;e.exports=r},{}],handle:[function(t,e,n){function r(t,e,n,r){i.buffer([t],r),i.emit(t,e,n)}var i=t("ee").get("handle");e.exports=r,r.ee=i},{}],id:[function(t,e,n){function r(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:a(t,o,function(){return i++})}var i=1,o="nr@id",a=t("gos");e.exports=r},{}],loader:[function(t,e,n){function r(){if(!R++){var t=M.info=NREUM.info,e=v.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&e))return u.abort();c(E,function(e,n){t[e]||(t[e]=n)});var n=a();f("mark",["onload",n+M.offset],null,"api"),f("timing",["load",n]);var r=v.createElement("script");0===t.agent.indexOf("http://")||0===t.agent.indexOf("https://")?r.src=t.agent:r.src=l+"://"+t.agent,e.parentNode.insertBefore(r,e)}}function i(){"complete"===v.readyState&&o()}function o(){f("mark",["domContent",a()+M.offset],null,"api")}var a=t(3),f=t("handle"),c=t(8),u=t("ee"),s=t(6),d=t(4),p=t(2),l=p.getConfiguration("ssl")===!1?"http":"https",m=window,v=m.document,g="addEventListener",h="attachEvent",y=m.XMLHttpRequest,w=y&&y.prototype,b=!d(m.location);NREUM.o={ST:setTimeout,SI:m.setImmediate,CT:clearTimeout,XHR:y,REQ:m.Request,EV:m.Event,PR:m.Promise,MO:m.MutationObserver};var x=""+location,E={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1209.min.js"},O=y&&w&&w[g]&&!/CriOS/.test(navigator.userAgent),M=e.exports={offset:a.getLastTimestamp(),now:a,origin:x,features:{},xhrWrappable:O,userAgent:s,disabled:b};if(!b){t(1),t(5),v[g]?(v[g]("DOMContentLoaded",o,!1),m[g]("load",r,!1)):(v[h]("onreadystatechange",i),m[h]("onload",r)),f("mark",["firstbyte",a.getLastTimestamp()],null,"api");var R=0}},{}],"wrap-function":[function(t,e,n){function r(t,e){function n(e,n,r,c,u){function nrWrapper(){var o,a,s,p;try{a=this,o=d(arguments),s="function"==typeof r?r(o,a):r||{}}catch(l){i([l,"",[o,a,c],s],t)}f(n+"start",[o,a,c],s,u);try{return p=e.apply(a,o)}catch(m){throw f(n+"err",[o,a,m],s,u),m}finally{f(n+"end",[o,a,p],s,u)}}return a(e)?e:(n||(n=""),nrWrapper[p]=e,o(e,nrWrapper,t),nrWrapper)}function r(t,e,r,i,o){r||(r="");var f,c,u,s="-"===r.charAt(0);for(u=0;u<e.length;u++)c=e[u],f=t[c],a(f)||(t[c]=n(f,s?c+r:r,i,c,o))}function f(n,r,o,a){if(!m||e){var f=m;m=!0;try{t.emit(n,r,o,e,a)}catch(c){i([c,n,r,o],t)}m=f}}return t||(t=s),n.inPlace=r,n.flag=p,n}function i(t,e){e||(e=s);try{e.emit("internal-error",t)}catch(n){}}function o(t,e,n){if(Object.defineProperty&&Object.keys)try{var r=Object.keys(t);return r.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(o){i([o],n)}for(var a in t)l.call(t,a)&&(e[a]=t[a]);return e}function a(t){return!(t&&t instanceof Function&&t.apply&&!t[p])}function f(t,e){var n=e(t);return n[p]=t,o(t,n,s),n}function c(t,e,n){var r=t[e];t[e]=f(r,n)}function u(){for(var t=arguments.length,e=new Array(t),n=0;n<t;++n)e[n]=arguments[n];return e}var s=t("ee"),d=t(9),p="nr@original",l=Object.prototype.hasOwnProperty,m=!1;e.exports=r,e.exports.wrapFunction=f,e.exports.wrapInPlace=c,e.exports.argsToArray=u},{}]},{},["loader"]);</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title></title>
+
+    <meta property="og:site_name" content="Handbollsbloggen">
+    <meta property="og:url" content="https://handboll.blogg.kristianstadsbladet.se">
+    <meta property="og:locale" content="sv_SE">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Handbollsbloggen">
+    <meta property="og:description" content="Här bloggar Kristianstadsbladets Robin Nilsson.">
+            <meta property="og:image" content="https://s3-eu-north-1.amazonaws.com/gotamedia-se-prod-blogs/wp-content/uploads/sites/30/2019/01/cropped-RobinHandboll-1.png">
+    
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Handbollsbloggen">
+    <meta name="twitter:description" content="Här bloggar Kristianstadsbladets Robin Nilsson.">
+            <meta name="twitter:image" content="https://s3-eu-north-1.amazonaws.com/gotamedia-se-prod-blogs/wp-content/uploads/sites/30/2019/01/cropped-RobinHandboll-1.png">
+    
+            <link rel="icon" href="https://handboll.blogg.kristianstadsbladet.se/wp-content/themes/cockatoo/assets/icons/themes/kb/favicon.ico" sizes="32x32" />
+        <link rel="icon" href="https://handboll.blogg.kristianstadsbladet.se/wp-content/themes/cockatoo/assets/icons/themes/kb/favicon-152x152.png" sizes="152x152" />
+        <link rel="apple-touch-icon-precomposed" href="https://handboll.blogg.kristianstadsbladet.se/wp-content/themes/cockatoo/assets/icons/themes/kb/favicon-152x152.png" />
+        <link rel="msapplication-TileImage" href="https://handboll.blogg.kristianstadsbladet.se/wp-content/themes/cockatoo/assets/icons/themes/kb/favicon-152x152.png" />
+    
+    <script type="text/javascript">
+    var GoogleDfp = {
+        widgets: JSON.parse('{"ad_unit-5":{"adUnit":{"id":"21738865275","name":"KB Mobil","hasChildren":false,"sizes":[[320,80],[320,160],[320,320],[320,480]],"code":"kb_mobil","parentPath":[{"id":"807856","name":"ca-pub-7827743387174303","code":"ca-pub-7827743387174303"},{"id":"21719389447","name":"Mobil","code":"mobil"}]},"targeting":[{"key":"blog","value":"kb_handbollsbloggen"}],"mobileExclusive":true,"nonMobileExclusive":false},"ad_unit-4":{"adUnit":{"id":"21738865332","name":"KB Panorama","hasChildren":false,"sizes":[[980,120],[980,240],[980,300],[980,360],[980,480],[980,500],[980,600]],"code":"kb_panorama","parentPath":[{"id":"807856","name":"ca-pub-7827743387174303","code":"ca-pub-7827743387174303"},{"id":"21709841646","name":"Panorama","code":"panorama"}]},"targeting":[{"key":"blog","value":"kb_handbollsbloggen"}],"mobileExclusive":false,"nonMobileExclusive":true},"ad_unit-8":{"adUnit":{"id":"21738865263","name":"KB Insider","hasChildren":false,"sizes":[[300,120],[300,250],[300,300],[300,360],[300,480],[300,600]],"code":"kb_insider","parentPath":[{"id":"807856","name":"ca-pub-7827743387174303","code":"ca-pub-7827743387174303"},{"id":"21719182652","name":"Insider","code":"insider"}]},"targeting":[{"key":"blog","value":"kb_handbollsbloggen"}],"mobileExclusive":false,"nonMobileExclusive":true},"ad_unit-9":{"adUnit":{"id":"21738865263","name":"KB Insider","hasChildren":false,"sizes":[[300,120],[300,250],[300,300],[300,360],[300,480],[300,600]],"code":"kb_insider","parentPath":[{"id":"807856","name":"ca-pub-7827743387174303","code":"ca-pub-7827743387174303"},{"id":"21719182652","name":"Insider","code":"insider"}]},"targeting":[{"key":"blog","value":"kb_handbollsbloggen"}],"mobileExclusive":false,"nonMobileExclusive":true}}'),
+        targeting: {
+            global: JSON.parse('[]'),
+            map: JSON.parse('[]'),
+            categories: JSON.parse('["European League","Handbollsligan"]'),
+            tags: JSON.parse('[]')
+        },
+        networkCode: '1022696'
+    };
+</script>
+<script src="https://www.googletagservices.com/tag/js/gpt.js" async></script>
+<script type="text/javascript" src="https://blogman.gotamedia.se/kbhandboll/wp-content/plugins/google-dfp/assets/js/head.js"></script>
+<script>
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', 'UA-3244605-7', 'auto');
+    ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<link rel='dns-prefetch' href='//handboll.blogg.kristianstadsbladet.se' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel='stylesheet' id='cockatoo-css'  href='https://handboll.blogg.kristianstadsbladet.se/wp-content/themes/cockatoo/assets/css/style.min.css?ver=0.3.0' type='text/css' media='all' />
+<link rel='https://api.w.org/' href='https://handboll.blogg.kristianstadsbladet.se/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://handboll.blogg.kristianstadsbladet.se/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://handboll.blogg.kristianstadsbladet.se/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.9.10" />
+</head>
+<body class="home blog theme--kb" itemscope itemtype="http://schema.org/Blog">
+    <header class="site-header">
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header row">
+                    <div class="col-xs-12">
+                        <a class="site-header__title-link" href="https://handboll.blogg.kristianstadsbladet.se">
+                            <h1 class="site-header__title">
+                                <small>Blogg</small>
+                                Handbollsbloggen                            </h1>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+
+                    <div class="row">
+                <div class="col-xs-12">
+                    <ul class="widgets ads-top">
+                        <li id="ad_unit-4" class="widget ad-unit">
+<script type="text/javascript">
+    googletag.cmd.push(function () {
+        googletag.display('ad_unit-4');
+    });
+</script>
+
+</li>
+                    </ul>
+                </div>
+            </div>
+        
+        <div class="row">
+<div class="col-xs-12 col-sm-8 post-list">
+    <div class="posts">
+                    <article class="post">
+    <header class="post__header">
+                <h1 class="post__title">
+            Kamikazetipset, Europaspelet och 2 x Henningsson (?)        </h1>
+    </header>
+    <div class="post__excerpt">
+        Det har, till slut, blivit dags att gå vidare. Att lämna handbollssäsongen 20/21 bakom sig och i stället irritera sig och engagera sig i kampen mellan SVT och TV4 vid fotbolls-EM. Så mycket till kamp är...LÄS MER    </div>
+    <footer class="post__footer">
+        <span class="post__categories">
+            European League, Handbollsligan        </span>
+        <time class="post__date" datetime="1623873511">
+            3 veckor            sedan        </time>
+    </footer>
+    <a href="https://handboll.blogg.kristianstadsbladet.se/handbollsligan/kamikazetipset-europaspelet-och-2-x-henningsson/" class="link-wrap"></a>
+</article>
+                                <article class="post">
+    <header class="post__header">
+                <h1 class="post__title">
+            Semirysaren, verkligheten och IFK:s nya (?) strategi        </h1>
+    </header>
+    <div class="post__excerpt">
+        Uffe Larsson klarade sitt huvudmål och tog IFK Kristianstad till semifinal. Allt han gör nu är en bonus, det tror jag att han själv känner. Samtidigt ska han nog passa sig för att underskatta den självklara...LÄS MER    </div>
+    <footer class="post__footer">
+        <span class="post__categories">
+            Handbollsligan        </span>
+        <time class="post__date" datetime="1617978206">
+            3 månader            sedan        </time>
+    </footer>
+    <a href="https://handboll.blogg.kristianstadsbladet.se/handbollsligan/semirysaren-verkligheten-och-ifks-nya-strategi/" class="link-wrap"></a>
+</article>
+                                <article class="post">
+    <header class="post__header">
+                <h1 class="post__title">
+            Fel fokus, ett vidöppet slutspel och IFK:s alla uppställningar        </h1>
+    </header>
+    <div class="post__excerpt">
+        Åh, slutspel igen. Utan publik förstås, det drar ner känslan, men samtidigt med en mer intressant och kittlande kvartsfinal än på flera år. Vi får gå tillbaka till förlängnings- och straffrysarna mot Hammarby och Alingsås 2012-2015...LÄS MER    </div>
+    <footer class="post__footer">
+        <span class="post__categories">
+            Handbollsligan        </span>
+        <time class="post__date" datetime="1615987286">
+            4 månader            sedan        </time>
+    </footer>
+    <a href="https://handboll.blogg.kristianstadsbladet.se/handbollsligan/fel-fokus-ett-vidoppet-slutspel-och-ifks-alla-uppstallningar-och/" class="link-wrap"></a>
+</article>
+                            <ul class="widgets ads-post">
+                                    </ul>
+                                <article class="post">
+    <header class="post__header">
+                <h1 class="post__title">
+            Kommunikation, trim-SM och otydligt tydliga beslut        </h1>
+    </header>
+    <div class="post__excerpt">
+        En av årets roligaste veckor är härmed inledd. Ovisshet rådet i tabellerna på både herr- och damsidan. Vilka vinner de båda grundserierna? Vilka åker ur? Vilka får kvala? Vilka kniper de sista slutspelsplatserna? Det lever precis...LÄS MER    </div>
+    <footer class="post__footer">
+        <span class="post__categories">
+            European League, Handbollsligan        </span>
+        <time class="post__date" datetime="1614636027">
+            4 månader            sedan        </time>
+    </footer>
+    <a href="https://handboll.blogg.kristianstadsbladet.se/handbollsligan/kommunikation-trim-sm-och-otydligt-tydliga-beslut/" class="link-wrap"></a>
+</article>
+                                <article class="post">
+    <header class="post__header">
+                <h1 class="post__title">
+            Stjärnorna, framtidens landslag och tidernas tyngsta karantän        </h1>
+    </header>
+    <div class="post__excerpt">
+        Sverige tappade flytet. Det som tog Glenn Solbergs nya landslag till final var inget som visades upp mot Danmark. Den matchvinnande målvakten stod inte i Sveriges mål. Omställningarna mattades av mer och mer. 50-50-domsluten gick inte...LÄS MER    </div>
+    <footer class="post__footer">
+        <span class="post__categories">
+            Handbolls-VM        </span>
+        <time class="post__date" datetime="1612123026">
+            5 månader            sedan        </time>
+    </footer>
+    <a href="https://handboll.blogg.kristianstadsbladet.se/handbolls-vm/stjarnorna-framtidens-landslag-och-tidernas-tyngsta-karantan/" class="link-wrap"></a>
+</article>
+                                <article class="post">
+    <header class="post__header">
+                <h1 class="post__title">
+            Det svenska systemet, finalhotet och Palickas likhet med Diggins        </h1>
+    </header>
+    <div class="post__excerpt">
+        Det kändes oroligt hela vägen. När kommer de franska målvakterna igång? Hur lång tid tar det då innan de är ifatt? Hur reagerar Sverige om det blir förlängning? Men så här några timmar efteråt, när jag...LÄS MER    </div>
+    <footer class="post__footer">
+        <span class="post__categories">
+            Handbolls-VM        </span>
+        <time class="post__date" datetime="1611962342">
+            5 månader            sedan        </time>
+    </footer>
+    <a href="https://handboll.blogg.kristianstadsbladet.se/handbolls-vm/det-svenska-systemet-finalhotet-och-palickas-likhet-med-diggins/" class="link-wrap"></a>
+</article>
+                                <article class="post">
+    <header class="post__header">
+                <h1 class="post__title">
+            Videogranskningen, den mentala härdsmältan och Sveriges berg att bestiga        </h1>
+    </header>
+    <div class="post__excerpt">
+        Så här hade kvällen kunnat sluta för Danmark. En ledsen Mikkel Hansen på en plaststol vid sidan av planen. Med det alltid så fint matchande svettbandet perfekt på huvudet. Det hade kunnat bli bilden av det...LÄS MER    </div>
+    <footer class="post__footer">
+        <span class="post__categories">
+            Handbolls-VM        </span>
+        <time class="post__date" datetime="1611791511">
+            5 månader            sedan        </time>
+    </footer>
+    <a href="https://handboll.blogg.kristianstadsbladet.se/handbolls-vm/videogranskningen-den-mentala-hardsmaltan-och-sveriges-berg-att-bestiga/" class="link-wrap"></a>
+</article>
+                                <article class="post">
+    <header class="post__header">
+                <h1 class="post__title">
+            Breda Danmark, VM-hygienen och pikarna på Instagram        </h1>
+    </header>
+    <div class="post__excerpt">
+        Qatar i kvartsfinalen. Inte lika lurigt som Argentina, utan mer likt Egypten med fysik och skytte. Och, precis som Argentina, med en lurig spanjor på bänken. Valero Rivera håller kvar detta Qatar i världstoppen och att...LÄS MER    </div>
+    <footer class="post__footer">
+        <span class="post__categories">
+            Handbolls-VM        </span>
+        <time class="post__date" datetime="1611612660">
+            5 månader            sedan        </time>
+    </footer>
+    <a href="https://handboll.blogg.kristianstadsbladet.se/handbolls-vm/breda-danmark-vm-hygienen-och-pikarna-pa-instagram/" class="link-wrap"></a>
+</article>
+                                <article class="post">
+    <header class="post__header">
+                <h1 class="post__title">
+            Svenska folkets sport, Lagergrens comeback och en permanentad Prinsessan Leia        </h1>
+    </header>
+    <div class="post__excerpt">
+        Tankar inför kvällen: Kan bli en härlig match. En svensk seger hade suttit fint. Fyra-fem bollar känns ändå rimligt. Vägen mot medalj skulle ligga öppen! Tankar efter kvällen: Var inte Sverige lite väl bra? Det blev...LÄS MER    </div>
+    <footer class="post__footer">
+        <span class="post__categories">
+            Handbolls-VM        </span>
+        <time class="post__date" datetime="1611530542">
+            5 månader            sedan        </time>
+    </footer>
+    <a href="https://handboll.blogg.kristianstadsbladet.se/handbolls-vm/svenska-folkets-sport-lagergrens-comeback-och-en-permanentad-prinsessan-leia/" class="link-wrap"></a>
+</article>
+                                <article class="post">
+    <header class="post__header">
+                <h1 class="post__title">
+            Wenströms sista VM, professorn i fokus och oro i Danmark        </h1>
+    </header>
+    <div class="post__excerpt">
+        Märklig VM-dag, det här. Avskedens dag. Inte bara åker lag efter lag ut i det här skedet av turneringen, det ryker dessutom spelare och tränare till höger och vänster. Vi ska återkomma till några av dem,...LÄS MER    </div>
+    <footer class="post__footer">
+        <span class="post__categories">
+            Handbolls-VM        </span>
+        <time class="post__date" datetime="1611440184">
+            5 månader            sedan        </time>
+    </footer>
+    <a href="https://handboll.blogg.kristianstadsbladet.se/handbolls-vm/wenstroms-sista-vm-professorn-i-fokus-och-oro-i-danmark/" class="link-wrap"></a>
+</article>
+                        </div>
+
+    <div class="pagination clearfix">
+                            <a class="pagination__next" href="https://handboll.blogg.kristianstadsbladet.se/page/2/">Nästa</a>
+        
+        <ul class='page-numbers'>
+	<li><span aria-current='page' class='page-numbers current'>1</span></li>
+	<li><a class='page-numbers' href='https://handboll.blogg.kristianstadsbladet.se/page/2/'>2</a></li>
+	<li><span class="page-numbers dots">&hellip;</span></li>
+	<li><a class='page-numbers' href='https://handboll.blogg.kristianstadsbladet.se/page/96/'>96</a></li>
+</ul>
+    </div>
+</div>
+<aside class="site-sidebar col-xs-12 col-sm-4">
+    <div class="blog-info" itemprop="author" itemscope itemtype="http://schema.org/Person">
+                    <div class="blog-info__image" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+                <img src="https://s3-eu-north-1.amazonaws.com/gotamedia-se-prod-blogs/wp-content/uploads/sites/30/2019/01/cropped-RobinHandboll-1.png" itemprop="url contentUrl">
+            </div>
+                <div class="blog-info__about">
+            <h2 class="about__title">Om bloggen</h2>
+            <p class="about__description">Här bloggar Kristianstadsbladets Robin Nilsson.</p>
+        </div>
+    </div>
+
+            <ul class="widgets right-sidebar">
+            <li id="ad_unit-8" class="widget ad-unit">
+<script type="text/javascript">
+    googletag.cmd.push(function () {
+        googletag.display('ad_unit-8');
+    });
+</script>
+
+</li>
+        </ul>
+    </aside>
+
+        </div>
+
+                    <div class="row">
+                <div class="col-xs-12">
+                    <ul class="widgets ads-bottom">
+                                            </ul>
+                </div>
+            </div>
+        
+    </div>
+
+    <footer class="site-footer">
+        <nav class="navbar navbar-inverse">
+            <div class="container">
+
+                                    <div class="row">
+                        <div class="col-xs-12">
+                            <p class="site-footer__provider navbar-text">
+                                Tillhandahållare av sajten:
+                                Jörgen Svensson                            </p>
+                        </div>
+                    </div>
+                
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8 site-footer__links">
+                        
+                                            </div>
+
+                                            <div class="col-xs-12 col-sm-4 site-footer__logo">
+                            <a href="https://handboll.blogg.kristianstadsbladet.se">
+                                <img alt="Brand" src="https://handboll.blogg.kristianstadsbladet.se/wp-content/themes/cockatoo/assets/svg/themes/kb/logotype-footer.svg">
+                            </a>
+                        </div>
+                                    </div>
+
+                            </div>
+        </nav>
+    </footer>
+
+    <script type='text/javascript' src='https://handboll.blogg.kristianstadsbladet.se/wp-content/themes/cockatoo/assets/js/body.js?ver=0.3.0'></script>
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"a6ee95e9f6","applicationID":"110527173","transactionName":"NFRaZREAWEZZBxdcXg0eeVIXCFlbFw0NUVQb","queueTime":0,"applicationTime":184,"atts":"GBNZE1kaS0g=","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+</html>
