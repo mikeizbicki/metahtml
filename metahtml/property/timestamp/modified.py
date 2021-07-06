@@ -10,6 +10,7 @@ class Extractor(TimestampExtractor):
 
     xpaths = [
         # xpaths
+        ( 'aftenposten.no',                 '(//time[@itemprop="dateModified"]/@datetime)[1]'),
         ( 'airsafe.com',                    '//div[@class="blocked_off"]/text()'),
         ( 'alexandrina.eco-compliance.de',  '//a[@class="last-modified"]/text()'),
         ( 'arabic.rt.com',                  '(//time)[3]'),
@@ -41,10 +42,12 @@ class Extractor(TimestampExtractor):
         ( 'niconews55.com',                 '//time[@class="date gf entry-date undo updated"]/@datetime'),
         ( 'nsk.se',                         '(//time[@itemprop="dateModified"]/@datetime)[1]'),
         ( 'ottawacitizen.com',              '//span[@class="updated-date__since"]/@date-last-update' ),
+        ( 'oa.no',                          '//time[@itemprop="dateModified"]/@datetime'),
         ( 'pattayapeople.com',              '//div[@class="main"]/meta[@itemprop="dateModified"][@content]'),
         ( 'politico.com',                   '//p[@class="story-meta__updated"]/time/@datetime'),
         ( 'politico.com',                   '//span[@class="updated"]'),
         ( 'renegadetribune.com',            '//span[@class="posted-on"]//time[@class="updated"]/@datetime' ),
+        ( 'rb.no',                          '//time[@itemprop="dateModified"]/@datetime'),
         ( 'saymar.org',                     '//span[@class="updated"]'),
         ( 'senenews.com',                   '//span[@class="date updated"]' ),
         ( 'senenews.com',                   '//span[@class="timeT"]'),
