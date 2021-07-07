@@ -1,24 +1,22 @@
 #!/usr/bin/python3
 
-import datetime
-import json
+from urllib.parse import urlparse, urlunparse
 import copy
 import csv
+import datetime
 import glob
 import hashlib
+import json
 import os
+import pprint
+import pytest
 import re
 import requests
-from urllib.parse import urlparse, urlunparse
-import pytest
-import pprint
     
 # the sys import is needed so that we can import from the current project
 import sys
 sys.path.append('.')
-import metahtml.property.language
-import metahtml.property.timestamp.__common__
-
+import metahtml
 
 ################################################################################
 # settings
@@ -44,7 +42,7 @@ def url2filename(url):
     return re.sub(r'[/:><"|*?&]','_',url)[:196] + hashlib.md5(url.encode()).hexdigest()[:8]
 
 
-def get_cached_webpages(url, dates=None):
+def get_cached_webpages(url, dates=None, redownload=False):
     '''
     If the url does not exit in the cache,
     then this function first downloads the html and stores it in the cache.
@@ -72,13 +70,13 @@ def get_cached_webpages(url, dates=None):
         path = os.path.join(url_dir,date)
         paths = [ path ]
         r = requests.get(url,headers={'User-Agent':'Mozilla/5.0 (X11; Linux i686; rv:88.0) Gecko/20100101 Firefox/88.0'},verify=False)
+        print("r.encoding=",r.encoding)
         if r.status_code != 200:
             raise ValueError('status=',r.status_code,'for url=',url)
         html = r.text
         with open(path,'x', encoding='utf-8', newline='\n') as f:
             f.write(html)
-        print('done.')
-    if len(paths)==0:
+    if len(paths)==0 or redownload:
         download_url()
         return get_cached_webpages(url, dates)
 
@@ -96,7 +94,7 @@ def get_cached_webpages(url, dates=None):
 ################################################################################
 # test cases
 
-def generate_test(url, verbose=True, fast=True, save=False, debug=False, full=False, save_full=False):
+def generate_test(url, verbose=True, fast=True, save=False, debug=False, full=False, save_full=False, redownload=False):
     '''
     Prints the simplified meta for the url to stdout.
     If save is True, it also generates a golden test from the result.
@@ -106,7 +104,7 @@ def generate_test(url, verbose=True, fast=True, save=False, debug=False, full=Fa
         fast = False
         full = False
 
-    for date, html in get_cached_webpages(url):
+    for date, html in get_cached_webpages(url, redownload=redownload):
 
         # generate the test path
         url_filename = url2filename(url)
@@ -176,7 +174,7 @@ def get_tests(cache_filter=True):
     return list(filter(has_cache, raw_tests))
 
 
-@pytest.mark.parametrize('test_file', get_tests(), ids=id)
+@pytest.mark.parametrize('test_file', get_tests())
 def test_golden(test_file, full=False):
     '''
     This function gets called by pytest for each golden test case.
@@ -238,7 +236,6 @@ def convert_csv(filter_str=None, filter_key=None, verified_only=True):
             num_processed += 1
     return tests
 
-convert_csv()
 
 ################################################################################
 # initialize the test cases
@@ -253,6 +250,7 @@ if __name__=='__main__':
     parser.add_argument('--slow', action='store_true')
     parser.add_argument('--debug', action='store_true')
     parser.add_argument('--full', action='store_true')
+    parser.add_argument('--redownload', action='store_true')
     args = parser.parse_args()
 
-    generate_test(args.url, not args.full, not args.slow, args.save, args.debug, args.full)
+    generate_test(args.url, not args.full, not args.slow, args.save, args.debug, args.full, redownload=args.redownload)

@@ -10,6 +10,7 @@ class Extractor(TimestampExtractor):
 
     xpaths = [
         # xpaths
+        ( 'aftenposten.no',                 '(//time[@itemprop="dateModified"]/@datetime)[1]'),
         ( 'airsafe.com',                    '//div[@class="blocked_off"]/text()'),
         ( 'alexandrina.eco-compliance.de',  '//a[@class="last-modified"]/text()'),
         ( 'arabic.rt.com',                  '(//time)[3]'),
@@ -39,15 +40,19 @@ class Extractor(TimestampExtractor):
         ( 'newindianexpress.com',           '(//p[@class="ArticlePublish margin-bottom-10"]/span)[2]'),
         ( 'news.asiantown.net',             '//div[@id="b_by"]/@data-t' ),
         ( 'niconews55.com',                 '//time[@class="date gf entry-date undo updated"]/@datetime'),
+        ( 'nsk.se',                         '(//time[@itemprop="dateModified"]/@datetime)[1]'),
         ( 'ottawacitizen.com',              '//span[@class="updated-date__since"]/@date-last-update' ),
+        ( 'oa.no',                          '//time[@itemprop="dateModified"]/@datetime'),
         ( 'pattayapeople.com',              '//div[@class="main"]/meta[@itemprop="dateModified"][@content]'),
         ( 'politico.com',                   '//p[@class="story-meta__updated"]/time/@datetime'),
         ( 'politico.com',                   '//span[@class="updated"]'),
         ( 'renegadetribune.com',            '//span[@class="posted-on"]//time[@class="updated"]/@datetime' ),
+        ( 'rb.no',                          '//time[@itemprop="dateModified"]/@datetime'),
         ( 'saymar.org',                     '//span[@class="updated"]'),
         ( 'senenews.com',                   '//span[@class="date updated"]' ),
         ( 'senenews.com',                   '//span[@class="timeT"]'),
         ( 'service-public.fr',              '(//p[@class="date"]/text())[1]'),
+        ( 'skd.se',                         '(//time[@itemprop="dateModified"]/@datetime)[1]'),
         ( 'sohfrance.org',                  '//meta[@property="article:modified_time"]/@content' ),
         ( 'sternchen4you.de',               '//time[@class="updated"]/@datetime'),
         ( 'topia.ne.jp',                    '//p[@class="updatedAt"]/text()'),

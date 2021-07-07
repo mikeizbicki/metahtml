@@ -1,0 +1,64 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script>
+function toggleSelectedText(e) {
+    if (e.shiftKey) {
+        var selection = window.getSelection();
+        var range = selection.getRangeAt(0);
+        var tags = "p,h1,h2,h3,h4,h5,h6,ul,ol,li,table,tr,td,th,article,main,section,figure,figcaption,aside,section";
+        if (range.commonAncestorContainer.getElementsByTagName) {
+            var allWithinRangeParent = range.commonAncestorContainer.querySelectorAll(tags);
+        }
+        else {
+            //var allWithinRangeParent = [range.commonAncestorContainer.closest(tags)];
+            var allWithinRangeParent = [range.commonAncestorContainer.parentNode.closest(tags)];
+        }
+
+        for (var i=0, el; el = allWithinRangeParent[i]; i++) {
+          // The second parameter says to include the element
+          // even if it's not fully selected
+          if (selection.containsNode(el, true) ) {
+              el.classList.toggle('rm-manual');
+          }
+        }
+        window.getSelection().removeAllRanges();
+    }
+};
+
+//var article = document.body.querySelector('article');
+document.onmouseup = toggleSelectedText;
+document.captureEvents(Event.MOUSEUP);
+</script>
+
+<style>
+.rm-manual {
+    text-decoration: line-through;
+    background-color: #faa;
+}
+</style>
+        </head><body><article><h1 class="rm-manual">¿Cuál es la capital de Irán?</h1>
+<p class="rm-manual"><a href="http://www.saberia.com/saber/lugares/">Lugares</a> </p>
+<p class="rm-manual"><a href="#comments">Ir a comentarios</a> </p>
+<p class="rm-manual"><a href="#comments"> <span> 2 </span> </a> </p>
+<p>La República Islámica de Irán, conocida como Persia en el pasado, es 
+un país de Oriente Medio que hace frontera con Pakistán, Afganistán, 
+Turkmenistán, Azerbaiyán, Armenia, Turquía e Irak, además de con el Mar 
+Caspio, el Golfo Pérsico y el Golfo de Omán. Shiraz, Isfahan, Yazd, 
+Mashad y Tabriz son algunas de sus ciudades más importantes, pero ¿sabes
+ cuál es la capital de Irán? </p>
+<p>La capital de Irán es Teherán, auténtico eje de la nación y su 
+principal motor político, económico y cultural. Está situada a una 
+altitud de casi 1200 metros, en una meseta norteña frente a los Montes 
+Alborz, y, aunque existen muchas teorías sobre el origen etimológico de 
+su nombre, afirma la oficial que proviene de las palabras persas “Tah” 
+(final o fondo) y “Ran” (ladera de una montaña).</p>
+<p>Teherán surgió a partir de un pequeño pueblo a escasos kilómetros de 
+la ciudad histórica de Rey. Comenzó a crecer bajo la tutela de Sah 
+Tahmasp I, segundo soberano de la dinastía safávida, y aumentó su 
+relevancia de forma progresiva hasta convertirse en la urbe moderna y 
+cosmopolita que actualmente es. </p>
+<p>Si visitas Teherán, no debes pasar por alto lugares tan emblemáticos 
+como la Torre Azadi, la Mezquita del Imám Jomeini, la Mezquita Shahid 
+Motahari, la antigua Residencia Real de Los Pahlavi o el Palacio Blanco.
+ Y, por supuesto, piérdete entre los puestos, tiendas y talleres del 
+Bazar del Barrio Histórico, una delicia. </p></article> 
+</body></html>

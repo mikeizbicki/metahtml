@@ -41,6 +41,7 @@ class Extractor(BaseExtractor):
 
         # hostname specific regexs
         ( 'abc3340.com', r'/news/nation-world$' ),
+        ( 'agroberichtenbuitenland.nl', r'/actueel/nieuws/?$' ),
         ( 'bbc.co.uk', r'/asia_pacific$' ),
         ( 'bbc.co.uk', r'/history/historic_figures/?$' ),
         ( 'bbc.com', r'/asia_pacific$' ),
@@ -60,6 +61,7 @@ class Extractor(BaseExtractor):
         ( 'dailywire.com', r'^/show/the-ben-shapiro-show$' ),
         ( 'dcmi.org', r'^/ko/%EB%89%B4%EC%8A%A4%EB%A0%88%ED%84%B0/?$' ),
         ( 'dcmi.org', r'^/ko/%eb%89%b4%ec%8a%a4%eb%a0%88%ed%84%b0/?$' ),
+        ( 'diagnostics.roche.com', r'^/hk/en/home.html' ),
         ( 'elmundo.es', r'^/internacional.html$' ),
         ( 'en.mediamass.net', r'^/people/kim-jong-un/?$' ),
         ( 'frac.org', r'^/covid-19-updates/?$' ),
