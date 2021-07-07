@@ -409,6 +409,10 @@ class TimestampExtractor(BaseExtractor):
             if timestamp is None or timestamp['value']['hi'] is None or timestamp['value']['lo'] is None:
                 continue
 
+            # skip timestamps that have obviously invalid dates
+            if timestamp['value']['hi'].year < 1600 or timestamp['value']['lo'].year > 2030:
+                continue
+
             # skip timestamps not valid for the hostname
             if require_valid_for_hostname and not timestamp.get('is_valid_for_hostname'):
                 continue

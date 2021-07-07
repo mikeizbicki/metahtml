@@ -209,6 +209,12 @@ class BaseExtractor():
             if hostname is not None:
                 disable_universal_xpaths = disable_universal_xpaths or (hostname == url_hostname or 'www.'+hostname == url_hostname)
                 valid_for_hostname = hostname in url_hostname
+
+                # FIXME:
+                # this special case is needed because other blogspot blogs add too many xpaths,
+                # and there's no other way currently to disable some xpaths for subdomains
+                if url_hostname in ['egoistenblog.blogspot.com']:
+                    valid_for_hostname = False
             else:
                 valid_for_hostname = not disable_universal_xpaths
 

@@ -1,0 +1,1084 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8" />
+<script data-ezscrex='false' data-cfasync='false' data-pagespeed-no-defer>var __ez=__ez||{};__ez.stms=Date.now();__ez.evt={};__ez.script={};__ez.ck=__ez.ck||{};__ez.template={};__ez.template.isOrig=true;__ez.queue=(function(){var count=0,incr=0,items=[],timeDelayFired=false,hpItems=[],lpItems=[],allowLoad=true;var obj={func:function(name,funcName,parameters,isBlock,blockedBy,deleteWhenComplete,proceedIfError){var self=this;this.name=name;this.funcName=funcName;this.parameters=parameters===null?null:(parameters instanceof Array)?parameters:[parameters];this.isBlock=isBlock;this.blockedBy=blockedBy;this.deleteWhenComplete=deleteWhenComplete;this.isError=false;this.isComplete=false;this.isInitialized=false;this.proceedIfError=proceedIfError;this.isTimeDelay=false;this.process=function(){log("... func = "+name);self.isInitialized=true;self.isComplete=true;log("... func.apply: "+name);var funcs=self.funcName.split('.');var func=null;if(funcs.length>3){}else if(funcs.length===3){func=window[funcs[0]][funcs[1]][funcs[2]];}else if(funcs.length===2){func=window[funcs[0]][funcs[1]];}else{func=window[self.funcName];}
+if(typeof func!=='undefined'&&func!==null){func.apply(null,this.parameters);}
+if(self.deleteWhenComplete===true)delete items[name];if(self.isBlock===true){log("----- F'D: "+self.name);processAll();}}},file:function(name,path,isBlock,blockedBy,async,defer,proceedIfError){var self=this;this.name=name;this.path=path;this.async=async;this.defer=defer;this.isBlock=isBlock;this.blockedBy=blockedBy;this.isInitialized=false;this.isError=false;this.isComplete=false;this.proceedIfError=proceedIfError;this.isTimeDelay=false;this.process=function(){self.isInitialized=true;log("... file = "+name);var scr=document.createElement('script');scr.src=path;if(async===true)scr.async=true;else if(defer===true)scr.defer=true;scr.onerror=function(){log("----- ERR'D: "+self.name);self.isError=true;if(self.isBlock===true){processAll();}};scr.onreadystatechange=scr.onload=function(){var state=scr.readyState;log("----- F'D: "+self.name);if((!state||/loaded|complete/.test(state))){self.isComplete=true;if(self.isBlock===true){processAll();}}};document.getElementsByTagName('head')[0].appendChild(scr);}},fileLoaded:function(name,isComplete){this.name=name;this.path="";this.async=false;this.defer=false;this.isBlock=false;this.blockedBy=[];this.isInitialized=true;this.isError=false;this.isComplete=isComplete;this.proceedIfError=false;this.isTimeDelay=false;this.process=function(){};}};function init(){window.addEventListener("load",function(){setTimeout(function(){timeDelayFired=true;log('TDELAY -----');processAll();},5000);},false);}
+function addFile(name,path,isBlock,blockedBy,async,defer,proceedIfError,priority){var item=new obj.file(name,path,isBlock,blockedBy,async,defer,proceedIfError);if(priority===true){hpItems[name]=item}else{lpItems[name]=item}
+items[name]=item;checkIfBlocked(item);}
+function setallowLoad(settobool){allowLoad=settobool}
+function addFunc(name,func,parameters,isBlock,blockedBy,autoInc,deleteWhenComplete,proceedIfError,priority){if(autoInc===true)name=name+"_"+incr++;var item=new obj.func(name,func,parameters,isBlock,blockedBy,deleteWhenComplete,proceedIfError);if(priority===true){hpItems[name]=item}else{lpItems[name]=item}
+items[name]=item;checkIfBlocked(item);}
+function addTimeDelayFile(name,path){var item=new obj.file(name,path,false,[],false,false,true);item.isTimeDelay=true;log(name+' ... '+' FILE! TDELAY');lpItems[name]=item;items[name]=item;checkIfBlocked(item);}
+function addTimeDelayFunc(name,func,parameters){var item=new obj.func(name,func,parameters,false,[],true,true);item.isTimeDelay=true;log(name+' ... '+' FUNCTION! TDELAY');lpItems[name]=item;items[name]=item;checkIfBlocked(item);}
+function checkIfBlocked(item){if(isBlocked(item)===true||allowLoad==false)return;item.process();}
+function isBlocked(item){if(item.isTimeDelay===true&&timeDelayFired===false){log(item.name+" blocked = TIME DELAY!");return true;}
+if(item.blockedBy instanceof Array){for(var i=0;i<item.blockedBy.length;i++){var block=item.blockedBy[i];if(items.hasOwnProperty(block)===false){log(item.name+" blocked = "+block);return true;}else if(item.proceedIfError===true&&items[block].isError===true){return false;}else if(items[block].isComplete===false){log(item.name+" blocked = "+block);return true;}}}
+return false;}
+function markLoaded(filename){if(!filename||0===filename.length){return;}
+if(filename in items){var item=items[filename];if(item.isComplete===true){log(item.name+' '+filename+': error loaded duplicate')}else{item.isComplete=true;item.isInitialized=true;}}else{items[filename]=new obj.fileLoaded(filename,true);}
+log("markLoaded dummyfile: "+items[filename].name);}
+function logWhatsBlocked(){for(var i in items){if(items.hasOwnProperty(i)===false)continue;var item=items[i];isBlocked(item)}}
+function log(msg){var href=window.location.href;var reg=new RegExp('[?&]ezq=([^&#]*)','i');var string=reg.exec(href);var res=string?string[1]:null;if(res==="1")console.debug(msg);}
+function processAll(){count++;if(count>200)return;log("let's go");processItems(hpItems);processItems(lpItems);}
+function processItems(list){for(var i in list){if(list.hasOwnProperty(i)===false)continue;var item=list[i];if(item.isComplete===true||isBlocked(item)||item.isInitialized===true||item.isError===true){if(item.isError===true){log(item.name+': error')}else if(item.isComplete===true){log(item.name+': complete already')}else if(item.isInitialized===true){log(item.name+': initialized already')}}else{item.process();}}}
+init();return{addFile:addFile,addDelayFile:addTimeDelayFile,addFunc:addFunc,addDelayFunc:addTimeDelayFunc,items:items,processAll:processAll,setallowLoad:setallowLoad,markLoaded:markLoaded,logWhatsBlocked:logWhatsBlocked,};})();__ez.evt.add=function(e,t,n){e.addEventListener?e.addEventListener(t,n,!1):e.attachEvent?e.attachEvent("on"+t,n):e["on"+t]=n()},__ez.evt.remove=function(e,t,n){e.removeEventListener?e.removeEventListener(t,n,!1):e.detachEvent?e.detachEvent("on"+t,n):delete e["on"+t]};__ez.script.add=function(e){var t=document.createElement("script");t.src=e,t.async=!0,t.type="text/javascript",document.getElementsByTagName("head")[0].appendChild(t)};__ez.dot={};__ez.vep=(function(){var pixels=[],pxURL="/detroitchicago/grapefruit.gif";function AddPixel(vID,pixelData){if(__ez.dot.isDefined(vID)&&__ez.dot.isValid(pixelData)){pixels.push({type:'video',video_impression_id:vID,domain_id:__ez.dot.getDID(),t_epoch:__ez.dot.getEpoch(0),data:__ez.dot.dataToStr(pixelData)});}}
+function Fire(){if(typeof document.visibilityState!=='undefined'&&document.visibilityState==="prerender"){return;}
+if(__ez.dot.isDefined(pixels)&&pixels.length>0){while(pixels.length>0){var j=5;if(j>pixels.length){j=pixels.length;}
+var pushPixels=pixels.splice(0,j);var pixelURL=__ez.dot.getURL(pxURL)+"?orig="+(__ez.template.isOrig===true?1:0)+"&v="+btoa(JSON.stringify(pushPixels));__ez.dot.Fire(pixelURL);}}
+pixels=[];}
+return{Add:AddPixel,Fire:Fire};})();</script><script data-ezscrex='false' data-cfasync='false' data-pagespeed-no-defer>__ez.pel=(function(){var pixels=[],pxURL="/porpoiseant/army.gif";function AddAndFirePixel(adSlot,pixelData){AddPixel(adSlot,pixelData,0,0,0,0,0);Fire();}
+function AddAndFireOrigPixel(adSlot,pixelData){AddPixel(adSlot,pixelData,0,0,0,0,0,true);Fire();}
+function GetCurrentPixels(){return pixels;}
+function AddPixel(adSlot,pixelData,revenue,est_revenue,bid_floor_filled,bid_floor_prev,stat_source_id,isOrig){if(!__ez.dot.isDefined(adSlot)||__ez.dot.isAnyDefined(adSlot.getSlotElementId,adSlot.ElementId)==false){return;}
+var ad_position_id=parseInt(__ez.dot.getTargeting(adSlot,'ap'));var impId=__ez.dot.getSlotIID(adSlot),adUnit=__ez.dot.getAdUnit(adSlot,isOrig);var compId=parseInt(__ez.dot.getTargeting(adSlot,"compid"));var lineItemId=0;var creativeId=0;var ezimData=getEzimData(adSlot);if(typeof ezimData=='object'){if(ezimData.creative_id!==undefined){creativeId=ezimData.creative_id;}
+if(ezimData.line_item_id!==undefined){lineItemId=ezimData.line_item_id;}}
+if(__ez.dot.isDefined(impId,adUnit)&&__ez.dot.isValid(pixelData)){pixels.push({type:"impression",impression_id:impId,domain_id:__ez.dot.getDID(),unit:adUnit,t_epoch:__ez.dot.getEpoch(0),revenue:revenue,est_revenue:est_revenue,ad_position:ad_position_id,ad_size:"",bid_floor_filled:bid_floor_filled,bid_floor_prev:bid_floor_prev,stat_source_id:stat_source_id,country_code:__ez.dot.getCC(),pageview_id:__ez.dot.getPageviewId(),comp_id:compId,line_item_id:lineItemId,creative_id:creativeId,data:__ez.dot.dataToStr(pixelData),is_orig:isOrig||__ez.template.isOrig,});}}
+function AddPixelById(impFullId,pixelData,isOrig){var vals=impFullId.split('/');if(__ez.dot.isDefined(impFullId)&&vals.length===3&&__ez.dot.isValid(pixelData)){var adUnit=vals[0],impId=vals[2];pixels.push({type:"impression",impression_id:impId,domain_id:__ez.dot.getDID(),unit:adUnit,t_epoch:__ez.dot.getEpoch(0),pageview_id:__ez.dot.getPageviewId(),data:__ez.dot.dataToStr(pixelData),is_orig:isOrig||__ez.template.isOrig});}}
+function Fire(){if(typeof document.visibilityState!=='undefined'&&document.visibilityState==="prerender")return;if(__ez.dot.isDefined(pixels)&&pixels.length>0){var allPixels=[pixels.filter(function(pixel){return pixel.is_orig}),pixels.filter(function(pixel){return!pixel.is_orig})];allPixels.forEach(function(pixels){while(pixels.length>0){var isOrig=pixels[0].is_orig||false;var j=5;if(j>pixels.length){j=pixels.length;}
+var pushPixels=pixels.splice(0,j);var pixelURL=__ez.dot.getURL(pxURL)+"?orig="+(isOrig===true?1:0)+"&sts="+btoa(JSON.stringify(pushPixels));if(typeof window.isAmp!=='undefined'&&isAmp&&typeof window._ezaq!=='undefined'&&_ezaq.hasOwnProperty("domain_id")){pixelURL+="&visit_uuid="+_ezaq['visit_uuid'];}
+__ez.dot.Fire(pixelURL);}})}
+pixels=[];}
+function getEzimData(adSlot){if(typeof _ezim_d=="undefined"){return false}
+var adUnitName=__ez.dot.getAdUnitPath(adSlot).split('/').pop();if(typeof _ezim_d==='object'&&_ezim_d.hasOwnProperty(adUnitName)){return _ezim_d[adUnitName];}
+for(var ezimKey in _ezim_d){if(ezimKey.split('/').pop()===adUnitName){return _ezim_d[ezimKey];}}
+return false;}
+return{Add:AddPixel,AddAndFire:AddAndFirePixel,AddAndFireOrig:AddAndFireOrigPixel,AddById:AddPixelById,Fire:Fire,GetPixels:GetCurrentPixels,};})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="profile" href="https://gmpg.org/xfn/11" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+<title>Happy Fourth of July - The Declaration of Independence Annotated - Bookworm Room</title>
+<link rel="canonical" href="https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Happy Fourth of July - The Declaration of Independence Annotated - Bookworm Room" />
+<meta property="og:description" content="The Declaration of Independence was published by the Second Continental Congress on this day in 1776.  Their audiences were the American colonists, to justify our call to arms, and Britain’s enemies, to assure them of our intent. Thomas Jefferson’s preamble, with his famous proclamation that all people are equal before" />
+<meta property="og:url" content="https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/" />
+<meta property="og:site_name" content="Bookworm Room" />
+<meta property="article:publisher" content="https://www.facebook.com/Bookworm-Room-128475230511762/" />
+<meta property="article:published_time" content="2021-07-04T11:48:42+00:00" />
+<meta property="article:modified_time" content="2021-07-04T20:24:22+00:00" />
+<meta property="og:image" content="http://www.bookwormroom.com/wp-content/uploads/2021/07/United_States_Declaration_of_Independence.jpg" />
+<meta property="og:image:width" content="1000" />
+<meta property="og:image:height" content="562" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:creator" content="@Bookwormroom" />
+<meta name="twitter:site" content="@Bookwormroom" />
+<meta name="twitter:label1" content="Written by" />
+<meta name="twitter:data1" content="Wolf Howling" />
+<meta name="twitter:label2" content="Est. reading time" />
+<meta name="twitter:data2" content="26 minutes" />
+<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.bookwormroom.com/#website","url":"https://www.bookwormroom.com/","name":"Bookworm Room","description":"Conservatives deal with facts and reach conclusions; liberals have conclusions and sell them as facts.","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.bookwormroom.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"ImageObject","@id":"https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/#primaryimage","inLanguage":"en-US","url":"https://www.bookwormroom.com/wp-content/uploads/2021/07/United_States_Declaration_of_Independence.jpg","contentUrl":"https://www.bookwormroom.com/wp-content/uploads/2021/07/United_States_Declaration_of_Independence.jpg","width":1000,"height":562},{"@type":"WebPage","@id":"https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/#webpage","url":"https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/","name":"Happy Fourth of July - The Declaration of Independence Annotated - Bookworm Room","isPartOf":{"@id":"https://www.bookwormroom.com/#website"},"primaryImageOfPage":{"@id":"https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/#primaryimage"},"datePublished":"2021-07-04T11:48:42+00:00","dateModified":"2021-07-04T20:24:22+00:00","author":{"@id":"https://www.bookwormroom.com/#/schema/person/95853e72d4c663da8207eeecd44d4b66"},"breadcrumb":{"@id":"https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/"]}]},{"@type":"BreadcrumbList","@id":"https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.bookwormroom.com/"},{"@type":"ListItem","position":2,"name":"Happy Fourth of July &#8212; The Declaration of Independence Annotated"}]},{"@type":"Person","@id":"https://www.bookwormroom.com/#/schema/person/95853e72d4c663da8207eeecd44d4b66","name":"Wolf Howling","image":{"@type":"ImageObject","@id":"https://www.bookwormroom.com/#personlogo","inLanguage":"en-US","url":"https://secure.gravatar.com/avatar/8c05a036c7df2943d01694c5943ca3ef?s=96&d=wavatar&r=g","contentUrl":"https://secure.gravatar.com/avatar/8c05a036c7df2943d01694c5943ca3ef?s=96&d=wavatar&r=g","caption":"Wolf Howling"},"url":"https://www.bookwormroom.com/author/wolf-howling/"}]}</script>
+
+<link rel="dns-prefetch" href="//secure.gravatar.com" />
+<link rel="dns-prefetch" href="//s.w.org" />
+<link rel="dns-prefetch" href="//v0.wordpress.com" />
+<link rel="alternate" type="application/rss+xml" title="Bookworm Room » Feed" href="https://www.bookwormroom.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Bookworm Room » Comments Feed" href="https://www.bookwormroom.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Bookworm Room » Happy Fourth of July — The Declaration of Independence Annotated Comments Feed" href="https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/feed/" />
+<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.bookwormroom.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.7.2"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([55357,56424,8205,55356,57212],[55357,56424,8203,55356,57212])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="donovan-theme-fonts-css" href="https://www.bookwormroom.com/wp-content/fonts/6ce86b985cce06757fa1cac4202fb95c.css?ver=20201110" type="text/css" media="all" />
+<link rel="stylesheet" id="wp-block-library-css" href="https://www.bookwormroom.com/wp-includes/css/dist/block-library/style.min.css?ver=5.7.2" type="text/css" media="all" />
+<style id="wp-block-library-inline-css" type="text/css">
+.has-text-align-justify{text-align:justify;}
+</style>
+<link rel="stylesheet" id="mediaelement-css" href="https://www.bookwormroom.com/wp-includes/js/mediaelement/mediaelementplayer-legacy.min.css?ver=4.2.16" type="text/css" media="all" />
+<link rel="stylesheet" id="wp-mediaelement-css" href="https://www.bookwormroom.com/wp-includes/js/mediaelement/wp-mediaelement.min.css?ver=5.7.2" type="text/css" media="all" />
+<link rel="stylesheet" id="email-subscribers-css" href="https://www.bookwormroom.com/wp-content/plugins/email-subscribers/lite/public/css/email-subscribers-public.css?ver=4.7.4" type="text/css" media="all" />
+<link rel="stylesheet" id="donovan-stylesheet-css" href="https://www.bookwormroom.com/wp-content/themes/donovan/style.css?ver=1.8.2" type="text/css" media="all" />
+<link rel="stylesheet" id="addtoany-css" href="https://www.bookwormroom.com/wp-content/plugins/add-to-any/addtoany.min.css?ver=1.15" type="text/css" media="all" />
+<link rel="stylesheet" id="social-logos-css" href="https://www.bookwormroom.com/wp-content/plugins/jetpack/_inc/social-logos/social-logos.min.css?ver=9.9" type="text/css" media="all" />
+<link rel="stylesheet" id="jetpack_css-css" href="https://www.bookwormroom.com/wp-content/plugins/jetpack/css/jetpack.css?ver=9.9" type="text/css" media="all" />
+<script type="text/javascript" src="https://www.bookwormroom.com/wp-includes/js/jquery/jquery.min.js?ver=3.5.1" id="jquery-core-js"></script>
+<script type="text/javascript" src="https://www.bookwormroom.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2" id="jquery-migrate-js"></script>
+<script type="text/javascript" src="https://www.bookwormroom.com/wp-content/plugins/add-to-any/addtoany.min.js?ver=1.1" id="addtoany-js"></script>
+<script type="text/javascript" id="email-subscribers-js-extra">
+/* <![CDATA[ */
+var es_data = {"messages":{"es_empty_email_notice":"Please enter email address","es_rate_limit_notice":"You need to wait for sometime before subscribing again","es_single_optin_success_message":"Successfully Subscribed.","es_email_exists_notice":"Email Address already exists!","es_unexpected_error_notice":"Oops.. Unexpected error occurred.","es_invalid_email_notice":"Invalid email address","es_try_later_notice":"Please try after some time"},"es_ajax_url":"https:\/\/www.bookwormroom.com\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.bookwormroom.com/wp-content/plugins/email-subscribers/lite/public/js/email-subscribers-public.js?ver=4.7.4" id="email-subscribers-js"></script>
+<script type="text/javascript" src="https://www.bookwormroom.com/wp-content/themes/donovan/assets/js/svgxuse.min.js?ver=1.2.6" id="svgxuse-js"></script>
+<link rel="https://api.w.org/" href="https://www.bookwormroom.com/wp-json/" /><link rel="alternate" type="application/json" href="https://www.bookwormroom.com/wp-json/wp/v2/posts/73258" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.bookwormroom.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.bookwormroom.com/wp-includes/wlwmanifest.xml" />
+<meta name="generator" content="WordPress 5.7.2" />
+<link rel="shortlink" href="https://wp.me/pc49I-j3A" />
+<link rel="alternate" type="application/json+oembed" href="https://www.bookwormroom.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.bookwormroom.com%2F2021%2F07%2F04%2Fhappy-fourth-of-july-the-declaration-of-independence-annotated%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.bookwormroom.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.bookwormroom.com%2F2021%2F07%2F04%2Fhappy-fourth-of-july-the-declaration-of-independence-annotated%2F&amp;format=xml" />
+<script data-cfasync="false">
+window.a2a_config=window.a2a_config||{};a2a_config.callbacks=[];a2a_config.overlays=[];a2a_config.templates={};
+(function(d,s,a,b){a=d.createElement(s);b=d.getElementsByTagName(s)[0];a.async=1;a.src="https://static.addtoany.com/menu/page.js";b.parentNode.insertBefore(a,b);})(document,"script");
+</script>
+
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-4408345-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-4408345-2');
+</script><link rel="pingback" href="https://www.bookwormroom.com/xmlrpc.php" />
+<link rel="icon" href="https://www.bookwormroom.com/wp-content/uploads/2020/01/cropped-Blue-bookworm-room-logo-32x32.jpg" sizes="32x32" />
+<link rel="icon" href="https://www.bookwormroom.com/wp-content/uploads/2020/01/cropped-Blue-bookworm-room-logo-192x192.jpg" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://www.bookwormroom.com/wp-content/uploads/2020/01/cropped-Blue-bookworm-room-logo-180x180.jpg" />
+<meta name="msapplication-TileImage" content="https://www.bookwormroom.com/wp-content/uploads/2020/01/cropped-Blue-bookworm-room-logo-270x270.jpg" />
+<style type="text/css" id="wp-custom-css">
+			add_action( 'after_setup_theme', 'default_attachment_display_settings' );
+/**
+ * Set the Attachment Display Settings "Link To" default to "none"
+ *
+ * This function is attached to the 'after_setup_theme' action hook.
+ */
+function default_attachment_display_settings() {
+	update_option( 'image_default_align', 'center' );
+	update_option( 'image_default_link_type', 'none' );
+	update_option( 'image_default_size', 'large' );
+}
+		</style>
+
+<style>
+		:root {
+--font-base: Georgia, Times, Times New Roman, serif;
+--font-headings: Georgia, Times, Times New Roman, serif;
+--font-input: Georgia, Times, Times New Roman, serif;
+}
+body, #content, .entry-content, .post-content, .page-content, .post-excerpt, .entry-summary, .entry-excerpt, .widget-area, .widget, .sidebar, #sidebar, footer, .footer, #footer, .site-footer {
+font-family: Georgia, Times, Times New Roman, serif;
+ }
+#site-title, .site-title, #site-title a, .site-title a, .entry-title, .entry-title a, h1, h2, h3, h4, h5, h6, .widget-title {
+font-family: Georgia, Times, Times New Roman, serif;
+ }
+button, .button, input, select, textarea, .wp-block-button, .wp-block-button__link {
+font-family: Georgia, Times, Times New Roman, serif;
+ }
+	</style>
+
+<script type="text/javascript">var ezouid = "1";</script><base href="https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/"><script type='text/javascript'>
+var ezoTemplate = 'old_site_gc';
+if(typeof ezouid == 'undefined')
+{
+    var ezouid = 'none';
+}
+var ezoFormfactor = '1';
+var ezo_elements_to_check = Array();
+</script>
+<script data-ezscrex="false" type='text/javascript'>
+var soc_app_id = '0';
+var did = 157321;
+var ezdomain = 'bookwormroom.com';
+var ezoicSearchable = 1;
+</script>
+
+
+<script data-ezscrex="false" type="text/javascript" data-cfasync="false">var _ezaq = {"ab_test_id":"mod1","ad_cache_level":0,"ad_lazyload_version":0,"ad_load_version":0,"city":"Claremont","country":"US","days_since_last_visit":-1,"domain_id":157321,"engaged_time_visit":0,"ezcache_level":0,"ezcache_skip_code":0,"form_factor_id":1,"framework_id":1,"is_return_visitor":false,"is_sitespeed":0,"last_page_load":"","last_pageview_id":"","lt_cache_level":0,"metro_code":803,"page_ad_positions":"","page_view_count":0,"page_view_id":"6c6b8922-202d-45fc-50a6-a3ce7291fce9","position_selection_id":0,"postal_code":"91711","pv_event_count":0,"response_size_orig":115277,"response_time_orig":0,"serverid":"3.238.67.210:9685","state":"CA","t_epoch":1625634769,"template_id":126,"time_on_site_visit":0,"url":"https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/","user_id":0,"visit_uuid":"821a85c5-444e-40e2-7326-e8a783fa7494","word_count":6707,"worst_bad_word_level":0};var _ezExtraQueries = "&ez_orig=1";</script><script data-ezscrex='false' data-cfasync='false' type="text/javascript">var ezWp = true;</script>
+<script data-ezscrex='false' data-pagespeed-no-defer data-cfasync='false'>
+function create_ezolpl(pvID, rv) {
+    var d = new Date();
+    d.setTime(d.getTime() + (365*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    __ez.ck.setByCat("ezux_lpl_157321=" + new Date().getTime() + "|" + pvID + "|" + rv + "; " + expires, 3);
+}
+function attach_ezolpl(pvID, rv) {
+    if (document.readyState === "complete") {
+        create_ezolpl(pvID, rv);
+    }
+    if(window.attachEvent) {
+        window.attachEvent("onload", create_ezolpl, pvID, rv);
+    } else {
+        if(window.onload) {
+            var curronload = window.onload;
+            var newonload = function(evt) {
+                curronload(evt);
+                create_ezolpl(pvID, rv);
+            };
+            window.onload = newonload;
+        } else {
+            window.onload = create_ezolpl.bind(null, pvID, rv);
+        }
+    }
+}
+
+__ez.queue.addFunc("attach_ezolpl", "attach_ezolpl", ["6c6b8922-202d-45fc-50a6-a3ce7291fce9", "false"], false, ['/detroitchicago/boise.js'], true, false, false, false);
+</script>
+<script type="text/javascript">var _audins_dom="bookwormroom_com",_audins_did=157321;__ez.queue.addFile('/detroitchicago/cmbv2.js', '//g.ezoic.net/detroitchicago/cmbv2.js?gcb=195-2&cb=04-100-406-1207-119-509-50d-813-315-31a-220-352-1&cmbcb=19&sj=x04x00x06x07x19x09x0dx13x15x1ax20x52', true, [], true, false, true, false);</script></head>
+<body class="post-template-default single single-post postid-73258 single-format-standard wp-embed-responsive centered-theme-layout blog-grid-layout categories-hidden">
+<div id="page" class="site">
+<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+<header id="masthead" class="site-header clearfix" role="banner">
+<div class="header-main container clearfix">
+<div id="logo" class="site-branding clearfix">
+<p class="site-title"><a href="https://www.bookwormroom.com/" rel="home">Bookworm Room</a></p>
+<p class="site-description">Conservatives deal with facts and reach conclusions; liberals have conclusions and sell them as facts.</p>
+</div>
+</div>
+<div id="main-navigation-wrap" class="primary-navigation-wrap">
+<div id="main-navigation-container" class="primary-navigation-container container">
+<button class="primary-menu-toggle menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+<svg class="icon icon-menu" aria-hidden="true" role="img"> <use xlink:href="https://www.bookwormroom.com/wp-content/themes/donovan/assets/icons/genericons-neue.svg#menu"></use> </svg><svg class="icon icon-close" aria-hidden="true" role="img"> <use xlink:href="https://www.bookwormroom.com/wp-content/themes/donovan/assets/icons/genericons-neue.svg#close"></use> </svg> <span class="menu-toggle-text">Menu</span>
+</button>
+<div class="primary-navigation">
+<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Primary Menu">
+<ul id="primary-menu" class="menu"><li id="menu-item-42818" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-42818"><a href="https://www.bookwormroom.com/contact/">Contact Bookworm</a></li>
+<li id="menu-item-65491" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-65491"><a href="https://www.bookwormroom.com/comment-policy/">Comment policy</a></li>
+<li id="menu-item-65772" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-65772"><a href="https://www.bookwormroom.com/?page_id=65771">Donate</a></li>
+</ul> </nav>
+</div>
+</div>
+</div>
+</header>
+<div id="content" class="site-content container">
+<div id="primary" class="content-area">
+<main id="main" class="site-main">
+<div class="code-block code-block-1" style="margin: 8px auto; text-align: center; display: block; clear: both;">
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-9070917587874823",
+          enable_page_level_ads: true
+     });
+</script>
+</div>
+<article id="post-73258" class="post-73258 post type-post status-publish format-standard has-post-thumbnail hentry category-america category-history tag-4776 tag-2nd-continental-congress tag-britain tag-declaration-of-independence tag-john-locke tag-thomas-jefferson tag-united-states">
+<div class="post-image">
+<img width="1000" height="562" src="https://www.bookwormroom.com/wp-content/uploads/2021/07/United_States_Declaration_of_Independence.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" loading="lazy" srcset="https://www.bookwormroom.com/wp-content/uploads/2021/07/United_States_Declaration_of_Independence.jpg 1000w, https://www.bookwormroom.com/wp-content/uploads/2021/07/United_States_Declaration_of_Independence-300x169.jpg 300w, https://www.bookwormroom.com/wp-content/uploads/2021/07/United_States_Declaration_of_Independence-768x432.jpg 768w" sizes="(max-width: 1000px) 100vw, 1000px" /> </div>
+<div class="post-content">
+<header class="entry-header">
+<h1 class="entry-title">Happy Fourth of July — The Declaration of Independence Annotated</h1>
+<div class="entry-meta post-details"><span class="posted-on meta-date">Posted on <a href="https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/" rel="bookmark"><time class="entry-date published" datetime="2021-07-04T07:48:42-04:00">July 4, 2021</time><time class="updated" datetime="2021-07-04T16:24:22-04:00">July 4, 2021</time></a></span><span class="posted-by meta-author"> by <span class="author vcard"><a class="url fn n" href="https://www.bookwormroom.com/author/wolf-howling/" title="View all posts by Wolf Howling" rel="author">Wolf Howling</a></span></span></div>
+</header>
+<div class="entry-content clearfix">
+<p><span style="color: #0000ff;">The Declaration of Independence was published by the Second Continental Congress on this day in 1776.  Their audiences were the American colonists, to justify our call to arms, and Britain’s enemies, to assure them of our intent.</span></p>
+<p><span style="color: #0000ff;">Thomas Jefferson’s preamble, with his famous proclamation that all people are equal before God (an argument he first used years earlier in a court case seeking freedom for a slave), was aspirational and marked the apex of the Enlightenment.  It is particularly timely now as we are living through the nadir of post-modernism, when the search for truth and equality are under seemingly the worst threat since the day the Declaration was published.</span></p>
+<p>Historical Context:  In 1760, Britain was on the verge of finally defeating France in the Seven Years War (with the U.S. theaters known as the French-Indian War and the First Anglo-Cherokee War), a world-war from which England would emerge as the world’s lone super-power.  The colonial economy was growing, and virtually every American colonist was proud to be a British citizen.  Even as Britain, out of misplaced jealousy and greed, slowly tried to strangle its colonies over the next sixteen years, the majority of colonists still wanted nothing more than to remain in the British fold.</p>
+<p>That finally changed among a bare majority of patriots after shots were fired at Lexington and Concord, in 1775, and after Thomas Paine published the most read pamphlet in American history, <a href="http://www.pinkmonkey.com/dl/library1/sense.pdf">Common Sense</a>, justifying rebellion against Britain.  A decision had to be made, though it was not clear that we would declare independence until, after several votes and much debate, we voted to do so on July 2, 1776.  The colonists themselves needed a sufficient reason to fight — to create a new nation that would be better than the old.  And the colonists needed foreign support, particularly from Britain’s long term enemies, France and the Netherlands.  Both would only offer their support to us if we unequivocally proclaimed that our intent was to form a new nation.  The Declaration of Independence was commissioned for those two audiences.</p>
+<p>Everyone knows Jefferson’s preamble, a restatement of <a href="https://lonang.com/library/reference/locke-two-treatises-government/">Locke’s natural rights theory</a> that itself is founded on Christianity.  It was the high watermark of the English Enlightenment.  Jefferson’s preamble provided the philosophical basis for our rebellion and the creation of our new nation.</p>
+<p>After Jefferson’s preamble came the specific complaints drafted by the joint effort of all of the members of the Second Continental Congress.  Everyone knows that the colonists demanded that they only be taxed — and subject to laws — passed by their own governments, not by the Parliament sitting in London.  But the members of the Second Continental Congress went far beyond that, setting forth in the Declaration of Independence the “long train of abuses,” to quote Jefferson who was, himself, quoting John Locke, that accumulated over sixteen years and that now justified our rebellion.</p>
+<p>As you read this, remember that, in July 1776, the outcome of this rebellion was anything but certain.  Moreover, signing the Declaration was a death warrant for the signatories.  If they lost the war and were caught, they faced being hanged, drawn and quartered for treason and their families thrown into absolute poverty.  When, at the end of the Declaration, Jefferson wrote that “we mutually pledge to each other our Lives, our Fortunes and our sacred Honor,” that was a statement of reality, not bravado.  Ben Franklin, a true wit, quipped at the time, “we can hang together, or most assuredly, we shall all hang separately.”  This nascent nation, a loose association of thirteen separate colonies, was undertaking a war against the world’s greatest power.  The signatories believed fully and completely in the rightness of their cause and trusted to “the protection of divine Providence” to see them through.</p>
+<p>The one high ranking member of the Revolution, Henry Laurens of South Carolina, a former President of the Second Continental Congress, who was caught by the Brits in 1780, was charged with treason and held in the Tower of London.  Fortunately for Laurens, the Brits soon after lost the Battle of Yorktown and Britain exchanged Laurens for Lord Cornwallis, the British commander captured by the Americans at Yorktown.</p>
+<p>———-</p>
+<p><a href="https://www.bookwormroom.com/wp-content/uploads/2018/07/1-Declaration-of-Independence-1.jpg"><img loading="lazy" class="alignleft size-medium wp-image-57034" src="https://www.bookwormroom.com/wp-content/uploads/2018/07/1-Declaration-of-Independence-1-255x300.jpg" alt="" width="255" height="300" srcset="https://www.bookwormroom.com/wp-content/uploads/2018/07/1-Declaration-of-Independence-1-255x300.jpg 255w, https://www.bookwormroom.com/wp-content/uploads/2018/07/1-Declaration-of-Independence-1.jpg 617w" sizes="(max-width: 255px) 100vw, 255px" /></a></p>
+<p><strong>IN CONGRESS, July 4, 1776</strong></p>
+<p>The unanimous Declaration of the thirteen united States of America,</p>
+<p>When in the Course of human events, it becomes necessary for one people to dissolve the political bands which have connected them with another, and to assume among the powers of the earth, the separate and equal station to which the Laws of Nature and of Nature’s God entitle them, a decent respect to the opinions of mankind requires that they should declare the causes which impel them to the separation.</p>
+<p>We hold these truths to be self-evident, that all men are created equal, that they are endowed by their Creator with certain unalienable Rights, that among these are Life, Liberty and the pursuit of Happiness.  That to secure these rights, Governments are instituted among Men, deriving their just powers from the consent of the governed,</p>
+<p>That whenever any Form of Government becomes destructive of these ends, it is the Right of the People to alter or to abolish it, and to institute new Government, laying its foundation on such principles and organizing its powers in such form, as to them shall seem most likely to effect their Safety and Happiness. Prudence, indeed, will dictate that Governments long established should not be changed for light and transient causes; and accordingly all experience hath shewn, that mankind are more disposed to suffer, while evils are sufferable, than to right themselves by abolishing the forms to which they are accustomed.</p>
+<p>But when a long train of abuses and usurpations, pursuing invariably the same Object evinces a design to reduce them under absolute Despotism, it is their right, it is their duty, to throw off such Government, and to provide new Guards for their future security.–Such has been the patient sufferance of these Colonies; and such is now the necessity which constrains them to alter their former Systems of Government. The history of the present <strong>King of Great Britain</strong> is a history of repeated injuries and usurpations, all having in direct object the establishment of an absolute Tyranny over these States. To prove this, let Facts be submitted to a candid world.</p>
+<p><strong>He</strong> has refused his Assent to Laws, the most wholesome and necessary for the public good.</p>
+<blockquote><p><span style="color: #993300;"><em>[This is a generic complaint against the King for retaining power to veto duly passed local laws and likely a specific complaint about the <a style="color: #993300;" href="https://en.wikipedia.org/wiki/History_of_slavery_in_Pennsylvania">King’s repeated veto of laws</a> passed by Pennsylvania to restrict the slave trade in that colony. ]</em></span></p></blockquote>
+<p><strong>He</strong> has forbidden his Governors to pass Laws of immediate and pressing importance, unless suspended in their operation till his Assent should be obtained; and when so suspended, he has utterly neglected to attend to them.</p>
+<blockquote><p><span style="color: #993300;"><em>[Unsure]</em></span></p></blockquote>
+<p><strong>He</strong> has refused to pass other Laws for the accommodation of large districts of people, unless those people would relinquish the right of Representation in the Legislature, a right inestimable to them and formidable to tyrants only.</p>
+<blockquote><p><span style="color: #993300;"><em>[This no doubt refers to the <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Quebec_Act">Quebec Act of 1774</a>, that ignored the complaints of British citizens living in Canada and did away with representative government there, establishing in its place a legislative council appointed by the King.  It might seem odd that the Second Continental Congress should be concerned with what was happening in Canada, but at this point, some of the members of Congress still held out hope that <a style="color: #993300;" href="https://www.amrevmuseum.org/updates/reflections/canada-and-american-revolution">Canada might join</a> with the lower thirteen colonies in rebellion against the Crown.]</em></span></p></blockquote>
+<p><strong>He</strong> has called together legislative bodies at places unusual, uncomfortable, and distant from the depository of their public Records, for the sole purpose of fatiguing them into compliance with his measures.</p>
+<blockquote><p><span style="color: #993300;"><em>[<a style="color: #993300;" href="https://en.wikipedia.org/wiki/Boston_Port_Act">The Boston Port Act</a> of 1774, part of the <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Intolerable_Acts">Intolerable Acts</a> designed to punish Boston and the colony of Massachusetts after the <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Boston_Tea_Party">Tea Party</a>, provided in part that the legislature of Massachusetts Bay Colony would, in the future, meet in Salem, not Boston. Similar events happened in Virginia and South Carolina as their respective Royal Governors tried to disrupt intransigent legislatures.]</em></span></p></blockquote>
+<p><strong>He</strong> has dissolved Representative Houses repeatedly, for opposing with manly firmness his invasions on the rights of the people.</p>
+<blockquote><p><span style="color: #993300;"><em>[In 1768 and 1769, Britain’s colonial Secretary ordered all legislatures be dissolved if they adopted the <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Massachusetts_Circular_Letter">Mass. Circular Letter</a> seeking to unify the colonies and petition the government to rescind the <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Townshend_Acts">Townshend Acts</a> as unconstitutional. This passage also likely refers to the <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Massachusetts_Government_Act">Massachusetts Government Act of 1774</a>, part of the <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Intolerable_Acts">Intolerable Acts</a>, that functionally ended representative government in Massachusetts. The royal legislatures of the colonies were dissolved individually by the Royal Governors, most in 1775, as they lost control of each colony to the patriots.]</em></span></p></blockquote>
+<p><strong>He</strong> has refused for a long time, after such dissolutions, to cause others to be elected; whereby the Legislative powers, incapable of Annihilation, have returned to the People at large for their exercise; the State remaining in the mean time exposed to all the dangers of invasion from without, and convulsions within.</p>
+<blockquote><p><span style="color: #993300;"><em>[Britain’s practice of dissolving colonial legislative bodies was meant to stop troublesome legislatures and prevent them from conducting the jobs they were elected to do. Though complaining of this practice, this indictment also states the principle that the source of all local law is the people, not the King, and that such dissolutions has among its effects an abrogation of the sovereign’s fundamental duties to defend the colony and maintain the peace. ]</em></span></p></blockquote>
+<p><strong>He</strong> has endeavoured to prevent the population of these States; for that purpose obstructing the Laws for Naturalization of Foreigners; refusing to pass others to encourage their migrations hither, and raising the conditions of new Appropriations of Lands.</p>
+<blockquote><p><span style="color: #993300;"><em>[<a style="color: #993300;" href="https://en.wikipedia.org/wiki/Nationality_law_in_the_American_Colonies">The British Nationality Laws</a> as applied in the American Colonies were a minor but persistent source of irritation between the colonies and Parliament.]</em></span></p></blockquote>
+<p><strong>He</strong> has obstructed the Administration of Justice, by refusing his Assent to Laws for establishing Judiciary powers.</p>
+<blockquote><p><span style="color: #993300;"><em>[This likely refers to the difficulty the colonies experienced in getting the Board of Trade to approve election districts, judicial bodies and administrative bodies for numerous new communities forming in their “back country” after 1760. In SC and NC, this occurred because people in the Board of Trade had a financial interest in the Court fees that accrued in existing courts, which fees would have been diluted had the Board approved creation of new courts. It led to the largely disastrous <a style="color: #993300;" href="https://en.wikipedia.org/wiki/War_of_the_Regulation">vigilante Regulator Movement in NC and SC</a>. ]</em></span></p></blockquote>
+<p><strong>He</strong> has made Judges dependent on his Will alone, for the tenure of their offices, and the amount and payment of their salaries.</p>
+<blockquote><p><span style="color: #993300;"><em>[Assuring an independent judiciary was an important theme in British history from the 15th to 18th centuries. It was solved in 1701 by <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Act_of_Settlement_1701">The Act Of Settlement</a> which provided that judges had tenure, subject only to recall by Parliament for cause. But Parliament passed a law in 1761 providing that judges in the colonies, most often appointed from among the local populace, served solely at the King’s pleasure and could be removed from office at any time for any reason. ]</em></span></p></blockquote>
+<p><strong>He</strong> has erected a multitude of New Offices, and sent hither swarms of Officers to harrass our people, and eat out their substance.</p>
+<blockquote><p><span style="color: #993300;"><em>[This was a very significant cause of the revolution. Beginning with provisions of the <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Sugar_Act">Sugar Act of 1764</a>, Britain severely burdened American commerce in an effort to raise revenue and stop smuggling. Parliament significantly increased the number of customs agents in the colonies and gave these agents, as well as judges in the Admiralty Courts and each colony’s Royal Governor, a personal financial stake in the administrative fees and fines arising out of prosecutions for smuggling. The end result was a very abusive and corrupt system that made a mockery of the law and British rights.]</em></span></p></blockquote>
+<p><strong>He</strong> has kept among us, in times of peace, Standing Armies without the Consent of our legislatures.</p>
+<blockquote><p><span style="color: #993300;"><em>[In the 18th century, people were very distrustful of standing Armies as history, from the time of Julius Caesar to Oliver Cromwell, showed that standing armies were always a threat to civilian governments. Indeed, prohibitions against standing armies and forced quartering of armies both appear in the <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Bill_of_Rights_1689">Bill of Rights of 1689</a>. Yet in 1763, after the <a style="color: #993300;" href="https://en.wikipedia.org/wiki/French_and_Indian_War">French and Indian War</a>, Britain opted to maintain an army of 10,000 men in the American colonies, ostensibly to protect against Indians. Colonists objected to the standing army, which they did not see as necessary, and strongly objected to being forced by Parliament to bear part of the cost and maintenance of the army.]</em></span></p></blockquote>
+<p><strong>He</strong> has affected to render the Military independent of and superior to the Civil power.</p>
+<p><strong>He</strong> has combined with others to subject us to a jurisdiction foreign to our constitution, and unacknowledged by our laws; giving his Assent to their Acts of pretended Legislation:</p>
+<p><span style="color: #993300;"><em>[This begins a series of charges against Parliament, for passing legislation effecting and taxing colonists directly, and against the King for his role in approving their laws.  The three constitutional documents of English history, the Magna Carta of 1215, the Petition of Rights of 1628, and the English Bill of Rights of 1689 all, in one form or another, provided for people to vote for their representatives and the necessity that their representatives have the power to vote on all laws and taxes binding the people. The colonists were not represented in Parliament and most colonies, by their charters, had been given the sole right to raise taxes and pass laws locally applicable. When Parliament began impinging on those rights and legislating laws on behalf of the colonists without their consent, this became the rallying cry of the colonists.]</em></span></p>
+<blockquote><p>For Quartering large bodies of armed troops among us:</p>
+<p><span style="color: #993300;"><em>[<a style="color: #993300;" href="https://en.wikipedia.org/wiki/Quartering_Acts">Quartering Act of 1765</a> and the <a style="color: #993300;" href="http://avalon.law.yale.edu/18th_century/quartering_act_1774.asp">Quartering Act of 1774</a>, the latter of which was part of the <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Intolerable_Acts">Intolerable Acts</a> and which authorized, in certain cases, forced quartering of British soldiers on private property.]</em></span></p>
+<p>For protecting them, by a mock Trial, from punishment for any Murders which they should commit on the Inhabitants of these States:</p>
+<p><span style="color: #993300;"><em>[This refers to <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Administration_of_Justice_Act_1774">Administration of Justice Act</a>, also part of the <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Intolerable_Acts">Intolerable Acts</a>, allowed Royal Governors to direct that trials brought against British soldiers and officers for crimes they committed in the colonies be moved to Britain. This would have placed such a burden on local witnesses to spend months travelling to and from Britain, as well as attending trial, all with no compensation other than travel expenses, that it effectively placed British soldiers and officers outside of the law. In addition, in 1773, a customs official was convicted of a local jury in Boston for the murder of 11 year old Christopher Seider when the official fired his gun directly into the middle of a crowd to disperse them. King George III immediately granted the murderer a full pardon.]</em></span></p>
+<p>For cutting off our Trade with all parts of the world:</p>
+<p><span style="color: #993300;"><em>[The <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Restraining_Acts_1775">Restraining Acts of 1775</a> and the <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Prohibitory_Act">Prohibitory Acts</a> were two punitive provisions passed by Britain to break the economic back of those colonies that adopted an embargo against British trade over the <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Intolerable_Acts">Intolerable Acts</a>. The Prohibitory Act went further, declaring the colonies to be in a state of rebellion. It amounted to a declaration of war and authorized a total blockade of the colonies. ]</em></span></p>
+<p>For imposing Taxes on us without our Consent:</p>
+<p><span style="color: #993300;"><em>[<a style="color: #993300;" href="https://en.wikipedia.org/wiki/Stamp_Act_1765">Stamp Act of 1765</a>; <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Townshend_Acts">Townshend Acts of 1767</a>, <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Tea_Act">Tea Act of 1773</a>]</em></span></p>
+<p>For depriving us in many cases, of the benefits of Trial by Jury:</p>
+<p><span style="color: #993300;"><em>[In 1764, with the Sugar Act, <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Vice_admiralty_court">Britain began using Admiralty Courts to hear criminal and civil cases involving smuggling</a>. These courts were a mockery of British Rights. Cases were heard and decided by a single judge with no jury. A defendant was presumed guilty and had to prove his innocence. Standards for admitting evidence were much lower than in normal courts. There was no right to confront witnesses. And to make it completely corrupt, Admiralty Court judges received commissions based on the value of ships and trade goods they ordered forfeit. ]</em></span></p>
+<p>For transporting us beyond Seas to be tried for pretended offences</p>
+<p><span style="color: #993300;"><em>[This likely refers to two policies. A provision of the Sugar Act allowed a British official to direct that a trial for smuggling be held not in the local Admiralty Court, where the judge would have been a colonist, but in the Vice Admiralty Court that sat in Nova Scotia with a judge appointed directly by the King. The second policy was one proclaimed by Britain but never put into effect. In 1768, the British Secretary for the colonies charged that the attempt, through the Massachusetts Circular Letter, to unify the colonies in peaceful opposition to the Townshend Acts amounted to high treason. Referring to a long outdated law passed under the reign of Henry VIII, Britain claimed the right to bring any colonist to Britain to be tried for a crime amounting to high treason. The colonists strenuously objected to this law in light of their own colonial Charters. The only serious attempt to arrest people for high treason and send them to Britain for trial was General Gage’s march on Concord, one goal of which was to arrest Samuel Adams and John Hancock.]</em></span></p>
+<p>For abolishing the free System of English Laws in a neighbouring Province, establishing therein an Arbitrary government, and enlarging its Boundaries so as to render it at once an example and fit instrument for introducing the same absolute rule into these Colonies:</p>
+<p><span style="color: #993300;"><em>[This refers to the Quebec Act, of which the colonists were deeply distrustful and angry. One, it expanded the boundaries of Canada into territory claimed by several of the American colonies. Two, it ended representative government in Canada. Three, it did away with British civil law in Canada in favor of French civil law Four, it favored French Roman Catholics. The American colonists religiously pluralistic but for Catholicism which had been the bete noir of British protestants since the days of Europe’s brutal religious wars. The purpose of the Quebec Act was to satisfy the largely French population of that country and insure that Canada did not join the lower thirteen colonies in opposition to the Crown.]</em></span></p>
+<p>For taking away our Charters, abolishing our most valuable Laws, and altering fundamentally the Forms of our Governments:</p>
+<p><span style="color: #993300;"><em>[Britain attempted to do this on more than one occasion in colonial history, but by 1776, this indictment probably only referred to the <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Massachusetts_Government_Act">Massachusetts Government Act</a>, also a part of the <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Intolerable_Acts">Intolerable Acts</a>. By this law, the King unilaterally abrogated the charter governing the colony, in all but name did away with representative democracy, going so far as to outlaw town meetings not pre-approved. This was a clear warning to all of the other colonies that they needed to submit to British demands or Britain would impose martial law upon them. The colonists chose a third option.]</em></span></p>
+<p>For suspending our own Legislatures, and declaring themselves invested with power to legislate for us in all cases whatsoever.</p>
+<p><span style="color: #993300;"><em>[This repeats the indictment about the <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Massachusetts_Government_Act">Massachusetts Government Act</a>, but adds a specific complaint against the <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Declaratory_Act">Declaratory Act</a>, which provided that Parliament had unlimited power to legislate for the colonies in all matters. The Declaratory Act was passed in 1766, at the same time Parliament rescinded the <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Stamp_Act_1765">Stamp Act</a>, as a means for Parliament to save face.]</em></span></p></blockquote>
+<p><strong>He</strong> has abdicated Government here, by declaring us out of his Protection and waging War against us.</p>
+<blockquote><p><span style="color: #993300;"><em>[This refers to the <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Prohibitory_Act">Prohibitory Act</a> and the clash of arms at <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Battles_of_Lexington_and_Concord">Lexington and Concord</a>, then <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Battle_of_Bunker_Hill">Bunker Hill</a>.]</em></span></p></blockquote>
+<p><strong>He</strong> has plundered our seas, ravaged our Coasts, burnt our towns, and destroyed the lives of our people.</p>
+<blockquote><p><span style="color: #993300;"><em>[In late 1775, the Royal Navy engaged in several raids against civilian targets in coastal towns, culminating most notoriously in the <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Burning_of_Falmouth">burning of the town of Falmouth</a>. These were shocking acts of terrorism and, in particular, convinced at least one still uncommitted colony, South Carolina, that the colony should join in active rebellion against Britain.]</em></span></p></blockquote>
+<p><strong>He</strong> is at this time transporting large Armies of foreign Mercenaries to compleat the works of death, desolation and tyranny, already begun with circumstances of Cruelty &amp; perfidy scarcely paralleled in the most barbarous ages, and totally unworthy the Head of a civilized nation.</p>
+<blockquote><p><span style="color: #993300;"><em>[Britain made <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Germans_in_the_American_Revolution">extensive use of German mercenaries</a> to augment their forces in the colonies. This was seen as particularly treacherous by the colonists.]</em></span></p></blockquote>
+<p><strong>He</strong> has constrained our fellow Citizens taken Captive on the high Seas to bear Arms against their Country, to become the executioners of their friends and Brethren, or to fall themselves by their Hands.</p>
+<blockquote><p><span style="color: #993300;"><em>[<a style="color: #993300;" href="https://en.wikipedia.org/wiki/Prohibitory_Act">The Prohibitory Act</a> authorized not merely the capture of American ships, but the impressment of any of her crewmen into service aboard British naval ships.]</em></span></p></blockquote>
+<p><strong>He</strong> has excited domestic insurrections amongst us, and has endeavoured to bring on the inhabitants of our frontiers, the merciless Indian Savages, whose known rule of warfare, is an undistinguished destruction of all ages, sexes and conditions.</p>
+<blockquote><p><span style="color: #993300;"><em>[The Southern colonies had large slave populations. The Royal Governor of Virginia, in late 1775, issued what became known as <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Dunmore%27s_Proclamation">Dunmore’s Proclamation</a>, offering freedom to any slave owned by a patriot who would take up arms against the patriots. As to the Indians, those who engaged in warfare against the colonists over the past century had a well earned reputation for savagery and attacking civilians of all ages and sexes. For instance, The <a style="color: #993300;" href="http://next1000.com/family/EC/LongCane.massacre.html">Long Canes Massacre</a> and the ordeal of <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Hannah_Duston">Hannah Duston</a> are but two examples. The colonists viewed British efforts to enlist the various Indian tribes to war against the colonists as acts of particular evil. And while the Congress did not know it, when they drafted this passage, the Cherokee Indians, acting at the behest of Britain, had already <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Cherokee%E2%80%93American_wars">started their war against the colonists</a> in SC, NC, Georgia and Virginia, in a series of attacks that were supposed to be timed to coincide with the first British offensive of the Revolutionary War outside of Boston, the <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Battle_of_Sullivan%27s_Island">British attack on Charleston, S.C.</a>.]</em></span></p></blockquote>
+<p>In every stage of these Oppressions We have Petitioned for Redress in the most humble terms: Our repeated Petitions have been answered only by repeated injury. A Prince whose character is thus marked by every act which may define a Tyrant, is unfit to be the ruler of a free people.</p>
+<blockquote><p><span style="color: #993300;"><em>[1774 <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Petition_to_the_King">Petition to the King</a>; 1775 <a style="color: #993300;" href="https://en.wikipedia.org/wiki/Olive_Branch_Petition">Olive Branch Petition</a>]</em></span></p></blockquote>
+<p>Nor have We been wanting in attentions to our Brittish brethren. We have warned them from time to time of attempts by their legislature to extend an unwarrantable jurisdiction over us. We have reminded them of the circumstances of our emigration and settlement here. We have appealed to their native justice and magnanimity, and we have conjured them by the ties of our common kindred to disavow these usurpations, which, would inevitably interrupt our connections and correspondence. They too have been deaf to the voice of justice and of consanguinity. We must, therefore, acquiesce in the necessity, which denounces our Separation, and hold them, as we hold the rest of mankind, Enemies in War, in Peace Friends.</p>
+<p>We, therefore, the Representatives of the united States of America, in General Congress, Assembled, appealing to the Supreme Judge of the world for the rectitude of our intentions, do, in the Name, and by Authority of the good People of these Colonies, solemnly publish and declare, That these United Colonies are, and of Right ought to be Free and Independent States; that they are Absolved from all Allegiance to the British Crown, and that all political connection between them and the State of Great Britain, is and ought to be totally dissolved; and that as Free and Independent States, they have full Power to levy War, conclude Peace, contract Alliances, establish Commerce, and to do all other Acts and Things which Independent States may of right do.</p>
+<p>And for the support of this Declaration, with a firm reliance on the protection of divine Providence, we mutually pledge to each other our Lives, our Fortunes and our sacred Honor.</p>
+<p>———-</p>
+<p>Many of the concerns of the raised by the colonists in 1776 are unique to their time and place simply because they eventually wrote corrections for them into our Constitution eleven years later.  For but one example, the practice of the Crown to dissolve troublesome colonial parliaments upon their whim is not allowed our President by our Constitution.  For another, we’ve made mandatory the due process of law in several different provisions of the Constitution and the Bill of Rights.</p>
+<p>But there are concerns in the Declaration of Independence that are every bit as problematic in the modern day.  Indeed, there are two very big ones that were at the center of our rebellion in 1776.   And those problems aren’t because they are somehow new, but rather they arise out of progressives seeking a way around Art. I, Sec. I, that all legislative authority resides in Congress, and Article V, that limits our nation to two means by which the Constitution may be amended, neither of which is by judicial fiat.</p>
+<p>The first is the right of the people to have all of their laws passed by their elected representatives.  That worked until a century ago, when progressives introduced regulatory agencies and a Supreme Court was cowed into approving them by FDR’s threat of packing the Supreme Court.  Progressives use the regulatory bureaucracy to work fundamental changes to our nation through regulations, all with the force of law, that are never voted upon by our elected representatives — or in truly obscene cases, that have been rejected by Congress.  For example, since 2009, we have been passing laws on the proposition that carbon dioxide is a pollutant.  In 2009, our elected representatives voted down a bill that would have included regulating carbon as a pollutant.  Within months, Obama’s EPA unilaterally declared carbon a pollutant, claiming the power to do so under the Clean Air Act.</p>
+<p>A second major concern of the colonists was the judiciary and fair application of the law.  Admittedly, the colonists were concerned about a judiciary that was under the influence of the King, whereas our problem today is a judiciary without checks and balances that no longer has fidelity to the rule of law but rather to progressive ideology.  And now with the progressives facing loss of a Supreme Court that holds to progressive ideology, they are . . . going back to FDR’s Court Packing scheme.</p>
+<p>At any rate, Powerline has posted the comments of two Presidents on the Declaration of Independence.  The quotes are so good that I include them below just to memorialize them here for future reference.  Please do visit Powerline to read both posts in full.  <a href="http://www.powerlineblog.com/archives/2018/07/the-eternal-meaning-of-independence-day-2-4.php">The first</a> comes from a speech given by President Calvin Coolidge on July 4, 1926:</p>
+<blockquote><p>About the Declaration there is a finality that is exceedingly restful. It is often asserted that the world has made a great deal of progress since 1776, that we have had new thoughts and new experiences which have given us a great advance over the people of that day, and that we may therefore very well discard their conclusions for something more modern. But that reasoning can not be applied to this great charter. If all men are created equal, that is final. If they are endowed with inalienable rights, that is final. If governments derive their just powers from the consent of the governed, that is final. No advance, no progress can be made beyond these propositions. If anyone wishes to deny their truth or their soundness, the only direction in which he can proceed historically is not forward, but backward toward the time when there was no equality, no rights of the individual, no rule of the people. Those who wish to proceed in that direction can not lay claim to progress. They are reactionary. Their ideas are not more modern, but more ancient, than those of the Revolutionary fathers.</p></blockquote>
+<p>The second exceptional commentary about the ideals expressed in the Declaration of Independence comes from a speech by Abraham Lincoln in response to a statement by his political rival, Stephen Douglas,“that in my opinion this government of ours is founded on the white basis. It was made by the white man, for the benefit of the white man, to be administered by white men, in such manner as they should determine.”  This was <a href="http://www.powerlineblog.com/archives/2018/07/the-eternal-meaning-of-independence-day-11.php">Lincoln’s response</a>, given during a speech on July 10, 1858:</p>
+<blockquote><p>Now, it happens that we meet together once every year, sometime about the 4th of July, for some reason or other. These 4th of July gatherings I suppose have their uses. If you will indulge me, I will state what I suppose to be some of them.</p>
+<p>We are now a mighty nation, we are thirty—or about thirty millions of people, and we own and inhabit about one-fifteenth part of the dry land of the whole earth. We run our memory back over the pages of history for about eighty-two years and we discover that we were then a very small people in point of numbers, vastly inferior to what we are now, with a vastly less extent of country,—with vastly less of everything we deem desirable among men,—we look upon the change as exceedingly advantageous to us and to our posterity, and we fix upon something that happened away back, as in some way or other being connected with this rise of prosperity. We find a race of men living in that day whom we claim as our fathers and grandfathers; they were iron men, they fought for the principle that they were contending for; and we understood that by what they then did it has followed that the degree of prosperity that we now enjoy has come to us.</p>
+<p>We hold this annual celebration to remind ourselves of all the good done in this process of time of how it was done and who did it, and how we are historically connected with it; and we go from these meetings in better humor with ourselves—we feel more attached the one to the other, and more firmly bound to the country we inhabit. In every way we are better men in the age, and race, and country in which we live for these celebrations.</p>
+<p>But after we have done all this we have not yet reached the whole. There is something else connected with it. We have besides these men—descended by blood from our ancestors—among us perhaps half our people who are not descendants at all of these men, they are men who have come from Europe—German, Irish, French and Scandinavian—men that have come from Europe themselves, or whose ancestors have come hither and settled here, finding themselves our equals in all things. If they look back through this history to trace their connection with those days by blood, they find they have none, they cannot carry themselves back into that glorious epoch and make themselves feel that they are part of us, but when they look through that old Declaration of Independence they find that those old men say that “We hold these truths to be self-evident, that all men are created equal,” and then they feel that that moral sentiment taught in that day evidences their relation to those men, that it is the father of all moral principle in them, and that they have a right to claim it as though they were blood of the blood, and flesh of the flesh of the men who wrote that Declaration [loud and long continued applause], and so they are. That is the electric cord in that Declaration that links the hearts of patriotic and liberty-loving men together, that will link those patriotic hearts as long as the love of freedom exists in the minds of men throughout the world. [Applause.]</p>
+<p>Now, sirs, for the purpose of squaring things with this idea of “don’t care if slavery is voted up or voted down” [Douglas’s “popular sovereignty” position on the extension of slavery to the territories], for sustaining the Dred Scott decision [A voice—“Hit him again”], for holding that the Declaration of Independence did not mean anything at all, we have Judge Douglas giving his exposition of what the Declaration of Independence means, and we have him saying that the people of America are equal to the people of England. According to his construction, you Germans are not connected with it. Now I ask you in all soberness, if all these things, if indulged in, if ratified, if confirmed and endorsed, if taught to our children, and repeated to them, do not tend to rub out the sentiment of liberty in the country, and to transform this Government into a government of some other form.</p>
+<p>Those arguments that are made, that the inferior race are to be treated with as much allowance as they are capable of enjoying; that as much is to be done for them as their condition will allow. What are these arguments? They are the arguments that kings have made for enslaving the people in all ages of the world. You will find that all the arguments in favor of king-craft were of this class; they always bestrode the necks of the people, not that they wanted to do it, but because the people were better off for being ridden.</p>
+<p>That is their argument, and this argument of the Judge is the same old serpent that says you work and I eat, you toil and I will enjoy the fruits of it. Turn in whatever way you will—whether it come from the mouth of a King, an excuse for enslaving the people of his country, or from the mouth of men of one race as a reason for enslaving the men of another race, it is all the same old serpent, and I hold if that course of argumentation that is made for the purpose of convincing the public mind that we should not care about this, should be granted, it does not stop with the negro. I should like to know if taking this old Declaration of Independence, which declares that all men are equal upon principle and making exceptions to it where will it stop. If one man says it does not mean a negro, why not another say it does not mean some other man? If that declaration is not the truth, let us get the Statute book, in which we find it and tear it out! Who is so bold as to do it! [Voices—“me” “no one,” &amp;c.] If it is not true let us tear it out! [cries of “no, no,”] let us stick to it then [cheers], let us stand firmly by it then. [Applause.]</p></blockquote>
+<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-email"><a rel="nofollow noopener noreferrer" data-shared="" class="share-email sd-button share-icon" href="https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/?share=email" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li class="share-custom share-custom-parler"><a rel="nofollow noopener noreferrer" data-shared="" class="share-custom share-custom-parler sd-button share-icon" href="https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/?share=custom-1592960720" target="_blank" title="Click to share on Parler"><span style="background-image:url(&#34;http://www.bookwormroom.com/wp-content/uploads/2020/06/Parler-1.jpg&#34;);">Parler</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-73258" class="share-facebook sd-button share-icon" href="https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/?share=facebook" target="_blank" title="Click to share on Facebook"><span>Facebook</span></a></li><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-73258" class="share-twitter sd-button share-icon" href="https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li><a href="#" class="sharing-anchor sd-button share-more"><span>More</span></a></li><li class="share-end"></li></ul><div class="sharing-hidden"><div class="inner" style="display: none;"><ul><li class="share-reddit"><a rel="nofollow noopener noreferrer" data-shared="" class="share-reddit sd-button share-icon" href="https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/?share=reddit" target="_blank" title="Click to share on Reddit"><span>Reddit</span></a></li><li class="share-linkedin"><a rel="nofollow noopener noreferrer" data-shared="sharing-linkedin-73258" class="share-linkedin sd-button share-icon" href="https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/?share=linkedin" target="_blank" title="Click to share on LinkedIn"><span>LinkedIn</span></a></li><li class="share-end"></li><li class="share-pinterest"><a rel="nofollow noopener noreferrer" data-shared="sharing-pinterest-73258" class="share-pinterest sd-button share-icon" href="https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/?share=pinterest" target="_blank" title="Click to share on Pinterest"><span>Pinterest</span></a></li><li class="share-tumblr"><a rel="nofollow noopener noreferrer" data-shared="" class="share-tumblr sd-button share-icon" href="https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/?share=tumblr" target="_blank" title="Click to share on Tumblr"><span>Tumblr</span></a></li><li class="share-end"></li><li class="share-skype"><a rel="nofollow noopener noreferrer" data-shared="sharing-skype-73258" class="share-skype sd-button share-icon" href="https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/?share=skype" target="_blank" title="Click to share on Skype"><span>Skype</span></a></li><li class="share-jetpack-whatsapp"><a rel="nofollow noopener noreferrer" data-shared="" class="share-jetpack-whatsapp sd-button share-icon" href="https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/?share=jetpack-whatsapp" target="_blank" title="Click to share on WhatsApp"><span>WhatsApp</span></a></li><li class="share-end"></li><li class="share-end"></li></ul></div></div></div></div></div><div class="addtoany_share_save_container addtoany_content addtoany_content_bottom"><div class="a2a_kit a2a_kit_size_32 addtoany_list" data-a2a-url="https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/" data-a2a-title="Happy Fourth of July — The Declaration of Independence Annotated"><a class="a2a_button_facebook" href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fwww.bookwormroom.com%2F2021%2F07%2F04%2Fhappy-fourth-of-july-the-declaration-of-independence-annotated%2F&amp;linkname=Happy%20Fourth%20of%20July%20%E2%80%94%20The%20Declaration%20of%20Independence%20Annotated" title="Facebook" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_twitter" href="https://www.addtoany.com/add_to/twitter?linkurl=https%3A%2F%2Fwww.bookwormroom.com%2F2021%2F07%2F04%2Fhappy-fourth-of-july-the-declaration-of-independence-annotated%2F&amp;linkname=Happy%20Fourth%20of%20July%20%E2%80%94%20The%20Declaration%20of%20Independence%20Annotated" title="Twitter" rel="nofollow noopener" target="_blank"></a><a class="a2a_button_email" href="https://www.addtoany.com/add_to/email?linkurl=https%3A%2F%2Fwww.bookwormroom.com%2F2021%2F07%2F04%2Fhappy-fourth-of-july-the-declaration-of-independence-annotated%2F&amp;linkname=Happy%20Fourth%20of%20July%20%E2%80%94%20The%20Declaration%20of%20Independence%20Annotated" title="Email" rel="nofollow noopener" target="_blank"></a><a class="a2a_dd addtoany_share_save addtoany_share" href="https://www.addtoany.com/share"></a></div></div>
+</div>
+</div>
+<footer class="entry-footer post-details">
+<div class="entry-categories"> <svg class="icon icon-category" aria-hidden="true" role="img"> <use xlink:href="https://www.bookwormroom.com/wp-content/themes/donovan/assets/icons/genericons-neue.svg#category"></use> </svg><a href="https://www.bookwormroom.com/category/america/" rel="category tag">America</a>, <a href="https://www.bookwormroom.com/category/history/" rel="category tag">History</a></div>
+<div class="entry-tags clearfix">
+<svg class="icon icon-tag" aria-hidden="true" role="img"> <use xlink:href="https://www.bookwormroom.com/wp-content/themes/donovan/assets/icons/genericons-neue.svg#tag"></use> </svg><a href="https://www.bookwormroom.com/tag/1776/" rel="tag">1776</a>, <a href="https://www.bookwormroom.com/tag/2nd-continental-congress/" rel="tag">2nd Continental Congress</a>, <a href="https://www.bookwormroom.com/tag/britain/" rel="tag">Britain</a>, <a href="https://www.bookwormroom.com/tag/declaration-of-independence/" rel="tag">Declaration of Independence</a>, <a href="https://www.bookwormroom.com/tag/john-locke/" rel="tag">John Locke</a>, <a href="https://www.bookwormroom.com/tag/thomas-jefferson/" rel="tag">Thomas Jefferson</a>, <a href="https://www.bookwormroom.com/tag/united-states/" rel="tag">United States</a> </div>
+</footer>
+</article>
+<nav class="navigation post-navigation" role="navigation" aria-label="Posts">
+<h2 class="screen-reader-text">Post navigation</h2>
+<div class="nav-links"><div class="nav-previous"><a href="https://www.bookwormroom.com/2021/07/01/star-trek-the-next-generation-another-prophecy-fulfilled/" rel="prev"><span class="nav-link-text">Previous Post</span><h3 class="entry-title">Star Trek: The Next Generation — another prophecy fulfilled</h3></a></div><div class="nav-next"><a href="https://www.bookwormroom.com/2021/07/04/happy-independence-day-3/" rel="next"><span class="nav-link-text">Next Post</span><h3 class="entry-title">Happy Independence Day!</h3></a></div></div>
+</nav>
+<div id="disqus_thread"></div>
+</main>
+</div>
+<section id="secondary" class="sidebar widget-area clearfix" role="complementary">
+<section id="media_image-3" class="widget widget_media_image"><h4 class="widget-title">Ashli Babbitt image by Stilton Jarlsberg</h4><img width="300" height="210" src="https://www.bookwormroom.com/wp-content/uploads/2021/01/Martyr-1-300x210.jpg" class="image wp-image-71603  attachment-medium size-medium" alt="Ashli Babbitt" loading="lazy" style="max-width: 100%; height: auto;" srcset="https://www.bookwormroom.com/wp-content/uploads/2021/01/Martyr-1-300x210.jpg 300w, https://www.bookwormroom.com/wp-content/uploads/2021/01/Martyr-1-1024x717.jpg 1024w, https://www.bookwormroom.com/wp-content/uploads/2021/01/Martyr-1-768x538.jpg 768w, https://www.bookwormroom.com/wp-content/uploads/2021/01/Martyr-1.jpg 1280w" sizes="(max-width: 300px) 100vw, 300px" /></section><section id="text-481791737" class="widget widget_text"><h4 class="widget-title">Tip Jar</h4> <div class="textwidget"><a class="maxbutton-1 maxbutton maxbutton-paypal" target="_blank" rel="noopener" href="https://www.paypal.com/paypalme/BookwormCA"><span class="mb-text">PayPal</span></a>
+</div>
+</section><section id="email-subscribers-form-1" class="widget widget_email-subscribers-form"><h4 class="widget-title"> Brand New Subscription Sign-Up </h4>
+<div class="emaillist">
+<form action="#" method="post" class="es_subscription_form es_shortcode_form" id="es_subscription_form_60e537d0c4664" data-source="ig-es">
+<div class="es-field-wrap"><label>Name*<br /><input type="text" name="name" class="ig_es_form_field_name" placeholder="" value="" required="required" /></label></div><div class="es-field-wrap"><label>Email*<br /><input class="es_required_field es_txt_email ig_es_form_field_email" type="email" name="email" value="" placeholder="" required="required" /></label></div><input type="hidden" name="lists[]" value="5fdea8997d20" /><input type="hidden" name="form_id" value="1" />
+<input type="hidden" name="es_email_page" value="73258" />
+<input type="hidden" name="es_email_page_url" value="https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/" />
+<input type="hidden" name="status" value="Unconfirmed" />
+<input type="hidden" name="es-subscribe" id="es-subscribe" value="58c460472f" />
+<label style="position:absolute;top:-99999px;left:-99999px;z-index:-99;"><input type="email" name="es_hp_email" class="es_required_field" tabindex="-1" autocomplete="-1" value="" /></label>
+<input type="submit" name="submit" class="es_subscription_form_submit es_submit_button es_textbox_button" id="es_subscription_form_submit_60e537d0c4664" value="Subscribe" />
+<span class="es_spinner_image" id="spinner-image"><img src="https://www.bookwormroom.com/wp-content/plugins/email-subscribers/lite/public/images/spinner.gif" alt="Loading" /></span>
+</form>
+<span class="es_subscription_message" id="es_subscription_message_60e537d0c4664"></span>
+</div>
+</section>
+<section id="recent-posts-3" class="widget widget_recent_entries">
+<h4 class="widget-title">Recent Posts</h4>
+<ul>
+<li>
+<a href="https://www.bookwormroom.com/2021/07/04/happy-independence-day-3/">Happy Independence Day!</a>
+</li>
+<li>
+<a href="https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/" aria-current="page">Happy Fourth of July — The Declaration of Independence Annotated</a>
+</li>
+<li>
+<a href="https://www.bookwormroom.com/2021/07/01/star-trek-the-next-generation-another-prophecy-fulfilled/">Star Trek: The Next Generation — another prophecy fulfilled</a>
+</li>
+<li>
+<a href="https://www.bookwormroom.com/2021/06/30/flowers-so-many-flowers/">Flowers, so many flowers</a>
+</li>
+<li>
+<a href="https://www.bookwormroom.com/2021/06/27/jaccuse-americas-dreyfus-affair-unfolds-in-minneapolis/">J’Accuse! America’s Dreyfus Affair unfolds in Minneapolis</a>
+</li>
+</ul>
+</section><section id="search-6" class="widget widget_search">
+<form role="search" method="get" class="search-form" action="https://www.bookwormroom.com/">
+<label>
+<span class="screen-reader-text">Search for:</span>
+<input type="search" class="search-field" placeholder="Search …" value="" name="s" title="Search for:" />
+</label>
+<button type="submit" class="search-submit">
+<svg class="icon icon-search" aria-hidden="true" role="img"> <use xlink:href="https://www.bookwormroom.com/wp-content/themes/donovan/assets/icons/genericons-neue.svg#search"></use> </svg> <span class="screen-reader-text">Search</span>
+</button>
+</form>
+</section><section id="categories-7" class="widget widget_categories"><h4 class="widget-title">Categories</h4><form action="https://www.bookwormroom.com" method="get"><label class="screen-reader-text" for="cat">Categories</label><select name="cat" id="cat" class="postform">
+<option value="-1">Select Category</option>
+<option class="level-0" value="3">9/11</option>
+<option class="level-0" value="4">Abortion</option>
+<option class="level-0" value="3079">Activism</option>
+<option class="level-0" value="7">African-Americans</option>
+<option class="level-0" value="9">America</option>
+<option class="level-0" value="12">Anti-Semitism</option>
+<option class="level-0" value="15">Art</option>
+<option class="level-0" value="17">Barack Obama</option>
+<option class="level-0" value="19">BBC</option>
+<option class="level-0" value="21">Bill Clinton</option>
+<option class="level-0" value="22">Bird flu</option>
+<option class="level-0" value="1">Bits and Pieces</option>
+<option class="level-0" value="23">Blogfriends</option>
+<option class="level-0" value="24">Blogs and Blogging</option>
+<option class="level-0" value="311">Books</option>
+<option class="level-0" value="27">Bureaucracy</option>
+<option class="level-0" value="325">California</option>
+<option class="level-0" value="31">Capitalism</option>
+<option class="level-0" value="3716">Carly Fiorina</option>
+<option class="level-0" value="17631">Censorship</option>
+<option class="level-0" value="33">Children</option>
+<option class="level-0" value="3613">Chris Christie</option>
+<option class="level-0" value="35">Christians</option>
+<option class="level-0" value="1664">CIA</option>
+<option class="level-0" value="36">Civil War</option>
+<option class="level-0" value="39">Congress</option>
+<option class="level-0" value="40">Conservative ideology</option>
+<option class="level-0" value="1837">Constitution</option>
+<option class="level-0" value="2280">Corruption</option>
+<option class="level-0" value="41">Crime and punishment</option>
+<option class="level-0" value="43">Culture</option>
+<option class="level-0" value="44">Death penalty</option>
+<option class="level-0" value="16794">Deep State</option>
+<option class="level-0" value="15672">Democracy</option>
+<option class="level-0" value="17217">Democratic Socialism</option>
+<option class="level-0" value="10069">Donald Trump</option>
+<option class="level-0" value="47">Economics</option>
+<option class="level-0" value="48">Education</option>
+<option class="level-1" value="10294">   College Course Catalogs</option>
+<option class="level-0" value="49">Elections</option>
+<option class="level-0" value="2290">Energy</option>
+<option class="level-0" value="56">Free speech</option>
+<option class="level-0" value="57">Freedom</option>
+<option class="level-0" value="58">Gay marriage</option>
+<option class="level-0" value="2279">Gender</option>
+<option class="level-0" value="61">George Soros</option>
+<option class="level-0" value="62">Germany</option>
+<option class="level-0" value="63">Government</option>
+<option class="level-0" value="65">Hamas</option>
+<option class="level-0" value="66">Health</option>
+<option class="level-1" value="8195">   Ebola</option>
+<option class="level-0" value="67">Hezbollah</option>
+<option class="level-0" value="68">Hillary Clinton</option>
+<option class="level-0" value="13937">History</option>
+<option class="level-0" value="70">Hollywood</option>
+<option class="level-0" value="71">Holocaust</option>
+<option class="level-0" value="506">Homosexuality</option>
+<option class="level-0" value="17550">Humor</option>
+<option class="level-0" value="72">Identity politics</option>
+<option class="level-0" value="8384">Illustrated editions</option>
+<option class="level-0" value="73">Immigration</option>
+<option class="level-0" value="16435">Iran</option>
+<option class="level-0" value="8206">ISIS</option>
+<option class="level-0" value="76">Islam</option>
+<option class="level-0" value="8377">Islamic State/ISIS</option>
+<option class="level-0" value="80">Jews</option>
+<option class="level-0" value="81">Jihad</option>
+<option class="level-0" value="82">Jimmy Carter</option>
+<option class="level-0" value="17318">Joe Biden</option>
+<option class="level-0" value="84">John McCain</option>
+<option class="level-0" value="85">Judges</option>
+<option class="level-0" value="86">Judicial activism</option>
+<option class="level-0" value="3123">Just Because Music</option>
+<option class="level-0" value="87">Law</option>
+<option class="level-0" value="3956">Lefties on Parade</option>
+<option class="level-1" value="10">   Animal rights</option>
+<option class="level-1" value="11">   Anti-Americanism</option>
+<option class="level-1" value="13">   Anti-war</option>
+<option class="level-1" value="37">   Climate change</option>
+<option class="level-1" value="38">   Communism</option>
+<option class="level-1" value="42">   Cuba</option>
+<option class="level-1" value="45">   Democrats</option>
+<option class="level-1" value="2019">   Environmentalism</option>
+<option class="level-1" value="52">   Euthanasia</option>
+<option class="level-1" value="53">   Feminism</option>
+<option class="level-0" value="88">Leftist morality</option>
+<option class="level-0" value="59">LGBTQ</option>
+<option class="level-0" value="3021">Liberal Fascism</option>
+<option class="level-0" value="2642">Libertarianism</option>
+<option class="level-0" value="2023">Marin County</option>
+<option class="level-0" value="91">Marriage</option>
+<option class="level-0" value="92">Media matters</option>
+<option class="level-0" value="93">Medicine</option>
+<option class="level-0" value="94">Men</option>
+<option class="level-0" value="96">Mike Huckabee</option>
+<option class="level-0" value="97">Military</option>
+<option class="level-0" value="641">Morality</option>
+<option class="level-0" value="100">Multiculturalism</option>
+<option class="level-0" value="101">Muslim violence</option>
+<option class="level-0" value="665">National Security</option>
+<option class="level-0" value="102">Nazis</option>
+<option class="level-0" value="4100">Newt Gingrich</option>
+<option class="level-0" value="3094">Open Threads</option>
+<option class="level-0" value="107">Palestinians</option>
+<option class="level-0" value="108">Parenting</option>
+<option class="level-0" value="2276">personal responsibility</option>
+<option class="level-0" value="13844">Podcasts</option>
+<option class="level-0" value="110">Police</option>
+<option class="level-0" value="111">Political correctness</option>
+<option class="level-0" value="717">Politics</option>
+<option class="level-0" value="112">Presidential elections</option>
+<option class="level-0" value="113">Privacy</option>
+<option class="level-0" value="733">Race</option>
+<option class="level-0" value="6627">Rand Paul</option>
+<option class="level-0" value="114">Religion</option>
+<option class="level-0" value="115">Republicans</option>
+<option class="level-0" value="116">Revolutionary War</option>
+<option class="level-0" value="3944">Rick Perry</option>
+<option class="level-0" value="121">San Francisco</option>
+<option class="level-0" value="2453">Sarah Palin</option>
+<option class="level-0" value="3016">Science</option>
+<option class="level-0" value="64">Second Amendment</option>
+<option class="level-0" value="2278">Self-reliance</option>
+<option class="level-0" value="123">Semantics</option>
+<option class="level-0" value="124">Sex</option>
+<option class="level-0" value="125">Silly Stuff</option>
+<option class="level-0" value="126">Socialism</option>
+<option class="level-0" value="129">Strict constructionism</option>
+<option class="level-0" value="17389">Supreme Court</option>
+<option class="level-0" value="824">Taxes</option>
+<option class="level-0" value="3477">Tea Parties</option>
+<option class="level-0" value="6562">Ted Cruz</option>
+<option class="level-0" value="6422">Tipping Points</option>
+<option class="level-0" value="853">Truth</option>
+<option class="level-0" value="135">Unions</option>
+<option class="level-0" value="136">United Nations</option>
+<option class="level-0" value="137">Uplifting stories</option>
+<option class="level-0" value="141">War crimes</option>
+<option class="level-0" value="142">Watcher of Weasels</option>
+<option class="level-0" value="145">Welfare</option>
+<option class="level-0" value="146">White House</option>
+<option class="level-0" value="147">Women</option>
+<option class="level-0" value="7542">World News</option>
+<option class="level-1" value="5">   Afghanistan</option>
+<option class="level-1" value="6">   Africa</option>
+<option class="level-1" value="14">   Arabs</option>
+<option class="level-1" value="10010">   Argentina</option>
+<option class="level-1" value="16">   Australia</option>
+<option class="level-1" value="26">   Britain</option>
+<option class="level-1" value="9871">   Canada</option>
+<option class="level-1" value="34">   China</option>
+<option class="level-1" value="8717">   Cuba</option>
+<option class="level-1" value="46">   Denmark</option>
+<option class="level-1" value="414">   Egypt</option>
+<option class="level-1" value="50">   England</option>
+<option class="level-1" value="51">   Europe</option>
+<option class="level-1" value="54">   France</option>
+<option class="level-1" value="9560">   Germany</option>
+<option class="level-1" value="5188">   Greece</option>
+<option class="level-1" value="69">   Holland</option>
+<option class="level-1" value="74">   Iran</option>
+<option class="level-1" value="75">   Iraq</option>
+<option class="level-1" value="77">   Israel</option>
+<option class="level-1" value="79">   Japan</option>
+<option class="level-1" value="4278">   Jordan</option>
+<option class="level-1" value="3855">   Libya</option>
+<option class="level-1" value="95">   Mexico</option>
+<option class="level-1" value="103">   North Korea</option>
+<option class="level-1" value="104">   Norway</option>
+<option class="level-1" value="106">   Pakistan</option>
+<option class="level-1" value="120">   Russia</option>
+<option class="level-1" value="122">   Saudi Arabia</option>
+<option class="level-1" value="12338">   South Africa</option>
+<option class="level-1" value="818">   Sweden</option>
+<option class="level-1" value="131">   Syria</option>
+<option class="level-1" value="4299">   Tunisia</option>
+<option class="level-1" value="855">   Turkey</option>
+<option class="level-1" value="7728">   Ukraine</option>
+<option class="level-1" value="12330">   United Arab Emirates</option>
+<option class="level-1" value="139">   Venezuela</option>
+<option class="level-1" value="140">   Vietnam</option>
+<option class="level-0" value="13258">World War I</option>
+<option class="level-0" value="148">World War II</option>
+</select>
+</form>
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+	var dropdown = document.getElementById( "cat" );
+	function onCatChange() {
+		if ( dropdown.options[ dropdown.selectedIndex ].value > 0 ) {
+			dropdown.parentNode.submit();
+		}
+	}
+	dropdown.onchange = onCatChange;
+})();
+/* ]]> */
+</script>
+</section><section id="archives-6" class="widget widget_archive"><h4 class="widget-title">Archives</h4> <label class="screen-reader-text" for="archives-dropdown-6">Archives</label>
+<select id="archives-dropdown-6" name="archive-dropdown">
+<option value="">Select Month</option>
+<option value="https://www.bookwormroom.com/2021/07/"> July 2021 </option>
+<option value="https://www.bookwormroom.com/2021/06/"> June 2021 </option>
+<option value="https://www.bookwormroom.com/2021/05/"> May 2021 </option>
+<option value="https://www.bookwormroom.com/2021/04/"> April 2021 </option>
+<option value="https://www.bookwormroom.com/2021/03/"> March 2021 </option>
+<option value="https://www.bookwormroom.com/2021/02/"> February 2021 </option>
+<option value="https://www.bookwormroom.com/2021/01/"> January 2021 </option>
+<option value="https://www.bookwormroom.com/2020/12/"> December 2020 </option>
+<option value="https://www.bookwormroom.com/2020/11/"> November 2020 </option>
+<option value="https://www.bookwormroom.com/2020/10/"> October 2020 </option>
+<option value="https://www.bookwormroom.com/2020/09/"> September 2020 </option>
+<option value="https://www.bookwormroom.com/2020/08/"> August 2020 </option>
+<option value="https://www.bookwormroom.com/2020/07/"> July 2020 </option>
+<option value="https://www.bookwormroom.com/2020/06/"> June 2020 </option>
+<option value="https://www.bookwormroom.com/2020/05/"> May 2020 </option>
+<option value="https://www.bookwormroom.com/2020/04/"> April 2020 </option>
+<option value="https://www.bookwormroom.com/2020/03/"> March 2020 </option>
+<option value="https://www.bookwormroom.com/2020/02/"> February 2020 </option>
+<option value="https://www.bookwormroom.com/2020/01/"> January 2020 </option>
+<option value="https://www.bookwormroom.com/2019/12/"> December 2019 </option>
+<option value="https://www.bookwormroom.com/2019/11/"> November 2019 </option>
+<option value="https://www.bookwormroom.com/2019/10/"> October 2019 </option>
+<option value="https://www.bookwormroom.com/2019/09/"> September 2019 </option>
+<option value="https://www.bookwormroom.com/2019/08/"> August 2019 </option>
+<option value="https://www.bookwormroom.com/2019/07/"> July 2019 </option>
+<option value="https://www.bookwormroom.com/2019/06/"> June 2019 </option>
+<option value="https://www.bookwormroom.com/2019/05/"> May 2019 </option>
+<option value="https://www.bookwormroom.com/2019/04/"> April 2019 </option>
+<option value="https://www.bookwormroom.com/2019/03/"> March 2019 </option>
+<option value="https://www.bookwormroom.com/2019/02/"> February 2019 </option>
+<option value="https://www.bookwormroom.com/2019/01/"> January 2019 </option>
+<option value="https://www.bookwormroom.com/2018/12/"> December 2018 </option>
+<option value="https://www.bookwormroom.com/2018/11/"> November 2018 </option>
+<option value="https://www.bookwormroom.com/2018/10/"> October 2018 </option>
+<option value="https://www.bookwormroom.com/2018/09/"> September 2018 </option>
+<option value="https://www.bookwormroom.com/2018/08/"> August 2018 </option>
+<option value="https://www.bookwormroom.com/2018/07/"> July 2018 </option>
+<option value="https://www.bookwormroom.com/2018/06/"> June 2018 </option>
+<option value="https://www.bookwormroom.com/2018/05/"> May 2018 </option>
+<option value="https://www.bookwormroom.com/2018/04/"> April 2018 </option>
+<option value="https://www.bookwormroom.com/2018/03/"> March 2018 </option>
+<option value="https://www.bookwormroom.com/2018/02/"> February 2018 </option>
+<option value="https://www.bookwormroom.com/2018/01/"> January 2018 </option>
+<option value="https://www.bookwormroom.com/2017/12/"> December 2017 </option>
+<option value="https://www.bookwormroom.com/2017/11/"> November 2017 </option>
+<option value="https://www.bookwormroom.com/2017/10/"> October 2017 </option>
+<option value="https://www.bookwormroom.com/2017/09/"> September 2017 </option>
+<option value="https://www.bookwormroom.com/2017/08/"> August 2017 </option>
+<option value="https://www.bookwormroom.com/2017/07/"> July 2017 </option>
+<option value="https://www.bookwormroom.com/2017/06/"> June 2017 </option>
+<option value="https://www.bookwormroom.com/2017/05/"> May 2017 </option>
+<option value="https://www.bookwormroom.com/2017/04/"> April 2017 </option>
+<option value="https://www.bookwormroom.com/2017/03/"> March 2017 </option>
+<option value="https://www.bookwormroom.com/2017/02/"> February 2017 </option>
+<option value="https://www.bookwormroom.com/2017/01/"> January 2017 </option>
+<option value="https://www.bookwormroom.com/2016/12/"> December 2016 </option>
+<option value="https://www.bookwormroom.com/2016/11/"> November 2016 </option>
+<option value="https://www.bookwormroom.com/2016/10/"> October 2016 </option>
+<option value="https://www.bookwormroom.com/2016/09/"> September 2016 </option>
+<option value="https://www.bookwormroom.com/2016/08/"> August 2016 </option>
+<option value="https://www.bookwormroom.com/2016/07/"> July 2016 </option>
+<option value="https://www.bookwormroom.com/2016/06/"> June 2016 </option>
+<option value="https://www.bookwormroom.com/2016/05/"> May 2016 </option>
+<option value="https://www.bookwormroom.com/2016/04/"> April 2016 </option>
+<option value="https://www.bookwormroom.com/2016/03/"> March 2016 </option>
+<option value="https://www.bookwormroom.com/2016/02/"> February 2016 </option>
+<option value="https://www.bookwormroom.com/2016/01/"> January 2016 </option>
+<option value="https://www.bookwormroom.com/2015/12/"> December 2015 </option>
+<option value="https://www.bookwormroom.com/2015/11/"> November 2015 </option>
+<option value="https://www.bookwormroom.com/2015/10/"> October 2015 </option>
+<option value="https://www.bookwormroom.com/2015/09/"> September 2015 </option>
+<option value="https://www.bookwormroom.com/2015/08/"> August 2015 </option>
+<option value="https://www.bookwormroom.com/2015/07/"> July 2015 </option>
+<option value="https://www.bookwormroom.com/2015/06/"> June 2015 </option>
+<option value="https://www.bookwormroom.com/2015/05/"> May 2015 </option>
+<option value="https://www.bookwormroom.com/2015/04/"> April 2015 </option>
+<option value="https://www.bookwormroom.com/2015/03/"> March 2015 </option>
+<option value="https://www.bookwormroom.com/2015/02/"> February 2015 </option>
+<option value="https://www.bookwormroom.com/2015/01/"> January 2015 </option>
+<option value="https://www.bookwormroom.com/2014/12/"> December 2014 </option>
+<option value="https://www.bookwormroom.com/2014/11/"> November 2014 </option>
+<option value="https://www.bookwormroom.com/2014/10/"> October 2014 </option>
+<option value="https://www.bookwormroom.com/2014/09/"> September 2014 </option>
+<option value="https://www.bookwormroom.com/2014/08/"> August 2014 </option>
+<option value="https://www.bookwormroom.com/2014/07/"> July 2014 </option>
+<option value="https://www.bookwormroom.com/2014/06/"> June 2014 </option>
+<option value="https://www.bookwormroom.com/2014/05/"> May 2014 </option>
+<option value="https://www.bookwormroom.com/2014/04/"> April 2014 </option>
+<option value="https://www.bookwormroom.com/2014/03/"> March 2014 </option>
+<option value="https://www.bookwormroom.com/2014/02/"> February 2014 </option>
+<option value="https://www.bookwormroom.com/2014/01/"> January 2014 </option>
+<option value="https://www.bookwormroom.com/2013/12/"> December 2013 </option>
+<option value="https://www.bookwormroom.com/2013/11/"> November 2013 </option>
+<option value="https://www.bookwormroom.com/2013/10/"> October 2013 </option>
+<option value="https://www.bookwormroom.com/2013/09/"> September 2013 </option>
+<option value="https://www.bookwormroom.com/2013/08/"> August 2013 </option>
+<option value="https://www.bookwormroom.com/2013/07/"> July 2013 </option>
+<option value="https://www.bookwormroom.com/2013/06/"> June 2013 </option>
+<option value="https://www.bookwormroom.com/2013/05/"> May 2013 </option>
+<option value="https://www.bookwormroom.com/2013/04/"> April 2013 </option>
+<option value="https://www.bookwormroom.com/2013/03/"> March 2013 </option>
+<option value="https://www.bookwormroom.com/2013/02/"> February 2013 </option>
+<option value="https://www.bookwormroom.com/2013/01/"> January 2013 </option>
+<option value="https://www.bookwormroom.com/2012/12/"> December 2012 </option>
+<option value="https://www.bookwormroom.com/2012/11/"> November 2012 </option>
+<option value="https://www.bookwormroom.com/2012/10/"> October 2012 </option>
+<option value="https://www.bookwormroom.com/2012/09/"> September 2012 </option>
+<option value="https://www.bookwormroom.com/2012/08/"> August 2012 </option>
+<option value="https://www.bookwormroom.com/2012/07/"> July 2012 </option>
+<option value="https://www.bookwormroom.com/2012/06/"> June 2012 </option>
+<option value="https://www.bookwormroom.com/2012/05/"> May 2012 </option>
+<option value="https://www.bookwormroom.com/2012/04/"> April 2012 </option>
+<option value="https://www.bookwormroom.com/2012/03/"> March 2012 </option>
+<option value="https://www.bookwormroom.com/2012/02/"> February 2012 </option>
+<option value="https://www.bookwormroom.com/2012/01/"> January 2012 </option>
+<option value="https://www.bookwormroom.com/2011/12/"> December 2011 </option>
+<option value="https://www.bookwormroom.com/2011/11/"> November 2011 </option>
+<option value="https://www.bookwormroom.com/2011/10/"> October 2011 </option>
+<option value="https://www.bookwormroom.com/2011/09/"> September 2011 </option>
+<option value="https://www.bookwormroom.com/2011/08/"> August 2011 </option>
+<option value="https://www.bookwormroom.com/2011/07/"> July 2011 </option>
+<option value="https://www.bookwormroom.com/2011/06/"> June 2011 </option>
+<option value="https://www.bookwormroom.com/2011/05/"> May 2011 </option>
+<option value="https://www.bookwormroom.com/2011/04/"> April 2011 </option>
+<option value="https://www.bookwormroom.com/2011/03/"> March 2011 </option>
+<option value="https://www.bookwormroom.com/2011/02/"> February 2011 </option>
+<option value="https://www.bookwormroom.com/2011/01/"> January 2011 </option>
+<option value="https://www.bookwormroom.com/2010/12/"> December 2010 </option>
+<option value="https://www.bookwormroom.com/2010/11/"> November 2010 </option>
+<option value="https://www.bookwormroom.com/2010/10/"> October 2010 </option>
+<option value="https://www.bookwormroom.com/2010/09/"> September 2010 </option>
+<option value="https://www.bookwormroom.com/2010/08/"> August 2010 </option>
+<option value="https://www.bookwormroom.com/2010/07/"> July 2010 </option>
+<option value="https://www.bookwormroom.com/2010/06/"> June 2010 </option>
+<option value="https://www.bookwormroom.com/2010/05/"> May 2010 </option>
+<option value="https://www.bookwormroom.com/2010/04/"> April 2010 </option>
+<option value="https://www.bookwormroom.com/2010/03/"> March 2010 </option>
+<option value="https://www.bookwormroom.com/2010/02/"> February 2010 </option>
+<option value="https://www.bookwormroom.com/2010/01/"> January 2010 </option>
+<option value="https://www.bookwormroom.com/2009/12/"> December 2009 </option>
+<option value="https://www.bookwormroom.com/2009/11/"> November 2009 </option>
+<option value="https://www.bookwormroom.com/2009/10/"> October 2009 </option>
+<option value="https://www.bookwormroom.com/2009/09/"> September 2009 </option>
+<option value="https://www.bookwormroom.com/2009/08/"> August 2009 </option>
+<option value="https://www.bookwormroom.com/2009/07/"> July 2009 </option>
+<option value="https://www.bookwormroom.com/2009/06/"> June 2009 </option>
+<option value="https://www.bookwormroom.com/2009/05/"> May 2009 </option>
+<option value="https://www.bookwormroom.com/2009/04/"> April 2009 </option>
+<option value="https://www.bookwormroom.com/2009/03/"> March 2009 </option>
+<option value="https://www.bookwormroom.com/2009/02/"> February 2009 </option>
+<option value="https://www.bookwormroom.com/2009/01/"> January 2009 </option>
+<option value="https://www.bookwormroom.com/2008/12/"> December 2008 </option>
+<option value="https://www.bookwormroom.com/2008/11/"> November 2008 </option>
+<option value="https://www.bookwormroom.com/2008/10/"> October 2008 </option>
+<option value="https://www.bookwormroom.com/2008/09/"> September 2008 </option>
+<option value="https://www.bookwormroom.com/2008/08/"> August 2008 </option>
+<option value="https://www.bookwormroom.com/2008/07/"> July 2008 </option>
+<option value="https://www.bookwormroom.com/2008/06/"> June 2008 </option>
+<option value="https://www.bookwormroom.com/2008/05/"> May 2008 </option>
+<option value="https://www.bookwormroom.com/2008/04/"> April 2008 </option>
+<option value="https://www.bookwormroom.com/2008/03/"> March 2008 </option>
+<option value="https://www.bookwormroom.com/2008/02/"> February 2008 </option>
+<option value="https://www.bookwormroom.com/2008/01/"> January 2008 </option>
+<option value="https://www.bookwormroom.com/2007/12/"> December 2007 </option>
+<option value="https://www.bookwormroom.com/2007/11/"> November 2007 </option>
+<option value="https://www.bookwormroom.com/2007/10/"> October 2007 </option>
+<option value="https://www.bookwormroom.com/2007/09/"> September 2007 </option>
+<option value="https://www.bookwormroom.com/2007/08/"> August 2007 </option>
+<option value="https://www.bookwormroom.com/2007/07/"> July 2007 </option>
+<option value="https://www.bookwormroom.com/2007/04/"> April 2007 </option>
+<option value="https://www.bookwormroom.com/2007/03/"> March 2007 </option>
+<option value="https://www.bookwormroom.com/2007/02/"> February 2007 </option>
+<option value="https://www.bookwormroom.com/2007/01/"> January 2007 </option>
+<option value="https://www.bookwormroom.com/2006/12/"> December 2006 </option>
+<option value="https://www.bookwormroom.com/2006/11/"> November 2006 </option>
+<option value="https://www.bookwormroom.com/2006/10/"> October 2006 </option>
+<option value="https://www.bookwormroom.com/2006/09/"> September 2006 </option>
+<option value="https://www.bookwormroom.com/2006/08/"> August 2006 </option>
+<option value="https://www.bookwormroom.com/2006/07/"> July 2006 </option>
+<option value="https://www.bookwormroom.com/2006/06/"> June 2006 </option>
+<option value="https://www.bookwormroom.com/2006/05/"> May 2006 </option>
+<option value="https://www.bookwormroom.com/2006/04/"> April 2006 </option>
+<option value="https://www.bookwormroom.com/2006/03/"> March 2006 </option>
+</select>
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+	var dropdown = document.getElementById( "archives-dropdown-6" );
+	function onSelectChange() {
+		if ( dropdown.options[ dropdown.selectedIndex ].value !== '' ) {
+			document.location.href = this.options[ this.selectedIndex ].value;
+		}
+	}
+	dropdown.onchange = onSelectChange;
+})();
+/* ]]> */
+</script>
+</section><section id="meta-4" class="widget widget_meta"><h4 class="widget-title">Meta</h4>
+<ul>
+<li><a rel="nofollow" href="https://www.bookwormroom.com/wp-login.php?action=register">Register</a></li> <li><a rel="nofollow" href="https://www.bookwormroom.com/wp-login.php">Log in</a></li>
+<li><a href="https://www.bookwormroom.com/feed/">Entries feed</a></li>
+<li><a href="https://www.bookwormroom.com/comments/feed/">Comments feed</a></li>
+<li><a href="https://wordpress.org/">WordPress.org</a></li>
+</ul>
+</section><section id="blog_subscription-4" class="widget widget_blog_subscription jetpack_subscription_widget"><h4 class="widget-title">Subscribe to Blog via Email</h4>
+<form action="#" method="post" accept-charset="utf-8" id="subscribe-blog-blog_subscription-4">
+<div id="subscribe-text"><p>Enter your email address to subscribe to this blog and receive notifications of new posts by email.</p>
+</div> <div class="jetpack-subscribe-count">
+<p>
+Join 452 other subscribers </p>
+</div>
+<p id="subscribe-email">
+<label id="jetpack-subscribe-label" class="screen-reader-text" for="subscribe-field-blog_subscription-4">
+Email Address </label>
+<input type="email" name="email" required="required" value="" id="subscribe-field-blog_subscription-4" placeholder="Email Address" />
+</p>
+<p id="subscribe-submit">
+<input type="hidden" name="action" value="subscribe" />
+<input type="hidden" name="source" value="https://www.bookwormroom.com/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/" />
+<input type="hidden" name="sub-type" value="widget" />
+<input type="hidden" name="redirect_fragment" value="blog_subscription-4" />
+<button type="submit" name="jetpack_subscriptions_widget">
+Subscribe </button>
+</p>
+</form>
+</section>
+</section>
+</div>
+<div id="footer" class="footer-wrap">
+<footer id="colophon" class="site-footer container clearfix" role="contentinfo">
+<div id="footer-line" class="site-info">
+<span class="credit-link">
+WordPress Theme: Donovan by <a href="https://themezee.com/" target="_blank" rel="nofollow">ThemeZee</a>. </span>
+</div>
+</footer>
+</div>
+</div>
+<style type="text/css">.maxbutton-1.maxbutton.maxbutton-paypal{position:relative;text-decoration:none;display:inline-block;vertical-align:middle;width:200px;height:47px;border:2px solid #ffc43a;border-radius:26px 26px 26px 26px;background-color:#ffc43a;-webkit-box-shadow:0px 0px 2px 0px #333333;-moz-box-shadow:0px 0px 2px 0px #333333;box-shadow:0px 0px 2px 0px #333333}.maxbutton-1.maxbutton.maxbutton-paypal:hover{border-color:#0c1c06;background-color:#ffc43a;-webkit-box-shadow:0px 0px 2px 0px #333333;-moz-box-shadow:0px 0px 2px 0px #333333;box-shadow:0px 0px 2px 0px #333333}.maxbutton-1.maxbutton.maxbutton-paypal .mb-text{color:#003087;font-family:Tahoma;font-size:26px;text-align:center;font-style:normal;font-weight:bold;line-height:1em;box-sizing:border-box;display:block;background-color:unset;padding:12px 0px 0px 0px;text-shadow:3px 2px 3px #5d67ea}.maxbutton-1.maxbutton.maxbutton-paypal:hover .mb-text{color:#5d67ea;text-shadow:3px 2px 3px #091107}@media only screen and (min-width:0px) and (max-width:480px){.maxbutton-1.maxbutton.maxbutton-paypal{width:90%}.maxbutton-1.maxbutton.maxbutton-paypal .mb-text{font-size:20px}}
+</style>
+<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/www.bookwormroom.com\/2021\/07\/04\/happy-fourth-of-july-the-declaration-of-independence-annotated\/":73258};
+	</script>
+<div id="sharing_email" style="display: none;">
+<form action="/2021/07/04/happy-fourth-of-july-the-declaration-of-independence-annotated/" method="post">
+<label for="target_email">Send to Email Address</label>
+<input type="email" name="target_email" id="target_email" value="" />
+<label for="source_name">Your Name</label>
+<input type="text" name="source_name" id="source_name" value="" />
+<label for="source_email">Your Email Address</label>
+<input type="email" name="source_email" id="source_email" value="" />
+<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" title="This field is for validation and should not be changed" />
+<img style="float: right; display: none" class="loading" src="https://www.bookwormroom.com/wp-content/plugins/jetpack/modules/sharedaddy/images/loading.gif" alt="loading" width="16" height="16" />
+<input type="submit" value="Send Email" class="sharing_send" />
+<a rel="nofollow" href="#cancel" class="sharing_cancel" role="button">Cancel</a>
+<div class="errors errors-1" style="display: none;">
+Post was not sent - check your email addresses! </div>
+<div class="errors errors-2" style="display: none;">
+Email check failed, please try again </div>
+<div class="errors errors-3" style="display: none;">
+Sorry, your blog cannot share posts by email. </div>
+</form>
+</div>
+<script type="text/javascript" id="disqus_count-js-extra">
+/* <![CDATA[ */
+var countVars = {"disqusShortname":"bookwormroom"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.bookwormroom.com/wp-content/plugins/disqus-comment-system/public/js/comment_count.js?ver=3.0.22" id="disqus_count-js"></script>
+<script type="text/javascript" id="disqus_embed-js-extra">
+/* <![CDATA[ */
+var embedVars = {"disqusConfig":{"integration":"wordpress 3.0.22"},"disqusIdentifier":"73258 https:\/\/www.bookwormroom.com\/?p=73258","disqusShortname":"bookwormroom","disqusTitle":"Happy Fourth of July \u2014 The Declaration of Independence Annotated","disqusUrl":"https:\/\/www.bookwormroom.com\/2021\/07\/04\/happy-fourth-of-july-the-declaration-of-independence-annotated\/","postId":"73258"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.bookwormroom.com/wp-content/plugins/disqus-comment-system/public/js/comment_embed.js?ver=3.0.22" id="disqus_embed-js"></script>
+<script type="text/javascript" id="donovan-navigation-js-extra">
+/* <![CDATA[ */
+var donovanScreenReaderText = {"expand":"Expand child menu","collapse":"Collapse child menu","icon":"<svg class=\"icon icon-expand\" aria-hidden=\"true\" role=\"img\"> <use xlink:href=\"https:\/\/www.bookwormroom.com\/wp-content\/themes\/donovan\/assets\/icons\/genericons-neue.svg#expand\"><\/use> <\/svg>"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.bookwormroom.com/wp-content/themes/donovan/assets/js/navigation.min.js?ver=20200822" id="donovan-navigation-js"></script>
+<script type="text/javascript" src="https://www.bookwormroom.com/wp-includes/js/comment-reply.min.js?ver=5.7.2" id="comment-reply-js"></script>
+<script type="text/javascript" src="https://www.bookwormroom.com/wp-includes/js/wp-embed.min.js?ver=5.7.2" id="wp-embed-js"></script>
+<script type="text/javascript" id="sharing-js-js-extra">
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1","is_stats_active":"1"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://www.bookwormroom.com/wp-content/plugins/jetpack/_inc/build/sharedaddy/sharing.min.js?ver=9.9" id="sharing-js-js"></script>
+<script type="text/javascript" id="sharing-js-js-after">
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-facebook' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-facebook' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+						return false;
+					}
+				} );
+			} )();
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-twitter' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-twitter' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+						return false;
+					}
+				} );
+			} )();
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-linkedin' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-linkedin' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomlinkedin', 'menubar=1,resizable=1,width=580,height=450' );
+						return false;
+					}
+				} );
+			} )();
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-tumblr' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-tumblr' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomtumblr', 'menubar=1,resizable=1,width=450,height=450' );
+						return false;
+					}
+				} );
+			} )();
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-skype' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-skype' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomskype', 'menubar=1,resizable=1,width=305,height=665' );
+						return false;
+					}
+				} );
+			} )();
+</script>
+<script src="https://stats.wp.com/e-202127.js" defer=""></script>
+<script>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:9.9',blog:'2875914',post:'73258',tz:'-4',srv:'www.bookwormroom.com'} ]);
+	_stq.push([ 'clickTrackerInit', '2875914', '73258' ]);
+</script>
+<script type='text/javascript' style='display:none;' async>
+</script>
+<script type="text/javascript" data-cfasync="false"></script></body></html>

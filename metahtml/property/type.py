@@ -41,6 +41,7 @@ class Extractor(BaseExtractor):
 
         # hostname specific regexs
         ( 'abc3340.com', r'/news/nation-world$' ),
+        ( 'agroberichtenbuitenland.nl', r'/actueel/nieuws/?$' ),
         ( 'bbc.co.uk', r'/asia_pacific$' ),
         ( 'bbc.co.uk', r'/history/historic_figures/?$' ),
         ( 'bbc.com', r'/asia_pacific$' ),

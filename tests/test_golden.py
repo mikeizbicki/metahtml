@@ -174,7 +174,7 @@ def get_tests(cache_filter=True):
     return list(filter(has_cache, raw_tests))
 
 
-@pytest.mark.parametrize('test_file', get_tests(), ids=id)
+@pytest.mark.parametrize('test_file', get_tests())
 def test_golden(test_file, full=False):
     '''
     This function gets called by pytest for each golden test case.
