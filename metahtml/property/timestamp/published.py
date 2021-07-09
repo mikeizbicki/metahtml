@@ -223,13 +223,9 @@ class Extractor(TimestampExtractor):
         ( 'foxnews.com',                    '//meta[@name="dcterms.created"]/@content' ),
         ( 'foxnews.com',                    '//p[@class="published updated dtstamp"]//span[@class="value-title"]/@title' ),
         ( 'franceculture.fr',               '//div[@class="cover-content-description-date"]/time/@datetime'),
-<<<<<<< HEAD
         ( 'franceculture.fr',               '//time/@datetime' ),
         ( 'frankfurter-hefte.de',           '//span[@class="info-bar__date"]/text()'),
-=======
-        ( 'franceculture.fr',               '//time/@datetime', ),
         ( 'fredblog.stlouisfed.org',        '//*[@class="entry-date"]'),
->>>>>>> b3a8ae3e75f26eaae7f4a23649c40c3dc691be38
         ( 'freepressjournal.in',            '//div[@class="story-meta-info-m__date-time__1IiJn"]/time/@datetime'),
         ( 'freerepublic.com',               '(//b/span[@class="date"])[1]'),
         ( 'freespeech.org',                 '//div[@class="date"]/p'),
