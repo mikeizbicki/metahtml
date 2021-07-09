@@ -37,6 +37,7 @@ class Extractor(BaseExtractor):
         # FIXME: false positive
         # https://benjamineidam.com/atomwaffe
         # https://aktuellesenergiejournal.wordpress.com/kernenergie/
+        # https://opensource.org/welcomeTeckids
         ( None, r'^/[a-zA-Z]*/?$' ), 
 
         # hostname specific regexs

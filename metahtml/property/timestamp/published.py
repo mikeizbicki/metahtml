@@ -442,6 +442,7 @@ class Extractor(TimestampExtractor):
         ( 'oluwagbemigapost.com',           '//time[@class="entry-date published updated"]/@datetime'),
         ( 'onenewspage.co.uk',              '//span[@class="lhpt"]'),
         ( 'onenewspage.com',                '//meta[@itemprop="uploadDate"]/@content'),
+        ( 'opensource.org',                 '//div[@class="submitted"]'),
         ( 'oshiete.goo.ne.jp',              '//li[@class="date"]/time' ),
         ( 'ottawacitizen.com',              '//span[@class="published-date__since"]' ),
         ( 'ozap.com',                       '//div[@class="article__author-date"]' ),
