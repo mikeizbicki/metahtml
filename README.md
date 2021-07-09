@@ -154,6 +154,15 @@ In order for me to accept a pull request, there needs to be at least 5 new test 
 Only contains Month/Day
 https://www.healthcarefinancenews.com/news/five-blues-plans-launch-evio-profit-company-focused-lowering-drug-prices
 
+Javascript webpage
+https://spectrum.ieee.org/automaton/robotics/humanoids/hyundai-buys-boston-dynamics
+
+503:
+https://blog.cloudflare.com/quic-version-1-is-live-on-cloudflare/
+
+bad unicode:
+https://arxiv.org/abs/2006.16668
+
 ## Notes
 
 Some websites aggregate from other websites, but appear to be their own news source.

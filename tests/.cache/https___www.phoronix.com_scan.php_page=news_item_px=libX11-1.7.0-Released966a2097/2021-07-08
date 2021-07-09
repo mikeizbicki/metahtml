@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-1978569-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-1978569-1');
+</script>
+
+<script data-cfasync="false" type="text/javascript">
+  var freestar = freestar || {};
+  freestar.hitTime = Date.now();
+  freestar.queue = freestar.queue || [];
+  freestar.config = freestar.config || {};
+  freestar.debug = window.location.search.indexOf('fsdebug') === -1 ? false : true;
+  freestar.config.enabled_slots = [];
+  !function(a,b){var c=b.getElementsByTagName("script")[0],d=b.createElement("script"),e="https://a.pub.network/phoronix-com";e+=freestar.debug?"/qa/pubfig.min.js":"/pubfig.min.js",d.async=!0,d.src=e,c.parentNode.insertBefore(d,c)}(window,document);
+  freestar.initCallback = function () { (freestar.config.enabled_slots.length === 0) ? freestar.initCallbackCalled = false : freestar.newAdSlots(freestar.config.enabled_slots) }
+</script>
+		<title>X11 Library Sees Lots Of Fixes With libX11 1.7 Release - Phoronix</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" href="phxcms-css/phoronix-10.css?2019">
+				<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+		<meta name="keywords" content="Phoronix, Linux Hardware Reviews, Linux hardware benchmarks, Linux Hardware, Linux benchmarking, Desktop Linux, GNU/Linux benchmarks, Open Source AMD, Linux How To, X.Org drivers, Ubuntu hardware, Phoronix Test Suite" />
+		<meta name="Description" content="Phoronix is the leading technology website for Linux hardware reviews, open-source news, Linux benchmarks, open-source benchmarks, and computer hardware tests." />
+		<link rel="alternate" type="application/rss+xml" title="Phoronix" href="rss.php" />
+		<link rel="shortcut icon" href="favicon.ico" />
+		<link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png" />
+		<link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png" />
+		<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png" />
+		<link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png" />
+		<link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png" />
+		<link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png" />
+		<link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png" />
+		<link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png" />
+		<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
+		<link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192" />
+		<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+		<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
+		<meta name="msapplication-TileImage" content="/mstile-144x144.png" />
+				<!-- PHXCMS-11 (phoronix.com) -->
+<!-- Quantcast Choice. Consent Manager Tag v2.0 (for TCF 2.0) -->
+<script type="text/javascript" async=true>
+(function() {
+  var host = 'phoronix.com';
+  var element = document.createElement('script');
+  var firstScript = document.getElementsByTagName('script')[0];
+  var url = 'https://quantcast.mgr.consensu.org'
+    .concat('/choice/', 'UEFjU_w924fg3', '/', host, '/choice.js')
+  var uspTries = 0;
+  var uspTriesLimit = 3;
+  element.async = true;
+  element.type = 'text/javascript';
+  element.src = url;
+
+  firstScript.parentNode.insertBefore(element, firstScript);
+
+  function makeStub() {
+    var TCF_LOCATOR_NAME = '__tcfapiLocator';
+    var queue = [];
+    var win = window;
+    var cmpFrame;
+
+    function addFrame() {
+      var doc = win.document;
+      var otherCMP = !!(win.frames[TCF_LOCATOR_NAME]);
+
+      if (!otherCMP) {
+        if (doc.body) {
+          var iframe = doc.createElement('iframe');
+
+          iframe.style.cssText = 'display:none';
+          iframe.name = TCF_LOCATOR_NAME;
+          doc.body.appendChild(iframe);
+        } else {
+          setTimeout(addFrame, 5);
+        }
+      }
+      return !otherCMP;
+    }
+
+    function tcfAPIHandler() {
+      var gdprApplies;
+      var args = arguments;
+
+      if (!args.length) {
+        return queue;
+      } else if (args[0] === 'setGdprApplies') {
+        if (
+          args.length > 3 &&
+          args[2] === 2 &&
+          typeof args[3] === 'boolean'
+        ) {
+          gdprApplies = args[3];
+          if (typeof args[2] === 'function') {
+            args[2]('set', true);
+          }
+        }
+      } else if (args[0] === 'ping') {
+        var retr = {
+          gdprApplies: gdprApplies,
+          cmpLoaded: false,
+          cmpStatus: 'stub'
+        };
+
+        if (typeof args[2] === 'function') {
+          args[2](retr);
+        }
+      } else {
+        queue.push(args);
+      }
+    }
+
+    function postMessageEventHandler(event) {
+      var msgIsString = typeof event.data === 'string';
+      var json = {};
+
+      try {
+        if (msgIsString) {
+          json = JSON.parse(event.data);
+        } else {
+          json = event.data;
+        }
+      } catch (ignore) {}
+
+      var payload = json.__tcfapiCall;
+
+      if (payload) {
+        window.__tcfapi(
+          payload.command,
+          payload.version,
+          function(retValue, success) {
+            var returnMsg = {
+              __tcfapiReturn: {
+                returnValue: retValue,
+                success: success,
+                callId: payload.callId
+              }
+            };
+            if (msgIsString) {
+              returnMsg = JSON.stringify(returnMsg);
+            }
+            event.source.postMessage(returnMsg, '*');
+          },
+          payload.parameter
+        );
+      }
+    }
+
+    while (win) {
+      try {
+        if (win.frames[TCF_LOCATOR_NAME]) {
+          cmpFrame = win;
+          break;
+        }
+      } catch (ignore) {}
+
+      if (win === window.top) {
+        break;
+      }
+      win = win.parent;
+    }
+    if (!cmpFrame) {
+      addFrame();
+      win.__tcfapi = tcfAPIHandler;
+      win.addEventListener('message', postMessageEventHandler, false);
+    }
+  };
+
+  makeStub();
+
+  var uspStubFunction = function() {
+    var arg = arguments;
+    if (typeof window.__uspapi !== uspStubFunction) {
+      setTimeout(function() {
+        if (typeof window.__uspapi !== 'undefined') {
+          window.__uspapi.apply(window.__uspapi, arg);
+        }
+      }, 500);
+    }
+  };
+
+  var checkIfUspIsReady = function() {
+    uspTries++;
+    if (window.__uspapi === uspStubFunction && uspTries < uspTriesLimit) {
+      console.warn('USP is not accessible');
+    } else {
+      clearInterval(uspInterval);
+    }
+  };
+
+  if (typeof window.__uspapi === 'undefined') {
+    window.__uspapi = uspStubFunction;
+    var uspInterval = setInterval(checkIfUspIsReady, 6000);
+  }
+})();
+</script>
+<!-- End Quantcast Choice. Consent Manager Tag v2.0 (for TCF 2.0) -->
+    		
+	</head>
+	<body style="overflow: initial !important;">
+		<div style="text-align: center; overflow: hidden; background: #222;"><div align="center" id="phoronix_desktop_leaderboard_header">
+  <script data-cfasync="false" type="text/javascript">
+      freestar.config.enabled_slots.push({ placementName: "phoronix_desktop_leaderboard_header", slotId: "phoronix_desktop_leaderboard_header" });
+  </script>
+</div>
+</div>		<div id="headerwrap">
+			<div class="wcontainer defpadding">
+				<a href="?page=home"><img id="logo" alt="Phoronix" src="/phxcms7-css/phoronix.png" style="height: 40px; margin-top: 5px;margin-left: 5px;" /></a>
+				<div id="headerright">
+					<div id="social">
+					    <a href="https://www.phoronix.com/rss.php" class="icon-rss"></a>
+					    <a href="https://twitter.com/Phoronix" class="icon-twitter"></a>
+					    <a href="https://www.facebook.com/Phoronix" class="icon-facebook"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="litemenu">
+		    <ul>
+		        <li><a href="?page=phoronix_articles">Articles &amp; Reviews</a></li>
+		        <li><a href="?page=phoronix_news">News Archive</a></li>
+		        <li><a href="https://www.phoronix.com/forums/">Forums</a></li>
+		        <li><a href="?page=phoronix_premium">Premium</a></li>		        <li class="categ icon-angle-circled-down"><span> Categories</span></li>
+		        <li><a href="?page=category&amp;item=Computers">Computers</a></li>
+				<li><a href="?page=category&amp;item=Display+Drivers">Display Drivers</a></li>
+				<li><a href="?page=category&amp;item=Graphics+Cards">GPUs / Graphics Cards</a></li>
+				<li><a href="?page=category&amp;item=Linux+Gaming">Linux Gaming</a></li>
+				<li><a href="?page=category&amp;item=Memory">Memory</a></li>
+				<li><a href="?page=category&amp;item=Motherboards">Motherboards</a></li>
+				<li><a href="?page=category&amp;item=Processors">CPUs / Processors</a></li>
+				<li><a href="?page=category&amp;item=Software">Software</a></li>
+				<li><a href="?page=category&amp;item=Storage">Storage</a></li>
+				<li><a href="?page=category&amp;item=Operating+Systems">Operating Systems</a></li>
+				<li><a href="?page=category&amp;item=Peripherals">Peripherals</a></li>
+				<li id="closelid">Close</li>
+		    </ul>		    
+		</div>
+		<div id="menuwrap">
+			<div class="wcontainer">
+				<ul id="linklist">
+					<li id="menubutton"><span class="icon-menu"></span>
+					</li>
+					<li class="menulink">
+						<a class="linknode" href="?page=phoronix_articles">Articles &amp; Reviews</a>
+					</li>
+					<li class="menulink">
+						<a class="linknode" href="?page=phoronix_news">News Archive</a>
+					</li>
+					<li class="menulink">
+						<a class="linknode" href="https://www.phoronix.com/forums/">Forums</a>
+					</li>
+					<li class="menulink">
+						<a class="linknode" href="?page=phoronix_premium">Premium</a>
+					</li>					<li id="categories-link" class="menulink">
+						<span class="menunolink icon-angle-circled-down"> Categories</span>
+						<div id="categories-list">
+							<div id="categories-content">
+								<a href="?page=category&amp;item=Computers">Computers</a>
+								<a href="?page=category&amp;item=Graphics+Cards">GPUs / Graphics Cards</a>
+								<a href="?page=category&amp;item=Linux+Gaming">Linux Gaming</a>
+								<a href="?page=category&amp;item=Memory">Memory</a>
+								<a href="?page=category&amp;item=Motherboards">Motherboards</a>
+								<a href="?page=category&amp;item=Processors">CPUs / Processors</a>
+								<a href="?page=category&amp;item=Software">Software</a>
+								<a href="?page=category&amp;item=Storage">Storage</a>
+								<a href="?page=category&amp;item=Operating+Systems">Operating Systems</a>
+								<a href="?page=category&amp;item=Peripherals">Peripherals</a>
+							</div>
+						</div>
+					</li>
+					<li id="searchbox">
+						<div id="search">
+							<form action="https://www.google.com" id="cse-search-box" target="_blank">
+							  <div>
+							    <input type="hidden" name="cx" value="partner-pub-0253814508491313:1305299758" />
+							    <input type="hidden" name="ie" value="UTF-8" />
+							    <input type="text" name="q" />
+							    <input type="submit" name="sa" value="Search" />
+							  </div>
+							</form>
+
+							<script type="text/javascript" src="https://www.google.com/coop/cse/brand?form=cse-search-box&amp;lang=en"></script>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="content-bg">
+			<div id="content">
+				<div id="main-wrap">
+					<div id="main">
+						<div style="text-align: center; overflow: hidden; margin-bottom: 30px;">
+							<div align="center" id="phoronix_desktop_leaderboard_atf">
+  <script data-cfasync="false" type="text/javascript">
+      freestar.config.enabled_slots.push({ placementName: "phoronix_desktop_leaderboard_atf", slotId: "phoronix_desktop_leaderboard_atf" });
+  </script>
+</div>
+
+						</div>
+						<!-- google_ad_section_start -->
+<article class="full">
+<script type="text/javascript">
+  window.onload = function() {
+    setTimeout(function() {
+if(typeof aax_getad_mpb === 'undefined') 
+{
+	document.getElementById("2005c").style.display = 'block';
+}
+ }, 2000);  
+  };
+</script>
+<strong id="2005c" style="display: none; border: 1px solid #efefef; font-size: 11.5px; margin: 9px;"><strong style="font-weight: 800;">We Rely On Your Support:</strong>  Have you heard of <a href="https://www.phoronix.com/scan.php?page=phoronix_premium">Phoronix Premium</a>? It's what complements advertisements on this site for our premium ad-free service. For as little as $3 USD per month, you can help support our site while the funds generated allow us to keep doing Linux hardware reviews, performance benchmarking, maintain our community forums, and much more. You can also consider <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3778540">a tip via PayPal</a>.</strong>
+<header>X11 Library Sees Lots Of Fixes With libX11 1.7 Release</header>
+<div class="author">Written by <a href="?page=michaellarabel">Michael Larabel</a> in <a href="?page=news_topic&amp;q=X.Org">X.Org</a> on 21 November 2020 at 12:18 AM EST. <a href="/forums/node/1221013">22 Comments</a></div>
+<div class="content">
+<div style="float: left; padding: 0 10px 10px;"><img alt="X.ORG -- " src="assets/categories/xorg.jpg" width="100" height="100" /></div>
+It's been seven years since the release of libX11 1.6.0 for this central X11 library while on Friday was replaced by the libX11 1.7 series. The release is primarily made up of fixes but leading to the version bump is a new API that allows for applications to recover from I/O error conditions rather than being forced to exit.<br /><br />That API addition for libX11 1.7.0 is interesting with XSetIOErrorExitHandler. But besides that are many fixes that accumulated for quite a while. The fixes range from warning fixes to memory allocation bugs being addressed to thread safety issues being resolved. There are also new locales and other changes with libX11 1.7.0.<br /><br />Longtime X11 developer Keith Packard has been fairly out of the X.Org scene recently besides his Valve contract work around VR, but he is the one that put together this libX11 1.7 update with the contributions of many. The list of changes for libX11 1.7 are outlined on the <a href="https://lists.x.org/archives/xorg-announce/2020-November/003065.html">mailing list</a>. Meanwhile still no signs of <a href="https://www.phoronix.com/scan.php?page=search&q=X.Org+Server+1.21">X.Org Server 1.21</a> moving closer but the back-ports continuing to the 1.20 series.</div>
+							<div style="text-align: center; overflow: hidden; margin-bottom: 30px;">
+								<div align="center" id="phoronix_leaderboard_btf">
+  <script data-cfasync="false" type="text/javascript">
+      freestar.config.enabled_slots.push({ placementName: "phoronix_leaderboard_btf", slotId: "phoronix_leaderboard_btf" });
+  </script>
+</div>
+							</div>
+							<div class="foot">
+								<div class="pagination">
+								</div>
+								<div class="comments-label">
+									<a href="/forums/node/1221013">22 Comments</a>								</div>
+							</div>
+						</article>
+<div id="sharebar">
+<div style="margin: 0 10px 10px; overflow: hidden;">
+
+<div style="float: left; overflow: hidden;"><a href="https://twitter.com/share" class="twitter-share-button" data-text="X11 Library Sees Lots Of Fixes With libX11 1.7 Release" data-url="http://www.phoronix.com/scan.php?page=news_item&amp;px=libX11-1.7.0-Released" data-via="phoronix" data-related="michaellarabel">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></div>
+
+<div style="float: left; overflow: hidden;"><iframe src="//www.facebook.com/plugins/like.php?href=http://www.phoronix.com/scan.php%3Fpage%3Dnews_item%26amp%3Bpx%3DlibX11-1.7.0-Released&amp;width=200&amp;height=46&amp;colorscheme=light&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;send=true" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:46px;" allowTransparency="true"></iframe></div>
+</div></div>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="autorelaxed"
+     data-ad-client="ca-pub-0253814508491313"
+     data-ad-slot="7279734770"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<div class="article-box">
+								<header>Related News</header>
+								<div class="node"><a href="?page=news_item&amp;px=X.Org-Server-21.1-21.0.99.1">X.Org Server 21.1 Development Snapshot Released</a></div><div class="node"><a href="?page=news_item&amp;px=XWayland-21.1.2-RC">XWayland 21.1.2 Nears With NVIDIA Hardware Acceleration</a></div><div class="node"><a href="?page=news_item&amp;px=Libinput-1.18-Released">Libinput 1.18 Released With Better Gesture Detection</a></div><div class="node"><a href="?page=news_item&amp;px=XWayland-Load-Correct-NV-GLX">X.Org Server Git Lands Latest Patches To Help NVIDIA XWayland</a></div><div class="node"><a href="?page=news_item&amp;px=X-Input-2.4-Touchpad-Gestures">X.Org Server Lands X Input 2.4 Touchpad Gestures</a></div><div class="node"><a href="?page=news_item&amp;px=XDC2021-Is-Virtual">XDC2021 Goes Virtual Again As Annual Wayland / Mesa / X.Org Summit</a></div>
+	                             
+							</div>						<div class="after-article">
+							<div style="text-align: center; overflow: hidden; margin: 5px;">
+								<div align="center" id="phoronix_leaderboard_incontent_3">
+  <script data-cfasync="false" type="text/javascript">
+      freestar.config.enabled_slots.push({ placementName: "phoronix_leaderboard_incontent_3", slotId: "phoronix_leaderboard_incontent_3" });
+  </script>
+</div>
+</div>
+							<div id="about-author">
+								<header>About The Author</header>
+								<img class="pic" src="/assets/categories/michaellarabel.jpg" alt="Author picture"/>
+								<div class="text"><p>Michael Larabel is the principal author of Phoronix.com and founded the site in 2004 with a focus on enriching the Linux hardware experience. Michael has written more than 20,000 articles covering the state of Linux hardware support, Linux performance, graphics drivers, and other topics. Michael is also the lead developer of the Phoronix Test Suite, Phoromatic, and OpenBenchmarking.org automated benchmarking software. He can be followed via <a href="https://twitter.com/MichaelLarabel">Twitter</a> or contacted via <a href="http://www.michaellarabel.com/">MichaelLarabel.com</a>.</p></div>
+							</div>
+<div class="article-box">
+								<header>Popular News This Week</header>
+								<div class="node"><a href="?page=news_item&amp;px=Steam-On-Linux-Tap-Dance-0.9">Steam On Linux Still Tap Dancing Around 0.9% Marketshare</a></div><div class="node"><a href="?page=news_item&amp;px=Wine-6.12-Released">Wine 6.12 Released With More PE Conversion, New Themes</a></div><div class="node"><a href="?page=news_item&amp;px=Intel-DG1-Nearly-At-Desktop">Intel Discrete Graphics On Linux Nearing The Point Of A Working, Accelerated Desktop</a></div><div class="node"><a href="?page=news_item&amp;px=DragonFlyBSD-COVID">Following NetBSD, DragonFlyBSD Now Has &quot;COVID&quot;</a></div><div class="node"><a href="?page=news_item&amp;px=OpenZFS-2.1">OpenZFS 2.1 Released With dRAID, Compatibility Property, Better Performance</a></div><div class="node"><a href="?page=news_item&amp;px=Rust-Independence-Linux-Kernel">Latest Patches Sent Out For Adding Rust Support To The Linux Kernel</a></div><div class="node"><a href="?page=news_item&amp;px=Darktable-3.6-Released">Darktable 3.6 Released For This Free Alternative To Adobe Lightroom</a></div><div class="node"><a href="?page=news_item&amp;px=Linux-5.14-Core-Sched-Off">Linux Will Keep Core Scheduling Disabled By Default</a></div>
+							</div>		</div>
+<!-- google_ad_section_end -->
+					</div>
+				</div>
+				<div id="sidebar-wrap">
+					<div id="sidebar">
+					    <aside>
+						<div style="text-align: center;">
+                           				<div align="center" id="phoronix_right_rail_1">
+  <script data-cfasync="false" type="text/javascript">
+      freestar.config.enabled_slots.push({ placementName: "phoronix_right_rail_1", slotId: "phoronix_right_rail_1" });
+  </script>
+</div>
+                        </div>
+                        </aside>
+                        <aside class="widget">
+			<header>Latest Linux News</header><div class="popular-list">
+                                <a href="?page=news_item&amp;px=VKD3D-Proton-2.4">VKD3D-Proton 2.4 Released With Better Performance, Sparse 3D Textures</a>
+                            </div>
+<div class="popular-list">
+                                <a href="?page=news_item&amp;px=Libre-SOC-Test-ASIC-180nm">Libre-SOC Test ASIC Going To Fabrication, Using TSMC 180nm Process</a>
+                            </div>
+<div class="popular-list">
+                                <a href="?page=news_item&amp;px=Intel-Graphics-Panel-2021">A Control Panel / UI For Intel's Linux Graphics Drivers Is Still Under Evaluation</a>
+                            </div>
+<div class="popular-list">
+                                <a href="?page=news_item&amp;px=Linux-Mint-20.2">Linux Mint 20.2 Released With Cinnamon 5.0 Desktop</a>
+                            </div>
+<div class="popular-list">
+                                <a href="?page=news_item&amp;px=Linux-5.13-rt1">Real-Time Patches Updated For The Linux 5.13 Kernel</a>
+                            </div>
+<div class="popular-list">
+                                <a href="?page=news_item&amp;px=ACPI-CPPC-Freq-Invariance-5.14">ACPI CPPC CPUFreq Will Try Frequency Invariance Again For Linux 5.14</a>
+                            </div>
+<div class="popular-list">
+                                <a href="?page=news_item&amp;px=F2FS-Linux-5.14">F2FS Brings Compression Improvements To Linux 5.14</a>
+                            </div>
+<div class="popular-list">
+                                <a href="?page=news_item&amp;px=Intel-IGC-Mesa-2022">Intel's Mesa Drivers Using The IGC Compiler Delayed</a>
+                            </div>
+<div class="popular-list">
+                                <a href="?page=news_item&amp;px=systemd-249">Systemd 249 Released With New Option For Simple Whole-File-System A/B Updates</a>
+                            </div>
+<div class="popular-list">
+                                <a href="?page=news_item&amp;px=KSMBD-In-Kernel-SMB3-v5">Samsung Posts Newest &quot;KSMBD&quot; Linux Patches For In-Kernel SMB3 Server</a>
+                            </div>
+<div class="popular-list">
+                                <a href="?page=news_item&amp;px=Mesa-21.2-Alternate-GBM">Mesa 21.2 Lands NVIDIA's Code For Handling Alternate GBM Backends</a>
+                            </div>
+                        </aside>
+			<aside>
+			<div style="text-align: center;">
+                          <div align="center" id="phoronix_right_rail_2">
+  <script data-cfasync="false" type="text/javascript">
+      freestar.config.enabled_slots.push({ placementName: "phoronix_right_rail_2", slotId: "phoronix_right_rail_2" });
+  </script>
+</div>
+
+                        </div>
+                        </aside>
+			                        <aside class="widget">
+                       <header>Show Your Support, Go Premium</header>
+                       <p><a href="https://www.phoronix.com/scan.php?page=phoronix_premium">Phoronix Premium</a> allows ad-free access to the site, multi-page articles on a single page, and other features while supporting this site's continued operations.</p>
+                        </aside>
+			                        <aside class="widget">
+			<header>Latest Featured Articles</header><div class="popular-list">
+                                <a href="/vr.php?view=30322">GCC 8 Through GCC 11 Stable Plus GCC 12 Compiler Benchmarks</a>
+                            </div>
+<div class="popular-list">
+                                <a href="/vr.php?view=30314">Linux Foundation Launches Open 3D Foundation, Amazon Lumberyard Spun As Open 3D Engine</a>
+                            </div>
+<div class="popular-list">
+                                <a href="/vr.php?view=30312">An Early Look At Windows 11 WSL2 Performance Against Ubuntu Linux</a>
+                            </div>
+<div class="popular-list">
+                                <a href="/vr.php?view=30311">Linux Leading Over Early Windows 11 Benchmarks For AMD Ryzen 9 5950X Performance</a>
+                            </div>
+<div class="popular-list">
+                                <a href="/vr.php?view=30304">NVIDIA 470 EOL Drivers For Kepler Still Obliterating Open-Source Alternative</a>
+                            </div>
+                        </aside>
+			<aside>
+						<div style="text-align: center;">
+                           				<div style="position: sticky; top: 0; position: -webkit-sticky;"><div align="center" id="phoronix_right_rail_3">
+  <script data-cfasync="false" type="text/javascript">
+      freestar.config.enabled_slots.push({ placementName: "phoronix_right_rail_3", slotId: "phoronix_right_rail_3" });
+  </script>
+</div>
+
+</div>                       				 </div>
+                        </aside>
+                        <aside class="widget">
+                            <header>Support Phoronix</header>
+                            <p>The mission at Phoronix since 2004 has centered around enriching the Linux hardware experience. In addition to supporting our site through advertisements, you can help by <a href="?page=phoronix_premium">subscribing to Phoronix Premium</a>. You can also contribute to Phoronix through a <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3778540">PayPal tip</a>.</p>
+                        </aside>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+		    <div id="footer-content">
+			<p align="center"></p>
+		        <div id="footer-left">
+		        <div id="footer-left-content">
+		            <div class="extra-info">
+		                <header>Phoronix Media</header>
+		                <hr/>
+		                <ul>
+		                    <li><a href="https://openbenchmarking.org/">OpenBenchmarking.org</a></li>
+		                </ul>
+		            </div>
+		            <div class="extra-info">
+		                <header>Phoronix Premium</header>
+		                <hr/>
+		                <a href="?page=phoronix_premium"><ul>
+                            <li>Support Phoronix</li>
+		                    <li>While Having Ad-Free Browsing,</li>
+                            <li>Single-Page Article Viewing</li>
+                        </ul></a>
+		            </div>
+		            <div class="extra-info">
+		                <header>Share</header>
+		                <hr/>
+		                <ul>
+		                    <li><a href="https://facebook.com/Phoronix">Facebook</a></li>
+		                    <li><a href="https://twitter.com/Phoronix">Twitter</a></li>
+		                </ul>
+		            </div>
+		       </div>
+		       </div>
+		       <div id="footer-right">
+		            <div class="extra-info">
+		                <ul>
+		                <li><p><a href="?page=legal">Legal Disclaimer, Privacy Policy</a> | <a href="https://www.phoronix-media.com/?k=contact">Contact</a></p></li>
+                        <li><p>Copyright &copy; 2004 - 2021 by <a href="https://www.phoronix-media.com/">Phoronix Media</a>.</p></li>
+                        <li><p>All trademarks used are properties of their respective owners. All rights reserved.</p></li>
+				</ul>
+		            </div>
+		        </div>
+		     </div>		   
+		</div>
+		<script type="text/javascript">
+		    function lmm () {
+		        if (litemenu.style.zIndex > 0)
+		            litemenu.style.zIndex = -1;
+		        else
+		            litemenu.style.zIndex = 1;
+		    }
+		    	    
+            menubutton.addEventListener('click', function() { lmm(); }, false);
+            closelid.addEventListener('click', function() { litemenu.style.zIndex = -1;}, false);
+		</script>
+	</body>
+</html>

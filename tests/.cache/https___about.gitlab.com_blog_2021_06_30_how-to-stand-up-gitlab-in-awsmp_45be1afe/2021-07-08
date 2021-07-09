@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset=UTF-8 />
+<meta content='width=device-width, initial-scale=1.0' name=viewport />
+<meta content='default-src &#39;self&#39; https: http:; script-src &#39;self&#39; &#39;unsafe-inline&#39; &#39;unsafe-eval&#39; https: http:; style-src &#39;self&#39; &#39;unsafe-inline&#39; https: http:; object-src https: http:; base-uri &#39;self&#39;; connect-src &#39;self&#39; https: http: wss: ws:; frame-src &#39;self&#39; https: http:; img-src &#39;self&#39; https: http: data:; manifest-src &#39;self&#39;; media-src &#39;self&#39; https: http:; worker-src &#39;self&#39; https: http:;' http-equiv=Content-Security-Policy />
+<script data-bl=j-no-m-no data-blockingmode=auto data-cbid=36a06ac5-ddb4-4f91-8337-067ad19ad8d5 data-georegions='{&#39;region&#39;:&#39;US-06&#39;,&#39;cbid&#39;:&#39;c2c1d015-6fa2-487d-aaf3-3a961d8a1984&#39;}' id=Cookiebot src='https://consent.cookiebot.com/uc.js'></script>
+
+<script>
+window.dataLayer = window.dataLayer || []
+</script>
+<script>document.documentElement.className = 'html--js'</script>
+<script async='' src='//cdn.bizible.com/scripts/bizible.js'></script>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-37019925-1', 'auto', {allowLinker: true});
+ga('require', 'GTM-WC3ZR2P');
+</script>
+<script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NJXWQL');
+</script>
+<meta content='index, follow' name=robots />
+<script data-cookieconsent=ignore>
+(function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+(w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+})(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+_st('install','5geYbhTxNzL5dsekC-B-','2.0.0');
+</script>
+<title>
+How to stand-up a GitLab instance in AWS Marketplace
+|
+GitLab
+</title>
+<meta content='This is a quick quide to help you provision a GitLab instance in the AWS Marketplace and setup a Runner.' name=description />
+<meta content='This is a quick quide to help you provision a GitLab instance in the AWS Marketplace and setup a Runner.' name='twitter:description'/>
+<meta content='This is a quick quide to help you provision a GitLab instance in the AWS Marketplace and setup a Runner.' property='og:description'/>
+<meta content=GitLab property='og:site_name'/>
+<meta content='How to stand-up a GitLab instance in AWS Marketplace' property='og:title'/>
+<meta content='https://gitlab.com/gitlab-com/www-gitlab-com/' property='og:repo'/>
+<meta content='https://gitlab.com/' property='og:instance'/>
+<meta content='gitlab-com/www-gitlab-com/' property='og:path'/>
+<meta content='blog/blog-posts/2021-06-30-how-to-stand-up-gitlab-in-awsmp.html.md.erb' property='og:relative_path'/>
+<meta content='sites/uncategorized/' property='og:monorepo_site_path_fragment'/>
+<meta content=article property='og:type'/>
+<meta content='https://about.gitlab.com/blog/2021/06/30/how-to-stand-up-gitlab-in-awsmp/' property='og:url'/>
+<meta content="https://about.gitlab.com/images/blogimages/2021-aws-marketplace-blog/awsmp.png" property="og:image">
+<meta content="https://about.gitlab.com/images/blogimages/2021-aws-marketplace-blog/awsmp.png" name="twitter:image">
+<meta content=summary_large_image name='twitter:card'/>
+<meta content='@GitLab' name='twitter:site'/>
+<meta content='How to stand-up a GitLab instance in AWS Marketplace' name='twitter:title'/>
+<meta content='@GitLab' name='twitter:creator'/>
+<link href='/atom.xml' rel=alternate title=Blog type='application/atom+xml'/>
+<link href='/all-releases.xml' rel=alternate title='All Releases' type='application/atom+xml'/>
+<link href='/security-releases.xml' rel=alternate title='Security Releases' type='application/atom+xml'/>
+<link href='/releases.xml' rel=alternate title='Major Releases' type='application/atom+xml'/>
+<link href='/ico/favicon.ico' rel='shortcut icon'/>
+<link href='/ico/favicon-192x192.png' rel=icon sizes=192x192 type='image/png'/>
+<link href='/ico/favicon-160x160.png' rel=icon sizes=160x160 type='image/png'/>
+<link href='/ico/favicon-96x96.png' rel=icon sizes=96x96 type='image/png'/>
+<link href='/ico/favicon-16x16.png' rel=icon sizes=16x16 type='image/png'/>
+<link href='/ico/favicon-32x32.png' rel=icon sizes=32x32 type='image/png'/>
+<link href='/ico/apple-touch-icon-57x57.png' rel=apple-touch-icon sizes=57x57 />
+<link href='/ico/apple-touch-icon-114x114.png' rel=apple-touch-icon sizes=114x114 />
+<link href='/ico/apple-touch-icon-72x72.png' rel=apple-touch-icon sizes=72x72 />
+<link href='/ico/apple-touch-icon-144x144.png' rel=apple-touch-icon sizes=144x144 />
+<link href='/ico/apple-touch-icon-60x60.png' rel=apple-touch-icon sizes=60x60 />
+<link href='/ico/apple-touch-icon-120x120.png' rel=apple-touch-icon sizes=120x120 />
+<link href='/ico/apple-touch-icon-76x76.png' rel=apple-touch-icon sizes=76x76 />
+<link href='/ico/apple-touch-icon-152x152.png' rel=apple-touch-icon sizes=152x152 />
+<link href='/ico/apple-touch-icon-180x180.png' rel=apple-touch-icon sizes=180x180 />
+<meta content='#554488' name=msapplication-TileColor />
+<meta content='/ico/mstile-144x144.png' name=msapplication-TileImage />
+<meta content='/ico/browserconfig.xml' name=msapplication-config />
+<link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,500,600,700' rel=stylesheet />
+<link crossorigin=anonymous href='https://use.fontawesome.com/releases/v5.1.0/css/all.css' integrity='sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt' rel=stylesheet />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.8.7/tiny-slider.css' rel=stylesheet />
+<link href="/stylesheets/styles.css" rel=stylesheet /><link href="/stylesheets/highlight.css" rel=stylesheet />
+<link href="/stylesheets/slippers-062821.css" rel=stylesheet />
+<script>
+        dataLayer.push({'tags': '["collaboration", "DevOps "]'});
+      </script>
+<script>
+        dataLayer.push({'category': 'engineering'});
+      </script>
+</head>
+<body data-spy=scroll data-target=".qnav" style="background: #ffffff;">
+<noscript>
+<iframe height=0 src='//www.googletagmanager.com/ns.html?id=GTM-NJXWQL' style='display:none;visibility:hidden' width=0></iframe>
+</noscript>
+<nav class='slp-sticky slp-left-0 slp-right-0 slp-top-0 slp-bg-white slp-z-90' style='z-index: 1000000;'>
+<div class=navigation-mobile style='padding-top: 0.3rem;'>
+<header class='slp-flex slp-justify-between slp-items-center slp-overflow-hidden slp-fill-current'>
+<a href='/'>
+<svg class='slp-pl-16 slp-p-8 slp-inline-block' height=60 viewbox='0 0 210 194' width=65>
+<path class='logo-svg-shape logo-dark-orange-shape' d='M105.0614,193.655 L105.0614,193.655 L143.7014,74.734 L66.4214,74.734 L105.0614,193.655 L105.0614,193.655 Z' fill='#E24329'></path>
+<path class='logo-svg-shape logo-orange-shape' d='M105.0614,193.6548 L66.4214,74.7338 L12.2684,74.7338 L105.0614,193.6548 Z' fill='#FC6D26'></path>
+<path class='logo-svg-shape logo-light-orange-shape' d='M12.2685,74.7341 L12.2685,74.7341 L0.5265,110.8731 C-0.5445,114.1691 0.6285,117.7801 3.4325,119.8171 L105.0615,193.6551 L12.2685,74.7341 Z' fill='#FCA326'></path>
+<path class='logo-svg-shape logo-dark-orange-shape' d='M12.2685,74.7342 L66.4215,74.7342 L43.1485,3.1092 C41.9515,-0.5768 36.7375,-0.5758 35.5405,3.1092 L12.2685,74.7342 Z' fill='#E24329'></path>
+<path class='logo-svg-shape logo-orange-shape' d='M105.0614,193.6548 L143.7014,74.7338 L197.8544,74.7338 L105.0614,193.6548 Z' fill='#FC6D26'></path>
+<path class='logo-svg-shape logo-light-orange-shape' d='M197.8544,74.7341 L197.8544,74.7341 L209.5964,110.8731 C210.6674,114.1691 209.4944,117.7801 206.6904,119.8171 L105.0614,193.6551 L197.8544,74.7341 Z' fill='#FCA326'></path>
+<path class='logo-svg-shape logo-dark-orange-shape' d='M197.8544,74.7342 L143.7014,74.7342 L166.9744,3.1092 C168.1714,-0.5768 173.3854,-0.5758 174.5824,3.1092 L197.8544,74.7342 Z' fill='#E24329'></path>
+</svg>
+</a>
+<button aria-label='Toggle Navigation' class='slp-p-16 slp-outline-none slp-border-none' id=slpMobileNavActive>
+<svg class='slp-inline-block slp-mr-8' fill=none height=16 viewbox='0 0 16 16' width=16 xmlns='http://www.w3.org/2000/svg'>
+<path d='M2 3H14C14.2652 3 14.5196 3.10536 14.7071 3.29289C14.8946 3.48043 15 3.73478 15 4C15 4.26522 14.8946 4.51957 14.7071 4.70711C14.5196 4.89464 14.2652 5 14 5H2C1.73478 5 1.48043 4.89464 1.29289 4.70711C1.10536 4.51957 1 4.26522 1 4C1 3.73478 1.10536 3.48043 1.29289 3.29289C1.48043 3.10536 1.73478 3 2 3ZM2 7H14C14.2652 7 14.5196 7.10536 14.7071 7.29289C14.8946 7.48043 15 7.73478 15 8C15 8.26522 14.8946 8.51957 14.7071 8.70711C14.5196 8.89464 14.2652 9 14 9H2C1.73478 9 1.48043 8.89464 1.29289 8.70711C1.10536 8.51957 1 8.26522 1 8C1 7.73478 1.10536 7.48043 1.29289 7.29289C1.48043 7.10536 1.73478 7 2 7ZM2 11H14C14.2652 11 14.5196 11.1054 14.7071 11.2929C14.8946 11.4804 15 11.7348 15 12C15 12.2652 14.8946 12.5196 14.7071 12.7071C14.5196 12.8946 14.2652 13 14 13H2C1.73478 13 1.48043 12.8946 1.29289 12.7071C1.10536 12.5196 1 12.2652 1 12C1 11.7348 1.10536 11.4804 1.29289 11.2929C1.48043 11.1054 1.73478 11 2 11Z' fill=black></path>
+</svg>
+</button>
+</header>
+<div class=navigation-mobile__dropdown>
+<div class='slp-relative slp-form-field--full-width slp-font-sans slp-box-border'>
+<div class=slp-form-field>
+<label class='slp-text-black slp-text-base' for=input></label>
+<input class='slp-w-full slp-border-2 slp-border-solid slp-border-black slp-text-grayscale-gray2 slp-text-xs slp-block slp-rounded-lg slp-mt-4 slp-p-12 slp-outline-none js-search slp-border' id=input name=input placeholder='Search GitLab.com' type=search />
+</div>
+</div>
+<div class=slp-overflow-hidden style='z-index: 1000000;'>
+<button class=navigation-mobile__button>
+<div class='slp-flex slp-flex-row slp-justify-between slp-py-16 slp-items-center slp-cursor-pointer'>
+<p class='slp-text-base slp-mb-0 slp-text-black'>Product</p>
+<svg class=slp-inline fill=none height=16 viewbox='0 0 16 16' width=16 xmlns='http://www.w3.org/2000/svg'>
+<path d='M12.2929 5.29289C12.6834 4.90237 13.3166 4.90237 13.7071 5.29289C14.0976 5.68342 14.0976 6.31658 13.7071 6.70711L8.70711 11.7071C8.31658 12.0976 7.68342 12.0976 7.29289 11.7071L2.29289 6.70711C1.90237 6.31658 1.90237 5.68342 2.29289 5.29289C2.68342 4.90237 3.31658 4.90237 3.70711 5.29289L8 9.58579L12.2929 5.29289Z' fill='#000'></path>
+</svg>
+</div>
+</button>
+<ul class=navigation-mobile__item>
+<div>
+<li class='slp-pb-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark slp-py-8' href='/stages-devops-lifecycle/'>
+GitLab: the open DevOps platform
+</a>
+</li>
+<li class='slp-pb-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark slp-py-8' href='https://gitlab.com/explore'>
+Explore GitLab
+</a>
+</li>
+<li class='slp-pb-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark slp-py-8' href='/install/'>
+Install GitLab
+</a>
+</li>
+<li class='slp-pb-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark slp-py-8' href='/is-it-any-good/'>
+How GitLab compares
+</a>
+</li>
+</div>
+</ul>
+<hr class='slp-border-t slp-border-grayscale-c3 slp-my-0 slp-border-solid'/>
+</div>
+<div class=slp-overflow-hidden style='z-index: 1000000;'>
+<button class=navigation-mobile__button>
+<div class='slp-flex slp-flex-row slp-justify-between slp-py-16 slp-items-center slp-cursor-pointer'>
+<p class='slp-text-base slp-mb-0 slp-text-black'>Solutions</p>
+<svg class=slp-inline fill=none height=16 viewbox='0 0 16 16' width=16 xmlns='http://www.w3.org/2000/svg'>
+<path d='M12.2929 5.29289C12.6834 4.90237 13.3166 4.90237 13.7071 5.29289C14.0976 5.68342 14.0976 6.31658 13.7071 6.70711L8.70711 11.7071C8.31658 12.0976 7.68342 12.0976 7.29289 11.7071L2.29289 6.70711C1.90237 6.31658 1.90237 5.68342 2.29289 5.29289C2.68342 4.90237 3.31658 4.90237 3.70711 5.29289L8 9.58579L12.2929 5.29289Z' fill='#000'></path>
+</svg>
+</div>
+</button>
+<ul class=navigation-mobile__item>
+<div>
+<div>
+<p class='slp-text-black slp-uppercase slp-tracking-wider slp-mb-0 slp-pt-4 slp-pb-16' style='font-size: 1rem;'>
+By Use Case
+</p>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='/stages-devops-lifecycle/continuous-integration/'>
+Continuous integration (CI/CD)
+</a>
+</li>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='/stages-devops-lifecycle/source-code-management/'>
+Source code management (SCM)
+</a>
+</li>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='/stages-devops-lifecycle/auto-devops/'>
+Out-of-the-box pipelines (Auto DevOps)
+</a>
+</li>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='/solutions/dev-sec-ops/'>
+Security (DevSecOps)
+</a>
+</li>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='/solutions/agile-delivery/'>
+Agile development
+</a>
+</li>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='/solutions/value-stream-management/'>
+Value stream management
+</a>
+</li>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='/solutions/gitops/'>
+GitOps
+</a>
+</li>
+</div>
+<div>
+<p class='slp-text-black slp-uppercase slp-tracking-wider slp-mb-0 slp-pt-4 slp-pb-16' style='font-size: 1rem;'>
+By Organization Type
+</p>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='/small-business/'>
+Small business
+</a>
+</li>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='/enterprise/'>
+Enterprise
+</a>
+</li>
+</div>
+</div>
+</ul>
+<hr class='slp-border-t slp-border-grayscale-c3 slp-my-0 slp-border-solid'/>
+</div>
+<div class=slp-overflow-hidden style='z-index: 1000000;'>
+<button class=navigation-mobile__button>
+<div class='slp-flex slp-flex-row slp-justify-between slp-py-16 slp-items-center slp-cursor-pointer'>
+<p class='slp-text-base slp-mb-0 slp-text-black'>Resources</p>
+<svg class=slp-inline fill=none height=16 viewbox='0 0 16 16' width=16 xmlns='http://www.w3.org/2000/svg'>
+<path d='M12.2929 5.29289C12.6834 4.90237 13.3166 4.90237 13.7071 5.29289C14.0976 5.68342 14.0976 6.31658 13.7071 6.70711L8.70711 11.7071C8.31658 12.0976 7.68342 12.0976 7.29289 11.7071L2.29289 6.70711C1.90237 6.31658 1.90237 5.68342 2.29289 5.29289C2.68342 4.90237 3.31658 4.90237 3.70711 5.29289L8 9.58579L12.2929 5.29289Z' fill='#000'></path>
+</svg>
+</div>
+</button>
+<ul class=navigation-mobile__item>
+<div>
+<div>
+<p class='slp-text-black slp-uppercase slp-tracking-wider slp-mb-0 slp-pt-4 slp-pb-16' style='font-size: 1rem;'>
+Product Resources
+</p>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='/get-started/'>
+Getting started
+</a>
+</li>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='/topics/'>
+Industry topics and trends
+</a>
+</li>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='https://docs.gitlab.com/'>
+GitLab docs
+</a>
+</li>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='/learn/'>
+GitLab Learn
+</a>
+</li>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='/blog/'>
+Blog
+</a>
+</li>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='/services/'>
+Services
+</a>
+</li>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='/resources/'>
+Additional resources
+</a>
+</li>
+</div>
+<div>
+<p class='slp-text-black slp-uppercase slp-tracking-wider slp-mb-0 slp-pt-4 slp-pb-16' style='font-size: 1rem;'>
+People Resources
+</p>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='/company/culture/all-remote/'>
+Working remotely
+</a>
+</li>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='/community/'>
+Community programs
+</a>
+</li>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='/events/'>
+Upcoming events
+</a>
+</li>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='/developer-survey/'>
+2021 Developer survey results
+</a>
+</li>
+</div>
+</div>
+</ul>
+<hr class='slp-border-t slp-border-grayscale-c3 slp-my-0 slp-border-solid'/>
+</div>
+<div class=slp-overflow-hidden style='z-index: 1000000;'>
+<button class=navigation-mobile__button>
+<div class='slp-flex slp-flex-row slp-justify-between slp-py-16 slp-items-center slp-cursor-pointer'>
+<p class='slp-text-base slp-mb-0 slp-text-black'>Partners</p>
+<svg class=slp-inline fill=none height=16 viewbox='0 0 16 16' width=16 xmlns='http://www.w3.org/2000/svg'>
+<path d='M12.2929 5.29289C12.6834 4.90237 13.3166 4.90237 13.7071 5.29289C14.0976 5.68342 14.0976 6.31658 13.7071 6.70711L8.70711 11.7071C8.31658 12.0976 7.68342 12.0976 7.29289 11.7071L2.29289 6.70711C1.90237 6.31658 1.90237 5.68342 2.29289 5.29289C2.68342 4.90237 3.31658 4.90237 3.70711 5.29289L8 9.58579L12.2929 5.29289Z' fill='#000'></path>
+</svg>
+</div>
+</button>
+<ul class=navigation-mobile__item>
+<div>
+<div>
+<p class='slp-text-black slp-uppercase slp-tracking-wider slp-mb-0 slp-pt-4 slp-pb-16' style='font-size: 1rem;'>
+Meet Our Partners
+</p>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='/partners/'>
+GitLab partners
+</a>
+</li>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='/customers/'>
+Customer case studies
+</a>
+</li>
+</div>
+<div>
+<p class='slp-text-black slp-uppercase slp-tracking-wider slp-mb-0 slp-pt-4 slp-pb-16' style='font-size: 1rem;'>
+Technology Partners
+</p>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='/partners/technology-partners/'>
+Find a technology partner
+</a>
+</li>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='https://partners.gitlab.com/English/register_email.aspx'>
+Become a technology partner
+</a>
+</li>
+</div>
+<div>
+<p class='slp-text-black slp-uppercase slp-tracking-wider slp-mb-0 slp-pt-4 slp-pb-16' style='font-size: 1rem;'>
+Channel Partners
+</p>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='https://partners.gitlab.com/English/directory/'>
+Find a channel partner
+</a>
+</li>
+<li class='slp-mt-0 slp-pb-16 slp-pl-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark' href='https://partners.gitlab.com/English/#scroll-to-benefits'>
+Become a channel partner
+</a>
+</li>
+</div>
+</div>
+</ul>
+<hr class='slp-border-t slp-border-grayscale-c3 slp-my-0 slp-border-solid'/>
+</div>
+<div class=slp-overflow-hidden style='z-index: 1000000;'>
+<button class=navigation-mobile__button>
+<div class='slp-flex slp-flex-row slp-justify-between slp-py-16 slp-items-center slp-cursor-pointer'>
+<p class='slp-text-base slp-mb-0 slp-text-black'>Pricing</p>
+<svg class=slp-inline fill=none height=16 viewbox='0 0 16 16' width=16 xmlns='http://www.w3.org/2000/svg'>
+<path d='M12.2929 5.29289C12.6834 4.90237 13.3166 4.90237 13.7071 5.29289C14.0976 5.68342 14.0976 6.31658 13.7071 6.70711L8.70711 11.7071C8.31658 12.0976 7.68342 12.0976 7.29289 11.7071L2.29289 6.70711C1.90237 6.31658 1.90237 5.68342 2.29289 5.29289C2.68342 4.90237 3.31658 4.90237 3.70711 5.29289L8 9.58579L12.2929 5.29289Z' fill='#000'></path>
+</svg>
+</div>
+</button>
+<ul class=navigation-mobile__item>
+<div>
+<li class='slp-pb-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark slp-py-8' href='/pricing/'>
+Pricing plans
+</a>
+</li>
+</div>
+</ul>
+<hr class='slp-border-t slp-border-grayscale-c3 slp-my-0 slp-border-solid'/>
+</div>
+<div class=slp-overflow-hidden style='z-index: 1000000;'>
+<button class=navigation-mobile__button>
+<div class='slp-flex slp-flex-row slp-justify-between slp-py-16 slp-items-center slp-cursor-pointer'>
+<p class='slp-text-base slp-mb-0 slp-text-black'>Support</p>
+<svg class=slp-inline fill=none height=16 viewbox='0 0 16 16' width=16 xmlns='http://www.w3.org/2000/svg'>
+<path d='M12.2929 5.29289C12.6834 4.90237 13.3166 4.90237 13.7071 5.29289C14.0976 5.68342 14.0976 6.31658 13.7071 6.70711L8.70711 11.7071C8.31658 12.0976 7.68342 12.0976 7.29289 11.7071L2.29289 6.70711C1.90237 6.31658 1.90237 5.68342 2.29289 5.29289C2.68342 4.90237 3.31658 4.90237 3.70711 5.29289L8 9.58579L12.2929 5.29289Z' fill='#000'></path>
+</svg>
+</div>
+</button>
+<ul class=navigation-mobile__item>
+<div>
+<li class='slp-pb-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark slp-py-8' href='/support/'>
+Contact Support
+</a>
+</li>
+<li class='slp-pb-16 slp-list-none'>
+<a class='slp-text-sm slp-text-ui-secondary-dark slp-py-8' href='/get-help/'>
+Support resources
+</a>
+</li>
+</div>
+</ul>
+<hr class='slp-border-t slp-border-grayscale-c3 slp-my-0 slp-border-solid'/>
+</div>
+<a class='slp-py-16 slp-text-base slp-text-black slp-block' href='https://gitlab.com/users/sign_in'>
+Login
+</a>
+<div class='slp-fixed slp-z-10 slp-bg-white slp-bottom-0 slp-left-0 slp-right-0 slp-px-16 slp-shadow-soft'>
+<a class='slp-w-full slp-btn' href='https://about.gitlab.com/pricing'>
+Get Free Trial
+</a>
+</div>
+</div>
+</div>
+<div class='slp-hidden md:slp-flex slp-pl-16 slp-pr-16 slp-bg-white'>
+<a class='slp-mr-48 md:slp-mr-24' href='/' title=GitLab>
+<svg class='md:slp-hidden lg:slp-inline-block slp-relative' fill=none height=52 style='top: 0.8rem;' viewbox='0 0 118 52' width=118 xmlns='http://www.w3.org/2000/svg'>
+<g>
+<path d='M77.7595 18.4363H75.7407L75.75 33.5526H83.9269V31.6828H77.7687L77.7595 18.4363Z' fill='#8C929D'></path>
+<path d='M91.7084 30.9001C91.1991 31.4303 90.3564 31.9606 89.2081 31.9606C87.6709 31.9606 87.0504 31.1978 87.0504 30.2024C87.0504 28.7047 88.0876 27.9885 90.2916 27.9885C90.7083 27.9885 91.375 28.035 91.7177 28.1001V30.9001H91.7084ZM89.6155 21.7373C87.9857 21.7373 86.4855 22.314 85.3187 23.2908L86.0318 24.5373C86.8559 24.0536 87.8653 23.5699 89.3192 23.5699C90.9768 23.5699 91.7084 24.4257 91.7084 25.8582V26.5931C91.3843 26.528 90.7175 26.4815 90.3101 26.4815C86.7726 26.4815 84.9761 27.728 84.9761 30.3327C84.9761 32.6675 86.4022 33.8396 88.5599 33.8396C90.0137 33.8396 91.4121 33.1699 91.8936 32.0815L92.264 33.5606H93.6901V25.821C93.6809 23.3745 92.6252 21.7373 89.6155 21.7373Z' fill='#8C929D'></path>
+<path d='M100.204 32.0297C99.4444 32.0297 98.7777 31.9366 98.2776 31.7041V25.4436V24.718C98.9629 24.1413 99.8149 23.7227 100.898 23.7227C102.852 23.7227 103.602 25.1087 103.602 27.3506C103.602 30.532 102.389 32.0297 100.204 32.0297ZM101.056 21.7413C99.25 21.7413 98.2776 22.9785 98.2776 22.9785V21.025L98.2684 18.439H97.3608H96.2959L96.3052 33.1831C97.296 33.6017 98.648 33.825 100.12 33.825C103.889 33.825 105.704 31.4064 105.704 27.2297C105.695 23.9273 104.019 21.7413 101.056 21.7413Z' fill='#8C929D'></path>
+<path d='M55.7793 20.0764C57.5665 20.0764 58.7241 20.6718 59.4742 21.2764L60.3447 19.7602C59.1686 18.7183 57.5758 18.1602 55.8719 18.1602C51.5751 18.1602 48.5654 20.7927 48.5654 26.1043C48.5654 31.6671 51.8158 33.8346 55.5293 33.8346C57.3906 33.8346 58.9741 33.3974 60.0113 32.9602L59.965 27.016V26.3183V25.1462H54.4551V27.016H57.974L58.0203 31.5276C57.5573 31.7602 56.7609 31.9462 55.6774 31.9462C52.6956 31.9462 50.6953 30.0578 50.6953 26.0857C50.6861 22.0392 52.7511 20.0764 55.7793 20.0764Z' fill='#8C929D'></path>
+<path d='M69.9964 18.4343H68.0239L68.0332 20.9739V22.0157V22.6204V23.6808V29.7273V29.746C68.0332 32.1925 69.0889 33.8297 72.0985 33.8297C72.5153 33.8297 72.9227 33.7925 73.3117 33.718V31.9413C73.0246 31.9878 72.719 32.0064 72.3949 32.0064C70.7373 32.0064 70.0057 31.1506 70.0057 29.718V23.6715H73.3117V22.0157H70.0057L69.9964 18.4343Z' fill='#8C929D'></path>
+<path d='M63.0078 33.5527H64.9802V22.0178H63.0078V33.5527Z' fill='#8C929D'></path>
+<path d='M63.0078 20.427H64.9802V18.4456H63.0078V20.427Z' fill='#8C929D'></path>
+<path d='M27.1124 40.4551L32.8722 22.6577H21.3608L27.1124 40.4551Z' fill='#E24329'></path>
+<path d='M13.2934 22.6577L11.5394 28.0648C11.3807 28.5558 11.5521 29.0977 11.971 29.4038L27.1126 40.455L13.2934 22.6577Z' fill='#FCA326'></path>
+<path d='M13.2935 22.6576H21.3611L17.889 11.9391C17.7113 11.3907 16.9369 11.3907 16.7528 11.9391L13.2935 22.6576Z' fill='#E24329'></path>
+<path d='M40.9403 22.6577L42.688 28.0648C42.8467 28.5558 42.6753 29.0977 42.2564 29.4038L27.1128 40.4551L40.9403 22.6577Z' fill='#FCA326'></path>
+<path d='M40.9402 22.6576H32.8726L36.3383 11.9391C36.516 11.3907 37.2904 11.3907 37.4745 11.9391L40.9402 22.6576Z' fill='#E24329'></path>
+<path d='M27.1128 40.4551L32.8727 22.6577H40.9403L27.1128 40.4551Z' fill='#FC6D26'></path>
+<path d='M27.1126 40.4551L13.2935 22.6577H21.3611L27.1126 40.4551Z' fill='#FC6D26'></path>
+</g>
+<defs>
+<clippath id=clip0>
+<rect fill=white height=52 width='117.236'></rect>
+</clippath>
+</defs>
+</svg>
+<svg class='slp-pl-16 slp-p-8 slp-relative md:slp-inline-block lg:slp-hidden' height=60 style='top: 0.5rem;' viewbox='0 0 210 194' width=65>
+<path class='logo-svg-shape logo-dark-orange-shape' d='M105.0614,193.655 L105.0614,193.655 L143.7014,74.734 L66.4214,74.734 L105.0614,193.655 L105.0614,193.655 Z' fill='#E24329'></path>
+<path class='logo-svg-shape logo-orange-shape' d='M105.0614,193.6548 L66.4214,74.7338 L12.2684,74.7338 L105.0614,193.6548 Z' fill='#FC6D26'></path>
+<path class='logo-svg-shape logo-light-orange-shape' d='M12.2685,74.7341 L12.2685,74.7341 L0.5265,110.8731 C-0.5445,114.1691 0.6285,117.7801 3.4325,119.8171 L105.0615,193.6551 L12.2685,74.7341 Z' fill='#FCA326'></path>
+<path class='logo-svg-shape logo-dark-orange-shape' d='M12.2685,74.7342 L66.4215,74.7342 L43.1485,3.1092 C41.9515,-0.5768 36.7375,-0.5758 35.5405,3.1092 L12.2685,74.7342 Z' fill='#E24329'></path>
+<path class='logo-svg-shape logo-orange-shape' d='M105.0614,193.6548 L143.7014,74.7338 L197.8544,74.7338 L105.0614,193.6548 Z' fill='#FC6D26'></path>
+<path class='logo-svg-shape logo-light-orange-shape' d='M197.8544,74.7341 L197.8544,74.7341 L209.5964,110.8731 C210.6674,114.1691 209.4944,117.7801 206.6904,119.8171 L105.0614,193.6551 L197.8544,74.7341 Z' fill='#FCA326'></path>
+<path class='logo-svg-shape logo-dark-orange-shape' d='M197.8544,74.7342 L143.7014,74.7342 L166.9744,3.1092 C168.1714,-0.5768 173.3854,-0.5758 174.5824,3.1092 L197.8544,74.7342 Z' fill='#E24329'></path>
+</svg>
+</a>
+<div class='slp-group slp-inline slp-relative slp-text-base slp-p-16 slp-py-24 slp-cursor-pointer slp-align-middle slp-text-grayscale-333 hover:slp-text-ui-secondary-dark slp-transition slp-duration-300 slp-ease-in-out' style='height: 7rem;'>
+<p aria-haspopup=true class='slp-text-black slp-inline slp-pb-2 group-hover:slp-border-b slp-border-ui-secondary-dark slp-p-4 slp-navigation-desktop__drop-down slp-mb-0 group-hover:slp-text-ui-secondary-dark'>
+Product
+</p>
+<div class='group-hover:slp--left-8 group-hover:slp-top-24 group-hover:slp-inline group-hover:slp-opacity-100 group-focus:slp-inline focus-within:slp-opacity-100 focus-within:slp-top-24 focus-within:slp--left-8 hover:slp-inline slp-origin-top-right slp-absolute slp--left-screen-width slp-text-grayscale-333 slp-z-100 slp-duration-300 slp-transition-opacity slp-opacity-0 slp-p-16'>
+<div class='slp-bg-white slp-py-20 slp-px-24 slp-shadow-soft slp-rounded-lg'>
+<div class='slp-grid slp-grid-flow-col slp-justify-start' style='grid-template-rows: repeat(4, auto);'>
+<div>
+<a class='slp-block slp-py-12 slp-px-8 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/stages-devops-lifecycle/' style='width: 26.2rem;'>
+GitLab: the open DevOps platform
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Discover all-in-one software delivery.
+</p>
+</a>
+</div>
+<div>
+<a class='slp-block slp-py-12 slp-px-8 slp-text-ui-secondary-dark slp-group slp-no-underline' href='https://gitlab.com/explore' style='width: 26.2rem;'>
+Explore GitLab
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+See repositories in action with GitLab projects.
+</p>
+</a>
+</div>
+<div>
+<a class='slp-block slp-py-12 slp-px-8 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/install/' style='width: 26.2rem;'>
+Install GitLab
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Install one pacakge, run a complete solution.
+</p>
+</a>
+</div>
+<div>
+<a class='slp-block slp-py-12 slp-px-8 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/is-it-any-good/' style='width: 26.2rem;'>
+How GitLab compares
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+See why we're the best in DevOps
+</p>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class='slp-group slp-inline slp-relative slp-text-base slp-p-16 slp-py-24 slp-cursor-pointer slp-align-middle slp-text-grayscale-333 hover:slp-text-ui-secondary-dark slp-transition slp-duration-300 slp-ease-in-out' style='height: 7rem;'>
+<p aria-haspopup=true class='slp-text-black slp-inline slp-pb-2 group-hover:slp-border-b slp-border-ui-secondary-dark slp-p-4 slp-navigation-desktop__drop-down slp-mb-0 group-hover:slp-text-ui-secondary-dark'>
+Solutions
+</p>
+<div class='group-hover:slp--left-8 group-hover:slp-top-24 group-hover:slp-inline group-hover:slp-opacity-100 group-focus:slp-inline focus-within:slp-opacity-100 focus-within:slp-top-24 focus-within:slp--left-8 hover:slp-inline slp-origin-top-right slp-absolute slp--left-screen-width slp-text-grayscale-333 slp-z-100 slp-duration-300 slp-transition-opacity slp-opacity-0 slp-p-16'>
+<div class='slp-bg-white slp-py-20 slp-px-24 slp-shadow-soft slp-rounded-lg'>
+<div class='slp-flex md:slp-flex-col lg:slp-flex-row'>
+<div>
+<p class='slp-text-black slp-uppercase slp-tracking-wider slp-px-12 lg:slp-pt-0 slp-relative slp-top-3 slp-mb-0' style='font-size: 1rem;'>
+By Use Case
+</p>
+<div class='slp-grid slp-grid-flow-col slp-justify-start' style='grid-template-rows: repeat(4, auto);'>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/stages-devops-lifecycle/continuous-integration/' style='min-width: 27.4rem;'>
+Continuous integration (CI/CD)
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Automate everything, accelerate deployment.
+</p>
+</a>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/stages-devops-lifecycle/source-code-management/' style='min-width: 27.4rem;'>
+Source code management (SCM)
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Build the future with a shared history.
+</p>
+</a>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/stages-devops-lifecycle/auto-devops/' style='min-width: 27.4rem;'>
+Out-of-the-box pipelines (Auto DevOps)
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Adopt DevOps with a single commit.
+</p>
+</a>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/solutions/dev-sec-ops/' style='min-width: 27.4rem;'>
+Security (DevSecOps)
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Integrate security, deliver faster continuously.
+</p>
+</a>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/solutions/agile-delivery/' style='min-width: 27.4rem;'>
+Agile development
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Keep your methodology, gain functionality.
+</p>
+</a>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/solutions/value-stream-management/' style='min-width: 27.4rem;'>
+Value stream management
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Visualize what works and optimize the rest.
+</p>
+</a>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/solutions/gitops/' style='min-width: 27.4rem;'>
+GitOps
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Simplify IT with DevOps-style automation.
+</p>
+</a>
+</div>
+</div>
+<div>
+<p class='slp-text-black slp-uppercase slp-tracking-wider slp-px-12 lg:slp-pt-0 slp-relative slp-top-3 slp-mb-0' style='font-size: 1rem;'>
+By Organization Type
+</p>
+<div class='slp-grid slp-grid-flow-col slp-justify-start' style='grid-template-rows: repeat(4, auto);'>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/small-business/' style='min-width: 27.4rem;'>
+Small business
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Get a DevOps platform that grows with you.
+</p>
+</a>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/enterprise/' style='min-width: 27.4rem;'>
+Enterprise
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Adopt one platform for endless possibilities.
+</p>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class='slp-group slp-inline slp-relative slp-text-base slp-p-16 slp-py-24 slp-cursor-pointer slp-align-middle slp-text-grayscale-333 hover:slp-text-ui-secondary-dark slp-transition slp-duration-300 slp-ease-in-out' style='height: 7rem;'>
+<p aria-haspopup=true class='slp-text-black slp-inline slp-pb-2 group-hover:slp-border-b slp-border-ui-secondary-dark slp-p-4 slp-navigation-desktop__drop-down slp-mb-0 group-hover:slp-text-ui-secondary-dark'>
+Resources
+</p>
+<div class='group-hover:slp--left-8 group-hover:slp-top-24 group-hover:slp-inline group-hover:slp-opacity-100 group-focus:slp-inline focus-within:slp-opacity-100 focus-within:slp-top-24 focus-within:slp--left-8 hover:slp-inline slp-origin-top-right slp-absolute slp--left-screen-width slp-text-grayscale-333 slp-z-100 slp-duration-300 slp-transition-opacity slp-opacity-0 slp-p-16'>
+<div class='slp-bg-white slp-py-20 slp-px-24 slp-shadow-soft slp-rounded-lg'>
+<div class='slp-flex md:slp-flex-col lg:slp-flex-row'>
+<div>
+<p class='slp-text-black slp-uppercase slp-tracking-wider slp-px-12 lg:slp-pt-0 slp-relative slp-top-3 slp-mb-0' style='font-size: 1rem;'>
+Product Resources
+</p>
+<div class='slp-grid slp-grid-flow-col slp-justify-start' style='grid-template-rows: repeat(4, auto);'>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/get-started/' style='min-width: 27.4rem;'>
+Getting started
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Explore our quick-start checklist.
+</p>
+</a>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/topics/' style='min-width: 27.4rem;'>
+Industry topics and trends
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Get cross-functional software delivery insights.
+</p>
+</a>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='https://docs.gitlab.com/' style='min-width: 27.4rem;'>
+GitLab docs
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Access step-by-step tutorials and guides.
+</p>
+</a>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/learn/' style='min-width: 27.4rem;'>
+GitLab Learn
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Watch videos and self-driven demos.
+</p>
+</a>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/blog/' style='min-width: 27.4rem;'>
+Blog
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Read up on releases, contributions, and more.
+</p>
+</a>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/services/' style='min-width: 27.4rem;'>
+Services
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Adopt DevOps faster with our support services.
+</p>
+</a>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/resources/' style='min-width: 27.4rem;'>
+Additional resources
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Download knowledge, expand to production.
+</p>
+</a>
+</div>
+</div>
+<div>
+<p class='slp-text-black slp-uppercase slp-tracking-wider slp-px-12 lg:slp-pt-0 slp-relative slp-top-3 slp-mb-0' style='font-size: 1rem;'>
+People Resources
+</p>
+<div class='slp-grid slp-grid-flow-col slp-justify-start' style='grid-template-rows: repeat(4, auto);'>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/company/culture/all-remote/' style='min-width: 27.4rem;'>
+Working remotely
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Discover how we work better together â wherever.
+</p>
+</a>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/community/' style='min-width: 27.4rem;'>
+Community programs
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Access contributor resources and startup grants.
+</p>
+</a>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/events/' style='min-width: 27.4rem;'>
+Upcoming events
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Find meetups, webinars, conferences, and more.
+</p>
+</a>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/developer-survey/' style='min-width: 27.4rem;'>
+2021 Developer survey results
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+See DevSecOps through the eyes of practitioners
+</p>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class='slp-group slp-inline slp-relative slp-text-base slp-p-16 slp-py-24 slp-cursor-pointer slp-align-middle slp-text-grayscale-333 hover:slp-text-ui-secondary-dark slp-transition slp-duration-300 slp-ease-in-out' style='height: 7rem;'>
+<p aria-haspopup=true class='slp-text-black slp-inline slp-pb-2 group-hover:slp-border-b slp-border-ui-secondary-dark slp-p-4 slp-navigation-desktop__drop-down slp-mb-0 group-hover:slp-text-ui-secondary-dark'>
+Partners
+</p>
+<div class='group-hover:slp--left-8 group-hover:slp-top-24 group-hover:slp-inline group-hover:slp-opacity-100 group-focus:slp-inline focus-within:slp-opacity-100 focus-within:slp-top-24 focus-within:slp--left-8 hover:slp-inline slp-origin-top-right slp-absolute slp--left-screen-width slp-text-grayscale-333 slp-z-100 slp-duration-300 slp-transition-opacity slp-opacity-0 slp-p-16'>
+<div class='slp-bg-white slp-py-20 slp-px-24 slp-shadow-soft slp-rounded-lg'>
+<div class='slp-flex md:slp-flex-col lg:slp-flex-row'>
+<div>
+<p class='slp-text-black slp-uppercase slp-tracking-wider slp-px-12 lg:slp-pt-0 slp-relative slp-top-3 slp-mb-0' style='font-size: 1rem;'>
+Meet Our Partners
+</p>
+<div class='slp-grid slp-grid-flow-col slp-justify-start' style='grid-template-rows: repeat(4, auto);'>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/partners/' style='min-width: 27.4rem;'>
+GitLab partners
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Check out our technology and channel partners.
+</p>
+</a>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/customers/' style='min-width: 27.4rem;'>
+Customer case studies
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Learn why top companies trust GitLab for DevOps.
+</p>
+</a>
+</div>
+</div>
+<div>
+<p class='slp-text-black slp-uppercase slp-tracking-wider slp-px-12 lg:slp-pt-0 slp-relative slp-top-3 slp-mb-0' style='font-size: 1rem;'>
+Technology Partners
+</p>
+<div class='slp-grid slp-grid-flow-col slp-justify-start' style='grid-template-rows: repeat(4, auto);'>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/partners/technology-partners/' style='min-width: 27.4rem;'>
+Find a technology partner
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+See our cloud partners and other integrators.
+</p>
+</a>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='https://partners.gitlab.com/English/register_email.aspx' style='min-width: 27.4rem;'>
+Become a technology partner
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Join our DevOps partner ecosystem.
+</p>
+</a>
+</div>
+</div>
+<div>
+<p class='slp-text-black slp-uppercase slp-tracking-wider slp-px-12 lg:slp-pt-0 slp-relative slp-top-3 slp-mb-0' style='font-size: 1rem;'>
+Channel Partners
+</p>
+<div class='slp-grid slp-grid-flow-col slp-justify-start' style='grid-template-rows: repeat(4, auto);'>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='https://partners.gitlab.com/English/directory/' style='min-width: 27.4rem;'>
+Find a channel partner
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Find resellers, solution providers, and more.
+</p>
+</a>
+<a class='slp-block slp-p-10 slp-text-ui-secondary-dark slp-group slp-no-underline' href='https://partners.gitlab.com/English/#scroll-to-benefits' style='min-width: 27.4rem;'>
+Become a channel partner
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Grow your business alongside our DevOps experts.
+</p>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class='slp-group slp-inline slp-relative slp-text-base slp-p-16 slp-py-24 slp-cursor-pointer slp-align-middle slp-text-grayscale-333 hover:slp-text-ui-secondary-dark slp-transition slp-duration-300 slp-ease-in-out' style='height: 7rem;'>
+<p aria-haspopup=true class='slp-text-black slp-inline slp-pb-2 group-hover:slp-border-b slp-border-ui-secondary-dark slp-p-4 slp-navigation-desktop__drop-down slp-mb-0 group-hover:slp-text-ui-secondary-dark'>
+Pricing
+</p>
+<div class='group-hover:slp--left-8 group-hover:slp-top-24 group-hover:slp-inline group-hover:slp-opacity-100 group-focus:slp-inline focus-within:slp-opacity-100 focus-within:slp-top-24 focus-within:slp--left-8 hover:slp-inline slp-origin-top-right slp-absolute slp--left-screen-width slp-text-grayscale-333 slp-z-100 slp-duration-300 slp-transition-opacity slp-opacity-0 slp-p-16'>
+<div class='slp-bg-white slp-py-20 slp-px-24 slp-shadow-soft slp-rounded-lg'>
+<div class='slp-grid slp-grid-flow-col slp-justify-start' style='grid-template-rows: repeat(4, auto);'>
+<div>
+<a class='slp-block slp-py-12 slp-px-8 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/pricing/' style='width: 26.2rem;'>
+Pricing plans
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+See options for projects and teams of every size.
+</p>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class='slp-group slp-inline slp-relative slp-text-base slp-p-16 slp-py-24 slp-cursor-pointer slp-align-middle slp-text-grayscale-333 hover:slp-text-ui-secondary-dark slp-transition slp-duration-300 slp-ease-in-out' style='height: 7rem;'>
+<p aria-haspopup=true class='slp-text-black slp-inline slp-pb-2 group-hover:slp-border-b slp-border-ui-secondary-dark slp-p-4 slp-navigation-desktop__drop-down slp-mb-0 group-hover:slp-text-ui-secondary-dark'>
+Support
+</p>
+<div class='group-hover:slp--left-8 group-hover:slp-top-24 group-hover:slp-inline group-hover:slp-opacity-100 group-focus:slp-inline focus-within:slp-opacity-100 focus-within:slp-top-24 focus-within:slp--left-8 hover:slp-inline slp-origin-top-right slp-absolute slp--left-screen-width slp-text-grayscale-333 slp-z-100 slp-duration-300 slp-transition-opacity slp-opacity-0 slp-p-16'>
+<div class='slp-bg-white slp-py-20 slp-px-24 slp-shadow-soft slp-rounded-lg'>
+<div class='slp-grid slp-grid-flow-col slp-justify-start' style='grid-template-rows: repeat(4, auto);'>
+<div>
+<a class='slp-block slp-py-12 slp-px-8 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/support/' style='width: 26.2rem;'>
+Contact Support
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Find out how, where, and when we offer support.
+</p>
+</a>
+</div>
+<div>
+<a class='slp-block slp-py-12 slp-px-8 slp-text-ui-secondary-dark slp-group slp-no-underline' href='/get-help/' style='width: 26.2rem;'>
+Support resources
+<span class='slp-navigation-desktop__link-item slp-text-white slp-transition-opacity slp-opacity-0'>
+â
+</span>
+<p class='slp-text-grayscale-gray2 slp-text-xs slp-mb-0 slp-navigation-dekstop__link-description'>
+Explore support documents and instructions.
+</p>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class='slp-absolute slp-right-6 slp-top-0'>
+<button aria-label=Search class='slp-p-16 slp-mr-16 slp-outline-none slp-border-none js-search-toggle' id=search-header type=button>
+<svg class=slp-inline fill=none height=16 viewbox='0 0 16 16' width=16 xmlns='http://www.w3.org/2000/svg'>
+<path clip-rule=evenodd d='M10.4765 11.8907C9.49572 12.5892 8.29583 13 7 13C3.68629 13 1 10.3137 1 7C1 3.68629 3.68629 1 7 1C10.3137 1 13 3.68629 13 7C13 8.29583 12.5892 9.49572 11.8907 10.4765L14.7071 13.2929C15.0976 13.6834 15.0976 14.3166 14.7071 14.7071C14.3166 15.0976 13.6834 15.0976 13.2929 14.7071L10.4765 11.8907ZM11 7C11 9.20914 9.20914 11 7 11C4.79086 11 3 9.20914 3 7C3 4.79086 4.79086 3 7 3C9.20914 3 11 4.79086 11 7Z' fill-rule=evenodd fill='#333333'></path>
+</svg>
+</button>
+<a class=slp-btn href='/free-trial' style='margin: 0.8rem 0px 0.4rem !important;'>
+Get free trial
+</a>
+<a class='slp-text-base slp-p-16 slp-ml-16 slp-text-black' href='https://gitlab.com/users/sign_in'>
+Login
+</a>
+</div>
+</div>
+</nav>
+<div class='search-box js-search-box'>
+<i class='fa fa-search search-box-icon'></i>
+<input class='search-input js-search st-header' placeholder='Search...'/>
+<button aria-label='Close search' class='search-close js-search-toggle' type=button>
+<i class='fa fa-times'></i>
+</button>
+</div>
+<script src='/javascripts/mobile-menu.js'></script>
+<template id=slp-blog>
+<style>
+        .slpBlog__article p,
+        .slpBlog__article ol,
+        .slpBlog__article ul,
+        .slpBlog__article li {
+          font-style: normal;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 28px;
+          margin-bottom: 1em;
+        }
+        .tags a {
+          z-index:1;
+        }
+      </style>
+<main class="slpBlog slp-grid slp-mx-auto slp-bg-white">
+<header class=slpBlog__header>
+<div
+class="slp-text-sm slp-leading-8 slp-mb-6 slp-flex slp-flex-wrap slp-justify-left"
+>
+<div class=slp-flex-initial>
+<a href="/blog/" class="slp-text-ui-secondary slp-mr-2">Blog</a>
+<span class="slp-mr-2 slp-text-grayscale-333 slp-font-normal">/</span>
+<a href="/blog/categories/engineering/" class="slp-text-ui-secondary slp-mr-2">Engineering</a>
+</div>
+</div>
+<div class="slp-flex slp-justify-center slp-p-8 slp-transform">
+<svg style="transform: rotate(45deg)" width=80 height=78 viewBox="0 0 80 78" fill=none xmlns="http://www.w3.org/2000/svg">
+<path d="M1.30102 65.6288C1.36553 64.8841 2.19436 64.4709 2.82789 64.8675L12.1364 70.6945C12.7984 71.1089 12.751 72.0885 12.052 72.437L1.79555 77.5509C1.09651 77.8995 0.285643 77.3479 0.353068 76.5697L1.30102 65.6288Z" fill="#2F80ED">
+</path>
+<circle cx="74.5" cy="10.5" r="5.5" fill="#9B51E0"></circle>
+<path d="M3.82968 0.832616C3.62769 0.3444 4.22243 -0.0826533 4.62048 0.264773L15.1 9.41138C15.3783 9.65434 15.3061 10.1049 14.9657 10.2487L10.6988 12.0511C10.4451 12.1583 10.3258 12.4505 10.4321 12.7046L13.9821 21.195C14.1868 21.6846 13.5884 22.1139 13.1902 21.763L1.59394 11.5454C1.31848 11.3027 1.3898 10.8558 1.72712 10.7109L6.52914 8.64781C6.78044 8.53985 6.89835 8.25 6.79379 7.99727L3.82968 0.832616Z" fill="#FCA326">
+</path>
+</svg>
+</div>
+<div class="slp-flex slp-flex-wrap slp-items-center slp-justify-center tags">
+<a
+href="/blog/tags.html#collaboration"
+class="slp-border slp-border-grayscale-highlight slp-text-xs slp-text-ui-secondary slp-leading-8 slp-rounded-full slp-py-4 slp-px-8 slp-shadow slp-m-8 slp-inline-block hover:slp-border-ui-secondary-dark focus:slp-border-ui-secondary-dark hover:slp-shadow-md focus:slp-shadow-md"
+>
+collaboration
+</a>
+<a
+href="/blog/tags.html#DevOps"
+class="slp-border slp-border-grayscale-highlight slp-text-xs slp-text-ui-secondary slp-leading-8 slp-rounded-full slp-py-4 slp-px-8 slp-shadow slp-m-8 slp-inline-block hover:slp-border-ui-secondary-dark focus:slp-border-ui-secondary-dark hover:slp-shadow-md focus:slp-shadow-md"
+>
+DevOps
+</a>
+</div>
+<div class="slp-text-center slp-text-grayscale-333 slp-max-w-7xl slp-p-40 slp-mx-auto">
+<h1 class="slp-text-4xl slp-leading-tight slp-mb-24 sm:slp-mb-48 slp-font-normal slp-text-grayscale-333">
+How to stand-up a GitLab instance in AWS Marketplace
+</h1>
+<div class="slp-text-sm slp-leading-8 slp-mb-6 slp-flex slp-flex-wrap slp-justify-center">
+<div class="slp-flex-initial slp-order-last sm:slp-order-first">
+<a href="/company/team/#iganbaruch" class="slp-text-ui-secondary slp-underline slp-mr-2">
+Itzik Gan-Baruch
+</a>
+<span class="slp-mr-2 slp-hidden sm:slp-inline-block">Â·</span>
+</div>
+<div class=slp-flex-initial>
+<span class="slp-mr-2 slp-text-grayscale-333 slp-font-normal">Jun 30, 2021</span>
+<span class="slp-mr-2 slp-text-grayscale-333 slp-font-normal">Â·</span>
+<span class="slp-mr-2 slp-text-grayscale-333 slp-font-normal">4 min read</span>
+<span class="slp-mr-2 slp-text-grayscale-333 slp-font-normal">Â·</span>
+<a href="#disqus_thread" class="slp-text-ui-secondary slp-underline">Leave a comment</a>
+</div>
+<a
+href="/company/team/#iganbaruch"
+class="slp-author-avatar slp-flex slp-justify-center slp-items-center slp-mx-auto slp-min-w-full"
+>
+<img
+alt="Itzik Gan-Baruch GitLab profile"
+height=70
+width=70
+src="/images/team/itzikgb-crop.jpg",
+class=slp-rounded-full
+/>
+</a>
+</div>
+</div>
+<hr class="slp-border-t slp-border-grayscale-c3"/>
+</header>
+<article class="slpBlog__article slp-z-0">
+<img alt="" src="/images/blogimages/2021-aws-marketplace-blog/awsmp.png" class=slp-mb-32 width="100%"/>
+<h2 id=in-this-guide-we-will-learn-how-to-spin-up-gitlab-in-the-aws-marketplace>In this guide we will learn how to spin up GitLab in the AWS Marketplace:</h2>
+<h3 id=pre-requisites-for-this-lab-are-having-an-account-in-aws-and-an-accessible-and-working-vpc>Pre requisites for this lab are having an account in AWS and an accessible and working VPC.</h3>
+<h3 id=we-will-learn-the-following-steps>We will learn the following steps:</h3>
+<ol>
+<li>Stand up a self-managed instance of GitLab.</li>
+<li>Install Runner and Docker Engine.</li>
+</ol>
+<h2 id=step-by-step-instructions>Step-by-step Instructions</h2>
+<h3 id=step-1---stand-up-gitlab-instance-in-aws>Step 1 - Stand up GitLab instance in AWS</h3>
+<ul>
+<li>Open <a href="https://aws.amazon.com/marketplace/pp/B07SJ817DX">GitLab Ultimate</a> in AWS Marketplace.</li>
+<li>Click on <strong>Continue to Subscribe</strong></li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-1.png" alt=aws-1 /></p>
+<ul>
+<li>Sign in with your IAM user.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-2.png" alt=aws-2 /></p>
+<ul>
+<li>Click on <strong>Continue to Configuration</strong>.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-3.png" alt=aws-3 /></p>
+<ul>
+<li>Leave the default value for <strong>Delivery Method</strong>, select the latest version in <strong>Software Version</strong>, select your <strong>Region</strong>, click <strong>Continue to Launch</strong>.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-4.png" alt=aws-4 /></p>
+<ul>
+<li>In Launch this software page, scroll down.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-5.png" alt=aws-5 /></p>
+<ul>
+<li>Under <strong>Security Group Settings</strong> click <strong>Create New Based On Seller Settings</strong> .</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-6.png" alt=aws-6 /></p>
+<ul>
+<li>Name your security group, add a description, and save it.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-7.png" alt=aws-7 /></p>
+<ul>
+<li>Select <strong>Key Pair</strong>. If you don't have key pair, create one. Leave other fields in this page with default values. Click <strong>Launch</strong>.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-8.png" alt=aws-8 /></p>
+<ul>
+<li>You will get Congratulations message confirming you launched the machine successfully. In this message click on <strong>EC2 Console</strong> link.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-9.png" alt=aws-9 /></p>
+<ul>
+<li>Click on your instance ID link.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-10.png" alt=aws-10 /></p>
+<p>The provisioning takes a few minutes. Please wait before you start the next step.</p>
+<ul>
+<li>Click "Open address" in order to open GitLab UI.</li>
+</ul>
+<p>Copy the <strong>private</strong> or <strong>public</strong> IP to your browser , depending on your <strong>VPC configuration</strong>.</p>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-10_5.png" alt=aws-10_5 /></p>
+<ul>
+<li>It takes a few minutes to start the server, you may see this error, this is ok, wait 1 minute and refresh the page.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-11.png" alt=aws-11 /></p>
+<ul>
+<li>You now should be able to access the GitLab login page; Username is <strong>root</strong>, password is your <strong>instance ID</strong>, click <strong>Sign in</strong>.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-13.png" alt=aws-13 /></p>
+<h2 id=congratulations-you-managed-to-start-a-gitlab-instance-and-sign-in-to-it>Congratulations! you managed to start a GitLab instance and sign in to it.</h2>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-14.png" alt=aws-14 /></p>
+<h3 id=step-2---install-runner-and-docker-engine>Step 2 - Install Runner and Docker Engine</h3>
+<p>Runner machines are the build agents that run the CI/CD jobs.</p>
+<p>Requirements:</p>
+<ul>
+<li>Jobs run inside the Docker images, therefore the runner machine requires Docker engine on the runner machine.</li>
+</ul>
+<h3 id=connect-to-the-machine-with-the-aws-console---connect>Connect to the machine with the <strong>AWS console - Connect</strong></h3>
+<p>In order to setup the Runners and Docker engine, we need to connect to the GitLab machine we are running. This can be done via <strong>SSH</strong> from any command line, or directly via the <strong>AWS Console</strong>, depending on how your <strong>VPC</strong> is set. In our example we will use the <strong>AWS console - Connect</strong> feature to SSH into the machines.</p>
+<p><strong>WARNING: It is not a recommended best practice to install Runners on the same machine where the server is installed for security and performance reasons, but only for the sake of simplicity, in this blog we will install it on the same machine.</strong></p>
+<ul>
+<li>Go to your Instance summary, and click <strong>Connect</strong> in order to open the console.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/runner-1.png" alt=runner-1 /></p>
+<ul>
+<li>Click Connect again.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/runner-2.png" alt=runner-2 /></p>
+<h3 id=install-docker-engine>Install Docker engine</h3>
+<ul>
+<li>Install Container by running this command <code>curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh</code></li>
+</ul>
+<h3 id=setup-runners>Setup Runners</h3>
+<ul>
+<li>Download the binaries for Linux x86 <code>sudo curl -L --output /usr/local/bin/gitlab-runner "https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-386"</code></li>
+<li>Give it permissions to execute: <code>sudo chmod +x /usr/local/bin/gitlab-runner</code></li>
+<li>Create a GitLab CI user: <code>sudo useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash</code></li>
+<li>Install and run as service: <code>sudo gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner
+sudo gitlab-runner start</code></li>
+</ul>
+<h3 id=register-the-runner>Register the Runner</h3>
+<ul>
+<li>Run this command: <code>sudo gitlab-runner register</code>.</li>
+<li>You will be prompt to enter URL.</li>
+<li>Open your GitLab instance, under CI/CD settings:
+<ul>
+<li>
+<p>Click Settings, CI/CD.</p>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/runner-3.png" alt=runner-2 /></p>
+</li>
+<li>
+<p>Expand <strong>Runners</strong>.</p>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/runner-4.png" alt=runner-4 /></p>
+</li>
+<li>
+<p>Copy the URL to the clipboard under specific runner.</p>
+</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/runner-5.png" alt=runner-5 /></p>
+</li>
+<li>Paste the URL in the console.</li>
+<li>Enter.</li>
+<li>You will be prompt to enter registration token, copy it from the Runner settings.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/runner-6.png" alt=runner-5 /></p>
+<ul>
+<li>Paste it in the console.</li>
+<li>Enter Description for the runner: type <strong>GitLab workshop</strong>.</li>
+<li>Add a tag to this runner, for example type <strong>Linux</strong></li>
+<li>Enter executor, type <strong>docker</strong>.</li>
+<li>Enter the default Docker image, type <strong>ruby:2.6</strong>.</li>
+<li>You will get a message starting with <strong>Runner registered successfully. Feel free to start itâ¦</strong></li>
+<li>Refresh the Runner settings page in GitLab and you will see your runner under <strong>Available specific runners</strong>.</li>
+<li>Click edit.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/runner-7.png" alt="runner-7.png"/></p>
+<ul>
+<li>Check the <strong>Indicates whether this runner can pick jobs without tags</strong> option, and click <strong>Save changes</strong>.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/runner-8.png" alt="runner-7.png"/></p>
+<h2 id=well-done-you-installed-and-registered-successfully-gitlab-runner-now-you-are-ready-to-create-a-project-and-run-your-first-cicd-pipeline>Well done!! You installed and registered successfully GitLab Runner. Now you are ready to create a project and run your first CI/CD pipeline.</h2>
+<p>In my next blog, I will show you how to create a project, configure the CI/CD, change your application code, and run a CI/CD pipeline.</p>
+<a
+href="http://twitter.com/share?text=%E2%80%9CHow+to+stand-up+GitLab+instance+in+AWS+Marketplace+%E2%80%9D+%E2%80%93+Itzik+Gan-Baruch&url=https://about.gitlab.com/blog/2021/06/30/how-to-stand-up-gitlab-in-awsmp/"
+class="slpClickToTweet slp-max-w-screen-sm slp-flex slp-flex-wrap slp-justify-end slp-font-normal slp-p-32 slp-shadow-md slp-rounded slp-mx-auto slp-my-32 slp-no-underline slp-border slp-border-grayscale-highlight slp-border-solid hover:slp-shadow-lg slp-ease-in-out slp-transition-all slp-duration-300 slp-text-grayscale-333"
+>
+<p class="slpClickToTweet__body slp-mb-6 slp-text-md">
+âHow to stand-up GitLab instance in AWS Marketplace â â Itzik Gan-Baruch
+</p>
+<p
+href="https://twitter.com/share?text=%22How%20software%20developers%20can%20future-proof%20their%20careers%20(and%20why%20it%E2%80%99s%20better%20to%20be%20a%20generalist%20than%20a%20specialist).%2014%20DevOps%20practitioners%2C%20analysts%2C%20and%20%40gitlab%20execs%20weigh%20in%22&amp;url=https://current-page-url-here.com"
+class="slpClickToTweet__anchor slp-flex slp-items-center slp-text-xs slp-leading-10 slp-mb-0"
+>
+<svg
+width=16
+height=13
+fill=none
+xmlns="http://www.w3.org/2000/svg"
+class="slpClickToTweet__logo slp-mr-4 slp-text-xs"
+>
+<path
+d="M7.769 3.3l.035.537-.578-.066C5.12 3.52 3.283 2.665 1.723 1.231L.96.519l-.197.525c-.416 1.172-.15 2.41.717 3.242.462.46.358.526-.44.252-.277-.088-.52-.153-.543-.12-.08.076.197 1.073.416 1.467.3.548.914 1.084 1.584 1.402l.567.252-.67.01c-.648 0-.671.012-.602.242.231.711 1.144 1.467 2.162 1.796l.717.23-.625.35a6.835 6.835 0 01-3.098.81c-.52.011-.948.055-.948.088 0 .11 1.41.723 2.231.964 2.463.712 5.388.405 7.584-.81 1.56-.866 3.122-2.585 3.85-4.25.393-.887.786-2.508.786-3.285 0-.504.035-.57.682-1.172.382-.35.74-.734.81-.843.115-.208.104-.208-.486-.022-.983.328-1.122.284-.636-.208.358-.35.786-.986.786-1.172 0-.033-.173.022-.37.12-.208.11-.67.274-1.017.373l-.624.186-.567-.362c-.312-.197-.751-.416-.983-.481-.59-.154-1.49-.132-2.023.043C8.578.64 7.665 1.91 7.77 3.3z"
+fill="#1DA1F2"
+></path>
+</svg>
+Click to tweet
+</p>
+</a>
+</article>
+<aside class="slpBlog__aside slp-flex slp-flex-col slp-justify-start slp-pt-6">
+<div class=slp-flex>
+<a
+href="https://www.facebook.com/gitlab"
+target=_blank
+title="GitLab on Facebook"
+>
+<svg
+width=24
+height=24
+fill=none
+xmlns="http://www.w3.org/2000/svg"
+class=slp-mr-6
+>
+<path
+fill-rule=evenodd
+clip-rule=evenodd
+d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm1.25 12.527v6.529h-2.7v-6.529H9.2v-2.25h1.35v-1.35C10.55 7.09 11.312 6 13.476 6h1.802v2.25h-1.127c-.842 0-.898.314-.898.901l-.003 1.126h2.04l-.238 2.25h-1.802z"
+fill="#404040"
+></path>
+</svg>
+</a>
+<a
+href="https://twitter.com/gitlab"
+target=_blank
+title="GitLab on Twitter"
+>
+<svg
+width=24
+height=24
+fill=none
+xmlns="http://www.w3.org/2000/svg"
+class=slp-mr-6
+>
+<path
+fill-rule=evenodd
+clip-rule=evenodd
+d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-.334 10.169l-.025-.415c-.076-1.076.587-2.06 1.636-2.44.387-.136 1.041-.153 1.47-.035.167.051.486.22.713.373l.411.28.453-.144c.252-.076.588-.204.739-.288.143-.077.269-.119.269-.094 0 .145-.311.636-.571.907-.353.382-.252.415.461.161.428-.144.437-.144.353.017-.05.085-.31.381-.588.653-.47.466-.495.517-.495.906 0 .602-.285 1.856-.57 2.543-.53 1.288-1.663 2.618-2.796 3.287-1.595.941-3.718 1.178-5.506.628-.596-.187-1.62-.661-1.62-.746 0-.026.31-.06.688-.068a4.726 4.726 0 002.25-.627l.453-.271-.52-.178c-.739-.254-1.402-.84-1.57-1.39-.05-.178-.034-.186.437-.186l.486-.009-.411-.195c-.487-.245-.932-.66-1.15-1.084-.16-.305-.36-1.077-.302-1.136.017-.025.193.025.394.093.58.212.655.161.32-.195-.63-.644-.823-1.601-.521-2.508l.143-.407.554.551c1.133 1.11 2.467 1.771 3.995 1.966l.42.051z"
+fill="#404040"
+></path>
+</svg>
+</a>
+<a
+href="https://www.linkedin.com/company/gitlab-com"
+target=_blank
+title="GitLab on LinkedIn"
+>
+<svg width=24 height=24 fill=none xmlns="http://www.w3.org/2000/svg">
+<path
+fill-rule=evenodd
+clip-rule=evenodd
+d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zM5.76 9.939h2.72v8.17H5.76V9.94zm2.9-2.528C8.641 6.611 8.068 6 7.138 6 6.209 6 5.6 6.61 5.6 7.411c0 .785.59 1.413 1.503 1.413h.018c.948 0 1.538-.628 1.538-1.413zm6.497 2.336c1.79 0 3.13 1.168 3.13 3.678v4.685h-2.719v-4.372c0-1.098-.393-1.847-1.378-1.847-.751 0-1.198.505-1.395.993-.072.175-.09.418-.09.663v4.563h-2.72s.036-7.404 0-8.17h2.72v1.157c.361-.557 1.008-1.35 2.452-1.35z"
+fill="#404040"
+></path>
+</svg>
+</a>
+</div>
+<slot name=non-slippers-aside-items></slot>
+</aside>
+<footer class=slpBlog__footer>
+<hr class="slp-border-t slp-border-grayscale-c3 slp-mb-20"/>
+<div class="slp-flex slp-flex-wrap slp-items-center slp-justify-start tags">
+<span class="slp-text-sm slp-text-grayscale-333 slp-mx-2">Tags:</span>
+<a
+href="/blog/tags.html#collaboration"
+class="slp-border slp-border-grayscale-highlight slp-text-xs slp-text-ui-secondary slp-leading-8 slp-rounded-full slp-py-4 slp-px-8 slp-shadow slp-m-8 slp-inline-block hover:slp-border-ui-secondary-dark focus:slp-border-ui-secondary-dark hover:slp-shadow-md focus:slp-shadow-md"
+>
+collaboration
+</a>
+<a
+href="/blog/tags.html#DevOps"
+class="slp-border slp-border-grayscale-highlight slp-text-xs slp-text-ui-secondary slp-leading-8 slp-rounded-full slp-py-4 slp-px-8 slp-shadow slp-m-8 slp-inline-block hover:slp-border-ui-secondary-dark focus:slp-border-ui-secondary-dark hover:slp-shadow-md focus:slp-shadow-md"
+>
+DevOps
+</a>
+</div>
+<div>
+<h2 class="slp-text-grayscale-333 slp-text-lg slp-leading-10 slp-min-w-full slp-text-center slp-font-normal slp-mb-32">
+More to explore
+</h2>
+<div class="slp-flex slp-justify-start md:slp-justify-center slp-overflow-x-auto slp-mb-16 md:slp-mb-0">
+<a href="/blog/2021/06/23/how-to-use-agent-based-gitops/" class="slp-group slp-text-grayscale-333 slp-flex-none slp-mx-16 slp-mb-32">
+<div class="slp-max-w-lg slp-rounded-md slp-shadow-md slp-p-32 slp-h-full slp-box-border slp-flex slp-flex-col">
+<div class=slp-mb-6>
+<svg
+width=14
+height=16
+fill=none
+xmlns="http://www.w3.org/2000/svg"
+class="slp-inline-block slp-mr-2"
+>
+<path
+d="M11.96 13.728H8.184a.642.642 0 01-.64-.64c0-.352.288-.64.64-.64h3.776c.352 0 .64-.288.64-.64V1.92a.642.642 0 00-.64-.64H2.04a.642.642 0 00-.64.64v9.888c0 .352.288.64.64.64h2.368c.352 0 .64.288.64.64 0 .352-.288.64-.64.64H2.04a1.926 1.926 0 01-1.92-1.92V1.92C.12.864.984 0 2.04 0h9.92c1.056 0 1.92.864 1.92 1.92v9.888c0 1.056-.864 1.92-1.92 1.92z"
+fill="#9B51E0"
+></path>
+<path
+d="M10.36 6.752H3.64a.642.642 0 01-.64-.64V3.328c0-.352.288-.64.64-.64h6.72c.352 0 .64.288.64.64v2.784c0 .352-.288.64-.64.64zm-6.08-1.28h5.44V3.968H4.28v1.504zM7.704 11.04H3.64A.642.642 0 013 10.4c0-.352.288-.64.64-.64h4.064c.352 0 .64.288.64.64 0 .352-.288.64-.64.64zM10.36 8.896H3.64a.642.642 0 01-.64-.64c0-.352.288-.64.64-.64h6.72c.352 0 .64.288.64.64 0 .352-.288.64-.64.64zM4.408 16a.617.617 0 01-.32-.096c-.192-.128-.32-.32-.32-.544v-2.272c0-.352.288-.64.64-.64.352 0 .64.288.64.64v1.152l2.784-1.696a.602.602 0 01.864.224.602.602 0 01-.224.864L4.76 15.904a.645.645 0 01-.352.096z"
+fill="#9B51E0"
+></path>
+</svg>
+<span class="slp-uppercase slp-text-xs">engineering</span>
+</div>
+<h2 class="group-focus:slp-text-ui-secondary group-hover:slp-text-ui-secondary slp-text-lg slp-leading-tight slp-mb-6 slp-font-normal slp-text-grayscale-333">
+How to use a pull-based (agent-based) approach for GitOps
+<svg
+width=9
+height=6
+xmlns="http://www.w3.org/2000/svg"
+class=slp-inline-block
+>
+<path
+d="M6.685.683L9 3 6.685 5.317a.624.624 0 11-.883-.884l.808-.808H.624a.625.625 0 010-1.25H6.61l-.808-.808a.625.625 0 01.883-.884z"
+fill=none
+class="slp-fill-current slp-text-black group-hover:slp-text-ui-secondary group-focus:slp-text-ui-secondary"
+></path>
+</svg>
+</h2>
+<div class="slp-flex slp-items-center slp-mt-auto">
+<img
+alt="Cesar Saavedra GitLab profile"
+src="/images/team/cesar_saavedra-crop.jpg"
+height=39
+width=39
+class="slp-mr-4 slp-rounded-full slp-bg-grayscale-gray2"
+/>
+<span class="slp-text-xs slp-text-grayscale-333">Cesar Saavedra</span>
+</div>
+</div>
+</a>
+<a href="/blog/2021/06/21/how-to-become-more-productive-with-gitlab-ci/" class="slp-group slp-text-grayscale-333 slp-flex-none slp-mx-16 slp-mb-32">
+<div class="slp-max-w-lg slp-rounded-md slp-shadow-md slp-p-32 slp-h-full slp-box-border slp-flex slp-flex-col">
+<div class=slp-mb-6>
+<svg
+width=14
+height=16
+fill=none
+xmlns="http://www.w3.org/2000/svg"
+class="slp-inline-block slp-mr-2"
+>
+<path
+d="M11.96 13.728H8.184a.642.642 0 01-.64-.64c0-.352.288-.64.64-.64h3.776c.352 0 .64-.288.64-.64V1.92a.642.642 0 00-.64-.64H2.04a.642.642 0 00-.64.64v9.888c0 .352.288.64.64.64h2.368c.352 0 .64.288.64.64 0 .352-.288.64-.64.64H2.04a1.926 1.926 0 01-1.92-1.92V1.92C.12.864.984 0 2.04 0h9.92c1.056 0 1.92.864 1.92 1.92v9.888c0 1.056-.864 1.92-1.92 1.92z"
+fill="#9B51E0"
+></path>
+<path
+d="M10.36 6.752H3.64a.642.642 0 01-.64-.64V3.328c0-.352.288-.64.64-.64h6.72c.352 0 .64.288.64.64v2.784c0 .352-.288.64-.64.64zm-6.08-1.28h5.44V3.968H4.28v1.504zM7.704 11.04H3.64A.642.642 0 013 10.4c0-.352.288-.64.64-.64h4.064c.352 0 .64.288.64.64 0 .352-.288.64-.64.64zM10.36 8.896H3.64a.642.642 0 01-.64-.64c0-.352.288-.64.64-.64h6.72c.352 0 .64.288.64.64 0 .352-.288.64-.64.64zM4.408 16a.617.617 0 01-.32-.096c-.192-.128-.32-.32-.32-.544v-2.272c0-.352.288-.64.64-.64.352 0 .64.288.64.64v1.152l2.784-1.696a.602.602 0 01.864.224.602.602 0 01-.224.864L4.76 15.904a.645.645 0 01-.352.096z"
+fill="#9B51E0"
+></path>
+</svg>
+<span class="slp-uppercase slp-text-xs">engineering</span>
+</div>
+<h2 class="group-focus:slp-text-ui-secondary group-hover:slp-text-ui-secondary slp-text-lg slp-leading-tight slp-mb-6 slp-font-normal slp-text-grayscale-333">
+How to become more productive with Gitlab CI
+<svg
+width=9
+height=6
+xmlns="http://www.w3.org/2000/svg"
+class=slp-inline-block
+>
+<path
+d="M6.685.683L9 3 6.685 5.317a.624.624 0 11-.883-.884l.808-.808H.624a.625.625 0 010-1.25H6.61l-.808-.808a.625.625 0 01.883-.884z"
+fill=none
+class="slp-fill-current slp-text-black group-hover:slp-text-ui-secondary group-focus:slp-text-ui-secondary"
+></path>
+</svg>
+</h2>
+<div class="slp-flex slp-items-center slp-mt-auto">
+<img
+alt="Veethika Mishra GitLab profile"
+src="/images/team/Veethika_Mishra-crop.jpg"
+height=39
+width=39
+class="slp-mr-4 slp-rounded-full slp-bg-grayscale-gray2"
+/>
+<span class="slp-text-xs slp-text-grayscale-333">Veethika Mishra</span>
+</div>
+</div>
+</a>
+<a href="/blog/2021/06/15/why-we-are-building-the-gitlab-environment-toolkit-to-help-deploy-gitlab-at-scale/" class="slp-group slp-text-grayscale-333 slp-flex-none slp-mx-16 slp-mb-32">
+<div class="slp-max-w-lg slp-rounded-md slp-shadow-md slp-p-32 slp-h-full slp-box-border slp-flex slp-flex-col">
+<div class=slp-mb-6>
+<svg
+width=14
+height=16
+fill=none
+xmlns="http://www.w3.org/2000/svg"
+class="slp-inline-block slp-mr-2"
+>
+<path
+d="M11.96 13.728H8.184a.642.642 0 01-.64-.64c0-.352.288-.64.64-.64h3.776c.352 0 .64-.288.64-.64V1.92a.642.642 0 00-.64-.64H2.04a.642.642 0 00-.64.64v9.888c0 .352.288.64.64.64h2.368c.352 0 .64.288.64.64 0 .352-.288.64-.64.64H2.04a1.926 1.926 0 01-1.92-1.92V1.92C.12.864.984 0 2.04 0h9.92c1.056 0 1.92.864 1.92 1.92v9.888c0 1.056-.864 1.92-1.92 1.92z"
+fill="#9B51E0"
+></path>
+<path
+d="M10.36 6.752H3.64a.642.642 0 01-.64-.64V3.328c0-.352.288-.64.64-.64h6.72c.352 0 .64.288.64.64v2.784c0 .352-.288.64-.64.64zm-6.08-1.28h5.44V3.968H4.28v1.504zM7.704 11.04H3.64A.642.642 0 013 10.4c0-.352.288-.64.64-.64h4.064c.352 0 .64.288.64.64 0 .352-.288.64-.64.64zM10.36 8.896H3.64a.642.642 0 01-.64-.64c0-.352.288-.64.64-.64h6.72c.352 0 .64.288.64.64 0 .352-.288.64-.64.64zM4.408 16a.617.617 0 01-.32-.096c-.192-.128-.32-.32-.32-.544v-2.272c0-.352.288-.64.64-.64.352 0 .64.288.64.64v1.152l2.784-1.696a.602.602 0 01.864.224.602.602 0 01-.224.864L4.76 15.904a.645.645 0 01-.352.096z"
+fill="#9B51E0"
+></path>
+</svg>
+<span class="slp-uppercase slp-text-xs">engineering</span>
+</div>
+<h2 class="group-focus:slp-text-ui-secondary group-hover:slp-text-ui-secondary slp-text-lg slp-leading-tight slp-mb-6 slp-font-normal slp-text-grayscale-333">
+The next step in performance testing? The GitLab Environment Toolkit
+<svg
+width=9
+height=6
+xmlns="http://www.w3.org/2000/svg"
+class=slp-inline-block
+>
+<path
+d="M6.685.683L9 3 6.685 5.317a.624.624 0 11-.883-.884l.808-.808H.624a.625.625 0 010-1.25H6.61l-.808-.808a.625.625 0 01.883-.884z"
+fill=none
+class="slp-fill-current slp-text-black group-hover:slp-text-ui-secondary group-focus:slp-text-ui-secondary"
+></path>
+</svg>
+</h2>
+<div class="slp-flex slp-items-center slp-mt-auto">
+<img
+alt="Grant Young GitLab profile"
+src="/images/team/grantyoung-crop.jpg"
+height=39
+width=39
+class="slp-mr-4 slp-rounded-full slp-bg-grayscale-gray2"
+/>
+<span class="slp-text-xs slp-text-grayscale-333">Grant Young</span>
+</div>
+</div>
+</a>
+</div>
+<a
+href="/blog/"
+class="slp-text-ui-secondary slp-font-bold slp-text-sm slp-leading-4 slp-underline slp-min-w-full slp-text-center slp-block"
+>
+All Blog Posts
+<svg
+width=9
+height=6
+xmlns="http://www.w3.org/2000/svg"
+class=slp-inline-block
+>
+<path
+d="M6.685.683L9 3 6.685 5.317a.624.624 0 11-.883-.884l.808-.808H.624a.625.625 0 010-1.25H6.61l-.808-.808a.625.625 0 01.883-.884z"
+fill=none
+class="slp-fill-current group-hover:slp-text-ui-secondary group-focus:slp-text-ui-secondary"
+></path>
+</svg>
+</a>
+</div>
+<slot name=non-slippers-footer-items></slot>
+</footer>
+</main>
+</template>
+<script data-cookieconsent=ignore src="/javascripts/slippers-blog.js"></script>
+<slp-blog>
+<h2 id=in-this-guide-we-will-learn-how-to-spin-up-gitlab-in-the-aws-marketplace>In this guide we will learn how to spin up GitLab in the AWS Marketplace:</h2>
+<h3 id=pre-requisites-for-this-lab-are-having-an-account-in-aws-and-an-accessible-and-working-vpc>Pre requisites for this lab are having an account in AWS and an accessible and working VPC.</h3>
+<h3 id=we-will-learn-the-following-steps>We will learn the following steps:</h3>
+<ol>
+<li>Stand up a self-managed instance of GitLab.</li>
+<li>Install Runner and Docker Engine.</li>
+</ol>
+<h2 id=step-by-step-instructions>Step-by-step Instructions</h2>
+<h3 id=step-1---stand-up-gitlab-instance-in-aws>Step 1 - Stand up GitLab instance in AWS</h3>
+<ul>
+<li>Open <a href="https://aws.amazon.com/marketplace/pp/B07SJ817DX">GitLab Ultimate</a> in AWS Marketplace.</li>
+<li>Click on <strong>Continue to Subscribe</strong></li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-1.png" alt=aws-1 /></p>
+<ul>
+<li>Sign in with your IAM user.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-2.png" alt=aws-2 /></p>
+<ul>
+<li>Click on <strong>Continue to Configuration</strong>.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-3.png" alt=aws-3 /></p>
+<ul>
+<li>Leave the default value for <strong>Delivery Method</strong>, select the latest version in <strong>Software Version</strong>, select your <strong>Region</strong>, click <strong>Continue to Launch</strong>.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-4.png" alt=aws-4 /></p>
+<ul>
+<li>In Launch this software page, scroll down.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-5.png" alt=aws-5 /></p>
+<ul>
+<li>Under <strong>Security Group Settings</strong> click <strong>Create New Based On Seller Settings</strong> .</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-6.png" alt=aws-6 /></p>
+<ul>
+<li>Name your security group, add a description, and save it.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-7.png" alt=aws-7 /></p>
+<ul>
+<li>Select <strong>Key Pair</strong>. If you don't have key pair, create one. Leave other fields in this page with default values. Click <strong>Launch</strong>.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-8.png" alt=aws-8 /></p>
+<ul>
+<li>You will get Congratulations message confirming you launched the machine successfully. In this message click on <strong>EC2 Console</strong> link.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-9.png" alt=aws-9 /></p>
+<ul>
+<li>Click on your instance ID link.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-10.png" alt=aws-10 /></p>
+<p>The provisioning takes a few minutes. Please wait before you start the next step.</p>
+<ul>
+<li>Click "Open address" in order to open GitLab UI.</li>
+</ul>
+<p>Copy the <strong>private</strong> or <strong>public</strong> IP to your browser , depending on your <strong>VPC configuration</strong>.</p>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-10_5.png" alt=aws-10_5 /></p>
+<ul>
+<li>It takes a few minutes to start the server, you may see this error, this is ok, wait 1 minute and refresh the page.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-11.png" alt=aws-11 /></p>
+<ul>
+<li>You now should be able to access the GitLab login page; Username is <strong>root</strong>, password is your <strong>instance ID</strong>, click <strong>Sign in</strong>.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-13.png" alt=aws-13 /></p>
+<h2 id=congratulations-you-managed-to-start-a-gitlab-instance-and-sign-in-to-it>Congratulations! you managed to start a GitLab instance and sign in to it.</h2>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/aws-14.png" alt=aws-14 /></p>
+<h3 id=step-2---install-runner-and-docker-engine>Step 2 - Install Runner and Docker Engine</h3>
+<p>Runner machines are the build agents that run the CI/CD jobs.</p>
+<p>Requirements:</p>
+<ul>
+<li>Jobs run inside the Docker images, therefore the runner machine requires Docker engine on the runner machine.</li>
+</ul>
+<h3 id=connect-to-the-machine-with-the-aws-console---connect>Connect to the machine with the <strong>AWS console - Connect</strong></h3>
+<p>In order to setup the Runners and Docker engine, we need to connect to the GitLab machine we are running. This can be done via <strong>SSH</strong> from any command line, or directly via the <strong>AWS Console</strong>, depending on how your <strong>VPC</strong> is set. In our example we will use the <strong>AWS console - Connect</strong> feature to SSH into the machines.</p>
+<p><strong>WARNING: It is not a recommended best practice to install Runners on the same machine where the server is installed for security and performance reasons, but only for the sake of simplicity, in this blog we will install it on the same machine.</strong></p>
+<ul>
+<li>Go to your Instance summary, and click <strong>Connect</strong> in order to open the console.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/runner-1.png" alt=runner-1 /></p>
+<ul>
+<li>Click Connect again.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/runner-2.png" alt=runner-2 /></p>
+<h3 id=install-docker-engine>Install Docker engine</h3>
+<ul>
+<li>Install Container by running this command <code>curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh</code></li>
+</ul>
+<h3 id=setup-runners>Setup Runners</h3>
+<ul>
+<li>Download the binaries for Linux x86 <code>sudo curl -L --output /usr/local/bin/gitlab-runner "https://gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-386"</code></li>
+<li>Give it permissions to execute: <code>sudo chmod +x /usr/local/bin/gitlab-runner</code></li>
+<li>Create a GitLab CI user: <code>sudo useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash</code></li>
+<li>Install and run as service: <code>sudo gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner
+sudo gitlab-runner start</code></li>
+</ul>
+<h3 id=register-the-runner>Register the Runner</h3>
+<ul>
+<li>Run this command: <code>sudo gitlab-runner register</code>.</li>
+<li>You will be prompt to enter URL.</li>
+<li>Open your GitLab instance, under CI/CD settings:
+<ul>
+<li>
+<p>Click Settings, CI/CD.</p>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/runner-3.png" alt=runner-2 /></p>
+</li>
+<li>
+<p>Expand <strong>Runners</strong>.</p>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/runner-4.png" alt=runner-4 /></p>
+</li>
+<li>
+<p>Copy the URL to the clipboard under specific runner.</p>
+</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/runner-5.png" alt=runner-5 /></p>
+</li>
+<li>Paste the URL in the console.</li>
+<li>Enter.</li>
+<li>You will be prompt to enter registration token, copy it from the Runner settings.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/runner-6.png" alt=runner-5 /></p>
+<ul>
+<li>Paste it in the console.</li>
+<li>Enter Description for the runner: type <strong>GitLab workshop</strong>.</li>
+<li>Add a tag to this runner, for example type <strong>Linux</strong></li>
+<li>Enter executor, type <strong>docker</strong>.</li>
+<li>Enter the default Docker image, type <strong>ruby:2.6</strong>.</li>
+<li>You will get a message starting with <strong>Runner registered successfully. Feel free to start itâ¦</strong></li>
+<li>Refresh the Runner settings page in GitLab and you will see your runner under <strong>Available specific runners</strong>.</li>
+<li>Click edit.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/runner-7.png" alt="runner-7.png"/></p>
+<ul>
+<li>Check the <strong>Indicates whether this runner can pick jobs without tags</strong> option, and click <strong>Save changes</strong>.</li>
+</ul>
+<p><img src="/images/blogimages/2021-aws-marketplace-blog/runner-8.png" alt="runner-7.png"/></p>
+<h2 id=well-done-you-installed-and-registered-successfully-gitlab-runner-now-you-are-ready-to-create-a-project-and-run-your-first-cicd-pipeline>Well done!! You installed and registered successfully GitLab Runner. Now you are ready to create a project and run your first CI/CD pipeline.</h2>
+<p>In my next blog, I will show you how to create a project, configure the CI/CD, change your application code, and run a CI/CD pipeline.</p>
+<div slot=non-slippers-aside-items>
+<div class="panel panel-default nl panel-newsletter-signup">
+<div class=row>
+<div class="col-12 newsletter">
+<div class=newsletter-form style="margin: 32px 0">
+<span class=newsletter-preamble>
+Sign up for GitLabâs twice-monthly newsletter
+</span>
+<script src="//page.gitlab.com/js/forms2/js/forms2.min.js"></script>
+<form id=mktoForm_1077></form>
+<script>
+
+          MktoForms2.setOptions(
+          {
+            formXDPath : "/rs/194-VVC-221/images/marketo-xdframe-relative.html"
+          });
+          MktoForms2.loadForm("//page.gitlab.com", "194-VVC-221", 1077, function(form) {
+            form.onSuccess(function(values, followUpUrl) {
+
+              dataLayer.push(
+              {
+                'event' : 'mktoLead', 
+                'mktoFormId' : form.getId(),
+                'eventCallback' : function()
+                {
+                  form.getFormElem().hide();
+                  document.getElementById('confirmform').style.display = 'block';
+                }, 'eventTimeout' : 3000
+              });
+              return false;
+            });
+            function getgacid() {
+              try {
+                var tracker = ga.getAll()[0];
+                return tracker.get('clientId');
+              } catch (e) {
+                return 'n/a';
+              }
+            }
+            form.vals({
+              'gacid': getgacid()
+            });
+          });
+        </script>
+<div id=confirmform class=confirm-message style="display:none;"><p>Thanks for subscribing!</p></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div slot=non-slippers-footer-items>
+<div class='callout gitlab-trial'>
+<h2>
+Try all GitLab features - free for 30 days
+</h2>
+<p>
+GitLab is more than just source code management or CI/CD. It is a full software development lifecycle & DevOps tool in a single application.
+</p>
+<a href="/free-trial/" class="btn cta-btn orange">Try GitLab Free</a>
+</div>
+<div id=disqus_thread>
+<script>
+  //<![CDATA[
+    var disqus_shortname = 'gitlab'; // required: replace example with your forum shortname
+    //var disqus_developer = 1;
+    var disqus_identifier = disqus_identifier ? disqus_identifier : 'https://about.gitlab.com/blog/2021/06/30/how-to-stand-up-gitlab-in-awsmp/';
+    var disqus_url = 'https://about.gitlab.com/blog/2021/06/30/how-to-stand-up-gitlab-in-awsmp/';
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  //]]>
+</script>
+</div>
+</div>
+</slp-blog>
+<footer class=footer>
+<svg width=65 height=60 viewBox="0 0 210 194" class=footer-logo>
+<path d="M105.0614,193.655 L105.0614,193.655 L143.7014,74.734 L66.4214,74.734 L105.0614,193.655 L105.0614,193.655 Z" fill="#E24329" class="logo-svg-shape logo-dark-orange-shape"/>
+<path d="M105.0614,193.6548 L66.4214,74.7338 L12.2684,74.7338 L105.0614,193.6548 Z" fill="#FC6D26" class="logo-svg-shape logo-orange-shape"/>
+<path d="M12.2685,74.7341 L12.2685,74.7341 L0.5265,110.8731 C-0.5445,114.1691 0.6285,117.7801 3.4325,119.8171 L105.0615,193.6551 L12.2685,74.7341 Z" fill="#FCA326" class="logo-svg-shape logo-light-orange-shape"/>
+<path d="M12.2685,74.7342 L66.4215,74.7342 L43.1485,3.1092 C41.9515,-0.5768 36.7375,-0.5758 35.5405,3.1092 L12.2685,74.7342 Z" fill="#E24329" class="logo-svg-shape logo-dark-orange-shape"/>
+<path d="M105.0614,193.6548 L143.7014,74.7338 L197.8544,74.7338 L105.0614,193.6548 Z" fill="#FC6D26" class="logo-svg-shape logo-orange-shape"/>
+<path d="M197.8544,74.7341 L197.8544,74.7341 L209.5964,110.8731 C210.6674,114.1691 209.4944,117.7801 206.6904,119.8171 L105.0614,193.6551 L197.8544,74.7341 Z" fill="#FCA326" class="logo-svg-shape logo-light-orange-shape"/>
+<path d="M197.8544,74.7342 L143.7014,74.7342 L166.9744,3.1092 C168.1714,-0.5768 173.3854,-0.5758 174.5824,3.1092 L197.8544,74.7342 Z" fill="#E24329" class="logo-svg-shape logo-dark-orange-shape"/>
+</svg>
+<div class='animated container'>
+<ul class='text-center footer-social'>
+<li>
+<a href="https://twitter.com/gitlab"><i class='fab fa-twitter'></i>
+<span class=sr-only>Twitter</span>
+</a></li>
+<li>
+<a href="https://www.facebook.com/gitlab"><i class='fab fa-facebook'></i>
+<span class=sr-only>Facebook</span>
+</a></li>
+<li>
+<a href="https://www.youtube.com/channel/UCnMGQ8QHMAnVIsI3xJrihhg"><i class='fab fa-youtube'></i>
+<span class=sr-only>YouTube</span>
+</a></li>
+<li>
+<a href="https://www.linkedin.com/company/gitlab-com"><i class='fab fa-linkedin'></i>
+<span class=sr-only>LinkedIn</span>
+</a></li>
+</ul>
+<div class=footer-links-container>
+<div class=footer-link-holder>
+<h3 class=footer-link-title>Why GitLab?</h3>
+<ul class='animated footer-links'>
+<li><a href="/stages-devops-lifecycle/" class=footer-nav-link>Product</a></li>
+<li><a href="/solutions/" class=footer-nav-link>Solutions</a></li>
+<li><a href="/services/" class=footer-nav-link>Services</a></li>
+<li><a href="/devops-tools/" class=footer-nav-link>DevOps tools</a></li>
+<li><a href="/is-it-any-good/" class=footer-nav-link>Is it any good?</a></li>
+<li><a href="/releases/" class=footer-nav-link>Releases</a></li>
+<li><a href="/pricing/" class=footer-nav-link>Pricing</a></li>
+<li><a href="/get-started/" class=footer-nav-link>Get started</a></li>
+</ul>
+</div>
+<div class=footer-link-holder>
+<h3 class=footer-link-title>Resources</h3>
+<ul class='animated footer-links'>
+<li><a href="/resources/" class=footer-nav-link>All resources</a></li>
+<li><a href="/company/culture/all-remote/" class=footer-nav-link>All-Remote</a></li>
+<li><a href="/blog/" class=footer-nav-link>Blog</a></li>
+<li><a href="/company/contact/" class=footer-nav-link>Newsletter</a></li>
+<li><a href="/events/" class=footer-nav-link>Events</a></li>
+<li><a href="/webcast/" class=footer-nav-link>Webcasts</a></li>
+<li><a href="/topics/" class=footer-nav-link>Topics</a></li>
+<li><a href="/learn/" class=footer-nav-link>Training</a></li>
+<li><a href="https://docs.gitlab.com/" class=footer-nav-link>Docs</a></li>
+<li><a href="/install/" class=footer-nav-link>Install</a></li>
+</ul>
+</div>
+<div class=footer-link-holder>
+<h3 class=footer-link-title>Community</h3>
+<ul class='animated footer-links'>
+<li><a href="/customers/" class=footer-nav-link>Customers</a></li>
+<li><a href="/community/contribute/" class=footer-nav-link>Contribute</a></li>
+<li><a href="/community/" class=footer-nav-link>Community Programs</a></li>
+<li><a href="/direction/" class=footer-nav-link>Direction</a></li>
+<li><a href="/partners/technology-partners/" class=footer-nav-link>Technology Partners</a></li>
+<li><a href="/partners/" class=footer-nav-link>Channel Partners</a></li>
+<li><a href="/solutions/open-source/partners/" class=footer-nav-link>Open Source Partners</a></li>
+<li><a href="/solutions/open-source/" class=footer-nav-link>GitLab for Open Source</a></li>
+<li><a href="/solutions/education/" class=footer-nav-link>GitLab for Education</a></li>
+<li><a href="/solutions/startups/" class=footer-nav-link>GitLab for Startups</a></li>
+<li><a href="https://shop.gitlab.com" class=footer-nav-link>Shop</a></li>
+<li><a href="https://forum.gitlab.com/" class=footer-nav-link>Community Forum</a></li>
+</ul>
+</div>
+<div class=footer-link-holder>
+<h3 class=footer-link-title>Support</h3>
+<ul class='animated footer-links'>
+<li><a href="/get-help/" class=footer-nav-link>Get help</a></li>
+<li><a href="/sales/" class=footer-nav-link>Contact Sales</a></li>
+<li><a href="/support/#contact-support" class=footer-nav-link>Contact Support</a></li>
+<li><a href="/support/" class=footer-nav-link>Support options</a></li>
+<li><a href="https://status.gitlab.com/" class=footer-nav-link>Status</a></li>
+<li><a href="https://customers.gitlab.com/" class=footer-nav-link>Customers Portal</a></li>
+</ul>
+</div>
+<div class=footer-link-holder>
+<h3 class=footer-link-title>Company</h3>
+<ul class='animated footer-links'>
+<li><a href="/company/" class=footer-nav-link>About</a></li>
+<li><a href="/what-is-gitlab/" class=footer-nav-link>What is GitLab?</a></li>
+<li><a href="/jobs/" class=footer-nav-link>Jobs</a></li>
+<li><a href="/company/culture/" class=footer-nav-link>Culture</a></li>
+<li><a href="/company/team/" class=footer-nav-link>Team</a></li>
+<li><a href="/press/" class=footer-nav-link>Press</a></li>
+<li><a href="/analysts/" class=footer-nav-link>Analysts</a></li>
+<li><a href="/handbook/" class=footer-nav-link>Handbook</a></li>
+<li><a href="/security/" class=footer-nav-link>Security</a></li>
+<li><a href="/company/contact/" class=footer-nav-link>Contact</a></li>
+<li><a href="/terms/" class=footer-nav-link>Terms</a></li>
+<li><a href="/privacy/" class=footer-nav-link>Privacy</a></li>
+<li><a href="/handbook/marketing/corporate-marketing/brand-activation/brand-guidelines/#trademark" class=footer-nav-link>Trademark</a></li>
+</ul>
+</div>
+</div>
+</div>
+</footer>
+<div class=git-trademark>
+Git is a trademark of Software Freedom Conservancy and our use of 'GitLab' is under license
+</div>
+<div class='animated text-center source-link'>
+View
+<a href="https://gitlab.com/gitlab-com/www-gitlab-com/blob/master/sites/uncategorized/source/blog/blog-posts/2021-06-30-how-to-stand-up-gitlab-in-awsmp.html.md.erb" class=external-source-link>page source</a>
+&mdash; Edit in
+<a href="https://gitlab.com/-/ide/project/gitlab-com/www-gitlab-com/edit/master/-/sites/uncategorized/source/blog/blog-posts/2021-06-30-how-to-stand-up-gitlab-in-awsmp.html.md.erb" class=external-source-link>Web IDE</a>
+&mdash; please
+<a href="https://gitlab.com/gitlab-com/www-gitlab-com/blob/master/CONTRIBUTING.md" class=external-source-link>contribute</a>.
+<a href='https://creativecommons.org/licenses/by-sa/4.0/' rel=license>
+<img src="/images/by-sa.svg" alt="Creative Commons License"/>
+</a>
+</div>
+<script src="/javascripts/libs/jquery.min.js"></script>
+<script src="/javascripts/libs/jquery-migrate-3.3.0.min.js"></script>
+<script src="/javascripts/libs/bootstrap.min.js"></script>
+<script src="/javascripts/libs/jqBootstrapValidation.js"></script>
+<script src="/javascripts/scripts.js"></script>
+<script>
+  //<![CDATA[
+    $.ajax({
+      url: '//munchkin.marketo.net/munchkin.js',
+      dataType: 'script',
+      cache: true,
+      success: function() {
+        Munchkin.init('194-VVC-221');
+      }
+    });
+  //]]>
+</script>
+<script data-cookieconsent=ignore defer=true src='/javascripts/cbextras.js'></script>
+<div class='sticky-banner js-sticky-banner active' id=sticky-banner>
+<div class=sticky-banner-content>
+<div class=sticky-banner-text>
+<p class=header-text>
+Try
+<a href='/pricing/'>GitLab</a>
+risk-free for 30 days.
+</p>
+<p class=subheader-text>
+No credit card required. Have questions?
+<a href="/sales/" class=contact-us>Contact us.</a>
+</p>
+</div>
+<div class=action>
+<a href="/free-trial/" class="btn featured-item-cta-btn" style="min-width: 200px">Get Your Free Trial Today</a>
+</div>
+</div>
+<img src="/images/icons/x.svg" id=dismiss-trial class=dismiss-trial alt="Gitlab x icon svg"/>
+</div>
+<script>
+  //<![CDATA[
+    (function() {
+      var trialDismissed = false
+      document.getElementById("dismiss-trial").addEventListener("click", dismissTrial)
+      function dismissTrial() {
+        document.getElementById('sticky-banner').style.display = "none";
+      }
+    })();
+  //]]>
+</script>
+</body>
+</html>
