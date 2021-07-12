@@ -114,7 +114,7 @@ def parse(html, url, property_filter=None, fast=False, extractor_config=metahtml
     calculate_property('type')
     calculate_property('links','links.all')
 
-    if parser.meta['type']['best']['value'] == 'article' or force_parsing:
+    if parser.meta['type']['best']['value'] == 'article':
         calculate_property('language')
         calculate_property('timestamp.modified')
 
