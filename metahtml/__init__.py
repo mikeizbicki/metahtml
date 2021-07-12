@@ -67,11 +67,22 @@ def parse(html, url, property_filter=None, fast=False, extractor_config=metahtml
     parser.meta['url'] = url
 
     # parse the raw html using lxml;
+    try:
+        parser.doc = lxml.html.fromstring(html)
+
+    # some html documents start with an xml encoding tag similar to
+    # <?xml version="1.0" encoding="UTF-8"?>
+    # this causes lxml to throw a ValueError, and we fix this by removing the encoding line;
+    # FIXME:
+    # a better fix would be for the parse function to accept raw bytes as input and handle the decoding within this function;
+    # but that would require reworking lots of code and it's not clear there would be any benefit
+    except ValueError:
+        html_fixed = html[html.find('?>')+2:]
+        parser.doc = lxml.html.fromstring(html_fixed)
+
     # lxml fails whenever the html is empty, so we pass it a minimal html document;
     # this ensures that we will return a valid result 
     # (it will have no data, but it will be valid schematically)
-    try:
-        parser.doc = lxml.html.fromstring(html)
     except lxml.etree.ParserError:
         parser.doc = lxml.html.fromstring('<html></html>')
 
