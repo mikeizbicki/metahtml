@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html class="html" lang="en-US">
+<head><script>if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script>class RocketLazyLoadScripts{constructor(e){this.triggerEvents=e,this.eventOptions={passive:!0},this.userEventListener=this.triggerListener.bind(this),this.delayedScripts={normal:[],async:[],defer:[]},this.allJQueries=[]}_addUserInteractionListener(e){this.triggerEvents.forEach((t=>window.addEventListener(t,e.userEventListener,e.eventOptions)))}_removeUserInteractionListener(e){this.triggerEvents.forEach((t=>window.removeEventListener(t,e.userEventListener,e.eventOptions)))}triggerListener(){this._removeUserInteractionListener(this),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",this._loadEverythingNow.bind(this)):this._loadEverythingNow()}async _loadEverythingNow(){this._delayEventListeners(),this._delayJQueryReady(this),this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async),await this._triggerDOMContentLoaded(),await this._triggerWindowLoad(),window.dispatchEvent(new Event("rocket-allScriptsLoaded"))}_registerAllDelayedScripts(){document.querySelectorAll("script[type=rocketlazyloadscript]").forEach((e=>{e.hasAttribute("src")?e.hasAttribute("async")&&!1!==e.async?this.delayedScripts.async.push(e):e.hasAttribute("defer")&&!1!==e.defer||"module"===e.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(e):this.delayedScripts.normal.push(e):this.delayedScripts.normal.push(e)}))}async _transformScript(e){return await this._requestAnimFrame(),new Promise((t=>{const n=document.createElement("script");let i;[...e.attributes].forEach((e=>{let t=e.nodeName;"type"!==t&&("data-rocket-type"===t&&(t="type",i=e.nodeValue),n.setAttribute(t,e.nodeValue))})),e.hasAttribute("src")&&this._isValidScriptType(i)?(n.addEventListener("load",t),n.addEventListener("error",t)):(n.text=e.text,t()),e.parentNode.replaceChild(n,e)}))}_isValidScriptType(e){return!e||""===e||"string"==typeof e&&["text/javascript","text/x-javascript","text/ecmascript","text/jscript","application/javascript","application/x-javascript","application/ecmascript","application/jscript","module"].includes(e.toLowerCase())}async _loadScriptsFromList(e){const t=e.shift();return t?(await this._transformScript(t),this._loadScriptsFromList(e)):Promise.resolve()}_preloadAllScripts(){var e=document.createDocumentFragment();[...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async].forEach((t=>{const n=t.getAttribute("src");if(n){const t=document.createElement("link");t.href=n,t.rel="preload",t.as="script",e.appendChild(t)}})),document.head.appendChild(e)}_delayEventListeners(){let e={};function t(t,n){!function(t){function n(n){return e[t].eventsToRewrite.indexOf(n)>=0?"rocket-"+n:n}e[t]||(e[t]={originalFunctions:{add:t.addEventListener,remove:t.removeEventListener},eventsToRewrite:[]},t.addEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.add.apply(t,arguments)},t.removeEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.remove.apply(t,arguments)})}(t),e[t].eventsToRewrite.push(n)}function n(e,t){const n=e[t];Object.defineProperty(e,t,{get:n||function(){},set:n=>{e["rocket"+t]=n}})}t(document,"DOMContentLoaded"),t(window,"DOMContentLoaded"),t(window,"load"),t(window,"pageshow"),t(document,"readystatechange"),n(document,"onreadystatechange"),n(window,"onload"),n(window,"onpageshow")}_delayJQueryReady(e){let t=window.jQuery;Object.defineProperty(window,"jQuery",{get:()=>t,set(n){if(n&&n.fn&&!e.allJQueries.includes(n)){n.fn.ready=n.fn.init.prototype.ready=function(t){e.domReadyFired?t.bind(document)(n):document.addEventListener("rocket-DOMContentLoaded",(()=>t.bind(document)(n)))};const t=n.fn.on;n.fn.on=n.fn.init.prototype.on=function(){if(this[0]===window){function e(e){return e.split(" ").map((e=>"load"===e||0===e.indexOf("load.")?"rocket-jquery-load":e)).join(" ")}"string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=e(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach((t=>{delete Object.assign(arguments[0],{[e(t)]:arguments[0][t]})[t]}))}return t.apply(this,arguments),this},e.allJQueries.push(n)}t=n}})}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._requestAnimFrame(),document.rocketonreadystatechange&&document.rocketonreadystatechange()}async _triggerWindowLoad(){await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-load")),await this._requestAnimFrame(),window.rocketonload&&window.rocketonload(),await this._requestAnimFrame(),this.allJQueries.forEach((e=>e(window).trigger("rocket-jquery-load"))),window.dispatchEvent(new Event("rocket-pageshow")),await this._requestAnimFrame(),window.rocketonpageshow&&window.rocketonpageshow()}_handleDocumentWrite(){const e=new Map;document.write=document.writeln=function(t){const n=document.currentScript,i=document.createRange(),r=n.parentElement;let a=e.get(n);void 0===a&&(a=n.nextSibling,e.set(n,a));const o=document.createDocumentFragment();i.setStart(o,0),o.appendChild(i.createContextualFragment(t)),r.insertBefore(o,a)}}async _requestAnimFrame(){return new Promise((e=>requestAnimationFrame(e)))}static run(){const e=new RocketLazyLoadScripts(["keydown","mousemove","touchmove","touchstart","touchend","touchcancel","touchforcechange","wheel"]);e._addUserInteractionListener(e)}}RocketLazyLoadScripts.run();
+</script>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+<script type="rocketlazyloadscript" async src="https://www.googletagmanager.com/gtag/js?id=UA-102426589-2"></script>
+<script type="rocketlazyloadscript">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-102426589-4');
+</script>
+	<meta charset="UTF-8">
+	<link rel="profile" href="https://gmpg.org/xfn/11">
+
+	<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+<link rel="pingback" href="https://then24.com/xmlrpc.php">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- This site is optimized with the Yoast SEO plugin v16.6.1 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>The definitive end of Internet Explorer: Microsoft will retire the browser in 2022 - The News 24</title><link rel="stylesheet" href="https://then24.com/wp-content/cache/min/1/4c8f28d3a7245ed407e89e46775e0ecb.css" media="all" data-minify="1" />
+	<meta name="description" content="The end of an era. Next June 2022, after more than 25 years, Internet Explorer will come to an end. Microsoft has announced that they will withdraw" />
+	<link rel="canonical" href="https://then24.com/2021/05/19/the-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="The definitive end of Internet Explorer: Microsoft will retire the browser in 2022 - The News 24" />
+	<meta property="og:description" content="The end of an era. Next June 2022, after more than 25 years, Internet Explorer will come to an end. Microsoft has announced that they will withdraw" />
+	<meta property="og:url" content="https://then24.com/2021/05/19/the-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022/" />
+	<meta property="og:site_name" content="The News 24" />
+	<meta property="article:published_time" content="2021-05-19T20:23:03+00:00" />
+	<meta property="article:modified_time" content="2021-05-19T21:03:15+00:00" />
+	<meta property="og:image" content="https://then24.com/wp-content/uploads/2021/05/1621458193_The-definitive-end-of-Internet-Explorer-Microsoft-will-retire-the.jpg" />
+	<meta property="og:image:width" content="840" />
+	<meta property="og:image:height" content="560" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:label1" content="Written by" />
+	<meta name="twitter:data1" content="The News 24" />
+	<meta name="twitter:label2" content="Est. reading time" />
+	<meta name="twitter:data2" content="2 minutes" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://then24.com/#organization","name":"The News 24","url":"https://then24.com/","sameAs":[],"logo":{"@type":"ImageObject","@id":"https://then24.com/#logo","inLanguage":"en-US","url":"https://then24.com/wp-content/uploads/2021/03/24-1.png","contentUrl":"https://then24.com/wp-content/uploads/2021/03/24-1.png","width":512,"height":512,"caption":"The News 24"},"image":{"@id":"https://then24.com/#logo"}},{"@type":"WebSite","@id":"https://then24.com/#website","url":"https://then24.com/","name":"The News 24","description":"All Daily News Here!","publisher":{"@id":"https://then24.com/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://then24.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"ImageObject","@id":"https://then24.com/2021/05/19/the-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022/#primaryimage","inLanguage":"en-US","url":"https://then24.com/wp-content/uploads/2021/05/1621458193_The-definitive-end-of-Internet-Explorer-Microsoft-will-retire-the.jpg","contentUrl":"https://then24.com/wp-content/uploads/2021/05/1621458193_The-definitive-end-of-Internet-Explorer-Microsoft-will-retire-the.jpg","width":840,"height":560,"caption":"The definitive end of Internet Explorer: Microsoft will retire the browser in 2022"},{"@type":"WebPage","@id":"https://then24.com/2021/05/19/the-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022/#webpage","url":"https://then24.com/2021/05/19/the-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022/","name":"The definitive end of Internet Explorer: Microsoft will retire the browser in 2022 - The News 24","isPartOf":{"@id":"https://then24.com/#website"},"primaryImageOfPage":{"@id":"https://then24.com/2021/05/19/the-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022/#primaryimage"},"datePublished":"2021-05-19T20:23:03+00:00","dateModified":"2021-05-19T21:03:15+00:00","description":"The end of an era. Next June 2022, after more than 25 years, Internet Explorer will come to an end. Microsoft has announced that they will withdraw","breadcrumb":{"@id":"https://then24.com/2021/05/19/the-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://then24.com/2021/05/19/the-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022/"]}]},{"@type":"BreadcrumbList","@id":"https://then24.com/2021/05/19/the-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://then24.com/"},{"@type":"ListItem","position":2,"name":"Sci&amp;Tech","item":"https://then24.com/category/sciencetech/"},{"@type":"ListItem","position":3,"name":"The definitive end of Internet Explorer: Microsoft will retire the browser in 2022"}]},{"@type":"Article","@id":"https://then24.com/2021/05/19/the-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022/#article","isPartOf":{"@id":"https://then24.com/2021/05/19/the-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022/#webpage"},"author":{"@id":"https://then24.com/#/schema/person/55e07241e966bbcf666f47c4670cda83"},"headline":"The definitive end of Internet Explorer: Microsoft will retire the browser in 2022","datePublished":"2021-05-19T20:23:03+00:00","dateModified":"2021-05-19T21:03:15+00:00","mainEntityOfPage":{"@id":"https://then24.com/2021/05/19/the-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022/#webpage"},"wordCount":315,"commentCount":0,"publisher":{"@id":"https://then24.com/#organization"},"image":{"@id":"https://then24.com/2021/05/19/the-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022/#primaryimage"},"thumbnailUrl":"https://then24.com/wp-content/uploads/2021/05/1621458193_The-definitive-end-of-Internet-Explorer-Microsoft-will-retire-the.jpg","articleSection":["Sci&amp;Tech"],"inLanguage":"en-US","potentialAction":[{"@type":"CommentAction","name":"Comment","target":["https://then24.com/2021/05/19/the-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022/#respond"]}]},{"@type":"Person","@id":"https://then24.com/#/schema/person/55e07241e966bbcf666f47c4670cda83","name":"The News 24","image":{"@type":"ImageObject","@id":"https://then24.com/#personlogo","inLanguage":"en-US","url":"https://secure.gravatar.com/avatar/028920634086cd7350d5bcb6dc7a82b3?s=96&d=mm&r=g","contentUrl":"https://secure.gravatar.com/avatar/028920634086cd7350d5bcb6dc7a82b3?s=96&d=mm&r=g","caption":"The News 24"},"sameAs":["https://then24.com"]}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+
+<link rel="alternate" type="application/rss+xml" title="The News 24 &raquo; Feed" href="https://then24.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="The News 24 &raquo; Comments Feed" href="https://then24.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="The News 24 &raquo; The definitive end of Internet Explorer: Microsoft will retire the browser in 2022 Comments Feed" href="https://then24.com/2021/05/19/the-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022/feed/" />
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	
+
+
+
+
+
+
+
+
+
+<style id='rocket-lazyload-inline-css' type='text/css'>
+.rll-youtube-player{position:relative;padding-bottom:56.23%;height:0;overflow:hidden;max-width:100%;}.rll-youtube-player iframe{position:absolute;top:0;left:0;width:100%;height:100%;z-index:100;background:0 0}.rll-youtube-player img{bottom:0;display:block;left:0;margin:auto;max-width:100%;width:100%;position:absolute;right:0;top:0;border:none;height:auto;cursor:pointer;-webkit-transition:.4s all;-moz-transition:.4s all;transition:.4s all}.rll-youtube-player img:hover{-webkit-filter:brightness(75%)}.rll-youtube-player .play{height:72px;width:72px;left:50%;top:50%;margin-left:-36px;margin-top:-36px;position:absolute;background:url(https://then24.com/wp-content/plugins/wp-rocket/assets/img/youtube.png) no-repeat;cursor:pointer}.wp-has-aspect-ratio .rll-youtube-player{position:absolute;padding-bottom:0;width:100%;height:100%;top:0;bottom:0;left:0;right:0}
+</style>
+
+
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://then24.com/wp-includes/js/jquery/jquery.min.js?ver=3.5.1' id='jquery-core-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://then24.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js' defer></script>
+<script type="rocketlazyloadscript" data-minify="1" data-rocket-type='text/javascript' src='https://then24.com/wp-content/cache/min/1/wp-content/plugins/wp-automatic/js/main-front.js?ver=1626033273' id='wp_automatic_gallery-js' defer></script>
+<link rel="https://api.w.org/" href="https://then24.com/wp-json/" /><link rel="alternate" type="application/json" href="https://then24.com/wp-json/wp/v2/posts/110237" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://then24.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://then24.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.7.2" />
+<link rel='shortlink' href='https://then24.com/?p=110237' />
+
+<link rel="preload" as="font" href="https://then24.com/wp-content/themes/oceanwp/assets/fonts/simple-line-icons/Simple-Line-Icons.woff2?v=2.4.0" crossorigin><style type='text/css'>img#wpstats{display:none}</style>
+		<link rel="amphtml" href="https://then24.com/2021/05/19/the-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022/amp/"><link rel="icon" href="https://then24.com/wp-content/uploads/2021/03/cropped-24-1-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://then24.com/wp-content/uploads/2021/03/cropped-24-1-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://then24.com/wp-content/uploads/2021/03/cropped-24-1-180x180.png" />
+<meta name="msapplication-TileImage" content="https://then24.com/wp-content/uploads/2021/03/cropped-24-1-270x270.png" />
+		<style type="text/css" id="wp-custom-css">
+			.ad-disc{color:#363636;min-height:52px;padding:18px 26px;margin:0 0 31px 0;overflow:auto;font-size:17px;background-color:#ffdede}p:empty:before{content:"​";display:none}p#breadcrumbs{padding:3px 0 3px 3px;margin:0;border:1px solid #ddd;background:#ffffff}		</style>
+		<!-- OceanWP CSS -->
+<style type="text/css">
+/* General CSS */a{color:#0a0a0a}a .owp-icon use{stroke:#0a0a0a}a:hover{color:#0a0000}a:hover .owp-icon use{stroke:#0a0000}.boxed-layout #wrap,.boxed-layout .parallax-footer,.boxed-layout .owp-floating-bar{width:1020px}.container{width:1080px}@media only screen and (min-width:960px){.content-area,.content-left-sidebar .content-area{width:67%}}@media only screen and (min-width:960px){.widget-area,.content-left-sidebar .widget-area{width:33%}}/* Header CSS */#site-header.has-header-media .overlay-header-media{background-color:rgba(0,0,0,0.5)}/* Blog CSS */.blog-entry.thumbnail-entry .blog-entry-category a{color:#333333}.blog-entry.thumbnail-entry .blog-entry-comments,.blog-entry.thumbnail-entry .blog-entry-comments a{color:#333333}.blog-entry.thumbnail-entry .blog-entry-date{color:#333333}/* Sidebar CSS */.widget-title{border-color:#13f0f0}/* Footer Bottom CSS */#footer-bottom,#footer-bottom p{color:#ffffff}#footer-bottom a:hover,#footer-bottom #footer-bottom-menu a:hover{color:#13f0f0}
+</style><script type="rocketlazyloadscript" data-ad-client="ca-pub-3147710026437552" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+<!-- Start GPT Tag -->
+<script type="rocketlazyloadscript"> !(function () { window.googletag = window.googletag || {}; window.vmpbjs = window.vmpbjs || {}; window.vpb = window.vpb || {}; vpb.fastLoad = true; googletag.cmd = googletag.cmd || []; vmpbjs.cmd = vmpbjs.cmd || []; var cmds = []; try{ cmds = googletag.cmd.slice(0); googletag.cmd.length = 0; }catch(e){} var ready = false; function exec(cb) { return cb.call(googletag); } var overriden = false; googletag.cmd.push(function () { overriden = true; googletag.cmd.unshift = function (cb) { if (ready) { return exec(cb); } cmds.unshift(cb); if (cb._startgpt) { ready = true; for (var k = 0; k < cmds.length; k++) { exec(cmds[k]); } } }; googletag.cmd.push = function (cb) { if (ready) { return exec(cb); } cmds.push(cb); }; }); if(!overriden){ googletag.cmd.push = function (cb) { cmds.push(cb); }; googletag.cmd.unshift = function (cb) { cmds.unshift(cb); if (cb._startgpt) { ready = true; if (googletag.apiReady) { cmds.forEach(function (cb) { googletag.cmd.push(cb); }); } else { googletag.cmd = cmds; } } }; } var dayMs = 36e5, cb = parseInt(Date.now() / dayMs), vpbSrc = '//player.adtcdn.com/prebidlink/' + cb + '/wrapper_hb_323303_10647.js', pbSrc = vpbSrc.replace('wrapper_hb', 'hb'), gptSrc = '//securepubads.g.doubleclick.net/tag/js/gpt.js', c = document.head || document.body || document.documentElement; function loadScript(src, cb) { var s = document.createElement('script'); s.src = src; s.defer=false; c.appendChild(s); s.onload = cb; s.onerror = function(){ var fn = function(){}; fn._startgpt = true; googletag.cmd.unshift(fn); }; return s; } loadScript(pbSrc); loadScript(gptSrc); loadScript(vpbSrc); })() </script>
+<script type="rocketlazyloadscript" data-minify="1" async src='https://then24.com/wp-content/cache/min/1/tag/js/gpt.js?ver=1626033274'></script>
+<script type="rocketlazyloadscript">
+var gptAdSlots = [];
+  window.googletag = window.googletag || {cmd: []};
+  googletag.cmd.push(function() {
+    googletag.defineSlot('/21939239661,22384214384/apl/aplmcm/cube', [[300,250],[336,280]], 'div-gpt-ad-8176806-1')
+             .addService(googletag.pubads());
+    googletag.defineSlot('/21939239661,22384214384/apl/aplmcm/cube2', [[300,250],[336,280]], 'div-gpt-ad-8176806-2')
+             .addService(googletag.pubads());
+    googletag.defineSlot('/21939239661,22384214384/apl/aplmcm/cube3', [[300,250],[336,280]], 'div-gpt-ad-8176806-3')
+             .addService(googletag.pubads());
+    googletag.defineSlot('/21939239661,22384214384/apl/aplmcm/rich', [[728,90],[320,50],[320,100]], 'div-gpt-ad-8176806-4')
+             .addService(googletag.pubads());
+    googletag.defineSlot('/21939239661,22384214384/apl/aplmcm/rich2', [[728,90],[320,50],[320,100]], 'div-gpt-ad-8176806-5')
+             .addService(googletag.pubads());
+    googletag.defineSlot('/21939239661,22384214384/apl/aplmcm/sky', [[120,600],[160,600],[300,600]], 'div-gpt-ad-8176806-6')
+             .addService(googletag.pubads());
+gptAdSlots[0] = googletag.defineSlot('/21939239661,22384214384/apl/aplmcm/sticky', [[970,90],[728,90],[320,50],[320,100]], 'stick').setTargeting('test', 'refresh')
+             .addService(googletag.pubads());
+
+    googletag.pubads().collapseEmptyDivs();
+    googletag.enableServices();
+  });
+</script>
+<div id="id-custom_banner" style="width: fit-content;position:fixed;left:50%;bottom:0;transform:translateX(-50%);z-index:999999;opacity:1;transition:bottom 1.5s ease-out 0s,opacity .2s ease-out 1s,transform .2s ease-out 0s"><div style="position:absolute;right:0;top:-21px;cursor:pointer" onclick="removeCustomBanner(this.parentNode)"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" preserveAspectRatio="xMidYMid meet" viewBox="0 0 16.6 17" style="width:20px;height:20px;filter:drop-shadow(1px 1px 2px #333);-webkit-filter:drop-shadow(1px 1px 2px #333)"><polygon fill="#FFF" points="15.5,1.7 13.7,0 7.7,6.1 1.8,0 0,1.7 6,7.9 0,14.1 1.8,15.9 7.7,9.7 13.7,15.9 15.5,14.1 9.5,7.9 "></polygon></svg></div><div class="timer" style="position:absolute;left:0;top:0;z-index:10;padding:5px;color:#fff"></div><div id='stick'><script type="rocketlazyloadscript">googletag.cmd.push(function(){googletag.display('stick')}); setInterval(function(){googletag.pubads().refresh([gptAdSlots[0]]);}, '50000');</script></div></div><script type="rocketlazyloadscript" data-rocket-type="text/javascript">function removeCustomBanner(n){n.style.transform="translate(-50%, 150%)",setTimeout(function(){clearInterval(customBannerCountdownInterval),n.parentNode.removeChild(n)},200)}var customBannerCountdownInterval;</script>
+<script type="rocketlazyloadscript" data-minify="1" async src="https://then24.com/wp-content/cache/min/1/tag/js/gpt.js?ver=1626033274"></script> <script type="rocketlazyloadscript">window.googletag=window.googletag||{cmd:[]};var interstitialSlot,staticSlot;googletag.cmd.push(function(){interstitialSlot=googletag.defineOutOfPageSlot('/21939239661,22384214384/apl/inter',googletag.enums.OutOfPageFormat.INTERSTITIAL);if(interstitialSlot){interstitialSlot.addService(googletag.pubads());googletag.pubads().addEventListener('slotOnload',function(event){});} googletag.enableServices();});googletag.cmd.push(function(){googletag.display(interstitialSlot);});</script>
+<script type="rocketlazyloadscript">window.googletag=window.googletag ||{cmd: []}; var anchorSlot, staticSlot; googletag.cmd.push(function (){anchorSlot=googletag.defineOutOfPageSlot("/21939239661,22384214384/apl/anchor/anchortop", googletag.enums.OutOfPageFormat.TOP_ANCHOR); if (anchorSlot){anchorSlot.addService(googletag.pubads()); googletag.pubads().addEventListener("slotOnload", function (event){});}googletag.enableServices();}); googletag.cmd.push(function (){googletag.display(anchorSlot);});</script>
+<script type="rocketlazyloadscript" data-minify="1" async src="https://then24.com/wp-content/cache/min/1/nedirorg.js?ver=1626033274" defer></script>
+<!-- End GPT Tag --><noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript>	<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="manifest" href="/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+</head>
+
+<body class="post-template-default single single-post postid-110237 single-format-standard wp-custom-logo wp-embed-responsive oceanwp-theme dropdown-mobile boxed-layout wrap-boxshadow default-breakpoint has-sidebar content-right-sidebar post-in-category-sciencetech has-breadcrumbs pagination-center" itemscope="itemscope" itemtype="https://schema.org/Article">
+
+	
+	
+	<div id="outer-wrap" class="site clr">
+
+		<a class="skip-link screen-reader-text" href="#main">Skip to content</a>
+
+		
+		<div id="wrap" class="clr">
+
+			
+			
+<header id="site-header" class="minimal-header clr" data-height="74" itemscope="itemscope" itemtype="https://schema.org/WPHeader" role="banner">
+
+	
+					
+			<div id="site-header-inner" class="clr container">
+
+				
+				
+
+<div id="site-logo" class="clr" itemscope itemtype="https://schema.org/Brand" >
+
+	
+	<div id="site-logo-inner" class="clr">
+
+		<a href="https://then24.com/" class="custom-logo-link" rel="home"><img width="220" height="60" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20220%2060'%3E%3C/svg%3E" class="custom-logo" alt="then24" data-lazy-srcset="https://then24.com/wp-content/uploads/2021/03/then24.png 1x, https://then24.com/wp-content/uploads/2021/03/then24.png 2x" data-lazy-src="https://then24.com/wp-content/uploads/2021/03/then24.png" /><noscript><img width="220" height="60" src="https://then24.com/wp-content/uploads/2021/03/then24.png" class="custom-logo" alt="then24" srcset="https://then24.com/wp-content/uploads/2021/03/then24.png 1x, https://then24.com/wp-content/uploads/2021/03/then24.png 2x" /></noscript></a>
+	</div><!-- #site-logo-inner -->
+
+	
+	
+</div><!-- #site-logo -->
+
+			<div id="site-navigation-wrap" class="clr">
+			
+			
+			
+			<nav id="site-navigation" class="navigation main-navigation clr" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement" role="navigation" >
+
+				<ul id="menu-main-menu" class="main-menu dropdown-menu sf-menu"><li id="menu-item-73" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-73"><a href="https://then24.com/category/news/" class="menu-link"><span class="text-wrap">News</span></a></li><li id="menu-item-71" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-71"><a href="https://then24.com/category/entertainment/" class="menu-link"><span class="text-wrap">Entertainment</span></a></li><li id="menu-item-72" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-72"><a href="https://then24.com/category/health/" class="menu-link"><span class="text-wrap">Health</span></a></li><li id="menu-item-74" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-74"><a href="https://then24.com/category/sciencetech/" class="menu-link"><span class="text-wrap">Sci&amp;Tech</span></a></li><li id="menu-item-75" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-75"><a href="https://then24.com/category/sports/" class="menu-link"><span class="text-wrap">Sports</span></a></li><li class="search-toggle-li" ><a href="javascript:void(0)" class="site-search-toggle search-dropdown-toggle" aria-label="Search website"><i class=" icon-magnifier" aria-hidden="true" role="img"></i></a></li></ul>
+<div id="searchform-dropdown" class="header-searchform-wrap clr" >
+	
+<form role="search" method="get" class="searchform" action="https://then24.com/">
+	<label for="ocean-search-form-1">
+		<span class="screen-reader-text">Search for:</span>
+		<input type="search" id="ocean-search-form-1" class="field" autocomplete="off" placeholder="Search" name="s">
+			</label>
+	</form>
+</div><!-- #searchform-dropdown -->
+
+			</nav><!-- #site-navigation -->
+
+			
+			
+					</div><!-- #site-navigation-wrap -->
+			
+		
+	
+				
+	<div class="oceanwp-mobile-menu-icon clr mobile-right">
+
+		
+		
+		
+		<a href="javascript:void(0)" class="mobile-menu"  aria-label="Mobile Menu">
+							<i class="fa fa-bars" aria-hidden="true"></i>
+								<span class="oceanwp-text">Menu</span>
+				<span class="oceanwp-close-text">Close</span>
+						</a>
+
+		
+		
+		
+	</div><!-- #oceanwp-mobile-menu-navbar -->
+
+
+			</div><!-- #site-header-inner -->
+
+			
+<div id="mobile-dropdown" class="clr" >
+
+	<nav class="clr" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement">
+
+		
+	<div id="mobile-nav" class="navigation clr">
+
+		<ul id="menu-main-menu-1" class="menu"><li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-73"><a href="https://then24.com/category/news/">News</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-71"><a href="https://then24.com/category/entertainment/">Entertainment</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-72"><a href="https://then24.com/category/health/">Health</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-74"><a href="https://then24.com/category/sciencetech/">Sci&amp;Tech</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-75"><a href="https://then24.com/category/sports/">Sports</a></li>
+</ul>
+	</div>
+
+
+<div id="mobile-menu-search" class="clr">
+	<form method="get" action="https://then24.com/" class="mobile-searchform" role="search" aria-label="Search for:">
+		<label for="ocean-mobile-search2">
+			<input type="search" name="s" autocomplete="off" placeholder="Search" />
+			<button type="submit" class="searchform-submit" aria-label="Submit search">
+				<i class=" icon-magnifier" aria-hidden="true" role="img"></i>			</button>
+					</label>
+			</form>
+</div><!-- .mobile-menu-search -->
+
+	</nav>
+
+</div>
+
+			
+			
+		
+		
+</header><!-- #site-header -->
+
+
+			
+			<main id="main" class="site-main clr"  role="main">
+
+				
+
+<header class="page-header">
+
+	
+	<div class="container clr page-header-inner">
+
+		
+			<h1 class="page-header-title clr" itemprop="headline">The definitive end of Internet Explorer: Microsoft will retire the browser in 2022</h1>
+
+			
+		
+		<nav class="site-breadcrumbs clr position-under-title"><span><span><a href="https://then24.com/">Home</a> » <span><a href="https://then24.com/category/sciencetech/">Sci&amp;Tech</a> » <strong class="breadcrumb_last" aria-current="page">The definitive end of Internet Explorer: Microsoft will retire the browser in 2022</strong></span></span></span></nav>
+	</div><!-- .page-header-inner -->
+
+	
+	
+</header><!-- .page-header -->
+
+
+	
+	<div id="content-wrap" class="container clr">
+
+		
+		<div id="primary" class="content-area clr">
+
+			
+			<div id="content" class="site-content clr">
+
+				
+				
+<article id="post-110237">
+
+	
+<div class="thumbnail">
+
+	<img width="840" height="560" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20840%20560'%3E%3C/svg%3E" class="attachment-full size-full wp-post-image" alt="The definitive end of Internet Explorer: Microsoft will retire the browser in 2022" itemprop="image" data-lazy-srcset="https://then24.com/wp-content/uploads/2021/05/1621458193_The-definitive-end-of-Internet-Explorer-Microsoft-will-retire-the.jpg 840w, https://then24.com/wp-content/uploads/2021/05/1621458193_The-definitive-end-of-Internet-Explorer-Microsoft-will-retire-the-768x512.jpg 768w" data-lazy-sizes="(max-width: 840px) 100vw, 840px" data-lazy-src="https://then24.com/wp-content/uploads/2021/05/1621458193_The-definitive-end-of-Internet-Explorer-Microsoft-will-retire-the.jpg" /><noscript><img width="840" height="560" src="https://then24.com/wp-content/uploads/2021/05/1621458193_The-definitive-end-of-Internet-Explorer-Microsoft-will-retire-the.jpg" class="attachment-full size-full wp-post-image" alt="The definitive end of Internet Explorer: Microsoft will retire the browser in 2022" itemprop="image" srcset="https://then24.com/wp-content/uploads/2021/05/1621458193_The-definitive-end-of-Internet-Explorer-Microsoft-will-retire-the.jpg 840w, https://then24.com/wp-content/uploads/2021/05/1621458193_The-definitive-end-of-Internet-Explorer-Microsoft-will-retire-the-768x512.jpg 768w" sizes="(max-width: 840px) 100vw, 840px" /></noscript>
+</div><!-- .thumbnail -->
+
+<ul class="meta ospm-default clr">
+
+	
+					<li class="meta-author" itemprop="name"><span class="screen-reader-text">Post author:</span><i class=" icon-user" aria-hidden="true" role="img"></i><a href="https://then24.com/author/then24_3gjf02/" title="Posts by The News 24" rel="author"  itemprop="author" itemscope="itemscope" itemtype="https://schema.org/Person">The News 24</a></li>
+		
+		
+		
+		
+		
+		
+	
+		
+					<li class="meta-date" itemprop="datePublished"><span class="screen-reader-text">Post published:</span><i class=" icon-clock" aria-hidden="true" role="img"></i>May 19, 2021</li>
+		
+		
+		
+		
+		
+	
+		
+		
+		
+					<li class="meta-cat"><span class="screen-reader-text">Post category:</span><i class=" icon-folder" aria-hidden="true" role="img"></i><a href="https://then24.com/category/sciencetech/" rel="category tag">Sci&amp;Tech</a></li>
+		
+		
+		
+	
+		
+		
+		
+		
+		
+					<li class="meta-comments"><span class="screen-reader-text">Post comments:</span><i class=" icon-bubble" aria-hidden="true" role="img"></i><a href="https://then24.com/2021/05/19/the-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022/#respond" class="comments-link" >0 Comments</a></li>
+		
+	
+</ul>
+
+
+
+<div class="entry-content clr" itemprop="text">
+	<div class='code-block code-block-1' style='margin: 8px 0; clear: both;'>
+<script type="rocketlazyloadscript" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- then24 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3147710026437552"
+     data-ad-slot="6615902631"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script type="rocketlazyloadscript">
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+<div>
+<p>The end of an era.  Next June 2022, after more than 25 years, <strong>Internet Explorer will come to an end</strong>.  Microsoft has announced that they will withdraw browser support in favor of Microsoft Edge.  &#8220;The future of Internet Explorer in Windows 10 is in Microsoft Edge&#8221;, has indicated a person in charge of the company.</p>
+<p><!-- BREAK 1 --><br />
+<span id="more-110237"></span></p>
+<p>As indicated in the official blog, Internet Explorer 11 for desktop <strong>will no longer be supported on June 15, 2022</strong> and will retire. </p>
+<p><!-- BREAK 2 --> </p><div class='code-block code-block-3' style='margin: 8px 0; clear: both;'>
+<!-- Composite Start -->
+<div id="M710051ScriptRootC1134084"></div>
+<script type="rocketlazyloadscript" src="https://jsc.mgid.com/t/h/then24.com.1134084.js" async></script>
+<!-- Composite End --></div>
+
+<h2>Goodbye to the consumer version</h2>
+<p>It must be said, this withdrawal will not be for everyone but it will be for most consumer users and versions of Windows 10 aimed at consumers. <strong>Microsoft will keep Internet Explorer on Windows 10&#8217;s Long-Term Servicing Channel (LTSC)</strong> for example.  This is done to continue offering support to companies that depend directly on the browser to carry out their operations. </p>
+<p><!-- BREAK 3 --></p>
+<div class="article-asset-image article-asset-large">
+<div class="asset-content"> <img alt="New Timeline 1024x361" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" data-lazy-src="https://then24.com/wp-content/uploads/2021/05/The-definitive-end-of-Internet-Explorer-Microsoft-will-retire-the.png"><noscript><img alt="New Timeline 1024x361" src="https://then24.com/wp-content/uploads/2021/05/The-definitive-end-of-Internet-Explorer-Microsoft-will-retire-the.png"></noscript> </div>
+</div>
+<p>What will Internet Explorer users be able to do?  The few that remain, <strong>they will be able to use Microsoft Edge instead</strong>.  Microsoft Edge includes for some years an &#8220;IE mode&#8221; that allows ActiveX controls and support for pages that are still based on Internet Explorer standards.  Microsoft is committed to supporting this mode until at least 2029.</p>
+<p><!-- BREAK 4 --></p>
+<div class="article-asset-image article-asset-normal">
+<div class="asset-content"> <img class="sf-lazy centro_sinmarco" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="h" data-lazy-src="https://then24.com/wp-content/uploads/2021/05/The-definitive-end-of-Internet-Explorer-Microsoft-will-retire-the.jpg"><noscript><img class="sf-lazy centro_sinmarco" src="https://then24.com/wp-content/uploads/2021/05/The-definitive-end-of-Internet-Explorer-Microsoft-will-retire-the.jpg" alt="h"></noscript><img alt="h" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" data-lazy-src="https://then24.com/wp-content/uploads/2021/05/The-definitive-end-of-Internet-Explorer-Microsoft-will-retire-the.jpg"><noscript><img alt="h" src="https://then24.com/wp-content/uploads/2021/05/The-definitive-end-of-Internet-Explorer-Microsoft-will-retire-the.jpg"></noscript> </div>
+</div>
+<p>Throughout these last months <strong>Microsoft has repeatedly announced the end of support</strong> Internet Explorer gradually.  No support in Microsoft Teams and no support in Microsoft 365 shortly.  It also redirects to Microsoft Edge when opening some web pages.</p><div class='code-block code-block-7' style='margin: 8px 0; clear: both;'>
+<script type="rocketlazyloadscript" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- then_new -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3147710026437552"
+     data-ad-slot="8169023385"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script type="rocketlazyloadscript">
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+
+<p><!-- BREAK 5 --></p>
+<div class="desvio-container">
+<div class="desvio">
+<div class="desvio-figure js-desvio-figure">
+<p>    <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%200%200'%3E%3C/svg%3E" alt="The Internet Before Chrome: 13 Browsers That Shaped The Web In Its Early Years" data-lazy-src="https://then24.com/wp-content/uploads/2021/05/The-definitive-end-of-Internet-Explorer-Microsoft-will-retire-the.jpeg"><noscript><img src="https://then24.com/wp-content/uploads/2021/05/The-definitive-end-of-Internet-Explorer-Microsoft-will-retire-the.jpeg" alt="The Internet Before Chrome: 13 Browsers That Shaped The Web In Its Early Years"></noscript>
+  </div>
+</p></div>
+</div>
+<p>Since Microsoft Edge appeared in 2015, the company has done its best to promote its use to users as opposed to Internet Explorer. <strong>The great advantage of Microsoft Edge is that it is a browser that is based on Chromium</strong>, so it is much more adapted to current Internet standards.</p>
+<p><!-- BREAK 6 --></p>
+<p>Via |  Windows Blogs</p>
+<p><!-- BREAK 7 --> </div>
+<div class="ad-disc">Disclaimer: If you need to update/edit/remove this news or article then please contact our support team <a href="https://then24.com/how-do-i-request-the-removal-of-an-article/">Learn more</a></div>
+<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-official sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-facebook"><div class="fb-share-button" data-href="https://then24.com/2021/05/19/the-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022/" data-layout="button_count"></div></li><li class="share-twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-url="https://then24.com/2021/05/19/the-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022/" data-text="The definitive end of Internet Explorer: Microsoft will retire the browser in 2022" data-via="then24dotcom" >Tweet</a></li><li class="share-linkedin"><div class="linkedin_button"><script type="rocketlazyloadscript" data-rocket-type="in/share" data-url="https://then24.com/2021/05/19/the-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022/" data-counter="right"></script></div></li><li class="share-reddit"><div class="reddit_button"><iframe loading="lazy" src="about:blank" height="22" width="120" scrolling="no" frameborder="0" data-rocket-lazyload="fitvidscompatible" data-lazy-src="https://www.reddit.com/static/button/button1.html?newwindow=true&#038;width=120&#038;url=https%3A%2F%2Fthen24.com%2F2021%2F05%2F19%2Fthe-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022%2F&#038;title=The%20definitive%20end%20of%20Internet%20Explorer%3A%20Microsoft%20will%20retire%20the%20browser%20in%202022"></iframe><noscript><iframe src="https://www.reddit.com/static/button/button1.html?newwindow=true&width=120&amp;url=https%3A%2F%2Fthen24.com%2F2021%2F05%2F19%2Fthe-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022%2F&amp;title=The%20definitive%20end%20of%20Internet%20Explorer%3A%20Microsoft%20will%20retire%20the%20browser%20in%202022" height="22" width="120" scrolling="no" frameborder="0"></iframe></noscript></div></li><li class="share-email"><a rel="nofollow noopener noreferrer" data-shared="" class="share-email sd-button" href="https://then24.com/2021/05/19/the-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022/?share=email" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li class="share-print"><a rel="nofollow noopener noreferrer" data-shared="" class="share-print sd-button" href="https://then24.com/2021/05/19/the-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022/#print" target="_blank" title="Click to print"><span>Print</span></a></li><li class="share-end"></li></ul></div></div></div><div class='code-block code-block-2' style='margin: 8px 0; clear: both;'>
+<!-- Composite Start -->
+<div id="M710051ScriptRootC1133450">
+</div>
+<script type="rocketlazyloadscript" src="https://jsc.mgid.com/t/h/then24.com.1133450.js" async>
+</script>
+<!-- Composite End --></div>
+<!-- AI CONTENT END 1 -->
+
+</div><!-- .entry -->
+
+<div class="post-tags clr">
+	</div>
+
+
+
+<div id="disqus_thread"></div>
+<script type="rocketlazyloadscript">
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://then24.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</article>
+<div class='code-block code-block-9' style='margin: 8px 0; clear: both;'>
+<!-- GPT AdSlot 1 for Ad unit '' ### Size: [[300,250],[336,280]] -->
+<div id='div-gpt-ad-8176806-1'>
+  <script type="rocketlazyloadscript">
+    googletag.cmd.push(function() { googletag.display('div-gpt-ad-8176806-1'); });
+  </script>
+</div>
+<!-- End AdSlot 1 --></div>
+
+				
+			</div><!-- #content -->
+
+			
+		</div><!-- #primary -->
+
+		
+
+<aside id="right-sidebar" class="sidebar-container widget-area sidebar-primary" itemscope="itemscope" itemtype="https://schema.org/WPSideBar" role="complementary" aria-label="Primary Sidebar">
+
+	
+	<div id="right-sidebar-inner" class="clr">
+
+		<div id="ai_widget-2" class="sidebar-box ai_widget clr ai-sticky-widget"><h3 class="widget-title">Advertisement</h3><div class='code-block code-block-6' style='margin: 8px 0; clear: both;'>
+<script type="rocketlazyloadscript" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- wnreal3 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3147710026437552"
+     data-ad-slot="4091583863"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script type="rocketlazyloadscript">
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+</div><div id="ai_widget-3" class="sidebar-box ai_widget clr ai-sticky-widget"><div class='code-block code-block-5' style='margin: 8px 0; clear: both;'>
+<!-- Composite Start -->
+<div id="M710051ScriptRootC1157200"></div>
+<script type="rocketlazyloadscript" src="https://jsc.mgid.com/t/h/then24.com.1157200.js" async></script>
+<!-- Composite End --></div>
+</div><div id="ai_widget-4" class="sidebar-box ai_widget clr"><h3 class="widget-title">Advertisement</h3><div class='code-block code-block-8' style='margin: 8px 0; clear: both;'>
+<!-- GPT AdSlot 6 for Ad unit '' ### Size: [[120,600],[160,600],[300,600]] -->
+<div id='div-gpt-ad-8176806-6'>
+  <script type="rocketlazyloadscript">
+    googletag.cmd.push(function() { googletag.display('div-gpt-ad-8176806-6'); });
+  </script>
+</div>
+<!-- End AdSlot 6 --></div>
+</div><div id="eu_cookie_law_widget-2" class="sidebar-box widget_eu_cookie_law_widget clr">
+<div
+	class="hide-on-button"
+	data-hide-timeout="30"
+	data-consent-expiration="180"
+	id="eu-cookie-law"
+>
+	<form method="post">
+		<input type="submit" value="Close and accept" class="accept" />
+	</form>
+
+	Privacy &amp; Cookies: This site uses cookies. By continuing to use this website, you agree to their use. <br />
+To find out more, including how to control cookies, see here:
+		<a href="https://automattic.com/cookies/" rel="nofollow">
+		Cookie Policy	</a>
+</div>
+</div>
+	</div><!-- #sidebar-inner -->
+
+	
+</aside><!-- #right-sidebar -->
+
+
+	</div><!-- #content-wrap -->
+
+	
+
+	</main><!-- #main -->
+
+	
+	
+	
+		
+<footer id="footer" class="site-footer" itemscope="itemscope" itemtype="https://schema.org/WPFooter" role="contentinfo">
+
+	
+	<div id="footer-inner" class="clr">
+
+		
+
+<div id="footer-bottom" class="clr">
+
+	
+	<div id="footer-bottom-inner" class="container clr">
+
+		
+			<div id="footer-bottom-menu" class="navigation clr">
+
+				<div class="menu-top-header-container"><ul id="menu-top-header" class="menu"><li id="menu-item-6382" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6382"><a href="https://then24.com/about-us/">About us</a></li>
+<li id="menu-item-6383" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6383"><a href="https://then24.com/contact-us/">Contact us</a></li>
+<li id="menu-item-6385" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6385"><a href="https://then24.com/cookie-policy/">Cookie Policy</a></li>
+<li id="menu-item-6384" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6384"><a href="https://then24.com/disclaimer/">Disclaimer</a></li>
+<li id="menu-item-6387" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-privacy-policy menu-item-6387"><a href="https://then24.com/privacy-policy/">Privacy Policy</a></li>
+<li id="menu-item-6386" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6386"><a href="https://then24.com/terms-and-conditions/">Terms</a></li>
+</ul></div>
+			</div><!-- #footer-bottom-menu -->
+
+			
+		
+			<div id="copyright" class="clr" role="contentinfo">
+				2021 <a href="https://then24.com/">The News 24</a> - All Daily News Here! | All rights reserved.			</div><!-- #copyright -->
+
+			
+	</div><!-- #footer-bottom-inner -->
+
+	
+</div><!-- #footer-bottom -->
+
+
+	</div><!-- #footer-inner -->
+
+	
+</footer><!-- #footer -->
+
+	
+	
+</div><!-- #wrap -->
+
+
+</div><!-- #outer-wrap -->
+
+
+
+
+
+
+<div id="fb-root"></div>
+			<script type="rocketlazyloadscript">(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&appId=249643311490&version=v2.3'; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
+			<script type="rocketlazyloadscript">
+			document.body.addEventListener( 'is.post-load', function() {
+				if ( 'undefined' !== typeof FB ) {
+					FB.XFBML.parse();
+				}
+			} );
+			</script>
+						<script type="rocketlazyloadscript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+						<script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+				( function () {
+					var currentScript = document.currentScript;
+
+					// Helper function to load an external script.
+					function loadScript( url, cb ) {
+						var script = document.createElement( 'script' );
+						var prev = currentScript || document.getElementsByTagName( 'script' )[ 0 ];
+						script.setAttribute( 'async', true );
+						script.setAttribute( 'src', url );
+						prev.parentNode.insertBefore( script, prev );
+						script.addEventListener( 'load', cb );
+					}
+
+					function init() {
+						loadScript( 'https://platform.linkedin.com/in.js?async=true', function () {
+							if ( typeof IN !== 'undefined' ) {
+								IN.init();
+							}
+						} );
+					}
+
+					if ( document.readyState === 'loading' ) {
+						document.addEventListener( 'DOMContentLoaded', init );
+					} else {
+						init();
+					}
+
+					document.body.addEventListener( 'is.post-load', function() {
+						if ( typeof IN !== 'undefined' ) {
+							IN.parse();
+						}
+					} );
+				} )();
+			</script>
+				<div id="sharing_email" style="display: none;">
+		<form action="/2021/05/19/the-definitive-end-of-internet-explorer-microsoft-will-retire-the-browser-in-2022/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" title="This field is for validation and should not be changed" />
+			
+			<img style="float: right; display: none" class="loading" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2016%2016'%3E%3C/svg%3E" alt="loading" width="16" height="16" data-lazy-src="https://then24.com/wp-content/plugins/jetpack/modules/sharedaddy/images/loading.gif" /><noscript><img style="float: right; display: none" class="loading" src="https://then24.com/wp-content/plugins/jetpack/modules/sharedaddy/images/loading.gif" alt="loading" width="16" height="16" /></noscript>
+			<input type="submit" value="Send Email" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel" role="button">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' id='rocket-browser-checker-js-after'>
+"use strict";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||!1,descriptor.configurable=!0,"value"in descriptor&&(descriptor.writable=!0),Object.defineProperty(target,descriptor.key,descriptor)}}return function(Constructor,protoProps,staticProps){return protoProps&&defineProperties(Constructor.prototype,protoProps),staticProps&&defineProperties(Constructor,staticProps),Constructor}}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor))throw new TypeError("Cannot call a class as a function")}var RocketBrowserCompatibilityChecker=function(){function RocketBrowserCompatibilityChecker(options){_classCallCheck(this,RocketBrowserCompatibilityChecker),this.passiveSupported=!1,this._checkPassiveOption(this),this.options=!!this.passiveSupported&&options}return _createClass(RocketBrowserCompatibilityChecker,[{key:"_checkPassiveOption",value:function(self){try{var options={get passive(){return!(self.passiveSupported=!0)}};window.addEventListener("test",null,options),window.removeEventListener("test",null,options)}catch(err){self.passiveSupported=!1}}},{key:"initRequestIdleCallback",value:function(){!1 in window&&(window.requestIdleCallback=function(cb){var start=Date.now();return setTimeout(function(){cb({didTimeout:!1,timeRemaining:function(){return Math.max(0,50-(Date.now()-start))}})},1)}),!1 in window&&(window.cancelIdleCallback=function(id){return clearTimeout(id)})}},{key:"isDataSaverModeOn",value:function(){return"connection"in navigator&&!0===navigator.connection.saveData}},{key:"supportsLinkPrefetch",value:function(){var elem=document.createElement("link");return elem.relList&&elem.relList.supports&&elem.relList.supports("prefetch")&&window.IntersectionObserver&&"isIntersecting"in IntersectionObserverEntry.prototype}},{key:"isSlowConnection",value:function(){return"connection"in navigator&&"effectiveType"in navigator.connection&&("2g"===navigator.connection.effectiveType||"slow-2g"===navigator.connection.effectiveType)}}]),RocketBrowserCompatibilityChecker}();
+</script>
+<script type='text/javascript' id='rocket-preload-links-js-extra'>
+/* <![CDATA[ */
+var RocketPreloadLinksConfig = {"excludeUris":"\/(.+\/)?feed\/?.+\/?|\/(?:.+\/)?embed\/|\/(index\\.php\/)?wp\\-json(\/.*|$)|\/wp-admin\/|\/logout\/|\/wp-login.php","usesTrailingSlash":"1","imageExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif","fileExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|php|pdf|html|htm","siteUrl":"https:\/\/then24.com","onHoverDelay":"100","rateThrottle":"3"};
+/* ]]> */
+</script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' id='rocket-preload-links-js-after'>
+(function() {
+"use strict";var r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e=function(){function i(e,t){for(var n=0;n<t.length;n++){var i=t[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}return function(e,t,n){return t&&i(e.prototype,t),n&&i(e,n),e}}();function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var t=function(){function n(e,t){i(this,n),this.browser=e,this.config=t,this.options=this.browser.options,this.prefetched=new Set,this.eventTime=null,this.threshold=1111,this.numOnHover=0}return e(n,[{key:"init",value:function(){!this.browser.supportsLinkPrefetch()||this.browser.isDataSaverModeOn()||this.browser.isSlowConnection()||(this.regex={excludeUris:RegExp(this.config.excludeUris,"i"),images:RegExp(".("+this.config.imageExt+")$","i"),fileExt:RegExp(".("+this.config.fileExt+")$","i")},this._initListeners(this))}},{key:"_initListeners",value:function(e){-1<this.config.onHoverDelay&&document.addEventListener("mouseover",e.listener.bind(e),e.listenerOptions),document.addEventListener("mousedown",e.listener.bind(e),e.listenerOptions),document.addEventListener("touchstart",e.listener.bind(e),e.listenerOptions)}},{key:"listener",value:function(e){var t=e.target.closest("a"),n=this._prepareUrl(t);if(null!==n)switch(e.type){case"mousedown":case"touchstart":this._addPrefetchLink(n);break;case"mouseover":this._earlyPrefetch(t,n,"mouseout")}}},{key:"_earlyPrefetch",value:function(t,e,n){var i=this,r=setTimeout(function(){if(r=null,0===i.numOnHover)setTimeout(function(){return i.numOnHover=0},1e3);else if(i.numOnHover>i.config.rateThrottle)return;i.numOnHover++,i._addPrefetchLink(e)},this.config.onHoverDelay);t.addEventListener(n,function e(){t.removeEventListener(n,e,{passive:!0}),null!==r&&(clearTimeout(r),r=null)},{passive:!0})}},{key:"_addPrefetchLink",value:function(i){return this.prefetched.add(i.href),new Promise(function(e,t){var n=document.createElement("link");n.rel="prefetch",n.href=i.href,n.onload=e,n.onerror=t,document.head.appendChild(n)}).catch(function(){})}},{key:"_prepareUrl",value:function(e){if(null===e||"object"!==(void 0===e?"undefined":r(e))||!1 in e||-1===["http:","https:"].indexOf(e.protocol))return null;var t=e.href.substring(0,this.config.siteUrl.length),n=this._getPathname(e.href,t),i={original:e.href,protocol:e.protocol,origin:t,pathname:n,href:t+n};return this._isLinkOk(i)?i:null}},{key:"_getPathname",value:function(e,t){var n=t?e.substring(this.config.siteUrl.length):e;return n.startsWith("/")||(n="/"+n),this._shouldAddTrailingSlash(n)?n+"/":n}},{key:"_shouldAddTrailingSlash",value:function(e){return this.config.usesTrailingSlash&&!e.endsWith("/")&&!this.regex.fileExt.test(e)}},{key:"_isLinkOk",value:function(e){return null!==e&&"object"===(void 0===e?"undefined":r(e))&&(!this.prefetched.has(e.href)&&e.origin===this.config.siteUrl&&-1===e.href.indexOf("?")&&-1===e.href.indexOf("#")&&!this.regex.excludeUris.test(e.href)&&!this.regex.images.test(e.href))}}],[{key:"run",value:function(){"undefined"!=typeof RocketPreloadLinksConfig&&new n(new RocketBrowserCompatibilityChecker({capture:!0,passive:!0}),RocketPreloadLinksConfig).init()}}]),n}();t.run();
+}());
+</script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://then24.com/wp-includes/js/comment-reply.min.js?ver=5.7.2' id='comment-reply-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://then24.com/wp-includes/js/imagesloaded.min.js?ver=4.1.4' id='imagesloaded-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://then24.com/wp-content/themes/oceanwp/assets/js/third/magnific-popup.min.js?ver=1.0' id='magnific-popup-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://then24.com/wp-content/themes/oceanwp/assets/js/third/lightbox.min.js?ver=1.0' id='oceanwp-lightbox-js' defer></script>
+<script type='text/javascript' id='oceanwp-main-js-extra'>
+/* <![CDATA[ */
+var oceanwpLocalize = {"isRTL":"","menuSearchStyle":"drop_down","sidrSource":null,"sidrDisplace":"1","sidrSide":"left","sidrDropdownTarget":"link","verticalHeaderTarget":"link","customSelects":".woocommerce-ordering .orderby, #dropdown_product_cat, .widget_categories select, .widget_archive select, .single-product .variations_form .variations select"};
+/* ]]> */
+</script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://then24.com/wp-content/themes/oceanwp/assets/js/main.min.js?ver=1.0' id='oceanwp-main-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://then24.com/wp-content/plugins/jetpack/_inc/build/widgets/eu-cookie-law/eu-cookie-law.min.js?ver=20180522' id='eu-cookie-law-script-js' defer></script>
+<!--[if lt IE 9]>
+<script type='text/javascript' src='https://then24.com/wp-content/themes/oceanwp/assets/js/third/html5.min.js?ver=1.0' id='html5shiv-js'></script>
+<![endif]-->
+<script type='text/javascript' id='sharing-js-js-extra'>
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"","is_stats_active":"1"};
+/* ]]> */
+</script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://then24.com/wp-content/plugins/jetpack/_inc/build/sharedaddy/sharing.min.js?ver=9.9' id='sharing-js-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' id='sharing-js-js-after'>
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-facebook' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-facebook' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+						return false;
+					}
+				} );
+			} )();
+</script>
+<script type="rocketlazyloadscript" src='https://stats.wp.com/e-202128.js' defer></script>
+<script type="rocketlazyloadscript">
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:9.9',blog:'191112814',post:'110237',tz:'-4',srv:'then24.com'} ]);
+	_stq.push([ 'clickTrackerInit', '191112814', '110237' ]);
+</script>
+<script type="rocketlazyloadscript">window.addEventListener('DOMContentLoaded', function() {
+/* <![CDATA[ */
+ai_front = {"insertion_before":"BEFORE","insertion_after":"AFTER","insertion_prepend":"PREPEND CONTENT","insertion_append":"APPEND CONTENT","insertion_replace_content":"REPLACE CONTENT","insertion_replace_element":"REPLACE ELEMENT","visible":"VISIBLE","hidden":"HIDDEN","fallback":"FALLBACK","automatically_placed":"Automatically placed by AdSense Auto ads code","cancel":"Cancel","use":"Use","add":"Add","parent":"Parent","cancel_element_selection":"Cancel element selection","select_parent_element":"Select parent element","css_selector":"CSS selector","use_current_selector":"Use current selector","element":"ELEMENT","path":"PATH","selector":"SELECTOR"};
+/* ]]> */
+function ai_run_scripts(){jQuery(document).ready(function(g){var n=function(c){var h=0,k=15,l=c(document).width();c(".ai-sticky-widget").each(function(){for(var b=c(this),m=b.width(),d=!1,a=b.parent();"BODY"!=a.prop("tagName");){if(a.hasClass("theiaStickySidebar")){d=!0;break}var e=a.parent(),f=e.width();if(f>1.2*m||f>l/2)break;a=e}d||(b=a.offset().top-b.offset().top+k,0==h?("sticky"!=a.css("position")||isNaN(parseInt(a.css("top")))||a.css("top")<b)&&a.css("position",
+"sticky").css("position","-webkit-sticky").css("top",b):a.theiaStickySidebar({additionalMarginTop:b,sidebarBehavior:"stick-to-top"}))})};"undefined"==typeof ai_sticky_sidebar_delay&&(ai_sticky_sidebar_delay=200);setTimeout(function(){n(g)},ai_sticky_sidebar_delay)});
+
+ai_js_code = true;
+}
+function ai_wait_for_jquery(){function b(f,c){var a=document.createElement("script");a.src=f;var d=document.getElementsByTagName("head")[0],e=!1;a.onload=a.onreadystatechange=function(){e||this.readyState&&"loaded"!=this.readyState&&"complete"!=this.readyState||(e=!0,c&&c(),a.onload=a.onreadystatechange=null,d.removeChild(a))};d.appendChild(a)}window.jQuery&&window.jQuery.fn?ai_run_scripts():(ai_jquery_waiting_counter++,4==ai_jquery_waiting_counter&&b("https://then24.com/wp-includes/js/jquery/jquery.js?ver=3.5.1",function(){b("https://then24.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=5.7.2",
+null)}),30>ai_jquery_waiting_counter&&setTimeout(function(){ai_wait_for_jquery()},50))}ai_jquery_waiting_counter=0;ai_wait_for_jquery();
+
+});</script>
+<script>window.lazyLoadOptions={elements_selector:"img[data-lazy-src],.rocket-lazyload,iframe[data-lazy-src]",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}};window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){continue}
+if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){continue}
+images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
+if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async src="https://then24.com/wp-content/plugins/wp-rocket/assets/js/lazyload/16.1/lazyload.min.js"></script><script>function lazyLoadThumb(e){var t='<img loading="lazy" data-lazy-src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" width="480" height="360"><noscript><img src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" width="480" height="360"></noscript>',a='<div class="play"></div>';return t.replace("ID",e)+a}function lazyLoadYoutubeIframe(){var e=document.createElement("iframe"),t="ID?autoplay=1";t+=0===this.dataset.query.length?'':'&'+this.dataset.query;e.setAttribute("src",t.replace("ID",this.dataset.src)),e.setAttribute("frameborder","0"),e.setAttribute("allowfullscreen","1"),e.setAttribute("allow", "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"),this.parentNode.replaceChild(e,this)}document.addEventListener("DOMContentLoaded",function(){var e,t,a=document.getElementsByClassName("rll-youtube-player");for(t=0;t<a.length;t++)e=document.createElement("div"),e.setAttribute("data-id",a[t].dataset.id),e.setAttribute("data-query", a[t].dataset.query),e.setAttribute("data-src", a[t].dataset.src),e.innerHTML=lazyLoadThumb(a[t].dataset.id),e.onclick=lazyLoadYoutubeIframe,a[t].appendChild(e)});</script><script type="rocketlazyloadscript" data-minify="1" id="dsq-count-scr" src="https://then24.com/wp-content/cache/min/1/count.js?ver=1626033274" async></script>
+</body>
+</html>
+
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me - Debug: cached@1626117429 -->

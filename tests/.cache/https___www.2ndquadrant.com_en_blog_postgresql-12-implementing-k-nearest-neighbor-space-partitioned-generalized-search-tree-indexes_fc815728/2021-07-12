@@ -1,0 +1,1878 @@
+<!DOCTYPE html>
+<html lang="en-US" class="html_stretched responsive av-preloader-disabled av-default-lightbox  html_header_top html_logo_left html_bottom_nav_header html_menu_left html_custom html_header_sticky_disabled html_header_shrinking_disabled html_header_topbar_active html_mobile_menu_phone html_header_searchicon_disabled html_content_align_center html_header_unstick_top_disabled html_header_stretch_disabled html_minimal_header html_minimal_header_shadow html_av-submenu-hidden html_av-submenu-display-hover html_av-overlay-side html_av-overlay-side-minimal html_av-submenu-noclone html_entry_id_33491 av-cookies-no-cookie-consent av-no-preview html_text_menu_active ">
+
+<head>
+	<!-- Google Tag Manager -->
+	<script>
+		(function(w, d, s, l, i) {
+			w[l] = w[l] || [];
+			w[l].push({
+				'gtm.start': new Date().getTime(),
+				event: 'gtm.js'
+			});
+			var f = d.getElementsByTagName(s)[0],
+				j = d.createElement(s),
+				dl = l != 'dataLayer' ? '&l=' + l : '';
+			j.async = true;
+			j.src =
+				'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+			f.parentNode.insertBefore(j, f);
+		})(window, document, 'script', 'dataLayer', 'GTM-T6H2WCG');
+	</script>
+	<!-- End Google Tag Manager -->
+
+	<meta charset="UTF-8" />
+	
+
+	<!-- mobile setting -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- Scripts/CSS and wp_head hook -->
+	<link rel="alternate" href="https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/" hreflang="x-default" />
+<link rel="alternate" hreflang="en" href="https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/" />
+
+	<!-- This site is optimized with the Yoast SEO plugin v15.9 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>PostgreSQL 12: Implementing K-Nearest Neighbor Space Partitioned Generalized Search Tree Indexes - 2ndQuadrant | PostgreSQL</title>
+	<meta name="description" content="K-nearest neighbor answers the question of &quot;What is the closest match?&quot;. PostgreSQL 12 can answer this question, and use indexes while doing it." />
+	<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+	<link rel="canonical" href="https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="PostgreSQL 12: Implementing K-Nearest Neighbor Space Partitioned Generalized Search Tree Indexes - 2ndQuadrant | PostgreSQL" />
+	<meta property="og:description" content="SP-GiST is twice the speed of GiST in execution, 8x faster to plan, and about 60% of the size on disk. And it also supports K-Nearest Neighbor index searching in #PostgreSQL12" />
+	<meta property="og:url" content="https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/" />
+	<meta property="og:site_name" content="2ndQuadrant | PostgreSQL" />
+	<meta property="article:publisher" content="https://www.facebook.com/2ndQuadrant/" />
+	<meta property="article:published_time" content="2019-11-05T16:57:11+00:00" />
+	<meta property="article:modified_time" content="2019-11-28T11:15:09+00:00" />
+	<meta property="og:image" content="https://www.2ndquadrant.com/wp-content/uploads/2019/11/Implementing-K-Nearest-Neighbor-Space-Partitioned-Generalized-Search-Tree-Indexes-Kirk-Roybal.jpg" />
+	<meta property="og:image:width" content="3199" />
+	<meta property="og:image:height" content="1633" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:description" content="SP-GiST is twice the speed of GiST in execution, 8x faster to plan, and about 60% of the size on disk. And it also supports K-Nearest Neighbor index searching in #PostgreSQL12" />
+	<meta name="twitter:image" content="https://www.2ndquadrant.com/wp-content/uploads/2019/11/Implementing-K-Nearest-Neighbor-Space-Partitioned-Generalized-Search-Tree-Indexes-Kirk-Roybal.jpg" />
+	<meta name="twitter:creator" content="@2ndQuad" />
+	<meta name="twitter:site" content="@2ndQuad" />
+	<meta name="twitter:label1" content="Written by">
+	<meta name="twitter:data1" content="Kirk Roybal">
+	<meta name="twitter:label2" content="Est. reading time">
+	<meta name="twitter:data2" content="8 minutes">
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.2ndquadrant.com/en/#organization","name":"2ndQuadrant","url":"https://www.2ndquadrant.com/en/","sameAs":["https://www.facebook.com/2ndQuadrant/","https://pk.linkedin.com/company/2ndquadrant","https://www.youtube.com/channel/UC2PlX2QkaoQIbaZwPzA7yCg","https://twitter.com/2ndQuad"],"logo":{"@type":"ImageObject","@id":"https://www.2ndquadrant.com/en/#logo","inLanguage":"en-US","url":"https://www.2ndquadrant.com/wp-content/uploads/2019/07/2ndQuadrant.png","width":150,"height":150,"caption":"2ndQuadrant"},"image":{"@id":"https://www.2ndquadrant.com/en/#logo"}},{"@type":"WebSite","@id":"https://www.2ndquadrant.com/en/#website","url":"https://www.2ndquadrant.com/en/","name":"2ndQuadrant | PostgreSQL","description":"Mission Critical Databases","publisher":{"@id":"https://www.2ndquadrant.com/en/#organization"},"potentialAction":[{"@type":"SearchAction","target":"https://www.2ndquadrant.com/en/?s={search_term_string}","query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"ImageObject","@id":"https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/#primaryimage","inLanguage":"en-US","url":"https://www.2ndquadrant.com/wp-content/uploads/2019/11/Implementing-K-Nearest-Neighbor-Space-Partitioned-Generalized-Search-Tree-Indexes-Kirk-Roybal.jpg","width":3199,"height":1633,"caption":"PostgreSQL 12: Implementing K-Nearest Neighbor Space Partitioned Generalized Search Tree Indexes"},{"@type":"WebPage","@id":"https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/#webpage","url":"https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/","name":"PostgreSQL 12: Implementing K-Nearest Neighbor Space Partitioned Generalized Search Tree Indexes - 2ndQuadrant | PostgreSQL","isPartOf":{"@id":"https://www.2ndquadrant.com/en/#website"},"primaryImageOfPage":{"@id":"https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/#primaryimage"},"datePublished":"2019-11-05T16:57:11+00:00","dateModified":"2019-11-28T11:15:09+00:00","description":"K-nearest neighbor answers the question of \"What is the closest match?\". PostgreSQL 12 can answer this question, and use indexes while doing it.","breadcrumb":{"@id":"https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/"]}]},{"@type":"BreadcrumbList","@id":"https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"WebPage","@id":"https://www.2ndquadrant.com/en/home-2/","url":"https://www.2ndquadrant.com/en/home-2/","name":"Home"}},{"@type":"ListItem","position":2,"item":{"@type":"WebPage","@id":"https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/","url":"https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/","name":"PostgreSQL 12: Implementing K-Nearest Neighbor Space Partitioned Generalized Search Tree Indexes"}}]},{"@type":"Article","@id":"https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/#article","isPartOf":{"@id":"https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/#webpage"},"author":{"@id":"https://www.2ndquadrant.com/en/#/schema/person/f0b4f8ce26f370fbcae9af38bc4bbea5"},"headline":"PostgreSQL 12: Implementing K-Nearest Neighbor Space Partitioned Generalized Search Tree Indexes","datePublished":"2019-11-05T16:57:11+00:00","dateModified":"2019-11-28T11:15:09+00:00","mainEntityOfPage":{"@id":"https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/#webpage"},"commentCount":10,"publisher":{"@id":"https://www.2ndquadrant.com/en/#organization"},"image":{"@id":"https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/#primaryimage"},"keywords":"PG12,postgres,PostgreSQL 12","articleSection":"2ndQuadrant,Kirk\u2019s PlanetPostgreSQL,PostgreSQL","inLanguage":"en-US","potentialAction":[{"@type":"CommentAction","name":"Comment","target":["https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/#respond"]}]},{"@type":"Person","@id":"https://www.2ndquadrant.com/en/#/schema/person/f0b4f8ce26f370fbcae9af38bc4bbea5","name":"Kirk Roybal","image":{"@type":"ImageObject","@id":"https://www.2ndquadrant.com/en/#personlogo","inLanguage":"en-US","url":"https://secure.gravatar.com/avatar/a5ed4de1d6ab29a1bdc39189d6e76e00?s=96&d=mm&r=g","caption":"Kirk Roybal"}}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel='dns-prefetch' href='//js.hs-scripts.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="2ndQuadrant | PostgreSQL &raquo; Feed" href="https://www.2ndquadrant.com/en/feed/" />
+<link rel="alternate" type="application/rss+xml" title="2ndQuadrant | PostgreSQL &raquo; Comments Feed" href="https://www.2ndquadrant.com/en/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="2ndQuadrant | PostgreSQL &raquo; PostgreSQL 12: Implementing K-Nearest Neighbor Space Partitioned Generalized Search Tree Indexes Comments Feed" href="https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.2ndquadrant.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.5.5"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([55357,56424,8205,55356,57212],[55357,56424,8203,55356,57212])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css'  href='https://www.2ndquadrant.com/wp-includes/css/dist/block-library/style.min.css?ver=5.5.5' type='text/css' media='all' />
+<link rel='stylesheet' id='wpml-menu-item-0-css'  href='//www.2ndquadrant.com/wp-content/plugins/sitepress-multilingual-cms/templates/language-switchers/menu-item/style.css?ver=1' type='text/css' media='all' />
+<link rel='stylesheet' id='cms-navigation-style-base-css'  href='https://www.2ndquadrant.com/wp-content/plugins/wpml-cms-nav/res/css/cms-navigation-base.css?ver=1.5.5' type='text/css' media='screen' />
+<link rel='stylesheet' id='cms-navigation-style-css'  href='https://www.2ndquadrant.com/wp-content/plugins/wpml-cms-nav/res/css/cms-navigation.css?ver=1.5.5' type='text/css' media='screen' />
+<link rel='stylesheet' id='avia-merged-styles-css'  href='https://www.2ndquadrant.com/wp-content/uploads/dynamic_avia/avia-merged-styles-f4fd16ac9cb886c6f9180531d791b2e8---60466b1bdacf6.css' type='text/css' media='all' />
+<script type='text/javascript' src='https://www.2ndquadrant.com/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp' id='jquery-core-js'></script>
+<script type='text/javascript' id='wpml-browser-redirect-js-extra'>
+/* <![CDATA[ */
+var wpml_browser_redirect_params = {"pageLanguage":"en","languageUrls":{"en_us":"https:\/\/www.2ndquadrant.com\/en\/blog\/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes\/","en":"https:\/\/www.2ndquadrant.com\/en\/blog\/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes\/","us":"https:\/\/www.2ndquadrant.com\/en\/blog\/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes\/"},"cookie":{"name":"_icl_visitor_lang_js","domain":"www.2ndquadrant.com","path":"\/","expiration":24}};
+/* ]]> */
+</script>
+<script type='text/javascript' defer='defer' src='https://www.2ndquadrant.com/wp-content/plugins/sitepress-multilingual-cms/dist/js/browser-redirect/app.js?ver=4.4.6' id='wpml-browser-redirect-js'></script>
+<script type='text/javascript' defer='defer' src='https://www.2ndquadrant.com/wp-content/uploads/dynamic_avia/avia-head-scripts-d001f4033ca07682330f0c85eab90a33---60466b1c08f6c.js' id='avia-head-scripts-js'></script>
+<link rel="https://api.w.org/" href="https://www.2ndquadrant.com/en/wp-json/" /><link rel="alternate" type="application/json" href="https://www.2ndquadrant.com/en/wp-json/wp/v2/posts/33491" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.2ndquadrant.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.2ndquadrant.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.5.5" />
+<link rel='shortlink' href='https://www.2ndquadrant.com/en/?p=33491' />
+<link rel="alternate" type="application/json+oembed" href="https://www.2ndquadrant.com/en/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.2ndquadrant.com%2Fen%2Fblog%2Fpostgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.2ndquadrant.com/en/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.2ndquadrant.com%2Fen%2Fblog%2Fpostgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes%2F&#038;format=xml" />
+<meta name="generator" content="WPML ver:4.4.6 stt:1,4,3,27,43,2;" />
+
+<!-- This site is using AdRotate v5.8.13 to display their advertisements - https://ajdg.solutions/ -->
+<!-- AdRotate CSS -->
+<style type="text/css" media="screen">
+	.g { margin:0px; padding:0px; overflow:hidden; line-height:1; zoom:1; }
+	.g img { height:auto; }
+	.g-col { position:relative; float:left; }
+	.g-col:first-child { margin-left: 0; }
+	.g-col:last-child { margin-right: 0; }
+	@media only screen and (max-width: 480px) {
+		.g-col, .g-dyn, .g-single { width:100%; margin-left:0; margin-right:0; }
+	}
+</style>
+<!-- /AdRotate CSS -->
+
+			<!-- DO NOT COPY THIS SNIPPET! Start of Page Analytics Tracking for HubSpot WordPress plugin v7.48.24-->
+			<script type="text/javascript">
+				var _hsq = _hsq || [];
+				_hsq.push(["setContentType", "blog-post"]);
+			</script>
+			<!-- DO NOT COPY THIS SNIPPET! End of Page Analytics Tracking for HubSpot WordPress plugin -->
+						<script>
+				(function() {
+					var hbspt = window.hbspt = window.hbspt || {};
+					hbspt.forms = hbspt.forms || {};
+					hbspt._wpFormsQueue = [];
+					hbspt.enqueueForm = function(formDef) {
+						if (hbspt.forms && hbspt.forms.create) {
+							hbspt.forms.create(formDef);
+						} else {
+							hbspt._wpFormsQueue.push(formDef);
+						}
+					}
+					if (!window.hbspt.forms.create) {
+						Object.defineProperty(window.hbspt.forms, 'create', {
+							configurable: true,
+							get: function() {
+								return hbspt._wpCreateForm;
+							},
+							set: function(value) {
+								hbspt._wpCreateForm = value;
+								while (hbspt._wpFormsQueue.length) {
+									var formDef = hbspt._wpFormsQueue.shift();
+									if (!document.currentScript) {
+										var formScriptId = 'leadin-forms-v2-js';
+										hubspot.utils.currentScript = document.getElementById(formScriptId);
+									}
+									hbspt._wpCreateForm.call(hbspt.forms, formDef);
+								}
+							},
+						});
+					}
+				})();
+			</script>
+		<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="alternate" type="application/rss+xml" title="2ndQuadrant | PostgreSQL RSS2 Feed" href="https://www.2ndquadrant.com/en/feed/" />
+<link rel="pingback" href="https://www.2ndquadrant.com/xmlrpc.php" />
+
+<style type='text/css' media='screen'>
+ #top #header_main > .container, #top #header_main > .container .main_menu  .av-main-nav > li > a, #top #header_main #menu-item-shop .cart_dropdown_link{ height:100px; line-height: 100px; }
+ .html_top_nav_header .av-logo-container{ height:100px;  }
+ .html_header_top.html_header_sticky #top #wrap_all #main{ padding-top:182px; } 
+</style>
+<!--[if lt IE 9]><script src="https://www.2ndquadrant.com/wp-content/themes/enfold/js/html5shiv.js"></script><![endif]-->
+<link rel="icon" href="https://www.2ndquadrant.com/wp-content/uploads/2019/01/favicon-296x300.png" type="image/png">
+
+<!-- To speed up the rendering and to display the site as fast as possible to the user we include some styles and scripts for above the fold content inline -->
+<script type="text/javascript">'use strict';var avia_is_mobile=!1;if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)&&'ontouchstart' in document.documentElement){avia_is_mobile=!0;document.documentElement.className+=' avia_mobile '}
+else{document.documentElement.className+=' avia_desktop '};document.documentElement.className+=' js_active ';(function(){var e=['-webkit-','-moz-','-ms-',''],n='';for(var t in e){if(e[t]+'transform' in document.documentElement.style){document.documentElement.className+=' avia_transform ';n=e[t]+'transform'};if(e[t]+'perspective' in document.documentElement.style)document.documentElement.className+=' avia_transform3d '};if(typeof document.getElementsByClassName=='function'&&typeof document.documentElement.getBoundingClientRect=='function'&&avia_is_mobile==!1){if(n&&window.innerHeight>0){setTimeout(function(){var e=0,o={},a=0,t=document.getElementsByClassName('av-parallax'),i=window.pageYOffset||document.documentElement.scrollTop;for(e=0;e<t.length;e++){t[e].style.top='0px';o=t[e].getBoundingClientRect();a=Math.ceil((window.innerHeight+i-o.top)*0.3);t[e].style[n]='translate(0px, '+a+'px)';t[e].style.top='auto';t[e].className+=' enabled-parallax '}},50)}}})();</script><link rel="icon" href="https://www.2ndquadrant.com/wp-content/uploads/2020/05/cropped-circle-512px-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://www.2ndquadrant.com/wp-content/uploads/2020/05/cropped-circle-512px-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://www.2ndquadrant.com/wp-content/uploads/2020/05/cropped-circle-512px-180x180.png" />
+<meta name="msapplication-TileImage" content="https://www.2ndquadrant.com/wp-content/uploads/2020/05/cropped-circle-512px-270x270.png" />
+		<style type="text/css" id="wp-custom-css">
+			.sub_menu {
+	display: none;
+}
+
+div#header_meta {
+	background-color: #121646;
+}
+.center {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+.phone-info {
+  width: 100% !important;			
+}
+.header_color span {
+	width: 100% !important;
+}
+.header_color p {
+	color: #ffffff;
+  font-size: 1.3em;
+  font-weight: 100;
+  margin-top: 1px;
+	margin-bottom: 0px;
+}
+img {
+ 
+}
+#hide-head {
+	visibility: hidden;
+}
+
+.header_color span {
+  text-align: left;
+	line-height: 1.5em !important;
+}
+
+.phone-info .leftdiv {
+	width: 90%;
+  margin-top: 1%;	
+}
+
+
+.phone-info .rightdiv {
+	width: 10%;
+  margin-top: 0.5%;	
+}
+
+ @media screen and (min-width: 376px) and  (max-width: 768px) {
+ .phone-info .leftdiv {
+  	width: 80%;	
+  } 
+	.phone-info .rightdiv {
+  	width: 20%;	
+		margin-top: 3%;
+  } 
+}
+
+
+ @media screen and (max-width: 375px) {
+ .phone-info .leftdiv {
+  	width: 75%;	
+  } 
+	.phone-info .rightdiv {
+  	width: 25% !important;	
+		margin-top: 15% !important;
+  } 
+}
+/* Form Section */
+.mktoForm .mktoRequiredField .mktoAsterix {
+  display: none !important;
+}
+
+.mktoForm {
+  width: 100% !important;
+  font-family: “proxima_nova”, Helvetica, sans-serif;
+  background-color:rgba(255,255,255,.1);
+  padding: 20px;
+  border-radius:4px;
+}
+ .mktoForm .mktoFormCol {
+    float: left;
+    position: relative;
+    min-height: 2em;
+    width: 100%;
+   margin:0;
+}
+.mktoHtmlText{
+    position: relative;
+		width: 100% !important;
+    left:30px;
+    top: -3.7em;
+    font-size: 13px;
+}
+.mktoHtmlText a{
+    color:#ff3e00;
+}
+
+.mktoFieldWrap input:not([type=checkbox]):focus ~ label, .mktoFieldWrap input:not([type=checkbox]):valid ~ label, .mktoFieldWrap .mktoError + label, .mktoFieldWrap .select-wrapper + label {
+    transform: translateY(-20px);
+    left: 5px;
+    top: 20px;
+    padding: 2px;
+    font-size: 10px;
+    font-weight: 400;
+    pointer-events: all;
+}
+  .mktoFieldWrap input[type=“checkbox”]:checked + label:before, .mktoFieldWrap input[type=“radio”]:checked + label:before {
+    content: ‘’;
+    border: 2px solid #FE5000;
+    background: #FE5000;
+}
+.mktoForm .mktoFieldWrap {
+  	position:relative;
+    float: left;
+    box-sizing: border-box;
+    border-radius: 4px;
+    max-width: 100%;
+    font-size: 14px;
+    width: 100% !important;
+}
+
+.mktoFieldWrap input:not([type=checkbox]), .mktoFieldWrap input:not([type=radio]), .mktoFieldWrap select, .mktoFieldWrap textarea {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    margin-bottom: 0px !important;
+    padding: 10px !important;
+    border-radius: 2px;
+    max-width: 100%;
+    width: 100% !important;
+    font-size: 14px;
+}
+
+.mktoFieldWrap input:not([type=checkbox]):focus, .mktoFieldWrap input:not([type=checkbox]):active, .mktoFieldWrap input:not([type=radio]):focus, .mktoFieldWrap input:not([type=radio]):active,
+.mktoFieldWrap select:focus,
+.mktoFieldWrap select:active,
+.mktoFieldWrap textarea:focus,
+.mktoFieldWrap textarea:active {
+  outline: none;
+}
+.mktoFieldWrap input:not([type=checkbox]):focus ~ label, .mktoFieldWrap input:not([type=checkbox]):valid ~ label, .mktoFieldWrap .mktoError + label, .mktoFieldWrap .select-wrapper + label {
+    transform: translateY(-20px);
+    left: 5px;
+    top: 20px;
+    padding: 2px;
+    font-size: 10px;
+    font-weight: 400;
+    pointer-events: all;
+}
+.mktoFieldWrap input[type=“checkbox”], .mktoFieldWrap input[type=“radio”] {
+  opacity: 0;
+  height: 40px;
+}
+.mktoFieldWrap input[type=“checkbox”] + label:before {
+  content: ‘’;
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  background: transparent;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
+.mktoFieldWrap input[type=“checkbox”]:checked + label:before,
+.mktoFieldWrap input[type=“radio”]:checked + label:before {
+  content: ‘’;
+  border: 2px solid #FE5000;
+  background: #FE5000;
+}
+.mktoFieldWrap input[type=“checkbox”] + label,
+.mktoFieldWrap input[type=“radio”] + label {
+  padding-right: 10px;
+  padding-left: 28px;
+  font-weight: normal;
+  font-size: 16px;
+  text-transform: none;
+  color: #2D3035;
+  cursor: pointer;
+}
+.mktoFieldWrap select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+  .mktoForm .mktoError {
+    position: absolute;
+    z-index: 99;
+    color: #BF0000;
+    left: 0;
+    bottom:-29px!important;
+    width:100%;
+    text-align: center;
+    font-size: 11px;
+  background: #FF3E00;
+}
+  .mktoForm .mktoError .mktoErrorArrowWrap {
+    display:none;
+}
+  .mktoForm .mktoError .mktoErrorMsg {
+  background-image:none!important;
+  box-shadow:none!important;
+  width:100%;
+  border:none!important;
+  }
+  .mktoForm .mktoError .mktoErrorMsg .mktoErrorDetail {
+    display: inline-block!important;
+}
+ .mktoForm .mktoButtonWrap.mktoSimple button.mktoButton{
+    max-width: 100%;
+    width: 100%;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+   	border:none;
+   	padding: 12px 35px;
+    background-color:#ff3e00;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#D73D3C), to(#D23401));
+    background-image: -webkit-linear-gradient(top, #FF3E00, #D23401);
+    background-image: -moz-linear-gradient(top, #FF3E00, #D23401);
+   	background-image: linear-gradient(to bottom, #FF3E00, #D23401);
+  }
+  .mktoForm .mktoButtonWrap.mktoSimple button.mktoButton:hover,
+  .mktoForm .mktoButtonWrap.mktoSimple button.mktoButton:focus{
+    color: #fff;
+    background: #CC5835;
+  }
+.mktoForm .mktoGutter {
+  display: none;
+}
+.mktoButtonRow {
+  padding-top: 1em;
+  width: 100% !important;
+}
+.mktoButtonWrap {
+  margin-left: 0 !important;
+}
+select {
+  max-width: 100% !important;
+}
+div.mktoFieldDescriptor.mktoFormCol > div.mktoFieldWrap > label {
+  width: auto !important;
+}
+.mktoForm .mktoRadioList > label, .mktoForm .mktoCheckboxList > label {
+  margin: 0em !important;
+}
+.select-wrapper {
+  position: relative;
+}
+.select-wrapper:before {
+  position: absolute;
+  right: 10px;
+  top: 25%;
+  display: block;
+  content: ' ’;
+  background-image: url(“https://info.enterprisedb.com/rs/069-ALB-339/images/arrow.svg”);
+  height: 10px;
+  width: 10px;
+  z-index: 1000;
+  pointer-events: none;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+}
+select::-ms-expand {
+  display: none;
+}
+@supports (display: grid) {
+  @media screen and (min-width: 768px) {
+    .mktoFormRow-2-col, .checkbox-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 2ch;
+    }
+  }
+}
+@supports not (display: grid) {
+  @media screen and (min-width: 768px) {
+    .mktoFormRow-2-col {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+    }
+    .mktoFormRow-2-col .mktoFormCol {
+      width: 50%;
+      margin: 5px;
+    }
+    .checkbox-grid {
+      display: -ms-flexbox;
+      display: flex;
+    }
+    .checkbox-grid .checkbox-row {
+      width: 50%;
+    }
+  }
+}
+input#Consent_to_Processing__c {
+    height: inherit;
+    opacity: 1;
+    position: inherit;
+}
+
+
+
+div #rel-resources-heading {
+  background-color: #121646 !important;
+	padding: 10px;
+}
+
+#top #wrap_all .all_colors h3 {
+	color: #ffffff !important;
+}
+
+#related-columns {
+	border-radius: 10px !important;
+}
+
+#rel-resources-heading {
+	border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+div .av_one_third {
+	margin-left: 2% !important;
+}
+
+.av_textblock_section {
+  padding-left: 10px;	
+}
+
+#body_color {
+	background-color: #ebebeb !important;
+}
+
+#text-widget {
+	margin: 0.85em !important;
+}		</style>
+		<style type='text/css'>
+@font-face {font-family: 'entypo-fontello'; font-weight: normal; font-style: normal; font-display: auto;
+src: url('https://www.2ndquadrant.com/wp-content/themes/enfold/config-templatebuilder/avia-template-builder/assets/fonts/entypo-fontello.woff2') format('woff2'),
+url('https://www.2ndquadrant.com/wp-content/themes/enfold/config-templatebuilder/avia-template-builder/assets/fonts/entypo-fontello.woff') format('woff'),
+url('https://www.2ndquadrant.com/wp-content/themes/enfold/config-templatebuilder/avia-template-builder/assets/fonts/entypo-fontello.ttf') format('truetype'), 
+url('https://www.2ndquadrant.com/wp-content/themes/enfold/config-templatebuilder/avia-template-builder/assets/fonts/entypo-fontello.svg#entypo-fontello') format('svg'),
+url('https://www.2ndquadrant.com/wp-content/themes/enfold/config-templatebuilder/avia-template-builder/assets/fonts/entypo-fontello.eot'),
+url('https://www.2ndquadrant.com/wp-content/themes/enfold/config-templatebuilder/avia-template-builder/assets/fonts/entypo-fontello.eot?#iefix') format('embedded-opentype');
+} #top .avia-font-entypo-fontello, body .avia-font-entypo-fontello, html body [data-av_iconfont='entypo-fontello']:before{ font-family: 'entypo-fontello'; }
+</style>
+
+<!--
+Debugging Info for Theme support: 
+
+Theme: Enfold
+Version: 4.7.6.4
+Installed: enfold
+AviaFramework Version: 5.0
+AviaBuilder Version: 4.7.6.4
+aviaElementManager Version: 1.0.1
+- - - - - - - - - - -
+ChildTheme: Enfold Child
+ChildTheme Version: 1.14
+ChildTheme Installed: enfold
+
+ML:128-PU:38-PLA:28
+WP:5.5.5
+Compress: CSS:all theme files - JS:all theme files
+Updates: enabled - token has changed and not verified
+PLAu:25
+--></head>
+
+
+
+
+<body id="top" class="post-template-default single single-post postid-33491 single-format-standard  rtl_columns stretched metrophobic helvetica-neue-websave helvetica_neue sidebar_shadow">
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T6H2WCG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
+
+	
+	<div id='wrap_all'>
+
+		
+<header id='header' class='all_colors header_color light_bg_color  av_header_top av_logo_left av_bottom_nav_header av_menu_left av_custom av_header_sticky_disabled av_header_shrinking_disabled av_header_stretch_disabled av_mobile_menu_phone av_header_searchicon_disabled av_header_unstick_top_disabled av_minimal_header av_minimal_header_shadow av_header_border_disabled' >
+
+            <div id='header_meta' class='container_wrap container_wrap_meta  av_phone_active_left av_extra_header_active av_entry_id_33491'>
+
+            <div class='container'>
+                <div class='phone-info '><span><div class="leftdiv" style="float: left;"><h4 style="color:#ffffff">2ndQuadrant is now part of EDB</h4><p >Bringing together some of the world's top PostgreSQL experts.</p></div><div class="center rightdiv" style="float: right; width: 10%"><a href="https://enterprisedb.com"><img src="https://www.2ndquadrant.com/wp-content/uploads/2020/12/EDB_Logo-orange-whiteout.png" /></a></div></span></div>            </div>
+            <img src="/wp-content/uploads/2019/12/white-cross-circle.png" id="hide-head">
+        </div>
+
+        <div id='header_main' class='container_wrap container_wrap_logo'>
+
+        <div class='container av-logo-container'><div class='inner-container'><span class='logo'><a href='https://www.2ndquadrant.com/en/'><img height="100" width="300" src='/wp-content/uploads/2019/04/2ndQuadrant-Logo-e1554357894467.png' alt='2ndQuadrant | PostgreSQL' title='' /></a></span><div class="logo-right"><div id="blog-desc" class="blog-desc">Mission Critical Databases</div><div id="header-ph-div" class="header-ph-div"></div><div id="righttologo-widget-area" class="righttologo widget-area" role="complementary"><div class="hw-widget"><div class="menu-righttologo-container"><ul id="menu-righttologo" class="menu"><li id="menu-item-62328" class="talk-icon menu-item menu-item-type-post_type menu-item-object-page menu-item-62328"><a href="https://www.2ndquadrant.com/en/contact-us/">Contact us</a></li>
+</ul></div></div></div></div></div><nav class='sub_menu' ><ul id="avia2-menu" class="menu"><li id="menu-item-wpml-ls-13-en" class="menu-item-language menu-item-language-current menu-item wpml-ls-slot-13 wpml-ls-item wpml-ls-item-en wpml-ls-current-language wpml-ls-menu-item wpml-ls-first-item menu-item-type-wpml_ls_menu_item menu-item-object-wpml_ls_menu_item menu-item-has-children menu-item-wpml-ls-13-en"><a title="EN" href="https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/"><span class="wpml-ls-native" lang="en">EN</span></a>
+<ul class="sub-menu">
+	<li id="menu-item-wpml-ls-13-fr" class="menu-item-language menu-item wpml-ls-slot-13 wpml-ls-item wpml-ls-item-fr wpml-ls-menu-item menu-item-type-wpml_ls_menu_item menu-item-object-wpml_ls_menu_item menu-item-wpml-ls-13-fr"><a title="FR" href="https://www.2ndquadrant.com/fr/"><span class="wpml-ls-native" lang="fr">FR</span></a></li>
+	<li id="menu-item-wpml-ls-13-it" class="menu-item-language menu-item wpml-ls-slot-13 wpml-ls-item wpml-ls-item-it wpml-ls-menu-item menu-item-type-wpml_ls_menu_item menu-item-object-wpml_ls_menu_item menu-item-wpml-ls-13-it"><a title="IT" href="https://www.2ndquadrant.com/it/"><span class="wpml-ls-native" lang="it">IT</span></a></li>
+	<li id="menu-item-wpml-ls-13-es" class="menu-item-language menu-item wpml-ls-slot-13 wpml-ls-item wpml-ls-item-es wpml-ls-menu-item menu-item-type-wpml_ls_menu_item menu-item-object-wpml_ls_menu_item menu-item-wpml-ls-13-es"><a title="ES" href="https://www.2ndquadrant.com/es/"><span class="wpml-ls-native" lang="es">ES</span></a></li>
+	<li id="menu-item-wpml-ls-13-de" class="menu-item-language menu-item wpml-ls-slot-13 wpml-ls-item wpml-ls-item-de wpml-ls-menu-item menu-item-type-wpml_ls_menu_item menu-item-object-wpml_ls_menu_item menu-item-wpml-ls-13-de"><a title="DE" href="https://www.2ndquadrant.com/de/"><span class="wpml-ls-native" lang="de">DE</span></a></li>
+	<li id="menu-item-wpml-ls-13-pt-br" class="menu-item-language menu-item wpml-ls-slot-13 wpml-ls-item wpml-ls-item-pt-br wpml-ls-menu-item wpml-ls-last-item menu-item-type-wpml_ls_menu_item menu-item-object-wpml_ls_menu_item menu-item-wpml-ls-13-pt-br"><a title="PT" href="https://www.2ndquadrant.com/pt-br/"><span class="wpml-ls-native" lang="pt-br">PT</span></a></li>
+</ul>
+</li>
+</ul></nav></div><div id='header_main_alternate' class='container_wrap'><div class='container'><nav class='main_menu' data-selectname='Select a page' ><div class="avia-menu av-main-nav-wrap"><ul id="avia-menu" class="menu av-main-nav"><li id="menu-item-28510" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-top-level menu-item-top-level-1"><a href="https://www.2ndquadrant.com/en/services/"><span class="avia-bullet"></span><span class="avia-menu-text">Support &#038; Services</span><span class="avia-menu-fx"><span class="avia-arrow-wrap"><span class="avia-arrow"></span></span></span></a>
+
+
+<ul class="sub-menu">
+	<li id="menu-item-28537" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a href="https://www.2ndquadrant.com/en/support/support-postgresql/"><span class="avia-bullet"></span><span class="avia-menu-text">Support</span></a>
+	<ul class="sub-menu">
+		<li id="menu-item-490" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/support-postgresql/"><span class="avia-bullet"></span><span class="avia-menu-text">24/7 PostgreSQL Support</span></a></li>
+		<li id="menu-item-487" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/support-developer/"><span class="avia-bullet"></span><span class="avia-menu-text">Developer Support</span></a></li>
+	</ul>
+</li>
+	<li id="menu-item-28538" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a href="https://www.2ndquadrant.com/en/services/rdba/"><span class="avia-bullet"></span><span class="avia-menu-text">DBA Services</span></a>
+	<ul class="sub-menu">
+		<li id="menu-item-454" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/services/rdba/"><span class="avia-bullet"></span><span class="avia-menu-text">Remote DBA</span></a></li>
+		<li id="menu-item-457" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/services/monitoring-service/"><span class="avia-bullet"></span><span class="avia-menu-text">Database Monitoring</span></a></li>
+	</ul>
+</li>
+	<li id="menu-item-28542" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a href="https://www.2ndquadrant.com/en/services/"><span class="avia-bullet"></span><span class="avia-menu-text">Consulting Services</span></a>
+	<ul class="sub-menu">
+		<li id="menu-item-460" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/services/postgresql-healthcheck/"><span class="avia-bullet"></span><span class="avia-menu-text">Health Check</span></a></li>
+		<li id="menu-item-475" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/services/postgresql-performance-tuning/"><span class="avia-bullet"></span><span class="avia-menu-text">Performance Tuning</span></a></li>
+		<li id="menu-item-473" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/services/postgresql-security-audit/"><span class="avia-bullet"></span><span class="avia-menu-text">Database Security Audit</span></a></li>
+		<li id="menu-item-472" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/services/upgrade-postgresql/"><span class="avia-bullet"></span><span class="avia-menu-text">PostgreSQL Upgrade</span></a></li>
+	</ul>
+</li>
+	<li id="menu-item-28540" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a href="https://www.2ndquadrant.com/en/services/"><span class="avia-bullet"></span><span class="avia-menu-text">Migration Services</span></a>
+	<ul class="sub-menu">
+		<li id="menu-item-56764" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/services/migrate-from-oracle-to-postgresql/"><span class="avia-bullet"></span><span class="avia-menu-text">Migrate to PostgreSQL</span></a></li>
+		<li id="menu-item-471" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/services/postgresql-migration-assessment/"><span class="avia-bullet"></span><span class="avia-menu-text">Migration Assessment</span></a></li>
+	</ul>
+</li>
+</ul>
+</li>
+<li id="menu-item-523" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-top-level menu-item-top-level-2"><a href="https://www.2ndquadrant.com/en/resources/"><span class="avia-bullet"></span><span class="avia-menu-text">Products</span><span class="avia-menu-fx"><span class="avia-arrow-wrap"><span class="avia-arrow"></span></span></span></a>
+
+
+<ul class="sub-menu">
+	<li id="menu-item-583" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/resources/postgres-bdr-2ndquadrant/"><span class="avia-bullet"></span><span class="avia-menu-text">Postgres-BDR <sup>®<sup></span></a></li>
+	<li id="menu-item-15886" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/resources/highly-available-postgresql-clusters/"><span class="avia-bullet"></span><span class="avia-menu-text">PostgreSQL High Availability</span></a></li>
+	<li id="menu-item-33802" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/resources/kubernetes-operators-for-highly-available-postgresql-and-bdr/"><span class="avia-bullet"></span><span class="avia-menu-text">Kubernetes Operators for BDR &#038; PostgreSQL</span></a></li>
+	<li id="menu-item-22962" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/resources/postgres-cloud-manager/"><span class="avia-bullet"></span><span class="avia-menu-text">Managed PostgreSQL in the Cloud</span></a></li>
+	<li id="menu-item-43817" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a href="#"><span class="avia-bullet"></span><span class="avia-menu-text">Installers</span></a>
+	<ul class="sub-menu">
+		<li id="menu-item-615" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/resources/postgresql-installer-2ndquadrant/"><span class="avia-bullet"></span><span class="avia-menu-text">Postgres Installer</span></a></li>
+		<li id="menu-item-26912" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/resources/2uda/"><span class="avia-bullet"></span><span class="avia-menu-text">2UDA</span></a></li>
+	</ul>
+</li>
+	<li id="menu-item-595" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/resources/2ndqpostgres/"><span class="avia-bullet"></span><span class="avia-menu-text">2ndQPostgres</span></a></li>
+	<li id="menu-item-594" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/resources/pglogical/"><span class="avia-bullet"></span><span class="avia-menu-text">pglogical</span></a></li>
+	<li id="menu-item-619" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/resources/barman/"><span class="avia-bullet"></span><span class="avia-menu-text">Barman</span></a></li>
+	<li id="menu-item-601" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/resources/repmgr/"><span class="avia-bullet"></span><span class="avia-menu-text">repmgr</span></a></li>
+	<li id="menu-item-616" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/resources/omnidb/"><span class="avia-bullet"></span><span class="avia-menu-text">OmniDB</span></a></li>
+	<li id="menu-item-618" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/resources/postgresql-security-firewall/"><span class="avia-bullet"></span><span class="avia-menu-text">SQL Firewall</span></a></li>
+	<li id="menu-item-617" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/resources/postgres-xl/"><span class="avia-bullet"></span><span class="avia-menu-text">Postgres-XL</span></a></li>
+</ul>
+</li>
+<li id="menu-item-31592" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-top-level menu-item-top-level-3"><a href="#"><span class="avia-bullet"></span><span class="avia-menu-text">Downloads</span><span class="avia-menu-fx"><span class="avia-arrow-wrap"><span class="avia-arrow"></span></span></span></a>
+
+
+<ul class="sub-menu">
+	<li id="menu-item-43329" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a href="#"><span class="avia-bullet"></span><span class="avia-menu-text">Installers</span></a>
+	<ul class="sub-menu">
+		<li id="menu-item-32039" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/resources/postgresql-installer-2ndquadrant/"><span class="avia-bullet"></span><span class="avia-menu-text">Postgres Installer</span></a></li>
+		<li id="menu-item-32040" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/resources/2uda/"><span class="avia-bullet"></span><span class="avia-menu-text">2UDA &#8211; Unified Data Analytics</span></a></li>
+	</ul>
+</li>
+	<li id="menu-item-43330" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a href="#"><span class="avia-bullet"></span><span class="avia-menu-text">Whitepapers</span></a>
+	<ul class="sub-menu">
+		<li id="menu-item-55370" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://resources.2ndquadrant.com/business-case-for-postgresql-support"><span class="avia-bullet"></span><span class="avia-menu-text">Business Case for PostgreSQL Support</span></a></li>
+		<li id="menu-item-43336" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://info.enterprisedb.com/white-paper_security-best-practices-postgresql.html"><span class="avia-bullet"></span><span class="avia-menu-text">Security Best Practices for PostgreSQL</span></a></li>
+	</ul>
+</li>
+	<li id="menu-item-43331" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a href="#"><span class="avia-bullet"></span><span class="avia-menu-text">Case Studies</span></a>
+	<ul class="sub-menu">
+		<li id="menu-item-43339" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a href="#"><span class="avia-bullet"></span><span class="avia-menu-text">Performance Tuning</span></a>
+		<ul class="sub-menu">
+			<li id="menu-item-43340" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://resources.2ndquadrant.com/benchprep-case-study-download"><span class="avia-bullet"></span><span class="avia-menu-text">BenchPrep</span></a></li>
+			<li id="menu-item-43341" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://resources.2ndquadrant.com/tastyworks-case-study"><span class="avia-bullet"></span><span class="avia-menu-text">tastyworks</span></a></li>
+		</ul>
+</li>
+		<li id="menu-item-43342" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a href="#"><span class="avia-bullet"></span><span class="avia-menu-text">Distributed Clusters</span></a>
+		<ul class="sub-menu">
+			<li id="menu-item-43343" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://resources.2ndquadrant.com/clickup-case-study-download"><span class="avia-bullet"></span><span class="avia-menu-text">ClickUp</span></a></li>
+			<li id="menu-item-43344" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://resources.2ndquadrant.com/european-space-agency-case-study-download"><span class="avia-bullet"></span><span class="avia-menu-text">European Space Agency (ESA)</span></a></li>
+			<li id="menu-item-43345" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://resources.2ndquadrant.com/telefonica-del-sur-case-study-download"><span class="avia-bullet"></span><span class="avia-menu-text">Telefónica del Sur</span></a></li>
+			<li id="menu-item-43346" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://resources.2ndquadrant.com/animal-logic-case-study-download"><span class="avia-bullet"></span><span class="avia-menu-text">Animal Logic</span></a></li>
+		</ul>
+</li>
+		<li id="menu-item-43347" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a href="#"><span class="avia-bullet"></span><span class="avia-menu-text">Database Administration</span></a>
+		<ul class="sub-menu">
+			<li id="menu-item-43348" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://resources.2ndquadrant.com/agilis-systems-case-study-download"><span class="avia-bullet"></span><span class="avia-menu-text">Agilis Systems</span></a></li>
+		</ul>
+</li>
+		<li id="menu-item-43349" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a href="#"><span class="avia-bullet"></span><span class="avia-menu-text">Professional Training</span></a>
+		<ul class="sub-menu">
+			<li id="menu-item-43350" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://resources.2ndquadrant.com/met-office-case-study-download"><span class="avia-bullet"></span><span class="avia-menu-text">Met Office</span></a></li>
+			<li id="menu-item-43351" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://resources.2ndquadrant.com/london-partners-case-study-download"><span class="avia-bullet"></span><span class="avia-menu-text">London &#038; Partners</span></a></li>
+		</ul>
+</li>
+		<li id="menu-item-43352" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a href="#"><span class="avia-bullet"></span><span class="avia-menu-text">Database Upgrades</span></a>
+		<ul class="sub-menu">
+			<li id="menu-item-43353" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://resources.2ndquadrant.com/alfred-wegener-institute-case-study-download"><span class="avia-bullet"></span><span class="avia-menu-text">Alfred Wegener Institute (AWI)</span></a></li>
+		</ul>
+</li>
+		<li id="menu-item-43354" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a href="#"><span class="avia-bullet"></span><span class="avia-menu-text">Database Migration</span></a>
+		<ul class="sub-menu">
+			<li id="menu-item-55054" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://resources.2ndquadrant.com/igt-case-study-download"><span class="avia-bullet"></span><span class="avia-menu-text">International Game Technology (IGT)</span></a></li>
+			<li id="menu-item-43355" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://resources.2ndquadrant.com/healthcare-software-systems-case-study-download"><span class="avia-bullet"></span><span class="avia-menu-text">Healthcare Software Solutions (HSS)</span></a></li>
+			<li id="menu-item-43356" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://resources.2ndquadrant.com/navionics-download-case-study"><span class="avia-bullet"></span><span class="avia-menu-text">Navionics</span></a></li>
+		</ul>
+</li>
+	</ul>
+</li>
+</ul>
+</li>
+<li id="menu-item-34736" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-top-level menu-item-top-level-4"><a href="https://www.2ndquadrant.com/en/postgres-learning-center/"><span class="avia-bullet"></span><span class="avia-menu-text">Postgres Learning Center</span><span class="avia-menu-fx"><span class="avia-arrow-wrap"><span class="avia-arrow"></span></span></span></a>
+
+
+<ul class="sub-menu">
+	<li id="menu-item-41787" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a href="#"><span class="avia-bullet"></span><span class="avia-menu-text">Webinars</span></a>
+	<ul class="sub-menu">
+		<li id="menu-item-62535" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://www.enterprisedb.com/webinars"><span class="avia-bullet"></span><span class="avia-menu-text">Upcoming Webinars</span></a></li>
+		<li id="menu-item-41785" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/webinar-library/"><span class="avia-bullet"></span><span class="avia-menu-text">Webinar Library</span></a></li>
+	</ul>
+</li>
+	<li id="menu-item-35058" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children"><a href="https://www.2ndquadrant.com/en/whitepapers/"><span class="avia-bullet"></span><span class="avia-menu-text">Whitepapers</span></a>
+	<ul class="sub-menu">
+		<li id="menu-item-55369" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://resources.2ndquadrant.com/business-case-for-postgresql-support"><span class="avia-bullet"></span><span class="avia-menu-text">Business Case for PostgreSQL Support</span></a></li>
+		<li id="menu-item-31597" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://info.enterprisedb.com/white-paper_security-best-practices-postgresql.html"><span class="avia-bullet"></span><span class="avia-menu-text">Security Best Practices for PostgreSQL</span></a></li>
+	</ul>
+</li>
+	<li id="menu-item-9370" class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent"><a href="https://www.2ndquadrant.com/en/blog/"><span class="avia-bullet"></span><span class="avia-menu-text">Blog</span></a></li>
+	<li id="menu-item-574" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children"><a href="https://www.2ndquadrant.com/en/training/"><span class="avia-bullet"></span><span class="avia-menu-text">Training</span></a>
+	<ul class="sub-menu">
+		<li id="menu-item-37768" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://www.2ndquadrant.com/en/training/training-course-catalog/"><span class="avia-bullet"></span><span class="avia-menu-text">Course Catalogue</span></a></li>
+	</ul>
+</li>
+	<li id="menu-item-517" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children"><a href="https://www.2ndquadrant.com/en/case-studies/"><span class="avia-bullet"></span><span class="avia-menu-text">Case Studies</span></a>
+	<ul class="sub-menu">
+		<li id="menu-item-22322" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a><span class="avia-bullet"></span><span class="avia-menu-text">Performance Tuning</span></a>
+		<ul class="sub-menu">
+			<li id="menu-item-28633" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://resources.2ndquadrant.com/benchprep-case-study-download"><span class="avia-bullet"></span><span class="avia-menu-text">BenchPrep</span></a></li>
+			<li id="menu-item-15791" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/case-studies/performance-tuning/tastyworks-2ndquadrant-postgresql-case-study/"><span class="avia-bullet"></span><span class="avia-menu-text">tastyworks</span></a></li>
+		</ul>
+</li>
+		<li id="menu-item-22327" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a><span class="avia-bullet"></span><span class="avia-menu-text">Distributed Clusters</span></a>
+		<ul class="sub-menu">
+			<li id="menu-item-33771" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://resources.2ndquadrant.com/clickup-case-study-download"><span class="avia-bullet"></span><span class="avia-menu-text">ClickUp</span></a></li>
+			<li id="menu-item-27300" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://resources.2ndquadrant.com/european-space-agency-case-study-download"><span class="avia-bullet"></span><span class="avia-menu-text">European Space Agency (ESA)</span></a></li>
+			<li id="menu-item-15792" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/case-studies/multi-master-clusters/telefonica-del-sur-postgres-bdr-story-2ndquadrant/"><span class="avia-bullet"></span><span class="avia-menu-text">Telefónica del Sur</span></a></li>
+			<li id="menu-item-15788" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/case-studies/multi-master-clusters/animal-logic-2ndquadrant-case-study/"><span class="avia-bullet"></span><span class="avia-menu-text">Animal Logic</span></a></li>
+		</ul>
+</li>
+		<li id="menu-item-22981" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a><span class="avia-bullet"></span><span class="avia-menu-text">Database Administration</span></a>
+		<ul class="sub-menu">
+			<li id="menu-item-15794" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/case-studies/database-administration/agilis-systems/"><span class="avia-bullet"></span><span class="avia-menu-text">Agilis Systems</span></a></li>
+		</ul>
+</li>
+		<li id="menu-item-22982" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a><span class="avia-bullet"></span><span class="avia-menu-text">Professional Training</span></a>
+		<ul class="sub-menu">
+			<li id="menu-item-15795" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/case-studies/professional-training/met-office-2ndquadrant-case-study/"><span class="avia-bullet"></span><span class="avia-menu-text">Met Office</span></a></li>
+			<li id="menu-item-15796" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/case-studies/professional-training/london-partners-2ndquadrant-case-study/"><span class="avia-bullet"></span><span class="avia-menu-text">London &#038; Partners</span></a></li>
+		</ul>
+</li>
+		<li id="menu-item-22983" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a><span class="avia-bullet"></span><span class="avia-menu-text">Database Upgrades</span></a>
+		<ul class="sub-menu">
+			<li id="menu-item-15797" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/case-studies/database-upgrades/alfred-wegener-institute-awi/"><span class="avia-bullet"></span><span class="avia-menu-text">Alfred Wegener Institute (AWI)</span></a></li>
+		</ul>
+</li>
+		<li id="menu-item-22984" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a><span class="avia-bullet"></span><span class="avia-menu-text">Database Migration</span></a>
+		<ul class="sub-menu">
+			<li id="menu-item-55055" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://resources.2ndquadrant.com/igt-case-study-download"><span class="avia-bullet"></span><span class="avia-menu-text">International Game Technology (IGT)</span></a></li>
+			<li id="menu-item-15783" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/case-studies/database-migration/healthcare-software-solutions-hss/"><span class="avia-bullet"></span><span class="avia-menu-text">Healthcare Software Solutions (HSS)</span></a></li>
+			<li id="menu-item-15798" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/case-studies/database-migration/navionics-2ndquadrant-case-study/"><span class="avia-bullet"></span><span class="avia-menu-text">Navionics</span></a></li>
+		</ul>
+</li>
+	</ul>
+</li>
+	<li id="menu-item-536" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children"><a href="https://www.2ndquadrant.com/en/books/"><span class="avia-bullet"></span><span class="avia-menu-text">Books</span></a>
+	<ul class="sub-menu">
+		<li id="menu-item-25077" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/books/postgresql-11-administration-cookbook/"><span class="avia-bullet"></span><span class="avia-menu-text">PostgreSQL 11 Administration Cookbook</span></a></li>
+		<li id="menu-item-541" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/books/postgresql-10-administration-cookbook/"><span class="avia-bullet"></span><span class="avia-menu-text">PostgreSQL 10 Administration Cookbook</span></a></li>
+		<li id="menu-item-540" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/books/postgresql-high-availability-cookbook-second-edition/"><span class="avia-bullet"></span><span class="avia-menu-text">PostgreSQL High Availability Cookbook – 2nd Edition</span></a></li>
+		<li id="menu-item-539" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/books/postgresql-9-administration-cookbook/"><span class="avia-bullet"></span><span class="avia-menu-text">PostgreSQL 9 Administration Cookbook – 3rd Edition</span></a></li>
+		<li id="menu-item-538" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/books/postgresql-server-programming/"><span class="avia-bullet"></span><span class="avia-menu-text">PostgreSQL Server Programming Cookbook – 2nd Edition</span></a></li>
+		<li id="menu-item-537" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/books/postgresql-9-cookbook-chinese-edition/"><span class="avia-bullet"></span><span class="avia-menu-text">PostgreSQL 9 Cookbook – Chinese Edition</span></a></li>
+	</ul>
+</li>
+	<li id="menu-item-37035" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/videos/"><span class="avia-bullet"></span><span class="avia-menu-text">Videos</span></a></li>
+	<li id="menu-item-62536" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://www.enterprisedb.com/events"><span class="avia-bullet"></span><span class="avia-menu-text">Events</span></a></li>
+	<li id="menu-item-562" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children"><a href="https://www.2ndquadrant.com/en/postgresql/"><span class="avia-bullet"></span><span class="avia-menu-text">PostgreSQL</span></a>
+	<ul class="sub-menu">
+		<li id="menu-item-571" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/postgresql/postgresql-story/"><span class="avia-bullet"></span><span class="avia-menu-text">PostgreSQL – History</span></a></li>
+		<li id="menu-item-569" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/postgresql/who-uses-postgresql/"><span class="avia-bullet"></span><span class="avia-menu-text">Who uses PostgreSQL?</span></a></li>
+		<li id="menu-item-567" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/postgresql/postgresql-faq/"><span class="avia-bullet"></span><span class="avia-menu-text">PostgreSQL FAQ</span></a></li>
+		<li id="menu-item-566" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/postgresql/postgresql-vs-mysql/"><span class="avia-bullet"></span><span class="avia-menu-text">PostgreSQL vs MySQL</span></a></li>
+		<li id="menu-item-565" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/postgresql/business-case-postgresql/"><span class="avia-bullet"></span><span class="avia-menu-text">The Business Case for PostgreSQL</span></a></li>
+		<li id="menu-item-563" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/postgresql/postgresql-security-information/"><span class="avia-bullet"></span><span class="avia-menu-text">Security Information</span></a></li>
+		<li id="menu-item-40879" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://www.2ndquadrant.com/documents/pg_doc/?utm_campaign=Postgres%20Docs&amp;utm_source=PGDocsMenuItem"><span class="avia-bullet"></span><span class="avia-menu-text">Documentation</span></a></li>
+	</ul>
+</li>
+</ul>
+</li>
+<li id="menu-item-22945" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-top-level menu-item-top-level-5"><a href="#"><span class="avia-bullet"></span><span class="avia-menu-text">About Us</span><span class="avia-menu-fx"><span class="avia-arrow-wrap"><span class="avia-arrow"></span></span></span></a>
+
+
+<ul class="sub-menu">
+	<li id="menu-item-521" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/about-2ndquadrant/"><span class="avia-bullet"></span><span class="avia-menu-text">About 2ndQuadrant</span></a></li>
+	<li id="menu-item-570" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/postgresql/2ndquadrants-passion-postgresql/"><span class="avia-bullet"></span><span class="avia-menu-text">2ndQuadrant’s Passion for PostgreSQL</span></a></li>
+	<li id="menu-item-519" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/news/"><span class="avia-bullet"></span><span class="avia-menu-text">News</span></a></li>
+	<li id="menu-item-16804" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.2ndquadrant.com/en/careers/"><span class="avia-bullet"></span><span class="avia-menu-text">Careers</span></a></li>
+	<li id="menu-item-62372" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="https://www.enterprisedb.com/about"><span class="avia-bullet"></span><span class="avia-menu-text">Team Profile</span></a></li>
+</ul>
+</li>
+<li id="menu-item-34737" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-top-level menu-item-top-level-6"><a href="https://www.2ndquadrant.com/en/blog/"><span class="avia-bullet"></span><span class="avia-menu-text">Blog</span><span class="avia-menu-fx"><span class="avia-arrow-wrap"><span class="avia-arrow"></span></span></span></a></li>
+<li class='av-language-switch-item language_en avia_current_lang'><a href='https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/'>	<span class='language_flag'><img title='EN' src='https://www.2ndquadrant.com/wp-content/plugins/sitepress-multilingual-cms/res/flags/en.png' /></span></a></li><li class='av-language-switch-item language_fr '><a href='https://www.2ndquadrant.com/fr/'>	<span class='language_flag'><img title='FR' src='https://www.2ndquadrant.com/wp-content/plugins/sitepress-multilingual-cms/res/flags/fr.png' /></span></a></li><li class='av-language-switch-item language_it '><a href='https://www.2ndquadrant.com/it/'>	<span class='language_flag'><img title='IT' src='https://www.2ndquadrant.com/wp-content/plugins/sitepress-multilingual-cms/res/flags/it.png' /></span></a></li><li class='av-language-switch-item language_es '><a href='https://www.2ndquadrant.com/es/'>	<span class='language_flag'><img title='ES' src='https://www.2ndquadrant.com/wp-content/plugins/sitepress-multilingual-cms/res/flags/es.png' /></span></a></li><li class='av-language-switch-item language_de '><a href='https://www.2ndquadrant.com/de/'>	<span class='language_flag'><img title='DE' src='https://www.2ndquadrant.com/wp-content/plugins/sitepress-multilingual-cms/res/flags/de.png' /></span></a></li><li class='av-language-switch-item language_pt-br '><a href='https://www.2ndquadrant.com/pt-br/'>	<span class='language_flag'><img title='PT' src='https://www.2ndquadrant.com/wp-content/plugins/sitepress-multilingual-cms/res/flags/pt-br.png' /></span></a></li><li class="av-burger-menu-main menu-item-avia-special ">
+	        			<a href="#" aria-label="Menu" aria-hidden="false">
+							<span class="av-hamburger av-hamburger--spin av-js-hamburger">
+								<span class="av-hamburger-box">
+						          <span class="av-hamburger-inner"></span>
+						          <strong>Menu</strong>
+								</span>
+							</span>
+							<span class="avia_hidden_link_text">Menu</span>
+						</a>
+	        		   </li></ul></div></nav></div> </div> 
+        <!-- end container_wrap-->
+    </div>
+        <div class='header_bg'></div>
+
+    <!-- end header -->
+</header>
+		<div id='main' class='all_colors' data-scroll-offset='0'>
+
+			
+<div class='container_wrap container_wrap_first main_color sidebar_right'>
+
+	<div class='container template-blog template-single-blog '>
+
+		<main class='content units av-content-small alpha  av-blog-meta-comments-disabled av-blog-meta-tag-disabled' >
+
+			<div class='stretch_full container_wrap custom-breadcrumb empty_title  title_container'><div class="breadcrumb breadcrumbs avia-breadcrumbs"><div class="breadcrumb-trail" ><span class="trail-before"><span class="breadcrumb-title">You are here:</span></span> <span  itemscope="itemscope" itemtype="https://schema.org/BreadcrumbList" ><span  itemscope="itemscope" itemtype="https://schema.org/ListItem" itemprop="itemListElement" ><a itemprop="url" href="https://www.2ndquadrant.com/en/" title="2ndQuadrant | PostgreSQL" rel="home" class="trail-begin"><span itemprop="name">Home</span></a><span itemprop="position" class="hidden">1</span></span></span> <span class="sep">/</span> <span  itemscope="itemscope" itemtype="https://schema.org/BreadcrumbList" ><span  itemscope="itemscope" itemtype="https://schema.org/ListItem" itemprop="itemListElement" ><a itemprop="url" href="https://www.2ndquadrant.com/en/blog/" title="Blog"><span itemprop="name">Blog</span></a><span itemprop="position" class="hidden">2</span></span></span> <span class="sep">/</span> <span  itemscope="itemscope" itemtype="https://schema.org/BreadcrumbList" ><span  itemscope="itemscope" itemtype="https://schema.org/ListItem" itemprop="itemListElement" ><a itemprop="url" href="https://www.2ndquadrant.com/en/blog/category/http2ndquadrant-com/"><span itemprop="name">2ndQuadrant</span></a><span itemprop="position" class="hidden">3</span></span></span> <span class="sep">/</span> <span class="trail-end">PostgreSQL 12: Implementing K-Nearest Neighbor Space Partitioned Generalized...</span></div></div></div><article class='post-entry post-entry-type-standard post-entry-33491 post-loop-1 post-parity-odd post-entry-last multi-big with-slider post-33491 post type-post status-publish format-standard has-post-thumbnail hentry category-http2ndquadrant-com category-kirks-planetpostgresql category-postgresql tag-pg12 tag-postgres tag-postgresql-12' ><div class="big-preview multi-big" ><a href="https://www.2ndquadrant.com/wp-content/uploads/2019/11/Implementing-K-Nearest-Neighbor-Space-Partitioned-Generalized-Search-Tree-Indexes-Kirk-Roybal-1030x526.jpg"  title="Implementing K-Nearest Neighbor Space Partitioned Generalized Search Tree Indexes - Kirk Roybal" ><img width="845" height="321" src="https://www.2ndquadrant.com/wp-content/uploads/2019/11/Implementing-K-Nearest-Neighbor-Space-Partitioned-Generalized-Search-Tree-Indexes-Kirk-Roybal-845x321.jpg" class="wp-image-33808 avia-img-lazy-loading-33808 attachment-entry_with_sidebar size-entry_with_sidebar wp-post-image" alt="PostgreSQL 12: Implementing K-Nearest Neighbor Space Partitioned Generalized Search Tree Indexes" loading="lazy" /></a></div><div class='blog-meta'><a href='https://www.2ndquadrant.com/en/blog/author/kirk-roybal/' class='post-author-format-type'><span class='rounded-container'><img alt='Kirk Roybal' src='https://secure.gravatar.com/avatar/a5ed4de1d6ab29a1bdc39189d6e76e00?s=81&#038;d=blank&#038;r=g' srcset='https://secure.gravatar.com/avatar/a5ed4de1d6ab29a1bdc39189d6e76e00?s=162&#038;d=blank&#038;r=g 2x' class='avatar avatar-81 photo' height='81' width='81' loading='lazy'/><span class="iconfont" aria-hidden='true' data-av_icon='' data-av_iconfont='entypo-fontello'></span></span></a></div><div class='entry-content-wrapper clearfix standard-content'><header class="entry-content-header"><h1 class='post-title entry-title ' >	<a href='https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/' rel='bookmark' title='Permanent Link: PostgreSQL 12: Implementing K-Nearest Neighbor Space Partitioned Generalized Search Tree Indexes'>PostgreSQL 12: Implementing K-Nearest Neighbor Space Partitioned Generalized Search Tree Indexes			<span class='post-format-icon minor-meta'></span>	</a></h1><span class='post-meta-infos'><time class='date-container minor-meta updated' >November 5, 2019</time><span class='text-sep text-sep-date'>/</span><span class='comment-container minor-meta'><a href="https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/#comments" class="comments-link" >10 Comments</a></span><span class='text-sep text-sep-comment'>/</span><span class="blog-categories minor-meta">in <a href="https://www.2ndquadrant.com/en/blog/category/http2ndquadrant-com/" rel="tag">2ndQuadrant</a>, <a href="https://www.2ndquadrant.com/en/blog/category/kirks-planetpostgresql/" rel="tag">Kirk’s PlanetPostgreSQL</a>, <a href="https://www.2ndquadrant.com/en/blog/category/postgresql/" rel="tag">PostgreSQL</a> </span><span class="text-sep text-sep-cat">/</span><span class="blog-author minor-meta">by <span class="entry-author-link" ><span class="author"><span class="fn"><a href="https://www.2ndquadrant.com/en/blog/author/kirk-roybal/" title="Posts by Kirk Roybal" rel="author">Kirk Roybal</a></span></span></span></span></span></header><div class="entry-content" ><h2 id="the-value-of-indexing">The value of indexing</h2>
+<p>PostgreSQL provides a simple linear distance operator <code>&lt;-&gt;</code> (linear distance). We will use this to find points that are closest to a given location.</p>
+<p>PostgreSQL provides a simple linear distance operator the data, and performing no optimizations and having no indexes, we see the following execution plan:</p>
+<pre><code class="lang-bash"><span class="hljs-selector-tag">time</span> psql -qtAc <span class="hljs-string">"</span>
+</code></pre>
+<pre><code class="lang-sqlpostgresql"><span class="hljs-keyword">EXPLAIN</span> (<span class="hljs-keyword">ANALYZE</span> <span class="hljs-keyword">ON</span>, BUFFERS <span class="hljs-keyword">ON</span>)
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">name</span>, location
+<span class="hljs-keyword">FROM</span> geonames
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> location &lt;-&gt; <span class="hljs-string">'(29.9691,-95.6972)'</span>
+<span class="hljs-keyword">LIMIT</span> <span class="hljs-number">5</span>;
+</code></pre>
+<pre><code class="lang-bash"><span class="hljs-string">"  &lt;-- closing quote</span>
+</code></pre>
+<pre><code class="lang-bash">                                      QUERY PLAN
+-----------------------------------------------------------------------------------------------------------
+Limit  (<span class="hljs-attr">cost=418749.15..418749.73</span> <span class="hljs-attr">rows=5</span> <span class="hljs-attr">width=38)</span> 
+        (actual <span class="hljs-attr">time=2553.970..2555.673</span> <span class="hljs-attr">rows=5</span> <span class="hljs-attr">loops=1)</span>
+  Buffers: shared <span class="hljs-attr">hit=100</span> <span class="hljs-attr">read=272836</span>
+  -&gt;  Gather Merge  (<span class="hljs-attr">cost=418749.15..1580358.21</span> <span class="hljs-attr">rows=9955954</span> <span class="hljs-attr">width=38)</span> 
+                    (actual <span class="hljs-attr">time=2553.969..2555.669</span> <span class="hljs-attr">rows=5</span> <span class="hljs-attr">loops=1)</span>
+        Workers Planned: <span class="hljs-number">2</span>
+        Workers Launched: <span class="hljs-number">2</span>
+        Buffers: shared <span class="hljs-attr">hit=100</span> <span class="hljs-attr">read=272836</span>
+        -&gt;  Sort  (<span class="hljs-attr">cost=417749.12..430194.06</span> <span class="hljs-attr">rows=4977977</span> <span class="hljs-attr">width=38)</span>
+                 (actual <span class="hljs-attr">time=2548.220..2548.221</span> <span class="hljs-attr">rows=4</span> <span class="hljs-attr">loops=3)</span>
+              Sort Key: ((location &lt;-&gt; '(<span class="hljs-number">29.9691</span>,-<span class="hljs-number">95.6972</span>)'::point))
+              Sort Method: top-N heapsort  Memory: <span class="hljs-number">25</span>kB
+              Worker <span class="hljs-number">0</span>:  Sort Method: top-N heapsort  Memory: <span class="hljs-number">26</span>kB
+              Worker <span class="hljs-number">1</span>:  Sort Method: top-N heapsort  Memory: <span class="hljs-number">25</span>kB
+              Buffers: shared <span class="hljs-attr">hit=100</span> <span class="hljs-attr">read=272836</span>
+              -&gt;  Parallel Seq Scan on geonames  (<span class="hljs-attr">cost=0.00..335066.71</span> <span class="hljs-attr">rows=4977977</span> <span class="hljs-attr">width=38)</span> 
+                                        (actual <span class="hljs-attr">time=0.040..1637.884</span> <span class="hljs-attr">rows=3982382</span> <span class="hljs-attr">loops=3)</span>
+                    Buffers: shared <span class="hljs-attr">hit=6</span> <span class="hljs-attr">read=272836</span>
+Planning Time: <span class="hljs-number">0.493</span> ms
+Execution Time: <span class="hljs-number">2555.737</span> ms
+
+real    <span class="hljs-number">0</span>m2.<span class="hljs-number">595</span>s
+user    <span class="hljs-number">0</span>m0.<span class="hljs-number">011</span>s
+sys    <span class="hljs-number">0</span>m0.<span class="hljs-number">015</span>s
+</code></pre>
+<p>and here are the results: (the same results for all requests, so we&#8217;ll omit them later.)</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>name</strong></th>
+<th style="text-align: right;"><strong>location</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Cypress</td>
+<td style="text-align: right;">(29.96911,-95.69717)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cypress Pointe Baptist Church</td>
+<td style="text-align: right;">(29.9732,-95.6873)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cypress Post Office</td>
+<td style="text-align: right;">(29.9743,-95.67953)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Hot Wells</td>
+<td style="text-align: right;">(29.95689,-95.68189)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Dry Creek Airport</td>
+<td style="text-align: right;">(29.98571,-95.68597)</td>
+</tr>
+</tbody>
+</table>
+<p>So, 418749.73 is the OPTIMIZER cost to beat, and it took two and a half seconds (2555.673) to execute that query. This is actually a very good result, using PostgreSQL with no optimizations at all against an 11 million row table. This is also why we selected a larger data set, as there would be very minimal difference using indexes against less than 10 millions rows. Parallel sequential scans are fantastic, but that&#8217;s another article.</p>
+<h2 id="adding-gist-index">Adding GiST index</h2>
+<p>We begin the optimization process by adding a GiST index. Because our example query has a</p>
+<pre><code class="lang-postgresql"><span class="hljs-attribute">LIMIT</span>
+</code></pre>
+<p>clause of 5 items, we have a very high selectivity. This will encourage the planner to use an index, so we&#8217;ll provide one that works fairly well with geometry data.</p>
+<pre><code class="lang-sqlpostgresql">time psql -qtAc "<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">INDEX</span> idx_gist_geonames_location <span class="hljs-keyword">ON</span> geonames <span class="hljs-keyword">USING</span> gist(location);"
+</code></pre>
+<p>The act of creating the index has a bit of an expense.</p>
+<pre><code class="lang-bash">CREATE INDEX
+real    <span class="hljs-number">3</span>m1<span class="hljs-number">.988</span>s
+user    <span class="hljs-number">0</span>m0<span class="hljs-number">.011</span>s
+sys     <span class="hljs-number">0</span>m0<span class="hljs-number">.014</span>s
+</code></pre>
+<p>And then run the same query again.</p>
+<pre><code class="lang-bash"><span class="hljs-selector-tag">time</span> psql -qtAc <span class="hljs-string">"</span>
+</code></pre>
+<pre><code class="lang-sqlpostgresql"><span class="hljs-keyword">EXPLAIN</span> (<span class="hljs-keyword">ANALYZE</span> <span class="hljs-keyword">ON</span>, BUFFERS <span class="hljs-keyword">ON</span>)
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">name</span>, location
+<span class="hljs-keyword">FROM</span> geonames
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> location &lt;-&gt; <span class="hljs-string">'(29.9691,-95.6972)'</span>
+<span class="hljs-keyword">LIMIT</span> <span class="hljs-number">5</span>;
+</code></pre>
+<pre><code class="lang-bash"><span class="hljs-string">"</span>
+</code></pre>
+<pre><code class="lang-bash">                                      QUERY PLAN
+----------------------------------------------------------------------------------
+Limit  (<span class="hljs-attr">cost=0.42..1.16</span> <span class="hljs-attr">rows=5</span> <span class="hljs-attr">width=38)</span> (actual <span class="hljs-attr">time=0.797..0.881</span> <span class="hljs-attr">rows=5</span> <span class="hljs-attr">loops=1)</span>
+  Buffers: shared <span class="hljs-attr">hit=5</span> <span class="hljs-attr">read=15</span>
+  -&gt;  Index Scan using idx_gist_geonames_location on geonames  
+            (<span class="hljs-attr">cost=0.42..1773715.32</span> <span class="hljs-attr">rows=11947145</span> <span class="hljs-attr">width=38)</span> 
+            (actual <span class="hljs-attr">time=0.796..0.879</span> <span class="hljs-attr">rows=5</span> <span class="hljs-attr">loops=1)</span>
+        Order By: (location &lt;-&gt; '(<span class="hljs-number">29.9691</span>,-<span class="hljs-number">95.6972</span>)'::point)
+        Buffers: shared <span class="hljs-attr">hit=5</span> <span class="hljs-attr">read=15</span>
+Planning Time: <span class="hljs-number">0.768</span> ms
+Execution Time: <span class="hljs-number">0.939</span> ms
+
+real    <span class="hljs-number">0</span>m0.<span class="hljs-number">033</span>s
+user    <span class="hljs-number">0</span>m0.<span class="hljs-number">011</span>s
+sys     <span class="hljs-number">0</span>m0.<span class="hljs-number">013</span>s
+</code></pre>
+<p>In this case, we see some pretty dramatic improvement. The estimated cost of the query is only 1.16! Compare that to the original cost of the unoptimized query at 418749.73. The actual time taken was .939 milliseconds (nine tenths of a millisecond), which compares to the 2.5 seconds of the original query. This result took less time to plan, got a dramatically better estimate, and took about 3 orders of magnitude less runtime.</p>
+<p>Let&#8217;s see if we can do better.</p>
+<h2 id="adding-an-sp-gist-index">Adding an SP-GiST index</h2>
+<pre><code class="lang-sqlpostgresql">time psql -qtAc "<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">INDEX</span> idx_spgist_geonames_location <span class="hljs-keyword">ON</span> geonames <span class="hljs-keyword">USING</span> spgist(location);"
+</code></pre>
+<pre><code class="lang-bash">CREATE INDEX 
+
+real    <span class="hljs-number">1</span>m25<span class="hljs-number">.205</span>s
+user    <span class="hljs-number">0</span>m0<span class="hljs-number">.010</span>s
+sys        <span class="hljs-number">0</span>m0<span class="hljs-number">.015</span>s
+</code></pre>
+<p>And then we run the same query again.</p>
+<pre><code class="lang-bash"><span class="hljs-selector-tag">time</span> psql -qtAc <span class="hljs-string">"</span>
+</code></pre>
+<pre><code class="lang-sqlpostgresql"><span class="hljs-keyword">EXPLAIN</span> (<span class="hljs-keyword">ANALYZE</span> <span class="hljs-keyword">ON</span>, BUFFERS <span class="hljs-keyword">ON</span>)
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">name</span>, location
+<span class="hljs-keyword">FROM</span> geonames
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> location &lt;-&gt; <span class="hljs-string">'(29.9691,-95.6972)'</span>
+<span class="hljs-keyword">LIMIT</span> <span class="hljs-number">5</span>;
+</code></pre>
+<pre><code class="lang-bash"><span class="hljs-string">"</span>
+</code></pre>
+<pre><code>                                      QUERY PLAN
+-----------------------------------------------------------------------------------
+ Limit  (<span class="hljs-attr">cost=</span><span class="hljs-number">0.42</span>..<span class="hljs-number">1.09</span> <span class="hljs-attr">rows=</span><span class="hljs-number">5</span> <span class="hljs-attr">width=</span><span class="hljs-number">38</span>) (actual <span class="hljs-attr">time=</span><span class="hljs-number">0.066</span>..<span class="hljs-number">0.323</span> <span class="hljs-attr">rows=</span><span class="hljs-number">5</span> <span class="hljs-attr">loops=</span><span class="hljs-number">1</span>)
+   Buffers: shared <span class="hljs-attr">hit=</span><span class="hljs-number">47</span>
+   -&gt;  Index Scan using idx_spgist_geonames_location on geonames  
+            (<span class="hljs-attr">cost=</span><span class="hljs-number">0.42</span>..<span class="hljs-number">1598071.32</span> <span class="hljs-attr">rows=</span><span class="hljs-number">11947145</span> <span class="hljs-attr">width=</span><span class="hljs-number">38</span>) 
+            (actual <span class="hljs-attr">time=</span><span class="hljs-number">0.065</span>..<span class="hljs-number">0.320</span> <span class="hljs-attr">rows=</span><span class="hljs-number">5</span> <span class="hljs-attr">loops=</span><span class="hljs-number">1</span>)
+         <span class="hljs-keyword">Order</span> <span class="hljs-title">By</span>: (<span class="hljs-keyword">location</span> <span class="hljs-title">&lt;-&gt; '(29</span>.<span class="hljs-number">9691</span>,-<span class="hljs-number">95.6972</span>)'::point)
+         Buffers: shared <span class="hljs-attr">hit=</span><span class="hljs-number">47</span>
+ Planning Time: <span class="hljs-number">0.122</span> <span class="hljs-keyword">ms</span>
+ <span class="hljs-title">Execution</span> Time: <span class="hljs-number">0.358</span> <span class="hljs-keyword">ms</span>
+<span class="hljs-title">(7</span> rows)
+
+real    <span class="hljs-number">0m</span>0.<span class="hljs-number">040s</span>
+<span class="hljs-keyword">user</span>    <span class="hljs-title">0m0</span>.<span class="hljs-number">011s</span>
+sys        <span class="hljs-number">0m</span>0.<span class="hljs-number">015s</span>
+</code></pre>
+<p>Wow! Now using an SP-GiST index, the query cost only 1.09, and executed in .358 milliseconds (a third of a millisecond).</p>
+<p>Let&#8217;s examine some things about the indexes themselves, and see how they stack up to each other on disk.</p>
+<h2 id="index-comparisons">Index comparisons</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>indexname</strong></th>
+<th style="text-align: right;"><strong>creation time</strong></th>
+<th style="text-align: right;"><strong>estimate</strong></th>
+<th style="text-align: right;"><strong>query time</strong></th>
+<th style="text-align: right;"><strong>indexsize</strong></th>
+<th style="text-align: right;"><strong>plan time</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">unindexed</td>
+<td style="text-align: right;">0S</td>
+<td style="text-align: right;">418749.73</td>
+<td style="text-align: right;">2555.673</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">.493</td>
+</tr>
+<tr>
+<td style="text-align: left;">idx_gist_geonames_location</td>
+<td style="text-align: right;">3M 1S</td>
+<td style="text-align: right;">1.16</td>
+<td style="text-align: right;">.939 ms</td>
+<td style="text-align: right;">868 MB</td>
+<td style="text-align: right;">.786</td>
+</tr>
+<tr>
+<td style="text-align: left;">idx_spgist_geonames_location</td>
+<td style="text-align: right;">1M 25S</td>
+<td style="text-align: right;">1.09</td>
+<td style="text-align: right;">.358 ms</td>
+<td style="text-align: right;">523 MB</td>
+<td style="text-align: right;">.122</td>
+</tr>
+</tbody>
+</table>
+<h2 id="conclusions">Conclusions</h2>
+<p>So, we see that SP-GiST is twice the speed of GiST in execution, 8x faster to plan, and about 60% of the size on disk. And (relevant to this article) it also supports KNN index searching as of PostgreSQL 12. For this type of operation, we have a clear winner.</p>
+<h1 id="appendices">Appendices</h1>
+<h2 id="setting-up-the-data">Setting up the data</h2>
+<p>For this article, we are going to use the data provided by the GeoNames Gazetteer.<br />
+This work is licensed under a <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 License</a><br />
+The Data is provided &#8220;as is&#8221; without warranty or any representation of accuracy, timeliness or completeness.</p>
+<h2 id="create-the-structure">Create the structure</h2>
+<p>We start the process by creating a working directory and a little bit of ETL.</p>
+<pre><code class="lang-bash"><span class="hljs-comment"># change to our home directory</span>
+<span class="hljs-built_in">cd</span>
+mkdir spgist
+<span class="hljs-built_in">cd</span> spgist
+<span class="hljs-comment"># get the base data.  </span>
+<span class="hljs-comment"># This file is 350MB.  It will unpack to 1.5GB</span>
+<span class="hljs-comment"># It will expand to 2GB in PostgreSQL,</span>
+<span class="hljs-comment">#    and then you will still need some room for indexes</span>
+<span class="hljs-comment">#  All together, you will need about </span>
+<span class="hljs-comment">#  3GB of space for this exercise</span>
+<span class="hljs-comment">#  for about 12M rows of data.</span>
+
+psql -qtAc <span class="hljs-string">"</span>
+</code></pre>
+<pre><code class="lang-sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> <span class="hljs-keyword">IF</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span> geonames (
+geonameid           <span class="hljs-built_in">integer</span> primary <span class="hljs-keyword">key</span>
+,<span class="hljs-keyword">name</span>               <span class="hljs-built_in">text</span> 
+,asciiname          <span class="hljs-built_in">text</span> 
+,alternatenames     <span class="hljs-built_in">text</span> 
+,latitude           <span class="hljs-built_in">numeric</span>(<span class="hljs-number">13</span>,<span class="hljs-number">5</span>) 
+,longitude          <span class="hljs-built_in">numeric</span>(<span class="hljs-number">13</span>,<span class="hljs-number">5</span>)
+,feature_class      <span class="hljs-built_in">text</span> 
+,feature_code       <span class="hljs-built_in">text</span> 
+,country            <span class="hljs-built_in">text</span> 
+,cc2                <span class="hljs-built_in">text</span> 
+,admin1             <span class="hljs-built_in">text</span> 
+,admin2             <span class="hljs-built_in">bigint</span> 
+,admin3             <span class="hljs-built_in">bigint</span> 
+,admin4             <span class="hljs-built_in">bigint</span> 
+,population         <span class="hljs-built_in">bigint</span> 
+,elevation          <span class="hljs-built_in">bigint</span> 
+,dem                <span class="hljs-built_in">bigint</span> 
+,timezone           <span class="hljs-built_in">text</span> 
+,<span class="hljs-keyword">modification</span> <span class="hljs-built_in">date</span>  );
+
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">COLUMN</span> geonames.geonameid          
+ <span class="hljs-keyword">IS</span> <span class="hljs-string">' integer id of record in geonames database'</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">COLUMN</span> geonames.name               
+ <span class="hljs-keyword">IS</span> <span class="hljs-string">' name of geographical point (utf8) varchar(200)'</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">COLUMN</span> geonames.asciiname          
+ <span class="hljs-keyword">IS</span> <span class="hljs-string">' name of geographical point in plain ascii characters, varchar(200)'</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">COLUMN</span> geonames.alternatenames     
+ <span class="hljs-keyword">IS</span> <span class="hljs-string">' alternatenames, comma separated, ascii names automatically transliterated, 
+    convenience attribute from alternatename table, varchar(10000)'</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">COLUMN</span> geonames.latitude           
+ <span class="hljs-keyword">IS</span> <span class="hljs-string">' latitude in decimal degrees (wgs84)'</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">COLUMN</span> geonames.longitude          
+ <span class="hljs-keyword">IS</span> <span class="hljs-string">' longitude in decimal degrees (wgs84)'</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">COLUMN</span> geonames.feature_class      
+ <span class="hljs-keyword">IS</span> <span class="hljs-string">' http://www.geonames.org/export/codes.html, char(1)'</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">COLUMN</span> geonames.feature_code       
+ <span class="hljs-keyword">IS</span> <span class="hljs-string">' http://www.geonames.org/export/codes.html, varchar(10)'</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">COLUMN</span> geonames.country            
+ <span class="hljs-keyword">IS</span> <span class="hljs-string">' ISO-3166 2-letter country code, 2 characters'</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">COLUMN</span> geonames.cc2                
+ <span class="hljs-keyword">IS</span> <span class="hljs-string">' alternate country codes, comma separated, ISO-3166 2-letter country code, 
+    200 characters'</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">COLUMN</span> geonames.admin1             
+ <span class="hljs-keyword">IS</span> <span class="hljs-string">' fipscode (subject to change to iso code), see exceptions below, 
+    see file admin1Codes.txt for display names of this code; varchar(20)'</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">COLUMN</span> geonames.admin2             
+ <span class="hljs-keyword">IS</span> <span class="hljs-string">' code for the second administrative division, a county in the US, 
+    see file admin2Codes.txt; varchar(80) '</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">COLUMN</span> geonames.admin3             
+ <span class="hljs-keyword">IS</span> <span class="hljs-string">' code for third level administrative division, varchar(20)'</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">COLUMN</span> geonames.admin4             
+ <span class="hljs-keyword">IS</span> <span class="hljs-string">' code for fourth level administrative division, varchar(20)'</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">COLUMN</span> geonames.population         
+ <span class="hljs-keyword">IS</span> <span class="hljs-string">' bigint (8 byte int) '</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">COLUMN</span> geonames.elevation          
+ <span class="hljs-keyword">IS</span> <span class="hljs-string">' in meters, integer'</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">COLUMN</span> geonames.dem                
+ <span class="hljs-keyword">IS</span> <span class="hljs-string">' digital elevation model, srtm3 or gtopo30, average elevation of 3''x3'' 
+    (ca 90mx90m) or 30''x30'' (ca 900mx900m) area in meters, integer. 
+    srtm processed by cgiar/ciat.'</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">COLUMN</span> geonames.timezone           
+ <span class="hljs-keyword">IS</span> <span class="hljs-string">' the iana timezone id (see file timeZone.txt) varchar(40)'</span>;
+<span class="hljs-keyword">COMMENT</span> <span class="hljs-keyword">ON</span> <span class="hljs-keyword">COLUMN</span> geonames.modification       
+ <span class="hljs-keyword">IS</span> <span class="hljs-string">' date of last modification in yyyy-MM-dd format'</span>;
+</code></pre>
+<pre><code class="lang-bash">"  <span class="hljs-comment">#&lt;-- Don't forget the closing quote</span>
+</code></pre>
+<h2 id="etl">ETL</h2>
+<pre><code class="lang-bash">wget http://download.geonames.org/<span class="hljs-built_in">export</span>/dump/allCountries.zip
+unzip allCountries.zip
+
+<span class="hljs-comment"># do this, and go get a coffee.  This took nearly an hour</span>
+<span class="hljs-comment">#   there will be a few lines that fail, they don't really matter much</span>
+IFS=$<span class="hljs-string">'\n'</span>
+
+<span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> $(&lt;allCountries.txt)
+<span class="hljs-keyword">do</span>
+
+    <span class="hljs-built_in">echo</span> -n <span class="hljs-string">"<span class="hljs-variable">$line</span>"</span> | 
+        psql -qtAc
+</code></pre>
+<pre><code class="lang-sqlpostgresql">    <span class="hljs-string">"COPY geonames FROM STDIN WITH CSV DELIMITER E'<span class="hljs-subst">\t</span>';"</span>
+</code></pre>
+<pre><code class="lang-bash"><span class="hljs-meta">2&gt; </span>errors.txt
+done
+</code></pre>
+<h2 id="clean-up-and-set-up">Clean up and Set up</h2>
+<p>Everything else we do from inside psql:</p>
+<pre><code class="lang-bash"><span class="hljs-attribute">psql</span>
+</code></pre>
+<pre><code class="lang-sqlpostgresql"><span class="hljs-comment">-- This command requires the installation</span>
+<span class="hljs-comment">--  of postgis2 from your OS package manager.</span>
+<span class="hljs-comment">-- For OS/X that was `port install postgresql12-postgis2`</span>
+<span class="hljs-comment">-- it will be something similar on most platforms.</span>
+<span class="hljs-comment">-- (e.g. apt-get install postgresql12-postgis2, </span>
+<span class="hljs-comment">--  yum -y install postgresql12-postgis2, etc.)</span>
+<span class="hljs-keyword">CREATE</span> EXTENSION postgis;
+<span class="hljs-keyword">CREATE</span> EXTENSION postgis_topology;
+
+<span class="hljs-keyword">ALTER</span> <span class="hljs-keyword">TABLE</span> geonames <span class="hljs-keyword">ADD</span> <span class="hljs-keyword">COLUMN</span> location point;
+
+<span class="hljs-comment">-- Go get another cup of coffee, this is going to rewrite the entire table with the new geo column.</span>
+<span class="hljs-keyword">UPDATE</span> geonames <span class="hljs-keyword">SET</span> location = (<span class="hljs-string">'('</span> || latitude || <span class="hljs-string">', '</span> || longitude || <span class="hljs-string">')'</span>)::point;
+
+<span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">FROM</span> geonames <span class="hljs-keyword">WHERE</span> latitude <span class="hljs-keyword">IS</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">or</span> longitude <span class="hljs-keyword">IS</span> <span class="hljs-literal">NULL</span>;
+<span class="hljs-comment">-- DELETE 32   -- In my case, this ETL anomoly was too small</span>
+<span class="hljs-comment">--  to bother fixing the records</span>
+
+<span class="hljs-comment">-- Bloat removal from the update and delete operations</span>
+CLUSTER geonames USING geonames_pkey;
+</code></pre>
+<div class="widget_text blog-bottom-widget"><div class="textwidget custom-html-widget"><!-- Either there are no banners, they are disabled or none qualified for this location! -->	</div></div></div><footer class="entry-footer"><span class="blog-tags minor-meta"><strong>Tags:</strong><span> <a href="https://www.2ndquadrant.com/en/blog/tag/pg12/" rel="tag">PG12</a>, <a href="https://www.2ndquadrant.com/en/blog/tag/postgres/" rel="tag">postgres</a>, <a href="https://www.2ndquadrant.com/en/blog/tag/postgresql-12/" rel="tag">PostgreSQL 12</a></span></span><div class='av-share-box'><h5 class='av-share-link-description av-no-toc '>Share this entry</h5><ul class='av-share-box-list noLightbox'><li class='av-share-link av-social-link-facebook' ><a target="_blank" aria-label="Share on Facebook" href='https://www.facebook.com/sharer.php?u=https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/&#038;t=PostgreSQL%2012%3A%20Implementing%20K-Nearest%20Neighbor%20Space%20Partitioned%20Generalized%20Search%20Tree%20Indexes' aria-hidden='false' data-av_icon='' data-av_iconfont='entypo-fontello' title='' data-avia-related-tooltip='Share on Facebook' rel="noopener noreferrer"><span class='avia_hidden_link_text'>Share on Facebook</span></a></li><li class='av-share-link av-social-link-twitter' ><a target="_blank" aria-label="Share on Twitter" href='https://twitter.com/share?text=PostgreSQL%2012%3A%20Implementing%20K-Nearest%20Neighbor%20Space%20Partitioned%20Generalized%20Search%20Tree%20Indexes&#038;url=https://www.2ndquadrant.com/en/?p=33491' aria-hidden='false' data-av_icon='' data-av_iconfont='entypo-fontello' title='' data-avia-related-tooltip='Share on Twitter' rel="noopener noreferrer"><span class='avia_hidden_link_text'>Share on Twitter</span></a></li><li class='av-share-link av-social-link-whatsapp' ><a target="_blank" aria-label="Share on WhatsApp" href='https://api.whatsapp.com/send?text=https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/' aria-hidden='false' data-av_icon='' data-av_iconfont='entypo-fontello' title='' data-avia-related-tooltip='Share on WhatsApp' rel="noopener noreferrer"><span class='avia_hidden_link_text'>Share on WhatsApp</span></a></li><li class='av-share-link av-social-link-linkedin' ><a target="_blank" aria-label="Share on LinkedIn" href='https://linkedin.com/shareArticle?mini=true&#038;title=PostgreSQL%2012%3A%20Implementing%20K-Nearest%20Neighbor%20Space%20Partitioned%20Generalized%20Search%20Tree%20Indexes&#038;url=https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/' aria-hidden='false' data-av_icon='' data-av_iconfont='entypo-fontello' title='' data-avia-related-tooltip='Share on LinkedIn' rel="noopener noreferrer"><span class='avia_hidden_link_text'>Share on LinkedIn</span></a></li></ul></div></footer><div class='post_delimiter'></div></div><div class='post_author_timeline'></div></article><div class='multi-big'></div>
+
+
+	        	
+	        	
+<div class='comment-entry post-entry'>
+
+<div class='comment_meta_container'>
+			
+			<div class='side-container-comment'>
+	        		
+	        		<div class='side-container-comment-inner'>
+	        				        			
+	        			<span class='comment-count'>10</span>
+   						<span class='comment-text'>replies</span>
+   						<span class='center-border center-border-left'></span>
+   						<span class='center-border center-border-right'></span>
+   						
+	        		</div>
+	        		
+	        	</div>
+			
+			</div>
+
+			
+			<div class='comment_container'>
+			
+
+			<ol class="commentlist" id="comments">
+				    <li class="comment even thread-even depth-1" id="li-comment-28148">
+
+        <div id="comment-28148">
+        <article>
+            <div class="gravatar">
+                <img alt='Andreas Joseph Krogh' src='https://secure.gravatar.com/avatar/3558c633a945147c47ca2a2e0a1a2219?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/3558c633a945147c47ca2a2e0a1a2219?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' loading='lazy'/>            </div>
+
+            <!-- display the comment -->
+            <div class='comment_content'>
+                <header class="comment-header">
+                    <cite class="author_name heading"><cite class="comment_author_name">Andreas Joseph Krogh</cite></cite> <span class="says">says:</span>                    
+                    <!-- display the comment metadata like time and date-->
+                        <div class="comment-meta commentmetadata">
+                            <a href="https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/#comment-28148">
+                                <time  >
+                                    November 6, 2019 at 9:12 am                                </time>
+                            </a>
+                        </div>
+                </header>
+
+                <!-- display the comment text -->
+                <div class='comment_text entry-content-wrapper clearfix' >
+                <p>You misinterpreted the execution-time; &#8220;.939 ms&#8221; is less than 1 *millisecond*, so the effects of having these indexes are even better than what you describe.</p>
+                                <a rel='nofollow' class='comment-reply-link' href='#comment-28148' data-commentid="28148" data-postid="33491" data-belowelement="comment-28148" data-respondelement="respond" data-replyto="Reply to Andreas Joseph Krogh" aria-label='Reply to Andreas Joseph Krogh'>Reply</a>                </div>
+            </div>
+
+        </article>
+    </div>
+</li><!-- #comment-## -->
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-28165">
+
+        <div id="comment-28165">
+        <article>
+            <div class="gravatar">
+                <img alt='Pedro Romano' src='https://secure.gravatar.com/avatar/703aa6c136d148ffeaecb1c987f566ac?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/703aa6c136d148ffeaecb1c987f566ac?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' loading='lazy'/>            </div>
+
+            <!-- display the comment -->
+            <div class='comment_content'>
+                <header class="comment-header">
+                    <cite class="author_name heading"><cite class="comment_author_name">Pedro Romano</cite></cite> <span class="says">says:</span>                    
+                    <!-- display the comment metadata like time and date-->
+                        <div class="comment-meta commentmetadata">
+                            <a href="https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/#comment-28165">
+                                <time  >
+                                    November 6, 2019 at 12:11 pm                                </time>
+                            </a>
+                        </div>
+                </header>
+
+                <!-- display the comment text -->
+                <div class='comment_text entry-content-wrapper clearfix' >
+                <p>&#8220;The actual time taken was .939 seconds (nine tenths of a second), which compares to the 2.5 seconds of the original query.&#8221;</p>
+<p>I believe it&#8217;s better than that. The timings on the query plan are shown in milliseconds. &#8220;Execution Time: 0.939 ms&#8221; is actually nine tenths of a millisecond, not of a second.</p>
+                                <a rel='nofollow' class='comment-reply-link' href='#comment-28165' data-commentid="28165" data-postid="33491" data-belowelement="comment-28165" data-respondelement="respond" data-replyto="Reply to Pedro Romano" aria-label='Reply to Pedro Romano'>Reply</a>                </div>
+            </div>
+
+        </article>
+    </div>
+</li><!-- #comment-## -->
+    <li class="comment even thread-even depth-1" id="li-comment-28417">
+
+        <div id="comment-28417">
+        <article>
+            <div class="gravatar">
+                <img alt='foo bar' src='https://secure.gravatar.com/avatar/937d4564139a94675c0b6ee3adf2b52e?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/937d4564139a94675c0b6ee3adf2b52e?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' loading='lazy'/>            </div>
+
+            <!-- display the comment -->
+            <div class='comment_content'>
+                <header class="comment-header">
+                    <cite class="author_name heading"><cite class="comment_author_name">foo bar</cite></cite> <span class="says">says:</span>                    
+                    <!-- display the comment metadata like time and date-->
+                        <div class="comment-meta commentmetadata">
+                            <a href="https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/#comment-28417">
+                                <time  >
+                                    November 7, 2019 at 5:47 pm                                </time>
+                            </a>
+                        </div>
+                </header>
+
+                <!-- display the comment text -->
+                <div class='comment_text entry-content-wrapper clearfix' >
+                <p>I noticed that the planning and execution times in the explain output are in ms, yet the stated values in the article are in seconds (&#8220;nine tenths of a second&#8221; &#8211;&gt; &#8220;nine tenths of a millisecond&#8221;) &#8212; the speedup is therefore 1000x better than claimed!</p>
+                                <a rel='nofollow' class='comment-reply-link' href='#comment-28417' data-commentid="28417" data-postid="33491" data-belowelement="comment-28417" data-respondelement="respond" data-replyto="Reply to foo bar" aria-label='Reply to foo bar'>Reply</a>                </div>
+            </div>
+
+        </article>
+    </div>
+</li><!-- #comment-## -->
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-28422">
+
+        <div id="comment-28422">
+        <article>
+            <div class="gravatar">
+                <img alt='Miles Elam' src='https://secure.gravatar.com/avatar/47e79b32e1def0011ca7d2efffe663f6?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/47e79b32e1def0011ca7d2efffe663f6?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' loading='lazy'/>            </div>
+
+            <!-- display the comment -->
+            <div class='comment_content'>
+                <header class="comment-header">
+                    <cite class="author_name heading"><a rel="nofollow" href="https://productops.com" ><cite class="comment_author_name">Miles Elam</cite></a></cite> <span class="says">says:</span>                    
+                    <!-- display the comment metadata like time and date-->
+                        <div class="comment-meta commentmetadata">
+                            <a href="https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/#comment-28422">
+                                <time  >
+                                    November 7, 2019 at 6:25 pm                                </time>
+                            </a>
+                        </div>
+                </header>
+
+                <!-- display the comment text -->
+                <div class='comment_text entry-content-wrapper clearfix' >
+                <p>While the unindexed time is impressive for the lack of index, the GIST and SP-GIST times are not . 939 sec and .358 sec. All times are in *milliseconds*. GIST returns in slightly less than 1ms, not 1s. SP-GIST returns in 1/3 of a millisecond.</p>
+<p>Performance for GIST and SP-GIST are in fact three orders of magnitude better than what you summarized!</p>
+                                <a rel='nofollow' class='comment-reply-link' href='#comment-28422' data-commentid="28422" data-postid="33491" data-belowelement="comment-28422" data-respondelement="respond" data-replyto="Reply to Miles Elam" aria-label='Reply to Miles Elam'>Reply</a>                </div>
+            </div>
+
+        </article>
+    </div>
+</li><!-- #comment-## -->
+    <li class="comment byuser comment-author-kirk-roybal bypostauthor even thread-even depth-1" id="li-comment-28425">
+
+        <div id="comment-28425">
+        <article>
+            <div class="gravatar">
+                <img alt='Kirk Roybal' src='https://secure.gravatar.com/avatar/a5ed4de1d6ab29a1bdc39189d6e76e00?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/a5ed4de1d6ab29a1bdc39189d6e76e00?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' loading='lazy'/>            </div>
+
+            <!-- display the comment -->
+            <div class='comment_content'>
+                <header class="comment-header">
+                    <cite class="author_name heading"><cite class="comment_author_name">Kirk Roybal</cite></cite> <span class="says">says:</span>                    
+                    <!-- display the comment metadata like time and date-->
+                        <div class="comment-meta commentmetadata">
+                            <a href="https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/#comment-28425">
+                                <time  >
+                                    November 7, 2019 at 6:48 pm                                </time>
+                            </a>
+                        </div>
+                </header>
+
+                <!-- display the comment text -->
+                <div class='comment_text entry-content-wrapper clearfix' >
+                <p>Several astute readers have noted that the query times were in milliseconds, not seconds.   I gladly accept the fact that the results are 1000x better than anticipated 🙂</p>
+                                <a rel='nofollow' class='comment-reply-link' href='#comment-28425' data-commentid="28425" data-postid="33491" data-belowelement="comment-28425" data-respondelement="respond" data-replyto="Reply to Kirk Roybal" aria-label='Reply to Kirk Roybal'>Reply</a>                </div>
+            </div>
+
+        </article>
+    </div>
+</li><!-- #comment-## -->
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-29572">
+
+        <div id="comment-29572">
+        <article>
+            <div class="gravatar">
+                <img alt='Sean Brewer' src='https://secure.gravatar.com/avatar/220b2578b01263f6041dcceda7eec9ea?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/220b2578b01263f6041dcceda7eec9ea?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' loading='lazy'/>            </div>
+
+            <!-- display the comment -->
+            <div class='comment_content'>
+                <header class="comment-header">
+                    <cite class="author_name heading"><a rel="nofollow" href="https://www.seabre.com" ><cite class="comment_author_name">Sean Brewer</cite></a></cite> <span class="says">says:</span>                    
+                    <!-- display the comment metadata like time and date-->
+                        <div class="comment-meta commentmetadata">
+                            <a href="https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/#comment-29572">
+                                <time  >
+                                    November 13, 2019 at 11:19 pm                                </time>
+                            </a>
+                        </div>
+                </header>
+
+                <!-- display the comment text -->
+                <div class='comment_text entry-content-wrapper clearfix' >
+                <p>It looks like you used Postgres&#8217; native Point type (<a href="https://www.postgresql.org/docs/12/datatype-geometric.html" rel="nofollow ugc">https://www.postgresql.org/docs/12/datatype-geometric.html</a>) and not the PostGIS point type?</p>
+                                <a rel='nofollow' class='comment-reply-link' href='#comment-29572' data-commentid="29572" data-postid="33491" data-belowelement="comment-29572" data-respondelement="respond" data-replyto="Reply to Sean Brewer" aria-label='Reply to Sean Brewer'>Reply</a>                </div>
+            </div>
+
+        </article>
+    </div>
+<ul class="children">
+    <li class="comment byuser comment-author-kirk-roybal bypostauthor even depth-2" id="li-comment-29713">
+
+        <div id="comment-29713">
+        <article>
+            <div class="gravatar">
+                <img alt='Kirk Roybal' src='https://secure.gravatar.com/avatar/a5ed4de1d6ab29a1bdc39189d6e76e00?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/a5ed4de1d6ab29a1bdc39189d6e76e00?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' loading='lazy'/>            </div>
+
+            <!-- display the comment -->
+            <div class='comment_content'>
+                <header class="comment-header">
+                    <cite class="author_name heading"><cite class="comment_author_name">Kirk Roybal</cite></cite> <span class="says">says:</span>                    
+                    <!-- display the comment metadata like time and date-->
+                        <div class="comment-meta commentmetadata">
+                            <a href="https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/#comment-29713">
+                                <time  >
+                                    November 14, 2019 at 4:55 pm                                </time>
+                            </a>
+                        </div>
+                </header>
+
+                <!-- display the comment text -->
+                <div class='comment_text entry-content-wrapper clearfix' >
+                <p>Yes, this rather simple example would work without Postgis.  I realized after publication that keeping it simple, well, kept it simpler than I thought.</p>
+                                <a rel='nofollow' class='comment-reply-link' href='#comment-29713' data-commentid="29713" data-postid="33491" data-belowelement="comment-29713" data-respondelement="respond" data-replyto="Reply to Kirk Roybal" aria-label='Reply to Kirk Roybal'>Reply</a>                </div>
+            </div>
+
+        </article>
+    </div>
+<ul class="children">
+    <li class="comment odd alt depth-3" id="li-comment-32222">
+
+        <div id="comment-32222">
+        <article>
+            <div class="gravatar">
+                <img alt='Olivier' src='https://secure.gravatar.com/avatar/6878fa1398a223e707bbc468a74bbfe5?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/6878fa1398a223e707bbc468a74bbfe5?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' loading='lazy'/>            </div>
+
+            <!-- display the comment -->
+            <div class='comment_content'>
+                <header class="comment-header">
+                    <cite class="author_name heading"><cite class="comment_author_name">Olivier</cite></cite> <span class="says">says:</span>                    
+                    <!-- display the comment metadata like time and date-->
+                        <div class="comment-meta commentmetadata">
+                            <a href="https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/#comment-32222">
+                                <time  >
+                                    December 1, 2019 at 6:29 pm                                </time>
+                            </a>
+                        </div>
+                </header>
+
+                <!-- display the comment text -->
+                <div class='comment_text entry-content-wrapper clearfix' >
+                <p>Then why &#8220;CREATE EXTENSION postgis&#8221;?</p>
+                                <a rel='nofollow' class='comment-reply-link' href='#comment-32222' data-commentid="32222" data-postid="33491" data-belowelement="comment-32222" data-respondelement="respond" data-replyto="Reply to Olivier" aria-label='Reply to Olivier'>Reply</a>                </div>
+            </div>
+
+        </article>
+    </div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+    <li class="comment even thread-even depth-1" id="li-comment-63640">
+
+        <div id="comment-63640">
+        <article>
+            <div class="gravatar">
+                <img alt='Amul' src='https://secure.gravatar.com/avatar/263e8e66257084a42a53bc3d8b25c421?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/263e8e66257084a42a53bc3d8b25c421?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' loading='lazy'/>            </div>
+
+            <!-- display the comment -->
+            <div class='comment_content'>
+                <header class="comment-header">
+                    <cite class="author_name heading"><cite class="comment_author_name">Amul</cite></cite> <span class="says">says:</span>                    
+                    <!-- display the comment metadata like time and date-->
+                        <div class="comment-meta commentmetadata">
+                            <a href="https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/#comment-63640">
+                                <time  >
+                                    May 15, 2020 at 9:20 am                                </time>
+                            </a>
+                        </div>
+                </header>
+
+                <!-- display the comment text -->
+                <div class='comment_text entry-content-wrapper clearfix' >
+                <p>Hi,</p>
+<p>Thanks for the article. </p>
+<p>Just wanted to check whether this technique is ready for production usage. Or does it need further fine tuning for a low to medium scale?</p>
+                                <a rel='nofollow' class='comment-reply-link' href='#comment-63640' data-commentid="63640" data-postid="33491" data-belowelement="comment-63640" data-respondelement="respond" data-replyto="Reply to Amul" aria-label='Reply to Amul'>Reply</a>                </div>
+            </div>
+
+        </article>
+    </div>
+</li><!-- #comment-## -->
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-91126">
+
+        <div id="comment-91126">
+        <article>
+            <div class="gravatar">
+                <img alt='Irshad Khan' src='https://secure.gravatar.com/avatar/809793e0af783188b0a588eb752d16a0?s=60&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/809793e0af783188b0a588eb752d16a0?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' loading='lazy'/>            </div>
+
+            <!-- display the comment -->
+            <div class='comment_content'>
+                <header class="comment-header">
+                    <cite class="author_name heading"><a rel="nofollow" href="http://TripHobo.com" ><cite class="comment_author_name">Irshad Khan</cite></a></cite> <span class="says">says:</span>                    
+                    <!-- display the comment metadata like time and date-->
+                        <div class="comment-meta commentmetadata">
+                            <a href="https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/#comment-91126">
+                                <time  >
+                                    September 10, 2020 at 12:31 pm                                </time>
+                            </a>
+                        </div>
+                </header>
+
+                <!-- display the comment text -->
+                <div class='comment_text entry-content-wrapper clearfix' >
+                <p>SP-GiST indexes cannot be used for sorting and for support of the unique constraint. Additionally, indexes like this cannot be created on several columns (unlike GiST). But it is permitted to use such indexes to support exclusion constraints. The difference from GiST here is that clustering is impossible.</p>
+                                <a rel='nofollow' class='comment-reply-link' href='#comment-91126' data-commentid="91126" data-postid="33491" data-belowelement="comment-91126" data-respondelement="respond" data-replyto="Reply to Irshad Khan" aria-label='Reply to Irshad Khan'>Reply</a>                </div>
+            </div>
+
+        </article>
+    </div>
+</li><!-- #comment-## -->
+			</ol>
+						
+			
+			
+			
+			
+</div> <!-- end grid div--><div class='comment_container'><h3 class='miniheading '>Leave a Reply</h3><span class='minitext'>Want to join the discussion? <br/>Feel free to contribute!</span>	<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/#respond" style="display:none;">Cancel reply</a></small></h3><form action="https://www.2ndquadrant.com/wp-comments-post.php" method="post" id="commentform" class="comment-form"><p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" required='required' /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" maxlength="100" aria-describedby="email-notes" required='required' /></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="text" value="" size="30" maxlength="200" /></p>
+<p class="comment-form-comment"><label for="comment">Comment</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><input name="wpml_language_code" type="hidden" value="en" /><p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='33491' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="57c67c5345" /></p><input type="hidden" id="ak_js" name="ak_js" value="64"/><textarea name="ak_hp_textarea" cols="45" rows="8" maxlength="100" style="display: none !important;"></textarea></form>	</div><!-- #respond -->
+	</div>
+</div>
+			<!--end content-->
+		</main>
+
+		<aside class='sidebar sidebar_right   alpha units' ><div class='inner_sidebar extralight-border'><section id="search-2" class="widget clearfix widget_search"><h3 class="widgettitle">Search</h3>
+
+<form action="https://www.2ndquadrant.com/en/" id="searchform" method="get" class="">
+	<div>
+		<input type="submit" value="" id="searchsubmit" class="button avia-font-entypo-fontello" />
+		<input type="text" id="s" name="s" value="" placeholder='Search' />
+			</div>
+</form><span class="seperator extralight-border"></span></section><section id="custom_html-18" class="widget_text widget clearfix widget_custom_html"><div class="textwidget custom-html-widget"><div class="g g-2"><div class="g-single a-29"><a class="gofollow" data-track="MjksMiwxLDYw" href="https://www.2ndquadrant.com/en/postgres-learning-center/?utm_campaign=Postgres%20Learning%20Center&utm_source=PGLearningCenter_SideBar_Banner2020"><img src="https://www.2ndquadrant.com/wp-content/uploads/2019/06/PG-Learning-Center-Sidebar.png" /></a></div></div>	</div><span class="seperator extralight-border"></span></section><section id="custom_html-14" class="widget_text widget clearfix widget_custom_html"><div class="textwidget custom-html-widget"><!-- Either there are no banners, they are disabled or none qualified for this location! -->	</div><span class="seperator extralight-border"></span></section><section id="custom_html-4" class="widget_text widget clearfix widget_custom_html"><div class="textwidget custom-html-widget"><div style="background:#1D70B7; padding-top:10px"><h4 style="padding-left:10px">Get in touch with us!</h4>
+<script src="//info.enterprisedb.com/js/forms2/js/forms2.min.js"></script>
+
+<form id="mktoForm_3194"></form><script>MktoForms2.loadForm("//info.enterprisedb.com", "069-ALB-339", 3194);</script>
+</div></div><span class="seperator extralight-border"></span></section>
+		<section id="recent-posts-3" class="widget clearfix widget_recent_entries">
+		<h3 class="widgettitle">Recent Posts</h3>
+		<ul>
+											<li>
+					<a href="https://www.2ndquadrant.com/en/blog/random-data/">Random Data</a>
+											<span class="post-date">December 3, 2020</span>
+									</li>
+											<li>
+					<a href="https://www.2ndquadrant.com/en/blog/webinar-commit-without-fear-the-beauty-of-camo-follow-up/">Webinar: COMMIT Without Fear &#8211; The Beauty of CAMO [Follow Up]</a>
+											<span class="post-date">November 13, 2020</span>
+									</li>
+											<li>
+					<a href="https://www.2ndquadrant.com/en/blog/full-text-search-since-postgresql-8-3/">Full-text search since PostgreSQL 8.3</a>
+											<span class="post-date">November 5, 2020</span>
+									</li>
+											<li>
+					<a href="https://www.2ndquadrant.com/en/blog/random-numbers/">Random numbers</a>
+											<span class="post-date">November 3, 2020</span>
+									</li>
+											<li>
+					<a href="https://www.2ndquadrant.com/en/blog/webinar-best-practices-for-bulk-data-loading-in-postgresql-follow-up/">Webinar: Best Practices for Bulk Data Loading in PostgreSQL [Follow Up]</a>
+											<span class="post-date">November 2, 2020</span>
+									</li>
+					</ul>
+
+		<span class="seperator extralight-border"></span></section><section id="custom_html-5" class="widget_text widget clearfix widget_custom_html"><h3 class="widgettitle">Featured External Blogs</h3><div class="textwidget custom-html-widget"><a href="https://blog.pgaddict.com">Tomas Vondra's Blog</a></div><span class="seperator extralight-border"></span></section><section id="text-5" class="widget clearfix widget_text"><h3 class="widgettitle">Our Bloggers</h3>			<div class="textwidget"><ul class="right-list">
+<li><a href="/blog/author/simon-riggs/">Simon Riggs</a></li>
+<li><a href="/blog/author/alvherre/">Alvaro Herrera</a></li>
+<li><a href="/blog/author/andrew-dunstan/">Andrew Dunstan</a></li>
+<li><a href="/blog/author/craig-ringer/">Craig Ringer</a></li>
+<li><a href="/blog/author/francesco-canovai/">Francesco Canovai</a></li>
+<li><a href="/blog/author/gabriele-bartolini/">Gabriele Bartolini</a></li>
+<li><a href="/blog/author/giulio-calacoci/">Giulio Calacoci</a></li>
+<li><a href="/blog/author/ian-barwick//">Ian Barwick</a></li>
+<li><a href="/blog/author/marco-nenciarini/">Marco Nenciarini</a></li>
+<li><a href="/blog/author/mark-wong/">Mark Wong</a></li>
+<li><a href="/blog/author/pavan-deolasee/">Pavan Deolasee</a></li>
+<li><a href="/blog/author/petr-jelinek/">Petr Jelinek</a></li>
+<li><a href="/blog/author/shaun-thomas/">Shaun Thomas</a></li>
+<li><a href="/blog/author/tomas-vondra/">Tomas Vondra</a></li>
+<li><a href="/blog/author/umair/">Umair Shahid</a></li>
+</ul>
+</div>
+		<span class="seperator extralight-border"></span></section><section id="tag_cloud-2" class="widget clearfix widget_tag_cloud"><h3 class="widgettitle">PostgreSQL Cloud</h3><div class="tagcloud"><a href="https://www.2ndquadrant.com/en/blog/tag/2qlovespg/" class="tag-cloud-link tag-link-138 tag-link-position-1" style="font-size: 11.668965517241pt;" aria-label="2QLovesPG (23 items)">2QLovesPG</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/2uda/" class="tag-cloud-link tag-link-645 tag-link-position-2" style="font-size: 9.7379310344828pt;" aria-label="2UDA (14 items)">2UDA</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/9-6/" class="tag-cloud-link tag-link-108 tag-link-position-3" style="font-size: 8pt;" aria-label="9.6 (9 items)">9.6</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/backup/" class="tag-cloud-link tag-link-171 tag-link-position-4" style="font-size: 13.406896551724pt;" aria-label="backup (35 items)">backup</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/barman/" class="tag-cloud-link tag-link-237 tag-link-position-5" style="font-size: 14.951724137931pt;" aria-label="Barman (52 items)">Barman</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/bdr/" class="tag-cloud-link tag-link-105 tag-link-position-6" style="font-size: 13.6pt;" aria-label="BDR (37 items)">BDR</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/business-continuity/" class="tag-cloud-link tag-link-318 tag-link-position-7" style="font-size: 12.151724137931pt;" aria-label="Business Continuity (26 items)">Business Continuity</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/community/" class="tag-cloud-link tag-link-95 tag-link-position-8" style="font-size: 9.9310344827586pt;" aria-label="community (15 items)">community</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/conference/" class="tag-cloud-link tag-link-94 tag-link-position-9" style="font-size: 9.7379310344828pt;" aria-label="conference (14 items)">conference</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/database/" class="tag-cloud-link tag-link-129 tag-link-position-10" style="font-size: 12.151724137931pt;" aria-label="database (26 items)">database</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/dba/" class="tag-cloud-link tag-link-173 tag-link-position-11" style="font-size: 8.3862068965517pt;" aria-label="DBA (10 items)">DBA</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/development/" class="tag-cloud-link tag-link-328 tag-link-position-12" style="font-size: 8.7724137931034pt;" aria-label="development (11 items)">development</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/devops/" class="tag-cloud-link tag-link-174 tag-link-position-13" style="font-size: 10.510344827586pt;" aria-label="devops (17 items)">devops</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/disaster-recovery/" class="tag-cloud-link tag-link-175 tag-link-position-14" style="font-size: 13.503448275862pt;" aria-label="disaster recovery (36 items)">disaster recovery</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/greenplum-2/" class="tag-cloud-link tag-link-144 tag-link-position-15" style="font-size: 11.28275862069pt;" aria-label="greenplum (21 items)">greenplum</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/hot-standby/" class="tag-cloud-link tag-link-178 tag-link-position-16" style="font-size: 8.7724137931034pt;" aria-label="Hot Standby (11 items)">Hot Standby</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/json/" class="tag-cloud-link tag-link-136 tag-link-position-17" style="font-size: 8.7724137931034pt;" aria-label="JSON (11 items)">JSON</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/jsonb/" class="tag-cloud-link tag-link-137 tag-link-position-18" style="font-size: 8pt;" aria-label="JSONB (9 items)">JSONB</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/logical-replication/" class="tag-cloud-link tag-link-180 tag-link-position-19" style="font-size: 11.862068965517pt;" aria-label="logical replication (24 items)">logical replication</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/monitoring/" class="tag-cloud-link tag-link-433 tag-link-position-20" style="font-size: 8.7724137931034pt;" aria-label="monitoring (11 items)">monitoring</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/omnidb/" class="tag-cloud-link tag-link-995 tag-link-position-21" style="font-size: 9.7379310344828pt;" aria-label="OmniDB (14 items)">OmniDB</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/open-source/" class="tag-cloud-link tag-link-117 tag-link-position-22" style="font-size: 13.986206896552pt;" aria-label="open source (41 items)">open source</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/orange/" class="tag-cloud-link tag-link-646 tag-link-position-23" style="font-size: 8.7724137931034pt;" aria-label="Orange (11 items)">Orange</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/performance/" class="tag-cloud-link tag-link-156 tag-link-position-24" style="font-size: 13.11724137931pt;" aria-label="performance (33 items)">performance</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/pg12/" class="tag-cloud-link tag-link-1148 tag-link-position-25" style="font-size: 8.3862068965517pt;" aria-label="PG12 (10 items)">PG12</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/pgbarman/" class="tag-cloud-link tag-link-340 tag-link-position-26" style="font-size: 13.406896551724pt;" aria-label="pgbarman (35 items)">pgbarman</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/pglogical/" class="tag-cloud-link tag-link-182 tag-link-position-27" style="font-size: 11.089655172414pt;" aria-label="pglogical (20 items)">pglogical</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/pg-phriday/" class="tag-cloud-link tag-link-961 tag-link-position-28" style="font-size: 11.862068965517pt;" aria-label="PG Phriday (24 items)">PG Phriday</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/postgres/" class="tag-cloud-link tag-link-119 tag-link-position-29" style="font-size: 17.751724137931pt;" aria-label="postgres (102 items)">postgres</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/postgres-bdr/" class="tag-cloud-link tag-link-106 tag-link-position-30" style="font-size: 12.924137931034pt;" aria-label="Postgres-BDR (31 items)">Postgres-BDR</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/postgres-xl/" class="tag-cloud-link tag-link-588 tag-link-position-31" style="font-size: 10.896551724138pt;" aria-label="postgres-xl (19 items)">postgres-xl</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/postgresql/" class="tag-cloud-link tag-link-96 tag-link-position-32" style="font-size: 22pt;" aria-label="PostgreSQL (280 items)">PostgreSQL</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/postgresql-9-6/" class="tag-cloud-link tag-link-120 tag-link-position-33" style="font-size: 9.7379310344828pt;" aria-label="PostgreSQL 9.6 (14 items)">PostgreSQL 9.6</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/postgresql10/" class="tag-cloud-link tag-link-139 tag-link-position-34" style="font-size: 10.703448275862pt;" aria-label="PostgreSQL10 (18 items)">PostgreSQL10</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/postgresql11/" class="tag-cloud-link tag-link-142 tag-link-position-35" style="font-size: 9.0620689655172pt;" aria-label="PostgreSQL11 (12 items)">PostgreSQL11</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/postgresql-11/" class="tag-cloud-link tag-link-140 tag-link-position-36" style="font-size: 9.448275862069pt;" aria-label="PostgreSQL 11 (13 items)">PostgreSQL 11</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/postgresql-11-new-features/" class="tag-cloud-link tag-link-141 tag-link-position-37" style="font-size: 9.448275862069pt;" aria-label="PostgreSQL 11 New Features (13 items)">PostgreSQL 11 New Features</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/postgresql-repmgr/" class="tag-cloud-link tag-link-273 tag-link-position-38" style="font-size: 8.3862068965517pt;" aria-label="postgresql repmgr (10 items)">postgresql repmgr</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/recovery/" class="tag-cloud-link tag-link-168 tag-link-position-39" style="font-size: 8pt;" aria-label="Recovery (9 items)">Recovery</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/replication/" class="tag-cloud-link tag-link-186 tag-link-position-40" style="font-size: 13.406896551724pt;" aria-label="replication (35 items)">replication</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/security/" class="tag-cloud-link tag-link-398 tag-link-position-41" style="font-size: 10.703448275862pt;" aria-label="security (18 items)">security</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/sql/" class="tag-cloud-link tag-link-426 tag-link-position-42" style="font-size: 8.3862068965517pt;" aria-label="sql (10 items)">sql</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/wal/" class="tag-cloud-link tag-link-125 tag-link-position-43" style="font-size: 9.9310344827586pt;" aria-label="wal (15 items)">wal</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/webinar/" class="tag-cloud-link tag-link-1004 tag-link-position-44" style="font-size: 9.0620689655172pt;" aria-label="webinar (12 items)">webinar</a>
+<a href="https://www.2ndquadrant.com/en/blog/tag/webinars/" class="tag-cloud-link tag-link-1038 tag-link-position-45" style="font-size: 13.406896551724pt;" aria-label="webinars (35 items)">webinars</a></div>
+<span class="seperator extralight-border"></span></section></div></aside>
+
+	</div>
+	<!--end container-->
+
+</div><!-- close default .container_wrap element -->
+
+
+		<div id='av_section_1'  class='avia-section main_color avia-section-default avia-no-border-styling  avia-bg-style-scroll  avia-builder-el-0  avia-builder-el-no-sibling  tq-footer  container_wrap fullsize' style='background-color: #043f5e;  '  ><div class='container' ><main  class='template-page content  av-content-full alpha units'><div class='post-entry post-entry-type-page post-entry-33491'><div class='entry-content-wrapper clearfix'>
+<div class="flex_column av_one_fifth  flex_column_div av-zero-column-padding first  avia-builder-el-1  el_before_av_one_fifth  avia-builder-el-first  " style='border-radius:0px; '><div  class='avia-builder-widget-area clearfix  avia-builder-el-2  avia-builder-el-no-sibling '><section id="text_icl-11" class="widget clearfix widget_text_icl">		<div class="textwidget"><a href="https://www.2ndquadrant.com">
+<img class="alignnone size-medium wp-image-422" src="https://www.2ndquadrant.com/wp-content/uploads/2019/08/logo-whitebg_trasparent-e1564982769598.png" alt="" width="300" height="80" />
+</a>           </div>
+		<span class="seperator extralight-border"></span></section></div></div><div class="flex_column av_one_fifth  flex_column_div av-zero-column-padding   avia-builder-el-3  el_after_av_one_fifth  el_before_av_one_fifth  " style='border-radius:0px; '><section class="av_textblock_section " ><div class='avia_textblock  '  ><h3><a href="https://www.2ndquadrant.com/en/services/"><strong><span style="color: #ffffff;">Support &#038; Services</span></strong></a></h3>
+</div></section>
+<div  style='height:7px' class='hr hr-invisible   avia-builder-el-5  el_after_av_textblock  el_before_av_textblock '><span class='hr-inner ' ><span class='hr-inner-style'></span></span></div>
+<section class="av_textblock_section " ><div class='avia_textblock  '  ><p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/support/support-postgresql/">24/7 Production Support</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/support/support-developer/">Developer Support</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/services/rdba/">Remote DBA for PostgreSQL</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/services/monitoring-service/">PostgreSQL Database Monitoring</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/services/postgresql-healthcheck/">PostgreSQL Health Check</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/services/postgresql-performance-tuning/">PostgreSQL Performance Tuning</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/services/postgresql-security-audit/">Database Security Audit</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/services/upgrade-postgresql/">Upgrade PostgreSQL</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/services/postgresql-migration-assessment/">PostgreSQL Migration Assessment</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/services/migrate-from-oracle-to-postgresql/">Migrate from Oracle to PostgreSQL</a></span></p>
+</div></section></div><div class="flex_column av_one_fifth  flex_column_div av-zero-column-padding   avia-builder-el-7  el_after_av_one_fifth  el_before_av_one_fifth  " style='border-radius:0px; '><section class="av_textblock_section " ><div class='avia_textblock  '  ><h3><a href="https://www.2ndquadrant.com/en/resources/"><strong><span style="color: #ffffff;">Products</span></strong></a></h3>
+</div></section>
+<div  style='height:7px' class='hr hr-invisible   avia-builder-el-9  el_after_av_textblock  el_before_av_textblock '><span class='hr-inner ' ><span class='hr-inner-style'></span></span></div>
+<section class="av_textblock_section " ><div class='avia_textblock  '  ><p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/resources/highly-available-postgresql-clusters/">HA Postgres Clusters</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/resources/postgres-bdr-2ndquadrant/">Postgres-BDR<sup>®</sup></a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/resources/2ndqpostgres/">2ndQPostgres</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/resources/pglogical/">pglogical</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/resources/repmgr/">repmgr</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/resources/barman/">Barman</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/resources/postgres-cloud-manager/">Postgres Cloud Manager</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/resources/postgresql-security-firewall/">SQL Firewall</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/resources/postgres-xl/">Postgres-XL</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/resources/omnidb/">OmniDB</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/resources/postgresql-installer-2ndquadrant/">Postgres Installer</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/resources/2uda/">2UDA</a></span></p>
+</div></section></div><div class="flex_column av_one_fifth  flex_column_div av-zero-column-padding   avia-builder-el-11  el_after_av_one_fifth  el_before_av_one_fifth  " style='border-radius:0px; '><section class="av_textblock_section " ><div class='avia_textblock  '  ><h3><a href="https://www.2ndquadrant.com/en/postgres-learning-center/"><strong><span style="color: #ffffff;">Postgres Learning Center</span></strong></a></h3>
+</div></section>
+<div  style='height:7px' class='hr hr-invisible   avia-builder-el-13  el_after_av_textblock  el_before_av_textblock '><span class='hr-inner ' ><span class='hr-inner-style'></span></span></div>
+<section class="av_textblock_section " ><div class='avia_textblock  '  ><p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/postgresql/">Introducing Postgres</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/blog/">Blog</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/webinars/">Webinars</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/books/">Books</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.youtube.com/2ndquadrantpostgresql">Videos</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/training/">Training</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/case-studies/">Case Studies</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/events/">Events</a></span></p>
+</div></section></div><div class="flex_column av_one_fifth  flex_column_div av-zero-column-padding   avia-builder-el-15  el_after_av_one_fifth  avia-builder-el-last  " style='border-radius:0px; '><section class="av_textblock_section " ><div class='avia_textblock  '  ><h3><a href="https://www.2ndquadrant.com/en/about-2ndquadrant/"><strong><span style="color: #ffffff;">About Us</span></strong></a></h3>
+</div></section>
+<div  style='height:7px' class='hr hr-invisible   avia-builder-el-17  el_after_av_textblock  el_before_av_textblock '><span class='hr-inner ' ><span class='hr-inner-style'></span></span></div>
+<section class="av_textblock_section " ><div class='avia_textblock  '  ><p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/about-2ndquadrant/">About 2ndQuadrant</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/what-does-2ndquadrant-mean/">What does 2ndQuadrant Mean?</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/news/">News</a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/careers/">Careers </a></span></p>
+<p><span style="color: #ffffff;"><a style="color: #ffffff;" href="https://www.2ndquadrant.com/en/team-profile/">Team Profile</a></span></p>
+</div></section></div>
+</div></div></main><!-- close content main element --> <!-- section close by builder template -->		</div><!--end builder template--></div><!-- close default .container_wrap element -->
+
+
+			
+
+			
+				<footer class='container_wrap socket_color' id='socket' >
+                    <div class='container'>
+
+                        <span class='copyright'>© 2ndQuadrant Ltd. All rights reserved. | <a href="https://www.2ndquadrant.com/en/privacy-policy/">Privacy Policy</a></span>
+
+                        <ul class='noLightbox social_bookmarks icon_count_5'><li class='social_bookmarks_twitter av-social-link-twitter social_icon_1'><a target="_blank" aria-label="Link to Twitter" href='https://twitter.com/EDBPostgres' aria-hidden='false' data-av_icon='' data-av_iconfont='entypo-fontello' title='Twitter' rel="noopener noreferrer"><span class='avia_hidden_link_text'>Twitter</span></a></li><li class='social_bookmarks_linkedin av-social-link-linkedin social_icon_2'><a target="_blank" aria-label="Link to LinkedIn" href='https://www.linkedin.com/company/enterprisedb' aria-hidden='false' data-av_icon='' data-av_iconfont='entypo-fontello' title='LinkedIn' rel="noopener noreferrer"><span class='avia_hidden_link_text'>LinkedIn</span></a></li><li class='social_bookmarks_facebook av-social-link-facebook social_icon_3'><a target="_blank" aria-label="Link to Facebook" href='https://www.facebook.com/EDBpostgres' aria-hidden='false' data-av_icon='' data-av_iconfont='entypo-fontello' title='Facebook' rel="noopener noreferrer"><span class='avia_hidden_link_text'>Facebook</span></a></li><li class='social_bookmarks_youtube av-social-link-youtube social_icon_4'><a target="_blank" aria-label="Link to Youtube" href='https://www.youtube.com/user/EnterpriseDB' aria-hidden='false' data-av_icon='' data-av_iconfont='entypo-fontello' title='Youtube' rel="noopener noreferrer"><span class='avia_hidden_link_text'>Youtube</span></a></li><li class='social_bookmarks_mail av-social-link-mail social_icon_5'><a  aria-label="Link to Mail" href='/en/contact/' aria-hidden='false' data-av_icon='' data-av_iconfont='entypo-fontello' title='Mail'><span class='avia_hidden_link_text'>Mail</span></a></li></ul>
+                    </div>
+
+	            <!-- ####### END SOCKET CONTAINER ####### -->
+				</footer>
+
+
+					<!-- end main -->
+</div>		
+		
+		<a class='avia-post-nav avia-post-prev with-image' href='https://www.2ndquadrant.com/en/blog/postgres-bdr-it-is-also-about-fast-safe-upgrades/' >    <span class='label iconfont' aria-hidden='true' data-av_icon='' data-av_iconfont='entypo-fontello'></span>    <span class='entry-info-wrap'>        <span class='entry-info'>            <span class='entry-title'>Postgres-BDR: It is also about fast safe upgrades</span>            <span class='entry-image'><img width="80" height="80" src="https://www.2ndquadrant.com/wp-content/uploads/2019/10/Postgres-BDR-It-is-also-about-fast-safe-upgrades-80x80.png" class="wp-image-32160 avia-img-lazy-loading-32160 attachment-thumbnail size-thumbnail wp-post-image" alt="Postgres-BDR It is also about fast safe upgrades" loading="lazy" srcset="https://www.2ndquadrant.com/wp-content/uploads/2019/10/Postgres-BDR-It-is-also-about-fast-safe-upgrades-80x80.png 80w, https://www.2ndquadrant.com/wp-content/uploads/2019/10/Postgres-BDR-It-is-also-about-fast-safe-upgrades-36x36.png 36w, https://www.2ndquadrant.com/wp-content/uploads/2019/10/Postgres-BDR-It-is-also-about-fast-safe-upgrades-180x180.png 180w" sizes="(max-width: 80px) 100vw, 80px" /></span>        </span>    </span></a><a class='avia-post-nav avia-post-next without-image' href='https://www.2ndquadrant.com/en/blog/webinar-using-ssl-with-postgresql-pgbouncer/' >    <span class='label iconfont' aria-hidden='true' data-av_icon='' data-av_iconfont='entypo-fontello'></span>    <span class='entry-info-wrap'>        <span class='entry-info'>            <span class='entry-title'>Webinar: Using SSL with PostgreSQL and pgbouncer [Follow Up]</span>        </span>    </span></a><!-- end wrap_all --></div>
+
+<a href='#top' title='Scroll to top' id='scroll-top-link' aria-hidden='true' data-av_icon='' data-av_iconfont='entypo-fontello'><span class="avia_hidden_link_text">Scroll to top</span></a>
+
+<!-- <div id="formBtnDiv">
+	<div class="toggle-icon">
+		<img src="/wp-content/uploads/2019/10/red-cross-1.png" id="hide-icon">
+	</div>
+	<button id="formBtn">Need Help?</button>
+</div> -->
+
+<!-- The Modal -->
+<div id="formModal" class="formModal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+   
+<!--[if lte IE 8]>
+<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2-legacy.js"></script>
+<![endif]-->
+<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2.js"></script>
+<script>
+	jQuery(document).ready(function(){
+		hbspt.forms.create({
+			portalId: "4984779",
+			formId: "cead2ad1-3687-4382-a072-2fc461f7543d"
+		});
+	});
+</script>
+	  
+  </div>
+
+</div>
+
+<script>
+// var modal = document.getElementById("formModal");
+
+// var btn = document.getElementById("formBtn");
+// var span = document.getElementsByClassName("close")[0];
+// btn.onclick = function() {
+//   modal.style.display = "block";
+// }
+
+// span.onclick = function() {
+//   modal.style.display = "none";
+	
+// }
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+var hideIcon = document.getElementById("hide-icon");
+	var formBtn = document.getElementById("formBtn");
+hideIcon.onclick = function(){
+	formBtn.style.transform = "translate(200%,0)";
+	formBtn.style.transition = "transform 0.7s ease-in-out";
+	hideIcon.style.display = "none";
+}
+
+
+</script>
+<script>
+	jQuery(document).ready(function(){
+	jQuery(document).on('mouseenter', '#formBtnDiv', function () {
+                   jQuery(this).find(".toggle-icon").show();
+                }).on('mouseleave', '#formBtnDiv', function () {
+                    jQuery(this).find(".toggle-icon").hide();
+                });
+	});
+</script>
+
+
+<div id="fb-root"></div>
+
+    <script type="text/javascript">
+        document.addEventListener('wpcf7mailsent', function(event) {
+            document.cookie = "downloadForm=Submitted;path=/;";
+            jQuery('#case-study-form').hide();
+            jQuery('#download-form-link').show();
+        }, false);
+    </script>
+
+ <script type='text/javascript'>
+ /* <![CDATA[ */  
+var avia_framework_globals = avia_framework_globals || {};
+    avia_framework_globals.frameworkUrl = 'https://www.2ndquadrant.com/wp-content/themes/enfold/framework/';
+    avia_framework_globals.installedAt = 'https://www.2ndquadrant.com/wp-content/themes/enfold/';
+    avia_framework_globals.ajaxurl = 'https://www.2ndquadrant.com/wp-admin/admin-ajax.php?lang=en';
+/* ]]> */ 
+</script>
+ 
+ <script type='text/javascript' id='clicktrack-adrotate-js-extra'>
+/* <![CDATA[ */
+var click_object = {"ajax_url":"https:\/\/www.2ndquadrant.com\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type='text/javascript' defer='defer' src='https://www.2ndquadrant.com/wp-content/plugins/adrotate/library/jquery.adrotate.clicktracker.js' id='clicktrack-adrotate-js'></script>
+<script type='text/javascript' id='leadin-script-loader-js-js-extra'>
+/* <![CDATA[ */
+var leadin_wordpress = {"userRole":"visitor","pageType":"post","leadinPluginVersion":"7.48.24"};
+/* ]]> */
+</script>
+<script async defer id="hs-script-loader" type='text/javascript' defer='defer' src='https://js.hs-scripts.com/4984779.js?integration=WordPress' id='leadin-script-loader-js-js'></script>
+<script type='text/javascript' defer='defer' src='https://www.2ndquadrant.com/wp-content/themes/enfold-child/js/custom.js?ver=1.112' id='custom-js'></script>
+<script type='text/javascript' defer='defer' src='https://www.2ndquadrant.com/wp-includes/js/comment-reply.min.js?ver=5.5.5' id='comment-reply-js'></script>
+<script type='text/javascript' defer='defer' src='https://www.2ndquadrant.com/wp-includes/js/wp-embed.min.js?ver=5.5.5' id='wp-embed-js'></script>
+<script async="async" type='text/javascript' defer='defer' src='https://www.2ndquadrant.com/wp-content/plugins/akismet/_inc/form.js?ver=4.1.8' id='akismet-form-js'></script>
+<script type='text/javascript' defer='defer' src='https://www.2ndquadrant.com/wp-content/uploads/dynamic_avia/avia-footer-scripts-51db0797f748fbbe1d3d07fc000edca6---60466b1c69f82.js' id='avia-footer-scripts-js'></script>
+
+<!-- This site is optimized with Phil Singleton's WP SEO Structured Data Plugin v2.6.15 - https://kcseopro.com/wordpress-seo-structured-data-schema-plugin/ -->
+<script type="application/ld+json">{
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "PostgreSQL 12: Implementing K-Nearest Neighbor Space Partitioned Generalized Search Tree Indexes",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.2ndquadrant.com/en/blog/postgresql-12-implementing-k-nearest-neighbor-space-partitioned-generalized-search-tree-indexes/"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Kirk Roybal"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://www.2ndquadrant.com/wp-content/uploads/2019/11/Implementing-K-Nearest-Neighbor-Space-Partitioned-Generalized-Search-Tree-Indexes-Kirk-Roybal.jpg",
+        "height": 1633,
+        "width": 3199
+    },
+    "datePublished": "2019-11-05",
+    "dateModified": "2019-11-05",
+    "publisher": {
+        "@type": "Organization",
+        "name": "2ndQuadrant",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://www.2ndquadrant.com/wp-content/uploads/2019/07/2ndQuadrant.png",
+            "height": 150,
+            "width": 150
+        }
+    },
+    "description": "SP-GiST is twice the speed of GiST in execution, 8x faster to plan, and about 60% of the size on disk. And it also supports K-Nearest Neighbor index searching in #PostgreSQL12"
+}</script>
+<!-- / WP SEO Structured Data Plugin. -->
+
+
+<!-- google webfont font replacement -->
+
+			<script type='text/javascript'>
+
+				(function() {
+					
+					/*	check if webfonts are disabled by user setting via cookie - or user must opt in.	*/
+					var html = document.getElementsByTagName('html')[0];
+					var cookie_check = html.className.indexOf('av-cookies-needs-opt-in') >= 0 || html.className.indexOf('av-cookies-can-opt-out') >= 0;
+					var allow_continue = true;
+					var silent_accept_cookie = html.className.indexOf('av-cookies-user-silent-accept') >= 0;
+
+					if( cookie_check && ! silent_accept_cookie )
+					{
+						if( ! document.cookie.match(/aviaCookieConsent/) || html.className.indexOf('av-cookies-session-refused') >= 0 )
+						{
+							allow_continue = false;
+						}
+						else
+						{
+							if( ! document.cookie.match(/aviaPrivacyRefuseCookiesHideBar/) )
+							{
+								allow_continue = false;
+							}
+							else if( ! document.cookie.match(/aviaPrivacyEssentialCookiesEnabled/) )
+							{
+								allow_continue = false;
+							}
+							else if( document.cookie.match(/aviaPrivacyGoogleWebfontsDisabled/) )
+							{
+								allow_continue = false;
+							}
+						}
+					}
+					
+					if( allow_continue )
+					{
+						var f = document.createElement('link');
+					
+						f.type 	= 'text/css';
+						f.rel 	= 'stylesheet';
+						f.href 	= '//fonts.googleapis.com/css?family=Metrophobic';
+						f.id 	= 'avia-google-webfont';
+
+						document.getElementsByTagName('head')[0].appendChild(f);
+					}
+				})();
+			
+			</script>
+			</body>
+</html>
+
+<!-- Dynamic page generated in 0.400 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2021-07-12 18:32:46 -->
+
+<!-- Compression = gzip -->
