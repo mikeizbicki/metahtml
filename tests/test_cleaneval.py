@@ -6,6 +6,7 @@ cleaneval.py v1.0
 Simple and fast evaluation of CleanEval-1 tasks (precision, recall, F-score).
 """
 
+import time
 import sys
 import os
 import string
@@ -17,10 +18,12 @@ sys.path.append('')
 import metahtml
 import trafilatura
 from newspaper import parsers
+from bs4 import BeautifulSoup
+from glob import glob
 from math import *
 from difflib import SequenceMatcher
 from getopt import getopt, GetoptError
-
+from multiset import Multiset
 
 help_message = '''
 This is cleaneval.py version 1.0 -- Copyright (C) 2008 by Stefan Evert
@@ -209,6 +212,33 @@ def do_cleaneval(gold_html, cleaned_html):
     eval_list = evaluate(diff)
     return eval_list
 
+def do_jaccard(gold_html, cleaned_html):
+    cleaned_html = normalize(cleaned_html)
+    text_words = set(re_WS.split(cleaned_html))
+    gold_words = set(re_WS.split(gold_html))
+
+    intersection = gold_words.intersection(text_words)
+    union = gold_words.union(text_words)
+    
+    tp = len(intersection) / len(union)
+    fp = len(text_words.difference(gold_words)) / len(union)
+    fn = len(gold_words.difference(text_words)) / len(union)
+    result = __evaluate(tp, fp, fn, 0, 0, 0)
+    return result
+
+def do_jaccard_multiset(gold_html, cleaned_html):
+    cleaned_html = normalize(cleaned_html)
+    text_words = Multiset(re_WS.split(cleaned_html))
+    gold_words = Multiset(re_WS.split(gold_html))
+    intersection = gold_words.intersection(text_words)
+    union = gold_words.union(text_words)
+    
+    tp = len(intersection) / len(union)
+    fp = len(text_words.difference(gold_words)) / len(union)
+    fn = len(gold_words.difference(text_words)) / len(union)
+    result = __evaluate(tp, fp, fn, 0, 0, 0)
+    return result                                               
+
 def clean_cleaneval(raw_html):
     '''
     Traditional Cleaneval does not clean any html, just return the raw html
@@ -217,7 +247,47 @@ def clean_cleaneval(raw_html):
     '''
     return raw_html
 
-def clean_metahtml(raw_html):
+# List of function for different configuration of clean_metahtml
+def clean_metahtml_0(raw_html):
+    extractor_config = metahtml.content.ExtractorConfig()
+    return clean_metahtml(raw_html, extractor_config)
+
+def clean_metahtml_1(raw_html):
+    extractor_config = metahtml.content.ExtractorConfig()
+    extractor_config.filter_section = True
+    extractor_config.rm_form = True
+    return clean_metahtml(raw_html, extractor_config)
+
+def clean_metahtml_2(raw_html):
+    extractor_config = metahtml.content.ExtractorConfig()
+    extractor_config.filter_main = False
+    extractor_config.article = False
+    extractor_config.rm_badtags = False
+    extractor_config.rm_figure = False
+    extractor_config.rm_aside = False
+    extractor_config.div_to_p = False
+    extractor_config.rm_noncontent_blocks = False
+    extractor_config.rm_header_lists = False
+    extractor_config.rm_footer_lists = False
+    return clean_metahtml(raw_html, extractor_config)
+
+def clean_metahtml_3(raw_html):
+    extractor_config = metahtml.content.ExtractorConfig()
+    extractor_config.rm_header_lists = False
+    extractor_config.rm_footer_lists = False
+    return clean_metahtml(raw_html, extractor_config)
+
+def clean_metahtml_4(raw_html):
+    extractor_config = metahtml.content.ExtractorConfig()
+    extractor_config.rm_footer_lists = False
+    return clean_metahtml(raw_html, extractor_config)
+
+def clean_metahtml_5(raw_html):
+    extractor_config = metahtml.content.ExtractorConfig()
+    extractor_config.rm_header_lists = False
+    return clean_metahtml(raw_html, extractor_config)
+
+def clean_metahtml(raw_html, extractor_config=metahtml.content.ExtractorConfig()):
     '''
     Arguments:
         raw_html        String  Raw downloaded html input
@@ -227,8 +297,11 @@ def clean_metahtml(raw_html):
     ''
     '''
     url = __get_url(raw_html)
-    res = metahtml.parse(raw_html, url, None, False, True)
-    cleaned_html = res['content']['best']['value']['text']
+    res = metahtml.parse(raw_html, url, None, False, extractor_config, True)
+    if res['content'] is not None:
+        cleaned_html = res['content']['best']['value']['text']
+    else:
+        cleaned_html = ''
     return cleaned_html
 
 def clean_trafilatura_no_fallback(raw_html):
@@ -242,9 +315,8 @@ def clean_trafilatura_no_fallback(raw_html):
     'Content 123'
     '''
     url = __get_url(raw_html)
-    try:
-        cleaned_html = trafilatura.extract(raw_html, url, no_fallback=True)
-    except Exception:
+    cleaned_html = trafilatura.extract(raw_html, url, no_fallback=True)
+    if cleaned_html is None:
         cleaned_html = ''
     return cleaned_html
 
@@ -269,9 +341,25 @@ def clean_trafilatura_with_fallback(raw_html):
     '''
     url = __get_url(raw_html)
     cleaned_html = trafilatura.extract(raw_html, url)
+    if cleaned_html is None:
+        cleaned_html = ''
     return cleaned_html
 
-def cleaneval_from_files(gold_path, raw_path, list_of_libraries = [ lambda x: x ], eval_method=do_cleaneval, opt_total=True, opt_noheader=False, opt_summary=True, opt_ascii=False, opt_unlabelled=False):
+# Rename function names
+clean_cleaneval.__name__ = 'cleaneval'
+clean_metahtml.__name__ = 'metahtml'
+clean_metahtml_0.__name__ = 'metahtml-0'
+clean_metahtml_1.__name__ = 'metahtml-1'
+clean_metahtml_2.__name__ = 'metahtml-2'
+clean_metahtml_3.__name__ = 'metahtml-3'
+clean_metahtml_4.__name__ = 'metahtml-4'
+clean_metahtml_5.__name__ = 'metahtml-5'
+clean_newspaper3k.__name__ = 'newspaper3k'
+clean_trafilatura_no_fallback.__name__ = 'trafilatura-no-fallback'
+clean_trafilatura_with_fallback.__name__ = 'trafilatura-with-fallback'
+
+
+def cleaneval_from_files(gold_path, raw_path, list_of_libraries = [ lambda x: x ], eval_method=do_cleaneval, opt_latex=True, opt_total=True, opt_noheader=False, opt_summary=True, opt_ascii=False, opt_unlabelled=False):
     '''
     gold_path is the path to the directory containing the gold standard files
     raw_path is the path to the directory containing the raw files
@@ -295,8 +383,6 @@ def cleaneval_from_files(gold_path, raw_path, list_of_libraries = [ lambda x: x 
         gold_html = normalize(slurp_file(gold_standard_file), opt_ascii, opt_unlabelled)
         for library in list_of_libraries:
             cleaned_html = library(raw_html)
-            if cleaned_html is None:
-                continue
             eval_list[library.__name__] = eval_method(gold_html, cleaned_html)
             if not opt_total:
                 print(raw_file+ " ("+library.__name__+")" + "\t" + ("%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%d\t%d\t%d\t%d\t%d\t%d" % eval_list[library.__name__]))
@@ -307,7 +393,13 @@ def cleaneval_from_files(gold_path, raw_path, list_of_libraries = [ lambda x: x 
     for library in list_of_libraries:
         if n_processed[library.__name__] < n_files:
             print("Warning: %d files skipped for %s" % (n_files - n_processed[library.__name__], library.__name__))
-    print("Library\t\t\tF\tP\tR\tF.tag\tP.tag\tR.tag\tTP\tFP\tFN\tTP.tag\tFP.tag\tFN.tag")
+    if not opt_latex:
+        print("Library\t\t\tF\tP\tR\tF.tag\tP.tag\tR.tag\tTP\tFP\tFN\tTP.tag\tFP.tag\tFN.tag")
+    else:
+        print(r'\begin{tabular}{ |c|c|c|c|c|c|c|c|c|c|c|c|c| }')
+        print(r'\hline')
+        print(r'Library & F & P & R & F.tag & P.tag & R.tag & TP & FP & FN & TP.tag & FP.tag & FN.tag \\')
+        print(r'\hline')
     for library in list_of_libraries:
         tp = sum[library.__name__][6]
         fp = sum[library.__name__][7]
@@ -316,4 +408,83 @@ def cleaneval_from_files(gold_path, raw_path, list_of_libraries = [ lambda x: x 
         tag_fp = sum[library.__name__][10]
         tag_fn = sum[library.__name__][11]
         result = __evaluate(tp, fp, fn, tag_tp, tag_fp, tag_fn)
-        print(library.__name__ + "\t\t" + ("%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%d\t%d\t%d\t%d\t%d\t%d" % result))
+        if not opt_latex:
+            print(library.__name__ + "\t\t" + ("%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%d\t%d\t%d\t%d\t%d\t%d\n" % result))
+        else:
+            print(r'%s & ' % library.__name__ + r'%.2f & %.2f & %.2f & %.2f & %.2f & %.2f & %d & %d & %d & %d & %d & %d \\' % result)
+            print(r'\hline')
+
+
+cache_dir = "tests/.cache/"
+gold_dir = "tests/.golden/"
+
+def load_data():
+    dataset = []
+    gold_paths = glob(gold_dir+"**/*.content.*")
+    for path in gold_paths:
+        split_paths = path.split('/')
+        # [ 'tests', '.golden', 'webpage', 'date.content.username' ]
+        webpage = split_paths[2]
+        date = split_paths[3].split('.')[0]
+        raw_path = cache_dir + webpage + "/" + date
+        raw_html = slurp_file(raw_path)
+        gold_html = slurp_file(path)
+        gold_soup = BeautifulSoup(gold_html, features="lxml")
+        body = gold_soup.body
+        if body is None:
+            style_tag = gold_soup.find('style')
+            if style_tag is not None:
+                style_tag.decompose()
+            script_tags = gold_soup.find_all('script')
+            if len(script_tags) > 0:
+                for script_tag in script_tags:
+                    script_tag.decompose()
+            body = gold_soup
+        rm_lines = body.find_all(class_="rm-manual")
+        if len(rm_lines) > 0:
+            for line in rm_lines:
+                line.decompose()
+        gold_html = normalize(body.__str__())
+        dataset.append({
+            'raw': raw_html,
+            'gold': gold_html
+        })
+    return dataset
+
+def evaluation(dataset, list_of_libraries = [ lambda x: x ], eval_method=do_cleaneval, output='output.tex'):
+    eval_list = {}
+    total = {}
+    ss = {}
+    for library in list_of_libraries:
+        total[library.__name__] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ss[library.__name__] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    for webpage in dataset:
+        raw_html = webpage['raw']
+        gold_html = webpage['gold']
+        for library in list_of_libraries:
+            cleaned_html = library(raw_html)
+            eval_list[library.__name__] = eval_method(gold_html, cleaned_html)
+            for i, x in enumerate(eval_list[library.__name__]):
+                total[library.__name__][i] += x
+                ss[library.__name__][i] += x ** 2
+    with open(output, 'w') as f:
+        # Document setup
+        f.writelines([ r'\documentclass{article}', r'\usepackage[utf8]{inputenc}', r'\begin{document}', r'\title{Result}', r'\title{Result}', r'\maketitle' ])
+        # Table setup 
+        f.writelines([ r'\begin{tabular}{ |c|c|c|c|c|c|c|c|c|c|c|c|c| }', r'\hline', '\n', r'Library & F & P & R & F.tag & P.tag & R.tag & TP & FP & FN & TP.tag & FP.tag & FN.tag \\', r'\hline', '\n' ])
+        for library in list_of_libraries:
+            tp = total[library.__name__][6]
+            fp = total[library.__name__][7]
+            fn = total[library.__name__][8]
+            tag_tp = total[library.__name__][9]
+            tag_fp = total[library.__name__][10]
+            tag_fn = total[library.__name__][11]
+            result = __evaluate(tp, fp, fn, tag_tp, tag_fp, tag_fn)
+            f.writelines([ r'%s & ' % library.__name__ + r'%.2f & %.2f & %.2f & %.2f & %.2f & %.2f & %d & %d & %d & %d & %d & %d \\' % result, r'\hline', '\n' ])
+        f.write(r'\end{tabular}')
+        f.write(r'\end{document}')
+        f.close()
+
+dataset = load_data()
+evaluation(dataset, [ clean_cleaneval, clean_metahtml, clean_trafilatura_with_fallback, clean_trafilatura_no_fallback, clean_newspaper3k ], do_cleaneval, 'cleaneval_output.tex')
+evaluation(dataset, [ clean_cleaneval, clean_metahtml, clean_trafilatura_with_fallback, clean_trafilatura_no_fallback, clean_newspaper3k ], do_jaccard_multiset, 'jaccard_output.tex')
