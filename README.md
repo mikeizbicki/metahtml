@@ -42,6 +42,15 @@ For detailed on what these commands are doing, see [this github blog post](https
 
 ## Testing overview
 
+There are currently two types of tests: golden and content tests.
+
+### Golden Tests
+
+The golden tests ensure that certain metainformation (language, publication date, modification date, and type) are all correct.
+They are called "golden" tests because we record a gold-standard output for each file,
+and the test case ensures that the output of metahtml matches the gold-standard output file exactly.
+These are the most basic tests, and at least one test must exist for every domain name that we want to use metahtml on.
+
 The file `tests/test_golden.py` provides a simple command line interface for extracting information from a webpage.
 For example, we can extract information from https://www.cnn.com/2020/03/28/politics/trump-executive-order-ready-reserve-military-coronavirus/index.html with the command
 ```
@@ -86,7 +95,7 @@ but this extra information is not included in the test cases.
 
 There are currently about 2000 domain names that the metahtml library has test cases for.
 
-## How to add new test cases
+#### How to add new test cases
 
 Test cases for a website consist of 2 files: 
 1. A file containing the raw html data for the webpage (stored in the `tests/.cache/HASHED_URL/DATE` directory),
@@ -109,7 +118,7 @@ $ python3 tests/test_golden.py 'URL'
 where `URL` is the url you are testing.
 You must include the single quotation marks, or your terminal may mangle the url string before it gets passed to python.
 
-### If the output is correct
+##### If the output is correct
 
 You need to create a commit with the new test case files, and create a pull request.
 You should be able to add the correct files to the staging area with the commands
@@ -125,7 +134,7 @@ to ensure that the only files that were added were the two test case files descr
 If extraneous files get added, I cannot accept your pull request.
 Finally, commit the changes and issue the pull request.
 
-### If the output is incorrect
+##### If the output is incorrect
 
 If the problem is the `language` field, then let me know.
 
@@ -142,14 +151,50 @@ If the problem is that the `type` field is incorrect:
   If this behavior isn't working correctly,
   let me know and I'll fix it myself.
 
-## Pull request check list
+#### Pull request check list
 
 In order for me to accept a pull request, there needs to be at least 5 new test cases added for each hostname:
 1. 1 test case for the hostname by itself (this should not have any timestamps)
 1. 2 test cases for article urls (these should must have timestamps, and the timestamps should ideally be many years apart)
 1. 2 test cases for "category" urls that contain lists of many other urls (these should not have timestamps)
 
+### Content Tests
+
+Content tests are used to measure how accurately (in precision/recall terms) metahtml extracts the content of a webpage.
+Since we cannot guarantee that metahtml gets 100% accuracy on all webpages, these are not golden tests that must match exactly.
+
+The file `tests/test_content.py` is used to create content tests.
+To generate content tests, run the command
+```
+$ python3 tests/test_content.py --lang=en --username=mikeizbicki
+```
+but replace `mikeizbicki` with your github username and `en` with the ISO code of the language you wish to annotate.
+This will launch a firefox window with the contents of the webpage loaded.
+You can annotate the document by holding shift and selecting paragraphs;
+any region of the document that is highlighted in red is labeled as not being part of the main text of the document.
+
+The only content that should be labeled as document text (i.e. not red) is the actual content of the article.
+Other metadata such as:
+
+1. title
+1. author byline
+1. publication date
+1. copyright notice
+1. lists of links to related articles (that are not actually part of the document text)
+1. advertisements
+1. user comments
+1. navigation menus
+1. etc.
+
+should all be highlighted in red.
+
+There is a set of 50 urls that all annotators must label,
+and the `test_content.py` file will ensure that you label these urls first.
+You should submit a pull request with these 50 labels before moving on to labeling the remaining
+
+
 <!--
+The following urls have problems for some reason
 
 Only contains Month/Day
 https://www.healthcarefinancenews.com/news/five-blues-plans-launch-evio-profit-company-focused-lowering-drug-prices
@@ -159,9 +204,6 @@ https://spectrum.ieee.org/automaton/robotics/humanoids/hyundai-buys-boston-dynam
 
 503:
 https://blog.cloudflare.com/quic-version-1-is-live-on-cloudflare/
-
-bad unicode:
-https://arxiv.org/abs/2006.16668
 
 ## Notes
 
