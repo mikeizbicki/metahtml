@@ -608,7 +608,8 @@ def flatten_html(doc):
 
         # delete empty nodes
         if len(node)==0 and (node.text is None or node.text.strip() == ''):
-            node.getparent().remove(node)
+            if node.getparent() is not None:
+                node.getparent().remove(node)
 
         # we're done!
         return append_node
