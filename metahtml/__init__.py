@@ -9,7 +9,6 @@ this makes it easy to compare multiple parses of the same html file and determin
 # imports
 from collections import defaultdict
 import importlib
-import logging
 import lxml
 import lxml.html
 import lxml.etree
@@ -19,6 +18,10 @@ from urllib.parse import urlparse
 import metahtml.adblock
 import metahtml.content
 ExtractorConfig_recall = metahtml.content.ExtractorConfig_recall
+
+# configure logging
+import logging
+logger = logging.getLogger('metahtml')
 
 ################################################################################
 # set the __version__ variable
@@ -37,7 +40,7 @@ except DistributionNotFound:
     __version__ = 'uninstalled.' + os.popen('TZ=utc git log -1 --date="format-local:%Y%m%d%H%M%S" --format=format:"%cd+%h"').read()
 
 # log the version
-logging.info("version="+str(__version__))
+logger.info("version="+str(__version__))
 
 ################################################################################
 # parse functions
@@ -63,11 +66,22 @@ def parse(html, url, property_filter=None, fast=False, extractor_config=metahtml
     parser.meta['url'] = url
 
     # parse the raw html using lxml;
+    try:
+        parser.doc = lxml.html.fromstring(html)
+
+    # some html documents start with an xml encoding tag similar to
+    # <?xml version="1.0" encoding="UTF-8"?>
+    # this causes lxml to throw a ValueError, and we fix this by removing the encoding line;
+    # FIXME:
+    # a better fix would be for the parse function to accept raw bytes as input and handle the decoding within this function;
+    # but that would require reworking lots of code and it's not clear there would be any benefit
+    except ValueError:
+        html_fixed = html[html.find('?>')+2:]
+        parser.doc = lxml.html.fromstring(html_fixed)
+
     # lxml fails whenever the html is empty, so we pass it a minimal html document;
     # this ensures that we will return a valid result 
     # (it will have no data, but it will be valid schematically)
-    try:
-        parser.doc = lxml.html.fromstring(html)
     except lxml.etree.ParserError:
         parser.doc = lxml.html.fromstring('<html></html>')
 
@@ -86,7 +100,7 @@ def parse(html, url, property_filter=None, fast=False, extractor_config=metahtml
             except Exception as e:
                 # FIXME:
                 # these warning messages should get added into the parser.meta somehow
-                logging.warning('url='+url+' '+lib.__name__+': '+"e="+e.__repr__())
+                logger.warning('url='+url+' '+lib.__name__+': '+"e="+e.__repr__())
 
     # remove ads
     hostnames_adblock_breaks = [
@@ -104,7 +118,6 @@ def parse(html, url, property_filter=None, fast=False, extractor_config=metahtml
             property_name = property
         if property_filter is None or property_name in property_filter:
             module = importlib.import_module('metahtml.property.'+property)
-            logging.debug('property_name='+property_name)
             parser.meta[property_name] = module.Extractor.extract(parser)
 
     calculate_property('timestamp.published')
@@ -126,9 +139,10 @@ def parse(html, url, property_filter=None, fast=False, extractor_config=metahtml
             # extract the content;
             # this function is allowed to arbitrarily modify parser.doc,
             # and so it must come after properties that depend on the entire document
-            parser.meta['content'] = {
-                'best' : metahtml.content.extract_content(parser, config=extractor_config)
-            }
+            if not property_filter or 'content' in property_filter:
+                parser.meta['content'] = {
+                    'best' : metahtml.content.extract_content(parser, config=extractor_config)
+                }
 
             # calculate the links of just the article's html content;
             # this must come after calculating the content because 

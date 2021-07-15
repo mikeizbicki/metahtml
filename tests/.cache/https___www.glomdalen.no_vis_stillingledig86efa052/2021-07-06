@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="nb" ng-app="clfApp">
+<head>
+    <base href="/vis/" />
+    <title>Glåmdalen - Stilling ledig</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, user-scalable=yes, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="description" content="Her finner du stillinger, hus, leiligheter, hytter, lokaler, tomter og andre boliger og eiendommer til salgs">
+
+
+            <meta property="og:locale" content="no_NO">
+            <meta property="og:type" content="website">
+            <meta property="og:site_name" content="Glåmdalen">
+            <meta property="og:url" content="http://www.glomdalen.no/vis/stillingledig">
+
+
+    <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Lora:400,700|Source+Sans+Pro:400,600,700' type='text/css' />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" type='text/css' />
+    <link rel="stylesheet" href="//www.webatlas.no/sh/3/v/220415/webatlas.css" type='text/css' />
+    <link rel="stylesheet" href="/prophecy/bundle/all-4ae163fa22b072b699870d988da30516.css" type='text/css' />
+    <script src="//www.webatlas.no/sh/3/v/220415/webatlas.js" type="text/javascript"></script>
+    <script src="/prophecy/bundle/all-7bc08e8b88cea56f230556ecb8ca4750.js"></script>
+
+
+<script>
+    angular.module('clfConfig', []).constant('Config', {
+            "maps.webatlas.customername" : "AMEDIA",
+            "pipek.url" : "http://bed.api.no/api/pipek",
+            "obscura.url.browser" : "//g.api.no/obscura",
+            "localcss.menu.background.color" : "#CD000A",
+            "facebook.app_id" : "1389481411293766",
+            "nedstat.site.id" : "glomdalen",
+            "obscura.url" : "http://g.api.no/obscura",
+            "version" : "1.34.40-SNAPSHOT",
+            "rubrikk.language" : "nb",
+            "positive.header" : "true",
+            "classified.property.enable" : "true",
+            "traffic.adplogger.url" : "//api.adplogger.no/api/adplogger/v2/bundle/internal",
+            "rubrikk.bolig.sted" : "Norge/Innlandet/Åsnes,Norge/Innlandet/Grue,Norge/Innlandet/Kongsvinger,Norge/Innlandet/Eidskog,Norge/Innlandet/Sør-Odal,Norge/Innlandet/Nord-Odal,Norge/Innlandet/Våler",
+            "rubrikk.bil.sted" : "Norge",
+            "rubrikk.stilling.sted" : "Norge/Innlandet/Våler,Norge/Innlandet/Åsnes,Norge/Innlandet/Grue,Norge/Innlandet/Kongsvinger,Norge/Innlandet/Eidskog,Norge/Innlandet/Sør-Odal,Norge/Innlandet/Nord-Odal,Norge/Viken/Nes,Norge/Innlandet/Ringsaker",
+            "pipek.url.browser" : "//bed.api.no/api/pipek",
+            "google.analytics.site.id" : "UA-40913401-8",
+            "classified.job.enable" : "true",
+            "maps.webatlas.apikey" : "71255a5f-f098-4a99-b8bf-13e1ed7f8be1",
+            "audiencereport.job.id" : "ASNbf3dbad9",
+        "domain" : {
+                "identifier" : "glomdalen",
+                "wwwDomain" : "www.glomdalen.no",
+                "full" : "www.glomdalen.no"
+        },
+        "publicationName" : "Glåmdalen",
+        "logo.url" : "//r.api.no/local/v3/publications/www.glomdalen.no/gfx/",
+        "footer" : [
+                {
+                        name : 'Utgitt av Glåmdalen AS, Markensvegen 1 B, 2212 Kongsvinger'
+                        
+                },
+                {
+                        name : 'Postadresse: Postboks 757, 2204 Kongsvinger', 
+                        href : ''
+                },
+                {
+                        name : 'Tips oss', 
+                        href : 'mailto:tips@glomdalen.no'
+                },
+                {
+                        name : 'Ansvarlig redaktør og daglig leder: Thor Sørum-Johansen', 
+                        href : 'mailto:thor.sorum-johansen@glomdalen.no'
+                },
+                {
+                        name : 'Personvernpolicy / Informasjonskapsler', 
+                        href : 'https://personvern.amedia.no/'
+                },
+                {
+                        name : 'Redaktørplakaten', 
+                        href : 'http://www.nored.no/Redaktoeransvar/Redaktoerplakaten'
+                },
+                {
+                        name : 'PFU', 
+                        href : 'http://presse.no/pfu/'
+                }
+        ]
+    });
+</script>
+
+
+</head>
+<body role="application" id="body">
+
+  <!-- Audience Report Tracking  -->
+  <img src="https://visitanalytics.userreport.com/hit.gif?t=ASNbf3dbad9"/>
+  <!-- End Audience Report Tracking -->
+    <div class="app">
+        <header class="app-header">
+            <div role="navigation" ng-if="::navbarCategory">
+                <clf-navbar data-category="::navbarCategory"></clf-navbar>
+            </div>
+            <div ui-yield-to="clf-navbar-sub"></div>
+        </header>
+
+        <div role="main" class="app-body default-background">
+            <ng-view></ng-view>
+        </div>
+
+        <clf-footer data-hide="hideFooter"></clf-footer>
+    </div>
+
+    <clf-menu ng-if="state" data-category="::navbarCategory" data-state="state"></clf-menu>
+    <clf-menu-hint ng-if="state.name=='realEstate'"></clf-menu-hint>
+    <div ui-yield-to="clf-ad-details"></div>
+    <div ui-yield-to="clf-job-application-form"></div>
+    <div ui-yield-to="clf-email-form"></div>
+    <div ui-yield-to="clf-tip-a-friend"></div>
+    <div ui-yield-to="clf-email-order-prospect"></div>
+    <div ui-yield-to="clf-scroll-up"></div>
+    <clf-email-customer-service></clf-email-customer-service>
+
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40913401-8');
+</script>
+
+
+    <!-- Hotjar Tracking Code for stillingledig -->
+    <script>
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:1182304,hjsv:6};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+
+</body>
+</html>

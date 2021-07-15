@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en-US" prefix="og: https://ogp.me/ns# fb: https://ogp.me/ns/fb# article: https://ogp.me/ns/article#" class="no-js no-svg">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="profile" href="http://gmpg.org/xfn/11">
+		<title>Microsoft Teams 2.0 will use half the memory, dropping Electron for Edge Webview2 &#8211; Tom Talks</title>
+<meta name='robots' content='max-image-preview:large' />
+<!-- Jetpack Site Verification Tags -->
+<meta name="google-site-verification" content="UVK6mIF_vYcHTIkBM16j3je2iE3WIZRLqrgrTAdlYQg" />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel='dns-prefetch' href='//jetpack.wordpress.com' />
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//s1.wp.com' />
+<link rel='dns-prefetch' href='//s2.wp.com' />
+<link rel='dns-prefetch' href='//public-api.wordpress.com' />
+<link rel='dns-prefetch' href='//0.gravatar.com' />
+<link rel='dns-prefetch' href='//1.gravatar.com' />
+<link rel='dns-prefetch' href='//2.gravatar.com' />
+<link rel="alternate" type="application/rss+xml" title="Tom Talks &raquo; Feed" href="https://tomtalks.blog/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Tom Talks &raquo; Comments Feed" href="https://tomtalks.blog/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Tom Talks &raquo; Microsoft Teams 2.0 will use half the memory, dropping Electron for Edge Webview2 Comments Feed" href="https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/feed/" />
+		<!-- This site uses the Google Analytics by MonsterInsights plugin v7.17.0 - Using Analytics tracking - https://www.monsterinsights.com/ -->
+							<script src="//www.googletagmanager.com/gtag/js?id=UA-8883848-5"  type="text/javascript" data-cfasync="false"></script>
+			<script type="text/javascript" data-cfasync="false">
+				var mi_version = '7.17.0';
+				var mi_track_user = true;
+				var mi_no_track_reason = '';
+				
+								var disableStr = 'ga-disable-UA-8883848-5';
+
+				/* Function to detect opted out users */
+				function __gtagTrackerIsOptedOut() {
+					return document.cookie.indexOf( disableStr + '=true' ) > - 1;
+				}
+
+				/* Disable tracking if the opt-out cookie exists. */
+				if ( __gtagTrackerIsOptedOut() ) {
+					window[disableStr] = true;
+				}
+
+				/* Opt-out function */
+				function __gtagTrackerOptout() {
+					document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+					window[disableStr] = true;
+				}
+
+				if ( 'undefined' === typeof gaOptout ) {
+					function gaOptout() {
+						__gtagTrackerOptout();
+					}
+				}
+								window.dataLayer = window.dataLayer || [];
+				if ( mi_track_user ) {
+					function __gtagTracker() {dataLayer.push( arguments );}
+					__gtagTracker( 'js', new Date() );
+					__gtagTracker( 'set', {
+						'developer_id.dZGIzZG' : true,
+						                    });
+					__gtagTracker( 'config', 'UA-8883848-5', {
+						forceSSL:true,					} );
+										window.gtag = __gtagTracker;										(
+						function () {
+							/* https://developers.google.com/analytics/devguides/collection/analyticsjs/ */
+							/* ga and __gaTracker compatibility shim. */
+							var noopfn = function () {
+								return null;
+							};
+							var newtracker = function () {
+								return new Tracker();
+							};
+							var Tracker = function () {
+								return null;
+							};
+							var p = Tracker.prototype;
+							p.get = noopfn;
+							p.set = noopfn;
+							p.send = function (){
+								var args = Array.prototype.slice.call(arguments);
+								args.unshift( 'send' );
+								__gaTracker.apply(null, args);
+							};
+							var __gaTracker = function () {
+								var len = arguments.length;
+								if ( len === 0 ) {
+									return;
+								}
+								var f = arguments[len - 1];
+								if ( typeof f !== 'object' || f === null || typeof f.hitCallback !== 'function' ) {
+									if ( 'send' === arguments[0] ) {
+										var hitConverted, hitObject = false, action;
+										if ( 'event' === arguments[1] ) {
+											if ( 'undefined' !== typeof arguments[3] ) {
+												hitObject = {
+													'eventAction': arguments[3],
+													'eventCategory': arguments[2],
+													'eventLabel': arguments[4],
+													'value': arguments[5] ? arguments[5] : 1,
+												}
+											}
+										}
+										if ( typeof arguments[2] === 'object' ) {
+											hitObject = arguments[2];
+										}
+										if ( typeof arguments[5] === 'object' ) {
+											Object.assign( hitObject, arguments[5] );
+										}
+										if ( 'undefined' !== typeof (
+											arguments[1].hitType
+										) ) {
+											hitObject = arguments[1];
+										}
+										if ( hitObject ) {
+											action = 'timing' === arguments[1].hitType ? 'timing_complete' : hitObject.eventAction;
+											hitConverted = mapArgs( hitObject );
+											__gtagTracker( 'event', action, hitConverted );
+										}
+									}
+									return;
+								}
+
+								function mapArgs( args ) {
+									var gaKey, hit = {};
+									var gaMap = {
+										'eventCategory': 'event_category',
+										'eventAction': 'event_action',
+										'eventLabel': 'event_label',
+										'eventValue': 'event_value',
+										'nonInteraction': 'non_interaction',
+										'timingCategory': 'event_category',
+										'timingVar': 'name',
+										'timingValue': 'value',
+										'timingLabel': 'event_label',
+									};
+									for ( gaKey in gaMap ) {
+										if ( 'undefined' !== typeof args[gaKey] ) {
+											hit[gaMap[gaKey]] = args[gaKey];
+										}
+									}
+									return hit;
+								}
+
+								try {
+									f.hitCallback();
+								} catch ( ex ) {
+								}
+							};
+							__gaTracker.create = newtracker;
+							__gaTracker.getByName = newtracker;
+							__gaTracker.getAll = function () {
+								return [];
+							};
+							__gaTracker.remove = noopfn;
+							__gaTracker.loaded = true;
+							window['__gaTracker'] = __gaTracker;
+						}
+					)();
+									} else {
+										console.log( "" );
+					( function () {
+							function __gtagTracker() {
+								return null;
+							}
+							window['__gtagTracker'] = __gtagTracker;
+							window['gtag'] = __gtagTracker;
+					} )();
+									}
+			</script>
+				<!-- / Google Analytics by MonsterInsights -->
+				<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/tomtalks.blog\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.7.2"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([55357,56424,8205,55356,57212],[55357,56424,8203,55356,57212])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css'  href='https://149371380.v2.pressablecdn.com/wp-includes/css/dist/block-library/style.min.css?ver=5.7.2' type='text/css' media='all' />
+<style id='wp-block-library-inline-css' type='text/css'>
+.has-text-align-justify{text-align:justify;}
+</style>
+<link rel='stylesheet' id='mediaelement-css'  href='https://149371380.v2.pressablecdn.com/wp-includes/js/mediaelement/mediaelementplayer-legacy.min.css?ver=4.2.16' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-mediaelement-css'  href='https://149371380.v2.pressablecdn.com/wp-includes/js/mediaelement/wp-mediaelement.min.css?ver=5.7.2' type='text/css' media='all' />
+<link rel='stylesheet' id='responsive-lightbox-featherlight-css'  href='https://149371380.v2.pressablecdn.com/wp-content/plugins/responsive-lightbox/assets/featherlight/featherlight.min.css?ver=2.3.2' type='text/css' media='all' />
+<link rel='stylesheet' id='responsive-lightbox-featherlight-gallery-css'  href='https://149371380.v2.pressablecdn.com/wp-content/plugins/responsive-lightbox/assets/featherlight/featherlight.gallery.min.css?ver=2.3.2' type='text/css' media='all' />
+<link rel='stylesheet' id='tve_leads_forms-css'  href='//tomtalks.blog/wp-content/plugins/thrive-leads/editor-layouts/css/frontend.css?ver=2.6.1' type='text/css' media='all' />
+<link rel='stylesheet' id='typology-fonts-css'  href='https://fonts.googleapis.com/css?family=Lora%3A400%7CJosefin+Sans%3A400%2C600&#038;subset=latin%2Clatin-ext&#038;ver=1.5.3' type='text/css' media='all' />
+<link rel='stylesheet' id='typology-main-css'  href='https://149371380.v2.pressablecdn.com/wp-content/themes/typology/assets/css/min.css?ver=1.5.3' type='text/css' media='all' />
+<style id='typology-main-inline-css' type='text/css'>
+body,blockquote:before, q:before{font-family: 'Lora';font-weight: 400;}body,.typology-action-button .sub-menu{color:#444444;}body{background:#f8f8f8;font-size: 2.0em;}.typology-fake-bg{background:#f8f8f8;}.typology-sidebar,.typology-section{background:#ffffff;}h1, h2, h3, h4, h5, h6,.h1, .h2, .h3, .h4, .h5, .h6,.submit,.mks_read_more a,input[type="submit"],input[type="button"],a.mks_button,.cover-letter,.post-letter,.woocommerce nav.woocommerce-pagination ul li span,.woocommerce nav.woocommerce-pagination ul li a,.woocommerce div.product .woocommerce-tabs ul.tabs li,.typology-pagination a,.typology-pagination span,.comment-author .fn,.post-date-month,.typology-button-social,.meks-instagram-follow-link a,.mks_autor_link_wrap a,.entry-pre-title,.typology-button,button,.wp-block-cover .wp-block-cover-image-text, .wp-block-cover .wp-block-cover-text, .wp-block-cover h2, .wp-block-cover-image .wp-block-cover-image-text, .wp-block-cover-image .wp-block-cover-text, .wp-block-cover-image h2,.wp-block-button__link{font-family: 'Josefin Sans';font-weight: 600;}.typology-header .typology-nav{font-family: 'Josefin Sans';font-weight: 600;}.typology-cover .entry-title,.typology-cover h1 { font-size: 5.0rem;}h1, .h1 {font-size: 3.5rem;}h2, .h2 {font-size: 3.5rem;}h3, .h3 {font-size: 2.8rem;}h4, .h4 {font-size: 2.3rem;}h5, .h5,.typology-layout-c.post-image-on .entry-title,blockquote, q {font-size: 1.8rem;}h6, .h6 {font-size: 1.5rem;}.widget{font-size: 1.4rem;}.typology-header .typology-nav a{font-size: 1.6rem;}.typology-layout-b .post-date-hidden,.meta-item{font-size: 1.8rem;}.post-letter {font-size: 26.0rem;}.typology-layout-c .post-letter{height: 26.0rem;}.cover-letter {font-size: 60.0rem;}h1, h2, h3, h4, h5, h6,.h1, .h2, .h3, .h4, .h5, .h6,h1 a,h2 a,h3 a,h4 a,h5 a,h6 a,.post-date-month{color:#333333;}.typology-single-sticky a{color:#444444;}.entry-title a:hover,.typology-single-sticky a:hover{color:#1e73be;}.bypostauthor .comment-author:before,#cancel-comment-reply-link:after{background:#1e73be;}a,.widget .textwidget a,.typology-layout-b .post-date-hidden{color: #1e73be;}.single .typology-section:first-child .section-content, .section-content-page, .section-content.section-content-a{max-width: 800px;}.typology-header{height:110px;}.typology-header-sticky-on .typology-header{background:#1e73be;}.cover-letter{padding-top: 110px;}.site-title a,.typology-site-description{color: #ffffff;}.typology-header .typology-nav,.typology-header .typology-nav > li > a{color: #ffffff;}.typology-header .typology-nav .sub-menu a{ color:#444444;}.typology-header .typology-nav .sub-menu a:hover{color: #1e73be;}.typology-action-button .sub-menu ul a:before{background: #1e73be;}.sub-menu .current-menu-item a{color:#1e73be;}.dot,.typology-header .typology-nav .sub-menu{background:#ffffff;}.typology-header .typology-main-navigation .sub-menu .current-menu-ancestor > a,.typology-header .typology-main-navigation .sub-menu .current-menu-item > a{color: #1e73be;}.typology-header-wide .slot-l{left: 35px;}.typology-header-wide .slot-r{right: 20px;}.meta-item,.meta-item span,.meta-item a,.comment-metadata a{color: #888888;}.comment-meta .url,.meta-item a:hover{color:#333333;}.typology-post:after,.section-title:after,.typology-pagination:before{background:rgba(51,51,51,0.2);}.typology-layout-b .post-date-day,.typology-outline-nav li a:hover,.style-timeline .post-date-day{color:#1e73be;}.typology-layout-b .post-date:after,blockquote:before,q:before{background:#1e73be;}.typology-sticky-c,.typology-sticky-to-top span,.sticky-author-date{color: #888888;}.typology-outline-nav li a{color: #444444;}.typology-post.typology-layout-b:before, .section-content-b .typology-ad-between-posts:before{background:rgba(68,68,68,0.1);}.submit,.mks_read_more a,input[type="submit"],input[type="button"],a.mks_button,.typology-button,.submit,.typology-button-social,.widget .mks_autor_link_wrap a,.widget .meks-instagram-follow-link a,.widget .mks_read_more a,button{color:#ffffff;background: #1e73be;border:1px solid #1e73be;}.button-invert{color:#1e73be;background:transparent;}.widget .mks_autor_link_wrap a:hover,.widget .meks-instagram-follow-link a:hover,.widget .mks_read_more a:hover{color:#ffffff;}.wp-block-button__link{background: #1e73be;}.typology-cover{min-height: 240px;}.typology-cover-empty{height:209px;min-height:209px;}.typology-fake-bg .typology-section:first-child {top: -99px;}.typology-flat .typology-cover-empty{height:110px;}.typology-flat .typology-cover{min-height:110px;}.typology-cover-empty,.typology-cover,.typology-header-sticky{background: #1e73be;;}.typology-cover-overlay:after{background: rgba(30,115,190,0.6);}.typology-sidebar-header{background:#1e73be;}.typology-cover,.typology-cover .entry-title,.typology-cover .entry-title a,.typology-cover .meta-item,.typology-cover .meta-item span,.typology-cover .meta-item a,.typology-cover h1,.typology-cover h2,.typology-cover h3{color: #ffffff;}.typology-cover .typology-button{color: #1e73be;background:#ffffff;border:1px solid #ffffff;}.typology-cover .button-invert{color: #ffffff;background: transparent;}.typology-cover-slider .owl-dots .owl-dot span{background:#ffffff;}.typology-outline-nav li:before,.widget ul li:before{background:#1e73be;}.widget a{color:#444444;}.widget a:hover,.widget_calendar table tbody td a,.entry-tags a:hover{color:#1e73be;}.widget_calendar table tbody td a:hover,.widget table td,.entry-tags a{color:#444444;}.widget table,.widget table td,.widget_calendar table thead th,table,td, th{border-color: rgba(68,68,68,0.3);}.widget ul li,.widget .recentcomments{color:#444444;}.widget .post-date{color:#888888;}#today{background:rgba(68,68,68,0.1);}.typology-pagination .current, .typology-pagination .infinite-scroll a, .typology-pagination .load-more a, .typology-pagination .nav-links .next, .typology-pagination .nav-links .prev, .typology-pagination .next a, .typology-pagination .prev a{color: #ffffff;background:#333333;}.typology-pagination a, .typology-pagination span{color: #333333;border:1px solid #333333;}.typology-footer{background:#f8f8f8;color:#aaaaaa;}.typology-footer h1,.typology-footer h2,.typology-footer h3,.typology-footer h4,.typology-footer h5,.typology-footer h6,.typology-footer .post-date-month{color:#aaaaaa;}.typology-count{background: #1e73be;}.typology-footer a, .typology-footer .widget .textwidget a{color: #888888;}input[type="text"], input[type="email"], input[type="url"], input[type="tel"], input[type="number"], input[type="date"], input[type="password"], textarea, select{border-color:rgba(68,68,68,0.2);}blockquote:after, blockquote:before, q:after, q:before{-webkit-box-shadow: 0 0 0 10px #ffffff;box-shadow: 0 0 0 10px #ffffff;}pre,.entry-content #mc_embed_signup{background: rgba(68,68,68,0.1);}body.wp-editor,{background:#ffffff;}.site-title{text-transform: none;}.typology-site-description{text-transform: none;}.typology-nav{text-transform: none;}h1, h2, h3, h4, h5, h6, .wp-block-cover-text, .wp-block-cover-image-text{text-transform: none;}.section-title{text-transform: none;}.widget-title{text-transform: none;}.meta-item{text-transform: none;}.typology-button{text-transform: none;}
+</style>
+<link rel='stylesheet' id='jetpack_css-css'  href='https://149371380.v2.pressablecdn.com/wp-content/plugins/jetpack/css/jetpack.css?ver=9.9' type='text/css' media='all' />
+<script type='text/javascript' id='monsterinsights-frontend-script-js-extra'>
+/* <![CDATA[ */
+var monsterinsights_frontend = {"js_events_tracking":"true","download_extensions":"doc,pdf,ppt,zip,xls,docx,pptx,xlsx","inbound_paths":"[{\"path\":\"\\\/out\\\/\",\"label\":\"out\"}]","home_url":"https:\/\/tomtalks.blog","hash_tracking":"false","ua":"UA-8883848-5"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://149371380.v2.pressablecdn.com/wp-content/plugins/google-analytics-for-wordpress/assets/js/frontend-gtag.min.js?ver=7.17.0' id='monsterinsights-frontend-script-js'></script>
+<script type='text/javascript' src='https://149371380.v2.pressablecdn.com/wp-includes/js/jquery/jquery.min.js?ver=3.5.1' id='jquery-core-js'></script>
+<script type='text/javascript' src='https://149371380.v2.pressablecdn.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<script type='text/javascript' src='https://149371380.v2.pressablecdn.com/wp-content/plugins/responsive-lightbox/assets/infinitescroll/infinite-scroll.pkgd.min.js?ver=5.7.2' id='responsive-lightbox-infinite-scroll-js'></script>
+<script type='text/javascript' src='https://149371380.v2.pressablecdn.com/wp-includes/js/imagesloaded.min.js?ver=4.1.4' id='imagesloaded-js'></script>
+<script type='text/javascript' src='https://149371380.v2.pressablecdn.com/wp-includes/js/masonry.min.js?ver=4.2.2' id='masonry-js'></script>
+<script type='text/javascript' src='https://149371380.v2.pressablecdn.com/wp-includes/js/jquery/jquery.masonry.min.js?ver=3.1.2b' id='jquery-masonry-js'></script>
+<script type='text/javascript' id='tve_frontend-js-extra'>
+/* <![CDATA[ */
+var tve_frontend_options = {"is_editor_page":"","page_events":[],"is_single":"1","ajaxurl":"https:\/\/tomtalks.blog\/wp-admin\/admin-ajax.php","social_fb_app_id":"","dash_url":"https:\/\/tomtalks.blog\/wp-content\/plugins\/thrive-leads\/thrive-dashboard","translations":{"Copy":"Copy"},"post_id":"12803","ip":"108.184.165.91","current_user":[],"post_title":"Microsoft Teams 2.0 will use half the memory, dropping Electron for Edge Webview2","post_type":"post","post_url":"https:\/\/tomtalks.blog\/2021\/06\/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2\/","is_lp":"","post_request_data":[]};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://149371380.v2.pressablecdn.com/wp-content/plugins/thrive-leads/tcb/editor/js/dist/modules/general.min.js?ver=2.8.1' id='tve_frontend-js'></script>
+<script type='text/javascript' src='https://149371380.v2.pressablecdn.com/wp-content/plugins/wp-hide-post/public/js/wp-hide-post-public.js?ver=2.0.10' id='wp-hide-post-js'></script>
+<link rel="https://api.w.org/" href="https://tomtalks.blog/wp-json/" /><link rel="alternate" type="application/json" href="https://tomtalks.blog/wp-json/wp/v2/posts/12803" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://tomtalks.blog/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://tomtalks.blog/wp-includes/wlwmanifest.xml" /> 
+
+<link rel="canonical" href="https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/" />
+<link rel="alternate" type="application/json+oembed" href="https://tomtalks.blog/wp-json/oembed/1.0/embed?url=https%3A%2F%2Ftomtalks.blog%2F2021%2F06%2Fmicrosoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://tomtalks.blog/wp-json/oembed/1.0/embed?url=https%3A%2F%2Ftomtalks.blog%2F2021%2F06%2Fmicrosoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2%2F&#038;format=xml" />
+			<script type="text/javascript">
+					(function(c,l,a,r,i,t,y){
+						c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;
+						t.src="https://www.clarity.ms/tag/"+i+"?ref=wordpress";y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+					})(window, document, "clarity", "script", "57wlgtuidz");
+			</script>
+		<style type='text/css'>img#wpstats{display:none}</style>
+		<style type="text/css" id="tve_global_variables">:root{}</style>
+
+<!-- social and search optimization by WPSSO Core v8.34.0 - https://wpsso.com/ -->
+<!-- wpsso meta tags begin -->
+<meta name="wpsso:mark:begin" content="wpsso meta tags begin"/>
+<!-- generator:1 --><meta name="generator" content="WPSSO Core 8.34.0/S"/>
+<link rel="shortlink" href="https://tomtalks.blog/?p=12803"/>
+<meta property="fb:app_id" content="966242223397117"/>
+<meta property="og:type" content="article"/>
+<meta property="og:url" content="https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:site_name" content="Tom Talks"/>
+<meta property="og:title" content="Microsoft Teams 2.0 will use half the memory, dropping Electron..."/>
+<meta property="og:description" content="Credit to Brad Sams for first reporting on this, Alongside the Windows 11 announcement today, Rish Tandon, the CVP Engineering for Microsoft Teams, posted on Twitter about changes coming to Microsoft Teams architecture. It gave a lot of useful insight into what is coming. Microsoft Teams is..."/>
+<meta property="og:updated_time" content="2021-06-30T08:11:56+00:00"/>
+<!-- og:image:1 --><meta property="og:image" content="https://149371380.v2.pressablecdn.com/wp-content/uploads/2021/06/image-60.png"/>
+<!-- og:image:1 --><meta property="og:image:width" content="1024"/>
+<!-- og:image:1 --><meta property="og:image:height" content="676"/>
+<meta property="article:published_time" content="2021-06-24T20:23:00+00:00"/>
+<meta property="article:modified_time" content="2021-06-30T08:11:56+00:00"/>
+<!-- article:tag:1 --><meta property="article:tag" content="edge"/>
+<!-- article:tag:2 --><meta property="article:tag" content="electron"/>
+<!-- article:tag:3 --><meta property="article:tag" content="MicrosoftTeams"/>
+<meta name="twitter:domain" content="tomtalks.blog"/>
+<meta name="twitter:title" content="Microsoft Teams 2.0 will use half the memory, dropping Electron..."/>
+<meta name="twitter:description" content="Credit to Brad Sams for first reporting on this, Alongside the Windows 11 announcement today, Rish Tandon, the CVP Engineering for Microsoft Teams, posted on Twitter about changes coming to..."/>
+<meta name="twitter:creator" content="@tomarbuthnot"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://149371380.v2.pressablecdn.com/wp-content/uploads/2021/06/image-60.png?p=12803"/>
+<meta name="twitter:label1" content="Written by"/>
+<meta name="twitter:data1" content="Tom Arbuthnot"/>
+<meta name="twitter:label2" content="Est. reading time"/>
+<meta name="twitter:data2" content="3 minutes"/>
+<link itemprop="url" href="https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/"/>
+<meta itemprop="name" content="Microsoft Teams 2.0 will use half the memory, dropping Electron for Edge Webview2"/>
+<meta itemprop="alternatename" content="Microsoft Teams 2.0 will use half the memory, dropping Electron..."/>
+<meta itemprop="description" content="Credit to Brad Sams for first reporting on this, Alongside the Windows 11 announcement today, Rish Tandon, the CVP Engineering for Microsoft Teams, posted on Twitter about changes coming to Microsoft Teams architecture. It gave a lot of useful..."/>
+<link itemprop="thumbnailurl" href="https://149371380.v2.pressablecdn.com/wp-content/uploads/2021/06/image-60.png"/>
+<meta name="author" content="Tom Arbuthnot"/>
+<meta name="thumbnail" content="https://149371380.v2.pressablecdn.com/wp-content/uploads/2021/06/image-60.png"/>
+<meta name="wpsso:mark:end" content="wpsso meta tags end"/>
+<!-- wpsso meta tags end -->
+<!-- added on 2021-07-12T19:13:31+00:00 in 0.000670 secs from https://tomtalks.blog -->
+
+<meta name="description" content="Credit to Brad Sams for first reporting on this, Alongside the Windows 11 announcement today, Rish Tandon, the CVP Engineering for Microsoft Teams, posted on Twitter about changes coming to Microsoft Teams architecture. It gave a lot of useful insight into what is coming. Microsoft Teams is moving away from Electron to Edge Webview2 Angular&hellip;" />
+<style type="text/css" id="thrive-default-styles"></style><link rel="icon" href="https://149371380.v2.pressablecdn.com/wp-content/uploads/2017/11/cropped-Tom-Arbuthont-headshot-2017-32x32.jpg" sizes="32x32" />
+<link rel="icon" href="https://149371380.v2.pressablecdn.com/wp-content/uploads/2017/11/cropped-Tom-Arbuthont-headshot-2017-192x192.jpg" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://149371380.v2.pressablecdn.com/wp-content/uploads/2017/11/cropped-Tom-Arbuthont-headshot-2017-180x180.jpg" />
+<meta name="msapplication-TileImage" content="https://149371380.v2.pressablecdn.com/wp-content/uploads/2017/11/cropped-Tom-Arbuthont-headshot-2017-270x270.jpg" />
+	</head>
+
+	<body class="post-template-default single single-post postid-12803 single-format-standard typology-header-wide typology-v_1_5_3">
+
+		<header id="typology-header" class="typology-header">
+			<div class="container">
+					<div class="slot-l">
+	<div class="typology-site-branding">
+	
+	<span class="site-title h4"><a href="https://tomtalks.blog/" rel="home">Tom Talks</a></span>		<span class="typology-site-description">Microsoft Teams and Microsoft 365 news and opinions</span>
+
+</div>
+	
+</div>
+
+<div class="slot-r">
+				<ul id="menu-primary-menu" class="typology-nav typology-main-navigation"><li id="menu-item-8843" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8843"><a href="https://tomtalks.blog/tomsemailupdate/">Tom&#8217;s Email Update</a></li>
+<li id="menu-item-8774" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8774"><a href="https://tomtalks.blog/microsoft-teams-monthly-podcast/">Microsoft Teams Podcast</a></li>
+<li id="menu-item-3257" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3257"><a href="https://tomtalks.blog/tom-arbuthnot/">Tom Arbuthnot</a></li>
+</ul>			
+	<ul class="typology-nav typology-actions-list">
+    <li class="typology-actions-button typology-action-search">
+	<span>
+		<i class="fa fa-search"></i>
+	</span>
+	<ul class="sub-menu">
+		<li>
+			<form class="typology-search-form" action="https://tomtalks.blog/" method="get">
+	<input name="s" type="text" value="" placeholder="Type here to search..." />
+	<button type="submit" class="typology-button typology-button-search typology-icon-button">Search</button> 
+	</form>		</li>
+	</ul>
+</li><li class="typology-action-button typology-action-sidebar typology-mobile-visible">
+		<span>
+			<i class="fa fa-bars"></i>
+		</span>
+</li>
+</ul></div>			</div>
+		</header>
+	
+			
+        				<div id="typology-cover" class="typology-cover typology-cover-empty">
+            		</div>
+		<div class="typology-fake-bg">
+			<div class="typology-section">
+				    
+				<div class="section-content">
+    <article id="post-12803" class="typology-post typology-single-post post-12803 post type-post status-publish format-standard has-post-thumbnail hentry category-microsoft category-microsoft365 category-microsoftteams tag-edge tag-electron tag-microsoftteams">
+	
+	            
+            <header class="entry-header">
+
+                <h1 class="entry-title entry-title-cover-empty">Microsoft Teams 2.0 will use half the memory, dropping Electron for Edge Webview2</h1>
+                                    <div class="entry-meta"><div class="meta-item meta-author">By <span class="vcard author"><span class="fn"><a href="https://tomtalks.blog/author/tom/">Tom Arbuthnot</a></span></span></div><div class="meta-item meta-date"><span class="updated">June 24, 2021</span></div><div class="meta-item meta-rtime">3 Min read</div><div class="meta-item meta-comments"><a href="https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/#comments">16 comments</a></div></div>
+                
+                
+            </header>
+
+                
+        <div class="entry-content clearfix">
+                        
+            
+            <p><a href="https://149371380.v2.pressablecdn.com/wp-content/uploads/2021/06/image-60.png" data-rel="lightbox-image-0" data-rl_title="" data-rl_caption="" title=""><img loading="lazy" style="border: 0px currentcolor; display: inline; background-image: none;" title="image" src="https://149371380.v2.pressablecdn.com/wp-content/uploads/2021/06/image_thumb-59.png" alt="image" width="640" height="423" border="0" /></a></p>
+<p>Credit to <a href="https://petri.com/microsoft-teams-2-0-will-deliver-big-performance-improvements" target="_blank" rel="noopener">Brad Sams</a> for first reporting on this, Alongside the Windows 11 announcement today, <a href="https://www.linkedin.com/in/rishtandon/" target="_blank" rel="noopener">Rish Tandon</a>, the CVP Engineering for Microsoft Teams, <a href="https://twitter.com/rishmsft/status/1408085784016539653">posted on Twitter</a> about changes coming to Microsoft Teams architecture. It gave a lot of useful insight into what is coming.</p>
+<ul>
+<li>Microsoft Teams is moving away from Electron to Edge Webview2</li>
+<li>Angular has gone. Teams is now 100% on reactjs</li>
+<li>Teams is also leveraging apollo graphql</li>
+<li>“Teams 2.0”, a name Rish coins in his tweet, but I suspect not an actual product name/version, launches with Windows 11 and consumer accounts then commercial will move to the same architecture</li>
+<li>Teams/Microsoft will continue to contribute back to apollo, graphql, reactjs, chromium projects</li>
+</ul>
+<h2>So what does this all mean?</h2>
+<p>If you are not interested in the detail, the punchline is Teams is moving to a more performant and more Microsoft controlled technology stack, meaning a better and more performance client experience. If you want the detail read on….</p>
+<p>Today Microsoft Teams uses Electron. Electron is a framework for creating desktop applications with web technologies like JavaScript, HTML, and CSS. It’s popular with some developers for its flexibility, but it’s also a well-documented memory hog. Microsoft even has a Teams documentation page explaining <a href="https://docs.microsoft.com/en-us/microsoftteams/teams-memory-usage-perf" target="_blank" rel="noopener">why Microsoft Teams might have high memory use</a>.</p>
+<p>Electron uses Chromium for rendering and Chromium’s behaviour is to detect how much system memory is available and utilizes enough of that memory to optimize the rendering experience. If other apps or services signal that they require system memory, Chromium gives up memory to those processes. This matters a lot less on high-end PC’s with lots of RAM, but as you get to less performance machines with less RAM, for example often the choice in education to hit an aggressive price point, performance can really suffer.</p>
+<p>Beyond just memory usage there are other benefits to Edge Webview2</p>
+<h2>What is Edge Webview2?</h2>
+<p>Microsoft Edge WebView2 control allows you to embed web technologies (HTML, CSS, and JavaScript) in native apps. So now Microsoft Teams will be leveraging another Microsoft lead technology, rather than needing to wait on and leverage and integrate Electron, a separate open-source project.</p>
+<p>If an app is written in what is called “Evergreen distribution mode” the WebView2 Runtime is updated automatically so there is no need for the developer to manage it.</p>
+<p>All apps that use the Evergreen distribution mode use a shared copy of the Evergreen WebView2 Runtime, meaning it does not have to be distributed by each app, reducing the app size, meaning a smaller app to download and update.</p>
+<p>Microsoft has been <a href="https://office365itpros.com/2021/03/08/edge-webview2-runtime/" target="_blank" rel="noopener">pushing Edge WebView2 Runtime on PCs with Microsoft 365 Apps for Enterprise</a>, WebView2 is already leveraged by the Outlook team in OWA Powered Experiences (OPX)</p>
+<p><a href="https://149371380.v2.pressablecdn.com/wp-content/uploads/2021/06/image-61.png" data-rel="lightbox-image-1" data-rl_title="" data-rl_caption="" title=""><img loading="lazy" style="border: 0px currentcolor; display: inline; background-image: none;" title="image" src="https://149371380.v2.pressablecdn.com/wp-content/uploads/2021/06/image_thumb-60.png" alt="image" width="477" height="480" border="0" /></a></p>
+<p>&nbsp;</p>
+<h2>Windows 11 / Teams consumer version first</h2>
+<p>At the Windows 11 launch event today we saw that Teams will be integrated into Windows. This will be Teams consumer and it will be the first client to leverage Edge Webview2. Later the enterprise version of teams will move away from Electron to Edge Webview2</p>
+<p>Stay <a href="https://tomtalks.blog/tomsemailupdate/" target="_blank" rel="noopener">tuned to the blog</a> for more on the new Teams client as it rolls out.</p>
+<p>&nbsp;</p>
+<p>Reference:</p>
+<p><a href="https://blog.thoughtstuff.co.uk/2021/06/electron-to-webview2-what-does-it-really-mean-for-the-teams-desktop-client-and-for-a-client-sdk/" target="_blank" rel="noopener">Electron to WebView2 – What does it really mean for the Teams desktop client, and for a Client SDK?</a></p>
+<p><a href="https://docs.microsoft.com/en-gb/microsoft-edge/webview2/" target="_blank" rel="noopener">Introduction to Microsoft Edge WebView2</a></p>
+<p><a href="https://medium.com/young-coder/the-most-exciting-part-of-microsoft-edge-is-webview2-584ac27fb788" target="_blank" rel="noopener">The Most Exciting Part of Microsoft Edge is WebView2</a></p>
+<p><a href="https://docs.microsoft.com/en-us/microsoft-edge/webview2/concepts/distribution" target="_blank" rel="noopener">Distribution of apps using WebView2</a></p>
+<p>&nbsp;</p>
+<p><a href="https://149371380.v2.pressablecdn.com/wp-content/uploads/2021/06/image-62.png" data-rel="lightbox-image-2" data-rl_title="" data-rl_caption="" title=""><img loading="lazy" style="border: 0px currentcolor; display: inline; background-image: none;" title="image" src="https://149371380.v2.pressablecdn.com/wp-content/uploads/2021/06/image_thumb-61.png" alt="image" width="583" height="909" border="0" /></a></p>
+<span id="tve_leads_end_content" style="display: block; visibility: hidden; border: 1px solid transparent;"></span><span style="display:none" class="tl-placeholder-f-type-post_footer"></span>
+                        
+                            <div class="entry-tags"><a href="https://tomtalks.blog/tag/edge/" rel="tag">edge</a> <a href="https://tomtalks.blog/tag/electron/" rel="tag">electron</a> <a href="https://tomtalks.blog/tag/microsoftteams/" rel="tag">MicrosoftTeams</a></div>
+            
+        </div>
+        
+                             
+    </article>
+</div>
+				
+	<div class="section-head"><h3 class="section-title h6">About the author</h3></div>	
+	
+		<div class="section-content typology-author">
+				
+			<div class="container">
+
+				<div class="col-lg-2">
+					<img alt='' src='https://secure.gravatar.com/avatar/e5c330dc084725fd164b466cc46b21ad?s=100&#038;d=wavatar&#038;r=pg' srcset='https://secure.gravatar.com/avatar/e5c330dc084725fd164b466cc46b21ad?s=200&#038;d=wavatar&#038;r=pg 2x' class='avatar avatar-100 photo' height='100' width='100' loading='lazy' data-pin-nopin="nopin"/>				</div>
+
+				<div class="col-lg-10">
+
+					<h5 class="typology-author-box-title">Tom Arbuthnot</h5>
+					<div class="typology-author-desc">
+						<p>A Microsoft MVP and Microsoft Certified Master, Tom Arbuthnot is Principal Solutions Architect at Microsoft Collaboration specialists Modality Systems. </p>
+<p>Tom stays up to date with industry developments and shares news and his opinions on his blog, Microsoft Teams Podcast and email list. He is a regular speaker at events around the world.</p>
+					</div>
+
+					<div class="typology-author-links">
+						<a class="typology-button-social hover-on" href="https://tomtalks.blog/author/tom/">View all posts</a><a href="https://www.linkedin.com/in/tomarbuthnot/" target="_blank" class="typology-icon-social hover-on fa fa-linkedin"></a><a href="https://twitter.com/@tomarbuthnot" target="_blank" class="typology-icon-social hover-on fa fa-twitter"></a>					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+			
+
+
+				
+	
+				
+		<div class="section-head"><h3 class="section-title h6">16 comments</h3></div>
+		<div id="comments" class="section-content typology-comments">
+
+			
+		<div id="respond" class="comment-respond">
+							<h3 id="reply-title" class="comment-reply-title">Leave a Reply					<small><a rel="nofollow" id="cancel-comment-reply-link" href="/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/#respond" style="display:none;">Cancel reply</a></small>
+				</h3>
+						<form id="commentform" class="comment-form">
+				<iframe
+					title="Comment Form"
+					src="https://jetpack.wordpress.com/jetpack-comment/?blogid=154607545&#038;postid=12803&#038;comment_registration=0&#038;require_name_email=1&#038;stc_enabled=0&#038;stb_enabled=0&#038;show_avatars=1&#038;avatar_default=wavatar&#038;greeting=Leave+a+Reply&#038;greeting_reply=Leave+a+Reply+to+%25s&#038;color_scheme=light&#038;lang=en_US&#038;jetpack_version=9.9&#038;show_cookie_consent=10&#038;has_cookie_consent=0&#038;token_key=%3Bnormal%3B&#038;sig=4a6fdd4e523586fbdc69f8751a82d3a4b3ea0cca#parent=https%3A%2F%2Ftomtalks.blog%2F2021%2F06%2Fmicrosoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2%2F"
+											name="jetpack_remote_comment"
+						style="width:100%; height: 430px; border:0;"
+										class="jetpack_remote_comment"
+					id="jetpack_remote_comment"
+					sandbox="allow-same-origin allow-top-navigation allow-scripts allow-forms allow-popups"
+				>
+									</iframe>
+									<!--[if !IE]><!-->
+					<script>
+						document.addEventListener('DOMContentLoaded', function () {
+							var commentForms = document.getElementsByClassName('jetpack_remote_comment');
+							for (var i = 0; i < commentForms.length; i++) {
+								commentForms[i].allowTransparency = false;
+								commentForms[i].scrolling = 'no';
+							}
+						});
+					</script>
+					<!--<![endif]-->
+							</form>
+		</div>
+
+		
+		<input type="hidden" name="comment_parent" id="comment_parent" value="" />
+
+		<p class="akismet_comment_form_privacy_notice">This site uses Akismet to reduce spam. <a href="https://akismet.com/privacy/" target="_blank" rel="nofollow noopener">Learn how your comment data is processed</a>.</p>			
+			
+				<ul class="comment-list">
+											<li id="comment-132199" class="pingback even thread-even depth-1">
+			<article id="div-comment-132199" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+												<b class="fn"><a href='https://coverstory.ph/microsoft-teams-will-be-abandoning-electron-with-big-improvements-expected-mspoweruser-mspoweruser/' rel='external nofollow ugc' class='url'>Microsoft Teams will be abandoning Electron, with big improvements expected &#8211; MSPoweruser &#8211; MSPoweruser &#8211; CoverStory</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/#comment-132199"><time datetime="2021-06-25T03:43:49+00:00">June 25, 2021 at 03:43</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>[&#8230;] Microsoft Teams 2.0 will use half the memory, dropping Electron&#8230; &#8211; Tom Talks Blog [&#8230;]</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/?replytocom=132199#respond' data-commentid="132199" data-postid="12803" data-belowelement="div-comment-132199" data-respondelement="respond" data-replyto="Reply to Microsoft Teams will be abandoning Electron, with big improvements expected &#8211; MSPoweruser &#8211; MSPoweruser &#8211; CoverStory" aria-label='Reply to Microsoft Teams will be abandoning Electron, with big improvements expected &#8211; MSPoweruser &#8211; MSPoweruser &#8211; CoverStory'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-132203" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-132203" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/55fc160834a23d6478eeae092de36fad?s=80&#038;d=wavatar&#038;r=pg' srcset='https://secure.gravatar.com/avatar/55fc160834a23d6478eeae092de36fad?s=160&#038;d=wavatar&#038;r=pg 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy' data-pin-nopin="nopin"/>						<b class="fn">James Edge</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/#comment-132203"><time datetime="2021-06-26T12:22:56+00:00">June 26, 2021 at 12:22</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Meh, the big design flaw with teams isn&#8217;t the memory usage its the HDD space used.  Because it installs to appdata instead of program files it has to install a seperate copy for every user.</p>
+<p>I&#8217;ve lost count of the times we&#8217;ve had to repair or reimage machines because they became ususable or straight up failed to boot due to having 30-90GB of teams installations on the drive &gt;.&gt;</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/?replytocom=132203#respond' data-commentid="132203" data-postid="12803" data-belowelement="div-comment-132203" data-respondelement="respond" data-replyto="Reply to James Edge" aria-label='Reply to James Edge'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-132205" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-132205" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/9f29754d638f0eeb91ce8a84ff60cab6?s=80&#038;d=wavatar&#038;r=pg' srcset='https://secure.gravatar.com/avatar/9f29754d638f0eeb91ce8a84ff60cab6?s=160&#038;d=wavatar&#038;r=pg 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy' data-pin-nopin="nopin"/>						<b class="fn">David Weinehall</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/#comment-132205"><time datetime="2021-06-26T13:56:04+00:00">June 26, 2021 at 13:56</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>How will this affect the Linux version of Teams?</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/?replytocom=132205#respond' data-commentid="132205" data-postid="12803" data-belowelement="div-comment-132205" data-respondelement="respond" data-replyto="Reply to David Weinehall" aria-label='Reply to David Weinehall'>Reply</a></div>			</article><!-- .comment-body -->
+		<ul class="children">
+		<li id="comment-132206" class="comment byuser comment-author-tom bypostauthor odd alt depth-2 parent">
+			<article id="div-comment-132206" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/e5c330dc084725fd164b466cc46b21ad?s=80&#038;d=wavatar&#038;r=pg' srcset='https://secure.gravatar.com/avatar/e5c330dc084725fd164b466cc46b21ad?s=160&#038;d=wavatar&#038;r=pg 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy' data-pin-nopin="nopin"/>						<b class="fn">Tom Arbuthnot</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/#comment-132206"><time datetime="2021-06-26T14:15:42+00:00">June 26, 2021 at 14:15</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Great question. Same one for Mac. I’ll see what I can find out. </p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/?replytocom=132206#respond' data-commentid="132206" data-postid="12803" data-belowelement="div-comment-132206" data-respondelement="respond" data-replyto="Reply to Tom Arbuthnot" aria-label='Reply to Tom Arbuthnot'>Reply</a></div>			</article><!-- .comment-body -->
+		<ul class="children">
+		<li id="comment-132207" class="comment even depth-3">
+			<article id="div-comment-132207" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/a977ad07f78fcacbebee23d5676a0dc6?s=80&#038;d=wavatar&#038;r=pg' srcset='https://secure.gravatar.com/avatar/a977ad07f78fcacbebee23d5676a0dc6?s=160&#038;d=wavatar&#038;r=pg 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy' data-pin-nopin="nopin"/>						<b class="fn">James</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/#comment-132207"><time datetime="2021-06-26T14:37:18+00:00">June 26, 2021 at 14:37</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Edge Webview2 is being ported to Mac first, then Linux, so presumably Teams will follow.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/?replytocom=132207#respond' data-commentid="132207" data-postid="12803" data-belowelement="div-comment-132207" data-respondelement="respond" data-replyto="Reply to James" aria-label='Reply to James'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-132220" class="comment odd alt depth-3">
+			<article id="div-comment-132220" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/4b9a420cec3fc47484a624fbb52690a9?s=80&#038;d=wavatar&#038;r=pg' srcset='https://secure.gravatar.com/avatar/4b9a420cec3fc47484a624fbb52690a9?s=160&#038;d=wavatar&#038;r=pg 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy' data-pin-nopin="nopin"/>						<b class="fn">Abraham</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/#comment-132220"><time datetime="2021-06-28T02:41:45+00:00">June 28, 2021 at 02:41</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Find out anything ?</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/?replytocom=132220#respond' data-commentid="132220" data-postid="12803" data-belowelement="div-comment-132220" data-respondelement="respond" data-replyto="Reply to Abraham" aria-label='Reply to Abraham'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-132208" class="comment even thread-odd thread-alt depth-1">
+			<article id="div-comment-132208" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/a7ee67c28ff02f88d9fe210c998286d5?s=80&#038;d=wavatar&#038;r=pg' srcset='https://secure.gravatar.com/avatar/a7ee67c28ff02f88d9fe210c998286d5?s=160&#038;d=wavatar&#038;r=pg 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy' data-pin-nopin="nopin"/>						<b class="fn">Jordan</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/#comment-132208"><time datetime="2021-06-26T14:40:14+00:00">June 26, 2021 at 14:40</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>That&#8217;s definitely a good news,<br />
+But what about being able to manage updates through SCCM/MECM?<br />
+I sincerely hope Microsoft will move on this soon because we are really scared to stop using Skype4Buisness because of that. We have a lot of users behind VSAT connections and we cannot afford to have every client downloading their own updates, this will clearly kill our bandwidth at some times.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/?replytocom=132208#respond' data-commentid="132208" data-postid="12803" data-belowelement="div-comment-132208" data-respondelement="respond" data-replyto="Reply to Jordan" aria-label='Reply to Jordan'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-132209" class="pingback odd alt thread-even depth-1">
+			<article id="div-comment-132209" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+												<b class="fn"><a href='https://breach74.com/blog/2021/06/26/microsoft-teams-2-0-will-use-half-the-memory-drop-electron/' rel='external nofollow ugc' class='url'>Microsoft Teams 2.0 will use half the memory, drop Electron &#8211; Cyber News Network</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/#comment-132209"><time datetime="2021-06-26T15:55:14+00:00">June 26, 2021 at 15:55</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>[&#8230;] Article URL: <a href="https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edg&#038;#8230" rel="nofollow ugc">https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edg&#038;#8230</a>; [&#8230;]</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/?replytocom=132209#respond' data-commentid="132209" data-postid="12803" data-belowelement="div-comment-132209" data-respondelement="respond" data-replyto="Reply to Microsoft Teams 2.0 will use half the memory, drop Electron &#8211; Cyber News Network" aria-label='Reply to Microsoft Teams 2.0 will use half the memory, drop Electron &#8211; Cyber News Network'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-132211" class="comment even thread-odd thread-alt depth-1">
+			<article id="div-comment-132211" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/4218965516c0b0eb42fbfe02ae87e745?s=80&#038;d=wavatar&#038;r=pg' srcset='https://secure.gravatar.com/avatar/4218965516c0b0eb42fbfe02ae87e745?s=160&#038;d=wavatar&#038;r=pg 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy' data-pin-nopin="nopin"/>						<b class="fn">Anurag singh</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/#comment-132211"><time datetime="2021-06-26T17:45:55+00:00">June 26, 2021 at 17:45</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thanks for information and update. What will be value added for enterprise customer part of service offering?</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/?replytocom=132211#respond' data-commentid="132211" data-postid="12803" data-belowelement="div-comment-132211" data-respondelement="respond" data-replyto="Reply to Anurag singh" aria-label='Reply to Anurag singh'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-132212" class="comment odd alt thread-even depth-1 parent">
+			<article id="div-comment-132212" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/0619bcdbd39cd24fa7f95ab17ee591ba?s=80&#038;d=wavatar&#038;r=pg' srcset='https://secure.gravatar.com/avatar/0619bcdbd39cd24fa7f95ab17ee591ba?s=160&#038;d=wavatar&#038;r=pg 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy' data-pin-nopin="nopin"/>						<b class="fn">Miu Ling</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/#comment-132212"><time datetime="2021-06-26T19:52:41+00:00">June 26, 2021 at 19:52</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Angular 2 is significantly more performant than react. This is for control, and to allow for the use of cheaper resources as they expand their reliance on outsourced partner labor.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/?replytocom=132212#respond' data-commentid="132212" data-postid="12803" data-belowelement="div-comment-132212" data-respondelement="respond" data-replyto="Reply to Miu Ling" aria-label='Reply to Miu Ling'>Reply</a></div>			</article><!-- .comment-body -->
+		<ul class="children">
+		<li id="comment-132213" class="comment even depth-2">
+			<article id="div-comment-132213" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/14a3cdfcbee197728d239e6386d8180e?s=80&#038;d=wavatar&#038;r=pg' srcset='https://secure.gravatar.com/avatar/14a3cdfcbee197728d239e6386d8180e?s=160&#038;d=wavatar&#038;r=pg 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy' data-pin-nopin="nopin"/>						<b class="fn">wintercounter</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/#comment-132213"><time datetime="2021-06-26T21:13:37+00:00">June 26, 2021 at 21:13</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>This is not really true. React gives you much more fine-grained control over performance than Angular. Incompetent developers and management, unreasonable business pressure/decisions that&#8217;s making softwares simply bad.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/?replytocom=132213#respond' data-commentid="132213" data-postid="12803" data-belowelement="div-comment-132213" data-respondelement="respond" data-replyto="Reply to wintercounter" aria-label='Reply to wintercounter'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-132216" class="pingback odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-132216" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+												<b class="fn"><a href='https://dmasior.com/hackernews-top-stories-63/' rel='external nofollow ugc' class='url'>HackerNews top stories #63 | Damian M?sior</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/#comment-132216"><time datetime="2021-06-27T11:20:27+00:00">June 27, 2021 at 11:20</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>[&#8230;] <a href="https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edg&#038;#8230" rel="nofollow ugc">https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edg&#038;#8230</a>; [&#8230;]</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/?replytocom=132216#respond' data-commentid="132216" data-postid="12803" data-belowelement="div-comment-132216" data-respondelement="respond" data-replyto="Reply to HackerNews top stories #63 | Damian M?sior" aria-label='Reply to HackerNews top stories #63 | Damian M?sior'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-132217" class="pingback even thread-even depth-1">
+			<article id="div-comment-132217" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+												<b class="fn"><a href='https://www.365forall.com/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2-blog-by-tomarbuthnot/' rel='external nofollow ugc' class='url'>Microsoft Teams 2.0 will use half the memory, dropping Electron for Edge Webview2 &#8211; blog by @tomarbuthnot</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/#comment-132217"><time datetime="2021-06-27T12:26:31+00:00">June 27, 2021 at 12:26</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>[&#8230;] Microsoft Teams 2.0 will use half the memory, dropping Electron for Edge Webview2 – Tom Talks [&#8230;]</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/?replytocom=132217#respond' data-commentid="132217" data-postid="12803" data-belowelement="div-comment-132217" data-respondelement="respond" data-replyto="Reply to Microsoft Teams 2.0 will use half the memory, dropping Electron for Edge Webview2 &#8211; blog by @tomarbuthnot" aria-label='Reply to Microsoft Teams 2.0 will use half the memory, dropping Electron for Edge Webview2 &#8211; blog by @tomarbuthnot'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-132219" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-132219" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/5693c8ab33e25d8d637aaf2dc4657703?s=80&#038;d=wavatar&#038;r=pg' srcset='https://secure.gravatar.com/avatar/5693c8ab33e25d8d637aaf2dc4657703?s=160&#038;d=wavatar&#038;r=pg 2x' class='avatar avatar-80 photo' height='80' width='80' loading='lazy' data-pin-nopin="nopin"/>						<b class="fn"><a href='https://www.zoonman.com' rel='external nofollow ugc' class='url'>Phil</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/#comment-132219"><time datetime="2021-06-28T02:39:17+00:00">June 28, 2021 at 02:39</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>The problem with Teams is not in used technologies.<br />
+It is implementation: a horrible UI/UX, bad code and countless number of bugs.<br />
+Product feels raw. Obviously it was cooked way too fast that supposed to be.<br />
+You need to invest in good people and time.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/?replytocom=132219#respond' data-commentid="132219" data-postid="12803" data-belowelement="div-comment-132219" data-respondelement="respond" data-replyto="Reply to Phil" aria-label='Reply to Phil'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-132224" class="pingback even thread-even depth-1">
+			<article id="div-comment-132224" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+												<b class="fn"><a href='https://grouvi.wordpress.com/2021/06/29/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2-tom-talks/' rel='external nofollow ugc' class='url'>Microsoft Teams 2.0 will use half the memory, dropping Electron for Edge Webview2 – Tom Talks &#8211; grouvi</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/#comment-132224"><time datetime="2021-06-29T11:11:43+00:00">June 29, 2021 at 11:11</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>[&#8230;] Source: Microsoft Teams 2.0 will use half the memory, dropping Electron for Edge Webview2 – Tom Talks [&#8230;]</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/?replytocom=132224#respond' data-commentid="132224" data-postid="12803" data-belowelement="div-comment-132224" data-respondelement="respond" data-replyto="Reply to Microsoft Teams 2.0 will use half the memory, dropping Electron for Edge Webview2 – Tom Talks &#8211; grouvi" aria-label='Reply to Microsoft Teams 2.0 will use half the memory, dropping Electron for Edge Webview2 – Tom Talks &#8211; grouvi'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-132225" class="pingback odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-132225" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+												<b class="fn"><a href='https://freelancehero.co/blog/2021/06/29/the-hybrid-workplace-were-all-feeling-our-way-who-grasps-the-whole-picture/' rel='external nofollow ugc' class='url'>The hybrid workplace &#8211; we&#8217;re all feeling our way, who grasps the whole picture? &#8211; My blog</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/#comment-132225"><time datetime="2021-06-29T15:46:08+00:00">June 29, 2021 at 15:46</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>[&#8230;] natch — which sees Teams replace Skype as the default video calling add-on to Windows. The Teams architecture is getting a makeover at the same time, [&#8230;]</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://tomtalks.blog/2021/06/microsoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2/?replytocom=132225#respond' data-commentid="132225" data-postid="12803" data-belowelement="div-comment-132225" data-respondelement="respond" data-replyto="Reply to The hybrid workplace &#8211; we&#8217;re all feeling our way, who grasps the whole picture? &#8211; My blog" aria-label='Reply to The hybrid workplace &#8211; we&#8217;re all feeling our way, who grasps the whole picture? &#8211; My blog'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+				</ul>
+			
+
+		</div>
+
+		<div class="typology-pagination typology-comments-pagination">
+					</div>
+
+				
+							</div>
+
+		
+	
+
+
+
+			<footer id="typology-footer" class="typology-footer">
+                
+                                
+                                    
+                    <div class="container">
+                        	
+	                                                	
+	                                                        <div class="col-lg-4 typology-footer-sidebar"></div>
+	                                                	
+	                                                    
+                    </div>
+
+                			</footer>
+
+		</div>
+
+		<div class="typology-sidebar">
+	<div class="typology-sidebar-header">
+		<div class="typology-sidebar-header-wrapper">
+			<div class="typology-site-branding">
+	
+	<span class="site-title h4"><a href="https://tomtalks.blog/" rel="home">Tom Talks</a></span>		<span class="typology-site-description">Microsoft Teams and Microsoft 365 news and opinions</span>
+
+</div>
+			<span class="typology-sidebar-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+		</div>
+	</div>
+
+	<div class="widget typology-responsive-menu">
+					<ul id="menu-primary-menu-1" class="typology-nav typology-main-navigation"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8843"><a href="https://tomtalks.blog/tomsemailupdate/">Tom&#8217;s Email Update</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8774"><a href="https://tomtalks.blog/microsoft-teams-monthly-podcast/">Microsoft Teams Podcast</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3257"><a href="https://tomtalks.blog/tom-arbuthnot/">Tom Arbuthnot</a></li>
+</ul>		</div>
+
+	
+</div>
+
+<div class="typology-sidebar-overlay"></div>		
+		<script type='text/javascript'>/**
+ * Displays toast message from storage, it is used when the user is redirected after login
+ */
+if ( window.sessionStorage ) {
+	window.addEventListener( 'load', function () {
+		var message = sessionStorage.getItem( 'tcb_toast_message' );
+
+		if ( message ) {
+			tcbToast( sessionStorage.getItem( 'tcb_toast_message' ), false );
+			sessionStorage.removeItem( 'tcb_toast_message' );
+		}
+	} );
+}
+
+/**
+ * Displays toast message
+ */
+function tcbToast( message, error, callback ) {
+	/* Also allow "message" objects */
+	if ( typeof message !== 'string' ) {
+		message = message.message || message.error || message.success;
+	}
+	if ( ! error ) {
+		error = false;
+	}
+
+	let _icon = 'checkmark',
+		_extra_class = '';
+	if ( error ) {
+		_icon = 'cross';
+		_extra_class = ' tve-toast-error';
+	}
+
+	jQuery( 'body' ).slideDown( 'fast', function () {
+		jQuery( 'body' ).prepend( '<div class="tvd-toast tve-fe-message"><div class="tve-toast-message"><div class="tve-toast-icon-container' + _extra_class + '"><span class="tve_tick thrv-svg-icon"><svg xmlns="http://www.w3.org/2000/svg" class="tcb-checkmark" style="width: 100%; height: 1em; stroke-width: 0; fill: #ffffff; stroke: #ffffff;" viewBox="0 0 32 32"><path d="M27 4l-15 15-7-7-5 5 12 12 20-20z"></path></svg></span></div><div class="tve-toast-message-container">' + message + '</div></div></div>' );
+	} );
+
+	setTimeout( function () {
+		jQuery( '.tvd-toast' ).hide();
+
+		if ( typeof callback === 'function' ) {
+			callback();
+		}
+
+	}, 3000 );
+}
+</script><span style="display:none" class="tl-placeholder-f-type-slide_in"></span><script type='text/javascript' src='https://149371380.v2.pressablecdn.com/wp-content/plugins/responsive-lightbox/assets/featherlight/featherlight.min.js?ver=2.3.2' id='responsive-lightbox-featherlight-js'></script>
+<script type='text/javascript' src='https://149371380.v2.pressablecdn.com/wp-content/plugins/responsive-lightbox/assets/featherlight/featherlight.gallery.min.js?ver=2.3.2' id='responsive-lightbox-featherlight-gallery-js'></script>
+<script type='text/javascript' src='https://149371380.v2.pressablecdn.com/wp-includes/js/underscore.min.js?ver=1.8.3' id='underscore-js'></script>
+<script type='text/javascript' id='responsive-lightbox-js-extra'>
+/* <![CDATA[ */
+var rlArgs = {"script":"featherlight","selector":"lightbox","customEvents":"","activeGalleries":"1","openSpeed":"250","closeSpeed":"250","closeOnClick":"background","closeOnEsc":"1","galleryFadeIn":"100","galleryFadeOut":"300","woocommerce_gallery":"0","ajaxurl":"https:\/\/tomtalks.blog\/wp-admin\/admin-ajax.php","nonce":"ded3c4718e"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://149371380.v2.pressablecdn.com/wp-content/plugins/responsive-lightbox/js/front.js?ver=2.3.2' id='responsive-lightbox-js'></script>
+<script type='text/javascript' src='//tomtalks.blog/wp-content/plugins/thrive-leads/js/frontend.min.js?ver=2.6.1' id='tve_leads_frontend-js'></script>
+<script type='text/javascript' src='https://149371380.v2.pressablecdn.com/wp-includes/js/comment-reply.min.js?ver=5.7.2' id='comment-reply-js'></script>
+<script type='text/javascript' id='typology-main-js-extra'>
+/* <![CDATA[ */
+var typology_js_settings = {"rtl_mode":"","header_sticky":"1","logo":"","logo_retina":"","use_gallery":"","slider_autoplay":"0","cover_video_image_fallback":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://149371380.v2.pressablecdn.com/wp-content/themes/typology/assets/js/min.js?ver=1.5.3' id='typology-main-js'></script>
+<script type='text/javascript' id='tve-dash-frontend-js-extra'>
+/* <![CDATA[ */
+var tve_dash_front = {"ajaxurl":"https:\/\/tomtalks.blog\/wp-admin\/admin-ajax.php","force_ajax_send":"1","is_crawler":"","recaptcha":[]};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://149371380.v2.pressablecdn.com/wp-content/plugins/thrive-leads/thrive-dashboard/js/dist/frontend.min.js?ver=2.6.1' id='tve-dash-frontend-js'></script>
+<script type='text/javascript' src='https://149371380.v2.pressablecdn.com/wp-includes/js/wp-embed.min.js?ver=5.7.2' id='wp-embed-js'></script>
+<script defer type='text/javascript' src='https://149371380.v2.pressablecdn.com/wp-content/plugins/akismet/_inc/form.js?ver=4.1.10' id='akismet-form-js'></script>
+<script type="text/javascript">var tcb_post_lists=JSON.parse('[]');</script><script type="text/javascript">/*<![CDATA[*/if ( !window.TL_Const ) {var TL_Const={"security":"0b4af565e3","ajax_url":"https:\/\/tomtalks.blog\/wp-admin\/admin-ajax.php","forms":[],"action_conversion":"tve_leads_ajax_conversion","action_impression":"tve_leads_ajax_impression","ajax_load":1,"main_group_id":7290,"display_options":{"allowed_post_types":[],"flag_url_match":false},"custom_post_data":[],"current_screen":{"screen_type":4,"screen_id":12803},"ignored_fields":["email","_captcha_size","_captcha_theme","_captcha_type","_submit_option","_use_captcha","g-recaptcha-response","__tcb_lg_fc","__tcb_lg_msg","_state","_form_type","_error_message_option","_back_url","_submit_option","url","_asset_group","_asset_option","mailchimp_optin","tcb_token","tve_labels","tve_mapping","_api_custom_fields","_sendParams","_autofill"]};} else {ThriveGlobal.$j.extend(true, TL_Const, {"security":"0b4af565e3","ajax_url":"https:\/\/tomtalks.blog\/wp-admin\/admin-ajax.php","forms":[],"action_conversion":"tve_leads_ajax_conversion","action_impression":"tve_leads_ajax_impression","ajax_load":1,"main_group_id":7290,"display_options":{"allowed_post_types":[],"flag_url_match":false},"custom_post_data":[],"current_screen":{"screen_type":4,"screen_id":12803},"ignored_fields":["email","_captcha_size","_captcha_theme","_captcha_type","_submit_option","_use_captcha","g-recaptcha-response","__tcb_lg_fc","__tcb_lg_msg","_state","_form_type","_error_message_option","_back_url","_submit_option","url","_asset_group","_asset_option","mailchimp_optin","tcb_token","tve_labels","tve_mapping","_api_custom_fields","_sendParams","_autofill"]})} /*]]> */</script>		<script type="text/javascript">
+			(function() {
+			var t   = document.createElement( 'script' );
+			t.type  = 'text/javascript';
+			t.async = true;
+			t.id    = 'gauges-tracker';
+			t.setAttribute( 'data-site-id', '5d90f7ac8ec6286e45e7b7b2' );
+			t.src = '//secure.gaug.es/track.js';
+			var s = document.getElementsByTagName( 'script' )[0];
+			s.parentNode.insertBefore( t, s );
+			})();
+		</script>
+		
+		<!--[if IE]>
+		<script type="text/javascript">
+			if ( 0 === window.location.hash.indexOf( '#comment-' ) ) {
+				// window.location.reload() doesn't respect the Hash in IE
+				window.location.hash = window.location.hash;
+			}
+		</script>
+		<![endif]-->
+		<script type="text/javascript">
+			(function () {
+				var comm_par_el = document.getElementById( 'comment_parent' ),
+					comm_par = ( comm_par_el && comm_par_el.value ) ? comm_par_el.value : '',
+					frame = document.getElementById( 'jetpack_remote_comment' ),
+					tellFrameNewParent;
+
+				tellFrameNewParent = function () {
+					if ( comm_par ) {
+						frame.src = "https://jetpack.wordpress.com/jetpack-comment/?blogid=154607545&postid=12803&comment_registration=0&require_name_email=1&stc_enabled=0&stb_enabled=0&show_avatars=1&avatar_default=wavatar&greeting=Leave+a+Reply&greeting_reply=Leave+a+Reply+to+%25s&color_scheme=light&lang=en_US&jetpack_version=9.9&show_cookie_consent=10&has_cookie_consent=0&token_key=%3Bnormal%3B&sig=4a6fdd4e523586fbdc69f8751a82d3a4b3ea0cca#parent=https%3A%2F%2Ftomtalks.blog%2F2021%2F06%2Fmicrosoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2%2F" + '&replytocom=' + parseInt( comm_par, 10 ).toString();
+					} else {
+						frame.src = "https://jetpack.wordpress.com/jetpack-comment/?blogid=154607545&postid=12803&comment_registration=0&require_name_email=1&stc_enabled=0&stb_enabled=0&show_avatars=1&avatar_default=wavatar&greeting=Leave+a+Reply&greeting_reply=Leave+a+Reply+to+%25s&color_scheme=light&lang=en_US&jetpack_version=9.9&show_cookie_consent=10&has_cookie_consent=0&token_key=%3Bnormal%3B&sig=4a6fdd4e523586fbdc69f8751a82d3a4b3ea0cca#parent=https%3A%2F%2Ftomtalks.blog%2F2021%2F06%2Fmicrosoft-teams-2-0-will-use-half-the-memory-dropping-electron-for-edge-webview2%2F";
+					}
+				};
+
+				
+				if ( 'undefined' !== typeof addComment ) {
+					addComment._Jetpack_moveForm = addComment.moveForm;
+
+					addComment.moveForm = function ( commId, parentId, respondId, postId ) {
+						var returnValue = addComment._Jetpack_moveForm( commId, parentId, respondId, postId ),
+							cancelClick, cancel;
+
+						if ( false === returnValue ) {
+							cancel = document.getElementById( 'cancel-comment-reply-link' );
+							cancelClick = cancel.onclick;
+							cancel.onclick = function () {
+								var cancelReturn = cancelClick.call( this );
+								if ( false !== cancelReturn ) {
+									return cancelReturn;
+								}
+
+								if ( ! comm_par ) {
+									return cancelReturn;
+								}
+
+								comm_par = 0;
+
+								tellFrameNewParent();
+
+								return cancelReturn;
+							};
+						}
+
+						if ( comm_par == parentId ) {
+							return returnValue;
+						}
+
+						comm_par = parentId;
+
+						tellFrameNewParent();
+
+						return returnValue;
+					};
+				}
+
+				
+				// Do the post message bit after the dom has loaded.
+				document.addEventListener( 'DOMContentLoaded', function () {
+					var iframe_url = "https:\/\/jetpack.wordpress.com";
+					if ( window.postMessage ) {
+						if ( document.addEventListener ) {
+							window.addEventListener( 'message', function ( event ) {
+								var origin = event.origin.replace( /^http:\/\//i, 'https://' );
+								if ( iframe_url.replace( /^http:\/\//i, 'https://' ) !== origin ) {
+									return;
+								}
+								jQuery( frame ).height( event.data );
+							});
+						} else if ( document.attachEvent ) {
+							window.attachEvent( 'message', function ( event ) {
+								var origin = event.origin.replace( /^http:\/\//i, 'https://' );
+								if ( iframe_url.replace( /^http:\/\//i, 'https://' ) !== origin ) {
+									return;
+								}
+								jQuery( frame ).height( event.data );
+							});
+						}
+					}
+				})
+
+			})();
+		</script>
+
+		<script src='https://stats.wp.com/e-202128.js' defer></script>
+<script>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:9.9',blog:'154607545',post:'12803',tz:'0',srv:'tomtalks.blog'} ]);
+	_stq.push([ 'clickTrackerInit', '154607545', '12803' ]);
+</script>
+
+	</body>
+</html>
+<!--
+	generated in 0.444 seconds
+	82133 bytes batcached for 300 seconds
+-->

@@ -37,15 +37,19 @@ class Extractor(BaseExtractor):
         # FIXME: false positive
         # https://benjamineidam.com/atomwaffe
         # https://aktuellesenergiejournal.wordpress.com/kernenergie/
+        # https://opensource.org/welcomeTeckids
+        # https://research.swtch.com/hwmm
         ( None, r'^/[a-zA-Z]*/?$' ), 
 
         # hostname specific regexs
         ( 'abc3340.com', r'/news/nation-world$' ),
+        ( 'agroberichtenbuitenland.nl', r'/actueel/nieuws/?$' ),
         ( 'bbc.co.uk', r'/asia_pacific$' ),
         ( 'bbc.co.uk', r'/history/historic_figures/?$' ),
         ( 'bbc.com', r'/asia_pacific$' ),
         ( 'be.la7.it', r'/laria-che-tira/?$' ),
         ( 'be.la7.it', r'/parlano-gli-esperti/?$' ),
+        ( 'boilingsteam.com', r'^/tutorial-and-guides/?$' ),
         ( 'breitbart.com', r'^/national-security/?$' ),
         ( 'channelb.org', r'^/sc/photo/?$' ),
         ( 'cnbc.com', r'^/2020-elections/?$' ),
@@ -60,6 +64,7 @@ class Extractor(BaseExtractor):
         ( 'dailywire.com', r'^/show/the-ben-shapiro-show$' ),
         ( 'dcmi.org', r'^/ko/%EB%89%B4%EC%8A%A4%EB%A0%88%ED%84%B0/?$' ),
         ( 'dcmi.org', r'^/ko/%eb%89%b4%ec%8a%a4%eb%a0%88%ed%84%b0/?$' ),
+        ( 'diagnostics.roche.com', r'^/hk/en/home.html' ),
         ( 'elmundo.es', r'^/internacional.html$' ),
         ( 'en.mediamass.net', r'^/people/kim-jong-un/?$' ),
         ( 'frac.org', r'^/covid-19-updates/?$' ),
@@ -84,6 +89,7 @@ class Extractor(BaseExtractor):
         ( 'news.un.org', r'^/es/node?$' ),
         ( 'pattayaone.news', r'^/learning-365/$' ),
         ( 'plaza.rakuten.co.jp', r'^/[a-zA-Z0-9]*/$' ),
+        ( 'pnas.org', r'^/content/118/27/eiti2721118/?$'),
         ( 'poynter.org', r'^/media-news/ethics-trust/$' ),
         ( 'poynter.org', r'^/mediawise-for-gen-z' ),
         ( 'propublica.org', r'^/topics/' ),
@@ -92,6 +98,7 @@ class Extractor(BaseExtractor):
         ( 'scvo.org', r'^/coronavirus-covid-19-information-guidance/?$' ),
         ( 'scvo.org', r'^/coronavirus-covid-19-information-guidance/resources/?$' ),
         ( 'scvo.org', r'^/support/running-your-organisation/leaving-lockdown/?$' ),
+        ( 'sec.gov', r'^/page/news' ),
         ( 'smnyct.org', r'^/informacion-general/?$' ),
         ( 'state.gov', r'^/press-releases/$' ),
         ( 'syrianews.cc', r'^/syria-news-editors-twitter-timeline-get-inspired/?$' ),

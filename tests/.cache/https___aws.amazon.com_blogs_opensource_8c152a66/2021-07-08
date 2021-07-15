@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en-US" class="no-js aws-lng-en_US" xmlns="http://www.w3.org/1999/xhtml" data-aws-assets="//a0.awsstatic.com" data-js-version="1.0.559" data-css-version="1.0.508" data-static-assets="//a0.awsstatic.com">
+ <head> 
+  <meta charset="UTF-8" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1" /> 
+  <title>AWS Open Source Blog</title> 
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> 
+  <link rel="dns-prefetch" href="//a0.awsstatic.com" /> 
+  <link rel="icon" type="image/ico" href="//a0.awsstatic.com/main/images/site/fav/favicon.ico" /> 
+  <link rel="shortcut icon" type="image/ico" href="//a0.awsstatic.com/main/images/site/fav/favicon.ico" /> 
+  <link rel="apple-touch-icon" sizes="57x57" href="//a0.awsstatic.com/main/images/site/touch-icon-iphone-114-smile.png" /> 
+  <link rel="apple-touch-icon" sizes="72x72" href="//a0.awsstatic.com/main/images/site/touch-icon-ipad-144-smile.png" /> 
+  <link rel="apple-touch-icon" sizes="114x114" href="//a0.awsstatic.com/main/images/site/touch-icon-iphone-114-smile.png" /> 
+  <link rel="apple-touch-icon" sizes="144x144" href="//a0.awsstatic.com/main/images/site/touch-icon-ipad-144-smile.png" /> 
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0 Feed" href="https://aws.amazon.com/blogs/opensource/feed/" /> 
+  <meta name="robots" content="index, follow" /> 
+  <link rel="next" href="https://aws.amazon.com/blogs/opensource/page/2/" /> 
+  <link rel="canonical" href="https://aws.amazon.com/blogs/opensource/" /> 
+  <link rel="stylesheet" href="//a0.awsstatic.com/libra-css/css/1.0.373/style-awsm.css" /> 
+  <link rel="stylesheet" href="//a0.awsstatic.com/aws-blog/1.0.47/css/blog.css" /> 
+  <script>
+    var AWS = {
+      PageSettings: {
+        supportedLanguages: ["ar","de","en","es","fr","id","it","jp","ko","pt","ru","th","tr","vi","cn","tw"],
+        libraCSSPath: '//a0.awsstatic.com/libra-css/css/1.0.373',
+        currentLanguage: 'en-US',
+        blogPageTitle: ""      }
+    };
+    var require = {
+      baseUrl: '//a0.awsstatic.com',
+      packages: [
+        { name: 'libra', location: 'libra/1.0.375' }
+      ],
+      paths: {
+        'aws-blog': '//a0.awsstatic.com/aws-blog/1.0.47/js',
+        'blog': '//a0.awsstatic.com/chrome/js/1.0.559/blog',
+        'directories': '//a0.awsstatic.com/libra/1.0.375/directories',
+        'jquery': 'jquery-amd',
+        'librastandardlib': '//a0.awsstatic.com/libra/1.0.375/librastandardlib',
+        "plugins": '//a0.awsstatic.com/chrome/js/1.0.559/plugins',
+        "scripts": '//a0.awsstatic.com/libra/1.0.375/v1-polyfills/scripts'
+      },
+      deps: [ 'scripts' ],
+      waitSeconds: 15
+    };
+  </script> 
+  <script src="//a0.awsstatic.com/aws-blog/1.0.47/js/blog-head.js"></script> 
+  <script src="//a0.awsstatic.com/s_code/js/3.0/awshome_s_code.js"></script> 
+  <script>
+    AWS.TargetMediator = {
+      supportedLanguages: AWS.PageSettings.supportedLanguages,
+      pageLanguage: 'en',
+      customParams: {}    };
+  </script> 
+  <script src="//a0.awsstatic.com/target/1.0.112/aws-target-mediator.js"></script> 
+  <noscript> 
+   <style>.js-mbox { visibility: visible; }</style> 
+  </noscript> 
+ </head> 
+ <body class="awsm aws-blogs-page aws-blogs-page-type-standard"> 
+  <header id="aws-page-header" class="awsm m-page-header" role="banner"> 
+   <div id="m-nav" class="m-nav" role="navigation"> 
+    <div class="m-nav-header lb-clearfix" data-menu-url="https://s0.awsstatic.com/en_US/nav/v3/panel-content/desktop/index.html"> 
+     <div class="m-nav-logo"> 
+      <div class="lb-bg-logo aws-amazon_web_services_smile-header-desktop-en"> 
+       <a href="https://aws.amazon.com/?nc2=h_lg"><span>Click here to return to Amazon Web Services homepage</span></a> 
+      </div> 
+     </div> 
+     <div class="m-nav-secondary-links" style="min-width: 620px"> 
+      <a href="https://aws.amazon.com/contact-us/?nc2=h_header">Contact Us</a> 
+      <a class="lb-txt-none lb-tiny-iblock lb-txt-13 lb-txt lb-has-trigger-indicator" href="#" data-mbox-ignore="true" data-lb-popover-trigger="popover-support-selector"> Support&nbsp; <i class="icon-caret-down lb-trigger-mount"></i></a> 
+      <a id="m-nav-language-selector" class="lb-tiny-iblock lb-txt lb-has-trigger-indicator" href="#" data-lb-popover-trigger="popover-language-selector" data-language="en">English&nbsp;<i class="icon-caret-down lb-trigger-mount"></i></a> 
+      <a class="lb-tiny-iblock lb-txt lb-has-trigger-indicator" href="#" data-lb-popover-trigger="popover-my-account">My Account&nbsp;<i class="icon-caret-down lb-trigger-mount"></i></a> 
+      <div class="m-nav-cta-btn"> 
+       <div class="lb-mbox js-mbox" data-lb-comp="mbox" data-lb-comp-ignore="true" data-mbox="en_header_nav_cta"> 
+        <div class="lb-btn"> 
+         <a id="aws-nav-cta-button" class="lb-btn-p-primary" href="https://portal.aws.amazon.com/gp/aws/developer/registration/index.html?nc2=h_ct&amp;src=default" style="min-width:171px;"><span>Create an AWS Account</span></a> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+     <div class="m-nav-primary-group"> 
+      <div class="m-nav-primary-links"> 
+       <i class="m-nav-angle-left-icon" aria-hidden="true"></i> 
+       <ul> 
+        <li><a href="https://aws.amazon.com/products/?nc2=h_ql_prod" data-panel="m-nav-panel-products">Products</a></li> 
+        <li><a href="https://aws.amazon.com/solutions/?nc2=h_ql_sol" data-panel="m-nav-panel-solutions">Solutions</a></li> 
+        <li><a href="https://aws.amazon.com/pricing/?nc2=h_ql_pr" data-panel="m-nav-panel-pricing">Pricing</a></li> 
+        <li><a href="https://docs.aws.amazon.com/index.html?nc2=h_ql_doc" data-panel="m-nav-panel-documentation">Documentation</a></li> 
+        <li><a href="https://aws.amazon.com/getting-started/?nc2=h_ql_le" data-panel="m-nav-panel-learn">Learn</a></li> 
+        <li><a href="https://aws.amazon.com/partners/?nc2=h_ql_pn" data-panel="m-nav-panel-partner">Partner Network</a></li> 
+        <li><a href="https://aws.amazon.com/marketplace/?nc2=h_ql_mp" data-panel="m-nav-panel-marketplace">AWS Marketplace</a></li> 
+        <li><a href="https://aws.amazon.com/customer-enablement/?nc2=h_ql_ce" data-panel="m-nav-panel-customer">Customer Enablement</a></li> 
+        <li><a href="https://aws.amazon.com/events/?nc2=h_ql_ev" data-panel="m-nav-panel-events">Events</a></li> 
+        <li><a href="https://aws.amazon.com/contact-us/?nc2=h_ql_exm" data-panel="m-nav-panel-more">Explore More </a></li> 
+       </ul> 
+       <div class="m-nav-icon-group"> 
+        <i class="m-nav-angle-right-icon" aria-hidden="true"></i> 
+        <i class="m-nav-search-icon"></i> 
+       </div> 
+      </div> 
+      <div class="m-nav-search"> 
+       <form action="https://aws.amazon.com/search/" role="search"> 
+        <div class="m-typeahead" data-directory-id="typeahead-suggestions" data-lb-comp="typeahead"> 
+         <input class="m-nav-search-field" placeholder="Search" autocomplete="off" spellcheck="false" dir="auto" type="text" name="searchQuery" /> 
+        </div> 
+       </form> 
+       <i class="m-nav-close-icon"></i> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="lb-popover lb-popover-aui lb-popover-tiny" data-lb-comp="popover" data-id="popover-language-selector" data-action="hover" data-position="top"> 
+     <div class="lb-grid lb-row lb-row-max-large lb-snap"> 
+      <div class="lb-col lb-tiny-24 lb-mid-12"> 
+       <ul class="lb-txt-none lb-ul lb-list-style-none lb-tiny-ul-block"> 
+        <li data-language="ar"><a href="https://aws.amazon.com/ar/?nc1=h_ls">عربي</a></li> 
+        <li data-language="id"><a href="https://aws.amazon.com/id/?nc1=h_ls">Bahasa Indonesia</a></li> 
+        <li data-language="de"><a href="https://aws.amazon.com/de/?nc1=h_ls">Deutsch</a></li> 
+        <li data-language="en"><a href="https://aws.amazon.com/?nc1=h_ls">English</a></li> 
+        <li data-language="es"><a href="https://aws.amazon.com/es/?nc1=h_ls">Espa&ntilde;ol</a></li> 
+        <li data-language="fr"><a href="https://aws.amazon.com/fr/?nc1=h_ls">Fran&ccedil;ais</a></li> 
+        <li data-language="it"><a href="https://aws.amazon.com/it/?nc1=h_ls">Italiano</a></li> 
+        <li data-language="pt"><a href="https://aws.amazon.com/pt/?nc1=h_ls">Portugu&ecirc;s</a></li> 
+       </ul> 
+      </div> 
+      <div class="lb-col lb-tiny-24 lb-mid-12"> 
+       <ul class="lb-txt-none lb-ul lb-list-style-none lb-tiny-ul-block"> 
+        <li data-language="vi"><a href="https://aws.amazon.com/vi/?nc1=f_ls">Tiếng Việt</a></li> 
+        <li data-language="tr"><a href="https://aws.amazon.com/tr/?nc1=h_ls">T&uuml;rk&ccedil;e</a></li> 
+        <li data-language="ru"><a href="https://aws.amazon.com/ru/?nc1=h_ls">Ρусский</a></li> 
+        <li data-language="th"><a href="https://aws.amazon.com/th/?nc1=f_ls">ไทย</a></li> 
+        <li data-language="jp"><a href="https://aws.amazon.com/jp/?nc1=h_ls">日本語</a></li> 
+        <li data-language="ko"><a href="https://aws.amazon.com/ko/?nc1=h_ls">한국어</a></li> 
+        <li data-language="cn"><a href="https://aws.amazon.com/cn/?nc1=h_ls">中文 (简体)</a></li> 
+        <li data-language="tw"><a href="https://aws.amazon.com/tw/?nc1=h_ls">中文 (繁體)</a></li> 
+       </ul> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="lb-popover lb-popover-aui lb-popover-tiny" data-lb-comp="popover" data-id="popover-my-account" data-action="hover" data-position="top"> 
+     <ul class="lb-txt-none lb-ul lb-list-style-none lb-tiny-ul-block"> 
+      <li><a href="https://console.aws.amazon.com/?nc2=h_m_mc">AWS Management Console</a></li> 
+      <li><a href="https://portal.aws.amazon.com/gp/aws/manageYourAccount?nc2=h_m_ma">Account Settings</a></li> 
+      <li><a href="https://console.aws.amazon.com/billing/home?nc2=h_m_bc">Billing &amp; Cost Management</a></li> 
+      <li><a href="https://console.aws.amazon.com/iam/home?nc2=h_m_sc#security_credential">Security Credentials</a></li> 
+      <li><a href="https://phd.aws.amazon.com/?nc2=h_m_sc">AWS Personal Health Dashboard</a></li> 
+     </ul> 
+    </div> 
+    <div class="lb-popover lb-popover-aui lb-popover-tiny" data-lb-comp="popover" data-id="popover-support-selector" data-action="hover" data-position="top"> 
+     <ul class="lb-txt-none lb-ul lb-list-style-none lb-tiny-ul-block"> 
+      <li><a href="https://console.aws.amazon.com/support/home/?nc2=h_ql_cu">Support Center</a></li> 
+      <li><a href="https://aws.amazon.com/premiumsupport/knowledge-center/?nc2=h_m_ma">Knowledge Center</a></li> 
+      <li><a href="https://aws.amazon.com/premiumsupport/?nc2=h_m_bc">AWS Support Overview</a></li> 
+     </ul> 
+    </div> 
+    <script class="tt-suggestion-tpl" type="text/x-handlebars-template">
+    <div>
+      <a href="{{primaryUrl}}">
+        <div class="tt-title">
+          {{cleanHTMLEntity title}}
+        </div>
+        {{#if desc}}
+          <div class="tt-desc">
+            {{cleanHTMLEntity desc}}
+          </div>
+        {{/if}}
+      </a>
+      <div class="tt-btn-group">
+        {{#if pricingUrl}}
+          <a href="{{pricingUrl}}">
+            <div class="tt-btn">Pricing</div>
+          </a>
+        {{/if}}
+        {{#if docsUrl}}
+          <a href="{{docsUrl}}">
+            <div class="tt-btn">Documentation</div>
+          </a>
+        {{/if}}
+        {{#if calculatorUrl}}
+          <a href="{{calculatorUrl}}">
+            <div class="tt-btn">Calculator</div>
+          </a>
+        {{/if}}
+      </div>
+    </div>
+  </script> 
+    <script class="tt-products-head-tpl" type="text/x-handlebars-template">
+    <div class="tt-header lb-txt-bold">
+      <p>Products</p>
+    </div>
+  </script> 
+    <script class="tt-keypages-head-tpl" type="text/x-handlebars-template">
+    <div class="tt-header lb-txt-bold">
+      <p>Related Pages</p>
+    </div>
+  </script> 
+    <script class="tt-tutorials-head-tpl" type="text/x-handlebars-template">
+    <div class="tt-header lb-txt-bold">
+      <p>Tutorials</p>
+    </div>
+  </script> 
+    <script class="tt-blogs-head-tpl" type="text/x-handlebars-template">
+    <div class="tt-header lb-txt-bold">
+      <p>Blogs</p>
+    </div>
+  </script> 
+    <script class="tt-see-all-tpl" type="text/x-handlebars-template">
+    <div class="tt-see-all">
+      <a href="https://aws.amazon.com/search/?searchQuery={{ query }}">See more results for "{{ query }}"&lrm;</a>
+    </div>
+  </script> 
+   </div> 
+   <div id="m-nav-mobile" class="m-nav-mobile"> 
+    <div id="m-nav-mobile-header" class="m-nav-mobile-header" data-menu-url="https://s0.awsstatic.com/en_US/nav/v3/panel-content/mobile/index.html"> 
+     <div class="lb-bg-logo aws-amazon_web_services_smile-header-mobile-en"> 
+      <a href="https://aws.amazon.com/?nc2=h_lg"><span>Click here to return to Amazon Web Services homepage</span></a> 
+     </div> 
+     <div class="m-nav-mobile-button-group"> 
+      <i class="m-nav-mobile-button icon-search"></i> 
+      <i class="m-nav-mobile-button icon-reorder"></i> 
+     </div> 
+    </div> 
+    <div id="m-nav-mobile-search" class="m-nav-mobile-search"> 
+     <form action="https://aws.amazon.com/search" role="search"> 
+      <div class="m-typeahead"> 
+       <input class="m-nav-search-field" placeholder="Search" autocomplete="off" spellcheck="false" dir="auto" type="text" name="searchQuery" /> 
+      </div> 
+     </form> 
+    </div> 
+    <nav id="m-nav-trimdown" role="navigation"> 
+     <ul class="m-nav-mobile-menu-group"> 
+      <li> <a href="https://aws.amazon.com/products/?nc2=h_mo">Products</a> </li> 
+      <li> <a href="https://aws.amazon.com/solutions/?nc2=h_mo">Solutions</a> </li> 
+      <li> <a href="https://aws.amazon.com/pricing/?nc2=h_mo">Pricing</a> </li> 
+      <li> <a href="https://aws.amazon.com/what-is-aws/?nc2=h_mo">Introduction to AWS</a> </li> 
+      <li> <a href="https://aws.amazon.com/getting-started/?nc2=h_mo">Getting Started</a> </li> 
+      <li> <a href="https://aws.amazon.com/documentation/?nc2=h_mo">Documentation</a> </li> 
+      <li> <a href="https://aws.amazon.com/training/?nc2=h_mo">Training and Certification</a> </li> 
+      <li> <a href="https://aws.amazon.com/developer/?nc2=h_mo">Developer Center</a> </li> 
+      <li> <a href="https://aws.amazon.com/solutions/case-studies/?nc2=h_mo">Customer Success</a> </li> 
+      <li> <a href="https://aws.amazon.com/partners/?nc2=h_mo">Partner Network</a> </li> 
+      <li> <a href="https://aws.amazon.com/marketplace/?nc2=h_mo">AWS Marketplace</a> </li> 
+      <li> <a href="https://console.aws.amazon.com/support/home?nc2=h_ql_cu">Support</a> </li> 
+      <li> <a href="https://console.aws.amazon.com/console/home">Log into Console</a> </li> 
+      <li> <a href="https://aws.amazon.com/console/mobile/">Download the Mobile App</a> </li> 
+     </ul> 
+    </nav> 
+   </div> 
+  </header> 
+  <div class="awsm"> 
+   <div class="lb-blog-nav" data-lb-comp="aws-blog:blog-nav"> 
+    <div class="lb-row lb-row-max-xlarge lb-snap"> 
+     <div class="lb-blog-nav-content"> 
+      <div class="lb-blog-nav-links"> 
+       <a class="lb-txt-none lb-txt" href="/blogs"> Blog Home</a> 
+       <a class="lb-txt-none lb-txt lb-has-trigger-indicator" href="/blogs" data-lb-popover-trigger="blog-category" data-trk-params="{&quot;trkOverrideWithQs&quot;:true}"> Category&nbsp; <i class="icon-caret-down lb-trigger-mount"></i></a> 
+       <a class="lb-txt-none lb-txt lb-has-trigger-indicator" href="/blogs" data-lb-popover-trigger="blog-editions"> Edition&nbsp; <i class="icon-caret-down lb-trigger-mount"></i></a> 
+       <a class="lb-txt-none lb-txt lb-has-trigger-indicator" href="/blogs" data-lb-popover-trigger="blog-follow"> Follow&nbsp; <i class="icon-caret-down lb-trigger-mount"></i></a> 
+      </div> 
+      <div class="lb-blog-nav-search"> 
+       <form action="https://aws.amazon.com/search" role="search"> 
+        <input type="hidden" name="facet_type" value="blogs" /> 
+        <input type="hidden" name="sortResults" value="modification_date desc" /> 
+        <div class="lb-search-input"> 
+         <input name="q" type="text" placeholder="Search Blogs" /> 
+         <div class="lb-blog-search-button"> 
+          <button class="icon-search" type="submit"></button> 
+         </div> 
+        </div> 
+       </form> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+   <div class="lb-popover lb-popover-aui lb-popover-xlarge" data-lb-comp="popover" data-id="blog-category" data-action="hover" data-position="top"> 
+    <div class="lb-grid lb-row lb-row-max-large lb-snap"> 
+     <div class="lb-col lb-tiny-24 lb-mid-12"> 
+      <div class="lb-none-pad lb-none-v-margin lb-box"> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/architecture/"> Architecture</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/aws-cost-management/"> AWS Cost Management</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/apn/"> AWS Partner Network</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/podcasts/aws-podcast/?sc_ichannel=ha&amp;sc_icampaign=acq_awsblognav&amp;sc_icontent=categorynav"> AWS Podcast</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/awsmarketplace/"> AWS Marketplace</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/aws/"> AWS News</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/big-data/"> Big Data</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/business-productivity/"> Business Productivity</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/compute/"> Compute</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/contact-center/"> Contact Center</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/containers/"> Containers</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/database/"> Database</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/desktop-and-application-streaming/"> Desktop &amp; Application Streaming</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/developer/"> Developer</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/devops/"> DevOps</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/enterprise-strategy/"> Enterprise Strategy</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/mobile/"> Front-End Web &amp; Mobile</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/gametech/"> Game Tech</a> 
+      </div> 
+     </div> 
+     <div class="lb-col lb-tiny-24 lb-mid-12"> 
+      <div class="lb-none-pad lb-none-v-margin lb-box"> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/hpc/"> HPC</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/infrastructure-and-automation/"> Infrastructure &amp; Automation</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/industries/"> Industries</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/iot/"> Internet of Things</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/machine-learning/"> Machine Learning</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/mt/"> Management &amp; Governance</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/media/"> Media</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/messaging-and-targeting/"> Messaging &amp; Targeting</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/modernizing-with-aws/"> Modernizing with AWS</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/networking-and-content-delivery/"> Networking &amp; Content Delivery</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/opensource/"> Open Source</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/publicsector/"> Public Sector</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/quantum-computing/" data-trk-params="{&quot;trkOverrideWithQs&quot;:true}"> Quantum Computing</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/robotics/"> Robotics</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/awsforsap/"> SAP</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/security/"> Security, Identity, &amp; Compliance</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/startups/"> Startups</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/storage/"> Storage</a> 
+       <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/training-and-certification/"> Training &amp; Certification</a> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+   <div class="lb-popover lb-popover-aui lb-popover-tiny" data-lb-comp="popover" data-id="blog-editions" data-action="hover" data-position="top"> 
+    <div class="lb-none-pad lb-box"> 
+     <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/cn/blogs/china/"> 中国版</a> 
+     <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/fr/blogs/france/"> &Eacute;dition Fran&ccedil;aise</a> 
+     <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/de/blogs/germany/"> Deutsche Edition</a> 
+     <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/jp/blogs/news/"> 日本版</a> 
+     <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/ko/blogs/korea/"> 한국 에디션</a> 
+     <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/pt/blogs/aws-brasil/" data-trk-params="{&quot;trkOverrideWithQs&quot;:true}"> Edi&ccedil;&atilde;o em Portugu&ecirc;s</a> 
+     <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/es/blogs/aws-spanish/" data-trk-params="{&quot;trkOverrideWithQs&quot;:true}"> Edici&oacute;n en Espa&ntilde;ol</a> 
+     <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/blogs/"> English Edition</a> 
+     <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/ru/blogs/rus/"> Версия на русском</a> 
+     <a class="lb-txt-none lb-txt" href="https://aws.amazon.com/id/blogs/indonesia/"> Edisi Bahasa Indonesia</a> 
+    </div> 
+   </div> 
+   <div class="lb-popover lb-popover-aui lb-popover-tiny" data-lb-comp="popover" data-id="blog-follow" data-action="hover" data-position="top"> 
+    <div class="lb-none-pad lb-box"> 
+     <a class="lb-txt-none lb-txt" href="https://pages.awscloud.com/communication-preferences?sc_ichannel=ha&amp;sc_icampaign=multi_emailoptin&amp;sc_isegment=en&amp;sc_iplace=fl-nav&amp;sc_icontent=subscribe_for_updates&amp;trkCampaign=EmailOptin&amp;trk=blog"> Mailing List</a> 
+     <a class="lb-txt-none lb-txt" href="http://feeds.feedburner.com/AmazonWebServicesBlog"> RSS Feed</a> 
+    </div> 
+   </div> 
+  </div> 
+  <div id="aws-page-content" class="lb-page-content lb-page-with-sticky-subnav blog-page blog-posts" data-page-alert-target="true"> 
+   <div class="aws-blog-content lb-row lb-row-max-large lb-snap"> 
+    <main class="lb-col lb-tiny-24" role="main"> 
+     <h1 class="lb-h2 blog-title">AWS Open Source Blog</h1> 
+     <article class="blog-post" vocab="http://schema.org/" typeof="TechArticle"> 
+      <meta property="inLanguage" content="en-US" /> 
+      <meta property="image" content="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2021/06/28/AdobeStock_374556316_boxes-cubes-bright.jpeg" /> 
+      <div class="lb-row lb-snap"> 
+       <div class="lb-col lb-mid-6 lb-tiny-24"> 
+        <a href="https://aws.amazon.com/blogs/opensource/declarative-provisioning-of-aws-resources-with-spinnaker-and-crossplane/" property="url" rel="bookmark"><img width="1000" height="500" src="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2021/06/28/AdobeStock_374556316_boxes-cubes-bright.jpeg" class="attachment-large size-large wp-post-image" alt="VAlex – stock.adobe.com Abstract 3d render, geometric composition, colorful background design with cubes" /></a> 
+       </div> 
+       <div class="lb-col lb-mid-18 lb-tiny-24"> 
+        <h2 class="blog-post-title"><a href="https://aws.amazon.com/blogs/opensource/declarative-provisioning-of-aws-resources-with-spinnaker-and-crossplane/" property="url" rel="bookmark"><span property="name headline">Declarative provisioning of AWS resources with Spinnaker and Crossplane</span></a></h2> 
+        <footer class="blog-post-meta" data-lb-comp="aws-blog:share-dialog">
+          by 
+         <span property="author" typeof="Person"><span property="name">Manabu McCloskey</span></span>, 
+         <span property="author" typeof="Person"><span property="name">Vikrant Kahlir</span></span>, and 
+         <span property="author" typeof="Person"><span property="name">Nima Kaviani</span></span> | on 
+         <time property="datePublished" datetime="2021-07-08T05:16:56-08:00">08 JUL 2021</time> | in 
+         <span class="blog-post-categories"><a href="https://aws.amazon.com/blogs/opensource/category/compute/amazon-kubernetes-service/" title="View all posts in Amazon Elastic Kubernetes Service"><span property="articleSection">Amazon Elastic Kubernetes Service</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/devops/" title="View all posts in DevOps"><span property="articleSection">DevOps</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/open-source/" title="View all posts in Open Source"><span property="articleSection">Open Source</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/post-types/technical-how-to/" title="View all posts in Technical How-to"><span property="articleSection">Technical How-to</span></a></span> | 
+         <a href="https://aws.amazon.com/blogs/opensource/declarative-provisioning-of-aws-resources-with-spinnaker-and-crossplane/" property="url">Permalink</a> | 
+         <a id="aws-comment-trigger-11450" href="https://commenting.awsblogs.com/embed.html?disqus_shortname=aws-open-source-blog&amp;disqus_identifier=11450&amp;disqus_title=Declarative+provisioning+of+AWS+resources+with+Spinnaker+and+Crossplane&amp;disqus_url=https://aws.amazon.com/blogs/opensource/declarative-provisioning-of-aws-resources-with-spinnaker-and-crossplane/" data-lb-comp="aws-blog:commenting" data-sandbox-attr="allow-forms allow-scripts allow-popups allow-same-origin" property="discussionUrl"><i class="icon-comment"></i> Comments</a> | 
+         <a href="#" role="button" data-share-dialog-toggle=""><span class="span icon-share"></span>&nbsp;Share</a> 
+         <div class="blog-share-dialog" data-share-dialog="" style="display: none;"> 
+          <ul> 
+           <li> <a class="lb-txt" href="https://www.facebook.com/sharer/sharer.php?u=https://aws.amazon.com/blogs/opensource/declarative-provisioning-of-aws-resources-with-spinnaker-and-crossplane/" target="_blank" rel="noopener noreferrer"><span class="icon-facebook-square" aria-label="Share on Facebook"></span></a> </li> 
+           <li> <a class="lb-txt" href="https://twitter.com/intent/tweet/?text=Declarative%20provisioning%20of%20AWS%20resources%20with%20Spinnaker%20and%20Crossplane&amp;via=awscloud&amp;url=https://aws.amazon.com/blogs/opensource/declarative-provisioning-of-aws-resources-with-spinnaker-and-crossplane/" target="_blank" rel="noopener noreferrer"><span class="icon-twitter-square" aria-label="Share on Twitter"></span></a> </li> 
+           <li> <a class="lb-txt" href="https://www.linkedin.com/shareArticle?mini=true&amp;title=Declarative%20provisioning%20of%20AWS%20resources%20with%20Spinnaker%20and%20Crossplane&amp;source=Amazon%20Web%20Services&amp;summary=This%20post%20was%20written%20by%20Steve%20Borrelli%2C%20Rob%20Clark%2C%20Manabu%20McCloskey%2C%20Vikrant%20Kahlir%2C%20and%20Nima%20Kaviani.%20In%20a%20previous%20blog%20post%2C%20we%20discussed%20how%20GitOps%2C%20declarative%20definition%20of%20infrastructure%20and%20application%20resources%2C%20and%20using%20technologies%20such%20as%20AWS%20Controllers%20for%20Kubernetes%20%28ACK%29%20and%20Crossplane%20have%20enabled%20DevOps%20engineers%20to%20reduce%20complexity%20and%20improve%20visibility%20into%20%5B%26hellip%3B%5D&amp;url=https://aws.amazon.com/blogs/opensource/declarative-provisioning-of-aws-resources-with-spinnaker-and-crossplane/" target="_blank" rel="noopener noreferrer"><span class="icon-linkedin-square" aria-label="Share on LinkedIn"></span></a> </li> 
+           <li> <a class="lb-txt" href="mailto:?subject=Declarative%20provisioning%20of%20AWS%20resources%20with%20Spinnaker%20and%20Crossplane&amp;body=Declarative%20provisioning%20of%20AWS%20resources%20with%20Spinnaker%20and%20Crossplane%0A%0Ahttps://aws.amazon.com/blogs/opensource/declarative-provisioning-of-aws-resources-with-spinnaker-and-crossplane/" target="_blank" rel="noopener noreferrer"><span class="icon-envelope-square" aria-label="Share on Email"></span></a> </li> 
+           <li class="blog-share-dialog-url"><input type="text" value="https://aws.amazon.com/blogs/opensource/declarative-provisioning-of-aws-resources-with-spinnaker-and-crossplane/" title="Link to Declarative provisioning of AWS resources with Spinnaker and Crossplane" readonly="" data-share-dialog-url="" /></li> 
+          </ul> 
+         </div> 
+        </footer> 
+        <section class="blog-post-excerpt" property="description"> 
+         <p>This post was written by Steve Borrelli, Rob Clark, Manabu McCloskey, Vikrant Kahlir, and Nima Kaviani. In a previous blog post, we discussed how GitOps, declarative definition of infrastructure and application resources, and using technologies such as AWS Controllers for Kubernetes (ACK) and Crossplane have enabled DevOps engineers to reduce complexity and improve visibility into […]</p> 
+         <a href="https://aws.amazon.com/blogs/opensource/declarative-provisioning-of-aws-resources-with-spinnaker-and-crossplane/" class="blog-read-more blog-btn-a blog-btn-a-small">Read More</a> 
+        </section> 
+       </div> 
+      </div> 
+     </article> 
+     <article class="blog-post" vocab="http://schema.org/" typeof="TechArticle"> 
+      <meta property="inLanguage" content="en-US" /> 
+      <meta property="image" content="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2021/04/16/AdobeStock_230022338_cube_block_collection_parts.png" /> 
+      <div class="lb-row lb-snap"> 
+       <div class="lb-col lb-mid-6 lb-tiny-24"> 
+        <a href="https://aws.amazon.com/blogs/opensource/developing-microservices-using-container-image-support-for-aws-lambda-and-aws-cdk/" property="url" rel="bookmark"><img width="1000" height="500" src="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2021/04/16/AdobeStock_230022338_cube_block_collection_parts.png" class="attachment-large size-large wp-post-image" alt="Sergey Nivens – stock.adobe.com" /></a> 
+       </div> 
+       <div class="lb-col lb-mid-18 lb-tiny-24"> 
+        <h2 class="blog-post-title"><a href="https://aws.amazon.com/blogs/opensource/developing-microservices-using-container-image-support-for-aws-lambda-and-aws-cdk/" property="url" rel="bookmark"><span property="name headline">Developing microservices using container image support for AWS Lambda and AWS CDK</span></a></h2> 
+        <footer class="blog-post-meta" data-lb-comp="aws-blog:share-dialog">
+          by 
+         <span property="author" typeof="Person"><span property="name">Irshad Buchh</span></span> and 
+         <span property="author" typeof="Person"><span property="name">Carl Zogheib</span></span> | on 
+         <time property="datePublished" datetime="2021-07-06T05:23:41-08:00">06 JUL 2021</time> | in 
+         <span class="blog-post-categories"><a href="https://aws.amazon.com/blogs/opensource/category/developer-tools/aws-cloud-development-kit/" title="View all posts in AWS Cloud Development Kit"><span property="articleSection">AWS Cloud Development Kit</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/developer-tools/" title="View all posts in Developer Tools"><span property="articleSection">Developer Tools</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/open-source/" title="View all posts in Open Source"><span property="articleSection">Open Source</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/post-types/technical-how-to/" title="View all posts in Technical How-to"><span property="articleSection">Technical How-to</span></a></span> | 
+         <a href="https://aws.amazon.com/blogs/opensource/developing-microservices-using-container-image-support-for-aws-lambda-and-aws-cdk/" property="url">Permalink</a> | 
+         <a id="aws-comment-trigger-11479" href="https://commenting.awsblogs.com/embed.html?disqus_shortname=aws-open-source-blog&amp;disqus_identifier=11479&amp;disqus_title=Developing+microservices+using+container+image+support+for+AWS+Lambda+and+AWS+CDK&amp;disqus_url=https://aws.amazon.com/blogs/opensource/developing-microservices-using-container-image-support-for-aws-lambda-and-aws-cdk/" data-lb-comp="aws-blog:commenting" data-sandbox-attr="allow-forms allow-scripts allow-popups allow-same-origin" property="discussionUrl"><i class="icon-comment"></i> Comments</a> | 
+         <a href="#" role="button" data-share-dialog-toggle=""><span class="span icon-share"></span>&nbsp;Share</a> 
+         <div class="blog-share-dialog" data-share-dialog="" style="display: none;"> 
+          <ul> 
+           <li> <a class="lb-txt" href="https://www.facebook.com/sharer/sharer.php?u=https://aws.amazon.com/blogs/opensource/developing-microservices-using-container-image-support-for-aws-lambda-and-aws-cdk/" target="_blank" rel="noopener noreferrer"><span class="icon-facebook-square" aria-label="Share on Facebook"></span></a> </li> 
+           <li> <a class="lb-txt" href="https://twitter.com/intent/tweet/?text=Developing%20microservices%20using%20container%20image%20support%20for%20AWS%20Lambda%20and%20AWS%20CDK&amp;via=awscloud&amp;url=https://aws.amazon.com/blogs/opensource/developing-microservices-using-container-image-support-for-aws-lambda-and-aws-cdk/" target="_blank" rel="noopener noreferrer"><span class="icon-twitter-square" aria-label="Share on Twitter"></span></a> </li> 
+           <li> <a class="lb-txt" href="https://www.linkedin.com/shareArticle?mini=true&amp;title=Developing%20microservices%20using%20container%20image%20support%20for%20AWS%20Lambda%20and%20AWS%20CDK&amp;source=Amazon%20Web%20Services&amp;summary=AWS%20Cloud%20Development%20Kit%20%28AWS%20CDK%29%20is%20an%20open%20source%20software%20development%20framework%20used%20to%20define%20cloud%20application%20resources%20using%20familiar%20programming%20languages.%20AWS%20CDK%20can%20build%20container%20images%20locally%2C%20deploying%20them%20to%20Amazon%20Elastic%20Container%20Registry%20%28Amazon%20ECR%29%2C%20and%20configure%20them%20to%20run%20as%20Lambda%20functions.%20AWS%20CDK%20accelerates%20onboarding%20to%20AWS%20because%20there%20%5B%26hellip%3B%5D&amp;url=https://aws.amazon.com/blogs/opensource/developing-microservices-using-container-image-support-for-aws-lambda-and-aws-cdk/" target="_blank" rel="noopener noreferrer"><span class="icon-linkedin-square" aria-label="Share on LinkedIn"></span></a> </li> 
+           <li> <a class="lb-txt" href="mailto:?subject=Developing%20microservices%20using%20container%20image%20support%20for%20AWS%20Lambda%20and%20AWS%20CDK&amp;body=Developing%20microservices%20using%20container%20image%20support%20for%20AWS%20Lambda%20and%20AWS%20CDK%0A%0Ahttps://aws.amazon.com/blogs/opensource/developing-microservices-using-container-image-support-for-aws-lambda-and-aws-cdk/" target="_blank" rel="noopener noreferrer"><span class="icon-envelope-square" aria-label="Share on Email"></span></a> </li> 
+           <li class="blog-share-dialog-url"><input type="text" value="https://aws.amazon.com/blogs/opensource/developing-microservices-using-container-image-support-for-aws-lambda-and-aws-cdk/" title="Link to Developing microservices using container image support for AWS Lambda and AWS CDK" readonly="" data-share-dialog-url="" /></li> 
+          </ul> 
+         </div> 
+        </footer> 
+        <section class="blog-post-excerpt" property="description"> 
+         <p>AWS Cloud Development Kit (AWS CDK) is an open source software development framework used to define cloud application resources using familiar programming languages. AWS CDK can build container images locally, deploying them to Amazon Elastic Container Registry (Amazon ECR), and configure them to run as Lambda functions. AWS CDK accelerates onboarding to AWS because there […]</p> 
+         <a href="https://aws.amazon.com/blogs/opensource/developing-microservices-using-container-image-support-for-aws-lambda-and-aws-cdk/" class="blog-read-more blog-btn-a blog-btn-a-small">Read More</a> 
+        </section> 
+       </div> 
+      </div> 
+     </article> 
+     <article class="blog-post" vocab="http://schema.org/" typeof="TechArticle"> 
+      <meta property="inLanguage" content="en-US" /> 
+      <meta property="image" content="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2021/05/25/AdobeStock_242783853_open-neon-sign.png" /> 
+      <div class="lb-row lb-snap"> 
+       <div class="lb-col lb-mid-6 lb-tiny-24"> 
+        <a href="https://aws.amazon.com/blogs/opensource/how-being-open-led-to-greater-customer-value-with-the-aws-iot-device-sdk-for-embedded-c/" property="url" rel="bookmark"><img width="1000" height="500" src="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2021/05/25/AdobeStock_242783853_open-neon-sign.png" class="attachment-large size-large wp-post-image" alt="Rawpixel.com – stock.adobe.com Neon sign that says Open" /></a> 
+       </div> 
+       <div class="lb-col lb-mid-18 lb-tiny-24"> 
+        <h2 class="blog-post-title"><a href="https://aws.amazon.com/blogs/opensource/how-being-open-led-to-greater-customer-value-with-the-aws-iot-device-sdk-for-embedded-c/" property="url" rel="bookmark"><span property="name headline">How being open led to greater customer value with the AWS IoT Device SDK for Embedded C</span></a></h2> 
+        <footer class="blog-post-meta" data-lb-comp="aws-blog:share-dialog">
+          by 
+         <span property="author" typeof="Person"><span property="name">Rashed Talukder</span></span> | on 
+         <time property="datePublished" datetime="2021-06-30T06:53:59-08:00">30 JUN 2021</time> | in 
+         <span class="blog-post-categories"><a href="https://aws.amazon.com/blogs/opensource/category/internet-of-things/aws-iot-device-defender/" title="View all posts in AWS IoT Device Defender"><span property="articleSection">AWS IoT Device Defender</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/internet-of-things/amazon-freertos/" title="View all posts in FreeRTOS"><span property="articleSection">FreeRTOS</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/learning-levels/intermediate-200/" title="View all posts in Intermediate (200)"><span property="articleSection">Intermediate (200)</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/internet-of-things/" title="View all posts in Internet of Things"><span property="articleSection">Internet of Things</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/open-source/" title="View all posts in Open Source"><span property="articleSection">Open Source</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/post-types/technical-how-to/" title="View all posts in Technical How-to"><span property="articleSection">Technical How-to</span></a></span> | 
+         <a href="https://aws.amazon.com/blogs/opensource/how-being-open-led-to-greater-customer-value-with-the-aws-iot-device-sdk-for-embedded-c/" property="url">Permalink</a> | 
+         <a id="aws-comment-trigger-10524" href="https://commenting.awsblogs.com/embed.html?disqus_shortname=aws-open-source-blog&amp;disqus_identifier=10524&amp;disqus_title=How+being+open+led+to+greater+customer+value+with+the+AWS+IoT+Device+SDK+for+Embedded+C&amp;disqus_url=https://aws.amazon.com/blogs/opensource/how-being-open-led-to-greater-customer-value-with-the-aws-iot-device-sdk-for-embedded-c/" data-lb-comp="aws-blog:commenting" data-sandbox-attr="allow-forms allow-scripts allow-popups allow-same-origin" property="discussionUrl"><i class="icon-comment"></i> Comments</a> | 
+         <a href="#" role="button" data-share-dialog-toggle=""><span class="span icon-share"></span>&nbsp;Share</a> 
+         <div class="blog-share-dialog" data-share-dialog="" style="display: none;"> 
+          <ul> 
+           <li> <a class="lb-txt" href="https://www.facebook.com/sharer/sharer.php?u=https://aws.amazon.com/blogs/opensource/how-being-open-led-to-greater-customer-value-with-the-aws-iot-device-sdk-for-embedded-c/" target="_blank" rel="noopener noreferrer"><span class="icon-facebook-square" aria-label="Share on Facebook"></span></a> </li> 
+           <li> <a class="lb-txt" href="https://twitter.com/intent/tweet/?text=How%20being%20open%20led%20to%20greater%20customer%20value%20with%20the%20AWS%20IoT%20Device%20SDK%20for%20Embedded%20C&amp;via=awscloud&amp;url=https://aws.amazon.com/blogs/opensource/how-being-open-led-to-greater-customer-value-with-the-aws-iot-device-sdk-for-embedded-c/" target="_blank" rel="noopener noreferrer"><span class="icon-twitter-square" aria-label="Share on Twitter"></span></a> </li> 
+           <li> <a class="lb-txt" href="https://www.linkedin.com/shareArticle?mini=true&amp;title=How%20being%20open%20led%20to%20greater%20customer%20value%20with%20the%20AWS%20IoT%20Device%20SDK%20for%20Embedded%20C&amp;source=Amazon%20Web%20Services&amp;summary=The%20AWS%20IoT%20Device%20SDK%20for%20Embedded%20C%20%28C-SDK%29%20is%20composed%20of%20a%20set%20of%20MIT-licensed%20libraries%20that%20demonstrate%20simplified%2C%20lightweight%2C%20and%20secure%20connectivity%20to%20AWS%20IoT%20Core%20and%20device-side%20operations%20to%20AWS%20IoT%20services.%20The%20AWS%20IoT%20C-SDK%20can%20work%20on%20a%20variety%20of%20operating%20systems%2C%20such%20as%20Linux%2C%20macOS%2C%20and%20Windows%2C%20or%20a%20%5B%26hellip%3B%5D&amp;url=https://aws.amazon.com/blogs/opensource/how-being-open-led-to-greater-customer-value-with-the-aws-iot-device-sdk-for-embedded-c/" target="_blank" rel="noopener noreferrer"><span class="icon-linkedin-square" aria-label="Share on LinkedIn"></span></a> </li> 
+           <li> <a class="lb-txt" href="mailto:?subject=How%20being%20open%20led%20to%20greater%20customer%20value%20with%20the%20AWS%20IoT%20Device%20SDK%20for%20Embedded%20C&amp;body=How%20being%20open%20led%20to%20greater%20customer%20value%20with%20the%20AWS%20IoT%20Device%20SDK%20for%20Embedded%20C%0A%0Ahttps://aws.amazon.com/blogs/opensource/how-being-open-led-to-greater-customer-value-with-the-aws-iot-device-sdk-for-embedded-c/" target="_blank" rel="noopener noreferrer"><span class="icon-envelope-square" aria-label="Share on Email"></span></a> </li> 
+           <li class="blog-share-dialog-url"><input type="text" value="https://aws.amazon.com/blogs/opensource/how-being-open-led-to-greater-customer-value-with-the-aws-iot-device-sdk-for-embedded-c/" title="Link to How being open led to greater customer value with the AWS IoT Device SDK for Embedded C" readonly="" data-share-dialog-url="" /></li> 
+          </ul> 
+         </div> 
+        </footer> 
+        <section class="blog-post-excerpt" property="description"> 
+         <p>The AWS IoT Device SDK for Embedded C (C-SDK) is composed of a set of MIT-licensed libraries that demonstrate simplified, lightweight, and secure connectivity to AWS IoT Core and device-side operations to AWS IoT services. The AWS IoT C-SDK can work on a variety of operating systems, such as Linux, macOS, and Windows, or a […]</p> 
+         <a href="https://aws.amazon.com/blogs/opensource/how-being-open-led-to-greater-customer-value-with-the-aws-iot-device-sdk-for-embedded-c/" class="blog-read-more blog-btn-a blog-btn-a-small">Read More</a> 
+        </section> 
+       </div> 
+      </div> 
+     </article> 
+     <article class="blog-post" vocab="http://schema.org/" typeof="TechArticle"> 
+      <meta property="inLanguage" content="en-US" /> 
+      <meta property="image" content="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2021/06/28/AdobeStock_112842850_lock_security_secure_1000x500.png" /> 
+      <div class="lb-row lb-snap"> 
+       <div class="lb-col lb-mid-6 lb-tiny-24"> 
+        <a href="https://aws.amazon.com/blogs/opensource/how-using-hyper-in-curl-can-help-make-the-internet-safer/" property="url" rel="bookmark"><img width="1000" height="500" src="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2021/06/28/AdobeStock_112842850_lock_security_secure_1000x500.png" class="attachment-large size-large wp-post-image" alt="Pasko Maksim – stock.adobe.com" /></a> 
+       </div> 
+       <div class="lb-col lb-mid-18 lb-tiny-24"> 
+        <h2 class="blog-post-title"><a href="https://aws.amazon.com/blogs/opensource/how-using-hyper-in-curl-can-help-make-the-internet-safer/" property="url" rel="bookmark"><span property="name headline">How using hyper in curl can help make the internet safer</span></a></h2> 
+        <footer class="blog-post-meta" data-lb-comp="aws-blog:share-dialog">
+          by 
+         <span property="author" typeof="Person"><span property="name">Sean McArthur</span></span> | on 
+         <time property="datePublished" datetime="2021-06-28T05:46:04-08:00">28 JUN 2021</time> | in 
+         <span class="blog-post-categories"><a href="https://aws.amazon.com/blogs/opensource/category/open-source/" title="View all posts in Open Source"><span property="articleSection">Open Source</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/post-types/thought-leadership/" title="View all posts in Thought Leadership"><span property="articleSection">Thought Leadership</span></a></span> | 
+         <a href="https://aws.amazon.com/blogs/opensource/how-using-hyper-in-curl-can-help-make-the-internet-safer/" property="url">Permalink</a> | 
+         <a id="aws-comment-trigger-11370" href="https://commenting.awsblogs.com/embed.html?disqus_shortname=aws-open-source-blog&amp;disqus_identifier=11370&amp;disqus_title=How+using+hyper+in+curl+can+help+make+the+internet+safer&amp;disqus_url=https://aws.amazon.com/blogs/opensource/how-using-hyper-in-curl-can-help-make-the-internet-safer/" data-lb-comp="aws-blog:commenting" data-sandbox-attr="allow-forms allow-scripts allow-popups allow-same-origin" property="discussionUrl"><i class="icon-comment"></i> Comments</a> | 
+         <a href="#" role="button" data-share-dialog-toggle=""><span class="span icon-share"></span>&nbsp;Share</a> 
+         <div class="blog-share-dialog" data-share-dialog="" style="display: none;"> 
+          <ul> 
+           <li> <a class="lb-txt" href="https://www.facebook.com/sharer/sharer.php?u=https://aws.amazon.com/blogs/opensource/how-using-hyper-in-curl-can-help-make-the-internet-safer/" target="_blank" rel="noopener noreferrer"><span class="icon-facebook-square" aria-label="Share on Facebook"></span></a> </li> 
+           <li> <a class="lb-txt" href="https://twitter.com/intent/tweet/?text=How%20using%20hyper%20in%20curl%20can%20help%20make%20the%20internet%20safer&amp;via=awscloud&amp;url=https://aws.amazon.com/blogs/opensource/how-using-hyper-in-curl-can-help-make-the-internet-safer/" target="_blank" rel="noopener noreferrer"><span class="icon-twitter-square" aria-label="Share on Twitter"></span></a> </li> 
+           <li> <a class="lb-txt" href="https://www.linkedin.com/shareArticle?mini=true&amp;title=How%20using%20hyper%20in%20curl%20can%20help%20make%20the%20internet%20safer&amp;source=Amazon%20Web%20Services&amp;summary=In%20February%2C%20Josh%20Aas%20from%20Internet%20Security%20Research%20Group%2C%20Daniel%20Stenberg%20from%20curl%2C%20and%20I%20%28from%20hyper%20and%20Amazon%20Web%20Services%29%20hosted%20a%20joint%20webinar%20to%20discuss%20memory%20safety%20and%20the%20internet%2C%20and%20how%20using%20hyper%20in%20curl%20can%20help%20make%20the%20internet%20safer.%20Because%20curl%20is%20open%20source%20and%20permissively%20licensed%2C%20it%20is%20found%20%5B%26hellip%3B%5D&amp;url=https://aws.amazon.com/blogs/opensource/how-using-hyper-in-curl-can-help-make-the-internet-safer/" target="_blank" rel="noopener noreferrer"><span class="icon-linkedin-square" aria-label="Share on LinkedIn"></span></a> </li> 
+           <li> <a class="lb-txt" href="mailto:?subject=How%20using%20hyper%20in%20curl%20can%20help%20make%20the%20internet%20safer&amp;body=How%20using%20hyper%20in%20curl%20can%20help%20make%20the%20internet%20safer%0A%0Ahttps://aws.amazon.com/blogs/opensource/how-using-hyper-in-curl-can-help-make-the-internet-safer/" target="_blank" rel="noopener noreferrer"><span class="icon-envelope-square" aria-label="Share on Email"></span></a> </li> 
+           <li class="blog-share-dialog-url"><input type="text" value="https://aws.amazon.com/blogs/opensource/how-using-hyper-in-curl-can-help-make-the-internet-safer/" title="Link to How using hyper in curl can help make the internet safer" readonly="" data-share-dialog-url="" /></li> 
+          </ul> 
+         </div> 
+        </footer> 
+        <section class="blog-post-excerpt" property="description"> 
+         <p>In February, Josh Aas from Internet Security Research Group, Daniel Stenberg from curl, and I (from hyper and Amazon Web Services) hosted a joint webinar to discuss memory safety and the internet, and how using hyper in curl can help make the internet safer. Because curl is open source and permissively licensed, it is found […]</p> 
+         <a href="https://aws.amazon.com/blogs/opensource/how-using-hyper-in-curl-can-help-make-the-internet-safer/" class="blog-read-more blog-btn-a blog-btn-a-small">Read More</a> 
+        </section> 
+       </div> 
+      </div> 
+     </article> 
+     <article class="blog-post" vocab="http://schema.org/" typeof="TechArticle"> 
+      <meta property="inLanguage" content="en-US" /> 
+      <meta property="image" content="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2021/06/24/grafana-loki-regulated-multitenant-environ_feature.png" /> 
+      <div class="lb-row lb-snap"> 
+       <div class="lb-col lb-mid-6 lb-tiny-24"> 
+        <a href="https://aws.amazon.com/blogs/opensource/how-to-manage-grafana-and-loki-in-a-regulated-multitenant-environment/" property="url" rel="bookmark"><img width="1000" height="500" src="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2021/06/24/grafana-loki-regulated-multitenant-environ_feature.png" class="attachment-large size-large wp-post-image" alt="high level architecture of How to manage Grafana and Loki in a regulated multi-tenant environment" /></a> 
+       </div> 
+       <div class="lb-col lb-mid-18 lb-tiny-24"> 
+        <h2 class="blog-post-title"><a href="https://aws.amazon.com/blogs/opensource/how-to-manage-grafana-and-loki-in-a-regulated-multitenant-environment/" property="url" rel="bookmark"><span property="name headline">Managing Grafana and Loki in a regulated multitenant environment</span></a></h2> 
+        <footer class="blog-post-meta" data-lb-comp="aws-blog:share-dialog">
+          by 
+         <span property="author" typeof="Person"><span property="name">Marco Ballerini</span></span> and 
+         <span property="author" typeof="Person"><span property="name">Kseniya Stadnik</span></span> | on 
+         <time property="datePublished" datetime="2021-06-24T06:03:50-08:00">24 JUN 2021</time> | in 
+         <span class="blog-post-categories"><a href="https://aws.amazon.com/blogs/opensource/category/management-tools/amazon-managed-service-for-grafana/" title="View all posts in Amazon Managed Service for Grafana"><span property="articleSection">Amazon Managed Service for Grafana</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/open-source/" title="View all posts in Open Source"><span property="articleSection">Open Source</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/post-types/technical-how-to/" title="View all posts in Technical How-to"><span property="articleSection">Technical How-to</span></a></span> | 
+         <a href="https://aws.amazon.com/blogs/opensource/how-to-manage-grafana-and-loki-in-a-regulated-multitenant-environment/" property="url">Permalink</a> | 
+         <a id="aws-comment-trigger-11327" href="https://commenting.awsblogs.com/embed.html?disqus_shortname=aws-open-source-blog&amp;disqus_identifier=11327&amp;disqus_title=Managing+Grafana+and+Loki+in+a+regulated+multitenant+environment&amp;disqus_url=https://aws.amazon.com/blogs/opensource/how-to-manage-grafana-and-loki-in-a-regulated-multitenant-environment/" data-lb-comp="aws-blog:commenting" data-sandbox-attr="allow-forms allow-scripts allow-popups allow-same-origin" property="discussionUrl"><i class="icon-comment"></i> Comments</a> | 
+         <a href="#" role="button" data-share-dialog-toggle=""><span class="span icon-share"></span>&nbsp;Share</a> 
+         <div class="blog-share-dialog" data-share-dialog="" style="display: none;"> 
+          <ul> 
+           <li> <a class="lb-txt" href="https://www.facebook.com/sharer/sharer.php?u=https://aws.amazon.com/blogs/opensource/how-to-manage-grafana-and-loki-in-a-regulated-multitenant-environment/" target="_blank" rel="noopener noreferrer"><span class="icon-facebook-square" aria-label="Share on Facebook"></span></a> </li> 
+           <li> <a class="lb-txt" href="https://twitter.com/intent/tweet/?text=Managing%20Grafana%20and%20Loki%20in%20a%20regulated%20multitenant%20environment&amp;via=awscloud&amp;url=https://aws.amazon.com/blogs/opensource/how-to-manage-grafana-and-loki-in-a-regulated-multitenant-environment/" target="_blank" rel="noopener noreferrer"><span class="icon-twitter-square" aria-label="Share on Twitter"></span></a> </li> 
+           <li> <a class="lb-txt" href="https://www.linkedin.com/shareArticle?mini=true&amp;title=Managing%20Grafana%20and%20Loki%20in%20a%20regulated%20multitenant%20environment&amp;source=Amazon%20Web%20Services&amp;summary=Grafana%20Loki%20was%20introduced%20in%202018%20as%20a%20lightweight%20and%20cost-effective%20log%20aggregation%20system%20inspired%20by%20Prometheus.%20Grafana%2C%20often%20with%20Prometheus%2C%20is%20a%20popular%20open%20source%20platform%20for%20monitoring%20and%20observability%20that%20can%20be%20used%20to%20query%2C%20visualize%2C%20and%20create%20alerts%20on%20a%20number%20of%20metric%20and%20data%20sources.%20With%20the%20increase%20in%20maturity%20of%20%5B%26hellip%3B%5D&amp;url=https://aws.amazon.com/blogs/opensource/how-to-manage-grafana-and-loki-in-a-regulated-multitenant-environment/" target="_blank" rel="noopener noreferrer"><span class="icon-linkedin-square" aria-label="Share on LinkedIn"></span></a> </li> 
+           <li> <a class="lb-txt" href="mailto:?subject=Managing%20Grafana%20and%20Loki%20in%20a%20regulated%20multitenant%20environment&amp;body=Managing%20Grafana%20and%20Loki%20in%20a%20regulated%20multitenant%20environment%0A%0Ahttps://aws.amazon.com/blogs/opensource/how-to-manage-grafana-and-loki-in-a-regulated-multitenant-environment/" target="_blank" rel="noopener noreferrer"><span class="icon-envelope-square" aria-label="Share on Email"></span></a> </li> 
+           <li class="blog-share-dialog-url"><input type="text" value="https://aws.amazon.com/blogs/opensource/how-to-manage-grafana-and-loki-in-a-regulated-multitenant-environment/" title="Link to Managing Grafana and Loki in a regulated multitenant environment" readonly="" data-share-dialog-url="" /></li> 
+          </ul> 
+         </div> 
+        </footer> 
+        <section class="blog-post-excerpt" property="description"> 
+         <p>Grafana Loki was introduced in 2018 as a lightweight and cost-effective log aggregation system inspired by Prometheus. Grafana, often with Prometheus, is a popular open source platform for monitoring and observability that can be used to query, visualize, and create alerts on a number of metric and data sources. With the increase in maturity of […]</p> 
+         <a href="https://aws.amazon.com/blogs/opensource/how-to-manage-grafana-and-loki-in-a-regulated-multitenant-environment/" class="blog-read-more blog-btn-a blog-btn-a-small">Read More</a> 
+        </section> 
+       </div> 
+      </div> 
+     </article> 
+     <article class="blog-post" vocab="http://schema.org/" typeof="TechArticle"> 
+      <meta property="inLanguage" content="en-US" /> 
+      <meta property="image" content="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2021/06/22/cd_foundation_logo_1000x500.png" /> 
+      <div class="lb-row lb-snap"> 
+       <div class="lb-col lb-mid-6 lb-tiny-24"> 
+        <a href="https://aws.amazon.com/blogs/opensource/aws-is-doubling-down-on-improving-the-open-source-continuous-delivery-experience-for-our-customers/" property="url" rel="bookmark"><img width="1000" height="500" src="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2021/06/22/cd_foundation_logo_1000x500.png" class="attachment-large size-large wp-post-image" alt="CD Foundation Logo" /></a> 
+       </div> 
+       <div class="lb-col lb-mid-18 lb-tiny-24"> 
+        <h2 class="blog-post-title"><a href="https://aws.amazon.com/blogs/opensource/aws-is-doubling-down-on-improving-the-open-source-continuous-delivery-experience-for-our-customers/" property="url" rel="bookmark"><span property="name headline">AWS is doubling down on improving the open source continuous delivery experience for our customers</span></a></h2> 
+        <footer class="blog-post-meta" data-lb-comp="aws-blog:share-dialog">
+          by 
+         <span property="author" typeof="Person"><span property="name">Nima Kaviani</span></span>, 
+         <span property="author" typeof="Person"><span property="name">Matt Asay</span></span>, 
+         <span property="author" typeof="Person"><span property="name">Rob Hilton</span></span>, and 
+         <span property="author" typeof="Person"><span property="name">Sarah Watson</span></span> | on 
+         <time property="datePublished" datetime="2021-06-23T08:01:14-08:00">23 JUN 2021</time> | in 
+         <span class="blog-post-categories"><a href="https://aws.amazon.com/blogs/opensource/category/post-types/announcements/" title="View all posts in Announcements"><span property="articleSection">Announcements</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/devops/" title="View all posts in DevOps"><span property="articleSection">DevOps</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/open-source/" title="View all posts in Open Source"><span property="articleSection">Open Source</span></a></span> | 
+         <a href="https://aws.amazon.com/blogs/opensource/aws-is-doubling-down-on-improving-the-open-source-continuous-delivery-experience-for-our-customers/" property="url">Permalink</a> | 
+         <a id="aws-comment-trigger-11384" href="https://commenting.awsblogs.com/embed.html?disqus_shortname=aws-open-source-blog&amp;disqus_identifier=11384&amp;disqus_title=AWS+is+doubling+down+on+improving+the+open+source+continuous+delivery+experience+for+our+customers&amp;disqus_url=https://aws.amazon.com/blogs/opensource/aws-is-doubling-down-on-improving-the-open-source-continuous-delivery-experience-for-our-customers/" data-lb-comp="aws-blog:commenting" data-sandbox-attr="allow-forms allow-scripts allow-popups allow-same-origin" property="discussionUrl"><i class="icon-comment"></i> Comments</a> | 
+         <a href="#" role="button" data-share-dialog-toggle=""><span class="span icon-share"></span>&nbsp;Share</a> 
+         <div class="blog-share-dialog" data-share-dialog="" style="display: none;"> 
+          <ul> 
+           <li> <a class="lb-txt" href="https://www.facebook.com/sharer/sharer.php?u=https://aws.amazon.com/blogs/opensource/aws-is-doubling-down-on-improving-the-open-source-continuous-delivery-experience-for-our-customers/" target="_blank" rel="noopener noreferrer"><span class="icon-facebook-square" aria-label="Share on Facebook"></span></a> </li> 
+           <li> <a class="lb-txt" href="https://twitter.com/intent/tweet/?text=AWS%20is%20doubling%20down%20on%20improving%20the%20open%20source%20continuous%20delivery%20experience%20for%20our%20customers&amp;via=awscloud&amp;url=https://aws.amazon.com/blogs/opensource/aws-is-doubling-down-on-improving-the-open-source-continuous-delivery-experience-for-our-customers/" target="_blank" rel="noopener noreferrer"><span class="icon-twitter-square" aria-label="Share on Twitter"></span></a> </li> 
+           <li> <a class="lb-txt" href="https://www.linkedin.com/shareArticle?mini=true&amp;title=AWS%20is%20doubling%20down%20on%20improving%20the%20open%20source%20continuous%20delivery%20experience%20for%20our%20customers&amp;source=Amazon%20Web%20Services&amp;summary=We%20are%20thrilled%20to%20announce%20that%20AWS%20is%20joining%20the%20Continuous%20Delivery%20Foundation%20%28CDF%29%20as%20a%20Premier%20member.%20Continuous%20delivery%20is%20the%20bridge%20between%20software%20that%20our%20customers%20build%20and%20cloud%20services%20that%20AWS%20offers%2C%20and%20CDF%20is%20the%20interface%20to%20the%20community%20that%20is%20driving%20many%20important%20innovations%20in%20this%20space.%20We%20join%20the%20%5B%26hellip%3B%5D&amp;url=https://aws.amazon.com/blogs/opensource/aws-is-doubling-down-on-improving-the-open-source-continuous-delivery-experience-for-our-customers/" target="_blank" rel="noopener noreferrer"><span class="icon-linkedin-square" aria-label="Share on LinkedIn"></span></a> </li> 
+           <li> <a class="lb-txt" href="mailto:?subject=AWS%20is%20doubling%20down%20on%20improving%20the%20open%20source%20continuous%20delivery%20experience%20for%20our%20customers&amp;body=AWS%20is%20doubling%20down%20on%20improving%20the%20open%20source%20continuous%20delivery%20experience%20for%20our%20customers%0A%0Ahttps://aws.amazon.com/blogs/opensource/aws-is-doubling-down-on-improving-the-open-source-continuous-delivery-experience-for-our-customers/" target="_blank" rel="noopener noreferrer"><span class="icon-envelope-square" aria-label="Share on Email"></span></a> </li> 
+           <li class="blog-share-dialog-url"><input type="text" value="https://aws.amazon.com/blogs/opensource/aws-is-doubling-down-on-improving-the-open-source-continuous-delivery-experience-for-our-customers/" title="Link to AWS is doubling down on improving the open source continuous delivery experience for our customers" readonly="" data-share-dialog-url="" /></li> 
+          </ul> 
+         </div> 
+        </footer> 
+        <section class="blog-post-excerpt" property="description"> 
+         <p>We are thrilled to announce that AWS is joining the Continuous Delivery Foundation (CDF) as a Premier member. Continuous delivery is the bridge between software that our customers build and cloud services that AWS offers, and CDF is the interface to the community that is driving many important innovations in this space. We join the […]</p> 
+         <a href="https://aws.amazon.com/blogs/opensource/aws-is-doubling-down-on-improving-the-open-source-continuous-delivery-experience-for-our-customers/" class="blog-read-more blog-btn-a blog-btn-a-small">Read More</a> 
+        </section> 
+       </div> 
+      </div> 
+     </article> 
+     <article class="blog-post" vocab="http://schema.org/" typeof="TechArticle"> 
+      <meta property="inLanguage" content="en-US" /> 
+      <meta property="image" content="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2021/02/25/AdobeStock_80263750_cloud_computing_parts_moving_gears.png" /> 
+      <div class="lb-row lb-snap"> 
+       <div class="lb-col lb-mid-6 lb-tiny-24"> 
+        <a href="https://aws.amazon.com/blogs/opensource/cloud-governance-and-compliance-on-aws-with-policy-as-code/" property="url" rel="bookmark"><img width="1000" height="500" src="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2021/02/25/AdobeStock_80263750_cloud_computing_parts_moving_gears.png" class="attachment-large size-large wp-post-image" alt="ShpilbergStudios – stock.adobe.com" /></a> 
+       </div> 
+       <div class="lb-col lb-mid-18 lb-tiny-24"> 
+        <h2 class="blog-post-title"><a href="https://aws.amazon.com/blogs/opensource/cloud-governance-and-compliance-on-aws-with-policy-as-code/" property="url" rel="bookmark"><span property="name headline">Cloud governance and compliance on AWS with policy as code</span></a></h2> 
+        <footer class="blog-post-meta" data-lb-comp="aws-blog:share-dialog">
+          by 
+         <span property="author" typeof="Person"><span property="name">Xuejiao Zhang</span></span> | on 
+         <time property="datePublished" datetime="2021-06-17T05:23:55-08:00">17 JUN 2021</time> | in 
+         <span class="blog-post-categories"><a href="https://aws.amazon.com/blogs/opensource/category/developer-tools/aws-codebuild/" title="View all posts in AWS CodeBuild"><span property="articleSection">AWS CodeBuild</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/developer-tools/aws-codecommit/" title="View all posts in AWS CodeCommit"><span property="articleSection">AWS CodeCommit</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/developer-tools/aws-codepipeline/" title="View all posts in AWS CodePipeline"><span property="articleSection">AWS CodePipeline</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/developer-tools/" title="View all posts in Developer Tools"><span property="articleSection">Developer Tools</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/open-source/" title="View all posts in Open Source"><span property="articleSection">Open Source</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/post-types/technical-how-to/" title="View all posts in Technical How-to"><span property="articleSection">Technical How-to</span></a></span> | 
+         <a href="https://aws.amazon.com/blogs/opensource/cloud-governance-and-compliance-on-aws-with-policy-as-code/" property="url">Permalink</a> | 
+         <a id="aws-comment-trigger-11332" href="https://commenting.awsblogs.com/embed.html?disqus_shortname=aws-open-source-blog&amp;disqus_identifier=11332&amp;disqus_title=Cloud+governance+and+compliance+on+AWS+with+policy+as+code&amp;disqus_url=https://aws.amazon.com/blogs/opensource/cloud-governance-and-compliance-on-aws-with-policy-as-code/" data-lb-comp="aws-blog:commenting" data-sandbox-attr="allow-forms allow-scripts allow-popups allow-same-origin" property="discussionUrl"><i class="icon-comment"></i> Comments</a> | 
+         <a href="#" role="button" data-share-dialog-toggle=""><span class="span icon-share"></span>&nbsp;Share</a> 
+         <div class="blog-share-dialog" data-share-dialog="" style="display: none;"> 
+          <ul> 
+           <li> <a class="lb-txt" href="https://www.facebook.com/sharer/sharer.php?u=https://aws.amazon.com/blogs/opensource/cloud-governance-and-compliance-on-aws-with-policy-as-code/" target="_blank" rel="noopener noreferrer"><span class="icon-facebook-square" aria-label="Share on Facebook"></span></a> </li> 
+           <li> <a class="lb-txt" href="https://twitter.com/intent/tweet/?text=Cloud%20governance%20and%20compliance%20on%20AWS%20with%20policy%20as%20code&amp;via=awscloud&amp;url=https://aws.amazon.com/blogs/opensource/cloud-governance-and-compliance-on-aws-with-policy-as-code/" target="_blank" rel="noopener noreferrer"><span class="icon-twitter-square" aria-label="Share on Twitter"></span></a> </li> 
+           <li> <a class="lb-txt" href="https://www.linkedin.com/shareArticle?mini=true&amp;title=Cloud%20governance%20and%20compliance%20on%20AWS%20with%20policy%20as%20code&amp;source=Amazon%20Web%20Services&amp;summary=To%20stay%20competitive%2C%20organizations%20must%20innovate%20faster%20and%20operate%20more%20efficiently%2C%20and%20using%20dynamic%20and%20highly%20scalable%20cloud%20resources%20can%20help.%20IT%20teams%20can%20shift%20from%20the%20mindset%20of%20a%20binary%20choice%20between%20business%20agility%20and%20governance%20control%2C%20to%20a%20mindset%20that%20includes%20speed%20and%20governance%20over%20cost%2C%20security%2C%20compliance%2C%20and%20more.%20The%20following%20common%20%5B%26hellip%3B%5D&amp;url=https://aws.amazon.com/blogs/opensource/cloud-governance-and-compliance-on-aws-with-policy-as-code/" target="_blank" rel="noopener noreferrer"><span class="icon-linkedin-square" aria-label="Share on LinkedIn"></span></a> </li> 
+           <li> <a class="lb-txt" href="mailto:?subject=Cloud%20governance%20and%20compliance%20on%20AWS%20with%20policy%20as%20code&amp;body=Cloud%20governance%20and%20compliance%20on%20AWS%20with%20policy%20as%20code%0A%0Ahttps://aws.amazon.com/blogs/opensource/cloud-governance-and-compliance-on-aws-with-policy-as-code/" target="_blank" rel="noopener noreferrer"><span class="icon-envelope-square" aria-label="Share on Email"></span></a> </li> 
+           <li class="blog-share-dialog-url"><input type="text" value="https://aws.amazon.com/blogs/opensource/cloud-governance-and-compliance-on-aws-with-policy-as-code/" title="Link to Cloud governance and compliance on AWS with policy as code" readonly="" data-share-dialog-url="" /></li> 
+          </ul> 
+         </div> 
+        </footer> 
+        <section class="blog-post-excerpt" property="description"> 
+         <p>To stay competitive, organizations must innovate faster and operate more efficiently, and using dynamic and highly scalable cloud resources can help. IT teams can shift from the mindset of a binary choice between business agility and governance control, to a mindset that includes speed and governance over cost, security, compliance, and more. The following common […]</p> 
+         <a href="https://aws.amazon.com/blogs/opensource/cloud-governance-and-compliance-on-aws-with-policy-as-code/" class="blog-read-more blog-btn-a blog-btn-a-small">Read More</a> 
+        </section> 
+       </div> 
+      </div> 
+     </article> 
+     <article class="blog-post" vocab="http://schema.org/" typeof="TechArticle"> 
+      <meta property="inLanguage" content="en-US" /> 
+      <meta property="image" content="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2021/06/04/AdobeStock_328915424_earth-contacts-network_1000x500.png" /> 
+      <div class="lb-row lb-snap"> 
+       <div class="lb-col lb-mid-6 lb-tiny-24"> 
+        <a href="https://aws.amazon.com/blogs/opensource/how-open-source-on-aws-helped-nearform-quickly-build-and-scale-its-covid-19-contact-tracing-app/" property="url" rel="bookmark"><img width="1000" height="500" src="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2021/06/04/AdobeStock_328915424_earth-contacts-network_1000x500.png" class="attachment-large size-large wp-post-image" alt="greenbutterfly – stock.adobe.com view of earth from space" /></a> 
+       </div> 
+       <div class="lb-col lb-mid-18 lb-tiny-24"> 
+        <h2 class="blog-post-title"><a href="https://aws.amazon.com/blogs/opensource/how-open-source-on-aws-helped-nearform-quickly-build-and-scale-its-covid-19-contact-tracing-app/" property="url" rel="bookmark"><span property="name headline">How open source on AWS helped NearForm quickly build and scale its Covid-19 contact tracing app</span></a></h2> 
+        <footer class="blog-post-meta" data-lb-comp="aws-blog:share-dialog">
+          by 
+         <span property="author" typeof="Person"><span property="name">Ricardo Sueiras</span></span> | on 
+         <time property="datePublished" datetime="2021-06-10T07:29:41-08:00">10 JUN 2021</time> | in 
+         <span class="blog-post-categories"><a href="https://aws.amazon.com/blogs/opensource/category/open-source/" title="View all posts in Open Source"><span property="articleSection">Open Source</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/post-types/thought-leadership/" title="View all posts in Thought Leadership"><span property="articleSection">Thought Leadership</span></a></span> | 
+         <a href="https://aws.amazon.com/blogs/opensource/how-open-source-on-aws-helped-nearform-quickly-build-and-scale-its-covid-19-contact-tracing-app/" property="url">Permalink</a> | 
+         <a id="aws-comment-trigger-11295" href="https://commenting.awsblogs.com/embed.html?disqus_shortname=aws-open-source-blog&amp;disqus_identifier=11295&amp;disqus_title=How+open+source+on+AWS+helped+NearForm+quickly+build+and+scale+its+Covid-19+contact+tracing+app&amp;disqus_url=https://aws.amazon.com/blogs/opensource/how-open-source-on-aws-helped-nearform-quickly-build-and-scale-its-covid-19-contact-tracing-app/" data-lb-comp="aws-blog:commenting" data-sandbox-attr="allow-forms allow-scripts allow-popups allow-same-origin" property="discussionUrl"><i class="icon-comment"></i> Comments</a> | 
+         <a href="#" role="button" data-share-dialog-toggle=""><span class="span icon-share"></span>&nbsp;Share</a> 
+         <div class="blog-share-dialog" data-share-dialog="" style="display: none;"> 
+          <ul> 
+           <li> <a class="lb-txt" href="https://www.facebook.com/sharer/sharer.php?u=https://aws.amazon.com/blogs/opensource/how-open-source-on-aws-helped-nearform-quickly-build-and-scale-its-covid-19-contact-tracing-app/" target="_blank" rel="noopener noreferrer"><span class="icon-facebook-square" aria-label="Share on Facebook"></span></a> </li> 
+           <li> <a class="lb-txt" href="https://twitter.com/intent/tweet/?text=How%20open%20source%20on%20AWS%20helped%20NearForm%20quickly%20build%20and%20scale%20its%20Covid-19%20contact%20tracing%20app&amp;via=awscloud&amp;url=https://aws.amazon.com/blogs/opensource/how-open-source-on-aws-helped-nearform-quickly-build-and-scale-its-covid-19-contact-tracing-app/" target="_blank" rel="noopener noreferrer"><span class="icon-twitter-square" aria-label="Share on Twitter"></span></a> </li> 
+           <li> <a class="lb-txt" href="https://www.linkedin.com/shareArticle?mini=true&amp;title=How%20open%20source%20on%20AWS%20helped%20NearForm%20quickly%20build%20and%20scale%20its%20Covid-19%20contact%20tracing%20app&amp;source=Amazon%20Web%20Services&amp;summary=This%20post%20was%20contributed%20by%20Colm%20Harte%2C%20Technical%20Director%2C%20NearForm.%20At%20NearForm%2C%20we%20use%20small%20cross-functional%20teams%20to%20rapidly%20build%20high-performance%2C%20highly%20scalable%20digital%20products%20using%20open%20source%20software%20%28OSS%29%20and%20a%20cloud-first%20approach.%20In%20this%20article%2C%20we%20share%20why%20and%20how%20we%20use%20open%20source%20and%20AWS%20to%20help%20us%20build%20digital%20products%20at%20%5B%26hellip%3B%5D&amp;url=https://aws.amazon.com/blogs/opensource/how-open-source-on-aws-helped-nearform-quickly-build-and-scale-its-covid-19-contact-tracing-app/" target="_blank" rel="noopener noreferrer"><span class="icon-linkedin-square" aria-label="Share on LinkedIn"></span></a> </li> 
+           <li> <a class="lb-txt" href="mailto:?subject=How%20open%20source%20on%20AWS%20helped%20NearForm%20quickly%20build%20and%20scale%20its%20Covid-19%20contact%20tracing%20app&amp;body=How%20open%20source%20on%20AWS%20helped%20NearForm%20quickly%20build%20and%20scale%20its%20Covid-19%20contact%20tracing%20app%0A%0Ahttps://aws.amazon.com/blogs/opensource/how-open-source-on-aws-helped-nearform-quickly-build-and-scale-its-covid-19-contact-tracing-app/" target="_blank" rel="noopener noreferrer"><span class="icon-envelope-square" aria-label="Share on Email"></span></a> </li> 
+           <li class="blog-share-dialog-url"><input type="text" value="https://aws.amazon.com/blogs/opensource/how-open-source-on-aws-helped-nearform-quickly-build-and-scale-its-covid-19-contact-tracing-app/" title="Link to How open source on AWS helped NearForm quickly build and scale its Covid-19 contact tracing app" readonly="" data-share-dialog-url="" /></li> 
+          </ul> 
+         </div> 
+        </footer> 
+        <section class="blog-post-excerpt" property="description"> 
+         <p>This post was contributed by Colm Harte, Technical Director, NearForm. At NearForm, we use small cross-functional teams to rapidly build high-performance, highly scalable digital products using open source software (OSS) and a cloud-first approach. In this article, we share why and how we use open source and AWS to help us build digital products at […]</p> 
+         <a href="https://aws.amazon.com/blogs/opensource/how-open-source-on-aws-helped-nearform-quickly-build-and-scale-its-covid-19-contact-tracing-app/" class="blog-read-more blog-btn-a blog-btn-a-small">Read More</a> 
+        </section> 
+       </div> 
+      </div> 
+     </article> 
+     <article class="blog-post" vocab="http://schema.org/" typeof="TechArticle"> 
+      <meta property="inLanguage" content="en-US" /> 
+      <meta property="image" content="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2021/05/04/AdobeStock_230581609_security_threat_detection_lock.png" /> 
+      <div class="lb-row lb-snap"> 
+       <div class="lb-col lb-mid-6 lb-tiny-24"> 
+        <a href="https://aws.amazon.com/blogs/opensource/scaling-threat-prevention-on-aws-with-suricata/" property="url" rel="bookmark"><img width="1000" height="500" src="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2021/05/04/AdobeStock_230581609_security_threat_detection_lock.png" class="attachment-large size-large wp-post-image" alt="Song_about_summer – stock.adobe.com" /></a> 
+       </div> 
+       <div class="lb-col lb-mid-18 lb-tiny-24"> 
+        <h2 class="blog-post-title"><a href="https://aws.amazon.com/blogs/opensource/scaling-threat-prevention-on-aws-with-suricata/" property="url" rel="bookmark"><span property="name headline">Scaling threat prevention on AWS with Suricata</span></a></h2> 
+        <footer class="blog-post-meta" data-lb-comp="aws-blog:share-dialog">
+          by 
+         <span property="author" typeof="Person"><span property="name">Shakeel Ahmad</span></span> and 
+         <span property="author" typeof="Person"><span property="name">Maritza Mills</span></span> | on 
+         <time property="datePublished" datetime="2021-06-10T07:08:26-08:00">10 JUN 2021</time> | in 
+         <span class="blog-post-categories"><a href="https://aws.amazon.com/blogs/opensource/category/networking-content-delivery/amazon-vpc-networking-content-delivery/" title="View all posts in Amazon VPC"><span property="articleSection">Amazon VPC</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/security-identity-compliance/aws-network-firewall/" title="View all posts in AWS Network Firewall"><span property="articleSection">AWS Network Firewall</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/open-source/" title="View all posts in Open Source"><span property="articleSection">Open Source</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/security-identity-compliance/security/" title="View all posts in Security"><span property="articleSection">Security</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/post-types/technical-how-to/" title="View all posts in Technical How-to"><span property="articleSection">Technical How-to</span></a></span> | 
+         <a href="https://aws.amazon.com/blogs/opensource/scaling-threat-prevention-on-aws-with-suricata/" property="url">Permalink</a> | 
+         <a id="aws-comment-trigger-11031" href="https://commenting.awsblogs.com/embed.html?disqus_shortname=aws-open-source-blog&amp;disqus_identifier=11031&amp;disqus_title=Scaling+threat+prevention+on+AWS+with+Suricata&amp;disqus_url=https://aws.amazon.com/blogs/opensource/scaling-threat-prevention-on-aws-with-suricata/" data-lb-comp="aws-blog:commenting" data-sandbox-attr="allow-forms allow-scripts allow-popups allow-same-origin" property="discussionUrl"><i class="icon-comment"></i> Comments</a> | 
+         <a href="#" role="button" data-share-dialog-toggle=""><span class="span icon-share"></span>&nbsp;Share</a> 
+         <div class="blog-share-dialog" data-share-dialog="" style="display: none;"> 
+          <ul> 
+           <li> <a class="lb-txt" href="https://www.facebook.com/sharer/sharer.php?u=https://aws.amazon.com/blogs/opensource/scaling-threat-prevention-on-aws-with-suricata/" target="_blank" rel="noopener noreferrer"><span class="icon-facebook-square" aria-label="Share on Facebook"></span></a> </li> 
+           <li> <a class="lb-txt" href="https://twitter.com/intent/tweet/?text=Scaling%20threat%20prevention%20on%20AWS%20with%20Suricata&amp;via=awscloud&amp;url=https://aws.amazon.com/blogs/opensource/scaling-threat-prevention-on-aws-with-suricata/" target="_blank" rel="noopener noreferrer"><span class="icon-twitter-square" aria-label="Share on Twitter"></span></a> </li> 
+           <li> <a class="lb-txt" href="https://www.linkedin.com/shareArticle?mini=true&amp;title=Scaling%20threat%20prevention%20on%20AWS%20with%20Suricata&amp;source=Amazon%20Web%20Services&amp;summary=This%20post%20was%20written%20by%20Victor%20Julien%2C%20Kelley%20Misata%2C%20Shakeel%20Ahmad%2C%20and%20Maritza%20Mills.%20Suricata%20is%20a%20fast%2C%20robust%2C%20open%20source%20network%20threat%20detection%20engine%20that%20includes%20real-time%20intrusion%20detection%20%28IDS%29%2C%20an%20inline%20intrusion%20prevention%20system%20%28IPS%29%2C%20network%20security%20monitoring%20%28NSM%29%2C%20and%20offline%20packet%20capture%20%28pcap%29%20processing.%20Suricata%20is%20owned%20by%20the%20community-run%2C%20non-profit%20Open%20%5B%26hellip%3B%5D&amp;url=https://aws.amazon.com/blogs/opensource/scaling-threat-prevention-on-aws-with-suricata/" target="_blank" rel="noopener noreferrer"><span class="icon-linkedin-square" aria-label="Share on LinkedIn"></span></a> </li> 
+           <li> <a class="lb-txt" href="mailto:?subject=Scaling%20threat%20prevention%20on%20AWS%20with%20Suricata&amp;body=Scaling%20threat%20prevention%20on%20AWS%20with%20Suricata%0A%0Ahttps://aws.amazon.com/blogs/opensource/scaling-threat-prevention-on-aws-with-suricata/" target="_blank" rel="noopener noreferrer"><span class="icon-envelope-square" aria-label="Share on Email"></span></a> </li> 
+           <li class="blog-share-dialog-url"><input type="text" value="https://aws.amazon.com/blogs/opensource/scaling-threat-prevention-on-aws-with-suricata/" title="Link to Scaling threat prevention on AWS with Suricata" readonly="" data-share-dialog-url="" /></li> 
+          </ul> 
+         </div> 
+        </footer> 
+        <section class="blog-post-excerpt" property="description"> 
+         <p>This post was written by Victor Julien, Kelley Misata, Shakeel Ahmad, and Maritza Mills. Suricata is a fast, robust, open source network threat detection engine that includes real-time intrusion detection (IDS), an inline intrusion prevention system (IPS), network security monitoring (NSM), and offline packet capture (pcap) processing. Suricata is owned by the community-run, non-profit Open […]</p> 
+         <a href="https://aws.amazon.com/blogs/opensource/scaling-threat-prevention-on-aws-with-suricata/" class="blog-read-more blog-btn-a blog-btn-a-small">Read More</a> 
+        </section> 
+       </div> 
+      </div> 
+     </article> 
+     <article class="blog-post" vocab="http://schema.org/" typeof="TechArticle"> 
+      <meta property="inLanguage" content="en-US" /> 
+      <meta property="image" content="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2021/06/04/koffir_otel_cross-account-metrics_ecs-feature.png" /> 
+      <div class="lb-row lb-snap"> 
+       <div class="lb-col lb-mid-6 lb-tiny-24"> 
+        <a href="https://aws.amazon.com/blogs/opensource/using-aws-distro-for-opentelemetry-collector-for-cross-account-metrics-collection-on-amazon-ecs/" property="url" rel="bookmark"><img width="1000" height="500" src="https://d2908q01vomqb2.cloudfront.net/ca3512f4dfa95a03169c5a670a4c91a19b3077b4/2021/06/04/koffir_otel_cross-account-metrics_ecs-feature.png" class="attachment-large size-large wp-post-image" alt="entire architecture illustrated" /></a> 
+       </div> 
+       <div class="lb-col lb-mid-18 lb-tiny-24"> 
+        <h2 class="blog-post-title"><a href="https://aws.amazon.com/blogs/opensource/using-aws-distro-for-opentelemetry-collector-for-cross-account-metrics-collection-on-amazon-ecs/" property="url" rel="bookmark"><span property="name headline">Using AWS Distro for OpenTelemetry collector for cross-account metrics collection on Amazon ECS</span></a></h2> 
+        <footer class="blog-post-meta" data-lb-comp="aws-blog:share-dialog">
+          by 
+         <span property="author" typeof="Person"><span property="name">Rodrigue Koffi</span></span> and 
+         <span property="author" typeof="Person"><span property="name">Rafael Pereyra</span></span> | on 
+         <time property="datePublished" datetime="2021-06-08T05:47:14-08:00">08 JUN 2021</time> | in 
+         <span class="blog-post-categories"><a href="https://aws.amazon.com/blogs/opensource/category/compute/amazon-elastic-container-service/" title="View all posts in Amazon Elastic Container Service"><span property="articleSection">Amazon Elastic Container Service</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/management-tools/amazon-managed-service-for-grafana/" title="View all posts in Amazon Managed Service for Grafana"><span property="articleSection">Amazon Managed Service for Grafana</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/management-tools/amazon-managed-service-for-prometheus/" title="View all posts in Amazon Managed Service for Prometheus"><span property="articleSection">Amazon Managed Service for Prometheus</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/management-tools/aws-distro-for-opentelemetry/" title="View all posts in AWS Distro for OpenTelemetry"><span property="articleSection">AWS Distro for OpenTelemetry</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/compute/" title="View all posts in Compute"><span property="articleSection">Compute</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/management-and-governance/" title="View all posts in Management &amp; Governance"><span property="articleSection">Management &amp; Governance</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/management-and-governance/monitoring-and-observability/" title="View all posts in Monitoring and observability"><span property="articleSection">Monitoring and observability</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/open-source/" title="View all posts in Open Source"><span property="articleSection">Open Source</span></a>, <a href="https://aws.amazon.com/blogs/opensource/category/post-types/technical-how-to/" title="View all posts in Technical How-to"><span property="articleSection">Technical How-to</span></a></span> | 
+         <a href="https://aws.amazon.com/blogs/opensource/using-aws-distro-for-opentelemetry-collector-for-cross-account-metrics-collection-on-amazon-ecs/" property="url">Permalink</a> | 
+         <a id="aws-comment-trigger-11291" href="https://commenting.awsblogs.com/embed.html?disqus_shortname=aws-open-source-blog&amp;disqus_identifier=11291&amp;disqus_title=Using+AWS+Distro+for+OpenTelemetry+collector+for+cross-account+metrics+collection+on+Amazon+ECS&amp;disqus_url=https://aws.amazon.com/blogs/opensource/using-aws-distro-for-opentelemetry-collector-for-cross-account-metrics-collection-on-amazon-ecs/" data-lb-comp="aws-blog:commenting" data-sandbox-attr="allow-forms allow-scripts allow-popups allow-same-origin" property="discussionUrl"><i class="icon-comment"></i> Comments</a> | 
+         <a href="#" role="button" data-share-dialog-toggle=""><span class="span icon-share"></span>&nbsp;Share</a> 
+         <div class="blog-share-dialog" data-share-dialog="" style="display: none;"> 
+          <ul> 
+           <li> <a class="lb-txt" href="https://www.facebook.com/sharer/sharer.php?u=https://aws.amazon.com/blogs/opensource/using-aws-distro-for-opentelemetry-collector-for-cross-account-metrics-collection-on-amazon-ecs/" target="_blank" rel="noopener noreferrer"><span class="icon-facebook-square" aria-label="Share on Facebook"></span></a> </li> 
+           <li> <a class="lb-txt" href="https://twitter.com/intent/tweet/?text=Using%20AWS%20Distro%20for%20OpenTelemetry%20collector%20for%20cross-account%20metrics%20collection%20on%20Amazon%20ECS&amp;via=awscloud&amp;url=https://aws.amazon.com/blogs/opensource/using-aws-distro-for-opentelemetry-collector-for-cross-account-metrics-collection-on-amazon-ecs/" target="_blank" rel="noopener noreferrer"><span class="icon-twitter-square" aria-label="Share on Twitter"></span></a> </li> 
+           <li> <a class="lb-txt" href="https://www.linkedin.com/shareArticle?mini=true&amp;title=Using%20AWS%20Distro%20for%20OpenTelemetry%20collector%20for%20cross-account%20metrics%20collection%20on%20Amazon%20ECS&amp;source=Amazon%20Web%20Services&amp;summary=In%20November%202020%2C%20we%20announced%20OpenTelemetry%20support%20on%20AWS%20with%20AWS%20Distro%20for%20OpenTelemetry%20%28ADOT%29%2C%20a%20secure%2C%20production-ready%2C%20AWS-supported%20distribution%20of%20the%20Cloud%20Native%20Computing%20Foundation%20%28CNCF%29%20OpenTelemetry%20project.%20With%20ADOT%2C%20you%20can%20instrument%20applications%20to%20send%20correlated%20metrics%20and%20traces%20to%20multiple%20AWS%20solutions%2C%20such%20as%20our%20Amazon%20Managed%20Service%20for%20Prometheus%20%28AMP%29%20and%20%5B%26hellip%3B%5D&amp;url=https://aws.amazon.com/blogs/opensource/using-aws-distro-for-opentelemetry-collector-for-cross-account-metrics-collection-on-amazon-ecs/" target="_blank" rel="noopener noreferrer"><span class="icon-linkedin-square" aria-label="Share on LinkedIn"></span></a> </li> 
+           <li> <a class="lb-txt" href="mailto:?subject=Using%20AWS%20Distro%20for%20OpenTelemetry%20collector%20for%20cross-account%20metrics%20collection%20on%20Amazon%20ECS&amp;body=Using%20AWS%20Distro%20for%20OpenTelemetry%20collector%20for%20cross-account%20metrics%20collection%20on%20Amazon%20ECS%0A%0Ahttps://aws.amazon.com/blogs/opensource/using-aws-distro-for-opentelemetry-collector-for-cross-account-metrics-collection-on-amazon-ecs/" target="_blank" rel="noopener noreferrer"><span class="icon-envelope-square" aria-label="Share on Email"></span></a> </li> 
+           <li class="blog-share-dialog-url"><input type="text" value="https://aws.amazon.com/blogs/opensource/using-aws-distro-for-opentelemetry-collector-for-cross-account-metrics-collection-on-amazon-ecs/" title="Link to Using AWS Distro for OpenTelemetry collector for cross-account metrics collection on Amazon ECS" readonly="" data-share-dialog-url="" /></li> 
+          </ul> 
+         </div> 
+        </footer> 
+        <section class="blog-post-excerpt" property="description"> 
+         <p>In November 2020, we announced OpenTelemetry support on AWS with AWS Distro for OpenTelemetry (ADOT), a secure, production-ready, AWS-supported distribution of the Cloud Native Computing Foundation (CNCF) OpenTelemetry project. With ADOT, you can instrument applications to send correlated metrics and traces to multiple AWS solutions, such as our Amazon Managed Service for Prometheus (AMP) and […]</p> 
+         <a href="https://aws.amazon.com/blogs/opensource/using-aws-distro-for-opentelemetry-collector-for-cross-account-metrics-collection-on-amazon-ecs/" class="blog-read-more blog-btn-a blog-btn-a-small">Read More</a> 
+        </section> 
+       </div> 
+      </div> 
+     </article> 
+     <div class="blog-pagination"> 
+      <a href="https://aws.amazon.com/blogs/opensource/page/2/" class="blog-btn-a">← Older posts</a> 
+     </div> 
+    </main> 
+   </div> 
+  </div> 
+  <div class="awsm"> 
+   <footer id="aws-page-footer" class="m-page-footer" role="contentinfo"> 
+    <div data-url="https://dc.ads.linkedin.com/collect/?pid=3038&amp;fmt=gif" data-lb-comp="tracking-pixel"></div> 
+    <div data-lb-comp="google-rlsa-pixel"></div> 
+    <div class="data-attr-wrapper lb-none-v-margin lb-xb-grid-wrap" style="background-color:#242F3E;" data-da-type="so" data-da-so-type="viewport" data-da-so-language="en" data-da-so-category="monitoring" data-da-so-name="footer" data-da-so-version="a"> 
+     <div class="lb-xb-grid lb-row-max-large lb-snap lb-tiny-xb-1 lb-small-xb-3 lb-large-xb-5"> 
+      <div class="lb-xbcol"> 
+       <div class="data-attr-wrapper lb-small-hide lb-btn" data-da-type="so" data-da-so-type="viewport" data-da-so-language="en" data-da-so-category="monitoring" data-da-so-name="footer_buttons" data-da-so-url="all" data-da-so-version="footer_signin-mobile-default"> 
+        <a class="lb-btn-p-primary" href="https://console.aws.amazon.com/console/home?nc1=f_ct&amp;src=footer-signin-mobile" role="button"> <span> Sign In to the Console</span> </a> 
+       </div> 
+       <h3 id="Learn_About_AWS" class="lb-txt-none lb-txt-p-chromium lb-tiny-v-margin lb-h3 lb-title"> Learn About AWS</h3> 
+       <ul class="lb-txt-p-chromium lb-ul lb-list-style-none lb-li-micro-v-margin lb-tiny-ul-block" style="margin-bottom:0px;"> 
+        <li><a href="https://aws.amazon.com/what-is-aws/?nc1=f_cc" target="_blank" rel="noopener">What Is AWS?</a></li> 
+        <li><a href="https://aws.amazon.com/what-is-cloud-computing/?nc1=f_cc" target="_blank" rel="noopener">What Is Cloud Computing?</a></li> 
+        <li><a href="https://aws.amazon.com/diversity-inclusion/?nc1=f_cc" target="_blank" rel="noopener">AWS Inclusion, Diversity &amp; Equity</a></li> 
+        <li><a href="https://aws.amazon.com/devops/what-is-devops/?nc1=f_cc" target="_blank" rel="noopener">What Is DevOps?</a></li> 
+        <li><a href="https://aws.amazon.com/containers/?nc1=f_cc" target="_blank" rel="noopener">What Is a Container?</a></li> 
+        <li><a href="https://aws.amazon.com/big-data/datalakes-and-analytics/what-is-a-data-lake/?nc1=f_cc" target="_blank" rel="noopener">What Is a Data Lake?</a></li> 
+        <li><a href="https://aws.amazon.com/security/?nc1=f_cc" target="_blank" rel="noopener">AWS Cloud Security</a></li> 
+        <li><a href="https://aws.amazon.com/new/?nc1=f_cc" target="_blank" rel="noopener">What's New</a></li> 
+        <li><a href="https://aws.amazon.com/blogs/?nc1=f_cc" target="_blank" rel="noopener">Blogs</a></li> 
+        <li><a href="https://press.aboutamazon.com/press-releases/aws" target="_blank" rel="noopener" title="Press Releases">Press Releases</a></li> 
+       </ul> 
+      </div> 
+      <div class="lb-xbcol"> 
+       <h3 id="Resources_for_AWS" class="lb-txt-none lb-txt-p-chromium lb-tiny-v-margin lb-h3 lb-title"> Resources for AWS</h3> 
+       <ul class="lb-txt-p-chromium lb-ul lb-list-style-none lb-li-micro-v-margin lb-tiny-ul-block" style="margin-bottom:0px;"> 
+        <li><a href="https://aws.amazon.com/getting-started/?nc1=f_cc" target="_blank" rel="noopener">Getting Started</a></li> 
+        <li><a href="https://aws.amazon.com/training/?nc1=f_cc" target="_blank" rel="noopener">Training and Certification</a></li> 
+        <li><a href="https://aws.amazon.com/solutions/?nc1=f_cc" target="_blank" rel="noopener">AWS Solutions Portfolio</a></li> 
+        <li><a href="https://aws.amazon.com/architecture/?nc1=f_cc" target="_blank" rel="noopener">Architecture Center</a></li> 
+        <li><a href="https://aws.amazon.com/faqs/?nc1=f_dr" target="_blank" rel="noopener">Product and Technical FAQs</a></li> 
+        <li><a href="https://aws.amazon.com/resources/analyst-reports/?nc1=f_cc" target="_blank" rel="noopener">Analyst Reports</a></li> 
+        <li><a href="https://aws.amazon.com/partners/?nc1=f_dr" target="_blank" rel="noopener">AWS Partner Network</a></li> 
+       </ul> 
+      </div> 
+      <div class="lb-xbcol"> 
+       <h3 id="Developers_on_AWS" class="lb-txt-none lb-txt-p-chromium lb-tiny-v-margin lb-h3 lb-title"> Developers on AWS</h3> 
+       <ul class="lb-txt-p-chromium lb-ul lb-list-style-none lb-li-micro-v-margin lb-tiny-ul-block" style="margin-bottom:0px;"> 
+        <li><a href="https://aws.amazon.com/developer/?nc1=f_dr" target="_blank" rel="noopener">Developer Center</a></li> 
+        <li><a href="https://aws.amazon.com/developer/tools/?nc1=f_dr" target="_blank" rel="noopener">SDKs &amp; Tools</a></li> 
+        <li><a href="https://aws.amazon.com/developer/language/net/?nc1=f_dr" target="_blank" rel="noopener">.NET on AWS</a></li> 
+        <li><a href="https://aws.amazon.com/developer/language/python/?nc1=f_dr" target="_blank" rel="noopener">Python on AWS</a></li> 
+        <li><a href="https://aws.amazon.com/developer/language/java/?nc1=f_dr" target="_blank" rel="noopener">Java on AWS</a></li> 
+        <li><a href="https://aws.amazon.com/developer/language/php/?nc1=f_cc" target="_blank" rel="noopener">PHP on AWS</a></li> 
+        <li><a href="https://aws.amazon.com/developer/language/javascript/?nc1=f_dr" target="_blank" rel="noopener">Javascript on AWS</a></li> 
+       </ul> 
+      </div> 
+      <div class="lb-xbcol"> 
+       <h3 id="Help" class="lb-txt-none lb-txt-p-chromium lb-tiny-v-margin lb-h3 lb-title"> Help</h3> 
+       <ul class="lb-txt-p-chromium lb-ul lb-list-style-none lb-li-micro-v-margin lb-tiny-ul-block" style="margin-bottom:0px;"> 
+        <li><a href="https://aws.amazon.com/contact-us/?nc1=f_m" target="_blank" rel="noopener">Contact Us</a></li> 
+        <li><a href="https://www.amazon.jobs/aws" target="_blank" rel="noopener">AWS Careers</a></li> 
+        <li><a href="https://console.aws.amazon.com/support/home/?nc1=f_dr" target="_blank" rel="noopener">File a Support Ticket</a></li> 
+        <li><a href="https://aws.amazon.com/premiumsupport/knowledge-center/?nc1=f_dr" target="_blank" rel="noopener">Knowledge Center</a></li> 
+        <li><a href="https://aws.amazon.com/premiumsupport/?nc1=f_dr" target="_blank" rel="noopener">AWS Support Overview</a></li> 
+        <li><a href="https://aws.amazon.com/legal/?nc1=f_cc" target="_blank" rel="noopener">Legal</a></li> 
+       </ul> 
+       <div class="lb-mbox js-mbox" data-lb-comp="mbox" data-lb-comp-ignore="true" data-mbox="en_footer-v3_addl-help"> 
+       </div> 
+      </div> 
+      <div class="lb-xbcol"> 
+       <div class="lb-mbox js-mbox" data-lb-comp="mbox" data-lb-comp-ignore="true" data-mbox="en_footer-v3_cta"> 
+        <div class="data-attr-wrapper lb-tiny-hide lb-small-show lb-btn" data-da-type="so" data-da-so-type="viewport" data-da-so-language="en" data-da-so-category="monitoring" data-da-so-name="footer_buttons" data-da-so-url="all" data-da-so-version="footer_signup-default"> 
+         <a class="lb-btn-p-primary" href="https://portal.aws.amazon.com/gp/aws/developer/registration/index.html?nc1=f_ct&amp;src=default" role="button"> <span> Create an AWS Account</span> </a> 
+        </div> 
+       </div> 
+       <div class="lb-xb-grid-wrap" style="padding-left:0px; margin-top:20px;"> 
+        <div class="lb-xb-grid lb-row-max-large lb-xb-equal-height lb-snap lb-gutter-collapse lb-vgutter-collapse lb-tiny-xb-auto"> 
+         <div class="lb-xbcol"> 
+          <a class="lb-txt-none lb-txt-p-chromium lb-none-pad lb-txt" style="padding-left:0px; padding-right:5px;" href="https://twitter.com/awscloud" target="_blank" rel="noopener" title="Twitter"> <i class="icon-twitter"></i></a> 
+         </div> 
+         <div class="lb-xbcol"> 
+          <a class="lb-txt-none lb-txt-p-chromium lb-none-pad lb-none-v-margin lb-txt" style="padding-right:5px;" href="https://www.facebook.com/amazonwebservices" target="_blank" rel="noopener" title="Facebook"> <i class="icon-facebook"></i></a> 
+         </div> 
+         <div class="lb-xbcol"> 
+          <a class="lb-txt-none lb-txt-p-chromium lb-none-pad lb-txt" style="padding-right:5px;" href="https://www.twitch.tv/aws" target="_blank" rel="noopener" title="Twitch"> <i class="icon-twitch"></i></a> 
+         </div> 
+         <div class="lb-xbcol"> 
+          <a class="lb-txt-none lb-txt-p-chromium lb-none-pad lb-txt" style="padding-right:5px;" href="https://www.youtube.com/user/AmazonWebServices/Cloud/" target="_blank" rel="noopener" title="YouTube"> <i class="icon-youtube"></i></a> 
+         </div> 
+         <div class="lb-xbcol"> 
+          <a class="lb-txt-none lb-txt-p-chromium lb-none-pad lb-txt" style="padding-right:5px;" href="https://aws.amazon.com/podcasts/aws-podcast/" target="_blank" rel="noopener" title="Podcast"> <i class="icon-podcast"></i></a> 
+         </div> 
+         <div class="lb-xbcol"> 
+          <a class="lb-txt-none lb-txt-p-chromium lb-none-pad lb-txt" style="padding-right:5px;" href="https://pages.awscloud.com/communication-preferences?trk=homepage" target="_blank" rel="noopener" title="Email"> <i class="icon-envelope-o"></i></a> 
+         </div> 
+        </div> 
+       </div> 
+       <div class="lb-txt-normal lb-txt-white lb-txt-14 lb-rtxt" style="color:#eaeded; margin-top:0px;"> 
+        <div>
+          Amazon is an Equal Opportunity Employer: 
+         <i> Minority / Women / Disability / Veteran / Gender Identity / Sexual Orientation / Age.</i> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="lb-none-pad lb-none-v-margin lb-xb-grid-wrap" style="background-color:#242F3E;"> 
+     <div class="lb-xb-grid lb-row-max-large lb-snap lb-tiny-xb-1"> 
+      <div class="lb-xbcol"> 
+       <ul class="lb-txt-p-chromium lb-tiny-iblock lb-none-v-margin lb-ul lb-list-style-none lb-li-micro-v-margin lb-tiny-ul-iblock"> 
+        <li class="lb-txt-bold">Language</li> 
+        <li data-language="ar"><a href="https://aws.amazon.com/ar/?nc1=h_ls">عربي</a></li> 
+        <li data-language="id"><a href="https://aws.amazon.com/id/?nc1=h_ls">Bahasa Indonesia</a></li> 
+        <li data-language="de"><a href="https://aws.amazon.com/de/?nc1=h_ls">Deutsch</a></li> 
+        <li data-language="en"><a href="https://aws.amazon.com/?nc1=h_ls">English</a></li> 
+        <li data-language="es"><a href="https://aws.amazon.com/es/?nc1=h_ls">Espa&ntilde;ol</a></li> 
+        <li data-language="fr"><a href="https://aws.amazon.com/fr/?nc1=h_ls">Fran&ccedil;ais</a></li> 
+        <li data-language="it"><a href="https://aws.amazon.com/it/?nc1=h_ls">Italiano</a></li> 
+        <li data-language="pt"><a href="https://aws.amazon.com/pt/?nc1=h_ls">Portugu&ecirc;s</a></li> 
+        <li data-language="vi"><a href="https://aws.amazon.com/vi/?nc1=f_ls">Tiếng Việt</a></li> 
+        <li data-language="tr"><a href="https://aws.amazon.com/tr/?nc1=h_ls">T&uuml;rk&ccedil;e</a></li> 
+        <li data-language="ru"><a href="https://aws.amazon.com/ru/?nc1=h_ls">Ρусский</a></li> 
+        <li data-language="th"><a href="https://aws.amazon.com/th/?nc1=f_ls">ไทย</a></li> 
+        <li data-language="jp"><a href="https://aws.amazon.com/jp/?nc1=h_ls">日本語</a></li> 
+        <li data-language="ko"><a href="https://aws.amazon.com/ko/?nc1=h_ls">한국어</a></li> 
+        <li data-language="cn"><a href="https://aws.amazon.com/cn/?nc1=h_ls">中文 (简体)</a></li> 
+        <li data-language="tw"><a href="https://aws.amazon.com/tw/?nc1=h_ls">中文 (繁體)</a></li> 
+       </ul> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="lb-none-pad lb-none-v-margin lb-xb-grid-wrap" style="background-color:#EAEDED; padding-top:5px;"> 
+     <div class="lb-xb-grid lb-row-max-large lb-snap lb-tiny-xb-1"> 
+      <div class="lb-xbcol"> 
+       <ul class="lb-txt-p-squid-ink lb-none-v-margin lb-ul lb-list-style-none lb-li-none-v-margin lb-tiny-ul-iblock"> 
+        <li><a href="https://aws.amazon.com/privacy/?nc1=f_pr">Privacy</a></li> 
+        <li>|</li> 
+        <li><a href="https://aws.amazon.com/terms/?nc1=f_pr">Site Terms</a></li> 
+        <li>|</li> 
+        <li data-cookie-consent-modal="1"><a href="#"> Cookie Preferences </a></li> 
+        <li>|</li> 
+        <li>&copy; 2021, Amazon Web Services, Inc. or its affiliates. All rights reserved.</li> 
+       </ul> 
+      </div> 
+     </div> 
+    </div> 
+   </footer> 
+  </div> 
+  <script data-disqus-cookies-disabled-dialog="" type="text/html">
+  <div class="lb-alert lb-alert-info">
+    <h4 class="lb-title">Feature not available</h4>
+
+    <p>Visit <a href="#" data-shortbread-modal="true">cookie preferences</a> and allow all cookies to enable this feature.</p>
+  </div>
+</script> 
+  <div id="aws-page-end"></div> 
+  <div id="lb-page-end"></div> 
+  <script src="//a0.awsstatic.com/da/js/1.0.47/aws-da.js" async=""></script> 
+  <script src="//a0.awsstatic.com/aws-blog/1.0.47/js/vendor/prism.js" data-default-language="markup"></script>  
+ </body>
+</html>

@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="alternate" title="RSS Feed for the Paragon Initiative Enterprises Blog" href="/rss/" type="application/rss+xml" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="keywords" content="Application Security, Cryptography, Encryption, Public Key Cryptography, Secret Key Cryptography, Security, Signatures" />     <meta name="description" content="JWT, JWE, JWS, etc. are terrible designs and need to be scrapped, not resuscitated." />            <link rel="icon" href="/favicon.ico" />
+
+    <title>No Way, JOSE! Javascript Object Signing and Encryption is a Bad Standard That Everyone Should Avoid - Paragon Initiative Enterprises Blog</title>
+
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Cinzel' rel='stylesheet' type='text/css' />
+    <link href='https://fonts.googleapis.com/css?family=Play' rel='stylesheet' type='text/css' />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.min.css?A/sjnp9tVHEM6j8bd+kiy9qcBgY=" rel="stylesheet" />
+    <link href="/static/css/bootstrap-theme.min.css?R/RAdJSOVa/cQLawS3u53hPY4Sg=" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link rel="icon" type="image/png" href="/static/images/logo.png?MzFUMJTuFlORt+FnT+yUyk+2Q6g=" />
+    <link href="/static/css/Envy.css?fqHKQt17Kh/0H6RbEamb80JCenc=" rel="stylesheet" />
+    <link href="/static/css/Components.css?BFDxZk+DY1lJkufk/dbUt0OYFMY=" rel="stylesheet" />
+    <link href="/static/css/responsive.css?J8nNFiWa3Ud4Lgr4KPf6yibiUu0=" rel="stylesheet" />
+    <link href="/static/highlightjs/styles/github.css?XFEFm0dyFeeloAoUFXZqBUZHTxk=" rel="stylesheet" />
+    <link href="/static/css/blog.css?nU5PusHCuLHrmHU4q0oKwWXeZ8Y=" rel="stylesheet"></head>
+
+<body>
+    <header>
+    <nav class="navbar navbar-inverse navbar-fixed-top btn-glass navbar-trans">
+        <div class="container" id="top-container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <img alt="Paragon Initiative Enterprises" id="logo" src="/static/images/logo.png?MzFUMJTuFlORt+FnT+yUyk+2Q6g=" title="Paragon Initiative Enterprises" />
+                </a>
+                <p class="navbar-text"><a title="Paragon Initiative Enterprises" href="/" class="white">PARAGON <span class='visible-lg-inline'>INITIATIVE</span> </a></p>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right uppercase">
+                    <li class="">
+                        <a title="Information" id="nav_menu_info" href="/menu/info" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Info
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a title="About Paragon Initiative Enterprises" href="/info/">About Us</a></li>
+                            <li><a title="Our Experience" href="/experience">Our Experience</a></li>
+                            <li><a title="Quick Answers" href="/quick-answers">Quick Answers</a></li>
+                            <li><a title="Technology Books" href="/book">Technology Books</a></li>
+                            <li><a title="White Papers" href="/white-papers">White Papers</a></li>
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a title="Services" href="/services" id="nav_menu_services" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Services
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a title="Technology Consulting Services" href="/service/technology-consulting">Consulting</a></li>
+                            <li><a title="Code Review Services" href="/service/code-review">Code Auditing</a></li>
+                            <li><a title="Business Intelligence Services" href="/service/business-intelligence">Business Intelligence</a></li>
+                            <li><a title="Application Security Services" href="/service/appsec">App Security</a></li>
+                            <li><a title="Application Development Services" href="/service/app-dev">App Development</a></li>
+                            <li><a title="Website Development Services" href="/service/web-development">Web Development</a></li>
+                        </ul>
+                    </li>
+                                        <li><a title="Software" href="/software">Software</a></li>
+                    <li class="">
+                        <a title="Security" href="/menu/security" id="nav_menu_security" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            Security
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a title="Security - Advisories" href="/security/advisories">Advisories</a></li>
+                            <li><a title="Security - Code Audits" href="/security/audits">Code Audits</a></li>
+                                                    </ul>
+                    <li><a title="Our Blog" href="/blog">Blog</a></li>
+                    <li><a title="Contact Us" href="/contact">Contact</a></li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
+    <!-- End Navbar -->
+    </header>
+
+    <div class="wallpaper">
+    <Div class="container container-fluid">
+            <div class="header">
+        <div class="row row-centered">
+            <div class="col-lg-12 text-left">
+                <h2>Paragon Initiative Enterprises Blog</h2>
+                <h4>The latest information from the team that develops cryptographically secure PHP software.</h4>
+            </div>
+        </div>
+    </div>
+
+    <div id="top-featured-message"><h3>Is Your Cryptography Reliable?</h3>
+<p>
+    Our team specializes in studying real world cryptography implementations
+    to assure their correctness and security.
+</p>
+<p class="top-buttons">
+    <a
+        class="btn btn-success"
+        href="https://paragonie.com/blog/2017/06/why-you-want-paragon-initiative-enterprises-audit-your-code"
+    >
+        Why You Want to Hire Our Company
+    </a>
+    <a
+        class="btn btn-primary"
+        href="https://paragonie.com/contact"
+    >
+        Contact Us
+    </a>
+</p>
+</div>
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+                        <div class="blog-post">
+            <div class="blogpost_header">
+                <h2 class="blog-post-title">No Way, JOSE! Javascript Object Signing and Encryption is a Bad Standard That Everyone Should Avoid </h2>
+                <p class="blog-post-meta">
+                    <time datetime="2017-03-14 07:18:21">
+                        March 14, 2017 7:18 am
+                    </time> by 
+                    <a href="/blog/author/scott-arciszewski">Scott Arciszewski</a>
+                </p>
+            </div>
+            <div class="blogpost_subhead">
+                <div class="blogpost_category">
+                    <a href="/blog/category/security-engineering"><i class="fa fa-folder-open"></i>Security Engineering</a>
+                </div>
+            </div>
+            <div class="blog-post-body">
+                    <blockquote>
+<p><strong>Update (March 2018)</strong>: <a href="https://paragonie.com/blog/2018/03/paseto-platform-agnostic-security-tokens-is-secure-alternative-jose-standards-jwt-etc">Paseto is a Secure Alternative to the JOSE Standards (JWT, etc.)</a></p>
+</blockquote>
+<hr />
+<p>If you've already decided to implement Javascript Object Signing and Encryption (JOSE), whether you want JSON Web Tokens, JSON Web Encryption (JWE), or JSON Web Signatures (JWS), you should question this decision. You're probably making a mistake.</p>
+<p>Everything in this blog post was written to be accurate as of <a href="https://tools.ietf.org/html/rfc7519">RFC 7519</a>, <a href="https://tools.ietf.org/html/rfc7515">RFC 7515</a>, and <a href="https://tools.ietf.org/html/rfc7516">RFC 7516</a>. It's possible that new RFCs in the future could supersede the flaws detailed within.</p>
+<p>If you're not already familiar with basic cryptography terms and concepts, <a href="https://paragonie.com/blog/2015/08/you-wouldnt-base64-a-password-cryptography-decoded">start here</a>. Hyperlinks are provided throughout the article to explain things in detail, for the sake of brevity.</p>
+<span id="after-fold"></span><h1>Why You Don't Want Javascript Object Signing and Encryption</h1>
+<p>There are several problems with the JOSE family of standards. These are not flaws specific to any particular implementation, and in fact many libraries <em>work around</em> the deficits of the standards.</p>
+<h2 id="jwt-misuse">JSON Web Tokens are Often Misused</h2>
+<p>A lot of developers try to use JWT to avoid server-side storage for sessions. This is <a href="http://cryto.net/~joepie91/blog/2016/06/13/stop-using-jwt-for-sessions/">almost always a terrible mistake</a> and invites developers to come up with <a href="http://cryto.net/~joepie91/blog/2016/06/19/stop-using-jwt-for-sessions-part-2-why-your-solution-doesnt-work/">clever explanations and workarounds instead of careful engineering</a>.</p>
+<p>The two linked posts explain succinctly why this is a bad move, so I won't delve further into the systems architecture issues. There are more pressing issues at stake: <strong>The standard itself is bad and leads to insecurity.</strong></p>
+<h2 id="jws-forgery">JSON Web Signatures Makes Forgery Trivial</h2>
+<p>JSON Web Signatures (JWS) is a standard that is supposed to provide <a href="https://paragonie.com/blog/2015/08/you-wouldnt-base64-a-password-cryptography-decoded#mac">message authentication</a> or <a href="https://paragonie.com/blog/2015/08/you-wouldnt-base64-a-password-cryptography-decoded#digital-signatures">digital signatures</a>.</p>
+<p>In general terms: When a cryptography protocol includes digital signatures or message authentication, if an attacker can successfully forge arbitrary messages at a low cost, we consider the protocol to be completely broken.</p>
+<p>Quoting <a href="https://tools.ietf.org/html/rfc7515#section-4.1.1">RFC 7515, section 4.1.1</a>:</p>
+<blockquote>
+<p>The &quot;alg&quot; (algorithm) Header Parameter identifies the cryptographic
+algorithm used to secure the JWS.  The JWS Signature value is not
+valid if the &quot;alg&quot; value does not represent a supported algorithm or
+if there is not a key for use with that algorithm associated with the
+party that digitally signed or MACed the content.  &quot;alg&quot; values
+should either be registered in the IANA &quot;JSON Web Signature and
+Encryption Algorithms&quot; registry established by [JWA] or be a value
+that contains a Collision-Resistant Name.  The &quot;alg&quot; value is a case-
+sensitive ASCII string containing a StringOrURI value.  <strong>This Header
+Parameter MUST be present and MUST be <em>understood and processed</em> by
+implementations.</strong></p>
+</blockquote>
+<p>We've seen this bite JWS users before, in the form of <a href="https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/">critical vulnerabilities in most JWT libraries</a>.</p>
+<p>There were two ways to attack a standards-compliant JWS library to achieve trivial token forgery:</p>
+<ol>
+<li>Send a header that specifies the &quot;none&quot; algorithm be used</li>
+<li>Send a header that specifies the &quot;HS256&quot; algorithm when the application normally signs messages with an RSA public key.</li>
+</ol>
+<p>This isn't just an implementation bug, this is the result of a failed standard that shouldn't be relied on for security. If you adhere to the standard, you <strong>must</strong> process and &quot;understand&quot; the header. You are explicitly forbidden, by the standard, to just disregard the header that an attacker provides.</p>
+<h4>What does &quot;understood and processed&quot; mean?</h4>
+<p>This phrase is repeated throughout the JSON and JOSE RFCs, but a formal definition is not provided.</p>
+<p>Today, many libraries interpret &quot;validate the <code>alg</code> header against a whitelist&quot; as satisfying the &quot;processed&quot; requirement. Historically, given the previous <a href="https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/">token forgery vulnerability enabled by changing the <code>alg</code> header</a>, this does not appear to have always been the case.</p>
+<p>While it's tempting to applaud developers for exploiting an ambiguity in a security protocol to improve the security of their implementations, that doesn't fix the standard.</p>
+<h2 id="jwe-foot-gun">JSON Web Encryption is a Foot-Gun</h2>
+<p>Encryption leaves <a href="https://paragonie.com/blog/2015/05/using-encryption-and-authentication-correctly">a lot of room for potential implementation errors</a>, especially when <a href="https://paragonie.com/blog/2016/12/everything-you-know-about-public-key-encryption-in-php-is-wrong">asymmetric (a.k.a. public-key) encryption</a> is involved.</p>
+<p>The encryption algorithms permitted by JWE are spelled out in <a href="https://tools.ietf.org/html/rfc7518#page-2">RFC 7518</a>, which comes in two sections:</p>
+<ul>
+<li>Key encryption, which gives you options such as:
+<ul>
+<li>RSA with PKCS #1v1.5 padding</li>
+<li>RSA with OAEP padding</li>
+<li>ECDH</li>
+<li>AES-GCM</li>
+</ul>
+</li>
+<li>Message encryption, which only allows you to choose between:
+<ul>
+<li>AES-CBC + HMAC</li>
+<li>AES-GCM</li>
+</ul>
+</li>
+</ul>
+<p>Let's look at some of the <strong>key encryption</strong> choices in detail. The message encryption part is OK (assuming you actually have a solid GCM implementation and adequate hardware support).</p>
+<p>If you're not familiar with cryptography, this is somewhat like pointing a gun with 5 out of 6 loaded chambers directly at your foot and expecting to not end up with a bullet wound. Almost all of these options have one or more security issues.</p>
+<h3>RSA with PKCS #1v1.5 Padding</h3>
+<p>RSA with PKCS #1v1.5 padding is vulnerable to a type of chosen-ciphertext attack, called a <strong>padding oracle</strong>. We discussed <a href="https://paragonie.com/blog/2016/12/everything-you-know-about-public-key-encryption-in-php-is-wrong">RSA attacks in detail here</a>.</p>
+<h3>RSA with OAEP Padding</h3>
+<p>RSA with OAEP padding is probably secure. OAEP has a <a href="https://eprint.iacr.org/2000/060.pdf">bogus security proof</a> but is far safer than PKCS1v1.5. However, there are serious doubts to the long-term security of RSA itself.</p>
+<p>Most cryptographers recommend migrating away from RSA.</p>
+<h3>ECDH</h3>
+<p>JWT only allows Elliptic Curve Diffie-Hellman (ECDH) over one of the NIST curves (Weierstrass curves, which introduce the risk of <a href="https://blogs.adobe.com/security/2017/03/critical-vulnerability-uncovered-in-json-encryption.html">invalid-curve attacks</a> that attackers to steal your secret keys).</p>
+<p>If you attempt to avoid invalid curve attacks by using <a href="https://tools.ietf.org/html/rfc7748">one of the elliptic curves for security</a>, you're no longer JWT standards-compliant.</p>
+<h3>AES-GCM</h3>
+<p>Because no list of questionable public-key encryption modes could be complete without shoehorning a shared-key encryption mode, the JOSE standards also allow you to use AES-GCM to possibly exchange an AES-GCM key.</p>
+<hr />
+<p>Cryptography algorithm selections should be made by professional cryptographers, not developers. Letting developers mix-and-match protocols and algorithms is the hallmark of <a href="http://bristolcrypto.blogspot.com/2015/01/real-world-crypto-2015-error-prone.html">error-prone cryptographic designs</a>.</p>
+<blockquote>
+<p>Aside: the <a href="https://blogs.adobe.com/security/2017/03/critical-vulnerability-uncovered-in-json-encryption.html">recent invalid curve attacks in JOSE</a> mentioned in this section are definitely worth reading, if you haven't already done so.</p>
+</blockquote>
+<h1 id="better-solution">A Better Solution than JOSE</h1>
+<p>A better standard would only let you choose two parameters:</p>
+<ul>
+<li>
+<strong><code>ver</code></strong> - Which version of the protocol to use, which defines &quot;one true ciphersuite&quot; for each version; what follows are pure examples:
+<ul>
+<li>v1: Ed25519, X25519, XSalsa20poly1305, HMAC-SHA-512-256</li>
+<li>v2: Ed448, X448, XChaCha20Poly1305, keyed BLAKE2b</li>
+<li>v3: <a href="https://csrc.nist.gov/projects/post-quantum-cryptography/round-1-submissions">Something Post-Quantum</a> with <a href="https://competitions.cr.yp.to/caesar.html">AEAD</a>
+</li>
+</ul>
+</li>
+<li>
+<strong><code>op</code></strong> - What operation to perform:
+<ul>
+<li>Authenticated encryption</li>
+<li>Message authentication</li>
+<li>Public-key authenticated encryption (for server-to-server communications only)</li>
+<li>Public-key digital signatures (for server-to-server communications only)</li>
+</ul>
+</li>
+</ul>
+<p>Public-key cryptography should be avoided if possible.</p>
+<p>The closest we have to a better standard today is <a href="https://github.com/fernet/spec">Fernet</a>.</p>
+<p>We're developing a simply secure alternative, called <a href="https://github.com/paragonie/paseto">PASETO (Platform-Agnostic Security Tokens)</a>.</p>
+<h2>Wrap-Up</h2>
+<p>So in conclusion:</p>
+<ul>
+<li>Don't use JWT for session management, as discussed in other articles</li>
+<li>The JWS standard is completely broken, and total RFC compliance renders your applications vulnerable</li>
+<li>The JWE standard is a minefield that non-cryptographers shouldn't be forced to navigate</li>
+<li>JOSE is a needlessly complex suite of standards with security deficits baked in</li>
+</ul>
+<h3 id="what-to-use-instead">What to use instead of JOSE / JWT / JWE / JWS?</h3>
+<p>As stated above, <a href="https://github.com/fernet/spec">Fernet</a> is an option for most JWT use-cases. In the near future, <a href="https://github.com/paragonie/paseto">PASETO</a> will hopefully replace JOSE in the modern web. That being said:</p>
+<ul>
+<li>For <a href="https://paragonie.com/blog/2015/04/fast-track-safe-and-secure-php-sessions">secure sessions</a>: Just use cookies over HTTPS. Cookies should only store a random identifier which is paired with a server-side persistent storage mechanism.</li>
+<li>For signatures: Libsodium's <code>crypto_sign()</code> or <code>crypto_auth()</code> APIs (<a href="https://paragonie.com/blog/2017/06/libsodium-quick-reference-quick-comparison-similar-functions-and-which-one-use">depending on use-case</a>).</li>
+<li>For encryption: Libsodium's <code>crypto_secretbox()</code> and <code>crypto_box()</code> APIs (depending on use-case).</li>
+<li>If you need some bizarre stateless property for horizontal scaling your sessions (and <a href="http://cryto.net/~joepie91/blog/2016/06/13/stop-using-jwt-for-sessions">are certain you're not making a mistake</a>), see the previous recommendation about signatures.
+<ul>
+<li>It is overwhelmingly likely that you do not needed crazy horizontal scaling schemes at all, and that a single server-side session management system is sufficient for your use case.  We've included this list item for the sake of completeness.</li>
+<li>However, if by some bizarre twist of fate your project is in the &lt;0.1% of systems, your organization is probably big enough to know how to solve this problem <em>without</em> JWT.</li>
+</ul>
+</li>
+</ul>
+<p>We've previously published material about <a href="https://paragonie.com/blog/2017/02/split-tokens-token-based-authentication-protocols-without-side-channels">secure token-based authentication</a> and <a href="https://paragonie.com/blog/2016/02/one-login-rule-them-all-seamless-and-secure-cross-domain-authentication">cross-domain user authentication</a> which totally obviates the need for JSON Web Tokens.</p>
+<h1>TL;DR</h1>
+<p>JOSE / JWT / JWS / JWE: Not even once.</p>
+            </div>
+            <div class="blogpost_footer blogpost_social">
+                <span class="blogpost_permalink">
+                                        <a href="/b/lHBERCHlF6Qsn7E5"><i class="fa fa-link"></i>Permalink</a>
+                </span>
+                                    <div class="floatright">
+                        <a target="external nofollow" href="https://news.ycombinator.com/item?id=13865459">
+                            <i class="fab fa-hacker-news"></i>
+                            Discuss <span class="visible-xl-inline">on Hacker News</span>
+                        </a>
+                    </div>
+                            </div>
+            <div class="blogpost_footer">
+                <div class="blogpost_cc">
+                    License: <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license external nofollow">
+                        <span class="visible-xl-inline">Creative Commons Attribution-ShareAlike 4.0 International</span>
+                        <span class="hidden-xl-inline" title="Creative Commons Attribution-ShareAlike 4.0 International">CC-BY-SA 4.0 Intl</span>
+                    </a>
+                    <br />
+                    <a href="/blog/2017/03/jwt-json-web-tokens-is-bad-standard-that-everyone-should-avoid/source" target="_blank" rel="noopener">
+                        <i class="fa fa-search"></i>
+                        View source (Markdown)
+                    </a>
+                </div>
+                                    <ul class="blogpost_tags">
+                                                    <li><a href="/blog/tag/application-security"><i class="fa fa-tag blogpost-tag-icon"></i>Application Security</a></li>
+                                                    <li><a href="/blog/tag/cryptography"><i class="fa fa-tag blogpost-tag-icon"></i>Cryptography</a></li>
+                                                    <li><a href="/blog/tag/encryption"><i class="fa fa-tag blogpost-tag-icon"></i>Encryption</a></li>
+                                                    <li><a href="/blog/tag/public-key-cryptography"><i class="fa fa-tag blogpost-tag-icon"></i>Public Key Cryptography</a></li>
+                                                    <li><a href="/blog/tag/secret-key-cryptography"><i class="fa fa-tag blogpost-tag-icon"></i>Secret Key Cryptography</a></li>
+                                                    <li><a href="/blog/tag/security"><i class="fa fa-tag blogpost-tag-icon"></i>Security</a></li>
+                                                    <li><a href="/blog/tag/signatures"><i class="fa fa-tag blogpost-tag-icon"></i>Signatures</a></li>
+                                            </ul>
+                            </div>
+        </div>
+            <div id="blogpost_authorbox"><h3>About the Author</h3><h4 class="nomargin"><a href="/blog/author/scott-arciszewski">Scott Arciszewski</a></h4><div id="author_byline"><p>Chief Development Officer</p></div><div id="author_bio"><p>With 15 years of software development, application security, and system administration experience, Scott aspires to help others attain a happier work-life balance by solving difficult problems and automating trivial tasks. He is mostly known in the community for his open source software security research and strong progressive positions on providing tools and frameworks that are secure by default. <a href="https://twitter.com/CiPHPercoder">@CiPHPerCoder</a></p></div></div>            </div>
+        <!-- /.blog-main -->
+
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+            <div class="sidebar-module sidebar-module-inset">
+                <h4>About</h4>
+                <p class="text-justify">
+                    <strong>Paragon Initiative Enterprises</strong><br /> offers 
+                    <a href="/service/technology-consulting">technology consulting</a> and 
+                    <a href="/service/web-development">web development</a>
+                    services to businesses with attention to <a href="/service/appsec">security above and beyond compliance</a>.
+                </p>
+                <p class="text-justify">
+                    <a class="btn btn-primary btn-block" href="/experience">
+                        <i class="fa fa-check"></i>
+                        Our Professional Experience
+                    </a>
+                </p>
+            </div>
+
+            <div class="sidebar-module" id="blog_menu">
+                <h4>Archives</h4>
+                <ol class="list-unstyled" id="blog_menu_dates">                    <li class="blog_year">
+                        <a href="/blog/2021"><i class="fa fa-calendar"></i> 2021</a>
+                        <ul>                            <li class="blog_month"><a href="/blog/2021/05"><i class="far fa-clock"></i> May 2021</a></li>
+                            </ul>
+                    </li>
+                                        <li class="blog_year">
+                        <a href="/blog/2019"><i class="fa fa-calendar"></i> 2019</a>
+                        <ul>                            <li class="blog_month"><a href="/blog/2019/01"><i class="far fa-clock"></i> January 2019</a></li>
+                                                        <li class="blog_month"><a href="/blog/2019/03"><i class="far fa-clock"></i> March 2019</a></li>
+                                                        <li class="blog_month"><a href="/blog/2019/05"><i class="far fa-clock"></i> May 2019</a></li>
+                                                        <li class="blog_month"><a href="/blog/2019/08"><i class="far fa-clock"></i> August 2019</a></li>
+                                                        <li class="blog_month"><a href="/blog/2019/10"><i class="far fa-clock"></i> October 2019</a></li>
+                            </ul>
+                    </li>
+                                        <li class="blog_year">
+                        <a href="/blog/2018"><i class="fa fa-calendar"></i> 2018</a>
+                        <ul>                            <li class="blog_month"><a href="/blog/2018/01"><i class="far fa-clock"></i> January 2018</a></li>
+                                                        <li class="blog_month"><a href="/blog/2018/03"><i class="far fa-clock"></i> March 2018</a></li>
+                                                        <li class="blog_month"><a href="/blog/2018/04"><i class="far fa-clock"></i> April 2018</a></li>
+                                                        <li class="blog_month"><a href="/blog/2018/08"><i class="far fa-clock"></i> August 2018</a></li>
+                                                        <li class="blog_month"><a href="/blog/2018/09"><i class="far fa-clock"></i> September 2018</a></li>
+                                                        <li class="blog_month"><a href="/blog/2018/11"><i class="far fa-clock"></i> November 2018</a></li>
+                            </ul>
+                    </li>
+                                        <li class="blog_year">
+                        <a href="/blog/2017"><i class="fa fa-calendar"></i> 2017</a>
+                        <ul>                            <li class="blog_month"><a href="/blog/2017/01"><i class="far fa-clock"></i> January 2017</a></li>
+                                                        <li class="blog_month"><a href="/blog/2017/02"><i class="far fa-clock"></i> February 2017</a></li>
+                                                        <li class="blog_month"><a href="/blog/2017/03"><i class="far fa-clock"></i> March 2017</a></li>
+                                                        <li class="blog_month"><a href="/blog/2017/04"><i class="far fa-clock"></i> April 2017</a></li>
+                                                        <li class="blog_month"><a href="/blog/2017/05"><i class="far fa-clock"></i> May 2017</a></li>
+                                                        <li class="blog_month"><a href="/blog/2017/06"><i class="far fa-clock"></i> June 2017</a></li>
+                                                        <li class="blog_month"><a href="/blog/2017/07"><i class="far fa-clock"></i> July 2017</a></li>
+                                                        <li class="blog_month"><a href="/blog/2017/08"><i class="far fa-clock"></i> August 2017</a></li>
+                                                        <li class="blog_month"><a href="/blog/2017/09"><i class="far fa-clock"></i> September 2017</a></li>
+                                                        <li class="blog_month"><a href="/blog/2017/10"><i class="far fa-clock"></i> October 2017</a></li>
+                                                        <li class="blog_month"><a href="/blog/2017/12"><i class="far fa-clock"></i> December 2017</a></li>
+                            </ul>
+                    </li>
+                                        <li class="blog_year">
+                        <a href="/blog/2016"><i class="fa fa-calendar"></i> 2016</a>
+                        <ul>                            <li class="blog_month"><a href="/blog/2016/01"><i class="far fa-clock"></i> January 2016</a></li>
+                                                        <li class="blog_month"><a href="/blog/2016/02"><i class="far fa-clock"></i> February 2016</a></li>
+                                                        <li class="blog_month"><a href="/blog/2016/03"><i class="far fa-clock"></i> March 2016</a></li>
+                                                        <li class="blog_month"><a href="/blog/2016/04"><i class="far fa-clock"></i> April 2016</a></li>
+                                                        <li class="blog_month"><a href="/blog/2016/05"><i class="far fa-clock"></i> May 2016</a></li>
+                                                        <li class="blog_month"><a href="/blog/2016/06"><i class="far fa-clock"></i> June 2016</a></li>
+                                                        <li class="blog_month"><a href="/blog/2016/07"><i class="far fa-clock"></i> July 2016</a></li>
+                                                        <li class="blog_month"><a href="/blog/2016/08"><i class="far fa-clock"></i> August 2016</a></li>
+                                                        <li class="blog_month"><a href="/blog/2016/09"><i class="far fa-clock"></i> September 2016</a></li>
+                                                        <li class="blog_month"><a href="/blog/2016/10"><i class="far fa-clock"></i> October 2016</a></li>
+                                                        <li class="blog_month"><a href="/blog/2016/11"><i class="far fa-clock"></i> November 2016</a></li>
+                                                        <li class="blog_month"><a href="/blog/2016/12"><i class="far fa-clock"></i> December 2016</a></li>
+                            </ul>
+                    </li>
+                                        <li class="blog_year">
+                        <a href="/blog/2015"><i class="fa fa-calendar"></i> 2015</a>
+                        <ul>                            <li class="blog_month"><a href="/blog/2015/04"><i class="far fa-clock"></i> April 2015</a></li>
+                                                        <li class="blog_month"><a href="/blog/2015/05"><i class="far fa-clock"></i> May 2015</a></li>
+                                                        <li class="blog_month"><a href="/blog/2015/06"><i class="far fa-clock"></i> June 2015</a></li>
+                                                        <li class="blog_month"><a href="/blog/2015/07"><i class="far fa-clock"></i> July 2015</a></li>
+                                                        <li class="blog_month"><a href="/blog/2015/08"><i class="far fa-clock"></i> August 2015</a></li>
+                                                        <li class="blog_month"><a href="/blog/2015/09"><i class="far fa-clock"></i> September 2015</a></li>
+                                                        <li class="blog_month"><a href="/blog/2015/10"><i class="far fa-clock"></i> October 2015</a></li>
+                                                        <li class="blog_month"><a href="/blog/2015/11"><i class="far fa-clock"></i> November 2015</a></li>
+                                                        <li class="blog_month"><a href="/blog/2015/12"><i class="far fa-clock"></i> December 2015</a></li>
+                            </ul>
+                    </li>
+                    </ol>
+            </div>
+            <div class="sidebar-module">
+                <h4>Blog Categories</h4>
+                <ol class="blog_categories list-unstyled">
+                     <li>
+    <a href="/blog/category/business"><i class="fa fa-folder"></i> Business</a>
+    </li>
+  <li>
+    <a href="/blog/category/paragon-initiative"><i class="fa fa-folder-open"></i> Paragon Initiative</a>
+            <ol class="list-unstyled blog_categories">
+                    <li>
+    <a href="/blog/category/community"><i class="fa fa-folder-open"></i> Community</a>
+            <ol class="list-unstyled blog_categories">
+                    <li>
+    <a href="/blog/category/open-source"><i class="fa fa-folder"></i> Open Source</a>
+    </li>
+
+                    <li>
+    <a href="/blog/category/pharaoh"><i class="fa fa-folder"></i> Pharaoh</a>
+    </li>
+
+                    <li>
+    <a href="/blog/category/security-advice"><i class="fa fa-folder"></i> Security Advice</a>
+    </li>
+
+                </ol>
+    </li>
+
+                    <li>
+    <a href="/blog/category/our-products"><i class="fa fa-folder-open"></i> Our Products</a>
+            <ol class="list-unstyled blog_categories">
+                    <li>
+    <a href="/blog/category/airship"><i class="fa fa-folder"></i> Airship</a>
+    </li>
+
+                    <li>
+    <a href="/blog/category/asgard"><i class="fa fa-folder"></i> ASGard</a>
+    </li>
+
+                    <li>
+    <a href="/blog/category/ward"><i class="fa fa-folder"></i> Ward</a>
+    </li>
+
+                </ol>
+    </li>
+
+                    <li>
+    <a href="/blog/category/slice-pie"><i class="fa fa-folder"></i> Slice of PIE</a>
+    </li>
+
+                </ol>
+    </li>
+  <li>
+    <a href="/blog/category/security-news"><i class="fa fa-folder"></i> Security News</a>
+    </li>
+  <li>
+    <a href="/blog/category/technology"><i class="fa fa-folder-open"></i> Technology</a>
+            <ol class="list-unstyled blog_categories">
+                    <li>
+    <a href="/blog/category/cryptology"><i class="fa fa-folder"></i> Cryptology</a>
+    </li>
+
+                    <li>
+    <a href="/blog/category/databases"><i class="fa fa-folder"></i> Databases</a>
+    </li>
+
+                    <li>
+    <a href="/blog/category/hardware"><i class="fa fa-folder"></i> Hardware</a>
+    </li>
+
+                    <li>
+    <a href="/blog/category/programming"><i class="fa fa-folder"></i> Programming</a>
+    </li>
+
+                    <li>
+    <a href="/blog/category/quality-assurance"><i class="fa fa-folder"></i> Quality Assurance</a>
+    </li>
+
+                    <li>
+    <a href="/blog/category/security-engineering"><i class="fa fa-folder"></i> Security Engineering</a>
+    </li>
+
+                    <li>
+    <a href="/blog/category/system-administration"><i class="fa fa-folder"></i> System Administration</a>
+    </li>
+
+                </ol>
+    </li>
+                     <li>
+                        <a href="/blog/category/"><i class="fa fa-folder-o"></i> Uncategorized</a>
+                    </li>
+                </ol>
+            </div>
+            <div class="sidebar-module">
+                <h4>Tags</h4>
+                <ol class="tagcloud list-unstyled">
+                                            <li>
+                            <a href="/blog/tag/access-controls" style="font-size: 56%;">
+                                Access Controls
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/application-security" style="font-size: 118.5%; font-weight: bold;">
+                                Application Security
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/authentication" style="font-size: 76.5%;">
+                                Authentication
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/authorization" style="font-size: 57%;">
+                                Authorization
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/automatic-updates" style="font-size: 53%;">
+                                Automatic Updates
+                            </a>
+                        </li>                                                                <li>
+                            <a href="/blog/tag/business" style="font-size: 57.5%;">
+                                Business
+                            </a>
+                        </li>                                                                <li>
+                            <a href="/blog/tag/central-florida" style="font-size: 58.5%;">
+                                Central Florida
+                            </a>
+                        </li>                                                                <li>
+                            <a href="/blog/tag/confidentiality" style="font-size: 53%;">
+                                Confidentiality
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/cryptography" style="font-size: 104%; font-weight: bold;">
+                                Cryptography
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/csprng" style="font-size: 59%;">
+                                CSPRNG
+                            </a>
+                        </li>                                                                <li>
+                            <a href="/blog/tag/data-science" style="font-size: 55.5%;">
+                                Data Science
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/encryption" style="font-size: 71%;">
+                                Encryption
+                            </a>
+                        </li>                                                                <li>
+                            <a href="/blog/tag/https" style="font-size: 61.5%;">
+                                HTTPS
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/integrity" style="font-size: 54.5%;">
+                                Integrity
+                            </a>
+                        </li>                                                                                    <li>
+                            <a href="/blog/tag/libsodium" style="font-size: 72.5%;">
+                                Libsodium
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/login" style="font-size: 61.5%;">
+                                Login
+                            </a>
+                        </li>                                                                                                        <li>
+                            <a href="/blog/tag/net" style="font-size: 53%;">
+                                .NET
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/networking" style="font-size: 56.5%;">
+                                Networking
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/node-js" style="font-size: 53%;">
+                                Node.js
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/open-source" style="font-size: 78.5%;">
+                                Open Source
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/orlando" style="font-size: 58.5%;">
+                                Orlando
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/owasp" style="font-size: 53%;">
+                                OWASP
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/owasp-top-ten" style="font-size: 60%;">
+                                OWASP Top Ten
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/php" style="font-size: 112.5%; font-weight: bold;">
+                                PHP
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/postgresql" style="font-size: 54%;">
+                                PostgreSQL
+                            </a>
+                        </li>                                                                <li>
+                            <a href="/blog/tag/public-key-cryptography" style="font-size: 69.5%;">
+                                Public Key Cryptography
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/python" style="font-size: 53%;">
+                                Python
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/ruby" style="font-size: 53%;">
+                                Ruby
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/secret-key-cryptography" style="font-size: 74.5%;">
+                                Secret Key Cryptography
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/security" style="font-size: 124.5%; font-weight: bold;">
+                                Security
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/signatures" style="font-size: 56.5%;">
+                                Signatures
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/sql" style="font-size: 59%;">
+                                SQL
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/sql-injection" style="font-size: 59%;">
+                                SQL Injection
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/statistics" style="font-size: 55.5%;">
+                                Statistics
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/vulnerability" style="font-size: 63.5%;">
+                                Vulnerability
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/web-development" style="font-size: 76.5%;">
+                                Web Development
+                            </a>
+                        </li>                                            <li>
+                            <a href="/blog/tag/xss" style="font-size: 60%;">
+                                XSS
+                            </a>
+                        </li>                                    </ol>
+            </div>
+            <div class="sidebar-module">
+                <h4>Mailing Lists</h4>
+                <ol class="list-unstyled">
+                    <li>
+                        <a href="http://eepurl.com/bqnTnf" title="Our quarterly newsletter">
+                            <i class="far fa-clock pad"></i>
+                            Paragon Initiative Quarterly
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://eepurl.com/bqnRzf" title="Receive our security advisories before Full Disclosure publishes them!">
+                            <i class="fa fa-lock pad"></i>
+                            Paragon Initiative Vanguard
+                        </a>
+                    </li>
+                </ol>
+            </div>
+            <div class="sidebar-module">
+                <h4>Elsewhere</h4>
+                <ol class="list-unstyled">
+                    <li>
+                        <a href="https://github.com/paragonie">
+                            <i class="fab fa-github-square pad"></i>
+                            ParagonIE on Github
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/ParagonIE">
+                            <i class="fab fa-twitter-square pad"></i>
+                            @ParagonIE
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://facebook.com/ParagonIE">
+                            <i class="fab fa-facebook-square pad"></i>
+                            Paragonie on Facebook
+                        </a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <!-- /.blog-sidebar -->
+
+    </div>
+    <!-- /.row -->
+
+    <hr class="pagebreak" />
+                        <div id="proposition">
+                <div>
+                    <h2>Need Technology Consultants?</h2>
+                    <p>
+                        Will tomorrow bring <a href="https://paragonie.com/white-paper/2015-why-invest-application-security">costly
+                        and embarrassing data breaches</a>? Or will it bring growth,
+                        success, and peace of mind?
+                    </p>
+                    <p>
+                        Our team of technology consultants have extensive knowledge
+                        and experience with application security and web/application
+                        development.
+                    </p>
+                    <p>
+                        We specialize in <a href="https://paragonie.com/blog/tag/cryptography">cryptography</a>
+                        and <a href="https://paragonie.com/blog/tag/php">secure PHP development</a>.
+                    </p>
+                    <div><a class="btn btn-ultra align-center" href="/contact" title="Technology Consulting from Paragon Initiative">
+                        <i class="fa fa-users"></i>
+                        Let's Work Together Towards Success
+                    </a></div>
+                </div>
+                <div>
+                    <h2>Our Security Newsletters</h2>
+                    <p>
+                        Want the latest from Paragon Initiative Enterprises delivered
+                        straight to your inbox? We have two newsletters to choose from.
+                    </p>
+                    <p>
+                        The first mails quarterly and often showcases our behind-the-scenes
+                        projects.
+                    </p>
+                    <p>
+                        The other is unscheduled and gives you a direct
+                        feed into the findings of our open source security research
+                        initiatives.
+                    </p>
+                    <div>
+                        <a class="btn btn-success align-center" href="http://eepurl.com/bqnTnf" title="Paragon Initiatve Quarterly">
+                            <i class="fa fa-calendar-o"></i>
+                            Quarterly Newsletter
+                        </a>
+                        &nbsp;
+                        <a class="btn btn-warning align-center" href="http://eepurl.com/bqnRzf" title="Paragon Initiatve Vanguard">
+                            <i class="fa fa-lock"></i>
+                            Security Announcements
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </Div>
+</div>
+    <!-- Start Footer -->
+    <footer class="footer">
+        <div class="container btn-glass">
+            <br />
+            <div class="row row-centered">
+                <div class="col-lg-6 col-centered footercopy">
+                    <p class="text-left">
+                        Copyright &copy; 2015 - 2021 Paragon Initiative Enterprises, LLC.
+                        All right reserved.
+                        <span class="visible-xl-inline">
+                            Software security and cryptography specialists.
+                        </span>
+                    </p>
+                </div>
+                <div class="col-lg-4  col-centered text-right">
+                    <a href="https://paragonie.com/contact" title="Contact Paragon Initiative Enterprises"><i class="fa fa-2x fa-envelope pad"></i></a>
+                    <a href="https://facebook.com/paragonie" title="Paragon Initiative Enterprises on Facebook"><i class="fab fa-2x fa-facebook-square pad"></i></a>
+                    <a href="https://github.com/paragonie" title="Fork our code on GitHub"><i class="fab fa-2x fa-github-square pad"></i></a>
+                    <a href="https://twitter.com/ParagonIE" title="Follow us on Twitter"><i class="fab fa-2x fa-twitter-square pad"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- /container -->
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script nonce="SgpXQy/zIsyzoE2zH6/EEbUv" src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script nonce="vXMngnXiXfX0KZcG4SKowe1Y" src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script nonce="0IB/6taFWdaJlUrr0KzpNh6r" src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script nonce="crLH/jNFrU1V6h6TiVVlouR3" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+    <script nonce="zjSCHg82fdguKZq53Ga0/Xhf">
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-61029337-1', 'auto');
+      ga('send', 'pageview');
+
+
+        $(document).ready(function() {
+            $('#nav_menu_info').attr('href', '#');
+            $('#nav_menu_services').attr('href', '#');
+            $('#nav_menu_community').attr('href', '#');
+        });
+    </script>
+    <script nonce="4LnoPNAAkr1bRvQpbIKMkKN7" src="/static/highlightjs/highlight.pack.js?8NVf/RUBBwePJpIHoPVoQAh/6vQ="></script>
+        <script nonce="5x34V6E7mTEMGc/hHYhBH9oR">hljs.initHighlightingOnLoad();</script>
+    </body>
+
+</html>

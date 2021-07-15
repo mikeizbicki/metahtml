@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- META DATA -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preload" href="/assets/css/index.css" as="style">
+  <link rel="preload" href="/assets/js/main.js" as="script">
+  <!--[if IE]><meta http-equiv="cleartype" content="on" /><![endif]-->
+  <link rel="canonical" href="https://securitylab.github.com/research/Ubuntu-gdm3-accountsservice-LPE/">
+  <link rel="alternate" type="application/rss+xml" title="GitHub Security Lab" href="/feed.xml">
+  <link rel="stylesheet" media="screen" href="/assets/css/index.css" />
+  <script async src="https://js.maxmind.com/js/apis/geoip2/v2.1/geoip2.js"></script>
+  <script src="/assets/js/jquery.js"></script>
+  <link id="favicon" rel="shortcut icon" type="image/ico" href="/assets/img/favicons/favicon.png" />
+  <link rel="apple-touch-icon" href="/assets/img/favicons/apple-touch-icon.png" />
+  <link rel="icon" href="/assets/img/favicons/android-favicon.png">
+  <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>How to get root on Ubuntu 20.04 by pretending nobody’s /home | GitHub Security Lab</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="How to get root on Ubuntu 20.04 by pretending nobody’s /home" />
+<meta name="author" content="kevinbackhouse" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Ubuntu 20.04 local privilege escalation using vulnerabilities in gdm3 and accountsservice (CVE-2020-16125, CVE-2020-16126, CVE-2020-16127)" />
+<meta property="og:description" content="Ubuntu 20.04 local privilege escalation using vulnerabilities in gdm3 and accountsservice (CVE-2020-16125, CVE-2020-16126, CVE-2020-16127)" />
+<link rel="canonical" href="https://securitylab.github.com/research/Ubuntu-gdm3-accountsservice-LPE/" />
+<meta property="og:url" content="https://securitylab.github.com/research/Ubuntu-gdm3-accountsservice-LPE/" />
+<meta property="og:site_name" content="GitHub Security Lab" />
+<meta property="og:image" content="https://securitylab.github.com/assets/img/social-card.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-11-10T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://securitylab.github.com/assets/img/social-card.png" />
+<meta property="twitter:title" content="How to get root on Ubuntu 20.04 by pretending nobody’s /home" />
+<meta name="twitter:site" content="@GHSecurityLab" />
+<meta name="twitter:creator" content="@kevinbackhouse" />
+<script type="application/ld+json">
+{"headline":"How to get root on Ubuntu 20.04 by pretending nobody’s /home","dateModified":"2020-11-10T00:00:00+00:00","description":"Ubuntu 20.04 local privilege escalation using vulnerabilities in gdm3 and accountsservice (CVE-2020-16125, CVE-2020-16126, CVE-2020-16127)","datePublished":"2020-11-10T00:00:00+00:00","url":"https://securitylab.github.com/research/Ubuntu-gdm3-accountsservice-LPE/","@type":"BlogPosting","image":"https://securitylab.github.com/assets/img/social-card.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://securitylab.github.com/research/Ubuntu-gdm3-accountsservice-LPE/"},"author":{"@type":"Person","name":"kevinbackhouse"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="no-js page-/research/Ubuntu-gdm3-accountsservice-LPE">
+  <a class="skip-to-content" href="#content">skip to content</a>
+
+  <div class="d-none d-md-block py-2 bg-gray-dark">
+  <div class="container-lg p-responsive d-flex flex-md-justify-between"><a class="d-block text-white no-underline" href="https://github.com" data-ga-click="Top bar, go to github, text:Back to GitHub.com">Back to GitHub.com</a></div>
+</div>
+<nav class="site-navigation UnderlineNav d-block">
+  <div class="container-lg d-flex flex-items-center px-3 px-md-6 px-lg-3 py-0">
+    <svg height="32" class="octicon octicon-mark-github mr-2" viewBox="0 0 16 16" version="1.1" width="32" aria-hidden="true">
+      <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+    </svg>
+    <a aria-current="page" role="tab" title="Security Lab" class="UnderlineNav-item UnderlineNav-item--logo" href="/">Security Lab</a>
+    <div class="UnderlineNav-body flex-auto flex-justify-end hide-sm hide-md" role="tablist">
+      <a role="tab" title="Bounties" class="UnderlineNav-item " href="/bounties">Bounties</a>
+      <a role="tab" title="CodeQL"  class="UnderlineNav-item " href="/tools/codeql">CodeQL</a>
+      <a role="tab" title="Research" class="UnderlineNav-item " href="/research">Research</a>
+      <a role="tab" title="Advisories" class="UnderlineNav-item " href="/advisories">Advisories</a>
+      <a role="tab" title="Get Involved" class="UnderlineNav-item " href="/get-involved">Get Involved</a>
+      <a role="tab" title="Events" class="UnderlineNav-item " href="/events">Events</a>
+		</div>
+    <div class="flex-auto d-flex flex-justify-end hide-lg hide-xl"><button aria-label="Menu" aria-expanded="false" class="sc-VigVT sc-jzJRlG facTgp js-menu-trigger"><svg aria-hidden="true" class="sc-dxgOiQ hTjMfW" height="16" role="img" viewBox="0 0 12 16" width="12" style="display:inline-block;fill:currentColor;user-select:none;vertical-align:text-bottom"><path fill-rule="evenodd" d="M11.41 9H.59C0 9 0 8.59 0 8c0-.59 0-1 .59-1H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1h.01zm0-4H.59C0 5 0 4.59 0 4c0-.59 0-1 .59-1H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1h.01zM.59 11H11.4c.59 0 .59.41.59 1 0 .59 0 1-.59 1H.59C0 13 0 12.59 0 12c0-.59 0-1 .59-1z"></path></svg></button><div></div></div>
+  </div>
+</nav>
+
+<div class="mobile-nav">
+  <div>
+    <a role="tab" title="Bounties" class="UnderlineNav-item " href="/">Home</a>
+    <a role="tab" title="Bounties" class="UnderlineNav-item " href="/bounties">Bounties</a>
+    <a role="tab" title="CodeQL"  class="UnderlineNav-item " href="/tools/codeql">CodeQL</a>
+    <a role="tab" title="Research" class="UnderlineNav-item " href="/research">Research</a>
+    <a role="tab" title="Advisories" class="UnderlineNav-item " href="/advisories">Advisories</a>
+    <a role="tab" title="Get Involved" class="UnderlineNav-item " href="/get-involved">Get Involved</a>
+    <a role="tab" title="Events" class="UnderlineNav-item " href="/events">Events</a>
+  </div>
+</div>
+<span class="mobile-nav-screen js-menu-trigger"></span>
+
+
+  <div class="container-md p-responsive mt-7 mb-8 mt-md-10 pt-md-10">
+    <header class="post-header d-block mb-6">
+      <div class="date text-mono f5 my-3">November 10, 2020</div>
+      <h1 class="my-2 h00-mktg lh-condensed">How to get root on Ubuntu 20.04 by pretending nobody’s /home</h1>
+
+      
+      
+      
+      
+      
+
+      
+
+      <a target="_blank" class="sc-frDJqD SgxRc d-inline-flex flex-row flex-items-center text-gray" href="https://github.com/kevinbackhouse">
+        <img class="mr-3" src="https://avatars.githubusercontent.com/u/4358136?s=35" height="35" width="35">
+        <span>Kevin Backhouse</span>
+      </a>
+    </header>
+
+    <main id="content" class="markdown-body" aria-label="Content">
+      <p>I am a fan of Ubuntu, so I would like to help make it as secure as possible. I have recently spent quite a bit of time looking for security vulnerabilities in Ubuntu’s system services, and it has mostly been an exercise in frustration. I have found (and reported) a few issues, but the majority have been low severity. Ubuntu is open source, which means that many people have looked at the source code before me, and it seems like all the easy bugs have already been found. In other words, I don’t want this blog post to give you the impression that Ubuntu is full of trivial security bugs; that’s not been my impression so far.</p>
+
+<p>This blog post is about an astonishingly straightforward way to escalate privileges on Ubuntu. With a few simple commands in the terminal, and a few mouse clicks, a standard user can create an administrator account for themselves. I have made a short <a href="https://youtu.be/8IjTq7GBupw">demo video</a>, to show how easy it is.</p>
+
+<p>It’s unusual for a vulnerability on a modern operating system to be this easy to exploit. I have, on some occasions, written thousands of lines of code to exploit a vulnerability. Most modern exploits involve complicated trickery, like using a memory corruption vulnerability to forge fake objects in the heap, or replacing a file with a symlink with microsecond accuracy to exploit a <a href="https://en.wikipedia.org/wiki/Time-of-check_to_time-of-use">TOCTOU</a> vulnerability. So these days it’s relatively rare to find a vulnerability that doesn’t require coding skills to exploit. I also think the vulnerability is easy to understand, even if you have no prior knowledge of how Ubuntu works or any security research experience.</p>
+
+<p><em>Disclaimer: For someone to exploit this vulnerability, they need access to the graphical desktop session of the system, so this issue affects desktop users only.</em></p>
+
+<h1 id="exploitation-steps">Exploitation steps</h1>
+
+<p>Here is a description of the exploitation steps, as shown in the <a href="https://youtu.be/8IjTq7GBupw">demo video</a>.</p>
+
+<p>First, open a terminal and create a <a href="https://en.wikipedia.org/wiki/Symbolic_link">symlink</a> in your home directory:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ln -s /dev/zero .pam_environment
+</code></pre></div></div>
+
+<p>(If that doesn’t work because a file named <code class="language-plaintext highlighter-rouge">.pam_environment</code> already exists, then just temporarily rename the old file so that you can restore it later.)</p>
+
+<p>Next, open “Region &amp; Language” in the system settings and try to change the language. The dialog box will freeze, so just ignore it and go back to the terminal. At this point, a program named accounts-daemon is consuming 100% of a CPU core, so your computer may become sluggish and start to get hot.</p>
+
+<p>In the terminal, delete the symlink. Otherwise you might lock yourself out of your own account!</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rm .pam_environment
+</code></pre></div></div>
+
+<p>The next step is to send a SIGSTOP signal to accounts-daemon to stop it from thrashing that CPU core. But to do that, you first need to know accounts-daemon’s process identifier (PID). In the video, I do that by running <a href="https://manpages.ubuntu.com/manpages/focal/en/man1/top.1.html">top</a>, which is a utility for monitoring the running processes. Because accounts-daemon is stuck in an infinite loop, it quickly goes to the top of the list. Another way to find the PID is with the <a href="https://manpages.ubuntu.com/manpages/focal/en/man8/pidof.8.html">pidof</a> utility:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pidof accounts-daemon
+597
+</code></pre></div></div>
+
+<p>Armed with accounts-daemon’s PID, you can use <a href="https://manpages.ubuntu.com/manpages/focal/en/man1/kill.1.html">kill</a> to send the SIGSTOP signal:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kill -SIGSTOP 597
+</code></pre></div></div>
+
+<p>Your computer can take a breather now.</p>
+
+<p><em>Here is the crucial step.</em> You’re going to log out of your account, but first you need to set a timer to reset accounts-daemon after you have logged out. Otherwise you’ll just be locked out and the exploit will fail. (Don’t worry if this happens: everything will be back to normal after a reboot.) This is how to set the timer:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nohup bash -c "sleep 30s; kill -SIGSEGV 597; kill -SIGCONT 597"
+</code></pre></div></div>
+
+<p>The <a href="https://manpages.ubuntu.com/manpages/focal/en/man1/nohup.1posix.html">nohup</a> utility is a simple way to leave a script running after you have logged out. This command tells it to run a <a href="https://manpages.ubuntu.com/manpages/focal/en/man1/bash.1.html">bash</a> script that does three things:</p>
+
+<ol>
+  <li>Sleep for 30 seconds. (You just need to give yourself enough time to log out. I set it to 10 seconds for the video.)</li>
+  <li>Send accounts-daemon a SIGSEGV signal, which will make it crash.</li>
+  <li>Send accounts-daemon a SIGCONT signal to deactivate the SIGSTOP, which you sent earlier. The SIGSEGV won’t take effect until the SIGCONT is received.</li>
+</ol>
+
+<p>Once completed, log out and wait a few seconds for the SIGSEGV to detonate. If the exploit is successful, then you will be presented with a series of dialog boxes which let you create a new user account. The new user account is an administrator account. (In the video, I run <a href="https://manpages.ubuntu.com/manpages/focal/en/man1/id.1.html">id</a> to show that the new user is a member of the sudo group, which means that it has root privileges.)</p>
+
+<p><img src="/assets/img/post-images/gdm3_accountsservice_victory.jpg" alt="Victory!" /></p>
+
+<h1 id="how-does-it-work">How does it work?</h1>
+
+<p>Stay with me! Even if you have no prior knowledge of how Ubuntu (or more specifically, GNOME) works, I reckon I can explain this vulnerability to you. There are actually two bugs involved. The first is in <a href="https://launchpad.net/ubuntu/+source/accountsservice">accountsservice</a>, which is a service that manages user accounts on the computer. The second is in <a href="https://wiki.gnome.org/Projects/GDM">GNOME Display Manager</a> (gdm3), which, among other things, handles the login screen. I’ll explain each of these bugs separately below.</p>
+
+<h2 id="accountsservice-denial-of-service-ghsl-2020-187-ghsl-2020-188--cve-2020-16126-cve-2020-16127">accountsservice denial of service (GHSL-2020-187, GHSL-2020-188 / CVE-2020-16126, CVE-2020-16127)</h2>
+
+<p>The accountsservice daemon (accounts-daemon) is a system service that manages user accounts on the machine. It can do things like create a new user account or change a user’s password, but it can also do less security-sensitive things like change a user’s icon or their preferred language. Daemons are programs that run in the background and do not have their own user interface. However, the systems settings dialog box can communicate with accounts-daemon via a message system known as <a href="https://www.freedesktop.org/wiki/Software/dbus/">D-Bus</a>.</p>
+
+<p><img src="/assets/img/post-images/gdm3_accountsservice_settings_users.png" alt="System Settings: Users" /></p>
+
+<p><img src="/assets/img/post-images/gdm3_accountsservice_settings_region_language.png" alt="System Settings: Region &amp; Language" /></p>
+
+<p>In the exploit, I use the systems settings dialog box to change the language. A standard user is allowed to change that setting on their own account - administrator privileges are not required. Under the hood, the systems services dialog box sends the <a href="https://git.launchpad.net/ubuntu/+source/accountsservice/tree/data/org.freedesktop.Accounts.User.xml?h=ubuntu/focal-updates&amp;id=e0347185d4c5554b026c13ccca691577c239afd5#n114">org.freedesktop.Accounts.User.SetLanguage</a> command to accounts-daemon, via D-Bus.</p>
+
+<p>It turns out that Ubuntu uses a modified version of accountsservice that includes some <a href="https://git.launchpad.net/ubuntu/+source/accountsservice/tree/debian/patches/0010-set-language.patch?h=ubuntu/focal-updates&amp;id=e0347185d4c5554b026c13ccca691577c239afd5">extra code</a> that doesn’t exist in the upstream version maintained by <a href="https://gitlab.freedesktop.org/accountsservice/accountsservice">freedesktop</a>. Ubuntu’s patch adds a function named <a href="https://git.launchpad.net/ubuntu/+source/accountsservice/tree/debian/patches/0010-set-language.patch?h=ubuntu/focal-updates&amp;id=e0347185d4c5554b026c13ccca691577c239afd5#n367"><code class="language-plaintext highlighter-rouge">is_in_pam_environment</code></a>, which looks for a file named <code class="language-plaintext highlighter-rouge">.pam_environment</code> in the user’s home directory and reads it. The denial of service vulnerability works by making <code class="language-plaintext highlighter-rouge">.pam_environment</code> a <a href="https://en.wikipedia.org/wiki/Symbolic_link">symlink</a> to <code class="language-plaintext highlighter-rouge">/dev/zero</code>. <a href="https://en.wikipedia.org/wiki//dev/zero"><code class="language-plaintext highlighter-rouge">/dev/zero</code></a> is a special file that doesn’t actually exist on disk. It is provided by the operating system and behaves like an infinitely long file in which every byte is zero. When <code class="language-plaintext highlighter-rouge">is_in_pam_environment</code> tries to read <code class="language-plaintext highlighter-rouge">.pam_environment</code>, it gets redirected to <code class="language-plaintext highlighter-rouge">/dev/zero</code> by the symlink, and then gets stuck in an infinite loop because <code class="language-plaintext highlighter-rouge">/dev/zero</code> is infinitely long.</p>
+
+<p>There’s a second part to this bug. The exploit involves crashing accounts-daemon by sending it a SIGSEGV. Surely a standard user shouldn’t be allowed to crash a system service like that? They shouldn’t, but accounts-daemon inadvertently allows it by <a href="https://git.launchpad.net/ubuntu/+source/accountsservice/tree/debian/patches/0010-set-language.patch?h=ubuntu/focal-updates&amp;id=e0347185d4c5554b026c13ccca691577c239afd5#n384">dropping privileges</a> just before it starts reading the user’s <code class="language-plaintext highlighter-rouge">.pam_environment</code>. Dropping privileges means that the daemon temporarily forfeits its root privileges, adopting instead the lower privileges of the user. Ironically, that’s intended to be a security precaution, the goal of which is to protect the daemon from a malicious user who does something like symlinking their <code class="language-plaintext highlighter-rouge">.pam_environment</code> to <code class="language-plaintext highlighter-rouge">/etc/shadow</code>, which is a highly sensitive file that standard users aren’t allowed to read. Unfortunately, when done incorrectly, it also grants the user permission to send the daemon signals, which is why we’re able to send accounts-daemon a SIGSEGV.</p>
+
+<h2 id="gdm3-privilege-escalation-due-to-unresponsive-accounts-daemon-ghsl-2020-202--cve-2020-16125">gdm3 privilege escalation due to unresponsive accounts-daemon (GHSL-2020-202 / CVE-2020-16125)</h2>
+
+<p><a href="https://wiki.gnome.org/Projects/GDM">GNOME Display Manager</a> (gdm3) is a fundamental component of Ubuntu’s user interface. It handles things like starting and stopping user sessions when they log in and out. It also manages the login screen.</p>
+
+<p><img src="/assets/img/post-images/gdm3_accountsservice_login_screen.png" alt="gdm3 login screen" /></p>
+
+<p>Another thing handled by gdm3 is the initial setup of a new computer. When you install Ubuntu on a new computer, one of the first things that you need to do is create a user account. The initial user account needs to be an administrator so that you can continue setting up the machine, doing things like configuring the wifi and installing applications. Here is a screenshot of the initial setup screen (taken from the exploit video):</p>
+
+<p><img src="/assets/img/post-images/gdm3_accountsservice_gnome-initial-setup.png" alt="gnome-initial-setup" /></p>
+
+<p>The dialog box that you see in the screenshot is a separate application, called <a href="https://gitlab.gnome.org/GNOME/gnome-initial-setup">gnome-initial-setup</a>. It is triggered by gdm3 when there are zero user accounts on the system, which is the expected scenario during the initial setup of a new computer. How does gdm3 check how many users there are on the system? You probably already guessed it: by asking accounts-daemon! So what happens if accounts-daemon is unresponsive? The relevant code is <a href="https://gitlab.gnome.org/GNOME/gdm/-/blob/3.36.3/daemon/gdm-display.c#L513">here</a>.</p>
+
+<p>It uses D-Bus to ask accounts-daemon how many users there are, but since accounts-daemon is unresponsive, the D-Bus method call fails due to a timeout. (In my testing, the timeout took around 20 seconds.) Due to the timeout error, the code does not set the value of <code class="language-plaintext highlighter-rouge">priv-&gt;have_existing_user_accounts</code>. Unfortunately, the default value of <code class="language-plaintext highlighter-rouge">priv-&gt;have_existing_user_accounts</code> is <code class="language-plaintext highlighter-rouge">false</code>, not <code class="language-plaintext highlighter-rouge">true</code>, so now gdm3 thinks that there are zero user accounts and it launches <code class="language-plaintext highlighter-rouge">gnome-initial-setup</code>.</p>
+
+<h1 id="how-did-i-find-it">How did I find it?</h1>
+
+<p>I have a confession to make: I found this bug completely by accident. This is the message that I sent to my colleagues at approximately 10pm BST on October 14:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>I just got LPE by accident, but I am not quite sure how to reproduce it. 🤦
+</code></pre></div></div>
+
+<p>Here’s what happened: I had found a couple of denial-of-service vulnerabilities in accountsservice. I considered them low severity, but was writing them up for a vulnerability report to send to Ubuntu. Around 6pm, I stopped work and closed my laptop lid. Later in the evening, I opened the laptop lid and discovered that I was locked out of my account. I had been experimenting with the <code class="language-plaintext highlighter-rouge">.pam_environment</code> symlink and had forgotten to delete it before closing the lid. No big deal: I used Ctrl-Alt-F4 to open a <a href="https://wiki.debian.org/Console">console</a>, logged in (the console login was not affected by the accountsservice DOS), and killed accounts-daemon with a SIGSEGV. I didn’t need to use <a href="https://manpages.ubuntu.com/manpages/focal/en/man8/sudo.8.html">sudo</a> due to the privilege dropping vulnerability. The next thing I knew, I was looking at the gnome-initial-setup dialog boxes, and was amazed to discover that I was able to create a new user with administrator privileges.</p>
+
+<p>Unfortunately, when I tried to reproduce the same sequence of steps, I couldn’t get it to work again. I checked the system logs for clues, but there wasn’t much information because I didn’t have gdm’s debug messages enabled. The exploit that I have since developed requires the user to log out of their account, but I definitely didn’t do that on the evening of October 14. So it remains a mystery how I accidentally triggered the bug that evening.</p>
+
+<p>Later that evening, I sent further messages to my (US-based) colleagues describing what had happened. Talking about the dialog boxes helped to jog my memory about something that I had noticed recently. Many of the system services that I have been looking at use <a href="https://www.freedesktop.org/software/polkit/docs/latest/polkit.8.html">policykit</a> to check whether the client is authorized to request an action. I had noticed a file called <a href="https://git.launchpad.net/ubuntu/+source/gnome-initial-setup/tree/debian/gnome-initial-setup.pkla?h=applied/ubuntu/focal-updates&amp;id=2b3933f055f28d52b4dd39b9a405d528a9c20a29"><code class="language-plaintext highlighter-rouge">gnome-initial-setup.pkla</code></a>, which is a policykit configuration file that grants a user named gnome-initial-setup the ability to do a number of security-sensitive things, such as mounting filesystems and creating new user accounts. So I said to my colleagues: “I wonder if it has something to do with gnome-initial-setup,” and <a href="https://github.com/anticomputer">Bas Alberts</a> almost immediately jumped in with a hypothesis that turned out to be right on the money: “You tricked gdm into launching gnome-initial-setup, I reckon, which maybe happens if a gdm session can’t verify that an account already exists.”</p>
+
+<p>After that, it was just a matter of finding the code in gdm3 that triggers gnome-initial-setup and figuring out how to trigger it while accounts-daemon is unresponsive. I found that the relevant code is triggered when a user logs out.</p>
+
+<p>And that’s the story of how the end of my workday was the start of an 0-day!</p>
+
+    </main>
+  </div>
+
+
+
+  <footer class="sc-dVhcbM cBEMHy footer mt-6">
+  <div class="container-xl p-responsive">
+    <div class="d-flex flex-wrap py-5 mb-5">
+      <div class="col-12 col-lg-4 mb-5">
+        <a href="https://github.com/" data-ga-click="Footer, go to home, text:home" class="text-gray-dark" aria-label="Go to GitHub homepage">
+          <svg height="30" class="octicon octicon-logo-github" viewBox="0 0 45 16" version="1.1" width="84" aria-hidden="true">
+            <path fill-rule="evenodd" d="M18.53 12.03h-.02c.009 0 .015.01.024.011h.006l-.01-.01zm.004.011c-.093.001-.327.05-.574.05-.78 0-1.05-.36-1.05-.83V8.13h1.59c.09 0 .16-.08.16-.19v-1.7c0-.09-.08-.17-.16-.17h-1.59V3.96c0-.08-.05-.13-.14-.13h-2.16c-.09 0-.14.05-.14.13v2.17s-1.09.27-1.16.28c-.08.02-.13.09-.13.17v1.36c0 .11.08.19.17.19h1.11v3.28c0 2.44 1.7 2.69 2.86 2.69.53 0 1.17-.17 1.27-.22.06-.02.09-.09.09-.16v-1.5a.177.177 0 00-.146-.18zM42.23 9.84c0-1.81-.73-2.05-1.5-1.97-.6.04-1.08.34-1.08.34v3.52s.49.34 1.22.36c1.03.03 1.36-.34 1.36-2.25zm2.43-.16c0 3.43-1.11 4.41-3.05 4.41-1.64 0-2.52-.83-2.52-.83s-.04.46-.09.52c-.03.06-.08.08-.14.08h-1.48c-.1 0-.19-.08-.19-.17l.02-11.11c0-.09.08-.17.17-.17h2.13c.09 0 .17.08.17.17v3.77s.82-.53 2.02-.53l-.01-.02c1.2 0 2.97.45 2.97 3.88zm-8.72-3.61h-2.1c-.11 0-.17.08-.17.19v5.44s-.55.39-1.3.39-.97-.34-.97-1.09V6.25c0-.09-.08-.17-.17-.17h-2.14c-.09 0-.17.08-.17.17v5.11c0 2.2 1.23 2.75 2.92 2.75 1.39 0 2.52-.77 2.52-.77s.05.39.08.45c.02.05.09.09.16.09h1.34c.11 0 .17-.08.17-.17l.02-7.47c0-.09-.08-.17-.19-.17zm-23.7-.01h-2.13c-.09 0-.17.09-.17.2v7.34c0 .2.13.27.3.27h1.92c.2 0 .25-.09.25-.27V6.23c0-.09-.08-.17-.17-.17zm-1.05-3.38c-.77 0-1.38.61-1.38 1.38 0 .77.61 1.38 1.38 1.38.75 0 1.36-.61 1.36-1.38 0-.77-.61-1.38-1.36-1.38zm16.49-.25h-2.11c-.09 0-.17.08-.17.17v4.09h-3.31V2.6c0-.09-.08-.17-.17-.17h-2.13c-.09 0-.17.08-.17.17v11.11c0 .09.09.17.17.17h2.13c.09 0 .17-.08.17-.17V8.96h3.31l-.02 4.75c0 .09.08.17.17.17h2.13c.09 0 .17-.08.17-.17V2.6c0-.09-.08-.17-.17-.17zM8.81 7.35v5.74c0 .04-.01.11-.06.13 0 0-1.25.89-3.31.89-2.49 0-5.44-.78-5.44-5.92S2.58 1.99 5.1 2c2.18 0 3.06.49 3.2.58.04.05.06.09.06.14L7.94 4.5c0 .09-.09.2-.2.17-.36-.11-.9-.33-2.17-.33-1.47 0-3.05.42-3.05 3.73s1.5 3.7 2.58 3.7c.92 0 1.25-.11 1.25-.11v-2.3H4.88c-.11 0-.19-.08-.19-.17V7.35c0-.09.08-.17.19-.17h3.74c.11 0 .19.08.19.17z"></path>
+          </svg>
+        </a>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-2 mb-6 mb-md-2 pr-3 pr-lg-0 pl-lg-4">
+        <h2 class="h5 mb-3 text-mono text-gray-light text-normal">Product</h2>
+        <ul class="list-style-none text-gray f5">
+          <li class="lh-condensed mb-3"><a href="https://github.com/features" data-ga-click="Footer, go to features, text:features" class="link-gray">Features</a></li>
+          <li class="lh-condensed mb-3"><a href="https://github.com/security" data-ga-click="Footer, go to security, text:security" class="link-gray">Security</a></li>
+          <li class="lh-condensed mb-3"><a href="https://github.com/enterprise" data-ga-click="Footer, go to enterprise, text:enterprise" class="link-gray">Enterprise</a></li>
+          <li class="lh-condensed mb-3"><a href="https://github.com/customer-stories?type=enterprise" data-ga-click="Footer, go to customer stories, text:customer stories" class="link-gray">Customer stories</a></li>
+          <li class="lh-condensed mb-3"><a href="https://github.com/pricing" data-ga-click="Footer, go to pricing, text:pricing" class="link-gray">Pricing</a></li>
+          <li class="lh-condensed mb-3"><a href="https://resources.github.com" data-ga-click="Footer, go to resources, text:resources" class="link-gray">Resources</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-2 mb-6 mb-md-2 pr-3 pr-md-0 pl-md-4">
+        <h2 class="h5 mb-3 text-mono text-gray-light text-normal">Platform</h2>
+        <ul class="list-style-none f5">
+          <li class="lh-condensed mb-3"><a href="https://developer.github.com" data-ga-click="Footer, go to api, text:api" class="link-gray">Developer API</a></li>
+          <li class="lh-condensed mb-3"><a href="http://partner.github.com/" data-ga-click="Footer, go to partner, text:partner" class="link-gray ">Partners</a></li>
+          <li class="lh-condensed mb-3"><a href="https://atom.io" data-ga-click="Footer, go to atom, text:atom" class="link-gray ">Atom</a></li>
+          <li class="lh-condensed mb-3"><a href="http://electron.atom.io/" data-ga-click="Footer, go to electron, text:electron" class="link-gray ">Electron</a></li>
+          <li class="lh-condensed mb-3"><a href="https://desktop.github.com/" data-ga-click="Footer, go to desktop, text:desktop" class="link-gray ">GitHub Desktop</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-2 mb-6 mb-md-2 pr-3 pr-md-0 pl-md-4">
+        <h2 class="h5 mb-3 text-mono text-gray-light text-normal">Support</h2>
+        <ul class="list-style-none f5">
+          <li class="lh-condensed mb-3"><a data-ga-click="Footer, go to help, text:docs" class="link-gray " href="https://docs.github.com">Docs</a></li>
+          <li class="lh-condensed mb-3"><a href="https://github.community" data-ga-click="Footer, go to community, text:community" class="link-gray ">Community Forum</a></li>
+          <li class="lh-condensed mb-3"><a href="https://services.github.com/" data-ga-click="Footer, go to professional services, text:professional services" class="link-gray ">Professional Services</a></li>
+          <li class="lh-condensed mb-3"><a href="https://lab.github.com/" data-ga-click="Footer, go to learning lab, text:learning lab" class="link-gray ">Learning Lab</a></li>
+          <li class="lh-condensed mb-3"><a href="https://githubstatus.com/" data-ga-click="Footer, go to status, text:status" class="link-gray ">Status</a></li>
+          <li class="lh-condensed mb-3"><a data-ga-click="Footer, go to contact, text:contact" class="link-gray " href="https://support.github.com">Contact GitHub</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-2 mb-6 mb-md-2 pr-3 pr-md-0 pl-md-4">
+        <h2 class="h5 mb-3 text-mono text-gray-light text-normal">Company</h2>
+        <ul class="list-style-none f5">
+          <li class="lh-condensed mb-3"><a data-ga-click="Footer, go to about, text:about" class="link-gray " href="https://github.com/about">About</a></li>
+          <li class="lh-condensed mb-3"><a href="https://github.blog" data-ga-click="Footer, go to blog, text:blog" class="link-gray">Blog</a></li>
+          <li class="lh-condensed mb-3"><a href="https://github.com/about/careers" data-ga-click="Footer, go to careers, text:careers" class="link-gray">Careers</a></li>
+          <li class="lh-condensed mb-3"><a href="https://github.com/about/press" data-ga-click="Footer, go to press, text:press" class="link-gray">Press</a></li>
+          <li class="lh-condensed mb-3"><a href="https://shop.github.com" data-ga-click="Footer, go to shop, text:shop" class="link-gray">Shop</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="bg-gray-light">
+    <div class="container-xl p-responsive f6 py-4 d-sm-flex flex-justify-between flex-row-reverse flex-items-center">
+      <ul class="list-style-none d-flex flex-items-center mb-3 mb-sm-0 lh-condensed-ultra social-icons">
+        <li class="mr-3">
+          <a href="https://twitter.com/github" data-ga-click="Footer, go to Twitter, text:twitter" title="GitHub on Twitter">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 273.5 222.3" class="d-block" height="18">
+              <path d="M273.5 26.3a109.77 109.77 0 0 1-32.2 8.8 56.07 56.07 0 0 0 24.7-31 113.39 113.39 0 0 1-35.7 13.6 56.1 56.1 0 0 0-97 38.4 54 54 0 0 0 1.5 12.8A159.68 159.68 0 0 1 19.1 10.3a56.12 56.12 0 0 0 17.4 74.9 56.06 56.06 0 0 1-25.4-7v.7a56.11 56.11 0 0 0 45 55 55.65 55.65 0 0 1-14.8 2 62.39 62.39 0 0 1-10.6-1 56.24 56.24 0 0 0 52.4 39 112.87 112.87 0 0 1-69.7 24 119 119 0 0 1-13.4-.8 158.83 158.83 0 0 0 86 25.2c103.2 0 159.6-85.5 159.6-159.6 0-2.4-.1-4.9-.2-7.3a114.25 114.25 0 0 0 28.1-29.1" fill="currentColor"></path>
+            </svg>
+          </a>
+        </li>
+        <li class="mr-3">
+          <a href="https://www.facebook.com/GitHub" data-ga-click="Footer, go to Facebook, text:facebook" title="GitHub on Facebook">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.3 15.4" class="d-block" height="18">
+              <path d="M14.5 0H.8a.88.88 0 0 0-.8.9v13.6a.88.88 0 0 0 .8.9h7.3v-6h-2V7.1h2V5.4a2.87 2.87 0 0 1 2.5-3.1h.5a10.87 10.87 0 0 1 1.8.1v2.1h-1.3c-1 0-1.1.5-1.1 1.1v1.5h2.3l-.3 2.3h-2v5.9h3.9a.88.88 0 0 0 .9-.8V.8a.86.86 0 0 0-.8-.8z" fill="currentColor"></path>
+            </svg>
+          </a>
+        </li>
+        <li class="mr-3">
+          <a href="https://www.youtube.com/github" data-ga-click="Footer, go to YouTube, text:youtube" title="GitHub on YouTube">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.17 13.6" class="d-block" height="16">
+              <path d="M18.77 2.13A2.4 2.4 0 0 0 17.09.42C15.59 0 9.58 0 9.58 0a57.55 57.55 0 0 0-7.5.4A2.49 2.49 0 0 0 .39 2.13 26.27 26.27 0 0 0 0 6.8a26.15 26.15 0 0 0 .39 4.67 2.43 2.43 0 0 0 1.69 1.71c1.52.42 7.5.42 7.5.42a57.69 57.69 0 0 0 7.51-.4 2.4 2.4 0 0 0 1.68-1.71 25.63 25.63 0 0 0 .4-4.67 24 24 0 0 0-.4-4.69zM7.67 9.71V3.89l5 2.91z" fill="currentColor"></path>
+            </svg>
+          </a>
+        </li>
+        <li class="mr-3 flex-self-start">
+          <a href="https://www.linkedin.com/company/github" data-ga-click="Footer, go to Linkedin, text:linkedin" title="GitHub on Linkedin">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 18" class="d-block" height="18">
+              <path d="M3.94 2A2 2 0 1 1 2 0a2 2 0 0 1 1.94 2zM4 5.48H0V18h4zm6.32 0H6.34V18h3.94v-6.57c0-3.66 4.77-4 4.77 0V18H19v-7.93c0-6.17-7.06-5.94-8.72-2.91z" fill="currentColor"></path>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/github" data-ga-click="Footer, go to github's org, text:github" title="GitHub's organization">
+            <svg height="20" class="octicon octicon-mark-github d-block" viewBox="0 0 16 16" version="1.1" width="20" aria-hidden="true">
+              <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+            </svg>
+          </a>
+        </li>
+      </ul>
+      <ul class="list-style-none d-flex text-gray">
+        <li class="mr-3">
+          © <!-- -->2021<!-- --> GitHub, Inc.
+        </li>
+        <li class="mr-3"><a href="https://docs.github.com/en/github/site-policy/github-terms-of-service" data-ga-click="Footer, go to terms, text:terms" class="link-gray">Terms</a></li>
+        <li class="mr-3"><a href="https://docs.github.com/en/github/site-policy/github-privacy-statement" data-ga-click="Footer, go to privacy, text:privacy" class="link-gray">Privacy</a></li>
+        <li><a href="#" class="link-gray">Cookie settings</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+
+  <!-- JAVASCRIPT -->
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

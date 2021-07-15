@@ -1,0 +1,1652 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="profile" href="https://gmpg.org/xfn/11" />
+	<title>Firefox &#8211; we&#8217;re finally getting HW acceleration on Linux &#8211; Martin Stransky&#039;s Blog</title>
+<script type="text/javascript">
+  WebFontConfig = {"google":{"families":["Arimo:r:latin,latin-ext"]}};
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://s0.wp.com/wp-content/plugins/custom-fonts/js/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+	})();
+</script><style id="jetpack-custom-fonts-css"></style>
+<meta name='robots' content='max-image-preview:large' />
+<link rel='dns-prefetch' href='//s2.wp.com' />
+<link rel='dns-prefetch' href='//s1.wp.com' />
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//wordpress.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.pubmine.com' />
+<link rel='dns-prefetch' href='//x.bidswitch.net' />
+<link rel='dns-prefetch' href='//static.criteo.net' />
+<link rel='dns-prefetch' href='//ib.adnxs.com' />
+<link rel='dns-prefetch' href='//aax.amazon-adsystem.com' />
+<link rel='dns-prefetch' href='//bidder.criteo.com' />
+<link rel='dns-prefetch' href='//cas.criteo.com' />
+<link rel='dns-prefetch' href='//gum.criteo.com' />
+<link rel='dns-prefetch' href='//ads.pubmatic.com' />
+<link rel='dns-prefetch' href='//gads.pubmatic.com' />
+<link rel='dns-prefetch' href='//tpc.googlesyndication.com' />
+<link rel='dns-prefetch' href='//ad.doubleclick.net' />
+<link rel='dns-prefetch' href='//googleads.g.doubleclick.net' />
+<link rel='dns-prefetch' href='//www.googletagservices.com' />
+<link rel='dns-prefetch' href='//cdn.switchadhub.com' />
+<link rel='dns-prefetch' href='//delivery.g.switchadhub.com' />
+<link rel='dns-prefetch' href='//delivery.swid.switchadhub.com' />
+<link rel='dns-prefetch' href='//a.teads.tv' />
+<link rel='dns-prefetch' href='//prebid.media.net' />
+<link rel='dns-prefetch' href='//adserver-us.adtech.advertising.com' />
+<link rel='dns-prefetch' href='//fastlane.rubiconproject.com' />
+<link rel='dns-prefetch' href='//prebid-server.rubiconproject.com' />
+<link rel='dns-prefetch' href='//hb-api.omnitagjs.com' />
+<link rel='dns-prefetch' href='//mtrx.go.sonobi.com' />
+<link rel='dns-prefetch' href='//apex.go.sonobi.com' />
+<link rel='dns-prefetch' href='//u.openx.net' />
+<link rel="alternate" type="application/rss+xml" title="Martin Stransky&#039;s Blog &raquo; Feed" href="https://mastransky.wordpress.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Martin Stransky&#039;s Blog &raquo; Comments Feed" href="https://mastransky.wordpress.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Martin Stransky&#039;s Blog &raquo; Firefox &#8211; we&#8217;re finally getting HW acceleration on&nbsp;Linux Comments Feed" href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s2.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1625065786h&ver=5.8-beta4-51252"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s0.wp.com/_static/??-eJytkttOAyEQhl9IYGm00QvjswwwQbqcwsENby+7aqWttl54Q/LPzDfMiS2RyOAL+sJcJdFWbXxmS5TBkeyMxXamqMz5jg2YsEEfQQdpxmK8JgIS66GnluvwEpIClZm2QYC9iB3qs2bGzA5YIsiZbOoi/CtW1y4FJt09Cdkb53SiExPVWLX+vyUQCVJjuTSL/5GovKL7TmS8tFWtBfdxoDKAtrvXjgYRLTRMxKIG2agz/jbefaM+gX4vfqt0GB60UAvRyag/93+WIsG633wDl+ET21E+Uc6UyeVoJD+zw8rXmXe7i3DZ+BXs43aFiAlzJv11pjqy7Wc7mRf3zPe7h8f7/ROfDu/9VCTz?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<style id='global-styles-inline-css'>
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--primary: #CD2220;--wp--preset--color--secondary: #007AB7;--wp--preset--color--foreground: #303030;--wp--preset--color--background: #FFFFFF;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 16.6px;--wp--preset--font-size--normal: 20px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 26.45px;--wp--preset--font-size--huge: 30.4174px;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-primary-color{color: var(--wp--preset--color--primary) !important;}.has-secondary-color{color: var(--wp--preset--color--secondary) !important;}.has-foreground-color{color: var(--wp--preset--color--foreground) !important;}.has-background-color{color: var(--wp--preset--color--background) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-primary-background-color{background-color: var(--wp--preset--color--primary) !important;}.has-secondary-background-color{background-color: var(--wp--preset--color--secondary) !important;}.has-foreground-background-color{background-color: var(--wp--preset--color--foreground) !important;}.has-background-background-color{background-color: var(--wp--preset--color--background) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-primary-border-color{border-color: var(--wp--preset--color--primary) !important;}.has-secondary-border-color{border-color: var(--wp--preset--color--secondary) !important;}.has-foreground-border-color{border-color: var(--wp--preset--color--foreground) !important;}.has-background-border-color{border-color: var(--wp--preset--color--background) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-normal-font-size{font-size: var(--wp--preset--font-size--normal) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-huge-font-size{font-size: var(--wp--preset--font-size--huge) !important;}
+</style>
+<link rel='stylesheet' id='all-css-2-1' href='https://s1.wp.com/_static/??/wp-content/mu-plugins/comment-likes/css/comment-likes.css,/i/noticons/noticons.css?m=1436783281j&cssminify=yes' type='text/css' media='all' />
+<link rel='stylesheet' id='print-css-3-1' href='https://s1.wp.com/wp-content/themes/pub/varia/print.css?m=1571655471h&cssminify=yes' type='text/css' media='print' />
+<link rel='stylesheet' id='all-css-4-1' href='https://s0.wp.com/_static/??-eJx9jUEOAiEMRS8kNk7GiRvjWRimYrVQAkXi7cW4GaNx15//3i+0ZJxExaigFwxYINUZguQFIxR9MG5dKRv4zd1tJgsU3Rs1LTkJX0KoJnH1FAs0WjxqAay9lRuhYdtAMSS22kd/f1wNeBTD4qySxI9gzmwp/1Mzziy+nx46tYov6RSOu2kY9+NwGKfrE7TyZ/U=?cssminify=yes' type='text/css' media='all' />
+<link crossorigin="anonymous" rel='stylesheet' id='morden-fonts-css'  href='https://fonts.googleapis.com/css?family=Noto+Sans%3A400%2C400i%2C700%2C700i&#038;subset=latin%2Clatin-ext' media='all' />
+<link rel='stylesheet' id='all-css-6-1' href='https://s1.wp.com/wp-content/themes/pub/morden/style.css?m=1624542846h&cssminify=yes' type='text/css' media='all' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-8-1' href='https://s1.wp.com/_static/??-eJxti0EKgCAQAD+ULUaJl+gtJqbG6opr9P3o0CHqNAzMwFmEpdxcbpAOUfDwMTMU4iY2NLECB1Nj9g97y9zB/8Vko0GB5Oktn6kFlxxDGMEjrQbvYEmzVHIclNZy2i9lFDfR?cssminify=yes' type='text/css' media='all' />
+<script id='wpcom-actionbar-placeholder-js-extra'>
+var actionbardata = {"siteID":"151695875","siteName":"Martin Stransky's Blog","siteURL":"http:\/\/mastransky.wordpress.com","icon":"<img alt='' src='https:\/\/s2.wp.com\/i\/logo\/wpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/morden","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fmastransky.wordpress.com%2F2021%2F01%2F10%2Ffirefox-were-finally-getting-hw-acceleration-on-linux%2F&signup_flow=account","themeURL":"https:\/\/wordpress.com\/theme\/morden\/","xhrURL":"https:\/\/mastransky.wordpress.com\/wp-admin\/admin-ajax.php","nonce":"ce5d907c01","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"4dd253c3f6\" \/>","referer":"https:\/\/mastransky.wordpress.com\/2021\/01\/10\/firefox-were-finally-getting-hw-acceleration-on-linux\/","canFollow":"1","feedID":"87547900","statusMessage":"","customizeLink":"https:\/\/mastransky.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fmastransky.wordpress.com%2F2021%2F01%2F10%2Ffirefox-were-finally-getting-hw-acceleration-on-linux%2F","postID":"266","shortlink":"https:\/\/wp.me\/pagv1F-4i","canEditPost":"","editLink":"https:\/\/wordpress.com\/post\/mastransky.wordpress.com\/266","statsLink":"https:\/\/wordpress.com\/stats\/post\/266\/mastransky.wordpress.com","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: Morden","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fmastransky.wordpress.com%2F2021%2F01%2F10%2Ffirefox-were-finally-getting-hw-acceleration-on-linux%2F&signup_flow=account\">Log in now.<\/a>","stats":"Stats"}};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s2.wp.com/_static/??-eJyFzUEKwkAMheELmQ5DocWFeJZaY8kwyYxJBu3traBQV67e4v/ghUeFuYijeEgWajFnNJsW7JIdwm/lcqGM0Ax1A+JAcitfRzLndkV7w3RvqOtnOib5i4Bp0clxj3fPmh2qlue6tTOf4hDHPvbDeEwvhOVG7A=='></script>
+<script type='text/javascript'>
+	window.addEventListener( 'DOMContentLoaded', function() {
+		rltInitialize( {"token":null,"iframeOrigins":["https:\/\/widgets.wp.com"]} );
+	} );
+</script>
+<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1625210320h&cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s2.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://mastransky.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/" />
+<link rel='shortlink' href='https://wp.me/pagv1F-4i' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fmastransky.wordpress.com%2F2021%2F01%2F10%2Ffirefox-were-finally-getting-hw-acceleration-on-linux%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fmastransky.wordpress.com%2F2021%2F01%2F10%2Ffirefox-were-finally-getting-hw-acceleration-on-linux%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Firefox &#8211; we&#8217;re finally getting HW acceleration on Linux" />
+<meta property="og:url" content="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/" />
+<meta property="og:description" content="A first image from original WebRender article. Published three years ago. Firefox 84.0 is a big milestone for Firefox Linux development as it comes with HW acceleration by default for some Linux us…" />
+<meta property="article:published_time" content="2021-01-10T20:40:25+00:00" />
+<meta property="article:modified_time" content="2021-01-13T08:28:55+00:00" />
+<meta property="og:site_name" content="Martin Stransky&#039;s Blog" />
+<meta property="og:image" content="https://mastransky.files.wordpress.com/2021/01/webrender-about.png" />
+<meta property="og:image:width" content="1121" />
+<meta property="og:image:height" content="708" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:site" content="@wordpressdotcom" />
+<meta name="twitter:text:title" content="Firefox &#8211; we&#8217;re finally getting HW acceleration on&nbsp;Linux" />
+<meta name="twitter:image" content="https://mastransky.files.wordpress.com/2021/01/webrender-about.png?w=640" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="fb:app_id" content="249643311490" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://s1.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="icon" type="image/x-icon" href="https://s1.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="apple-touch-icon" href="https://s2.wp.com/i/webclip.png" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://mastransky.wordpress.com/osd.xml" title="Martin Stransky&#039;s Blog" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+<meta name="application-name" content="Martin Stransky&#039;s Blog" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="Firefox hacking in Fedora" /><meta name="msapplication-task" content="name=Subscribe;action-uri=https://mastransky.wordpress.com/feed/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="description" content="A first image from original WebRender article. Published three years ago. Firefox 84.0 is a big milestone for Firefox Linux development as it comes with HW acceleration by default for some Linux users. Stock Mozilla Firefox 84.0 enables WebRender (HW accelerated backend) for Gnome/X.org and Gnome/Wayland will be supported in Firefox 85.0. Fedora is bit&hellip;" />
+		<script type="text/javascript">
+
+			window.doNotSellCallback = function() {
+
+				var linkElements = [
+					'a[href="https://wordpress.com/?ref=footer_blog"]',
+					'a[href="https://wordpress.com/?ref=footer_website"]',
+					'a[href="https://wordpress.com/?ref=vertical_footer"]',
+					'a[href^="https://wordpress.com/?ref=footer_segment_"]',
+				].join(',');
+
+				var dnsLink = document.createElement( 'a' );
+				dnsLink.href = 'https://wordpress.com/advertising-program-optout';
+				dnsLink.classList.add( 'do-not-sell-link' );
+				dnsLink.rel = 'nofollow';
+				dnsLink.style.marginLeft = '0.5em';
+				dnsLink.textContent = 'Do Not Sell My Personal Information';
+
+				var creditLinks = document.querySelectorAll( linkElements );
+
+				if ( 0 === creditLinks.length ) {
+					return false;
+				}
+
+				Array.prototype.forEach.call( creditLinks, function( el ) {
+					el.insertAdjacentElement( 'afterend', dnsLink );
+				});
+
+				return true;
+			};
+
+		</script>
+				<script type="text/javascript">
+		function __ATA_CC() {var v = document.cookie.match('(^|;) ?personalized-ads-consent=([^;]*)(;|$)');return v ? 1 : 0;}
+		var __ATA_PP = { 'pt': 1, 'ht': 0, 'tn': 'morden', 'amp': false, 'consent': __ATA_CC(), 'gdpr_applies': false, 'ad': { 'label': { 'text': 'Advertisements' }, 'reportAd': { 'text': 'Report this ad' } }, 'siteid': 8982, 'blogid': 151695875 };
+		var __ATA = __ATA || {};
+		__ATA.cmd = __ATA.cmd || [];
+		__ATA.criteo = __ATA.criteo || {};
+		__ATA.criteo.cmd = __ATA.criteo.cmd || [];
+		</script>
+		<script type="text/javascript">
+		(function(){var g=Date.now||function(){return+new Date};function h(a,b){a:{for(var c=a.length,d="string"==typeof a?a.split(""):a,e=0;e<c;e++)if(e in d&&b.call(void 0,d[e],e,a)){b=e;break a}b=-1}return 0>b?null:"string"==typeof a?a.charAt(b):a[b]};function k(a,b,c){c=null!=c?"="+encodeURIComponent(String(c)):"";if(b+=c){c=a.indexOf("#");0>c&&(c=a.length);var d=a.indexOf("?");if(0>d||d>c){d=c;var e=""}else e=a.substring(d+1,c);a=[a.substr(0,d),e,a.substr(c)];c=a[1];a[1]=b?c?c+"&"+b:b:c;a=a[0]+(a[1]?"?"+a[1]:"")+a[2]}return a};var l=0;function m(a,b){var c=document.createElement("script");c.src=a;c.onload=function(){b&&b(void 0)};c.onerror=function(){b&&b("error")};a=document.getElementsByTagName("head");var d;a&&0!==a.length?d=a[0]:d=document.documentElement;d.appendChild(c)}function n(a){var b=void 0===b?document.cookie:b;return(b=h(b.split("; "),function(c){return-1!=c.indexOf(a+"=")}))?b.split("=")[1]:""}function p(a){return"string"==typeof a&&0<a.length}
+		function r(a,b,c){b=void 0===b?"":b;c=void 0===c?".":c;var d=[];Object.keys(a).forEach(function(e){var f=a[e],q=typeof f;"object"==q&&null!=f||"function"==q?d.push(r(f,b+e+c)):null!==f&&void 0!==f&&(e=encodeURIComponent(b+e),d.push(e+"="+encodeURIComponent(f)))});return d.filter(p).join("&")}function t(a,b){a||((window.__ATA||{}).config=b.c,m(b.url))}var u=Math.floor(1E13*Math.random()),v=window.__ATA||{};window.__ATA=v;window.__ATA.cmd=v.cmd||[];v.rid=u;v.createdAt=g();var w=window.__ATA||{},x="s.pubmine.com";
+		w&&w.serverDomain&&(x=w.serverDomain);var y="//"+x+"/conf",z=window.top===window,A=window.__ATA_PP&&window.__ATA_PP.gdpr_applies,B="boolean"===typeof A?Number(A):null,C=window.__ATA_PP||null,D=z?document.referrer?document.referrer:null:null,E=z?window.location.href:document.referrer?document.referrer:null,F,G=n("__ATA_tuuid");F=G?G:null;var H=window.innerWidth+"x"+window.innerHeight,I=n("usprivacy"),J=r({gdpr:B,pp:C,rid:u,src:D,ref:E,tuuid:F,vp:H,us_privacy:I?I:null},"",".");
+		(function(a){var b=void 0===b?"cb":b;l++;var c="callback__"+g().toString(36)+"_"+l.toString(36);a=k(a,b,c);window[c]=function(d){t(void 0,d)};m(a,function(d){d&&t(d)})})(y+"?"+J);}).call(this);
+		</script><link rel="amphtml" href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/amp/"><script type="text/javascript">
+	window.google_analytics_uacct = "UA-52447-2";
+</script>
+
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-52447-2']);
+	_gaq.push(['_gat._anonymizeIp']);
+	_gaq.push(['_setDomainName', 'wordpress.com']);
+	_gaq.push(['_initData']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	})();
+</script>
+</head>
+
+<body class="post-template-default single single-post postid-266 single-format-standard wp-embed-responsive customizer-styles-applied singular image-filters-enabled has-marketing-bar has-marketing-bar-theme-morden highlander-enabled highlander-light">
+
+
+<div id="page" class="site">
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+	
+<header id="masthead" class="site-header" role="banner">
+	<div class="site-header-wrap responsive-max-width has-title-and-tagline">
+		
+
+			<p class="site-title"><a href="https://mastransky.wordpress.com/" rel="home">Martin Stransky&#039;s Blog</a></p>
+	
+		<p class="site-description">
+			Firefox hacking in Fedora		</p>
+					</div><!-- .site-header-wrap -->
+</header><!-- #masthead -->
+
+	<div id="content" class="site-content">
+
+	<section id="primary" class="content-area">
+		<main id="main" class="site-main">
+
+			
+<article id="post-266" class="post-266 post type-post status-publish format-standard hentry category-fedora tag-firefox tag-opengl tag-wayland tag-webrender tag-x11 entry">
+
+	<header class="entry-header">
+		<h1 class="entry-title">Firefox &#8211; we&#8217;re finally getting HW acceleration on&nbsp;Linux</h1>				<div class="entry-meta">
+			<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://mastransky.wordpress.com/author/komatisko/">Martin Stransky</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/" rel="bookmark"><time class="entry-date published" datetime="2021-01-10T20:40:25+00:00">January 10, 2021</time><time class="updated" datetime="2021-01-13T08:28:55+00:00">January 13, 2021</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://mastransky.wordpress.com/category/fedora/" rel="category tag">Fedora</a></span><span class="tags-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Tags:</span><a href="https://mastransky.wordpress.com/tag/firefox/" rel="tag">Firefox</a>, <a href="https://mastransky.wordpress.com/tag/opengl/" rel="tag">OpenGL</a>, <a href="https://mastransky.wordpress.com/tag/wayland/" rel="tag">Wayland</a>, <a href="https://mastransky.wordpress.com/tag/webrender/" rel="tag">webrender</a>, <a href="https://mastransky.wordpress.com/tag/x11/" rel="tag">X11</a></span>		</div><!-- .meta-info -->
+			</header>
+
+	
+	<div class="entry-content">
+		
+<figure class="wp-block-image size-large"><img data-attachment-id="279" data-permalink="https://mastransky.wordpress.com/01-768x459-1/" data-orig-file="https://mastransky.files.wordpress.com/2021/01/01-768x459-1.png" data-orig-size="768,459" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="01-768&#215;459-1" data-image-description="" data-medium-file="https://mastransky.files.wordpress.com/2021/01/01-768x459-1.png?w=300" data-large-file="https://mastransky.files.wordpress.com/2021/01/01-768x459-1.png?w=750" src="https://mastransky.files.wordpress.com/2021/01/01-768x459-1.png?w=768" alt="" class="wp-image-279" srcset="https://mastransky.files.wordpress.com/2021/01/01-768x459-1.png 768w, https://mastransky.files.wordpress.com/2021/01/01-768x459-1.png?w=150 150w, https://mastransky.files.wordpress.com/2021/01/01-768x459-1.png?w=300 300w" sizes="(max-width: 768px) 100vw, 768px" /><figcaption>A first image from original <a rel="noreferrer noopener" href="https://hacks.mozilla.org/2017/10/the-whole-web-at-maximum-fps-how-webrender-gets-rid-of-jank/" target="_blank">WebRender article</a>. Published three years ago.</figcaption></figure>
+
+
+
+<p>Firefox 84.0 is a big milestone for Firefox Linux development as it comes with HW acceleration by default for some Linux users. Stock Mozilla Firefox 84.0 enables WebRender (HW accelerated backend) for Gnome/X.org and Gnome/Wayland will be supported in Firefox 85.0. Fedora is bit ahead and enables WebRender for Gnome/Wayland in Firefox 84.0 too.</p>
+
+
+
+<p>WebRender by default is restricted to AMD/Intel graphics cards as NVIDIA is known for various issues &#8211; both proprietary and Noveau drivers. </p>
+
+
+
+<p>And why it&#8217;s enabled in Gnome only for now? For instance KDE is also a popular desktop environment. I think it&#8217;s because Gnome utilizes HW acceleration so when Gnome works on your box there&#8217;s assumption that Firefox will work too. KDE provides choices how to disable/restrict HW acceleration setup (for instance it supports disabled screen compositing) and it&#8217;s more difficult to cover various scenarios.</p>
+
+
+
+<p>Another excluded group are XWayland users. It means you have Wayland as a desktop compositor but for some reasons you use X11 emulation layer and run Firefox as X11 application. It&#8217;s a valid scenario, Firefox with Wayland backend still suffers from some annoying bug, mostly related to popup windows.</p>
+
+
+
+<p>But don&#8217;t worry, Mozilla folks are going to bring WebRender to the most Linux users on various desktops and graphics. Jan created a brief Linux <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1663273#c80" target="_blank" rel="noreferrer noopener">WebRender state overview</a>. And you can help with it! Please check if you have <a rel="noreferrer noopener" href="https://fedoraproject.org/wiki/How_to_debug_Firefox_problems#Check_WebRedner" target="_blank">WebRender enabled</a> and eventually try to enable it. Test various web pages, video playback, WebGL and report your experience. You can use comments below or drop me a mail at <a href="mailto:stransky@redhat.com">stransky@redhat.com</a>.</p>
+
+
+
+<figure class="wp-block-image size-large"><img data-attachment-id="276" data-permalink="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/webrender-about/" data-orig-file="https://mastransky.files.wordpress.com/2021/01/webrender-about.png" data-orig-size="1121,708" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="webrender-about" data-image-description="" data-medium-file="https://mastransky.files.wordpress.com/2021/01/webrender-about.png?w=300" data-large-file="https://mastransky.files.wordpress.com/2021/01/webrender-about.png?w=750" src="https://mastransky.files.wordpress.com/2021/01/webrender-about.png?w=1024" alt="" class="wp-image-276" srcset="https://mastransky.files.wordpress.com/2021/01/webrender-about.png?w=1024 1024w, https://mastransky.files.wordpress.com/2021/01/webrender-about.png?w=150 150w, https://mastransky.files.wordpress.com/2021/01/webrender-about.png?w=300 300w, https://mastransky.files.wordpress.com/2021/01/webrender-about.png?w=768 768w, https://mastransky.files.wordpress.com/2021/01/webrender-about.png 1121w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<p></p>
+<div id="atatags-370373-60ec9034de32d">
+        <script type="text/javascript">
+            __ATA.cmd.push(function() {
+                __ATA.initVideoSlot('atatags-370373-60ec9034de32d', {
+                    sectionId: '370373',
+                    format: 'inread'
+                });
+            });
+        </script>
+    </div>			<div id="atatags-26942-60ec9034de375"></div>
+			
+			<script>
+				__ATA.cmd.push(function() {
+					__ATA.initDynamicSlot({
+						id: 'atatags-26942-60ec9034de375',
+						location: 120,
+						formFactor: '001',
+						label: {
+							text: 'Advertisements',
+						},
+						creative: {
+							reportAd: {
+								text: 'Report this ad',
+							},
+							privacySettings: {
+								text: 'Privacy',
+								
+							}
+						}
+					});
+				});
+			</script><div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-266" class="share-twitter sd-button share-icon" href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-266" class="share-facebook sd-button share-icon" href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?share=facebook" target="_blank" title="Click to share on Facebook"><span>Facebook</span></a></li><li class="share-end"></li></ul></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-151695875-266-60ec9034df213' data-src='//widgets.wp.com/likes/index.html?ver=20210413#blog_id=151695875&amp;post_id=266&amp;origin=mastransky.wordpress.com&amp;obj_id=151695875-266-60ec9034df213' data-name='like-post-frame-151695875-266-60ec9034df213'><h3 class='sd-title'>Like this:</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>Like</span></span> <span class="loading">Loading...</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div>
+<div id='jp-relatedposts' class='jp-relatedposts' >
+	<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
+</div></div>	</div><!-- .entry-content -->
+
+	<footer class="entry-footer responsive-max-width">
+		<span class="byline"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted by</span><span class="author vcard"><a class="url fn n" href="https://mastransky.wordpress.com/author/komatisko/">Martin Stransky</a></span></span><span class="posted-on"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><path id="a" d="M0 0h24v24H0V0z"></path></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"></use></clipPath><path clip-path="url(#b)" d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z"></path></svg><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/" rel="bookmark"><time class="entry-date published" datetime="2021-01-10T20:40:25+00:00">January 10, 2021</time><time class="updated" datetime="2021-01-13T08:28:55+00:00">January 13, 2021</time></a></span><span class="cat-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Posted in</span><a href="https://mastransky.wordpress.com/category/fedora/" rel="category tag">Fedora</a></span><span class="tags-links"><svg class="svg-icon" width="16" height="16" aria-hidden="true" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg><span class="screen-reader-text">Tags:</span><a href="https://mastransky.wordpress.com/tag/firefox/" rel="tag">Firefox</a>, <a href="https://mastransky.wordpress.com/tag/opengl/" rel="tag">OpenGL</a>, <a href="https://mastransky.wordpress.com/tag/wayland/" rel="tag">Wayland</a>, <a href="https://mastransky.wordpress.com/tag/webrender/" rel="tag">webrender</a>, <a href="https://mastransky.wordpress.com/tag/x11/" rel="tag">X11</a></span>	</footer><!-- .entry-footer -->
+
+				
+</article><!-- #post-${ID} -->
+
+	<nav class="navigation post-navigation" role="navigation" aria-label="Posts">
+		<h2 class="screen-reader-text">Post navigation</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="https://mastransky.wordpress.com/2021/01/08/the-first-fully-tested-fedora-firefox-package/" rel="prev"><span class="meta-nav" aria-hidden="true">Previous Post</span> <span class="screen-reader-text">Previous post:</span> <br/><span class="post-title">The first fully tested Fedora Firefox&nbsp;package</span></a></div></div>
+	</nav>
+<div id="comments" class="comments-area responsive-max-width">
+
+			<h2 class="comments-title">
+			30 thoughts on &ldquo;<span>Firefox &#8211; we&#8217;re finally getting HW acceleration on&nbsp;Linux</span>&rdquo;		</h2><!-- .comments-title -->
+
+		
+		<ol class="comment-list">
+					<li id="comment-15459" class="comment even thread-even depth-1 parent highlander-comment">
+			<article id="div-comment-15459" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/470c5e17640a289d1e99b26d2dec9f54?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn"><a href='https://libre-ouvert.tuxfamily.org/' rel='external nofollow ugc' class='url'>antistress</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15459"><time datetime="2021-01-10T22:53:30+00:00">January 10, 2021 at 10:53 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi, I guess that those Intel setups that are painted in green here [1] are as concerned as AMD ones ?<br />
+Thanks</p>
+<p>[1] <a href="https://wiki.mozilla.org/Platform/GFX/WebRender_Where#Linux" rel="nofollow ugc">https://wiki.mozilla.org/Platform/GFX/WebRender_Where#Linux</a></p>
+<p id="comment-like-15459" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15459&#038;_wpnonce=c14fb34595" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15459" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?replytocom=15459#respond' data-commentid="15459" data-postid="266" data-belowelement="div-comment-15459" data-respondelement="respond" data-replyto="Reply to antistress" aria-label='Reply to antistress'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-15467" class="comment byuser comment-author-komatisko bypostauthor odd alt depth-2 parent highlander-comment">
+			<article id="div-comment-15467" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/1ad575baf124ff5058f4d44d5b066a29?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn"><a href='https://mastransky.wordpress.com' rel='external nofollow ugc' class='url'>Martin Stransky</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15467"><time datetime="2021-01-11T08:09:36+00:00">January 11, 2021 at 8:09 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Yes, green means enabled. I see Intel is disabled for 4K screens, that&#8217;s because integrated Intel HW may have issues with it and usually runs 30fps on it. We should consider to enable it for HD 630 which works with 4K screens well.</p>
+<p id="comment-like-15467" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15467&#038;_wpnonce=73b6bf2d96" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15467" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?replytocom=15467#respond' data-commentid="15467" data-postid="266" data-belowelement="div-comment-15467" data-respondelement="respond" data-replyto="Reply to Martin Stransky" aria-label='Reply to Martin Stransky'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-15470" class="comment byuser comment-author-komatisko bypostauthor even depth-3 highlander-comment">
+			<article id="div-comment-15470" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/1ad575baf124ff5058f4d44d5b066a29?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn"><a href='https://mastransky.wordpress.com' rel='external nofollow ugc' class='url'>Martin Stransky</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15470"><time datetime="2021-01-11T08:36:18+00:00">January 11, 2021 at 8:36 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I see 4K screens on Intel will come in Firefox 86: <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1683343" rel="nofollow ugc">https://bugzilla.mozilla.org/show_bug.cgi?id=1683343</a></p>
+<p id="comment-like-15470" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15470&#038;_wpnonce=0df751090e" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15470" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-15465" class="comment byuser comment-author-vladzzag odd alt thread-odd thread-alt depth-1 parent highlander-comment">
+			<article id="div-comment-15465" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/5adee513fb31fbe2ef411656d87e4bb3?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn"><a href='http://blog.vladzahorodnii.com/' rel='external nofollow ugc' class='url'>Vlad Zahorodnii</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15465"><time datetime="2021-01-11T06:25:49+00:00">January 11, 2021 at 6:25 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>It&#8217;s very surprising to see that WebRender will be enabled only on GNOME. If compositing is disabled in KWin, applications can still use OpenGL and Vulkan.</p>
+<p id="comment-like-15465" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15465&#038;_wpnonce=4c08c7bd46" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15465" class="comment-like-feedback">Liked by <a href="#" class="view-likers" data-like-count="1">1 person</a></span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?replytocom=15465#respond' data-commentid="15465" data-postid="266" data-belowelement="div-comment-15465" data-respondelement="respond" data-replyto="Reply to Vlad Zahorodnii" aria-label='Reply to Vlad Zahorodnii'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-15466" class="comment byuser comment-author-vladzzag even depth-2 parent highlander-comment">
+			<article id="div-comment-15466" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/5adee513fb31fbe2ef411656d87e4bb3?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn"><a href='http://blog.vladzahorodnii.com/' rel='external nofollow ugc' class='url'>Vlad Zahorodnii</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15466"><time datetime="2021-01-11T06:34:52+00:00">January 11, 2021 at 6:34 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Just to clarify, the purpose of disabling compositing is to boost performance in applications such as video games. It doesn&#8217;t imply that you should stop using hardware-accelerated rendering.</p>
+<p id="comment-like-15466" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15466&#038;_wpnonce=d605fb47ea" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15466" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?replytocom=15466#respond' data-commentid="15466" data-postid="266" data-belowelement="div-comment-15466" data-respondelement="respond" data-replyto="Reply to Vlad Zahorodnii" aria-label='Reply to Vlad Zahorodnii'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-15469" class="comment byuser comment-author-komatisko bypostauthor odd alt depth-3 parent highlander-comment">
+			<article id="div-comment-15469" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/1ad575baf124ff5058f4d44d5b066a29?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn"><a href='https://mastransky.wordpress.com' rel='external nofollow ugc' class='url'>Martin Stransky</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15469"><time datetime="2021-01-11T08:15:43+00:00">January 11, 2021 at 8:15 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Yes, I understand it. Unfortunately it leads to issues with transparency, like <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1479135" rel="nofollow ugc">https://bugzilla.mozilla.org/show_bug.cgi?id=1479135</a> .<br />
+Does the disabled compositing actually help when HW rasterization is used? </p>
+<p id="comment-like-15469" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15469&#038;_wpnonce=c4264f9f90" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15469" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-15474" class="comment byuser comment-author-vladzzag even depth-3 highlander-comment">
+			<article id="div-comment-15474" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/5adee513fb31fbe2ef411656d87e4bb3?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn"><a href='http://blog.vladzahorodnii.com/' rel='external nofollow ugc' class='url'>Vlad Zahorodnii</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15474"><time datetime="2021-01-11T09:39:53+00:00">January 11, 2021 at 9:39 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>The main reason why you might want to disable compositing or unredirect a window is to ensure that the frame rate of your app is not capped by the window manager. This also means less work being done by the compositor, which is good in terms of power consumption and also latencies.</p>
+<p id="comment-like-15474" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15474&#038;_wpnonce=3ca44e8e49" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15474" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-15480" class="comment odd alt depth-3 highlander-comment">
+			<article id="div-comment-15480" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/5da71984edb570ec3fc1c0fc02f52dfa?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn">Robert</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15480"><time datetime="2021-01-11T16:28:26+00:00">January 11, 2021 at 4:28 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>FTR: AFAIK we&#8217;re only talking about the case when compositing is disabled altogether. Automatic fullscreen unredirect is disabled in FF because of tearing issues (`_NET_WM_BYPASS_COMPOSITOR` -&gt; `FALSE`).</p>
+<p>Our main issue with completely non-composited desktops is that we&#8217;d have to reimplement our XShape logic for Webrender, i.e. in Rust code IIUC. We currently fall back to the legacy software renderer for menus in that case, but that code will go away eventually.</p>
+<p>X11 without compositing is thus a big exception &#8211; no other supported platform makes use of such tricks (XShape). So from the FF perspective it&#8217;s a quite annoying edge case 😦</p>
+<p id="comment-like-15480" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15480&#038;_wpnonce=66c1d5697a" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15480" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-15468" class="comment byuser comment-author-komatisko bypostauthor even depth-2 highlander-comment">
+			<article id="div-comment-15468" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/1ad575baf124ff5058f4d44d5b066a29?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn"><a href='https://mastransky.wordpress.com' rel='external nofollow ugc' class='url'>Martin Stransky</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15468"><time datetime="2021-01-11T08:11:16+00:00">January 11, 2021 at 8:11 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi Vlad, don&#8217;t worry, KDE is on the table, see <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1663273#c80" rel="nofollow ugc">https://bugzilla.mozilla.org/show_bug.cgi?id=1663273#c80</a><br />
+Would be great to see more reports how Firefox works on KDE with WebRender enabled.</p>
+<p id="comment-like-15468" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15468&#038;_wpnonce=45b8a7c46a" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15468" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?replytocom=15468#respond' data-commentid="15468" data-postid="266" data-belowelement="div-comment-15468" data-respondelement="respond" data-replyto="Reply to Martin Stransky" aria-label='Reply to Martin Stransky'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-15471" class="comment byuser comment-author-komatisko bypostauthor odd alt depth-2 parent highlander-comment">
+			<article id="div-comment-15471" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/1ad575baf124ff5058f4d44d5b066a29?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn"><a href='https://mastransky.wordpress.com' rel='external nofollow ugc' class='url'>Martin Stransky</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15471"><time datetime="2021-01-11T08:44:50+00:00">January 11, 2021 at 8:44 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Vlad, I&#8217;m looking at <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1675768" rel="nofollow ugc">https://bugzilla.mozilla.org/show_bug.cgi?id=1675768</a> and I don&#8217;t see any mention of KDE/Gnome. That means I might be confused by <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1680505" rel="nofollow ugc">https://bugzilla.mozilla.org/show_bug.cgi?id=1680505</a> which is Gnome/Wayland only. Can you check WebRender state on your Firefox installation?</p>
+<p>EDIT: I&#8217;ll try to check it later today when I have KDE workstation available.</p>
+<p id="comment-like-15471" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15471&#038;_wpnonce=b1122d2107" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15471" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?replytocom=15471#respond' data-commentid="15471" data-postid="266" data-belowelement="div-comment-15471" data-respondelement="respond" data-replyto="Reply to Martin Stransky" aria-label='Reply to Martin Stransky'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-15475" class="comment byuser comment-author-vladzzag even depth-3 highlander-comment">
+			<article id="div-comment-15475" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/5adee513fb31fbe2ef411656d87e4bb3?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn"><a href='http://blog.vladzahorodnii.com/' rel='external nofollow ugc' class='url'>Vlad Zahorodnii</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15475"><time datetime="2021-01-11T09:42:00+00:00">January 11, 2021 at 9:42 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Well, I&#8217;ve been running Firefox in Plasma/Wayland with WebRender for months and it works beautifully 🙂</p>
+<p id="comment-like-15475" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15475&#038;_wpnonce=893efbd605" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15475" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-15476" class="comment byuser comment-author-komatisko bypostauthor odd alt depth-3 highlander-comment">
+			<article id="div-comment-15476" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/1ad575baf124ff5058f4d44d5b066a29?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn"><a href='https://mastransky.wordpress.com' rel='external nofollow ugc' class='url'>Martin Stransky</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15476"><time datetime="2021-01-11T11:06:41+00:00">January 11, 2021 at 11:06 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>So yes, I tested Firefox 84.0.2, KDE and MATE on X.org/Intel and screen &lt; 4K. WebRender is enabled by default on Gnome/X.org only, MATE and KDE use Basic compositor. So let&#039;s work to enable it there too.</p>
+<p id="comment-like-15476" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15476&#038;_wpnonce=fa966f27fa" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15476" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-15479" class="comment even depth-3 highlander-comment">
+			<article id="div-comment-15479" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/5da71984edb570ec3fc1c0fc02f52dfa?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn">Robert</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15479"><time datetime="2021-01-11T16:12:21+00:00">January 11, 2021 at 4:12 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Vlad: concerning Wayland+WR on KDE, at least nightly/86 is broken/blocked by <a href="https://bugs.kde.org/show_bug.cgi?id=428499" rel="nofollow ugc">https://bugs.kde.org/show_bug.cgi?id=428499</a></p>
+<p>IIUC after your compositor rework (<a href="https://invent.kde.org/plasma/kwin/-/merge_requests/507" rel="nofollow ugc">https://invent.kde.org/plasma/kwin/-/merge_requests/507</a>) this should be easier to fix now &#8211; but then we&#8217;d still need to wait for older KWin to either get fixed or go away &#8211; or do version checks in FF, which would be unfortunate.</p>
+<p id="comment-like-15479" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15479&#038;_wpnonce=684bab5cb6" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15479" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-15472" class="comment byuser comment-author-rajeeshknambiar odd alt thread-even depth-1 parent highlander-comment">
+			<article id="div-comment-15472" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/f047a3b5528f6f187ac4ef1c7d81014a?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn">Rajeesh</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15472"><time datetime="2021-01-11T09:16:10+00:00">January 11, 2021 at 9:16 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thanks, Martin.</p>
+<p>I’m on KDE, Fedora 33. In the past, I tried to manually enable WebRender in the config, but had issues and reverted it.<br />
+Now, I’m no longer sure which config options should be enabled/disabled. Is there a guide that could be followed?</p>
+<p id="comment-like-15472" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15472&#038;_wpnonce=51e50d8954" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15472" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?replytocom=15472#respond' data-commentid="15472" data-postid="266" data-belowelement="div-comment-15472" data-respondelement="respond" data-replyto="Reply to Rajeesh" aria-label='Reply to Rajeesh'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-15473" class="comment byuser comment-author-komatisko bypostauthor even depth-2 highlander-comment">
+			<article id="div-comment-15473" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/1ad575baf124ff5058f4d44d5b066a29?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn"><a href='https://mastransky.wordpress.com' rel='external nofollow ugc' class='url'>Martin Stransky</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15473"><time datetime="2021-01-11T09:31:40+00:00">January 11, 2021 at 9:31 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>You can create a new Firefox profile (see <a href="https://fedoraproject.org/wiki/How_to_debug_Firefox_problems?rd=Bug_info_Firefox#Create_a_new_profile" rel="nofollow ugc">https://fedoraproject.org/wiki/How_to_debug_Firefox_problems?rd=Bug_info_Firefox#Create_a_new_profile</a>) and you&#8217;ll get default values there. Check if WebRender is enabled at about:support.</p>
+<p>You can also go to about:config and type webrender there. All bold lines are changed from default setup. You can revert them to default values by the arrow icon.</p>
+<p id="comment-like-15473" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15473&#038;_wpnonce=edcd8aff9d" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15473" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?replytocom=15473#respond' data-commentid="15473" data-postid="266" data-belowelement="div-comment-15473" data-respondelement="respond" data-replyto="Reply to Martin Stransky" aria-label='Reply to Martin Stransky'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-15483" class="comment byuser comment-author-ciupicri odd alt thread-odd thread-alt depth-1 parent highlander-comment">
+			<article id="div-comment-15483" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/7c866ac84e832e585c6bd3abe1149c47?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn"><a href='https://ciupicri.github.io/' rel='external nofollow ugc' class='url'>Cristian Ciupitu</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15483"><time datetime="2021-01-11T19:07:52+00:00">January 11, 2021 at 7:07 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I&#8217;ve tested it a couple of weeks ago and it uses tons of memory. I&#8217;ve seen others complaining as well.<br />
+<em>Without</em> WebRenderer I have about 10 GBs of available memory at start up, as indicated by the free command.<br />
+<em>With</em> WebRenderer enabled I had almost nothing and if I&#8217;m not mistaking the swap was also used a bit. Other than this, it wasn&#8217;t that bad.</p>
+<p>I&#8217;m using XFCE on Fedora 33, the GPU is Intel HD 4000 (i7-3770) and I have 32 GBs of RAM. If I remember correctly I set <code>gfx.webrender.all=true</code><code> in <strong>about:config</strong> to force it on video card.</p>
+<p id="comment-like-15483" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15483&#038;_wpnonce=8e28eae254" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15483" class="comment-like-feedback">Like</span></p>
+<p></code></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?replytocom=15483#respond' data-commentid="15483" data-postid="266" data-belowelement="div-comment-15483" data-respondelement="respond" data-replyto="Reply to Cristian Ciupitu" aria-label='Reply to Cristian Ciupitu'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-15495" class="comment byuser comment-author-komatisko bypostauthor even depth-2 highlander-comment">
+			<article id="div-comment-15495" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/1ad575baf124ff5058f4d44d5b066a29?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn"><a href='https://mastransky.wordpress.com' rel='external nofollow ugc' class='url'>Martin Stransky</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15495"><time datetime="2021-01-13T08:36:04+00:00">January 13, 2021 at 8:36 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Can you report that a bugzilla.mozilla.org and attach stats from about:memory ? Also cc me in that bug.<br />
+Thanks.</p>
+<p id="comment-like-15495" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15495&#038;_wpnonce=909e505fba" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15495" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?replytocom=15495#respond' data-commentid="15495" data-postid="266" data-belowelement="div-comment-15495" data-respondelement="respond" data-replyto="Reply to Martin Stransky" aria-label='Reply to Martin Stransky'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-15486" class="comment odd alt thread-even depth-1 highlander-comment">
+			<article id="div-comment-15486" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/d96a7a2b090645614274efb31719d6c5?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn">Lucas A. W.</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15486"><time datetime="2021-01-11T19:49:12+00:00">January 11, 2021 at 7:49 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I&#8217;m hopeful of seeing progress in development to improve the WR experience under the Xfce desktop environment.</p>
+<p id="comment-like-15486" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15486&#038;_wpnonce=6e196830e0" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15486" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?replytocom=15486#respond' data-commentid="15486" data-postid="266" data-belowelement="div-comment-15486" data-respondelement="respond" data-replyto="Reply to Lucas A. W." aria-label='Reply to Lucas A. W.'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-15487" class="comment even thread-odd thread-alt depth-1 parent highlander-comment">
+			<article id="div-comment-15487" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/555ab0c0cba6281364f7932ebc23d0dc?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn">Romani</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15487"><time datetime="2021-01-11T22:36:36+00:00">January 11, 2021 at 10:36 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Yeah, right, and, again, absolutely not work on supporting proprietary Nvidia.<br />
+Instead of that Mozilla got us &#8220;Software Webrender&#8221; as replacement, which is honestly should be called &#8220;Shitware Shitrender&#8221;/<br />
+I sorry for being harsh, but idea of replacing of somewhat accelerated OpenGL (which works for those who enabled it for years without any gamebreaking bugs) with completely unaccelerated, slow, sluggish Sotware Webrender is just insane.</p>
+<p id="comment-like-15487" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15487&#038;_wpnonce=b2dce9b4d6" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15487" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?replytocom=15487#respond' data-commentid="15487" data-postid="266" data-belowelement="div-comment-15487" data-respondelement="respond" data-replyto="Reply to Romani" aria-label='Reply to Romani'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-15489" class="comment byuser comment-author-komatisko bypostauthor odd alt depth-2 highlander-comment">
+			<article id="div-comment-15489" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/1ad575baf124ff5058f4d44d5b066a29?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn"><a href='https://mastransky.wordpress.com' rel='external nofollow ugc' class='url'>Martin Stransky</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15489"><time datetime="2021-01-12T08:28:22+00:00">January 12, 2021 at 8:28 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I tested the SW WebRender on browser speed benchmark (<a href="https://browserbench.org/Speedometer2.0/" rel="nofollow ugc">https://browserbench.org/Speedometer2.0/</a>) and it&#8217;s even faster than HW WebRender on my box. I think it depends on actual scenario, OTOH WebGL will be slower of course.</p>
+<p>As for NVIDIA, it&#8217;s difficult to support it. I spend three days figuring why it doesn&#8217;t work with EGL/transparent popups (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1650583" rel="nofollow ugc">https://bugzilla.mozilla.org/show_bug.cgi?id=1650583</a>). And there are other issues line EGLStreams (missing dmabuf) and lack of documentation (I mean it&#8217;s difficult to find why it&#8217;s something broken with NVIDIA drivers) which leads to developers frustration and leaving NVIDIA behind or creating a minimal working scenario.</p>
+<p id="comment-like-15489" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15489&#038;_wpnonce=472fbb12d9" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15489" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?replytocom=15489#respond' data-commentid="15489" data-postid="266" data-belowelement="div-comment-15489" data-respondelement="respond" data-replyto="Reply to Martin Stransky" aria-label='Reply to Martin Stransky'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-15488" class="comment even thread-even depth-1 parent highlander-comment">
+			<article id="div-comment-15488" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/4048f4b583df6173fc27e3fe8c7c5ae6?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn">ctk</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15488"><time datetime="2021-01-11T22:56:37+00:00">January 11, 2021 at 10:56 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I&#8217;m puzzled as to why the firefox developers concern themselves with the context so much.<br />
+OpenGL was invented so that applications don&#8217;t have to care what video card is being used.</p>
+<p>I know of the response &#8220;in theory, yes, but in practice…&#8221; and I&#8217;ll also reply to that in advance: for example, the KDE/plasma compositor has a menu that allows to choose OpenGL ES 2.0, OpenGL 3.1, OpenGL 3.3, OpenGL 4.5, etc.<br />
+If there is a problem with the video card driver, let it be fixed there. The application is not the place to fix issues that do not stem from it!</p>
+<p id="comment-like-15488" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15488&#038;_wpnonce=8385239050" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15488" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?replytocom=15488#respond' data-commentid="15488" data-postid="266" data-belowelement="div-comment-15488" data-respondelement="respond" data-replyto="Reply to ctk" aria-label='Reply to ctk'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-15490" class="comment byuser comment-author-komatisko bypostauthor odd alt depth-2 parent highlander-comment">
+			<article id="div-comment-15490" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/1ad575baf124ff5058f4d44d5b066a29?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn"><a href='https://mastransky.wordpress.com' rel='external nofollow ugc' class='url'>Martin Stransky</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15490"><time datetime="2021-01-12T08:34:59+00:00">January 12, 2021 at 8:34 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>The Gnome/Intel/AMD was chosen in a first batch because it&#8217;s known to work and Firefox developers have this setup, nothing more. For instance my laptop (provided by Red Hat) has Intel integrated GPU so I know it works on that.</p>
+<p>NVIDIA is known for issues (see <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1650583" rel="nofollow ugc">https://bugzilla.mozilla.org/show_bug.cgi?id=1650583</a> or <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1663273" rel="nofollow ugc">https://bugzilla.mozilla.org/show_bug.cgi?id=1663273</a>) and it&#8217;s difficult and frustrating to debug closed sources drivers.</p>
+<p id="comment-like-15490" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15490&#038;_wpnonce=6c3b46c600" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15490" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?replytocom=15490#respond' data-commentid="15490" data-postid="266" data-belowelement="div-comment-15490" data-respondelement="respond" data-replyto="Reply to Martin Stransky" aria-label='Reply to Martin Stransky'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-15492" class="comment even depth-3 highlander-comment">
+			<article id="div-comment-15492" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/4048f4b583df6173fc27e3fe8c7c5ae6?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn">ctk</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15492"><time datetime="2021-01-12T23:10:48+00:00">January 12, 2021 at 11:10 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>The point I mean to stress is that these days, application developers don&#8217;t concern themselves about who made the video card that provides the rendering: as a developer what you interface with is OpenGL/DirectX, but not Intel, AMD/ATI or Nvidia!</p>
+<p>And let the drivers be fixed; if they don&#8217;t implement OpenGL as per specification, it&#8217;s certainly a problem that stems from firefox. The sane approach here is it is to be solved in the driver, not in firefox.</p>
+<p>If the concerns about which video card is behind the OpenGL API are limited in scope to creating a list of which drivers work and which don&#8217;t, nevermind that, of course.<br />
+But then the title is confusing &#8211; to get the story straight, what firefox is getting is more acceleration on platforms providing OpenGL, not &#8220;on Linux&#8221;. OpenGL exists on Windows, FreeBSD and others after all, right?</p>
+<p id="comment-like-15492" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15492&#038;_wpnonce=a1fefbf462" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15492" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-15493" class="comment odd alt depth-3 highlander-comment">
+			<article id="div-comment-15493" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/4048f4b583df6173fc27e3fe8c7c5ae6?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn">ctk</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15493"><time datetime="2021-01-12T23:13:49+00:00">January 12, 2021 at 11:13 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Erratum: I meant to write, &#8220;if [the video drivers] don’t implement OpenGL as per specification, it’s certainly *not* a problem that stems from firefox&#8221;, although the typo was probably obvious</p>
+<p id="comment-like-15493" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15493&#038;_wpnonce=d9d3f598b1" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15493" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-15518" class="comment even depth-2 highlander-comment">
+			<article id="div-comment-15518" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/5da71984edb570ec3fc1c0fc02f52dfa?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn">Robert Mader</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15518"><time datetime="2021-01-19T18:48:24+00:00">January 19, 2021 at 6:48 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>ctk: While I generally agree with you, OpenGL support itself is actually a rather small problem here. AFAICS it&#8217;s way simpler to make a 3D-fullscreen (or windowed) game to work properly &#8211; in fact it&#8217;s just a subset of what happens in a modern browser. The main challenges are in things like windowing system integration (GLX/EGL), the windowing system (X11/Wayland), sandboxing (multi-process buffer sharing via e.g. DMABUF) etc.</p>
+<p>&gt; The application is not the place to fix issues that do not stem from it!</p>
+<p>Right, but many people expect software to simly work &#8211; if Firefox, after an update, suddenly has glitches all over the place, many people will not just blame their driver vendor and carry on &#8211; they would switch to some other browser 😦<br />
+This is much easier if the drivers are open source and thus we can help fixing them ourselves.</p>
+<p id="comment-like-15518" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15518&#038;_wpnonce=cb5e8e9e83" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15518" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?replytocom=15518#respond' data-commentid="15518" data-postid="266" data-belowelement="div-comment-15518" data-respondelement="respond" data-replyto="Reply to Robert Mader" aria-label='Reply to Robert Mader'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-15504" class="comment odd alt thread-odd thread-alt depth-1 parent highlander-comment">
+			<article id="div-comment-15504" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/050c0496e10f53a97bb34d9474524a0e?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn">Alex</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15504"><time datetime="2021-01-15T13:05:38+00:00">January 15, 2021 at 1:05 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi Martin,</p>
+<p>Thanks for the hard work for us Firefox Linux users. This is really the substantial work for Firefox on Linux in as long as I can remember. </p>
+<p>I follow Firefox development quite closely, so sorry for peppering you with questions. I am genuinely really interested in your work here (as well as Robert, Jan and others of course).</p>
+<p>What&#8217;s the plan for other less commonly used desktops like MATE, Cinnamon, Budgie, XFCE and LXQT, etc? Do you think it is likely these will be enabled incrementally, or will these remain software webrender by default? In other words will webrender be enabled by default on all WM/DEs for approved drivers in the future? Or do you think only the most commonly used WM/DEs will be enabled by default on approved drivers?</p>
+<p>My second question is in relation to GLX/X11. Is EGL/X11 going to be flipped on by default? Will GLX/X11 support be removed?</p>
+<p>Third, what is the plan with non-compositing setups? Will these get hardware Webrender by default? I know there is that issue with re-implementing shaping in the gfx code.</p>
+<p>Finally, what is the plan for Nouveau and the proprietary Nvidia driver? I am on Linus&#8217; side here in respect of Nvidia&#8217;s attitude to Linux development, but is the plan here to only enable software webrender by default in the near-term?  Conversely, does it look like Nouveau support will be enabled by default?</p>
+<p>Thanks</p>
+<p id="comment-like-15504" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15504&#038;_wpnonce=63b22faffb" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15504" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?replytocom=15504#respond' data-commentid="15504" data-postid="266" data-belowelement="div-comment-15504" data-respondelement="respond" data-replyto="Reply to Alex" aria-label='Reply to Alex'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-15517" class="comment even depth-2 parent highlander-comment">
+			<article id="div-comment-15517" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/5da71984edb570ec3fc1c0fc02f52dfa?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn">Robert</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15517"><time datetime="2021-01-19T18:13:49+00:00">January 19, 2021 at 6:13 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hej Alex, thanks for caring 🙂</p>
+<p>As to my knowledge:</p>
+<p>We want to ship WR by default, to all DEs, hopefully over the next couple of releases. The more feedback we get from people testing different DEs, the faster this will happen I guess 😉<br />
+I personally wouldn&#8217;t expect a lot of DE specific driver bugs on mesa Intel/AMD these days, so the differences AFAIK come down to two things: is the DE always composited? And how does it handle CSD[1]? The easiest case is always composited in combination with our internal `CSD_SUPPORT_SYSTEM`. So Cinnamon would be an obvious next candidate (IIUC it&#8217;s actually just old Gnome). Once we figured out all issues with non-composited and `CSD_SUPPORT_CLIENT` (and `CSD_SUPPORT_NONE`), things should work everywhere.</p>
+<p>Concerning EGL/X11: yes, we&#8217;d like to flip that on everywhere over time and deprecate GLX sooner or later. The main blocker is currently the testing infrastructure, but there are also other areas that still need tackling. The EGL backend is already quite superior (DMABUF/hardware video decoding/partial damage/less glitches) and the difference will likely only get bigger.</p>
+<p>As to non-composited desktops: we had to work around a certain issue by falling back to the basic compositor for popups. But apparently it works fine with that, so yes, we&#8217;d like to enable WR (and EGL) by default for them as well. At some point the basic compositor will get dropped, but that probably still has time.<br />
+Optimally people will slowly migrate to Wayland compositors, which *can* offer the same max performance (or even better) as non-composited X11 while not requiring odd legacy workarounds and being glitchy etc. I.e. Wayland was designed to make the distinction unnecessary. Or, if you like, the fact that we still have non-composited DEs is just a flaw of X11.</p>
+<p>As to Nvidia &#8211; yes for Nouveau, maybe for the prop. driver. If it turns out that things work just fine for people on the prop. driver, well, why not. But spending time trying to debug a blackbox is currently something I personally wouldn&#8217;t want to do, and apparently Martin feels the same.<br />
+Help with Nouveau is very much appreciated, especially filing or even fixing bugs in mesa[2].</p>
+<p>Cheers</p>
+<p>1: <a href="https://searchfox.org/mozilla-central/source/widget/gtk/nsWindow.cpp#7855-7942" rel="nofollow ugc">https://searchfox.org/mozilla-central/source/widget/gtk/nsWindow.cpp#7855-7942</a><br />
+2: <a href="https://gitlab.freedesktop.org/mesa/mesa/-/issues/" rel="nofollow ugc">https://gitlab.freedesktop.org/mesa/mesa/-/issues/</a></p>
+<p id="comment-like-15517" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15517&#038;_wpnonce=ea1a41f7b7" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15517" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?replytocom=15517#respond' data-commentid="15517" data-postid="266" data-belowelement="div-comment-15517" data-respondelement="respond" data-replyto="Reply to Robert" aria-label='Reply to Robert'>Reply</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-15541" class="comment odd alt depth-3 highlander-comment">
+			<article id="div-comment-15541" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/050c0496e10f53a97bb34d9474524a0e?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn">Alex</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15541"><time datetime="2021-01-24T13:06:36+00:00">January 24, 2021 at 1:06 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thanks for taking the time to reply to my questions Robert.</p>
+<p>Thanks for all your hard work!</p>
+<p id="comment-like-15541" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15541&#038;_wpnonce=f87143adfc" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15541" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-15862" class="comment byuser comment-author-mauromol1 even thread-even depth-1 highlander-comment">
+			<article id="div-comment-15862" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/3c6a035063d82b611c79ea21a95ed0ce?s=32&#038;d=identicon&#038;r=G' class='avatar avatar-32' height='32' width='32' />						<b class="fn"><a href='http://gravatar.com/mauromol1' rel='external nofollow ugc' class='url'>mauromol1</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-15862"><time datetime="2021-03-17T09:13:58+00:00">March 17, 2021 at 9:13 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hello,<br />
+looking at <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1663273#c80" rel="nofollow ugc">https://bugzilla.mozilla.org/show_bug.cgi?id=1663273#c80</a> as of Firefox 86 it seems like all known problems with KDE (either with or without compositing) are fixed. However, in my system (running Firefox 86 under Kubuntu 20.04) hardware compositing and web render are still both disabled by default. When do you plan to enable them by default for KDE? I&#8217;m running an Intel HD Graphics 4600, using X11.<br />
+Thank you!</p>
+<p id="comment-like-15862" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=15862&#038;_wpnonce=03a5f16528" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-15862" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?replytocom=15862#respond' data-commentid="15862" data-postid="266" data-belowelement="div-comment-15862" data-respondelement="respond" data-replyto="Reply to mauromol1" aria-label='Reply to mauromol1'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-16485" class="comment odd alt thread-odd thread-alt depth-1 highlander-comment">
+			<article id="div-comment-16485" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://lh3.googleusercontent.com/a-/AOh14GiEaC9hP6L3Y4GpzRdssDJKPziTS1khksnd2lGJVA=s96-c' class='avatar avatar-32' height='32' width='32' />						<b class="fn">Graham Perrin</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#comment-16485"><time datetime="2021-06-20T01:49:18+00:00">June 20, 2021 at 1:49 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thank you! From a user of Firefox 89 on FreeBSD 14.0-CURRENT. </p>
+<p>A nit, there&#8217;s a typo near the tail of this URL: </p>
+<p><a href="https://fedoraproject.org/wiki/How_to_debug_Firefox_problems#Check_WebRedner" rel="nofollow ugc">https://fedoraproject.org/wiki/How_to_debug_Firefox_problems#Check_WebRedner</a></p>
+<p>– should be #Check_WebRender</p>
+<p id="comment-like-16485" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?like_comment=16485&#038;_wpnonce=c2b829c849" class="comment-like-link needs-login" rel="nofollow" data-blog="151695875"><span>Like</span></a><span id="comment-like-count-16485" class="comment-like-feedback">Like</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://mastransky.wordpress.com/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/?replytocom=16485#respond' data-commentid="16485" data-postid="266" data-belowelement="div-comment-16485" data-respondelement="respond" data-replyto="Reply to Graham Perrin" aria-label='Reply to Graham Perrin'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		</ol><!-- .comment-list -->
+
+			<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/#respond" style="display:none;">Cancel reply</a></small></h3><form action="https://mastransky.wordpress.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate><input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="33943e9d67" /><input type="hidden" name="_wp_http_referer" value="/2021/01/10/firefox-were-finally-getting-hw-acceleration-on-linux/" />
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest" />
+
+<div class="comment-form-field comment-textarea">
+	<label for="comment">Enter your comment here...</label>
+	<div id="comment-form-comment"><textarea id="comment" name="comment" title="Enter your comment here..."></textarea></div>
+</div>
+
+<div id="comment-form-identity">
+	<div id="comment-form-nascar">
+		<p>Fill in your details below or click an icon to log in:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="#comment-form-guest" id="postas-guest" class="nascar-signin-link"
+                   title="Login via Guest">
+									</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:WordPress.com" id="postas-wordpress" class="nascar-signin-link"
+                   title="Login via WordPress.com">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg>				</a>
+			</li>
+			<li>
+			<iframe id="googleplus-sign-in" name="googleplus-sign-in" src="https://public-api.wordpress.com/connect/?googleplus-sign-in=https%3A%2F%2Fmastransky.wordpress.com&#038;color_scheme=light" width="24" height="24" scrolling="no" allowtransparency="true" seamless="seamless" frameborder="0"></iframe>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Twitter" id="postas-twitter" class="nascar-signin-link"
+                   title="Login via Twitter">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Facebook" id="postas-facebook" class="nascar-signin-link"
+                   title="Login via Facebook">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg>				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Gravatar" width="25" class="no-grav" />
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">Email <span class="nopublish">(Address never made public)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Name</label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Website</label>
+					<div class="comment-form-input"><input id="url" name="url" type="url" value="" /></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="WordPress.com Logo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="" />
+						<p class="comment-form-posting-as pa-wordpress">
+			<strong></strong>
+			You are commenting using your WordPress.com account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Google photo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="" />
+						<p class="comment-form-posting-as pa-googleplus">
+			<strong></strong>
+			You are commenting using your Google account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" x="0px" y="0px" viewBox="0 0 60 60" ><path fill="#519bf7" d="M56.3,30c0,-1.6 -0.2,-3.4 -0.6,-5h-3.1H42.2H30v10.6h14.8C44,39.3 42,42 39.1,43.9l8.8,6.8C53,46 56.3,39 56.3,30z" /><path fill="#3db366" d="M30,57.5c6.7,0 13.1,-2.4 17.9,-6.8l-8.8,-6.8c-2.5,1.6 -5.6,2.4 -9.1,2.4c-7.2,0 -13.3,-4.7 -15.4,-11.2l-9.3,7.1C9.8,51.3 19.1,57.5 30,57.5z" /><path fill="#fdc600" d="M5.3,42.2l9.3,-7.1c-0.5,-1.6 -0.8,-3.3 -0.8,-5.1s0.3,-3.5 0.8,-5.1l-9.3,-7.1C3.5,21.5 2.5,25.6 2.5,30S3.5,38.5 5.3,42.2z" /><path fill="#f15b44" d="M40.1,17.4l8,-8C43.3,5.1 37,2.5 30,2.5C19.1,2.5 9.8,8.7 5.3,17.8l9.3,7.1c2.1,-6.5 8.2,-11.1 15.4,-11.1C33.9,13.7 37.4,15.1 40.1,17.4z" /></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Twitter picture" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="" />
+						<p class="comment-form-posting-as pa-twitter">
+			<strong></strong>
+			You are commenting using your Twitter account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Facebook photo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="" />
+						<p class="comment-form-posting-as pa-facebook">
+			<strong></strong>
+			You are commenting using your Facebook account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Cancel</a></div>
+		<p>Connecting to %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function () {
+
+	function hide( sel ) {
+		var el = document.querySelector( sel );
+		if ( el ) {
+			el.style.setProperty( 'display', 'none' );
+		}
+	}
+
+	function show( sel ) {
+		var el = document.querySelector( sel );
+		if ( el ) {
+			el.style.removeProperty( 'display' );
+		}
+	}
+
+	var input = document.createElement( 'input' );
+	var comment = document.querySelector( '#comment' );
+
+	if ( input && comment && 'placeholder' in input ) {
+		var label = document.querySelector( '.comment-textarea label' );
+		if ( label ) {
+			var text = label.textContent;
+			label.parentNode.removeChild( label );
+			comment.setAttribute( 'placeholder', text );
+		}
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	hide( '#comment-form-identity' );
+	hide( '#comment-form-subscribe' );
+	hide( '#commentform .form-submit' );
+
+	if ( comment ) {
+		comment.style.height = '10px';
+
+		var handler = function () {
+			comment.style.height = HighlanderComments.initialHeight + 'px';
+			show( '#comment-form-identity' );
+			show( '#comment-form-subscribe' );
+			show( '#commentform .form-submit' );
+			HighlanderComments.resizeCallback();
+
+			comment.removeEventListener( 'focus', handler );
+		};
+
+		comment.addEventListener( 'focus', handler );
+	}
+}
+
+if ( document.readyState !== 'loading' ) {
+	highlander_expando_javascript();
+} else {
+	if ( typeof window.jQuery === 'function' ) {
+		// Use jQuery's `ready` if available.
+		// This solves some scheduling issues between this script and the main highlander script.
+		jQuery( document ).ready( highlander_expando_javascript );
+	} else {
+		// If not available, add a vanilla event listener.
+		document.addEventListener( 'DOMContentLoaded', highlander_expando_javascript );
+	}
+}
+
+</script>
+
+<div id="comment-form-subscribe">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Notify me of new comments via email.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog"  style="display: inline;">Notify me of new posts via email.</label></p></div>
+
+
+
+
+<p class="form-submit wp-block-button"><input name="submit" type="submit" id="comment-submit" class="submit wp-block-button__link" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='266' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="9838a86e54" /></p>
+<input type="hidden" name="genseq" value="1626116148" />
+<input type="hidden" id="ak_js" name="ak_js" value="24"/><textarea name="ak_hp_textarea" cols="45" rows="8" maxlength="100" style="display: none !important;"></textarea></form>	</div><!-- #respond -->
+	<div style="clear: both"></div><p class="akismet_comment_form_privacy_notice">This site uses Akismet to reduce spam. <a href="https://akismet.com/privacy/" target="_blank" rel="nofollow noopener">Learn how your comment data is processed</a>.</p>
+</div><!-- #comments -->
+
+		</main><!-- #main -->
+	</section><!-- #primary -->
+
+
+	</div><!-- #content -->
+
+	
+	<footer id="colophon" class="site-footer responsive-max-width">
+			
+	
+		<div class="site-info">
+		<a class="site-name" href="https://mastransky.wordpress.com/" rel="home">Martin Stransky&#039;s Blog</a><span class="comma">,</span>
+<a href="https://wordpress.com/?ref=footer_custom_powered" rel="nofollow">Website Powered by WordPress.com</a>.	</div><!-- .site-info -->
+	</footer><!-- #colophon -->
+
+</div><!-- #page -->
+
+<!--  -->
+<div id="marketingbar" class="marketing-bar noskim"><div class="marketing-bar-text">Create your website with WordPress.com</div><a class="marketing-bar-button" href="https://wordpress.com/start/?ref=marketing_bar">Get started</a><a class="marketing-bar-link" tabindex="-1" aria-label="Create your website at WordPress.com" href="https://wordpress.com/start/?ref=marketing_bar"></a></div><script src='//0.gravatar.com/js/gprofiles.js?ver=202128y' id='grofiles-cards-js'></script>
+<script id='wpgroho-js-extra'>
+var WPGroHo = {"my_hash":""};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1610363240h'></script>
+
+	<script>
+		// Initialize and attach hovercards to all gravatars
+		( function() {
+			function init() {
+				if ( typeof Gravatar === 'undefined' ) {
+					return;
+				}
+
+				if ( typeof Gravatar.init !== 'function' ) {
+					return;
+				}
+
+				Gravatar.profile_cb = function ( hash, id ) {
+					WPGroHo.syncProfileData( hash, id );
+				};
+
+				Gravatar.my_hash = WPGroHo.my_hash;
+				Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+			}
+
+			if ( document.readyState !== 'loading' ) {
+				init();
+			} else {
+				document.addEventListener( 'DOMContentLoaded', init );
+			}
+		} )();
+	</script>
+
+		<div style="display:none">
+	<div class="grofile-hash-map-470c5e17640a289d1e99b26d2dec9f54">
+	</div>
+	<div class="grofile-hash-map-1ad575baf124ff5058f4d44d5b066a29">
+	</div>
+	<div class="grofile-hash-map-5adee513fb31fbe2ef411656d87e4bb3">
+	</div>
+	<div class="grofile-hash-map-5da71984edb570ec3fc1c0fc02f52dfa">
+	</div>
+	<div class="grofile-hash-map-f047a3b5528f6f187ac4ef1c7d81014a">
+	</div>
+	<div class="grofile-hash-map-7c866ac84e832e585c6bd3abe1149c47">
+	</div>
+	<div class="grofile-hash-map-d96a7a2b090645614274efb31719d6c5">
+	</div>
+	<div class="grofile-hash-map-555ab0c0cba6281364f7932ebc23d0dc">
+	</div>
+	<div class="grofile-hash-map-4048f4b583df6173fc27e3fe8c7c5ae6">
+	</div>
+	<div class="grofile-hash-map-050c0496e10f53a97bb34d9474524a0e">
+	</div>
+	<div class="grofile-hash-map-3c6a035063d82b611c79ea21a95ed0ce">
+	</div>
+	<div class="grofile-hash-map-0c02caffb6b5bb7c900b09203e783b28">
+	</div>
+	</div>
+<script id='highlander-comments-js-extra'>
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"https:\/\/mastransky.wordpress.com\/public.api\/connect\/?action=request","logoutURL":"https:\/\/mastransky.wordpress.com\/wp-login.php?action=logout&_wpnonce=ce95ecfdd0","homeURL":"https:\/\/mastransky.wordpress.com\/","postID":"266","gravDefault":"identicon","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1573483029j'></script>
+		<!-- CCPA [start] -->
+		<script type="text/javascript">
+			( function () {
+
+				var setupPrivacy = function() {
+
+					// Minimal Mozilla Cookie library
+					// https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie/Simple_document.cookie_framework
+					var cookieLib = window.cookieLib = {getItem:function(e){return e&&decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*"+encodeURIComponent(e).replace(/[\-\.\+\*]/g,"\\$&")+"\\s*\\=\\s*([^;]*).*$)|^.*$"),"$1"))||null},setItem:function(e,o,n,t,r,i){if(!e||/^(?:expires|max\-age|path|domain|secure)$/i.test(e))return!1;var c="";if(n)switch(n.constructor){case Number:c=n===1/0?"; expires=Fri, 31 Dec 9999 23:59:59 GMT":"; max-age="+n;break;case String:c="; expires="+n;break;case Date:c="; expires="+n.toUTCString()}return"rootDomain"!==r&&".rootDomain"!==r||(r=(".rootDomain"===r?".":"")+document.location.hostname.split(".").slice(-2).join(".")),document.cookie=encodeURIComponent(e)+"="+encodeURIComponent(o)+c+(r?"; domain="+r:"")+(t?"; path="+t:"")+(i?"; secure":""),!0}};
+
+					// Implement IAB USP API.
+					window.__uspapi = function( command, version, callback ) {
+
+						if ( typeof callback !== 'function' ) {
+							return;
+						}
+
+						if ( command !== 'getUSPData' || version !== 1 ) {
+							callback( null, false );
+							return;
+						}
+
+						// Check for GPC.
+						if ( navigator.globalPrivacyControl ) {
+							callback( { version: 1, uspString: '1YYN' }, true );
+							return;
+						}
+
+						// Check for cookie.
+						var consent = cookieLib.getItem( 'usprivacy' );
+
+						if ( null === consent ) {
+							callback( null, false );
+							return;
+						}
+
+						callback( { version: 1, uspString: consent }, true );
+					};
+
+					// Initialization.
+					document.addEventListener( 'DOMContentLoaded', function() {
+
+						var setDefaultOptInCookie = function() {
+							var value = '1YNN';
+							var domain = '.wordpress.com' === location.hostname.slice( -14 ) ? '.rootDomain' : location.hostname;
+							cookieLib.setItem( 'usprivacy', value, 365 * 24 * 60 * 60, '/', domain );
+						};
+
+						var setCcpaAppliesCookie = function( value ) {
+							var domain = '.wordpress.com' === location.hostname.slice( -14 ) ? '.rootDomain' : location.hostname;
+							cookieLib.setItem( 'ccpa_applies', value, 24 * 60 * 60, '/', domain );
+						}
+
+						var maybeCallDoNotSellCallback = function() {
+							if ( 'function' === typeof window.doNotSellCallback ) {
+								return window.doNotSellCallback();
+							}
+
+							return false;
+						}
+
+						var usprivacyCookie = cookieLib.getItem( 'usprivacy' );
+
+						if ( null !== usprivacyCookie ) {
+							maybeCallDoNotSellCallback();
+							return;
+						}
+
+						var ccpaCookie = cookieLib.getItem( 'ccpa_applies' );
+
+						if ( null === ccpaCookie ) {
+
+							var request = new XMLHttpRequest();
+							request.open( 'GET', 'https://public-api.wordpress.com/geo/', true );
+
+							request.onreadystatechange = function () {
+								if ( 4 === this.readyState ) {
+									if ( 200 === this.status ) {
+
+										var data = JSON.parse( this.response );
+										var ccpa_applies = data['region'] && data['region'].toLowerCase() === 'california';
+
+										setCcpaAppliesCookie( ccpa_applies );
+
+										if ( ccpa_applies ) {
+											if ( maybeCallDoNotSellCallback() ) {
+												setDefaultOptInCookie();
+											}
+										}
+									} else {
+										setCcpaAppliesCookie( true );
+										if ( maybeCallDoNotSellCallback() ) {
+											setDefaultOptInCookie();
+										}
+									}
+								}
+							};
+
+							request.send();
+						} else {
+							if ( ccpaCookie === 'true' ) {
+								if ( maybeCallDoNotSellCallback() ) {
+									setDefaultOptInCookie();
+								}
+							}
+						}
+					} );
+				};
+
+				if ( window.defQueue && defQueue.isLOHP && defQueue.isLOHP === 2020 ) {
+					defQueue.items.push( setupPrivacy );
+				} else {
+					setupPrivacy();
+				}
+
+			} )();
+		</script>
+
+		<!-- CCPA [end] -->
+		
+<script>
+window.addEventListener( "load", function( event ) {
+	var link = document.createElement( "link" );
+	link.href = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.css?v=20201002";
+	link.type = "text/css";
+	link.rel = "stylesheet";
+	document.head.appendChild( link );
+
+	var script = document.createElement( "script" );
+	script.src = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.js?v=20210707";
+	script.defer = true;
+	document.body.appendChild( script );
+} );
+</script>
+
+	
+		<div
+			class="jp-carousel-wrap jp-carousel-transitions"
+			itemscope
+			itemtype="https://schema.org/ImageGallery"
+			style="display: none;">
+			<div class="jp-carousel-overlay"></div>
+			<div class="jp-carousel"></div>
+			<div class="jp-carousel-fadeaway"></div>
+			<div class="jp-carousel-info">
+				<div class="jp-carousel-photo-info">
+					<h2 class="jp-carousel-caption" itemprop="caption description"></h2>
+				</div>
+				<div class="jp-carousel-info-columns">
+					<div class="jp-carousel-left-column-wrapper">
+						<div class="jp-carousel-titleanddesc"></div>
+						<!-- Intentional duplicate -->
+						<div class="jp-carousel-photo-info">
+							<h2 class="jp-carousel-caption" itemprop="caption description"></h2>
+						</div>
+													<div id="jp-carousel-comment-form-container">
+																											<form id="jp-carousel-comment-form">
+											<label for="jp-carousel-comment-form-comment-field" class="screen-reader-text">Write a Comment...</label>
+											<textarea
+												name="comment"
+												class="jp-carousel-comment-form-field jp-carousel-comment-form-textarea"
+												id="jp-carousel-comment-form-comment-field"
+												placeholder="Write a Comment..."
+											></textarea>
+											<div id="jp-carousel-comment-form-submit-and-info-wrapper">
+												<div id="jp-carousel-comment-form-commenting-as">
+																											<fieldset>
+															<label for="jp-carousel-comment-form-email-field">Email</label>
+															<input type="text" name="email" class="jp-carousel-comment-form-field jp-carousel-comment-form-text-field" id="jp-carousel-comment-form-email-field" />
+														</fieldset>
+														<fieldset>
+															<label for="jp-carousel-comment-form-author-field">Name</label>
+															<input type="text" name="author" class="jp-carousel-comment-form-field jp-carousel-comment-form-text-field" id="jp-carousel-comment-form-author-field" />
+														</fieldset>
+														<fieldset>
+															<label for="jp-carousel-comment-form-url-field">Website</label>
+															<input type="text" name="url" class="jp-carousel-comment-form-field jp-carousel-comment-form-text-field" id="jp-carousel-comment-form-url-field" />
+														</fieldset>
+																									</div>
+												<input
+													type="submit"
+													name="submit"
+													class="jp-carousel-comment-form-button"
+													id="jp-carousel-comment-form-button-submit"
+													value="Post Comment" />
+												<span id="jp-carousel-comment-form-spinner">&nbsp;</span>
+												<div id="jp-carousel-comment-post-results"></div>
+											</div>
+										</form>
+																								</div>
+							<div class="jp-carousel-comments"></div>
+							<div id="jp-carousel-comments-loading">
+								<span>Loading Comments...</span>
+							</div>
+											</div>
+					<div class="jp-carousel-image-meta">
+						<div class="jp-carousel-buttons">
+														<a class="jp-carousel-commentlink" href="#">Comment</a>
+																				</div>
+						<ul class="jp-carousel-image-exif" style="display: none;"></ul>
+						<a class="jp-carousel-image-download" target="_blank" style="display: none;"></a>
+						<div class="jp-carousel-image-map" style="display: none;"></div>
+					</div>
+				</div>
+			</div>
+			<div class="jp-carousel-next-button" style="display: none;">
+				<span></span>
+			</div>
+			<div class="jp-carousel-previous-button" style="display: none;">
+				<span></span>
+			</div>
+			<div class="jp-carousel-close-hint"><span>&times;</span></div>
+		</div>
+
+		
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/mastransky.wordpress.com\/2021\/01\/10\/firefox-were-finally-getting-hw-acceleration-on-linux\/":266};
+	</script>
+				<div class="widget widget_eu_cookie_law_widget">
+<div
+	class="hide-on-button ads-active"
+	data-hide-timeout="30"
+	data-consent-expiration="180"
+	id="eu-cookie-law"
+>
+	<form method="post">
+		<input type="submit" value="Close and accept" class="accept" />
+
+		Privacy &amp; Cookies: This site uses cookies. By continuing to use this website, you agree to their use. <br />
+To find out more, including how to control cookies, see here:
+				<a href="https://automattic.com/cookies" rel="nofollow">
+			Cookie Policy		</a>
+ </form>
+</div>
+</div><link rel='stylesheet' id='all-css-0-3' href='https://s0.wp.com/_static/??/wp-content/mu-plugins/carousel/jetpack-carousel.css,/wp-content/mu-plugins/related-posts/related-posts.css?m=1624282247j&cssminify=yes' type='text/css' media='all' />
+<script id='comment-like-js-extra'>
+var comment_like_text = {"loading":"Loading..."};
+</script>
+<script id='coblocks-lightbox-js-extra'>
+var coblocksLigthboxData = {"closeLabel":"Close Gallery","leftLabel":"Previous","rightLabel":"Next"};
+</script>
+<script id='jetpack-carousel-js-extra'>
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"en","ajaxurl":"https:\/\/mastransky.wordpress.com\/wp-admin\/admin-ajax.php","nonce":"acdafb3f95","display_exif":"1","display_comments":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Comment","post_comment":"Post Comment","write_comment":"Write a Comment...","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","copyright":"Copyright","comment_registration":"0","require_name_email":"0","login_url":"https:\/\/mastransky.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fmastransky.wordpress.com%2F2021%2F01%2F10%2Ffirefox-were-finally-getting-hw-acceleration-on-linux%2F","blog_id":"151695875","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"stats_query_args":"blog=151695875&v=wpcom&tz=0&user_id=0&subd=mastransky","is_public":"1"};
+</script>
+<script id='jetpack_related-posts-js-extra'>
+var related_posts_js_options = {"post_heading":"h4"};
+</script>
+<script id='sharing-js-js-extra'>
+var sharing_js_options = {"lang":"en","counts":"1","is_stats_active":"1"};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s0.wp.com/_static/??-eJyNkVtSwzAMRTeEoz5C+WJYCuPYaqrELyy7oawed0pgEhiXL1lXOtYdCaYglHcJXYKBQeOZFIb3ZuAHWJaGt4zx8hUacmfC6W7bgClINYqITB+4brdZBJN7cgyGRmQoUMaTdNpgrDQrb22RxA0arnQHPFGoTfgFLYQ1+EN1xquRYddsN80WNHG6wTe90P0pdf57Y+SUyXo5IWIwl8aSq9ibSPeYGDCXqh8JhZETJLTByIQrvfKP1GWO6GQEKzlhLC+RYrkB/+WwpGg71HfMKRl9ZjQw33MWKkzEq3Etgue0ymr2R2KLSeybDbwWp3D00f7DmZhC2fYqrXBXH+JoJEXgk4zk+jkW6MU+bw+7tm0Pj/un4RPPfyva'></script>
+<script type='text/javascript'>
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-twitter' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-twitter' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+						return false;
+					}
+				} );
+			} )();
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-facebook' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-facebook' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+						return false;
+					}
+				} );
+			} )();
+</script>
+	<script>
+	/(trident|msie)/i.test(navigator.userAgent)&&document.getElementById&&window.addEventListener&&window.addEventListener("hashchange",function(){var t,e=location.hash.substring(1);/^[A-z0-9_-]+$/.test(e)&&(t=document.getElementById(e))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())},!1);
+	</script>
+	<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>	<iframe src='https://widgets.wp.com/likes/master.html?ver=20210413#ver=20210413&amp;origin=https://mastransky.wordpress.com' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+	<div id='likes-other-gravatars'>
+		<div class="likes-text">
+			<span>%d</span> bloggers like this:		</div>
+		<ul class="wpl-avatars sd-like-gravatars"></ul>
+	</div>
+	
+		<script src="//stats.wp.com/w.js?61" defer></script> <script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'151695875','blog_tz':'0','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'151695875','v':'wpcom','tz':'0','user_id':'0','post':'266','subd':'mastransky'}]);
+_stq.push(['extra', {'crypt':'UE5XaGUuOTlwaD85flAmcm1mcmZsaDhkV11YdWFnNncxc1tjZG9XVXhRREQ/V0xPZ1hKXy9qOT9QSFFRN1ZyVjZ8d3Y9OHVRSXxzUC1ofD81JWNbbUk0Jml8dkJERTJocHI4XzhPLGdlWF9uNGdkeVdhcXVHMXIsZ1cudmRMfkoyclMsL0UuJkYwV0R8X1NoNzYzdUVGTiVML0d2W0F+RlFWNENpS1FENEVHY2RWfHBdajR4JTZ3V3MxLGExLnFxRHV1RVpONl1fUTNVVTk0OVlmQzN+WU8ydzMmSDl1UjRRP3g0QX5BbTFtV19vQlpfZC5GYzVPbENqdXRnZXJEYVg9fHFXNTJ+'}]);
+_stq.push([ 'clickTrackerInit', '151695875', '266' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:1px;width:1px;overflow:hidden;position:absolute;bottom:1px;" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>

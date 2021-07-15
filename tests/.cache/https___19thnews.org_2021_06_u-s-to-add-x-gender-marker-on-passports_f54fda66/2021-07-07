@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+
+
+<head>
+  <meta charset="utf-8" /><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={licenseKey:"NRJS-ec1ddf6fca61e094a60",applicationID:"618942500"};window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var i=e[n]={exports:{}};t[n][0].call(i.exports,function(e){var i=t[n][1][e];return r(i||e)},i,i.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var i=0;i<n.length;i++)r(n[i]);return r}({1:[function(t,e,n){function r(){}function i(t,e,n){return function(){return o(t,[u.now()].concat(f(arguments)),e?null:this,n),e?void 0:this}}var o=t("handle"),a=t(8),f=t(9),c=t("ee").get("tracer"),u=t("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var d=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],p="api-",l=p+"ixn-";a(d,function(t,e){s[e]=i(p+e,!0,"api")}),s.addPageAction=i(p+"addPageAction",!0),s.setCurrentRouteName=i(p+"routeName",!0),e.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(t,e){var n={},r=this,i="function"==typeof e;return o(l+"tracer",[u.now(),t,n],r),function(){if(c.emit((i?"":"no-")+"fn-start",[u.now(),r,i],n),i)try{return e.apply(this,arguments)}catch(t){throw c.emit("fn-err",[arguments,this,t],n),t}finally{c.emit("fn-end",[u.now()],n)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,e){m[e]=i(l+e)}),newrelic.noticeError=function(t,e){"string"==typeof t&&(t=new Error(t)),o("err",[t,u.now(),!1,e])}},{}],2:[function(t,e,n){function r(t){if(NREUM.init){for(var e=NREUM.init,n=t.split("."),r=0;r<n.length-1;r++)if(e=e[n[r]],"object"!=typeof e)return;return e=e[n[n.length-1]]}}e.exports={getConfiguration:r}},{}],3:[function(t,e,n){function r(){return f.exists&&performance.now?Math.round(performance.now()):(o=Math.max((new Date).getTime(),o))-a}function i(){return o}var o=(new Date).getTime(),a=o,f=t(10);e.exports=r,e.exports.offset=a,e.exports.getLastTimestamp=i},{}],4:[function(t,e,n){function r(t){return!(!t||!t.protocol||"file:"===t.protocol)}e.exports=r},{}],5:[function(t,e,n){function r(t,e){var n=t.getEntries();n.forEach(function(t){"first-paint"===t.name?d("timing",["fp",Math.floor(t.startTime)]):"first-contentful-paint"===t.name&&d("timing",["fcp",Math.floor(t.startTime)])})}function i(t,e){var n=t.getEntries();n.length>0&&d("lcp",[n[n.length-1]])}function o(t){t.getEntries().forEach(function(t){t.hadRecentInput||d("cls",[t])})}function a(t){if(t instanceof m&&!g){var e=Math.round(t.timeStamp),n={type:t.type};e<=p.now()?n.fid=p.now()-e:e>p.offset&&e<=Date.now()?(e-=p.offset,n.fid=p.now()-e):e=p.now(),g=!0,d("timing",["fi",e,n])}}function f(t){d("pageHide",[p.now(),t])}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var c,u,s,d=t("handle"),p=t("loader"),l=t(7),m=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){c=new PerformanceObserver(r);try{c.observe({entryTypes:["paint"]})}catch(v){}u=new PerformanceObserver(i);try{u.observe({entryTypes:["largest-contentful-paint"]})}catch(v){}s=new PerformanceObserver(o);try{s.observe({type:"layout-shift",buffered:!0})}catch(v){}}if("addEventListener"in document){var g=!1,h=["click","keydown","mousedown","pointerdown","touchstart"];h.forEach(function(t){document.addEventListener(t,a,!1)})}l(f)}},{}],6:[function(t,e,n){function r(t,e){if(!i)return!1;if(t!==i)return!1;if(!e)return!0;if(!o)return!1;for(var n=o.split("."),r=e.split("."),a=0;a<r.length;a++)if(r[a]!==n[a])return!1;return!0}var i=null,o=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var f=navigator.userAgent,c=f.match(a);c&&f.indexOf("Chrome")===-1&&f.indexOf("Chromium")===-1&&(i="Safari",o=c[1])}e.exports={agent:i,version:o,match:r}},{}],7:[function(t,e,n){function r(t){function e(){t(a&&document[a]?document[a]:document[i]?"hidden":"visible")}"addEventListener"in document&&o&&document.addEventListener(o,e,!1)}e.exports=r;var i,o,a;"undefined"!=typeof document.hidden?(i="hidden",o="visibilitychange",a="visibilityState"):"undefined"!=typeof document.msHidden?(i="msHidden",o="msvisibilitychange"):"undefined"!=typeof document.webkitHidden&&(i="webkitHidden",o="webkitvisibilitychange",a="webkitVisibilityState")},{}],8:[function(t,e,n){function r(t,e){var n=[],r="",o=0;for(r in t)i.call(t,r)&&(n[o]=e(r,t[r]),o+=1);return n}var i=Object.prototype.hasOwnProperty;e.exports=r},{}],9:[function(t,e,n){function r(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,i=n-e||0,o=Array(i<0?0:i);++r<i;)o[r]=t[e+r];return o}e.exports=r},{}],10:[function(t,e,n){e.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(t,e,n){function r(){}function i(t){function e(t){return t&&t instanceof r?t:t?u(t,c,a):a()}function n(n,r,i,o,a){if(a!==!1&&(a=!0),!l.aborted||o){t&&a&&t(n,r,i);for(var f=e(i),c=v(n),u=c.length,s=0;s<u;s++)c[s].apply(f,r);var p=d[w[n]];return p&&p.push([b,n,r,f]),f}}function o(t,e){y[t]=v(t).concat(e)}function m(t,e){var n=y[t];if(n)for(var r=0;r<n.length;r++)n[r]===e&&n.splice(r,1)}function v(t){return y[t]||[]}function g(t){return p[t]=p[t]||i(n)}function h(t,e){l.aborted||s(t,function(t,n){e=e||"feature",w[n]=e,e in d||(d[e]=[])})}var y={},w={},b={on:o,addEventListener:o,removeEventListener:m,emit:n,get:g,listeners:v,context:e,buffer:h,abort:f,aborted:!1};return b}function o(t){return u(t,c,a)}function a(){return new r}function f(){(d.api||d.feature)&&(l.aborted=!0,d=l.backlog={})}var c="nr@context",u=t("gos"),s=t(8),d={},p={},l=e.exports=i();e.exports.getOrSetContext=o,l.backlog=d},{}],gos:[function(t,e,n){function r(t,e,n){if(i.call(t,e))return t[e];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:r,writable:!0,enumerable:!1}),r}catch(o){}return t[e]=r,r}var i=Object.prototype.hasOwnProperty;e.exports=r},{}],handle:[function(t,e,n){function r(t,e,n,r){i.buffer([t],r),i.emit(t,e,n)}var i=t("ee").get("handle");e.exports=r,r.ee=i},{}],id:[function(t,e,n){function r(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:a(t,o,function(){return i++})}var i=1,o="nr@id",a=t("gos");e.exports=r},{}],loader:[function(t,e,n){function r(){if(!R++){var t=M.info=NREUM.info,e=v.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&e))return u.abort();c(E,function(e,n){t[e]||(t[e]=n)});var n=a();f("mark",["onload",n+M.offset],null,"api"),f("timing",["load",n]);var r=v.createElement("script");0===t.agent.indexOf("http://")||0===t.agent.indexOf("https://")?r.src=t.agent:r.src=l+"://"+t.agent,e.parentNode.insertBefore(r,e)}}function i(){"complete"===v.readyState&&o()}function o(){f("mark",["domContent",a()+M.offset],null,"api")}var a=t(3),f=t("handle"),c=t(8),u=t("ee"),s=t(6),d=t(4),p=t(2),l=p.getConfiguration("ssl")===!1?"http":"https",m=window,v=m.document,g="addEventListener",h="attachEvent",y=m.XMLHttpRequest,w=y&&y.prototype,b=!d(m.location);NREUM.o={ST:setTimeout,SI:m.setImmediate,CT:clearTimeout,XHR:y,REQ:m.Request,EV:m.Event,PR:m.Promise,MO:m.MutationObserver};var x=""+location,E={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1209.min.js"},O=y&&w&&w[g]&&!/CriOS/.test(navigator.userAgent),M=e.exports={offset:a.getLastTimestamp(),now:a,origin:x,features:{},xhrWrappable:O,userAgent:s,disabled:b};if(!b){t(1),t(5),v[g]?(v[g]("DOMContentLoaded",o,!1),m[g]("load",r,!1)):(v[h]("onreadystatechange",i),m[h]("onload",r)),f("mark",["firstbyte",a.getLastTimestamp()],null,"api");var R=0}},{}],"wrap-function":[function(t,e,n){function r(t,e){function n(e,n,r,c,u){function nrWrapper(){var o,a,s,p;try{a=this,o=d(arguments),s="function"==typeof r?r(o,a):r||{}}catch(l){i([l,"",[o,a,c],s],t)}f(n+"start",[o,a,c],s,u);try{return p=e.apply(a,o)}catch(m){throw f(n+"err",[o,a,m],s,u),m}finally{f(n+"end",[o,a,p],s,u)}}return a(e)?e:(n||(n=""),nrWrapper[p]=e,o(e,nrWrapper,t),nrWrapper)}function r(t,e,r,i,o){r||(r="");var f,c,u,s="-"===r.charAt(0);for(u=0;u<e.length;u++)c=e[u],f=t[c],a(f)||(t[c]=n(f,s?c+r:r,i,c,o))}function f(n,r,o,a){if(!m||e){var f=m;m=!0;try{t.emit(n,r,o,e,a)}catch(c){i([c,n,r,o],t)}m=f}}return t||(t=s),n.inPlace=r,n.flag=p,n}function i(t,e){e||(e=s);try{e.emit("internal-error",t)}catch(n){}}function o(t,e,n){if(Object.defineProperty&&Object.keys)try{var r=Object.keys(t);return r.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(o){i([o],n)}for(var a in t)l.call(t,a)&&(e[a]=t[a]);return e}function a(t){return!(t&&t instanceof Function&&t.apply&&!t[p])}function f(t,e){var n=e(t);return n[p]=t,o(t,n,s),n}function c(t,e,n){var r=t[e];t[e]=f(r,n)}function u(){for(var t=arguments.length,e=new Array(t),n=0;n<t;++n)e[n]=arguments[n];return e}var s=t("ee"),d=t(9),p="nr@original",l=Object.prototype.hasOwnProperty,m=!1;e.exports=r,e.exports.wrapFunction=f,e.exports.wrapInPlace=c,e.exports.argsToArray=u},{}]},{},["loader"]);</script>
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+      <meta name="ga-author" content="Kate Sosin, Orion Rummler" />
+          <meta name="ga-topic" content="LGBTQ+" />
+        <meta name="ga-date" content="2021-06-30" />
+        <meta name="ga-page-type" content="article" />
+        <meta name="ga-purpose" content="For the Record" />
+  
+    <meta name="parsely-tags" content="For the Record" />
+  
+  
+  <link rel="stylesheet" href="https://19thnews.org/wp-content/themes/the-19th/dist/app.css?v=1.4.1" type="text/css" media="all" />
+
+    <link
+    rel="icon"
+    href="https://19thnews.org/wp-content/themes/the-19th/static/img/favicon/light/favicon.ico"
+        data-href-light="https://19thnews.org/wp-content/themes/the-19th/static/img/favicon/light/favicon.ico"
+    data-href-dark="https://19thnews.org/wp-content/themes/the-19th/static/img/favicon/dark/favicon.ico"
+      />
+  <link
+    rel="apple-touch-icon"
+    sizes="180x180"
+    href="https://19thnews.org/wp-content/themes/the-19th/static/img/favicon/light/apple-touch-icon.png"
+        data-href-light="https://19thnews.org/wp-content/themes/the-19th/static/img/favicon/light/apple-touch-icon.png"
+    data-href-dark="https://19thnews.org/wp-content/themes/the-19th/static/img/favicon/dark/apple-touch-icon.png"
+      />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="32x32"
+    href="https://19thnews.org/wp-content/themes/the-19th/static/img/favicon/light/favicon-32x32.png"
+        data-href-light="https://19thnews.org/wp-content/themes/the-19th/static/img/favicon/light/favicon-32x32.png"
+    data-href-dark="https://19thnews.org/wp-content/themes/the-19th/static/img/favicon/dark/favicon-32x32.png"
+      />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="16x16"
+    href="https://19thnews.org/wp-content/themes/the-19th/static/img/favicon/light/favicon-16x16.png"
+        data-href-light="https://19thnews.org/wp-content/themes/the-19th/static/img/favicon/light/favicon-16x16.png"
+    data-href-dark="https://19thnews.org/wp-content/themes/the-19th/static/img/favicon/dark/favicon-16x16.png"
+      />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="192x192"
+    href="https://19thnews.org/wp-content/themes/the-19th/static/img/favicon/light/android-chrome-192x192.png"
+        data-href-light="https://19thnews.org/wp-content/themes/the-19th/static/img/favicon/light/android-chrome-192x192.png"
+    data-href-dark="https://19thnews.org/wp-content/themes/the-19th/static/img/favicon/dark/android-chrome-192x192.png"
+      />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="512x512"
+    href="https://19thnews.org/wp-content/themes/the-19th/static/img/favicon/light/android-chrome-512x512.png"
+        data-href-light="https://19thnews.org/wp-content/themes/the-19th/static/img/favicon/light/android-chrome-512x512.png"
+    data-href-dark="https://19thnews.org/wp-content/themes/the-19th/static/img/favicon/dark/android-chrome-512x512.png"
+     />
+  <link
+    rel="manifest"
+    href="https://19thnews.org/wp-content/themes/the-19th/static/img/favicon/light/site.webmanifest"
+        data-href-light="https://19thnews.org/wp-content/themes/the-19th/static/img/favicon/light/site.webmanifest"
+    data-href-dark="https://19thnews.org/wp-content/themes/the-19th/static/img/favicon/dark/site.webmanifest"
+      />
+
+  <meta name="msapplication-TileColor" content="#51338d" />
+  <meta name="theme-color" content="#000000">
+
+  
+    <!-- Fundraise Up -->
+    <script>(function(w,d,s,n,a){if(!w[n]){var l='call,catch,on,once,set,then,track'
+    .split(','),i,o=function(n){return'function'==typeof n?o.l.push([arguments])&&o
+    :function(){return o.l.push([n,arguments])&&o}},t=d.getElementsByTagName(s)[0],
+    j=d.createElement(s);j.async=!0;j.src='https://cdn.fundraiseup.com/widget/'+a;
+    t.parentNode.insertBefore(j,t);o.s=Date.now();o.v=4;o.h=w.location.href;o.l=[];
+    for(i=0;i<7;i++)o[l[i]]=o(l[i]);w[n]=o}
+    })(window,document,'script','FundraiseUp','AXWQCBVT');</script>
+    <!-- End Fundraise Up -->
+
+        <!-- Broadstreet Ads -->
+    <script src="https://cdn.broadstreetads.com/init-2.min.js"></script>
+    <script>
+      if (typeof broadstreet !== 'undefined') {
+        // See https://information.broadstreetads.com/using-broadstreets-v2-tags/
+        broadstreet.watch({
+          networkId: 6527, // The 19th Upstatement Test
+        });
+      } else {
+        window.ads_blocked = true;
+      }
+    </script>
+    <!-- End Broadstreet Ads -->
+    
+  
+  
+      <script>
+      dataLayer = [{
+        'author': 'Kate Sosin, Orion Rummler',
+        'collection': '',
+        'topic': 'LGBTQ+',
+        'date': '2021-06-30',
+        'purpose': 'For the Record'
+      }];
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WC5X45J');</script>
+    <!-- End Google Tag Manager -->
+
+    
+  
+  <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO Premium plugin v16.4 (Yoast SEO v16.4) - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>U.S. to add ‘X’ gender marker on passports | The 19th</title>
+	<meta name="description" content="Transgender and intersex Americans will have the power to identify their own gender on travel documents by the end of this year, an administration official said." />
+	<link rel="canonical" href="https://19thnews.org/2021/06/u-s-to-add-x-gender-marker-on-passports/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="U.S. to add ‘X’ gender marker on passports | The 19th" />
+	<meta property="og:description" content="Transgender and intersex Americans will have the power to identify their own gender on travel documents by the end of this year, an administration official said." />
+	<meta property="og:url" content="https://19thnews.org/2021/06/u-s-to-add-x-gender-marker-on-passports/" />
+	<meta property="og:site_name" content="The 19th" />
+	<meta property="article:publisher" content="https://www.facebook.com/19thnews/" />
+	<meta property="article:published_time" content="2021-06-30T12:38:13+00:00" />
+	<meta property="article:modified_time" content="2021-07-02T17:45:07+00:00" />
+	<meta property="og:image" content="https://19thnews.org/wp-content/uploads/2021/05/GettyImages-74861689.jpg" />
+	<meta property="og:image:width" content="1800" />
+	<meta property="og:image:height" content="1258" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:creator" content="@19thnews" />
+	<meta name="twitter:site" content="@19thnews" />
+	<meta name="twitter:label1" content="Written by" />
+	<meta name="twitter:data1" content="Kate Sosin" />
+	<meta name="twitter:label2" content="Est. reading time" />
+	<meta name="twitter:data2" content="3 minutes" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://19thnews.org/#organization","name":"19th News","url":"https://19thnews.org/","sameAs":["https://www.facebook.com/19thnews/","https://www.instagram.com/19thnews/","https://www.linkedin.com/company/19th-news/","https://en.wikipedia.org/wiki/The_19th","https://twitter.com/19thnews"],"logo":{"@type":"ImageObject","@id":"https://19thnews.org/#logo","inLanguage":"en-US","url":"https://19thnews.org/wp-content/uploads/2020/06/og_image.png","contentUrl":"https://19thnews.org/wp-content/uploads/2020/06/og_image.png","width":1200,"height":630,"caption":"19th News"},"image":{"@id":"https://19thnews.org/#logo"}},{"@type":"WebSite","@id":"https://19thnews.org/#website","url":"https://19thnews.org/","name":"The 19th","description":"The 19th is an independent, nonprofit newsroom reporting at the intersection of gender, politics and policy.","publisher":{"@id":"https://19thnews.org/#organization"},"potentialAction":[{"@type":"SearchAction","target":"https://19thnews.org/?s={search_term_string}","query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"ImageObject","@id":"https://19thnews.org/2021/06/u-s-to-add-x-gender-marker-on-passports/#primaryimage","inLanguage":"en-US","url":"https://19thnews.org/wp-content/uploads/2021/05/GettyImages-74861689.jpg","contentUrl":"https://19thnews.org/wp-content/uploads/2021/05/GettyImages-74861689.jpg","width":1800,"height":1258,"caption":"The new rule marks the most substantial change to federal documents for transgender people in more than a decade."},{"@type":"WebPage","@id":"https://19thnews.org/2021/06/u-s-to-add-x-gender-marker-on-passports/#webpage","url":"https://19thnews.org/2021/06/u-s-to-add-x-gender-marker-on-passports/","name":"U.S. to add \u2018X\u2019 gender marker on passports | The 19th","isPartOf":{"@id":"https://19thnews.org/#website"},"primaryImageOfPage":{"@id":"https://19thnews.org/2021/06/u-s-to-add-x-gender-marker-on-passports/#primaryimage"},"datePublished":"2021-06-30T12:38:13+00:00","dateModified":"2021-07-02T17:45:07+00:00","description":"Transgender and intersex Americans will have the power to identify their own gender on travel documents by the end of this year, an administration official said.","breadcrumb":{"@id":"https://19thnews.org/2021/06/u-s-to-add-x-gender-marker-on-passports/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://19thnews.org/2021/06/u-s-to-add-x-gender-marker-on-passports/"]}]},{"@type":"BreadcrumbList","@id":"https://19thnews.org/2021/06/u-s-to-add-x-gender-marker-on-passports/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"WebPage","@id":"https://19thnews.org/","url":"https://19thnews.org/","name":"Home"}},{"@type":"ListItem","position":2,"item":{"@id":"https://19thnews.org/2021/06/u-s-to-add-x-gender-marker-on-passports/#webpage"}}]},{"@type":["Article","NewsArticle"],"@id":"https://19thnews.org/2021/06/u-s-to-add-x-gender-marker-on-passports/#article","isPartOf":{"@id":"https://19thnews.org/2021/06/u-s-to-add-x-gender-marker-on-passports/#webpage"},"author":{"@id":"https://19thnews.org/#/schema/person/378235e9022c9d8f0d0bf19226657c85"},"headline":"U.S. to add \u2018X\u2019 gender marker on passports","datePublished":"2021-06-30T12:38:13+00:00","dateModified":"2021-07-02T17:45:07+00:00","mainEntityOfPage":{"@id":"https://19thnews.org/2021/06/u-s-to-add-x-gender-marker-on-passports/#webpage"},"wordCount":544,"publisher":{"@id":"https://19thnews.org/#organization"},"image":{"@id":"https://19thnews.org/2021/06/u-s-to-add-x-gender-marker-on-passports/#primaryimage"},"thumbnailUrl":"https://19thnews.org/wp-content/uploads/2021/05/GettyImages-74861689.jpg","articleSection":["LGBTQ+"],"inLanguage":"en-US","copyrightYear":"2021","copyrightHolder":{"@id":"https://19thnews.org/#organization"}},{"@type":"Person","@id":"https://19thnews.org/#/schema/person/378235e9022c9d8f0d0bf19226657c85","name":"Kate Sosin","image":{"@type":"ImageObject","@id":"https://19thnews.org/#personlogo","inLanguage":"en-US","url":"https://secure.gravatar.com/avatar/399b03599a4fcee061bfaea6bc2100d0?s=96&d=mm&r=g","contentUrl":"https://secure.gravatar.com/avatar/399b03599a4fcee061bfaea6bc2100d0?s=96&d=mm&r=g","caption":"Kate Sosin"},"url":"https://19thnews.org/author/ksosin/"}]}</script>
+	<!-- / Yoast SEO Premium plugin. -->
+
+
+<link rel='stylesheet' id='ups-blocks-css'  href='https://19thnews.org/wp-content/plugins/ups-blocks/build/style.css?ver=97c7e82b4cd3ec17e138b7b4e7755b6c' type='text/css' media='all' />
+<script type='text/javascript' src='https://polyfill.io/v3/polyfill.min.js?features=fetch%2CElement.prototype.closest%2CElement.prototype.append&#038;ver=5.7.2' id='19th-polyfill-js'></script>
+
+<!-- BEGIN Parse.ly 2.5.0 -->
+<script type="application/ld+json">
+{"@context":"http:\/\/schema.org","@type":"NewsArticle","mainEntityOfPage":{"@type":"WebPage","@id":"http:\/\/19thnews.org\/2021\/06\/u-s-to-add-x-gender-marker-on-passports\/"},"headline":"U.S. to add \u2018X\u2019 gender marker on passports","url":"http:\/\/19thnews.org\/2021\/06\/u-s-to-add-x-gender-marker-on-passports\/","thumbnailUrl":"https:\/\/19thnews.org\/wp-content\/uploads\/2021\/05\/GettyImages-74861689-150x150.jpg","image":{"@type":"ImageObject","url":"https:\/\/19thnews.org\/wp-content\/uploads\/2021\/05\/GettyImages-74861689-150x150.jpg"},"dateCreated":"2021-06-30T12:38:13Z","datePublished":"2021-06-30T12:38:13Z","dateModified":"2021-06-30T12:38:13Z","articleSection":"LGBTQ+","author":[{"@type":"Person","name":"Kate Sosin"}],"creator":["Kate Sosin"],"publisher":{"@type":"Organization","name":"The 19th","logo":""},"keywords":[]}
+</script>
+<!-- END Parse.ly -->
+
+		<script>
+			document.documentElement.className = document.documentElement.className.replace( 'no-js', 'js' );
+		</script>
+				<style>
+			.no-js img.lazyload { display: none; }
+			figure.wp-block-image img.lazyloading { min-width: 150px; }
+							.lazyload, .lazyloading { opacity: 0; }
+				.lazyloaded {
+					opacity: 1;
+					transition: opacity 400ms;
+					transition-delay: 0ms;
+				}
+					</style>
+		<link rel="amphtml" href="https://19thnews.org/2021/06/u-s-to-add-x-gender-marker-on-passports/?amp">
+
+    </head>
+
+<body class="post-template-default single single-post postid-15678 single-format-standard  article-topper-horizontal_image">
+
+        
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe 
+    height="0" width="0" style="display:none;visibility:hidden" data-src="https://www.googletagmanager.com/ns.html?id=GTM-WC5X45J" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+  <a href="#content" class="tiny-text skip-to-content" tabindex="0">Skip to content</a>
+
+    
+<svg display="none" width="0" height="0" version="1.1" xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+
+        <symbol id="logo-on-light" viewBox="0 0 200 68">
+      <path d="M151.984 19.9153C154.299 17.2051 158.646 14.6642 163.389 14.6642C168.358 14.6642 172.875 17.4309 172.875 25.844V40.8633C172.875 45.7756 173.27 48.0906 176.602 50.0104H156.84C160.171 48.0906 160.566 45.7192 160.566 40.8633V25.844C160.566 21.8351 158.138 20.1412 155.259 20.1412C154.129 20.1412 152.661 20.367 151.927 20.5364V40.8633C151.927 45.7756 152.322 48.0906 155.654 50.0104H135.609C138.941 48.0906 139.336 45.7192 139.336 40.8633V13.7608C139.336 7.77563 138.658 5.63001 134.932 3.87964C134.932 3.87964 143.514 3.20208 151.927 1L151.984 19.9153Z" fill="black"/>
+      <path d="M32.1114 50.0104C37.2496 47.3002 37.9837 44.7028 37.9837 38.4918V20.8752C37.9837 20.8752 33.7489 22.0045 30.5869 22.0045C38.7741 19.1248 47.5825 10.7682 53.3982 5.96881V37.7014C53.3982 43.63 53.6241 47.1872 59.2704 50.0104H32.1114Z" fill="black"/>
+      <path d="M112.741 17.4309H109.297C115.734 14.2689 121.211 10.0906 125.107 6.08173V15.5111H133.577V17.4309H125.107V39.6211C125.107 43.3477 127.366 45.0981 130.64 45.0981C131.6 45.0981 133.012 44.7593 133.972 44.4205C132.278 47.0743 128.269 50.6315 122.961 50.6315C116.242 50.6315 112.685 47.6954 112.685 39.9599L112.741 17.4309Z" fill="black"/>
+      <path d="M77.847 43.6865C67.6835 43.6865 60.0609 37.9272 60.0609 27.3685C60.0609 18.2779 68.5305 6.75928 81.4606 6.75928C95.4636 6.75928 106.079 17.2615 106.079 31.4903C106.079 52.6642 85.7519 64.6345 66.893 66.2719C66.893 66.2719 84.3967 64.4651 88.5751 41.9926C88.5751 41.9926 83.3804 43.6865 77.847 43.6865ZM89.8173 30.8128C89.8173 22.3432 87.7846 8.17087 81.6865 8.17087C77.3388 8.17087 75.3626 18.6166 75.3626 24.3759C75.3626 33.1842 79.2586 41.2021 85.3002 41.2021C86.5988 41.2021 87.841 40.9198 88.8009 40.581C89.3655 38.266 89.8173 33.8618 89.8173 30.8128Z" fill="black"/>
+      <path d="M2.75037 39.1694C3.42793 38.8306 3.54086 38.4354 3.54086 37.6449V32.1114H3.31501C2.46805 32.1114 2.12927 32.5067 1.05646 33.8618H1L1.11293 31.7726H7.88856L8.00149 33.8618H7.94502C6.87221 32.5067 6.53343 32.1114 5.68648 32.1114H5.51709V37.6449C5.51709 38.4354 5.57355 38.7741 6.30758 39.1129V39.1694H2.75037Z" fill="black"/>
+      <path d="M15.0594 39.1694C15.737 38.8306 15.8499 38.4354 15.8499 37.6449V35.6122H13.0268V37.6449C13.0268 38.4354 13.0832 38.7741 13.8172 39.1129V39.1694H10.26V39.1129C10.9376 38.7741 11.0505 38.4354 11.0505 37.6449V33.1842C11.0505 32.3938 10.9941 32.1114 10.26 31.7727V31.7162H13.8172V31.7727C13.1397 32.1114 13.0268 32.3938 13.0268 33.1842V35.104H15.8499V33.1842C15.8499 32.3938 15.7935 32.1114 15.0594 31.7727V31.7162H18.6167V31.7727C17.9391 32.1114 17.8262 32.3938 17.8262 33.1842V37.6449C17.8262 38.4354 17.8826 38.7741 18.6167 39.1129V39.1694H15.0594Z" fill="black"/>
+      <path d="M21.101 39.1694C21.7786 38.8306 21.8915 38.4354 21.8915 37.6449V33.1842C21.8915 32.3938 21.8351 32.1114 21.101 31.7727V31.7162H26.7474V33.8053H26.6909C25.9005 32.6196 25.6181 32.1679 24.6583 32.1679H23.9242V35.1605H24.4324C25.3358 35.1605 25.7311 34.9346 26.1828 34.2006H26.2392V36.4027H26.1828C25.7311 35.7251 25.2794 35.4993 24.4324 35.4993H23.9242V38.7177H24.7147C25.844 38.7177 26.1828 38.0966 27.1991 36.9108H27.2556L27.0297 39.1129L21.101 39.1694Z" fill="black"/>
+      <path d="M181.684 8.45318L178.013 5.96878L175.303 7.60623L179.877 10.7682L181.345 9.9777L181.684 8.45318Z" fill="#F9135C"/>
+      <path d="M183.942 11.841L183.66 13.3655L187.217 15.8499L189.984 14.156L185.467 11.0505L183.942 11.841Z" fill="#F9135C"/>
+      <path d="M179.877 10.7682L174.287 13.5914L177.11 15.2853L180.724 13.422L181.062 11.6151L179.877 10.7682Z" fill="#00C6F3"/>
+      <path d="M185.467 11.0505L191 8.22732L188.177 6.53342L184.563 8.39672L184.224 10.2036L185.467 11.0505Z" fill="#00C6F3"/>
+      <path d="M181.345 9.97772L179.877 10.7682L181.062 11.6152L181.345 9.97772Z" fill="#563A88"/>
+      <path d="M183.942 11.841L185.467 11.0505L184.224 10.2036L183.942 11.841Z" fill="#563A88"/>
+      <path d="M180.724 13.422L179.651 19.0684L182.926 17.0921L183.66 13.3655L182.474 12.575L180.724 13.422Z" fill="#51338D"/>
+      <path d="M184.563 8.39673L185.636 2.75037L182.361 4.67013L181.684 8.45319L182.813 9.24368L184.563 8.39673Z" fill="#51338D"/>
+      <path d="M182.813 9.24368L181.684 8.45319L181.345 9.9777L182.813 9.24368Z" fill="#612058"/>
+      <path d="M182.474 12.575L183.66 13.3655L183.942 11.841L182.474 12.575Z" fill="#612058"/>
+      <path d="M184.224 10.2036L184.563 8.39673L182.813 9.24368L184.224 10.2036Z" fill="#35217F"/>
+      <path d="M181.062 11.6151L180.724 13.422L182.474 12.575L181.062 11.6151Z" fill="#35217F"/>
+      <path d="M182.813 9.24368L181.345 9.97771L181.062 11.6152L182.474 12.575L183.942 11.841L184.224 10.2036L182.813 9.24368Z" fill="#2B2259"/>
+    </symbol>
+
+    <symbol id="logo-on-dark" viewBox="0 0 200 68">
+      <path d="M172.875 40.8068V25.7875C172.875 17.3744 168.302 14.6077 163.389 14.6077C158.646 14.6077 154.299 17.0921 151.984 19.8588V1C143.571 3.20208 134.988 3.87964 134.988 3.87964C138.715 5.63001 139.392 7.83209 139.392 13.7608V40.8633C139.392 45.7756 138.997 48.0906 135.666 50.0104H155.71C152.379 48.0906 151.984 45.7192 151.984 40.8633V20.5364C152.718 20.3106 154.129 20.1412 155.315 20.1412C158.195 20.1412 160.623 21.8351 160.623 25.844V40.8633C160.623 45.7756 160.227 48.0906 156.896 50.0104H176.658C173.27 48.0342 172.875 45.6627 172.875 40.8068Z" fill="white"/>
+      <path d="M53.3982 37.6449V5.91235C47.5825 10.6553 38.7741 19.0684 30.5869 21.948C33.7489 21.8916 37.9836 20.8187 37.9836 20.8187V38.4354C37.9836 44.6464 37.2496 47.2437 32.1114 49.954H59.3269C53.6241 47.1308 53.3982 43.5736 53.3982 37.6449Z" fill="white"/>
+      <path d="M125.107 39.5082V17.318H133.576V15.3982H125.107V6.02527C121.211 10.0342 115.734 14.156 109.297 17.3745H112.741V39.9599C112.741 47.6954 116.299 50.6315 123.018 50.6315C128.325 50.6315 132.334 47.0178 134.028 44.4205C133.068 44.7593 131.657 45.0981 130.697 45.0981C127.365 44.9851 125.107 43.2348 125.107 39.5082Z" fill="white"/>
+      <path d="M81.4606 6.64636C68.5305 6.64636 60.0609 18.2214 60.0609 27.2556C60.0609 37.8143 67.74 43.5736 77.847 43.5736C83.3804 43.5736 88.5751 41.8796 88.5751 41.8796C84.3968 64.4086 66.893 66.159 66.893 66.159C85.7519 64.5215 106.079 52.5513 106.079 31.3774C106.079 17.1486 95.5201 6.64636 81.4606 6.64636ZM88.8009 40.4681C87.841 40.8068 86.5988 41.0892 85.3002 41.0892C79.2586 41.0892 75.3626 33.0713 75.3626 24.263C75.3626 18.5037 77.3388 8.05795 81.6865 8.05795C87.7846 8.05795 89.8173 22.2303 89.8173 30.6999C89.8173 33.7489 89.3656 38.153 88.8009 40.4681Z" fill="white"/>
+      <path d="M1.11293 31.6033L1 33.6925H1.05646C2.12927 32.3373 2.46805 31.9421 3.31501 31.9421H3.4844V37.4755C3.4844 38.266 3.42793 38.6048 2.69391 38.9436V39H6.25111V38.9436C5.63002 38.6613 5.51709 38.3225 5.51709 37.532V31.9985H5.68648C6.53343 31.9985 6.87221 32.3938 7.94502 33.7489H8.00149L7.88856 31.6598H1.11293V31.6033Z" fill="white"/>
+      <path d="M15.0595 31.6598C15.737 31.9985 15.85 32.2809 15.85 33.0714V34.9911H13.0268V33.0714C13.0268 32.2809 13.0833 31.9985 13.8173 31.6598V31.6033H10.2601V31.6598C10.9376 31.9985 11.0506 32.2809 11.0506 33.0714V37.532C11.0506 38.3225 10.9941 38.6613 10.2601 39V39.0565H13.8173V39C13.1397 38.6613 13.0268 38.3225 13.0268 37.532V35.4993H15.85V37.532C15.85 38.3225 15.7935 38.6613 15.0595 39V39.0565H18.6167V39C17.9391 38.6613 17.8262 38.3225 17.8262 37.532V33.0714C17.8262 32.2809 17.8827 31.9985 18.6167 31.6598V31.6033L15.0595 31.6598Z" fill="white"/>
+      <path d="M24.7147 38.6613H23.9243V35.4428H24.4324C25.2794 35.4428 25.7311 35.6687 26.1828 36.3462H26.2393V34.0877H26.1828C25.7311 34.7653 25.3358 35.0476 24.4324 35.0476H23.9243V31.9985H24.6583C25.6182 31.9985 25.9005 32.4503 26.691 33.636H26.7474V31.6033H21.1011V31.6598C21.7786 31.9985 21.8916 32.2809 21.8916 33.0714V37.532C21.8916 38.3225 21.8351 38.6613 21.1011 39V39.0565H27.0298L27.2556 36.798H27.1991C26.1828 38.0402 25.844 38.6613 24.7147 38.6613Z" fill="white"/>
+      <path d="M191 8.11442L188.177 6.42051L184.563 8.28381L185.636 2.63745L182.361 4.55721L181.684 8.34027L178.013 5.85588L175.303 7.49332L179.877 10.6553L174.287 13.4785L177.11 15.1724L180.724 13.3091L179.651 18.9554L182.926 16.9792L183.66 13.2526L187.217 15.737L189.984 14.0431L185.467 10.9376L191 8.11442Z" fill="white"/>
+    </symbol>
+
+    <symbol id="asterisk-on-light" viewBox="0 0 50 50">
+      <path d="M22.2432 17.3784L11.7027 10.2432L3.91895 14.9459L17.054 24.027L21.2702 21.7567L22.2432 17.3784Z" fill="#F9135C"/>
+      <path d="M28.7297 27.1081L27.9189 31.4864L38.1351 38.6216L46.0811 33.7567L33.1081 24.8378L28.7297 27.1081Z" fill="#F9135C"/>
+      <path d="M17.054 24.027L1 32.1351L9.10811 37L19.4865 31.6486L20.4595 26.4594L17.054 24.027Z" fill="#00C6F3"/>
+      <path d="M33.1081 24.8378L49 16.7297L40.8919 11.8648L30.5135 17.2162L29.5405 22.4054L33.1081 24.8378Z" fill="#00C6F3"/>
+      <path d="M21.2703 21.7568L17.054 24.0271L20.4595 26.4595L21.2703 21.7568Z" fill="#563A88"/>
+      <path d="M28.7297 27.1081L33.1081 24.8378L29.5405 22.4054L28.7297 27.1081Z" fill="#563A88"/>
+      <path d="M19.4865 31.6487L16.4054 47.8649L25.8108 42.1892L27.9189 31.4865L24.5135 29.2162L19.4865 31.6487Z" fill="#51338D"/>
+      <path d="M30.5135 17.2162L33.5946 1L24.1892 6.51351L22.2432 17.3784L25.4865 19.6486L30.5135 17.2162Z" fill="#51338D"/>
+      <path d="M25.4865 19.6486L22.2433 17.3784L21.2703 21.7567L25.4865 19.6486Z" fill="#612058"/>
+      <path d="M24.5135 29.2162L27.9189 31.4865L28.7297 27.1081L24.5135 29.2162Z" fill="#612058"/>
+      <path d="M29.5405 22.4054L30.5135 17.2162L25.4865 19.6486L29.5405 22.4054Z" fill="#35217F"/>
+      <path d="M20.4595 26.4594L19.4865 31.6486L24.5135 29.2162L20.4595 26.4594Z" fill="#35217F"/>
+      <path d="M25.4865 19.6487L21.2703 21.7568L20.4595 26.4595L24.5135 29.2162L28.7297 27.1081L29.5405 22.4054L25.4865 19.6487Z" fill="#2B2259"/>
+    </symbol>
+
+    <symbol id="asterisk-on-dark" viewBox="0 0 50 50">
+      <path d="M49 16.7297L40.8919 11.8649L30.5135 17.2162L33.5946 1L24.1892 6.51351L22.2432 17.3784L11.7027 10.2432L3.91895 14.9459L17.054 24.027L1 32.1351L9.10811 37L19.4865 31.6486L16.4054 47.8649L25.8108 42.1892L27.9189 31.4865L38.1351 38.6216L46.0811 33.7568L33.1081 24.8378L49 16.7297Z" fill="white"/>
+    </symbol>
+
+    <symbol id="quote-mark" viewBox="0 0 60 50" fill="#f8f8fc">
+      <path d="M25.2804 1L27.3667 2.39092L26.6179 3.35365C24.5151 6.0573 23.0209 8.59938 21.8253 11.2896C20.638 13.9609 20.0659 16.1325 19.9187 18.1164C19.9211 19.9281 20.0871 21.0371 20.5402 21.8301C21.1665 22.9262 21.7353 23.9154 22.4311 24.7504L22.495 24.827L22.5501 24.9235C23.1637 25.9972 23.7935 27.0994 24.4244 28.3611C25.142 29.7963 25.4691 31.5247 25.4691 33.4935C25.4691 36.8849 24.264 39.6552 21.8691 41.879C19.5119 44.0679 16.9273 45.1113 13.8513 45.1113C9.93091 45.1113 6.63243 43.9599 4.35057 41.1626C1.98297 38.4489 1 35.2386 1 31.335C1 28.3807 1.65942 25.4139 3.30117 22.4587C4.87412 19.6274 6.76955 16.7819 9.14673 14.0877L9.15805 14.0749L9.16975 14.0624C11.4929 11.5844 14.0032 9.07081 16.8431 6.86041C19.5195 4.6577 22.188 2.93274 24.6597 1.38793L25.2804 1ZM55.1911 1L57.2775 2.39092L56.5287 3.35365C54.4258 6.0573 52.9317 8.59938 51.736 11.2896C50.5488 13.9609 49.9767 16.1324 49.8294 18.1164C49.8319 19.928 49.9978 21.0371 50.4509 21.8301C51.0773 22.9262 51.646 23.9154 52.3419 24.7504L52.4058 24.827L52.4609 24.9235C53.0744 25.9972 53.7043 27.0994 54.3351 28.3611C55.0527 29.7963 55.3799 31.5247 55.3799 33.4935C55.3799 36.8849 54.1747 39.6552 51.7798 41.879C49.4226 44.0679 46.838 45.1113 43.762 45.1113C39.8417 45.1113 36.5432 43.9599 34.2613 41.1626C31.8937 38.4489 30.9107 35.2386 30.9107 31.335C30.9107 28.3807 31.5702 25.4139 33.2119 22.4587C34.7849 19.6274 36.6803 16.7819 39.0575 14.0877L39.0688 14.0749L39.0805 14.0624C41.4037 11.5844 43.914 9.07084 46.7538 6.86045C49.4302 4.65772 52.0987 2.93275 54.5704 1.38793L55.1911 1ZM22.2457 5.6548C20.9301 6.55324 19.6002 7.5271 18.2723 8.62067L18.2601 8.63071L18.2476 8.64042C15.5467 10.7411 13.1309 13.1529 10.8356 15.6006C8.59266 18.1448 6.7913 20.8452 5.28318 23.5598C3.84135 26.1551 3.26734 28.7388 3.26734 31.335C3.26734 34.8245 4.13078 37.4683 6.07042 39.685L6.08406 39.7006L6.09711 39.7166C7.82343 41.8413 10.3786 42.844 13.8513 42.844C16.3258 42.844 18.3665 42.0373 20.3263 40.2175C22.2484 38.4326 23.2018 36.2692 23.2018 33.4935C23.2018 31.762 22.9122 30.4068 22.3964 29.3751C21.8113 28.2049 21.2253 27.1751 20.6241 26.1229C19.8198 25.1396 19.1801 24.02 18.595 22.996L18.5716 22.955C17.7947 21.5955 17.6513 19.94 17.6513 18.0755V18.0351L17.6542 17.9948C17.8201 15.6725 18.4817 13.2299 19.7534 10.3687C20.4661 8.76507 21.2789 7.2118 22.2457 5.6548ZM52.1564 5.6548C50.8409 6.55323 49.5109 7.5271 48.183 8.62067L48.1708 8.63071L48.1583 8.64042C45.4575 10.7411 43.0416 13.1529 40.7464 15.6006C38.5034 18.1448 36.702 20.8452 35.1939 23.5598C33.7521 26.1551 33.1781 28.7388 33.1781 31.335C33.1781 34.8245 34.0415 37.4683 35.9812 39.685L35.9948 39.7006L36.0079 39.7166C37.7342 41.8413 40.2893 42.844 43.762 42.844C46.2365 42.844 48.2773 42.0373 50.237 40.2175C52.1592 38.4326 53.1125 36.2692 53.1125 33.4935C53.1125 31.762 52.823 30.4068 52.3071 29.3751C51.7221 28.2049 51.136 27.1751 50.5348 26.1229C49.7305 25.1395 49.0908 24.0199 48.5058 22.996L48.4823 22.955C47.7055 21.5955 47.5621 19.94 47.5621 18.0755V18.0351L47.565 17.9948C47.7308 15.6725 48.3925 13.2299 49.6641 10.3687C50.3768 8.76507 51.1896 7.2118 52.1564 5.6548Z" fill="#f8f8fc"/>
+    </symbol>
+
+    <symbol id="share-email" viewBox="0 0 30 30">
+      <path d="M6.75 8.5L15 16.75L23.25 8.5" stroke="#C4D0D4"/>
+      <path d="M6.21749 9L14.7375 16.59C14.8441 16.6849 15.1559 16.6849 15.2625 16.59L23.7825 9H6.21749V9ZM5.16 9.98251V20.0175L11.025 15.2025L5.16 9.98251ZM24.84 9.98251L18.975 15.2025L24.84 20.0175V9.98251ZM12.1125 16.1775L6.24 21H23.76L17.8875 16.1775L16.215 17.6625C15.5159 18.285 14.4841 18.285 13.785 17.6625L12.1125 16.1775V16.1775Z" />
+    </symbol>
+
+    <symbol id="share-facebook" viewBox="0 0 30 30">
+      <path d="M12.75,12 L10.5,12 L10.5,15 L12.75,15 L12.75,24 L16.5,24 L16.5,15 L19.2315,15 L19.5,12 L16.5,12 L16.5,10.74975 C16.5,10.0335 16.644,9.75 17.33625,9.75 L19.5,9.75 L19.5,6 L16.644,6 C13.947,6 12.75,7.18725 12.75,9.46125 L12.75,12 Z"/>
+    </symbol>
+
+    <symbol id="share-twitter" viewBox="0 0 30 30" >
+      <path d="M25.3044801,9.0053673 C24.5785869,9.32443226 23.8034805,9.54179013 22.9873632,9.64103655 C23.8190647,9.13988312 24.458835,8.35001282 24.7614956,7.40758189 C23.9814679,7.8628031 23.1169577,8.19417132 22.1966727,8.37872046 C21.461757,7.59213103 20.4143381,7.1 19.2512685,7.1 C17.0227351,7.1 15.215794,8.9069411 15.215794,11.1330138 C15.215794,11.452899 15.2527039,11.7604809 15.3199618,12.0549393 C11.9652686,11.8966371 8.99197695,10.2857282 7.00212715,7.85049982 C6.6518939,8.44269749 6.45586171,9.13086072 6.45586171,9.88054032 C6.45586171,11.2831138 7.1694517,12.515902 8.25049953,13.2401548 C7.58858329,13.2188291 6.96603754,13.0367407 6.42305297,12.7349003 L6.42305297,12.7849336 C6.42305297,14.7411545 7.81168269,16.3725688 9.65963471,16.7441277 C9.32088452,16.835172 8.9632693,16.8843851 8.59663169,16.8843851 C8.33908311,16.8843851 8.09219738,16.8597785 7.84531165,16.8138463 C8.36286945,18.4157328 9.85074559,19.5837238 11.6215971,19.6165325 C10.2436302,20.6984006 8.49738526,21.3430922 6.61662451,21.3430922 C6.29673934,21.3430922 5.97767439,21.3242272 5.656969,21.2881376 C7.45242704,22.431522 9.56777025,23.1 11.8553593,23.1 C19.2816166,23.1 23.3375965,16.951643 23.3375965,11.6284257 C23.3375965,11.4570001 23.3375965,11.283934 23.3252932,11.1116881 C24.1135231,10.5465576 24.8016863,9.83214743 25.3430304,9.02177167 L25.3044801,9.0053673 Z"/>
+    </symbol>
+
+    <symbol id="share-instagram" viewBox="0 0 30 30">
+      <path d="M15,4.5 C12.1475,4.5 11.791375,4.513125 10.671375,4.563 C9.553125,4.6155 8.791875,4.791375 8.1225,5.05125 C7.432125,5.319 6.845875,5.678625 6.26225,6.26225 C5.678625,6.845875 5.318125,7.43125 5.05125,8.1225 C4.791375,8.791875 4.614625,9.553125 4.563,10.671375 C4.5105,11.791375 4.5,12.1475 4.5,15 C4.5,17.8525 4.513125,18.208625 4.563,19.328625 C4.6155,20.446 4.791375,21.208125 5.05125,21.8775 C5.319,22.567 5.678625,23.154125 6.26225,23.73775 C6.845875,24.3205 7.43125,24.681875 8.1225,24.94875 C8.79275,25.20775 9.554,25.385375 10.671375,25.437 C11.791375,25.4895 12.1475,25.5 15,25.5 C17.8525,25.5 18.208625,25.486875 19.328625,25.437 C20.446,25.3845 21.208125,25.20775 21.8775,24.94875 C22.567,24.681 23.154125,24.3205 23.73775,23.73775 C24.3205,23.154125 24.681875,22.569625 24.94875,21.8775 C25.20775,21.208125 25.385375,20.446 25.437,19.328625 C25.4895,18.208625 25.5,17.8525 25.5,15 C25.5,12.1475 25.486875,11.791375 25.437,10.671375 C25.3845,9.554 25.20775,8.791 24.94875,8.1225 C24.681,7.432125 24.3205,6.845875 23.73775,6.26225 C23.154125,5.678625 22.569625,5.318125 21.8775,5.05125 C21.208125,4.791375 20.446,4.614625 19.328625,4.563 C18.208625,4.5105 17.8525,4.5 15,4.5 Z M15,6.39 C17.802625,6.39 18.136875,6.404 19.24375,6.452125 C20.2675,6.50025 20.823125,6.67 21.192375,6.81525 C21.684125,7.005125 22.032375,7.232625 22.401625,7.59925 C22.76825,7.96675 22.99575,8.315875 23.185625,8.807625 C23.329125,9.176875 23.500625,9.7325 23.547,10.75625 C23.596875,11.864 23.60825,12.1965 23.60825,15 C23.60825,17.8035 23.595125,18.136875 23.5435,19.24375 C23.490125,20.2675 23.3195,20.823125 23.175125,21.192375 C22.979125,21.684125 22.756,22.032375 22.3885,22.401625 C22.021875,22.76825 21.6675,22.99575 21.181,23.185625 C20.8135,23.329125 20.249125,23.500625 19.225375,23.547 C18.110625,23.596875 17.7825,23.60825 14.97375,23.60825 C12.164125,23.60825 11.836,23.595125 10.722125,23.5435 C9.6975,23.490125 9.133125,23.3195 8.765625,23.175125 C8.26775,22.979125 7.925625,22.756 7.559,22.3885 C7.190625,22.021875 6.95525,21.6675 6.7715,21.181 C6.627125,20.8135 6.457375,20.249125 6.404,19.225375 C6.364625,18.122875 6.350625,17.7825 6.350625,14.986875 C6.350625,12.190375 6.364625,11.849125 6.404,10.7335 C6.457375,9.70975 6.627125,9.14625 6.7715,8.77875 C6.95525,8.28 7.190625,7.93875 7.559,7.570375 C7.925625,7.20375 8.26775,6.9675 8.765625,6.784625 C9.133125,6.639375 9.68525,6.46875 10.709,6.41625 C11.824625,6.376875 12.15275,6.36375 14.960625,6.36375 L15,6.39 L15,6.39 Z M15,9.60825 C12.020625,9.60825 9.60825,12.02325 9.60825,15 C9.60825,17.979375 12.02325,20.39175 15,20.39175 C17.979375,20.39175 20.39175,17.97675 20.39175,15 C20.39175,12.020625 17.97675,9.60825 15,9.60825 Z M15,18.5 C13.06625,18.5 11.5,16.93375 11.5,15 C11.5,13.06625 13.06625,11.5 15,11.5 C16.93375,11.5 18.5,13.06625 18.5,15 C18.5,16.93375 16.93375,18.5 15,18.5 Z M21.86525,9.395625 C21.86525,10.09125 21.3,10.655625 20.60525,10.655625 C19.909625,10.655625 19.34525,10.090375 19.34525,9.395625 C19.34525,8.700875 19.9105,8.13649899 20.60525,8.13649899 C21.299125,8.135625 21.86525,8.700875 21.86525,9.395625 Z"/>
+    </symbol>
+
+    <symbol id="share-republish" viewBox="0 0 30 30">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M8.65685 21.0672L3 15.4104L8.65685 9.75354L10.2731 11.3698L6.23249 15.4104L10.2731 19.451L8.65685 21.0672ZM20.6162 9.75354L26.2731 15.4104L20.6162 21.0672L19 19.451L23.0406 15.4104L19 11.3698L20.6162 9.75354ZM15.1561 6L17.4071 6.39691L14.2318 24.4048L11.9808 24.0079L15.1561 6Z" />
+    </symbol>
+
+    <symbol id="form-arrow-right" viewBox="0 0 15 15">
+      <path d="M7.95 13.825L14.375 7.4L7.95 1L6.725 2.225L11.1 6.5H0V8.325H11.1L6.725 12.575L7.95 13.825Z" />
+    </symbol>
+
+    <symbol id="arrow-left" viewBox="0 0 50 55" fill="none">
+      <path d="M31 16L19 27.625L31 39.25" stroke="currentColor" stroke-width="4"/>
+    </symbol>
+
+    <symbol id="arrow-right" viewBox="0 0 50 55" fill="none">
+      <path d="M19 16L31 27.625L19 39.25" stroke="currentColor" stroke-width="4"/>
+    </symbol>
+
+    <symbol id="close-element" viewBox="0 0 20 20" fill="none">    
+      <path d="M11.5248 10.1982L16.8624 4.86017C17.2558 4.46617 17.2558 3.82817 16.8624 3.43417C16.4678 3.04017 15.8294 3.04017 15.436 3.43417L10.0984 8.77177L4.76076 3.43417C4.36636 3.04017 3.72896 3.04017 3.33436 3.43417C2.94096 3.82817 2.94096 4.46617 3.33436 4.86017L8.67196 10.1982L3.33436 15.536C2.94096 15.9294 2.94096 16.5678 3.33436 16.9624C3.53216 17.159 3.78976 17.2576 4.04756 17.2576C4.30616 17.2576 4.56396 17.1592 4.76056 16.9624L10.0982 11.6248L15.4358 16.9624C15.6324 17.159 15.8912 17.2576 16.1488 17.2576C16.4066 17.2576 16.6642 17.1592 16.862 16.9624C17.2554 16.5678 17.2554 15.9294 16.862 15.536L11.5248 10.1982Z" fill="black"/>
+    </symbol>
+
+    <symbol id="minus" viewBox="0 0 20 20" fill="none">
+    <path d="M4.6 9.40039C4.26863 9.40039 4 9.66901 4 10.0004C4 10.3318 4.26863 10.6004 4.6 10.6004H15.4C15.7314 10.6004 16 10.3318 16 10.0004C16 9.66901 15.7314 9.40039 15.4 9.40039H4.6Z" fill="black"/>
+    </symbol>
+
+    <symbol id="plus" viewBox="0 0 15 15" fill="none">
+    <path d="M7.49995 1.9502C7.16857 1.9502 6.89995 2.21883 6.89995 2.5502V6.90021H2.54995C2.21859 6.90021 1.94995 7.16883 1.94995 7.50021C1.94995 7.83159 2.21859 8.10021 2.54995 8.10021H6.89995V12.4502C6.89995 12.7816 7.16857 13.0502 7.49995 13.0502C7.83133 13.0502 8.09995 12.7816 8.09995 12.4502V8.10021H12.45C12.7813 8.10021 13.05 7.83159 13.05 7.50021C13.05 7.16883 12.7813 6.90021 12.45 6.90021H8.09995V2.5502C8.09995 2.21883 7.83133 1.9502 7.49995 1.9502V1.9502Z" fill="black"/>
+    </symbol>
+
+
+  </defs>
+</svg>
+  <div class="grid">
+  <div class="grid-inner">
+    <div class="grid-column"><span class="grid-column--inner"></span></div>
+    <div class="grid-column"><span class="grid-column--inner"></span></div>
+    <div class="grid-column"><span class="grid-column--inner"></span></div>
+    <div class="grid-column"><span class="grid-column--inner"></span></div>
+    <div class="grid-column"><span class="grid-column--inner"></span></div>
+    <div class="grid-column"><span class="grid-column--inner"></span></div>
+    <div class="grid-column"><span class="grid-column--inner"></span></div>
+    <div class="grid-column"><span class="grid-column--inner"></span></div>
+    <div class="grid-column"><span class="grid-column--inner"></span></div>
+    <div class="grid-column"><span class="grid-column--inner"></span></div>
+    <div class="grid-column"><span class="grid-column--inner"></span></div>
+    <div class="grid-column"><span class="grid-column--inner"></span></div>
+  </div>
+</div>
+
+  
+  
+  <div class="page-wrapper ">
+        
+        
+    <main class="content js-modal-gallery article" tabindex="-1">
+
+            <div class="republish js-republisher" data-post-id="15678" aria-hidden="true" aria-modal="true" aria-labelledby="republisher-title" role="dialog">
+
+  <div class="republish__inner js-republisher-inner">
+
+    <h2 id="republisher-title" class="republish__head">Republish This Story</h2>
+
+    <button class="input republish__close js-close-republisher">Close</button>
+
+    <div class="republish__content">
+
+      <div class="tiny-text republish__instructions">
+        <p>* Please read before republishing *</p>
+        <p>We’re happy to make this story available to republish for free under an <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" rel="noopener" target="_blank">Attribution-NonCommercial-NoDerivatives Creative Commons license</a> as long as you follow our republishing guidelines, which require that you credit The 19th and retain our pixel. <a href="/republishing-guidelines/">See our full guidelines for more information</a>.</p>
+        <p>To republish, simply copy the HTML at right, which includes our tracking pixel, all paragraph styles and hyperlinks, the author byline and credit to The 19th. Have questions? Please email <a href="/cdn-cgi/l/email-protection#2c4f5e494d58455a496c1d15584442495b5f02435e4b" rel="noopener" target="_blank"><span class="__cf_email__" data-cfemail="b8dbcaddd9ccd1ceddf88981ccd0d6ddcfcb96d7cadf">[email&#160;protected]</span></a>.</p>
+        <p>— The Editors</p>
+      </div>
+
+      <div class="republish__article js-republish-content">
+        <div class="republish__article-text">
+          <h1 class="republish__article-heading js-article-heading"></h1>
+          <p class="small-text republish__article-date js-article-date"></p>
+          <p class="small-text republish__article-byline js-article-byline"></p>
+        </div>
+        <div class="republish__markup-wrapper">
+          <p class="small-text republish__markup-loader">Loading...</p>
+          <textarea
+            class="input republish__markup js-republish-markup"
+            name="republish-markup"
+            id="republish-markup"
+            cols="30"
+            rows="10"
+            aria-hidden="true"
+            readonly
+          >
+          </textarea>
+        </div>
+        <button class="button republish__copy-button js-copy-button" aria-label="Copy HTML">Copy HTML</button>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+    <div class="modal-gallery js-modal-gallery__root" aria-hidden="true" aria-modal="true" aria-labelledby="modal-gallery-title" role="dialog">
+  <h2 id="modal-gallery-title" hidden>Modal Gallery</h2>
+
+  <button class="input modal-gallery__close js-modal-gallery__close">Close</button>
+
+  <div class="modal-gallery__slides">
+    <div
+      class="modal-gallery__slide modal-gallery__slide--active js-modal-gallery__slide--active"
+      aria-labelledby="modal-gallery__caption modal-gallery__credit"
+    >
+    </div>
+  </div>
+
+  <div class="modal-gallery__info">
+    <div class="tiny-text modal-gallery___count">
+      <span class="modal-gallery___count__current js-modal-gallery__count--current"></span> <span class="modal-gallery___count__slash">/</span> <span class="modal-gallery___count__total js-modal-gallery__count--total"></span>
+    </div>
+    <div class="tiny-text modal-gallery__dek">
+      <span id="modal-gallery__caption" class="modal-gallery__caption js-modal-gallery__caption"></span>
+      <span id="modal-gallery__credit" class="credit modal-gallery__credit js-modal-gallery__credit"></span>
+    </div>
+  </div>
+
+  <div class="modal-gallery__controls">
+    <button class="input button modal-gallery__button modal-gallery__button--previous js-modal-gallery__previous" aria-label="Previous slide">
+      <svg class="modal-gallery__button-icon">
+        <use xlink:href="#arrow-left"></use>
+      </svg>
+    </button>
+    <button class="input button modal-gallery__button modal-gallery__button--next js-modal-gallery__next" aria-label="Next slide">
+      <svg class="modal-gallery__button-icon">
+        <use xlink:href="#arrow-right"></use>
+      </svg>
+    </button>
+  </div>
+</div>
+                  
+<nav id="menu" class="menu js--menu" aria-hidden="true" aria-modal="true" aria-labelledby="menu-label" role="dialog">
+  <h2 id="menu-label" hidden>Menu</h2>
+
+  <div class="menu__inner">
+
+          
+
+<ul class="menu__pagelinks menu__pagelinks--mobile ">
+      <li class="menu__pagelinks-item">
+      <a class="menu__pagelinks-link" href="https://19thnews.org/about/">Our Mission</a>
+    </li>
+      <li class="menu__pagelinks-item">
+      <a class="menu__pagelinks-link" href="https://19thnews.org/team/">Our Team</a>
+    </li>
+      <li class="menu__pagelinks-item">
+      <a class="menu__pagelinks-link" href="https://19thnews.org/archive/">Latest Stories</a>
+    </li>
+      <li class="menu__pagelinks-item">
+      <a class="menu__pagelinks-link" href="https://www.crowdcast.io/19thnews">Upcoming Events</a>
+    </li>
+      <li class="menu__pagelinks-item">
+      <a class="menu__pagelinks-link" href="https://summit.19thnews.org">2020 Summit</a>
+    </li>
+      <li class="menu__pagelinks-item">
+      <a class="menu__pagelinks-link" href="https://19thnews.org/contact-us/">Contact Us</a>
+    </li>
+      <li class="menu__pagelinks-item">
+      <a class="menu__pagelinks-link" href="https://19thnews.org/newsletter/">Newsletter</a>
+    </li>
+      <li class="menu__pagelinks-item">
+      <a class="menu__pagelinks-link" href="https://19thnews.org/membership/">Donate</a>
+    </li>
+      <li class="menu__pagelinks-item">
+      <a class="menu__pagelinks-link" href="https://19thnews.org/19th-jobs/">Work With Us</a>
+    </li>
+  </ul>
+    
+    <ul class="menu__switcher" role="tablist">
+      <li class="menu__switcher-item">
+        <button
+          id="menu-tab-collections"
+          class="basic-text input menu__switcher-btn js--menu-item"
+          role="tab"
+          aria-controls="menu-panel-collections"
+          aria-selected="false"
+          data-show="collections"
+        >
+          <span>Collections</span>
+        </button>
+      </li>
+      <li class="menu__switcher-item">
+        <button
+          id="menu-tab-topics"
+          class="basic-text input menu__switcher-btn js--menu-item"
+          role="tab"
+          aria-controls="menu-panel-topics"
+          aria-selected="false"
+          data-show="topics"
+        >
+          <span>Topics</span>
+        </button>
+      </li>
+    </ul>
+
+    <ul class="menu-content">
+      <li
+        id="menu-panel-collections"
+        class="menu-content__group menu-content__group--collections js--menu-content"
+        data-id="collections"
+        role="tabpanel"
+        aria-labelledby="menu-tab-collections"
+        aria-hidden="true"
+      >
+        <ul class="menu-list">
+                      <li
+            class="menu-list__item gutenberg">
+              
+<div class="alignwide wp-block-collection-tease wp-block-collection-tease--inverse">
+
+  <p class="wp-block-collection-tease__overline">From the Collection</p>
+
+  <h2 class="basic-page-title wp-block-collection-tease__title">
+    <a class="plain-link" href="https://19thnews.org/collections/changing-child-care/">Changing Child Care</a>
+  </h2>
+
+  <div class="wp-block-collection-tease__group">
+                <figure class="wp-block-collection-tease__figure">
+        <a class="plain-link" href="https://19thnews.org/collections/changing-child-care/">
+        <div class="wp-block-collection-tease__img-container">
+          <img
+            class="wp-block-collection-tease__img js-modal-gallery__hidden lazyload"
+            data-sizes="auto"
+            data-src="https://19thnews.org/wp-content/uploads/2020/08/collections-changing-childcare-72dpi-600x600-c-default.jpg"
+            data-srcset="https://19thnews.org/wp-content/uploads/2020/08/collections-changing-childcare-72dpi-420x420-c-default.jpg 640w,
+                         https://19thnews.org/wp-content/uploads/2020/08/collections-changing-childcare-72dpi-600x600-c-default.jpg 1024w,
+                         https://19thnews.org/wp-content/uploads/2020/08/collections-changing-childcare-72dpi-750x750-c-default.jpg 1920w"
+            src="https://19thnews.org/wp-content/uploads/2020/08/collections-changing-childcare-72dpi-600x600-c-default.jpg"
+            alt="Illustration of a woman feeding a baby a bottle"
+                      />
+          </div>
+        </a>
+      </figure>
+    
+    <ul class="wp-block-collection-tease__list">
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2021/06/minnesota-to-let-incarcerated-mothers-be-with-their-newborns/">Minnesota offers conditional release so that incarcerated mothers can be with their newborns</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Jean Lee</span>            
+            <time class="article-meta__value--published" datetime="Jun-11">&middot; June 11</time>
+          </div>
+        </li>
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2021/06/summer-camps-closures-moms-workforce/">Summer camps haven't fully recovered. That could hurt working moms.</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Chabeli Carrazana</span>            
+            <time class="article-meta__value--published" datetime="Jun-09">&middot; June 9</time>
+          </div>
+        </li>
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2021/06/child-tax-credit-poorest-families/">This policy could cut child poverty in half — if it reaches those who need it most</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Chabeli Carrazana</span>            
+            <time class="article-meta__value--published" datetime="Jun-03">&middot; June 3</time>
+          </div>
+        </li>
+          </ul>
+  </div>
+
+</div>
+
+            </li>
+                      <li
+            class="menu-list__item gutenberg">
+              
+<div class="alignwide wp-block-collection-tease wp-block-collection-tease--inverse">
+
+  <p class="wp-block-collection-tease__overline">From the Collection</p>
+
+  <h2 class="basic-page-title wp-block-collection-tease__title">
+    <a class="plain-link" href="https://19thnews.org/collections/next-gen-gop/">Next-Gen GOP</a>
+  </h2>
+
+  <div class="wp-block-collection-tease__group">
+                <figure class="wp-block-collection-tease__figure">
+        <a class="plain-link" href="https://19thnews.org/collections/next-gen-gop/">
+        <div class="wp-block-collection-tease__img-container">
+          <img
+            class="wp-block-collection-tease__img js-modal-gallery__hidden lazyload"
+            data-sizes="auto"
+            data-src="https://19thnews.org/wp-content/uploads/2020/08/collections-next-gen-gop-72dpi-600x600-c-default.jpg"
+            data-srcset="https://19thnews.org/wp-content/uploads/2020/08/collections-next-gen-gop-72dpi-420x420-c-default.jpg 640w,
+                         https://19thnews.org/wp-content/uploads/2020/08/collections-next-gen-gop-72dpi-600x600-c-default.jpg 1024w,
+                         https://19thnews.org/wp-content/uploads/2020/08/collections-next-gen-gop-72dpi-750x750-c-default.jpg 1920w"
+            src="https://19thnews.org/wp-content/uploads/2020/08/collections-next-gen-gop-72dpi-600x600-c-default.jpg"
+            alt="Illustration of a woman riding an elephant"
+                      />
+          </div>
+        </a>
+      </figure>
+    
+    <ul class="wp-block-collection-tease__list">
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2020/11/election-2020-republican-women-congress/">A banner year for Republican women</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Amanda Becker</span>            
+            <time class="article-meta__value--published" datetime="Nov-11">&middot; November 11</time>
+          </div>
+        </li>
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2020/11/election-results-2020-republican-women-us-house-of-representatives/">Republican women could double representation in the U.S. House</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Amanda Becker</span>            
+            <time class="article-meta__value--published" datetime="Nov-04">&middot; November 4</time>
+          </div>
+        </li>
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2020/08/elise-stefanik-wants-to-elect-more-republican-women-into-office/">U.S. Rep. Elise Stefanik wants to elect more Republican women into office</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Barbara Rodriguez</span>            
+            <time class="article-meta__value--published" datetime="Aug-13">&middot; August 13</time>
+          </div>
+        </li>
+          </ul>
+  </div>
+
+</div>
+
+            </li>
+                      <li
+            class="menu-list__item gutenberg">
+              
+<div class="alignwide wp-block-collection-tease wp-block-collection-tease--inverse">
+
+  <p class="wp-block-collection-tease__overline">From the Collection</p>
+
+  <h2 class="basic-page-title wp-block-collection-tease__title">
+    <a class="plain-link" href="https://19thnews.org/collections/on-the-rise/">On The Rise</a>
+  </h2>
+
+  <div class="wp-block-collection-tease__group">
+                <figure class="wp-block-collection-tease__figure">
+        <a class="plain-link" href="https://19thnews.org/collections/on-the-rise/">
+        <div class="wp-block-collection-tease__img-container">
+          <img
+            class="wp-block-collection-tease__img js-modal-gallery__hidden lazyload"
+            data-sizes="auto"
+            data-src="https://19thnews.org/wp-content/uploads/2020/08/collections-women-on-the-rise-72dpi-600x600-c-default.jpg"
+            data-srcset="https://19thnews.org/wp-content/uploads/2020/08/collections-women-on-the-rise-72dpi-420x420-c-default.jpg 640w,
+                         https://19thnews.org/wp-content/uploads/2020/08/collections-women-on-the-rise-72dpi-600x600-c-default.jpg 1024w,
+                         https://19thnews.org/wp-content/uploads/2020/08/collections-women-on-the-rise-72dpi-750x750-c-default.jpg 1920w"
+            src="https://19thnews.org/wp-content/uploads/2020/08/collections-women-on-the-rise-72dpi-600x600-c-default.jpg"
+            alt="Illustration of three women marching"
+                      />
+          </div>
+        </a>
+      </figure>
+    
+    <ul class="wp-block-collection-tease__list">
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2021/06/meet-ketanji-brown-jackson-a-likely-contender-for-the-supreme-court/">Meet Ketanji Brown Jackson, a likely contender for the Supreme Court</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Jean Lee</span>            
+            <time class="article-meta__value--published" datetime="Jun-14">&middot; June 14</time>
+          </div>
+        </li>
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2021/06/maryland-women-gun-violence/">How women in Maryland are trying to stop gun violence</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Barbara Rodriguez</span>            
+            <time class="article-meta__value--published" datetime="Jun-10">&middot; June 10</time>
+          </div>
+        </li>
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2021/06/virginia-democrats-are-picking-a-gubernatorial-nominee-there-is-an-opening-to-make-history/">Virginia Democrats pick Terry McAuliffe as nominee for governor</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Amanda Becker</span>            
+            <time class="article-meta__value--published" datetime="Jun-08">&middot; June 8</time>
+          </div>
+        </li>
+          </ul>
+  </div>
+
+</div>
+
+            </li>
+                      <li
+            class="menu-list__item gutenberg">
+              
+<div class="alignwide wp-block-collection-tease wp-block-collection-tease--inverse">
+
+  <p class="wp-block-collection-tease__overline">From the Collection</p>
+
+  <h2 class="basic-page-title wp-block-collection-tease__title">
+    <a class="plain-link" href="https://19thnews.org/collections/pandemic-within-a-pandemic/">Pandemic Within a Pandemic</a>
+  </h2>
+
+  <div class="wp-block-collection-tease__group">
+                <figure class="wp-block-collection-tease__figure">
+        <a class="plain-link" href="https://19thnews.org/collections/pandemic-within-a-pandemic/">
+        <div class="wp-block-collection-tease__img-container">
+          <img
+            class="wp-block-collection-tease__img js-modal-gallery__hidden lazyload"
+            data-sizes="auto"
+            data-src="https://19thnews.org/wp-content/uploads/2020/08/collections-pandemic-within-a-pandemic-72dpi-600x600-c-default.jpg"
+            data-srcset="https://19thnews.org/wp-content/uploads/2020/08/collections-pandemic-within-a-pandemic-72dpi-420x420-c-default.jpg 640w,
+                         https://19thnews.org/wp-content/uploads/2020/08/collections-pandemic-within-a-pandemic-72dpi-600x600-c-default.jpg 1024w,
+                         https://19thnews.org/wp-content/uploads/2020/08/collections-pandemic-within-a-pandemic-72dpi-750x750-c-default.jpg 1920w"
+            src="https://19thnews.org/wp-content/uploads/2020/08/collections-pandemic-within-a-pandemic-72dpi-600x600-c-default.jpg"
+            alt="Illustration of four people marching for Black Lives Matter with coronavirus as the backdrop"
+                      />
+          </div>
+        </a>
+      </figure>
+    
+    <ul class="wp-block-collection-tease__list">
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2021/06/darnella-frazier-teen-filmed-george-floyds-murder-wins-honorary-pulitzer/">Darnella Frazier, the teen who filmed George Floyd’s murder, wins honorary Pulitzer</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Errin Haines</span>            
+            <time class="article-meta__value--published" datetime="Jun-11">&middot; June 11</time>
+          </div>
+        </li>
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2021/06/black-women-wage-gap/">Barriers for Black women set U.S. economy back by $500 billion, report finds</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Chabeli Carrazana</span>            
+            <time class="article-meta__value--published" datetime="Jun-08">&middot; June 8</time>
+          </div>
+        </li>
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2021/04/latinas-wealth-gap-pandemic-unidos-report/">How the pandemic has widened the Latina wealth gap</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Chabeli Carrazana</span>            
+            <time class="article-meta__value--published" datetime="Apr-19">&middot; April 19</time>
+          </div>
+        </li>
+          </ul>
+  </div>
+
+</div>
+
+            </li>
+                      <li
+            class="menu-list__item gutenberg">
+              
+<div class="alignwide wp-block-collection-tease wp-block-collection-tease--inverse">
+
+  <p class="wp-block-collection-tease__overline">From the Collection</p>
+
+  <h2 class="basic-page-title wp-block-collection-tease__title">
+    <a class="plain-link" href="https://19thnews.org/collections/portraits-of-a-pandemic/">Portraits of a Pandemic</a>
+  </h2>
+
+  <div class="wp-block-collection-tease__group">
+                <figure class="wp-block-collection-tease__figure">
+        <a class="plain-link" href="https://19thnews.org/collections/portraits-of-a-pandemic/">
+        <div class="wp-block-collection-tease__img-container">
+          <img
+            class="wp-block-collection-tease__img js-modal-gallery__hidden lazyload"
+            data-sizes="auto"
+            data-src="https://19thnews.org/wp-content/uploads/2020/08/collections-portraits-of-a-pandemic-72dpi-600x600-c-default.jpg"
+            data-srcset="https://19thnews.org/wp-content/uploads/2020/08/collections-portraits-of-a-pandemic-72dpi-420x420-c-default.jpg 640w,
+                         https://19thnews.org/wp-content/uploads/2020/08/collections-portraits-of-a-pandemic-72dpi-600x600-c-default.jpg 1024w,
+                         https://19thnews.org/wp-content/uploads/2020/08/collections-portraits-of-a-pandemic-72dpi-750x750-c-default.jpg 1920w"
+            src="https://19thnews.org/wp-content/uploads/2020/08/collections-portraits-of-a-pandemic-72dpi-600x600-c-default.jpg"
+            alt="Illustration of a woman wearing a mask and holding up the coronavirus"
+                      />
+          </div>
+        </a>
+      </figure>
+    
+    <ul class="wp-block-collection-tease__list">
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2020/10/for-family-caregivers-covid-is-a-mental-health-crisis-in-the-making/">For family caregivers, COVID is a mental health crisis in the making</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Shefali Luthra</span>            
+            <time class="article-meta__value--published" datetime="Oct-08">&middot; October 8</time>
+          </div>
+        </li>
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2020/09/a-new-database-tracks-covid-19s-effects-on-sex-and-gender/">A new database tracks COVID-19’s effects on sex and gender</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Shefali Luthra</span>            
+            <time class="article-meta__value--published" datetime="Sep-15">&middot; September 15</time>
+          </div>
+        </li>
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2020/08/pregnant-in-a-pandemic-the-perfect-storm-for-a-crisis/">Pregnant in a pandemic: The 'perfect storm for a crisis'</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Shefali Luthra</span>            
+            <time class="article-meta__value--published" datetime="Aug-25">&middot; August 25</time>
+          </div>
+        </li>
+          </ul>
+  </div>
+
+</div>
+
+            </li>
+                      <li
+            class="menu-list__item gutenberg">
+              
+<div class="alignwide wp-block-collection-tease wp-block-collection-tease--inverse">
+
+  <p class="wp-block-collection-tease__overline">From the Collection</p>
+
+  <h2 class="basic-page-title wp-block-collection-tease__title">
+    <a class="plain-link" href="https://19thnews.org/collections/19th-explains/">The 19th Explains</a>
+  </h2>
+
+  <div class="wp-block-collection-tease__group">
+                <figure class="wp-block-collection-tease__figure">
+        <a class="plain-link" href="https://19thnews.org/collections/19th-explains/">
+        <div class="wp-block-collection-tease__img-container">
+          <img
+            class="wp-block-collection-tease__img js-modal-gallery__hidden lazyload"
+            data-sizes="auto"
+            data-src="https://19thnews.org/wp-content/uploads/2020/11/the-19th-explains-collection-illustrations-600x600-c-default.jpg"
+            data-srcset="https://19thnews.org/wp-content/uploads/2020/11/the-19th-explains-collection-illustrations-420x420-c-default.jpg 640w,
+                         https://19thnews.org/wp-content/uploads/2020/11/the-19th-explains-collection-illustrations-600x600-c-default.jpg 1024w,
+                         https://19thnews.org/wp-content/uploads/2020/11/the-19th-explains-collection-illustrations-750x750-c-default.jpg 1920w"
+            src="https://19thnews.org/wp-content/uploads/2020/11/the-19th-explains-collection-illustrations-600x600-c-default.jpg"
+            alt="People walking from many articles to one article where they can get the context they need on an issue."
+                      />
+          </div>
+        </a>
+      </figure>
+    
+    <ul class="wp-block-collection-tease__list">
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2021/06/the-19th-explains-what-did-title-ix-changes-just-do-for-trans-students/">The 19th Explains: What did Title IX changes just do for trans students?</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Mariel Padilla</span>            
+            <time class="article-meta__value--published" datetime="Jun-23">&middot; June 23</time>
+          </div>
+        </li>
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2021/06/the-19th-explains-everything-you-need-to-know-to-get-the-child-tax-credit/">The 19th Explains: Everything you need to know to get the child tax credit</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Chabeli Carrazana</span>            
+            <time class="article-meta__value--published" datetime="Jun-21">&middot; June 21</time>
+          </div>
+        </li>
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2021/06/the-19th-explains-how-to-manage-post-pandemic-social-anxiety/">The 19th Explains: How to manage post-pandemic social anxiety</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Shefali Luthra</span>            
+            <time class="article-meta__value--published" datetime="Jun-18">&middot; June 18</time>
+          </div>
+        </li>
+          </ul>
+  </div>
+
+</div>
+
+            </li>
+                      <li
+            class="menu-list__item gutenberg">
+              
+<div class="alignwide wp-block-collection-tease wp-block-collection-tease--inverse">
+
+  <p class="wp-block-collection-tease__overline">From the Collection</p>
+
+  <h2 class="basic-page-title wp-block-collection-tease__title">
+    <a class="plain-link" href="https://19thnews.org/collections/the-electability-myth/">The Electability Myth</a>
+  </h2>
+
+  <div class="wp-block-collection-tease__group">
+                <figure class="wp-block-collection-tease__figure">
+        <a class="plain-link" href="https://19thnews.org/collections/the-electability-myth/">
+        <div class="wp-block-collection-tease__img-container">
+          <img
+            class="wp-block-collection-tease__img js-modal-gallery__hidden lazyload"
+            data-sizes="auto"
+            data-src="https://19thnews.org/wp-content/uploads/2020/08/collections-electability-myth-72dpi-600x600-c-default.jpg"
+            data-srcset="https://19thnews.org/wp-content/uploads/2020/08/collections-electability-myth-72dpi-420x420-c-default.jpg 640w,
+                         https://19thnews.org/wp-content/uploads/2020/08/collections-electability-myth-72dpi-600x600-c-default.jpg 1024w,
+                         https://19thnews.org/wp-content/uploads/2020/08/collections-electability-myth-72dpi-750x750-c-default.jpg 1920w"
+            src="https://19thnews.org/wp-content/uploads/2020/08/collections-electability-myth-72dpi-600x600-c-default.jpg"
+            alt="Illustration of three women speaking at podiums"
+                      />
+          </div>
+        </a>
+      </figure>
+    
+    <ul class="wp-block-collection-tease__list">
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2021/06/how-ranked-choice-voting-elevates-women-and-people-of-color-seeking-office/">How ranked-choice voting elevates women and people of color seeking office</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Barbara Rodriguez</span>            
+            <time class="article-meta__value--published" datetime="Jun-17">&middot; June 17</time>
+          </div>
+        </li>
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2021/04/this-candidate-says-she-quit-twitter-because-of-online-harassment/">This candidate says she quit Twitter because of online harassment</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Barbara Rodriguez</span>            
+            <time class="article-meta__value--published" datetime="Apr-17">&middot; April 17</time>
+          </div>
+        </li>
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2020/11/despite-historic-2020-gains-lgbtq-candidates-faced-homophobic-attacks/">Despite historic 2020 gains, LGBTQ+ candidates faced homophobic attacks</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Kate Sosin</span>            
+            <time class="article-meta__value--published" datetime="Nov-11">&middot; November 11</time>
+          </div>
+        </li>
+          </ul>
+  </div>
+
+</div>
+
+            </li>
+                      <li
+            class="menu-list__item gutenberg">
+              
+<div class="alignwide wp-block-collection-tease wp-block-collection-tease--inverse">
+
+  <p class="wp-block-collection-tease__overline">From the Collection</p>
+
+  <h2 class="basic-page-title wp-block-collection-tease__title">
+    <a class="plain-link" href="https://19thnews.org/collections/the-impact-of-aging/">The Impact of Aging</a>
+  </h2>
+
+  <div class="wp-block-collection-tease__group">
+                <figure class="wp-block-collection-tease__figure">
+        <a class="plain-link" href="https://19thnews.org/collections/the-impact-of-aging/">
+        <div class="wp-block-collection-tease__img-container">
+          <img
+            class="wp-block-collection-tease__img js-modal-gallery__hidden lazyload"
+            data-sizes="auto"
+            data-src="https://19thnews.org/wp-content/uploads/2021/05/19th-collection-aging.-600x600-c-default.jpg"
+            data-srcset="https://19thnews.org/wp-content/uploads/2021/05/19th-collection-aging.-420x420-c-default.jpg 640w,
+                         https://19thnews.org/wp-content/uploads/2021/05/19th-collection-aging.-600x600-c-default.jpg 1024w,
+                         https://19thnews.org/wp-content/uploads/2021/05/19th-collection-aging.-750x750-c-default.jpg 1920w"
+            src="https://19thnews.org/wp-content/uploads/2021/05/19th-collection-aging.-600x600-c-default.jpg"
+            alt="A number of older people walking down a path of information."
+                      />
+          </div>
+        </a>
+      </figure>
+    
+    <ul class="wp-block-collection-tease__list">
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2021/05/cdc-finds-older-women-left-behind-covid-vaccinations/">With COVID vaccinations, CDC finds older women are being left behind</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Shefali Luthra</span>            
+            <time class="article-meta__value--published" datetime="May-11">&middot; May 11</time>
+          </div>
+        </li>
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2021/04/home-care-american-jobs-plan/">A first-of-its-kind investment in home care is in the works. But will it be enough?</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Chabeli Carrazana</span>,                           <span>Shefali Luthra</span>            
+            <time class="article-meta__value--published" datetime="Apr-15">&middot; April 15</time>
+          </div>
+        </li>
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2021/04/covid-vaccine-eligibility-opens-up-older-women-left-behind/">As COVID vaccine eligibility opens up, older women struggle to get a shot</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Shefali Luthra</span>            
+            <time class="article-meta__value--published" datetime="Apr-08">&middot; April 8</time>
+          </div>
+        </li>
+          </ul>
+  </div>
+
+</div>
+
+            </li>
+                      <li
+            class="menu-list__item gutenberg">
+              
+<div class="alignwide wp-block-collection-tease wp-block-collection-tease--inverse">
+
+  <p class="wp-block-collection-tease__overline">From the Collection</p>
+
+  <h2 class="basic-page-title wp-block-collection-tease__title">
+    <a class="plain-link" href="https://19thnews.org/collections/voting-rights/">Voting Rights</a>
+  </h2>
+
+  <div class="wp-block-collection-tease__group">
+                <figure class="wp-block-collection-tease__figure">
+        <a class="plain-link" href="https://19thnews.org/collections/voting-rights/">
+        <div class="wp-block-collection-tease__img-container">
+          <img
+            class="wp-block-collection-tease__img js-modal-gallery__hidden lazyload"
+            data-sizes="auto"
+            data-src="https://19thnews.org/wp-content/uploads/2021/05/19th-collection-voting-600x600-c-default.jpg"
+            data-srcset="https://19thnews.org/wp-content/uploads/2021/05/19th-collection-voting-420x420-c-default.jpg 640w,
+                         https://19thnews.org/wp-content/uploads/2021/05/19th-collection-voting-600x600-c-default.jpg 1024w,
+                         https://19thnews.org/wp-content/uploads/2021/05/19th-collection-voting-750x750-c-default.jpg 1920w"
+            src="https://19thnews.org/wp-content/uploads/2021/05/19th-collection-voting-600x600-c-default.jpg"
+            alt="A series of hands reaching for ballots."
+                      />
+          </div>
+        </a>
+      </figure>
+    
+    <ul class="wp-block-collection-tease__list">
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2021/07/kagan-dissent-brnovich-dnc-supreme-court-voting-rights/">Justice Kagan warns Supreme Court has weakened voting protections at ‘perilous moment’</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Amanda Becker</span>            
+            <time class="article-meta__value--published" datetime="Jul-01">&middot; July 1</time>
+          </div>
+        </li>
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2021/06/stacey-abrams-fair-fight-action-georgia-voting-law-purged-voters/">Stacey Abrams group activating tool for Georgia voters to check if they are about to be purged</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Errin Haines</span>            
+            <time class="article-meta__value--published" datetime="Jun-29">&middot; June 29</time>
+          </div>
+        </li>
+              <li class="wp-block-collection-tease__item">
+          <h3 class="tease-title wp-block-collection-tease__item-title">
+            <a class="wp-block-collection-tease__item-title-link" href="https://19thnews.org/2021/06/texas-walkout-voting-rights-women/">Meet some of the women behind the walkout over Texas voting bill</a>
+          </h3>
+
+          <div class="meta-text">
+                          <span>Barbara Rodriguez</span>            
+            <time class="article-meta__value--published" datetime="Jun-28">&middot; June 28</time>
+          </div>
+        </li>
+          </ul>
+  </div>
+
+</div>
+
+            </li>
+                  </ul>
+
+                  <p class="menu-list__view-all menu-list__view-all--collections"><a class="menu-list__view-all-link" href="https://19thnews.org/collections/">View all collections</a></p>
+              </li>
+
+      <li
+        id="menu-panel-topics"
+        class="menu-content__group menu-content__group--topics js--menu-content"
+        data-id="topics"
+        role="tabpanel"
+        aria-labelledby="menu-tab-topics"
+        aria-hidden="true"
+      >
+        <h2 class="basic-page-title">Explore by Topic</h2>
+
+        <ul class="menu-list menu-list--topic">
+                      <li class="menu-list__item--topic">
+              <a href="https://19thnews.org/topics/business-economy/">Business &amp; Economy</a>
+            </li>
+                      <li class="menu-list__item--topic">
+              <a href="https://19thnews.org/topics/coronavirus/">Coronavirus</a>
+            </li>
+                      <li class="menu-list__item--topic">
+              <a href="https://19thnews.org/topics/education/">Education</a>
+            </li>
+                      <li class="menu-list__item--topic">
+              <a href="https://19thnews.org/topics/election-2020/">Election 2020</a>
+            </li>
+                      <li class="menu-list__item--topic">
+              <a href="https://19thnews.org/topics/environment-climate/">Environment &amp; Climate</a>
+            </li>
+                      <li class="menu-list__item--topic">
+              <a href="https://19thnews.org/topics/health/">Health</a>
+            </li>
+                      <li class="menu-list__item--topic">
+              <a href="https://19thnews.org/topics/immigration/">Immigration</a>
+            </li>
+                      <li class="menu-list__item--topic">
+              <a href="https://19thnews.org/topics/inside-the-19th/">Inside The 19th</a>
+            </li>
+                      <li class="menu-list__item--topic">
+              <a href="https://19thnews.org/topics/justice/">Justice</a>
+            </li>
+                      <li class="menu-list__item--topic">
+              <a href="https://19thnews.org/topics/lgbtq/">LGBTQ+</a>
+            </li>
+                      <li class="menu-list__item--topic">
+              <a href="https://19thnews.org/topics/politics/">Politics</a>
+            </li>
+                      <li class="menu-list__item--topic">
+              <a href="https://19thnews.org/topics/race/">Race</a>
+            </li>
+                      <li class="menu-list__item--topic">
+              <a href="https://19thnews.org/topics/technology/">Technology</a>
+            </li>
+                  </ul>
+
+                 <p class="menu-list__view-all menu-list__view-all--topics"> <a class="menu-list__view-all-link" href="https://19thnews.org/topics/">View All Topics</a></p>
+              </li>
+
+    </ul>
+  </div>
+</nav>
+
+
+        
+          <button
+    class="menu-button js--menu-toggle "
+    aria-controls="menu"
+    aria-expanded="false"
+    aria-labelledby="menu-button-label"    
+  >
+    <span id="menu-button-label" class="js--menu-toggle-text" hidden>Open Menu</span>
+    <span class="menu-button__bar menu-button__bar--1"></span>
+    <span class="menu-button__bar menu-button__bar--2"></span>
+  </button>
+
+                                          <aside class="sidebar  js-sidebar">
+
+  <a href="https://19thnews.org" class="sidebar__logo-link js-sidebar-logo" aria-label="Home">
+    <span class="visually-hidden">Home</span>
+        <svg class="sidebar__logo">
+      <use xlink:href="#logo-on-light"></use>
+    </svg>
+  </a>
+
+      <meta name="ga-page-type" content="article" />
+  
+        <div class="sidebar__nav-pagelinks">
+      
+
+<ul class="menu__pagelinks menu__pagelinks--desktop ">
+      <li class="menu__pagelinks-item">
+      <a class="menu__pagelinks-link js-sidebar-link" href="https://19thnews.org/about/">Our Mission</a>
+    </li>
+      <li class="menu__pagelinks-item">
+      <a class="menu__pagelinks-link js-sidebar-link" href="https://19thnews.org/team/">Our Team</a>
+    </li>
+      <li class="menu__pagelinks-item">
+      <a class="menu__pagelinks-link js-sidebar-link" href="https://19thnews.org/archive/">Latest Stories</a>
+    </li>
+      <li class="menu__pagelinks-item">
+      <a class="menu__pagelinks-link js-sidebar-link" href="https://www.crowdcast.io/19thnews">Upcoming Events</a>
+    </li>
+      <li class="menu__pagelinks-item">
+      <a class="menu__pagelinks-link js-sidebar-link" href="https://summit.19thnews.org">2020 Summit</a>
+    </li>
+      <li class="menu__pagelinks-item">
+      <a class="menu__pagelinks-link js-sidebar-link" href="https://19thnews.org/contact-us/">Contact Us</a>
+    </li>
+      <li class="menu__pagelinks-item">
+      <a class="menu__pagelinks-link js-sidebar-link" href="https://19thnews.org/newsletter/">Newsletter</a>
+    </li>
+      <li class="menu__pagelinks-item">
+      <a class="menu__pagelinks-link js-sidebar-link" href="https://19thnews.org/membership/">Donate</a>
+    </li>
+      <li class="menu__pagelinks-item">
+      <a class="menu__pagelinks-link js-sidebar-link" href="https://19thnews.org/19th-jobs/">Work With Us</a>
+    </li>
+  </ul>
+    </div>
+  
+  <div class="sidebar__scrollable">
+
+    <div class="sidebar__intro">
+      <p>We’re an independent, nonprofit newsroom reporting on gender, politics and policy. <a href="/about">Read our story</a>.</p>
+
+    </div>
+
+          
+    <div class="sidebar__footer ">
+
+      
+            
+      
+              <div class="sidebar__footer-promo">
+          
+  
+<div class="sidebar-promo sidebar-promo--newsletter">
+  <div class="sidebar-promo__primary">
+    <header class="sidebar-promo__header">
+      <h3 class="sidebar-promo__head">The 19th News(letter)</h3>
+
+            <h4 class="sidebar-promo__subhead">News that represents you, in your inbox every weekday.</h4>
+          </header>
+
+    
+
+<form
+  id="newsletter-form-sidebar"
+  class="newsletter-form align  js-newsletter-form"
+  aria-label="Subscribe to newsletter"
+  >
+  
+    <div submit-success>
+    <p class="small-text newsletter-form__message newsletter-form__success">You have been subscribed!</p>
+  </div>
+
+    <div class="newsletter-form__input-group">
+    <label for="mce-EMAIL-sidebar" class="visually-hidden">Email</label>
+    <input
+      id="mce-EMAIL-sidebar"
+      class="input newsletter-form__input"
+      name="EMAIL"
+      type="email"
+      value=""
+      placeholder="you@example.com"
+      required
+    />
+    <button type="submit" class="input newsletter-form__submit">
+      <span class="visually-hidden">Subscribe</span>
+      <svg class="newsletter-form__submit-icon">
+        <use xlink:href="#form-arrow-right"></use>
+      </svg>
+    </button>
+  </div>
+
+    <div class="newsletter-form__checkbox-group">
+    <input
+      id="subscribe-confirmation-sidebar"
+      class="newsletter-form__checkbox"
+      name="subscribe-confirmation-sidebar"
+      type="checkbox"
+      required
+    />
+    <label class="newsletter-form__checkbox-label" for="subscribe-confirmation-sidebar">
+      <span>I agree to</span>
+      <a href="https://19thnews.org/terms-of-service/">the terms</a>
+    </label>
+  </div>
+
+    <div class="newsletter-form__input-hidden" aria-hidden="true">
+        <input type="text" name="NEWSLETTER" tabindex="-1" value="The 19th News(letter)">
+    <input type="text" name="b_8c4d626920c5131bb82226529_a35c3279be" tabindex="-1" value="">
+  </div>
+
+    <div submitting>
+    <p class="small-text newsletter-form__message newsletter-form__loading">Submitting...</p>
+  </div>
+
+    <div submit-error>
+    <p class="small-text newsletter-form__message newsletter-form__error">Uh-oh! Something went wrong. Please try again later.</p>
+  </div>
+</form>
+  </div>
+
+        <p class="sidebar-promo__alternate">
+      <a href="/membership/">Donate to get our member newsletter</a>
+    </p>
+  </div>
+        </div>
+      
+    </div>
+
+  </div>
+
+</aside>
+                
+      <div id="content" class="content-inner">
+        <div class="page-body">
+          
+      
+  
+    
+            
+    <div class="article-ad-default-top article-ad-default-top--horizontal_image">
+      <div class="article-ad-default-top__inner">
+        <div class="ad-wrap-outer ad-wrap-outer--centered" style="max-width: 970px;">
+
+  <div class="sponsor-message-caption ad-sponsor-message ">
+  <p>The 19th thanks our sponsors. <a href="/sponsorship/">Become one</a>.</p>
+
+</div>
+
+  <!--
+  Broadstreet Ad Info:
+    is_mobile=No
+    is_amp=No
+    width=970
+    height=250
+    ratio=0.25773195876289
+  -->
+  <div class="ad-wrap" style="padding-top: 25.773195876289%">
+    
+      <broadstreet-zone zone-id="80601" keywords=",u-s-to-add-x-gender-marker-on-passports,LGBTQ+"></broadstreet-zone>
+
+      </div>
+
+</div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+
+<div class="topper topper--img-alignwide topper--caption">
+
+  <div class="topper__inner">
+
+          <figure class="topper-asset-mod">        
+
+<div class="article-asset-mod">
+      <img
+      class="lazyload article-asset "
+      data-src="https://19thnews.org/wp-content/uploads/2021/05/GettyImages-74861689-1800x1200-c-default.jpg"
+      src="https://19thnews.org/wp-content/uploads/2021/05/GettyImages-74861689-1800x1200-c-default.jpg"
+      alt="MIAMI - JUNE 22: A Passport Processing employee uses a stack of blank passports to print a new one at the Miami Passport Agency June 22, 2007 in Miami, Florida. The Bush administration postponed for at least six months a requirement that Americans who return to the United States by land or sea from Canada, Mexico and the Caribbean must carry passports. The rule, due to go into effect in January 2008, will be delayed until the summer of that year."
+      data-caption="The new rule marks the most substantial change to federal documents for transgender people in more than a decade."
+      data-credit="(Joe Raedle/Getty Images)"
+          />
+  </div>
+
+                  
+  <figcaption class="article-caption">
+    <div class="article-caption-width">
+          <span class="article-caption__description">The new rule marks the most substantial change to federal documents for transgender people in more than a decade.</span>
+    
+          <span class="credit">(Joe Raedle/Getty Images)</span>
+        </div>
+  </figcaption>
+              </figure>
+    
+    <div class="topper-hgroup alignwide">
+      
+  <p class="topper-overline">
+    <a class="plain-link overline-link topper-overline-link" href="https://19thnews.org/topics/lgbtq/">
+      LGBTQ+
+    </a>
+  </p>
+
+      <h1 class="topper-hed">        U.S. to add ‘X’ gender marker on passports      </h1>
+
+              <div class="topper-dek"><p><span style="font-weight: 400;">Transgender and intersex Americans will have the power to identify their own gender on travel documents without providing medical documentation by the end of this year, an administration official said.</span></p></div>
+          </div>
+
+  </div>
+</div>
+
+  <article class="basic-text article-body">
+
+    <div class="gutenberg article-body-width js-hang-punc">
+
+      <div class="article-meta">
+
+  <div class="article-meta__inner">
+
+    
+      
+                <div class="article-meta__block article-meta__block--multi-bylines">
+          <p class="article-meta__field meta-text meta-text--bold">By</p>
+          <p class="article-meta__value meta-text">
+                      <a class="plain-link" href="/author/kate-sosin">Kate Sosin</a>,                       <a class="plain-link" href="/author/orion-rummler">Orion Rummler</a>                    </p>
+        </div>
+
+      
+    
+    <div class="article-meta__block">
+      <p class="article-meta__field meta-text meta-text--bold">Published</p>
+            <time class="article-meta__value article-meta__value--published meta-text" datetime="2021-06-30 0:00">
+        <span class="js-final-pub-day"></span> <span class="js-final-pub-date"></span>
+      </time>
+            <div class="js-post-timestamp" style="display: none;">2021-06-30 07:38</div>
+      <div class="js-post-timestamp__formatted" style="display: none;">7:38</div>
+      <div class="js-post-timestamp__formatted_day" style="display: none;">June 30, 2021</div>
+      <div class="js-post-timestamp__formatted_ampm" style="display: none;">am</div>
+      <div class="js-timezone" style="display:none;"></div>
+    </div>
+
+    
+    <div class="share-tools mobile-and-tablet-only ">
+  <div class="share-tools__inner">
+
+    <p class="share-tools__head meta-text meta-text--bold">Share</p>
+
+      <ul class="share-tools__list">
+        
+        <li class="share-tools__item share-tools__item--twitter">
+          <a
+            href="https://twitter.com/intent/tweet?url=https%3A%2F%2F19thnews.org%2F2021%2F06%2Fu-s-to-add-x-gender-marker-on-passports%2F%3F%26utm_campaign%3D19th-social%26utm_source%3Dtwitter%26utm_medium%3Dsocial&amp;via=19thnews&amp;text=U.S.%20to%20add%20%E2%80%98X%E2%80%99%20gender%20marker%20on%20passports"
+            class="plain-link share-tools__link"
+            target="_blank"
+            rel="noopener"
+            aria-label="Twitter"
+          >
+            <span class="visually-hidden">Twitter</span>
+            <svg class="share-tools__icon ga-share-twitter">
+              <use xlink:href="#share-twitter"></use>
+            </svg>
+          </a>
+        </li>
+                <li class="share-tools__item share-tools__item--facebook">
+          <a
+            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2F19thnews.org%2F2021%2F06%2Fu-s-to-add-x-gender-marker-on-passports%2F%3F%26utm_campaign%3D19th-social%26utm_source%3Dfacebook%26utm_medium%3Dsocial"
+            class="plain-link share-tools__link"
+            target="_blank"
+            rel="noopener"
+            aria-label="Facebook"
+          >
+            <span class="visually-hidden">Facebook</span>
+            <svg class="share-tools__icon ga-share-facebook">
+              <use xlink:href="#share-facebook"></use>
+            </svg>
+          </a>
+        </li>
+                <li class="share-tools__item share-tools__item--email">
+          <a href="/cdn-cgi/l/email-protection#e5da9690878f808691d8b0cbb6cbc0d7d5918ac0d7d5848181c0d7d5c0a0d7c0ddd5c0dcddbdc0a0d7c0ddd5c0dcdcc0d7d582808b818097c0d7d58884978e8097c0d7d58a8bc0d7d595849696958a979196c3878a819cd88d91919596c0d6a4c0d7a3c0d7a3d4dc918d8b809296cb8a9782c0d7a3d7d5d7d4c0d7a3d5d3c0d7a390c896c8918ac8848181c89dc882808b818097c88884978e8097c88a8bc895849696958a979196c0d7a3" class="plain-link share-tools__link" target="_blank" rel="noopener" aria-label="Email">
+            <span class="visually-hidden">Email</span>
+            <svg class="share-tools__icon ga-share-email">
+              <use xlink:href="#share-email"></use>
+            </svg>
+          </a>
+        </li>
+                            <li class="share-tools__item share-tools__item--republish">
+            <button class="share-tools__link js-open-republisher" aria-label="Open republisher">
+              <svg class="share-tools__icon ga-share-republish">
+                <use xlink:href="#share-republish"></use>
+              </svg>
+            </button>
+          </li>
+              </ul>
+  </div>
+</div>
+
+  </div>
+</div>
+
+              
+<p>For the first time ever, the federal government will allow nonbinary and intersex people to obtain IDs and passports with an “X” gender marker instead of an “M” or “F.” <a href="https://travel.state.gov/content/travel/en/passports/need-passport/selecting-your-gender-marker.html" target="_blank" rel="noreferrer noopener">The interim policy</a> also removes the requirement that transgender people provide proof of gender transition from a physician, allowing gender diverse Americans to self identify. </p>
+
+
+
+<p>According to a source within the administration, nonbinary Americans are expected to be able to obtain the interim X gender markers by the end of the year. The new rule marks the most substantial change to federal documents for transgender people since 2010, when the Obama administration put in place a <a href="https://transequality.org/know-your-rights/passports">policy to allow trans Americans to update their passports</a>. </p>
+
+
+
+<p>The State Department’s announcement Wednesday makes good on one of President Joe Biden’s <a href="https://19thnews.org/2021/02/biden-administration-suggests-it-will-add-x-gender-markers-to-federal-documents/">campaign promises</a> and comes after months of prodding <a href="https://www.aclu.org/press-releases/six-figure-aclu-ad-buy-urges-president-biden-issue-executive-order-providing">from the ACLU</a> and LGBTQ+ advocacy groups, which argued that inaccurate identification barred people from traveling and completing job applications.</p>
+
+  
+
+  
+      
+  <div class="inline-ad alignwide article-ad ">
+    <div class="inline-ad__inner">
+      <div class="ad-wrap-outer" style="max-width: 970px;">
+
+  <div class="sponsor-message-caption ad-sponsor-message ">
+  <p>The 19th thanks our sponsors. <a href="/sponsorship/">Become one</a>.</p>
+
+</div>
+
+  <!--
+  Broadstreet Ad Info:
+    is_mobile=No
+    is_amp=No
+    width=970
+    height=250
+    ratio=0.25773195876289
+  -->
+  <div class="ad-wrap" style="padding-top: 25.773195876289%">
+    
+      <broadstreet-zone zone-id="80600" keywords=",u-s-to-add-x-gender-marker-on-passports,LGBTQ+"></broadstreet-zone>
+
+      </div>
+
+</div>
+    </div>
+  </div>
+
+
+
+
+<p><a href="https://www.lgbtmap.org/equality-maps/identity_document_laws">Twenty states and Washington, D.C.</a>, already<strong> </strong>issue IDs with “X” gender markers, and Illinois, Indiana and New York have passed laws to roll out gender neutral IDs in the coming months or years. That has left many trans, nonbinary and intersex Americans with licenses listing their gender as “X” and passports that say “M” or “F.”&nbsp;</p>
+
+
+
+<p>According to the <a href="https://transequality.org/sites/default/files/docs/usts/USTS-Full-Report-Dec17.pdf">2015 U.S. Trans Survey</a> conducted by the National Center for Transgender Equality, nearly half (46 percent) of trans and nonbinary people in the United States don’t have identification that lists their correct name or gender. Advocates say that leaves many vulnerable to violence or discrimination any time they have to use an ID to travel, interact with police, go to a bank or <a href="https://19thnews.org/2020/08/trans-americans-voting-rights-pandemic/">even vote</a>.&nbsp;</p>
+
+
+
+<p>Advocates have lobbied for removing gender markers altogether from some federal documents, but experts say removing them from passports is impossible due to international travel requirements. Advocates say that getting gender diverse people accurate IDs, however, can be life saving.&nbsp;</p>
+
+
+
+<div class="wp-block-newsletter-cta aligncenter js-hang-punc--ignore">
+  <div class="wp-block-newsletter-cta__inner">
+    <header class="wp-block-newsletter-cta__header">
+      <h3 class="wp-block-newsletter-cta__head">A newsletter you can relate to.</h3>
+      <h4 class="wp-block-newsletter-cta__subhead">Storytelling that represents you, delivered to your inbox.</h4>
+    </header>
+    
+
+<form
+  id="newsletter-form-block_60dc747eafde6"
+  class="newsletter-form align  js-newsletter-form"
+  aria-label="Subscribe to newsletter">
+  
+    <div submit-success>
+    <p class="small-text newsletter-form__message newsletter-form__success">You have been subscribed!</p>
+  </div>
+
+    <div class="newsletter-form__input-group">
+    <label for="mce-EMAIL-block_60dc747eafde6" class="visually-hidden">Email</label>
+    <input id="mce-EMAIL-block_60dc747eafde6"
+      class="input newsletter-form__input"
+      name="EMAIL"
+      type="email"
+      value=""
+      placeholder="you@example.com"
+      required
+    />
+    <button type="submit" class="input newsletter-form__submit">
+      <span class="visually-hidden">Subscribe</span>
+      <svg class="newsletter-form__submit-icon">
+        <use xlink:href="#form-arrow-right"></use>
+      </svg>
+    </button>
+  </div>
+
+    <div class="newsletter-form__checkbox-group">
+    <input id="subscribe-confirmation-block_60dc747eafde6"
+      class="newsletter-form__checkbox"
+      name="subscribe-confirmation-block_60dc747eafde6"
+      type="checkbox"
+      required
+    />
+    <label class="newsletter-form__checkbox-label" for="subscribe-confirmation-block_60dc747eafde6">
+      <span>I agree to</span>
+      <a href="https://19thnews.org/terms-of-service/">the terms</a>
+    </label>
+  </div>
+
+    <div class="newsletter-form__input-hidden" aria-hidden="true">
+        <input type="text" name="NEWSLETTER" tabindex="-1" value="The 19th News(letter)"/>
+    <input type="text" name="b_8c4d626920c5131bb82226529_a35c3279be" tabindex="-1" value=""/>
+  </div>
+
+    <div submitting>
+    <p class="small-text newsletter-form__message newsletter-form__loading">Submitting&#8230;</p>
+  </div>
+
+    <div submit-error>
+    <p class="small-text newsletter-form__message newsletter-form__error">Uh-oh! Something went wrong. Please try again later.</p>
+  </div>
+</form>
+  </div>
+</div>
+
+
+
+<figure class="wp-block-ups-image alignright"><img class="lazyload" src="https://19thnews.org/wp-content/uploads/2021/02/AP_984352854967.jpg" sizes="(max-width: 1800px) 100vw, 1800px" srcset="https://19thnews.org/wp-content/uploads/2021/02/AP_984352854967-300x207.jpg 300w, https://19thnews.org/wp-content/uploads/2021/02/AP_984352854967-1024x707.jpg 1024w, https://19thnews.org/wp-content/uploads/2021/02/AP_984352854967-150x150.jpg 150w, https://19thnews.org/wp-content/uploads/2021/02/AP_984352854967-768x530.jpg 768w, https://19thnews.org/wp-content/uploads/2021/02/AP_984352854967-1536x1061.jpg 1536w, https://19thnews.org/wp-content/uploads/2021/02/AP_984352854967.jpg 1800w" data-src="https://19thnews.org/wp-content/uploads/2021/02/AP_984352854967.jpg" alt="A photo of Dana Zzym." data-caption="Dana Zzyym, a Navy veteran, was the plaintiff in a federal discrimination lawsuit filed by Lambda Legal against the U.S. State Department seeking more gender options for passports. " data-credit="(AP Photo/David Zalubowski)"/><figcaption>Dana Zzyym, a Navy veteran, was the plaintiff in a federal discrimination lawsuit filed by Lambda Legal against the U.S. State Department seeking more gender options for passports.  <cite>(AP Photo/David Zalubowski)</cite></figcaption></figure>
+
+
+
+<p>&#8220;Improved access to accurate passports will have such a profound impact on the lives of trans, intersex and nonbinary folks across the country,&#8221; said Arli Christian, a campaign strategist with the ACLU. &#8220;But the work doesn’t stop here. We will keep working with the administration to make sure we see these important changes to gender change policies across all federal agencies.&#8221;</p>
+
+
+
+<p>The policy comes on the heels of a protracted legal battle that spanned three presidential administrations. Dana Zzyym, an intersex Navy veteran, sued the State Department with LGBTQ+ legal organization Lambda Legal in 2016 to obtain an accurate passport. More than a year ago, the U.S. Court of Appeals for the Tenth Circuit ordered the State Department to issue Zzyym a passport with a gender marker “X.”&nbsp;</p>
+
+
+
+<p>“I’ve been at this fight for so long,” Zzyym said in a statement. “I am optimistic that, with the incredible support and work of Lambda Legal and the Intersex Campaign for Equality, I will soon receive an accurate passport, one that reflects who I truly am.&#8221;</p>
+
+      
+            
+            <div class="share-tools article-end">
+  <div class="share-tools__inner">
+
+    <p class="share-tools__head meta-text meta-text--bold">Share</p>
+
+      <ul class="share-tools__list">
+        
+        <li class="share-tools__item share-tools__item--twitter">
+          <a
+            href="https://twitter.com/intent/tweet?url=https%3A%2F%2F19thnews.org%2F2021%2F06%2Fu-s-to-add-x-gender-marker-on-passports%2F%3F%26utm_campaign%3D19th-social%26utm_source%3Dtwitter%26utm_medium%3Dsocial&amp;via=19thnews&amp;text=U.S.%20to%20add%20%E2%80%98X%E2%80%99%20gender%20marker%20on%20passports"
+            class="plain-link share-tools__link"
+            target="_blank"
+            rel="noopener"
+            aria-label="Twitter"
+          >
+            <span class="visually-hidden">Twitter</span>
+            <svg class="share-tools__icon ga-share-twitter">
+              <use xlink:href="#share-twitter"></use>
+            </svg>
+          </a>
+        </li>
+                <li class="share-tools__item share-tools__item--facebook">
+          <a
+            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2F19thnews.org%2F2021%2F06%2Fu-s-to-add-x-gender-marker-on-passports%2F%3F%26utm_campaign%3D19th-social%26utm_source%3Dfacebook%26utm_medium%3Dsocial"
+            class="plain-link share-tools__link"
+            target="_blank"
+            rel="noopener"
+            aria-label="Facebook"
+          >
+            <span class="visually-hidden">Facebook</span>
+            <svg class="share-tools__icon ga-share-facebook">
+              <use xlink:href="#share-facebook"></use>
+            </svg>
+          </a>
+        </li>
+                <li class="share-tools__item share-tools__item--email">
+          <a href="/cdn-cgi/l/email-protection#4c733f392e26292f387119621f62697e7c3823697e7c2d2828697e7c69097e69747c6975741469097e69747c697575697e7c2b292228293e697e7c212d3e27293e697e7c2322697e7c3c2d3f3f3c233e383f6a2e232835712438383c3f697f0d697e0a697e0a7d75382422293b3f62233e2b697e0a7e7c7e7d697e0a7c7a697e0a39613f613823612d28286134612b292228293e61212d3e27293e612322613c2d3f3f3c233e383f697e0a" class="plain-link share-tools__link" target="_blank" rel="noopener" aria-label="Email">
+            <span class="visually-hidden">Email</span>
+            <svg class="share-tools__icon ga-share-email">
+              <use xlink:href="#share-email"></use>
+            </svg>
+          </a>
+        </li>
+                            <li class="share-tools__item share-tools__item--republish">
+            <button class="share-tools__link js-open-republisher" aria-label="Open republisher">
+              <svg class="share-tools__icon ga-share-republish">
+                <use xlink:href="#share-republish"></use>
+              </svg>
+            </button>
+          </li>
+              </ul>
+  </div>
+</div>
+
+    </div>
+
+        <aside class="article-mobile alignbleed article-mobile-promo mobile-only">
+      
+    
+<div class="sidebar-promo sidebar-promo--membership">
+  <div class="sidebar-promo__primary">
+    <header class="sidebar-promo__header">
+      <h3 class="sidebar-promo__head">Have a seat at our table</h3>
+
+              <h4 class="sidebar-promo__subhead">Share your story. See yourself in the news. Support our community.</h4>
+          </header>
+
+    <p class="sidebar-promo__cta">
+      <a href="/membership/" class="button sidebar-promo__cta-button">
+        Become a Member
+      </a>
+    </p>
+  </div>
+
+        <p class="sidebar-promo__alternate">
+      <a href="/newsletter/">Sign up for our newsletter</a>
+    </p>
+  </div>
+    </aside>
+
+    
+  </article>
+
+  
+        
+                  
+  <div class="article-upnext">
+    <div class="upnext">
+      <h4 class="upnext__head">Up Next</h4>
+        <div class="upnext__topper">
+          
+  
+
+<div class="topper topper--img-alignwide topper--caption">
+
+  <div class="topper__inner">
+
+          <figure class="topper-asset-mod"><a href="https://19thnews.org/2021/06/supreme-court-ends-gavin-grimms-legal-fight-over-transgender-bathroom-access/" class="topper-asset-mod__link">        
+
+<div class="article-asset-mod">
+      <img
+      class="lazyload article-asset js-modal-gallery__hidden"
+      data-src="https://19thnews.org/wp-content/uploads/2021/06/GettyImages-1189244062-1800x1200-c-default.jpg"
+      src="https://19thnews.org/wp-content/uploads/2021/06/GettyImages-1189244062-1800x1200-c-default.jpg"
+      alt=""
+      data-caption="Gavin Grimm in 2019. His family sued a school board in Virginia that refused to let him use a bathroom that matched his gender identity."
+      data-credit="(Photo by ASTRID STAWIARZ/GETTY IMAGES FOR OUT)"
+          />
+  </div>
+</a>
+              </figure>
+    
+    <div class="topper-hgroup alignwide">
+      
+  <p class="topper-overline">
+    <a class="plain-link overline-link topper-overline-link" href="https://19thnews.org/topics/lgbtq/">
+      LGBTQ+
+    </a>
+  </p>
+
+      <h1 class="topper-hed"><a href="https://19thnews.org/2021/06/supreme-court-ends-gavin-grimms-legal-fight-over-transgender-bathroom-access/" class="topper-hed__link">        Supreme Court won&#8217;t rule on transgender bathroom access in schools</a>      </h1>
+
+              <div class="topper-dek"><p>The justices declined to hear a Virginia school board's appeal, agreeing with a lower court that schools cannot bar transgender students from using bathrooms that match their gender identity.</p></div>
+              <p class="upnext__more">
+          <a href="https://19thnews.org/2021/06/supreme-court-ends-gavin-grimms-legal-fight-over-transgender-bathroom-access/">Read the Story</a>
+        </p>
+          </div>
+
+  </div>
+</div>
+        </div>
+      </div>
+    </div>
+  
+        </div>
+
+                  <div class="small-text site-footer">
+  <div class="site-footer__pad">
+    <div class="site-footer__inner">
+
+              <div class="site-footer__text">
+          <p><b>The 19th</b><br />
+The 19th is a 501(c)(3) tax-exempt organization. Our stories are <a href="https://19thnews.org/republishing-guidelines/">free to republish in accordance with these guidelines</a>.</p>
+
+        </div>
+      
+              <ul class="site-footer__menu">
+                                <li class="site-footer__menu-item">
+              <a href="https://19thnews.org/membership/">Donate</a>
+            </li>
+                      <li class="site-footer__menu-item">
+              <a href="https://19thnews.org/newsletter/">Subscribe to the Newsletter</a>
+            </li>
+                      <li class="site-footer__menu-item">
+              <a href="https://www.crowdcast.io/19thnews">Attend an Event</a>
+            </li>
+                      <li class="site-footer__menu-item">
+              <a href="https://19thnews.org/19th-jobs/">Work Here</a>
+            </li>
+                      <li class="site-footer__menu-item">
+              <a href="https://19thnews.org/contact-us/">Contact Us</a>
+            </li>
+                      <li class="site-footer__menu-item">
+              <a href="https://19thnews.org/about/">About Us</a>
+            </li>
+                      <li class="site-footer__menu-item">
+              <a href="https://19thnews.org/community-guidelines/">Community Guidelines</a>
+            </li>
+                      <li class="site-footer__menu-item">
+              <a href="https://19thnews.org/membership/">Membership</a>
+            </li>
+                      <li class="site-footer__menu-item">
+              <a href="https://19thnews.org/faq-our-membership-program/">Membership FAQ</a>
+            </li>
+                      <li class="site-footer__menu-item">
+              <a href="https://19thnews.org/major-gifts/">Major Gifts</a>
+            </li>
+                      <li class="site-footer__menu-item">
+              <a href="https://19thnews.org/sponsorship/">Sponsorship</a>
+            </li>
+                      <li class="site-footer__menu-item">
+              <a href="https://19thnews.org/terms-of-service/">Privacy</a>
+            </li>
+                  </ul>
+      
+              <ul class="site-footer__social">
+                                              
+            <li class="site-footer__social-item">
+              <a href="https://twitter.com/19thnews" class="site-footer__social-link" aria-label="Twitter">
+                <span class="visually-hidden">Twitter</span>
+                                  <svg class="share-tools__icon">
+                    <use xlink:href="#share-twitter"></use>
+                  </svg>
+                              </a>
+            </li>
+                                              
+            <li class="site-footer__social-item">
+              <a href="https://www.facebook.com/19thnews" class="site-footer__social-link" aria-label="Facebook">
+                <span class="visually-hidden">Facebook</span>
+                                  <svg class="share-tools__icon">
+                    <use xlink:href="#share-facebook"></use>
+                  </svg>
+                              </a>
+            </li>
+                                              
+            <li class="site-footer__social-item">
+              <a href="https://www.instagram.com/19thnews/" class="site-footer__social-link" aria-label="Instagram">
+                <span class="visually-hidden">Instagram</span>
+                                  <svg class="share-tools__icon">
+                    <use xlink:href="#share-instagram"></use>
+                  </svg>
+                              </a>
+            </li>
+                  </ul>
+      
+    </div>
+  </div>
+</div>
+              </div>
+
+    </main>
+
+  </div>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type='text/javascript' src='https://19thnews.org/wp-content/plugins/wp-smush-pro/app/assets/js/smush-lazy-load-native.min.js?ver=3.8.5' id='smush-lazy-load-js'></script>
+<script type='text/javascript' src='https://19thnews.org/wp-content/themes/the-19th/dist/vendor.js?ver=1.4.1' id='vendor-js'></script>
+<script type='text/javascript' src='https://19thnews.org/wp-content/themes/the-19th/dist/app.js?ver=1.4.1' id='script.js-js'></script>
+<script data-cfasync="false" type='text/javascript' data-parsely-site="19thnews.org" src='https://cdn.parsely.com/keys/19thnews.org/p.js?ver=2.5.0' id="parsely-cfg"></script>
+
+
+    
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"NRJS-ec1ddf6fca61e094a60","applicationID":"618942500","transactionName":"YVNbN0FQXUVXWhddXFgZeABHWFxYGUoKWlRaUw==","queueTime":0,"applicationTime":442,"atts":"TRRYQQlKTks=","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+</html>

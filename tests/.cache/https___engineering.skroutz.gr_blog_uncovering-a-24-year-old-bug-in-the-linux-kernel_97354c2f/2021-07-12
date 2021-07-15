@@ -1,0 +1,730 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Uncovering a 24-year-old bug in the Linux Kernel &#8211; Skroutz Engineering</title>
+<meta name="description" content="How a failing rsync run led to the discovery of a long-standing bug in the Linux TCP implementation.">
+<meta name="keywords" content="">
+
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="Uncovering a 24-year-old bug in the Linux Kernel">
+<meta name="twitter:description" content="How a failing rsync run led to the discovery of a long-standing bug in the Linux TCP implementation.">
+
+<meta name="twitter:creator" content="@apoikos">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://engineering.skroutz.gr/images/site-logo.png">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+
+<meta property="og:title" content="Uncovering a 24-year-old bug in the Linux Kernel">
+
+<meta property="og:description" content="How a failing rsync run led to the discovery of a long-standing bug in the Linux TCP implementation.">
+<meta property="og:url" content="https://engineering.skroutz.gr/blog/uncovering-a-24-year-old-bug-in-the-linux-kernel/">
+<meta property="og:site_name" content="Skroutz Engineering">
+
+
+
+
+
+
+
+<link rel="canonical" href="https://engineering.skroutz.gr/blog/uncovering-a-24-year-old-bug-in-the-linux-kernel/">
+<link href="https://engineering.skroutz.gr/feed.xml" type="application/atom+xml" rel="alternate" title="Skroutz Engineering Feed">
+
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="https://engineering.skroutz.gr/assets/css/main.css">
+<!-- Webfonts -->
+<script src="//use.edgefonts.net/lato.js"></script>
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+  <script src="https://engineering.skroutz.gr/assets/js/vendor/html5shiv.min.js"></script>
+  <script src="https://engineering.skroutz.gr/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="https://engineering.skroutz.gr/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="https://engineering.skroutz.gr/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="https://engineering.skroutz.gr/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="https://engineering.skroutz.gr/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="https://engineering.skroutz.gr/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="https://engineering.skroutz.gr/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://engineering.skroutz.gr/images/apple-touch-icon-144x144-precomposed.png">
+
+<script>
+ (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+ })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ ga('create', 'UA-55357-32', 'auto');
+ ga('send', 'pageview');
+
+</script>
+
+</head>
+
+<body id="post">
+
+<div class="navigation-wrapper">
+	<nav role="navigation" id="site-nav" class="animated drop">
+	    <ul>
+        <li class="logo"><a href="/">Skroutz Engineering</a></li>
+      
+		    
+		    <li><a href="https://engineering.skroutz.gr/" >Home</a></li>
+		    
+		    
+		    <li><a href="https://engineering.skroutz.gr/about/" >About</a></li>
+		    
+		    <li class="dosearch"><span><i class="fa fa-search"></i> Search</span></li>
+		    <li><a href="http://skroutz.workable.com/" class="job-offer" target="_blank" rel="nofollow external">We are hiring!</a></li>
+	    </ul>
+	</nav>
+</div><!-- /.navigation-wrapper -->
+
+<!--[if lt IE 9]><div class="upgrade"><strong><a href="http://whatbrowser.org/">Your browser is quite old!</strong> Why not upgrade to a different browser to better enjoy this site?</a></div><![endif]-->
+
+<div class="search-wrapper">
+  <div class="search-form">
+    <input type="text" class="search-field" placeholder="Search...">
+    <button class="close-btn"><i class="fa fa-times-circle fa-2x"></i></button>
+    <ul class="search-results post-list"></ul><!-- /.search-results -->
+  </div><!-- /.search-form -->
+</div><!-- ./search-wrapper -->
+
+<header class="masthead">
+	<div class="wrap">
+    <h1 class="site-title animated fadeIn">Skroutz Engineering</h1>
+		<h2 class="site-description animated fadeIn" itemprop="description">Skroutz's Engineering and Technology Blog</h2>
+	</div>
+</header><!-- /.masthead -->
+
+<div class="js-menu-screen menu-screen"></div>
+
+
+<div id="main" role="main">
+  <article class="hentry">
+    
+    <div class="entry-wrapper">
+      <header class="entry-header">
+        <span class="entry-tags"></span>
+        
+          <h1 class="entry-title">Uncovering a 24-year-old bug in the Linux Kernel</h1>
+        
+      </header>
+      <footer class="entry-meta">
+        
+        
+          <img src="https://b.scdn.gr/assets/helmet/blog/team/el/apollonas.png" class="bio-photo" alt="Apollon Oikonomopoulos bio photo"></a>
+        
+        <span class="author vcard">By <span class="fn">Apollon Oikonomopoulos</span></span>
+        <span class="entry-date date published"><time datetime="2021-02-11T00:00:00+02:00"><i class="fa fa-calendar-o"></i> February 11, 2021</time></span>
+        
+        <span class="entry-comments"><i class="fa fa-comment-o"></i> <a href="#disqus_thread">Comment</a></span>
+        <span class="social-share-twitter">
+  <a href="https://twitter.com/intent/tweet?hashtags=&amp;text=Uncovering%20a%2024-year-old%20bug%20in%20the%20Linux%20Kernel&amp;url=http://engineering.skroutz.gr/blog/uncovering-a-24-year-old-bug-in-the-linux-kernel/&amp;via=apoikos" title="Share on Twitter" itemprop="Twitter"><i class="fa fa-twitter-square"></i> Tweet</a>
+</span>
+<span class="social-share-facebook">
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https://engineering.skroutz.gr/blog/uncovering-a-24-year-old-bug-in-the-linux-kernel/" title="Share on Facebook" itemprop="Facebook"><i class="fa fa-facebook-square"></i> Like</a>
+</span>
+<!-- /.social-share -->
+
+        
+      </footer>
+      <div class="entry-content">
+        <p>As part of our standard toolkit, we provide each developer at Skroutz
+with a writable database snapshot against which she can develop. These
+snapshots are updated daily through a pipeline that involves taking an
+LVM snapshot of production data, anonymizing the dataset by stripping
+all personal data, and transferring it via rsync to the development
+database servers. The development servers in turn use ZFS snapshots to
+expose a copy-on-write snapshot to each developer, with
+self-service tools allowing rollback or upgrades to newer snapshots.</p>
+
+<p>We use the same pipeline to expose MariaDB and MongoDB data, with a
+full dataset size of 600GB and 200GB respectively, and a slightly
+modified pipeline for Elasticsearch. While on-disk data changes
+significantly for all data sources, rsync still saves significant time
+by transferring roughly 1/3 of the full data set every night. This
+setup has worked rather well for the better part of a decade and has
+managed to scale from 15 developers to 150. However, as with most
+systems, it has had its fair share of maintenance and has given us
+some interesting moments.</p>
+
+<p>One of the most interesting issues we encountered led to the discovery
+of a fairly old bug in the Linux kernel TCP implementation: every now
+and then, an rsync transfer from a source server would hang
+indefinitely for no apparent reason, as â apart from the stuck transfer â
+everything else seemed to be in order. Whatâs more, for reasons that became
+apparent later, the issue could not be reproduced at will, although
+some actions (e.g. adding an rsync-level rate limit) seemed to make
+the issue less frequent, with frequency ranging from once or twice per
+week to once every three months.</p>
+
+<p>As is not unusual in these cases, we had more urgent systems and issues to
+attend to, so we labeled this a ârace condition in rsyncâ that we
+should definitely look into at some point, and worked around it by
+throttling the rsync transfers.</p>
+
+<p>Until it started biting us every single day.</p>
+
+<h2 id="rsync-as-a-pipeline">rsync as a pipeline</h2>
+
+<p>While not strictly necessary, knowing how rsync works internally will help
+understand the analysis that follows. The rsync site contains <a href="https://rsync.samba.org/how-rsync-works.html">a thorough
+description</a> of rsyncâs internal architecture, so Iâll try to
+summarize the most important points here:</p>
+
+<ol>
+  <li>
+    <p>rsync starts off as a single process on the client and a single
+process on the server, communicating via a socket pair. When using
+the rsync daemon, as in our case, communication is done over a
+plain TCP connection</p>
+  </li>
+  <li>
+    <p>Based on the direction of sync, after the initial handshake is
+over, each end assumes a <em>role</em>, either that of the <em>sender</em>, or
+that of the <em>receiver</em>. In our case the client is the receiver,
+and the server is the sender.</p>
+  </li>
+  <li>
+    <p>The receiver forks an additional process called the <em>generator</em>,
+sharing the socket with the <em>receiver</em> process. The <em>generator</em>
+figures out what it needs to ask from the <em>sender</em>, and the
+<em>sender</em> subsequently sends the data to the <em>receiver</em>. What we
+essentially have after this step is a pipeline, <em>generator</em> â
+<em>sender</em> â <em>receiver</em>, where the arrows are the two directions of
+<em>the same</em> TCP connection. While there is some signaling involved,
+the pipeline operates in a <em>blocking</em> fashion and relies on OS
+buffers and TCP receive windows to apply backpressure.</p>
+  </li>
+</ol>
+
+<h2 id="a-ghost-in-the-network">A ghost in the network?</h2>
+
+<p>Our first reaction when we encountered the issue was to suspect the
+network for errors, which was a <em>reasonable</em> thing to do since we had
+recently upgraded our servers and switches. After eliminating the
+usual suspects (NIC firmware bugs involving TSO/GSO/GRO/VLAN
+offloading, excessive packet drops or CRC errors at the switches etc),
+we came to the conclusion that everything was normal and something
+else had to be going on.</p>
+
+<p>Attaching the hung processes using strace and gdb told us little: the
+generator was hung on <code class="highlighter-rouge">send()</code> and the sender and receiver were hung
+on <code class="highlighter-rouge">recv()</code>, yet no data was moving. However, turning to the kernel on
+both systems revealed something interesting! On the client the rsync
+socket shared between the <em>generator</em> and the <em>receiver</em> processes was
+in the following state:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>ss <span class="nt">-mito</span> dst :873
+State      Recv-Q Send-Q                  Local Address:Port                                 Peer Address:Port
+ESTAB      0      392827 â¶             2001:db8:2a::3:38022                             2001:db8:2a::18:rsync                 timer:<span class="o">(</span>persist,1min56sec,0<span class="o">)</span>
+	 skmem:<span class="o">(</span>r0,rb4194304,t0,tb530944,f3733,w401771,o0,bl0,d757<span class="o">)</span> ts sack cubic wscale:7,7 rto:204 backoff:15 rtt:2.06/0.541 ato:40 mss:1428 cwnd:10 ssthresh:46 bytes_acked:22924107 bytes_received:100439119971 segs_out:7191833 segs_in:70503044 data_segs_out:16161 data_segs_in:70502223 send 55.5Mbps lastsnd:16281856 lastrcv:14261988 lastack:3164 pacing_rate 133.1Mbps retrans:0/11 rcv_rtt:20 rcv_space:2107888 notsent:392827 minrtt:0.189</code></pre></figure>
+
+<p>while on the server, the socket state was the following:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>ss <span class="nt">-mito</span> src :873
+State      Recv-Q Send-Q                Local Address:Port                                 Peer Address:Port
+ESTAB      0      0                   2001:db8:2a::18:rsync                              2001:db8:2a::3:38022                 timer:<span class="o">(</span>keepalive,3min7sec,0<span class="o">)</span>
+ 	 skmem:<span class="o">(</span>r0,rb3540548,t0,tb4194304,f0,w0,o0,bl0,d292<span class="o">)</span> ts sack cubic wscale:7,7 rto:204 rtt:1.234/1.809 ato:40 mss:1428 cwnd:1453 ssthresh:1431 bytes_acked:100439119971 bytes_received:22924106 segs_out:70503089 segs_in:7191833 data_segs_out:70502269 data_segs_in:16161 send 13451.4Mbps lastsnd:14277708 lastrcv:16297572 lastack:7012576 pacing_rate 16140.1Mbps retrans:0/794 rcv_rtt:7.5 rcv_space:589824 minrtt:0.026</code></pre></figure>
+
+<p>The interesting thing here is that there are 3.5MB of data on the
+client, queued to be sent (â¶ in the first output) by the
+<em>generator</em> to the server; however, while the server has an empty <code class="highlighter-rouge">Recv-Q</code>
+and can accept data, nothing seems to be moving forward. If <code class="highlighter-rouge">Recv-Q</code>
+in the second output was non-zero, we would be looking at rsync on the
+server being stuck and not reading from the network, however here it
+is obvious that rsync has consumed all incoming data and is not to
+blame.</p>
+
+<p>So why is data queued up on one end of the connection, while the other end is
+obviously able to accept it? The answer is conveniently hidden in the <code class="highlighter-rouge">timer</code>
+fields of both <code class="highlighter-rouge">ss</code> outputs, especially in
+<code class="highlighter-rouge">timer:(persist,1min56sec,0)</code>. Quoting <code class="highlighter-rouge">ss(8)</code>:</p>
+
+<figure class="highlight"><pre><code class="language-man" data-lang="man">       -o, --options
+              Show timer information. For TCP protocol, the output format is:
+
+              timer:(&lt;timer_name&gt;,&lt;expire_time&gt;,&lt;retrans&gt;)
+
+              &lt;timer_name&gt;
+                     the name of the timer, there are five kind of timer names:
+
+                     on : means one of these  timers:  TCP  retrans  timer,  TCP
+                     early retrans timer and tail loss probe timer
+
+                     keepalive: tcp keep alive timer
+
+                     timewait: timewait stage timer
+
+                     persist: zero window probe timer
+
+                     unknown: none of the above timers</code></pre></figure>
+
+<p><code class="highlighter-rouge">persist</code> means that the connection has received a zero window
+advertisement and is waiting for the peer to advertise a non-zero
+window.</p>
+
+<h2 id="tcp-zero-windows-and-zero-window-probes">TCP Zero Windows and Zero Window Probes</h2>
+
+<p>TCP implements flow control by limiting the data in flight using a sliding
+window called the <em>receive window</em>. Wikipedia has a <a href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol#Flow_control">good description</a>, but in short each end of a TCP connection advertises how much
+data it is willing to buffer for the connection, i.e. how much data the other
+end may send before waiting for an acknowledgment.</p>
+
+<p>When one sideâs receive buffer (<code class="highlighter-rouge">Recv-Q</code>) fills up (in this case
+because the rsync process is doing disk I/O at a speed slower than the
+networkâs), it will send out a zero window advertisement, which will
+put that direction of the connection on hold. When buffer space
+eventually frees up, the kernel will send an unsolicited window update
+with a non-zero window size, and the data transfer continues. To be
+safe, just in case this unsolicited window update is lost, the other
+end will regularly poll the connection state using the so-called Zero
+Window Probes (the <code class="highlighter-rouge">persist</code> mode we are seeing here).</p>
+
+<h2 id="the-window-is-stuck-closed">The window is stuck closed</h2>
+
+<p>Itâs now time to dive a couple of layers deeper and use <code class="highlighter-rouge">tcpdump</code> to
+see whatâs going on at the network level:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">[â¦]
+09:34:34.165148 0c:c4:7a:f9:68:e4 &gt; 0c:c4:7a:f9:69:78, ethertype IPv6 (0x86dd), length 86: (flowlabel 0xcbf6f, hlim 64, next-header TCP (6) payload length: 32) 2001:db8:2a::3.38022 &gt; 2001:db8:2a::18.873: Flags [.], cksum 0x711b (incorrect -&gt; 0x4d39), seq 4212361595, ack 1253278418, win 16384, options [nop,nop,TS val 2864739840 ecr 2885730760], length 0
+09:34:34.165354 0c:c4:7a:f9:69:78 &gt; 0c:c4:7a:f9:68:e4, ethertype IPv6 (0x86dd), length 86: (flowlabel 0x25712, hlim 64, next-header TCP (6) payload length: 32) 2001:db8:2a::18.873 &gt; 2001:db8:2a::3.38022: Flags [.], cksum 0x1914 (correct), seq 1253278418, ack 4212361596, win 13831, options [nop,nop,TS val 2885760967 ecr 2863021624], length 0
+[â¦ repeats every 2 mins]</code></pre></figure>
+
+<p>The first packet is the rsync clientâs zero window probe, the second
+packet is the serverâs response. Surprisingly enough, the server is
+advertising a non-zero window size of 13831 bytesÂ¹ which the client
+apparently ignores.</p>
+
+<p>Â¹ actually multiplied by 128 because of a <a href="https://en.wikipedia.org/wiki/TCP_window_scale_option">window scaling</a> factor
+of 7</p>
+
+<p>We are finally making some progress and have a case to work on! At
+some point the client encountered a zero window advertisement from the
+server as part of regular TCP flow control, but then the window failed
+to re-open for some reason. The client seems to be still ignoring
+the new window advertised by the server and this is why the transfer
+is stuck.</p>
+
+<h2 id="linux-tcp-input-processing">Linux TCP input processing</h2>
+
+<p>By now itâs obvious that the TCP connection is in a weird state on the
+rsync client. Since TCP flow control happens at the kernel level, to
+get to the root of this we need to look at how the Linux kernel
+handles incoming TCP acknowledgments and try to figure out why it
+ignores the incoming window advertisement.</p>
+
+<p>Incoming TCP packet processing happens in
+<a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/net/ipv4/tcp_input.c"><code class="highlighter-rouge">net/ipv4/tcp_input.c</code></a>.Despite
+the <code class="highlighter-rouge">ipv4</code> component in the path, this is mostly shared code between
+IPv4 and IPv6.</p>
+
+<p>Digging a bit through the code we find out that incoming window
+updates are handled in
+<a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/net/ipv4/tcp_input.c?id=c3df39ac9b0e3747bf8233ea9ce4ed5ceb3199d3#n3552"><code class="highlighter-rouge">tcp_ack_update_window</code></a>
+and actually updating the window is guarded by the following function:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cm">/* Check that window update is acceptable.
+ * The function assumes that snd_una&lt;=ack&lt;=snd_next.
+ */</span>
+<span class="k">static</span> <span class="kr">inline</span> <span class="n">bool</span> <span class="nf">tcp_may_update_window</span><span class="p">(</span><span class="k">const</span> <span class="k">struct</span> <span class="n">tcp_sock</span> <span class="o">*</span><span class="n">tp</span><span class="p">,</span>
+					<span class="k">const</span> <span class="n">u32</span> <span class="n">ack</span><span class="p">,</span> <span class="k">const</span> <span class="n">u32</span> <span class="n">ack_seq</span><span class="p">,</span>
+					<span class="k">const</span> <span class="n">u32</span> <span class="n">nwin</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="k">return</span>	<span class="n">after</span><span class="p">(</span><span class="n">ack</span><span class="p">,</span> <span class="n">tp</span><span class="o">-&gt;</span><span class="n">snd_una</span><span class="p">)</span> <span class="o">||</span> <span class="err">â¶</span>
+		<span class="n">after</span><span class="p">(</span><span class="n">ack_seq</span><span class="p">,</span> <span class="n">tp</span><span class="o">-&gt;</span><span class="n">snd_wl1</span><span class="p">)</span> <span class="o">||</span> <span class="err">â·</span>
+		<span class="p">(</span><span class="n">ack_seq</span> <span class="o">==</span> <span class="n">tp</span><span class="o">-&gt;</span><span class="n">snd_wl1</span> <span class="o">&amp;&amp;</span> <span class="n">nwin</span> <span class="o">&gt;</span> <span class="n">tp</span><span class="o">-&gt;</span><span class="n">snd_wnd</span><span class="p">);</span> <span class="err">â¸</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>The <code class="highlighter-rouge">ack</code>, <code class="highlighter-rouge">ack_seq</code>, <code class="highlighter-rouge">snd_wl1</code> and <code class="highlighter-rouge">snd_una</code> variables hold TCP
+sequence numbers that are used in TCPâs sliding window to keep track
+of the data exchanged over the wire. These sequence numbers are 32-bit
+unsigned integers (<code class="highlighter-rouge">u32</code>) and are incremented by 1 for each byte that
+is exchanged, beginning from an arbitrary initial value (<em>initial
+sequence number</em>). In particular:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">ack_seq</code> is the sequence number of the incoming segment</li>
+  <li><code class="highlighter-rouge">ack</code> is the <em>acknowledgment number</em> contained in the incoming
+ segment, i.e. it acknowledges the sequence number of the last
+ segment the peer received from us.</li>
+  <li><code class="highlighter-rouge">snd_wl1</code> is the sequence number of the incoming segment that last
+ updated the peerâs receive window.</li>
+  <li><code class="highlighter-rouge">snd_una</code> is the sequence number of the first <em>unacknowledged</em>
+ segment, i.e. a segment we have sent but has not been yet
+ acknowledged by the peer.</li>
+</ul>
+
+<p>Being fixed-size integers, the sequence numbers will eventually wrap
+around, so the <code class="highlighter-rouge">after()</code> macro takes care of comparing two sequence
+numbers <a href="https://en.wikipedia.org/wiki/Serial_number_arithmetic">in the face of wraparounds</a>.</p>
+
+<p>For the record, the <code class="highlighter-rouge">snd_una</code> and <code class="highlighter-rouge">snd_wl1</code> names come directly from
+the <a href="https://tools.ietf.org/html/rfc793#section-3.2">original TCP specification in RFC 793</a>, back in 1981!</p>
+
+<p>Translating the rather cryptic check into plain English, we are
+willing to accept a window update from a peer if:</p>
+
+<dl>
+  <dt>â¶</dt>
+  <dd>our peer acknowledges the receipt of data we previously sent; <em>or</em></dd>
+  <dt>â·</dt>
+  <dd>our peer is sending new data since the previous window update; <em>or</em></dd>
+  <dt>â¸</dt>
+  <dd>our peer isnât sending us new data since the previous window update,
+but is advertising a larger window</dd>
+</dl>
+
+<p>Note that the comparison of <code class="highlighter-rouge">ack_seq</code> with <code class="highlighter-rouge">snd_wl1</code> is done to make
+sure that the window is not accidentally updated by a
+(retransmission of a) segment that was seen earlier.</p>
+
+<p>In our case, at least condition â¸ should be able to re-open the window, but
+apparently it doesnât and we need access to these variables to figure out what
+is happening. Unfortunately, these variables are part of the internal kernel
+state and are not directly exposed to userspace, so itâs time to get a bit
+creative.</p>
+
+<h2 id="accessing-the-internal-kernel-state">Accessing the internal kernel state</h2>
+
+<p>To get access to the kernel state, we somehow need to run code inside
+the kernel. One way would be to patch the kernel with a few <code class="highlighter-rouge">printk()</code>
+calls here and there, but that would require rebooting the machine and
+waiting for rsync to hang again. Rather, we opted to live-patch the
+kernel using <a href="https://sourceware.org/systemtap/">systemtap</a> with the following script:</p>
+
+<figure class="highlight"><pre><code class="language-perl" data-lang="perl"><span class="nv">probe</span> <span class="nv">kernel</span><span class="o">.</span><span class="nv">statement</span><span class="p">("</span><span class="s2">tcp_ack@./net/ipv4/tcp_input.c:3751</span><span class="p">")</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nv">$sk</span><span class="o">-&gt;</span><span class="nv">sk_send_head</span> <span class="o">!=</span> <span class="nv">NULL</span><span class="p">)</span> <span class="p">{</span>
+	  <span class="nv">ack_seq</span> <span class="o">=</span> <span class="nv">@cast</span><span class="p">(</span><span class="nv">&amp;$skb</span><span class="o">-&gt;</span><span class="nv">cb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">"</span><span class="s2">tcp_skb_cb</span><span class="p">",</span> <span class="p">"</span><span class="s2">kernel&lt;net/tcp.h&gt;</span><span class="p">")</span><span class="o">-&gt;</span><span class="nv">seq</span>
+	  <span class="nb">printf</span><span class="p">("</span><span class="s2">ack: %d, ack_seq: %d, prior_snd_una: %d</span><span class="se">\n</span><span class="p">",</span> <span class="nv">$ack</span><span class="p">,</span> <span class="nv">ack_seq</span><span class="p">,</span> <span class="nv">$prior_snd_una</span><span class="p">)</span>
+	  <span class="nv">seq</span> <span class="o">=</span> <span class="nv">@cast</span><span class="p">(</span><span class="nv">&amp;$sk</span><span class="o">-&gt;</span><span class="nv">sk_send_head</span><span class="o">-&gt;</span><span class="nv">cb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">"</span><span class="s2">tcp_skb_cb</span><span class="p">",</span> <span class="p">"</span><span class="s2">kernel&lt;net/tcp.h&gt;</span><span class="p">")</span><span class="o">-&gt;</span><span class="nv">seq</span>
+	  <span class="nv">end_seq</span> <span class="o">=</span> <span class="nv">@cast</span><span class="p">(</span><span class="nv">&amp;$sk</span><span class="o">-&gt;</span><span class="nv">sk_send_head</span><span class="o">-&gt;</span><span class="nv">cb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">"</span><span class="s2">tcp_skb_cb</span><span class="p">",</span> <span class="p">"</span><span class="s2">kernel&lt;net/tcp.h&gt;</span><span class="p">")</span><span class="o">-&gt;</span><span class="nv">end_seq</span>
+	  <span class="nb">printf</span><span class="p">("</span><span class="s2">sk_send_head seq:%d, end_seq: %d</span><span class="se">\n</span><span class="p">",</span> <span class="nv">seq</span><span class="p">,</span> <span class="nv">end_seq</span><span class="p">)</span>
+
+	  <span class="nv">snd_wnd</span> <span class="o">=</span> <span class="nv">@cast</span><span class="p">(</span><span class="nv">$sk</span><span class="p">,</span> <span class="p">"</span><span class="s2">tcp_sock</span><span class="p">",</span> <span class="p">"</span><span class="s2">kernel&lt;linux/tcp.h&gt;</span><span class="p">")</span><span class="o">-&gt;</span><span class="nv">snd_wnd</span>
+	  <span class="nv">snd_wl1</span> <span class="o">=</span> <span class="nv">@cast</span><span class="p">(</span><span class="nv">$sk</span><span class="p">,</span> <span class="p">"</span><span class="s2">tcp_sock</span><span class="p">",</span> <span class="p">"</span><span class="s2">kernel&lt;linux/tcp.h&gt;</span><span class="p">")</span><span class="o">-&gt;</span><span class="nv">snd_wl1</span>
+	  <span class="nv">ts_recent</span> <span class="o">=</span> <span class="nv">@cast</span><span class="p">(</span><span class="nv">$sk</span><span class="p">,</span> <span class="p">"</span><span class="s2">tcp_sock</span><span class="p">",</span> <span class="p">"</span><span class="s2">kernel&lt;linux/tcp.h&gt;</span><span class="p">")</span><span class="o">-&gt;</span><span class="nv">rx_opt</span><span class="o">-&gt;</span><span class="nv">ts_recent</span>
+	  <span class="nv">rcv_tsval</span> <span class="o">=</span> <span class="nv">@cast</span><span class="p">(</span><span class="nv">$sk</span><span class="p">,</span> <span class="p">"</span><span class="s2">tcp_sock</span><span class="p">",</span> <span class="p">"</span><span class="s2">kernel&lt;linux/tcp.h&gt;</span><span class="p">")</span><span class="o">-&gt;</span><span class="nv">rx_opt</span><span class="o">-&gt;</span><span class="nv">rcv_tsval</span>
+	  <span class="nb">printf</span><span class="p">("</span><span class="s2">snd_wnd: %d, tcp_wnd_end: %d, snd_wl1: %d</span><span class="se">\n</span><span class="p">",</span> <span class="nv">snd_wnd</span><span class="p">,</span> <span class="nv">$prior_snd_una</span> <span class="o">+</span> <span class="nv">snd_wnd</span><span class="p">,</span> <span class="nv">snd_wl1</span><span class="p">)</span>
+	  <span class="nb">printf</span><span class="p">("</span><span class="s2">flag: %x, may update window: %d</span><span class="se">\n</span><span class="p">",</span> <span class="nv">$flag</span><span class="p">,</span> <span class="nv">$flag</span> <span class="o">&amp;</span> <span class="mh">0x02</span><span class="p">)</span>
+	  <span class="nb">printf</span><span class="p">("</span><span class="s2">rcv_tsval: %d, ts_recent: %d</span><span class="se">\n</span><span class="p">",</span> <span class="nv">rcv_tsval</span><span class="p">,</span> <span class="nv">ts_recent</span><span class="p">)</span>
+	  <span class="k">print</span><span class="p">("</span><span class="se">\n</span><span class="p">")</span>
+     <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Systemtap works by converting systemtap scripts into C and building a
+kernel module that hot-patches the kernel and overrides specific
+instructions. Here we overrode <code class="highlighter-rouge">tcp_ack()</code>, hooked at its end and
+dumped the internal TCP connection state. The <code class="highlighter-rouge">$sk-&gt;sk_send_head !=
+NULL</code> check is a quick way to only match connections that have a
+non-empty <code class="highlighter-rouge">Send-Q</code>.</p>
+
+<p>Loading the resulting module into the kernel gave us the following:</p>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">ack: 4212361596, ack_seq: 1253278418, prior_snd_una: 4212361596
+sk_send_head seq:4212361596, end_seq: 4212425472
+snd_wnd: 0, tcp_wnd_end: 4212361596, snd_wl1: 1708927328
+flag: 4100, may update window: 0
+rcv_tsval: 2950255047, ts_recent: 2950255047</code></pre></figure>
+
+<p>The two things of interest here are <code class="highlighter-rouge">snd_wl1: 1708927328</code> and
+<code class="highlighter-rouge">ack_seq: 1253278418</code>. Not only are they not identical as we would
+expect, but actually <code class="highlighter-rouge">ack_seq</code> is <em>smaller</em> than <code class="highlighter-rouge">snd_wl1</code>, indicating
+that <code class="highlighter-rouge">ack_seq</code> wrapped around at some point and <code class="highlighter-rouge">snd_wl1</code> has not been
+updated for a while. Using the <a href="https://en.wikipedia.org/wiki/Serial_number_arithmetic">serial number arithmetic</a> rules, we can figure out that this end has
+received (at least) 3.8 GB since the last update of <code class="highlighter-rouge">snd_wl1</code>.</p>
+
+<p>We already saw that <code class="highlighter-rouge">snd_wl1</code> contains the last sequence number used
+to update the peerâs receive window (and thus our send window), with
+the ultimate purpose of guarding against window updates from old
+segments. It should be okay if <code class="highlighter-rouge">snd_wl1</code> is not updated for a while,
+but it should not lag too far behind <code class="highlighter-rouge">ack_seq</code>, or else we risk
+rejecting valid window updates, as in this case. So it looks like the
+Linux kernel fails to update <code class="highlighter-rouge">snd_wl1</code> under some circumstances, which
+leads to an inability to recover from a zero-window condition.</p>
+
+<p>Having tangible proof that something was going on in the kernel, it
+was time to get people familiar with the networking code in the loop.</p>
+
+<h2 id="taking-things-upstream">Taking things upstream</h2>
+
+<p>After sleeping on this, we wrote a good summary of what we knew so far
+and what we supposed was happening, and reached out to <a href="https://lore.kernel.org/netdev/87eelz4abk.fsf@marvin.dmesg.gr/T/#u">the Linux
+networking maintainers</a>. Confirmation came less than two
+hours later, <a href="https://lore.kernel.org/netdev/87eelz4abk.fsf@marvin.dmesg.gr/T/#mf568052a4f9d76d847ae192d3632b8e87083d75a">together with a patch by Neal
+Cardwell</a>.</p>
+
+<p>Apparently, the bug was in the <em>bulk receiver fast-path</em>, a code path
+that skips most of the expensive, strict TCP processing to optimize
+for the common case of bulk data reception. This is a significant
+optimization, outlined 28 years agoÂ² by Van Jacobson in his <a href="https://www.pdl.cmu.edu/mailinglists/ips/mail/msg00133.html">âTCP
+receive in 30 instructionsâ email</a>. Apparently
+the Linux implementation did not update <code class="highlighter-rouge">snd_wl1</code> while in the
+receiver fast path. If a connection uses the fast path for too long,
+<code class="highlighter-rouge">snd_wl1</code> will fall so far behind that <code class="highlighter-rouge">ack_seq</code> will wrap around with
+respect to it. And if this happens while the receive window is zero,
+there is no way to re-open the window, as demonstrated above. Whatâs
+more, this bug had been present in Linux <a href="https://git.kernel.org/pub/scm/linux/kernel/git/history/history.git/commit/net/ipv4/tcp_input.c?h=2.1.8&amp;id=0f9cac5b27076f801b29a0867868e1bce7310e00&amp;ignorews=1">since v2.1.8</a>, dating
+back to 1996!</p>
+
+<p>Â² This optimization is still relevant today: a relatively recent
+<a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=45f119bf936b1f9f546a0b139c5b56f9bb2bdc78">attempt</a> to remove the header prediction code and associated fast
+paths to simplify the code was <a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=31770e34e43d6c8dee129bfee77e56c34e61f0e5">reverted</a> on performance
+regression grounds.</p>
+
+<p>As soon as we got the patch, we applied it, rebuilt the kernel,
+deployed it on the affected machines and waited to see if the issue
+was fixed. A couple of days later we were certain that the fix was indeed
+correct and did not cause any ill side-effects.</p>
+
+<p>After a bit of discussion, the <a href="https://patchwork.ozlabs.org/project/netdev/patch/20201022143331.1887495-1-ncardwell.kernel@gmail.com/">final commit</a> landed in
+<code class="highlighter-rouge">linux-net</code>, and from there it was merged into Linux mainline for 5.10-rc1.
+Eventually it found its way to the stable 4.9 and 4.19 kernel series that we
+use on our Debian systems, in 4.9.241 and 4.19.153 respectively.</p>
+
+<h2 id="aftermath">Aftermath</h2>
+
+<p>With the fix in place, we still had a couple of questions to answer,
+namely:</p>
+
+<ul>
+  <li>
+    <p>How is it possible for a TCP bug that leads to stuck connections to
+go unnoticed for 24 years?</p>
+  </li>
+  <li>
+    <p>Out of an infrastructure with more than 600 systems running all kinds of
+software, how come we only witnessed this bug when using rsync?</p>
+  </li>
+</ul>
+
+<p>Itâs hard to give a definitive answer to these questions, but we can
+reason about it this way:</p>
+
+<ol>
+  <li>
+    <p>This bug will not be triggered by most L7 protocols. In
+âsynchronousâ request-response protocols such as HTTP, usually
+each side will consume all available data before sending. In this
+case, even if <code class="highlighter-rouge">snd_wl1</code> wraps around, the bulk receiver will be
+left with a non-zero window and will still be able to send out
+data, causing the next acknowledgment to update the window and
+adjust <code class="highlighter-rouge">snd_wl1</code> through check â¶ in <code class="highlighter-rouge">tcp_may_update_window</code>. <code class="highlighter-rouge">rsync</code> on the
+other hand uses a pretty aggressive pipeline where the server might send
+out multi-GB responses without consuming incoming data in the process.
+Even in <code class="highlighter-rouge">rsync</code>âs case, using <code class="highlighter-rouge">rsync</code> over SSH (a rather common
+combination) rather than the plain TCP transport would not expose this bug,
+as SSH framing/signaling would most likely not allow data to queue up on
+the server this way.</p>
+  </li>
+  <li>
+    <p>Regardless of the application protocol, the receiver must remain
+long enough (for at least 2GB) with a zero send window in the fast
+path to cause a wrap-around â but not too long for <code class="highlighter-rouge">ack_seq</code>
+to overtake <code class="highlighter-rouge">snd_wl1</code> again. For this to happen, there must be no
+packet loss or other conditions that would cause the fast pathâs header
+prediction to fail. This is very unlikely to happen in practice as TCP
+itself determines the network capacity by actually causing packets to be
+lost.</p>
+  </li>
+  <li>
+    <p>Most applications will care about network timeouts and will either fail or
+reconnect, making it appear as a ârandom network glitchâ and leaving no
+trace to debug behind.</p>
+  </li>
+</ol>
+
+<p>Finally, even if none of the above happens and you end up with a stuck
+TCP connection, it takes a lot of annoyance to decide to deal with it
+and drill deep in kernel code. And when you do, you are rewarded with
+a nice adventure, where you get to learn about internet protocol
+history, have a glimpse at kernel internals, and witness open source
+work in motion!</p>
+
+<hr />
+
+<p>If you enjoyed reading this post and you like hunting weird bugs and
+looking at kernel code, you might want to drop us a line
+â we are always looking for talented <a href="https://apply.workable.com/skroutz/j/485671FB1F/">SREs</a> and <a href="https://apply.workable.com/skroutz/j/9D8A0589DE/">DevOps
+Engineers</a>!</p>
+
+
+        
+          <div id="disqus_thread"></div><!-- /#disqus_thread -->
+          
+<script type="text/javascript">
+    var disqus_url = 'https://engineering.skroutz.gr' + window.location.pathname;
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'skroutzengineering'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+        
+      </div><!-- /.entry-content -->
+    </div><!-- /.entry-wrapper -->
+    <nav class="pagination" role="navigation">
+      
+        <a href="https://engineering.skroutz.gr/blog/speed-the-journey-to-delivering-a-faster-experience-at-skroutz-gr/" class="btn btn-grey" title="Speed: The Journey to Delivering a Faster Experience at Skroutz.gr">Previous</a>
+      
+      
+        <a href="https://engineering.skroutz.gr/blog/how-we-classify-products/" class="btn btn-grey" title="How we classify products at Skroutz">Next</a>
+      
+    </nav><!-- /.pagination -->
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrapper">
+  <footer role="contentinfo" class="entry-wrapper">
+    
+
+<div class="left-footer">
+  <ul>
+    <li><a href="/about">About</a></li>
+    <li><a href="http://www.skroutz.gr/blog/news" rel="external nofollow">Skroutz Blog</a></li>
+  </ul>
+  <ul>
+    <li><a href="http://developer.skroutz.gr/" rel="external nofollow">Developer tools</a></li>
+    <li><a href="http://github.com/skroutz" rel="external nofollow">Skroutz Github</a></li>
+  </ul>
+  <ul>
+    <li><a href="http://www.skroutz.gr/" rel="external nofollow">Skroutz</a></li>
+  </ul>
+  <span>&copy; 2021 Skroutz Engineering Team. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a>.</span>
+</div>
+
+<div class="right-footer">
+  <a href="http://skroutz.workable.com/" class="js-job-offer job-offer" target="_blank" rel="nofollow external">We are hiring!</a>
+  <div class="social-icons">
+  
+  
+  
+  
+  
+  
+  
+  
+  <a href="https://engineering.skroutz.gr/feed.xml" title="Atom/RSS feed"><i class="fa fa-rss-square fa-2x"></i></a>
+</div><!-- /.social-icons -->
+</div>
+
+  </footer>
+</div><!-- /.footer-wrapper -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="https://engineering.skroutz.gr/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="https://engineering.skroutz.gr/assets/js/scripts.min.js"></script>
+
+<!-- Jekyll Simple Search option -->
+<script>
+  var urlSchemeAdjust = function(url) {
+    var scheme = window.location.protocol,
+        https_rexp = /^https/;
+
+    if (scheme === 'http:' && https_rexp.test(url)) {
+      return url.replace(https_rexp, 'http');
+    }
+
+    return url;
+  };
+
+  $(document).ready(function() {
+      $('.search-field').jekyllSearch({
+          jsonFile: urlSchemeAdjust('https://engineering.skroutz.gr/search.json'),
+          searchResults: '.search-results',
+          template: '<li><article><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></article></li>',
+          fuzzy: true,
+          noResults: '<p>Nothing found.</p>'
+        });
+
+        $(window).scroll(function () {
+          var jobOfferButtonEl = $('.js-job-offer');
+          var scrollFromTop = 100;
+          var scrollFromBottom = 250;
+          if ($(window).scrollTop() + $(window).height() >= $(document).height() - scrollFromBottom) {
+            jobOfferButtonEl.removeClass('fixed');
+          } else {
+            if(($(window).scrollTop() > scrollFromTop)) {
+              jobOfferButtonEl.addClass('fixed');
+            } else {
+              jobOfferButtonEl.removeClass('fixed');
+            }
+          }
+        });
+
+  });
+
+  (function( $, window, undefined ) {
+
+     var bs = {
+          close: $(".close-btn"),
+          searchform: $(".search-form"),
+          // canvas: $(".js-menu-screen"),
+          dothis: $('.dosearch')
+      };
+
+    bs.dothis.on('click', function() {
+      $('.search-wrapper').toggleClass('active');
+      $('body').toggleClass('no-scroll');
+      // bs.searchform.toggleClass('active');
+      bs.searchform.find('input').focus();
+      // bs.canvas.toggleClass('is-visible');
+    });
+
+      bs.close.on('click', function() {
+        $('.search-wrapper').toggleClass('active');
+        $('body').toggleClass('no-scroll');
+        // bs.searchform.toggleClass('active');
+        // bs.canvas.removeClass('is-visible');
+    });
+  })( jQuery, window );
+</script>
+
+
+
+
+</body>
+</html>

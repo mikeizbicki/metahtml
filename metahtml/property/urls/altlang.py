@@ -61,6 +61,9 @@ class Extractor(BaseExtractor):
         # https://mondediplo.com/2020/05/03covid-ecology
         # https://carnegie-mec.org/diwan/81781
         # https://www.cdc.gov/flu/pandemic-resources/pandemic-timeline-1930-and-beyond.htm
+        # https://www.latimes.com/california/story/2020-03-21/coronavirus-air-pollution-health-risk?fbclid=IwAR1Qks8YXdeoQvRnqNbOt3BRVr6fKtbrA5INXzsHeqHY0Ya95qeB5CDOwrY
+        # http://www.danielpipes.org/186/the-ayatollah-the-novelist-and-the-west
+        # https://fsfe.org/news/nl/nl-202106.nl.html
 
         # direct translations without links:
         # https://bles.com/mundo/rusia-uso-hidroxicloroquina-medicamento-tratar-virus-pcch-sugerido-trump.html

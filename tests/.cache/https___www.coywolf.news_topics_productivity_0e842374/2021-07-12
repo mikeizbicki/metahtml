@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head> <script type="text/javascript">if(!gform){document.addEventListener("gform_main_scripts_loaded",function(){gform.scriptsLoaded=!0}),window.addEventListener("DOMContentLoaded",function(){gform.domLoaded=!0});var gform={domLoaded:!1,scriptsLoaded:!1,initializeOnLoaded:function(o){gform.domLoaded&&gform.scriptsLoaded?o():!gform.domLoaded&&gform.scriptsLoaded?window.addEventListener("DOMContentLoaded",o):document.addEventListener("gform_main_scripts_loaded",o)},hooks:{action:{},filter:{}},addAction:function(o,n,r,t){gform.addHook("action",o,n,r,t)},addFilter:function(o,n,r,t){gform.addHook("filter",o,n,r,t)},doAction:function(o){gform.doHook("action",o,arguments)},applyFilters:function(o){return gform.doHook("filter",o,arguments)},removeAction:function(o,n){gform.removeHook("action",o,n)},removeFilter:function(o,n,r){gform.removeHook("filter",o,n,r)},addHook:function(o,n,r,t,i){null==gform.hooks[o][n]&&(gform.hooks[o][n]=[]);var e=gform.hooks[o][n];null==i&&(i=n+"_"+e.length),null==t&&(t=10),gform.hooks[o][n].push({tag:i,callable:r,priority:t})},doHook:function(o,n,r){if(r=Array.prototype.slice.call(r,1),null!=gform.hooks[o][n]){var t,i=gform.hooks[o][n];i.sort(function(o,n){return o.priority-n.priority});for(var e=0;e<i.length;e++)"function"!=typeof(t=i[e].callable)&&(t=window[t]),"action"==o?t.apply(null,r):r[0]=t.apply(null,r)}if("filter"==o)return r[0]},removeHook:function(o,n,r,t){if(null!=gform.hooks[o][n])for(var i=gform.hooks[o][n],e=i.length-1;0<=e;e--)null!=t&&t!=i[e].tag||null!=r&&r!=i[e].priority||i.splice(e,1)}}}</script><script>if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script>class RocketLazyLoadScripts{constructor(e){this.triggerEvents=e,this.eventOptions={passive:!0},this.userEventListener=this.triggerListener.bind(this),this.delayedScripts={normal:[],async:[],defer:[]},this.allJQueries=[]}_addUserInteractionListener(e){this.triggerEvents.forEach((t=>window.addEventListener(t,e.userEventListener,e.eventOptions)))}_removeUserInteractionListener(e){this.triggerEvents.forEach((t=>window.removeEventListener(t,e.userEventListener,e.eventOptions)))}triggerListener(){this._removeUserInteractionListener(this),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",this._loadEverythingNow.bind(this)):this._loadEverythingNow()}async _loadEverythingNow(){this._delayEventListeners(),this._delayJQueryReady(this),this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async),await this._triggerDOMContentLoaded(),await this._triggerWindowLoad(),window.dispatchEvent(new Event("rocket-allScriptsLoaded"))}_registerAllDelayedScripts(){document.querySelectorAll("script[type=rocketlazyloadscript]").forEach((e=>{e.hasAttribute("src")?e.hasAttribute("async")&&!1!==e.async?this.delayedScripts.async.push(e):e.hasAttribute("defer")&&!1!==e.defer||"module"===e.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(e):this.delayedScripts.normal.push(e):this.delayedScripts.normal.push(e)}))}async _transformScript(e){return await this._requestAnimFrame(),new Promise((t=>{const n=document.createElement("script");let i;[...e.attributes].forEach((e=>{let t=e.nodeName;"type"!==t&&("data-rocket-type"===t&&(t="type",i=e.nodeValue),n.setAttribute(t,e.nodeValue))})),e.hasAttribute("src")&&this._isValidScriptType(i)?(n.addEventListener("load",t),n.addEventListener("error",t)):(n.text=e.text,t()),e.parentNode.replaceChild(n,e)}))}_isValidScriptType(e){return!e||""===e||"string"==typeof e&&["text/javascript","text/x-javascript","text/ecmascript","text/jscript","application/javascript","application/x-javascript","application/ecmascript","application/jscript","module"].includes(e.toLowerCase())}async _loadScriptsFromList(e){const t=e.shift();return t?(await this._transformScript(t),this._loadScriptsFromList(e)):Promise.resolve()}_preloadAllScripts(){var e=document.createDocumentFragment();[...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async].forEach((t=>{const n=t.getAttribute("src");if(n){const t=document.createElement("link");t.href=n,t.rel="preload",t.as="script",e.appendChild(t)}})),document.head.appendChild(e)}_delayEventListeners(){let e={};function t(t,n){!function(t){function n(n){return e[t].eventsToRewrite.indexOf(n)>=0?"rocket-"+n:n}e[t]||(e[t]={originalFunctions:{add:t.addEventListener,remove:t.removeEventListener},eventsToRewrite:[]},t.addEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.add.apply(t,arguments)},t.removeEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.remove.apply(t,arguments)})}(t),e[t].eventsToRewrite.push(n)}function n(e,t){let n=e[t];Object.defineProperty(e,t,{get:()=>n||function(){},set(i){e["rocket"+t]=n=i}})}t(document,"DOMContentLoaded"),t(window,"DOMContentLoaded"),t(window,"load"),t(window,"pageshow"),t(document,"readystatechange"),n(document,"onreadystatechange"),n(window,"onload"),n(window,"onpageshow")}_delayJQueryReady(e){let t=window.jQuery;Object.defineProperty(window,"jQuery",{get:()=>t,set(n){if(n&&n.fn&&!e.allJQueries.includes(n)){n.fn.ready=n.fn.init.prototype.ready=function(t){e.domReadyFired?t.bind(document)(n):document.addEventListener("rocket-DOMContentLoaded",(()=>t.bind(document)(n)))};const t=n.fn.on;n.fn.on=n.fn.init.prototype.on=function(){if(this[0]===window){function e(e){return e.split(" ").map((e=>"load"===e||0===e.indexOf("load.")?"rocket-jquery-load":e)).join(" ")}"string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=e(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach((t=>{delete Object.assign(arguments[0],{[e(t)]:arguments[0][t]})[t]}))}return t.apply(this,arguments),this},e.allJQueries.push(n)}t=n}})}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._requestAnimFrame(),document.rocketonreadystatechange&&document.rocketonreadystatechange()}async _triggerWindowLoad(){await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-load")),await this._requestAnimFrame(),window.rocketonload&&window.rocketonload(),await this._requestAnimFrame(),this.allJQueries.forEach((e=>e(window).trigger("rocket-jquery-load"))),window.dispatchEvent(new Event("rocket-pageshow")),await this._requestAnimFrame(),window.rocketonpageshow&&window.rocketonpageshow()}_handleDocumentWrite(){const e=new Map;document.write=document.writeln=function(t){const n=document.currentScript;n||console.error("WPRocket unable to document.write this: "+t);const i=document.createRange(),r=n.parentElement;let a=e.get(n);void 0===a&&(a=n.nextSibling,e.set(n,a));const o=document.createDocumentFragment();i.setStart(o,0),o.appendChild(i.createContextualFragment(t)),r.insertBefore(o,a)}}async _requestAnimFrame(){return new Promise((e=>requestAnimationFrame(e)))}static run(){const e=new RocketLazyLoadScripts(["keydown","mousemove","touchmove","touchstart","touchend","wheel"]);e._addUserInteractionListener(e)}}RocketLazyLoadScripts.run();
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="author" content="Jon Henshaw">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+		body { margin:0; }
+nav.top { position:fixed;width:100%;background:#050520;z-index:10; }
+nav.top .logo { text-align:center;padding:1rem; }
+nav.top .menu { padding:1rem;display:none;background:#050520;background: -moz-linear-gradient(left, #050520 0%, #0b0c35 100%);background: -webkit-linear-gradient(left, #050520 0%,#0b0c35 100%);background: linear-gradient(to right, #050520 0%,#0b0c35 100%);filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#050520', endColorstr='#0b0c35',GradientType=1 );text-transform:uppercase; }
+nav.top svg { height:2.5rem; }
+nav.top ul { margin:0;padding:0;line-height:2em;text-align:center;position: static;display: none; }
+nav.top li { display:inline-block;margin:0;padding:.5rem 0;width:100%; }
+nav.top a:link, nav.top a:visited { text-decoration:none;color:#fff;font-weight:600;padding:1rem; }
+nav.top a:hover { border-bottom:1px solid #fff;color:#fff; }
+nav.top .select { background:#fff; }
+nav.top .select a:link, nav.top .select a:visited { color:#000; }
+nav.top .select a:hover { border-bottom:1px solid #000; }
+nav.top .logo a:hover { border:none; }
+.show-menu { display:block;font-size:200%;position:fixed;top:14px;left:14px; }
+input[type=checkbox]{ display:none;-webkit-appearance:none; }
+input[type=checkbox]:checked ~ .menu{ display: block; }
+.contain { padding:1em;margin:0 auto;max-width:890px; }
+.intro { background:#EB644E; }.intro p { font-weight:300;color:#eee;margin-bottom:1rem; }
+.intro h1 a, .intro p a { text-decoration:none;color:#fff; }
+.intro p a { font-weight:600;border-bottom:1px solid #6D9F7D; }
+.intro h1 a:hover, .intro p a:hover { border-color:#aaa; }
+abbr { text-decoration:none; }
+h1, h2 { font-weight:800; }
+h4, h6 { font-weight:600; }
+h3, h5 { font-weight:400; }
+h1 { font-size:1.8rem;margin:6rem 0 0 0; }
+.intro h1 { font-size:240%; }
+h2.home { font-weight:200;font-size:1.5rem; }
+h2, h3, h4, h5, h6 { margin:3rem 0 1rem 0; }
+h2 { font-size:170%;}
+h3 { font-size:160%;}
+h4 { font-size:150%;}
+h5 { font-size:140%;}
+h6 { font-size:130%;}
+p, article ul li { line-height:2.2rem; }
+article ul.jump li, article ol.jump li, .yoast-table-of-contents ul li { line-height:1.7rem;padding:.3rem 0; }
+.share p { line-height:2rem; }
+.byline { font-size:90%; }
+article .byline { border-top:1px solid #eee;border-bottom:1px solid #eee;font-size:80%; }
+.byline span { display:none; }
+.byline a { text-decoration:none; }
+.author-coywolfnews { text-transform: none !important; }
+article .author { text-align:center; }
+.author a, time, .share { font-weight:600; }
+.author .pipe { display:none; }
+.author svg { height:20px;vertical-align: middle; }
+.person, .profiletwitter { color:#000; }
+.profiletwitter { text-transform:lowercase; }
+time, .byline tag { display:block; }
+.share { display:inline;font-size:100%;padding-top:2rem;text-align: center; }
+.share svg { height:1rem;vertical-align:top;padding:.6rem 0 ; }
+.share a { line-height:2rem; }
+.twitter { background: none repeat scroll 0 0 #00ACED;padding:.5rem 1rem;font-size:80%;-webkit-border-radius: 25px 0 0 25px;-moz-border-radius: 25px 0 0 25px;border-radius: 25px 0 0 25px;color: #fff;text-decoration:none; }
+.reddit { background: none repeat scroll 0 0 #E95428;padding:.5rem 1rem;font-size:80%;color: #fff;text-decoration:none; }
+.facebook { background: none repeat scroll 0 0 #3B5998;padding:.5rem 1rem;font-size:80%;color: #fff;text-decoration:none; }
+.linkedin { background: none repeat scroll 0 0 #0077B5;padding:.5rem 1rem;font-size:80%;-webkit-border-radius: 0 25px 25px 0;-moz-border-radius: 20 25px 25px 0;border-radius: 0 25px 25px 0;color: #fff;text-decoration:none; }
+article p, article li { font-family:Georgia,"Times New Roman", Times, serif;font-size:120%; }
+dt { font-weight:700;margin-left:2rem; }
+dd { margin-left:3rem;margin-bottom: 1rem; }
+article li li { font-size:90%; }
+article li p { font-size:100% }
+header p { font-size:1.2rem;margin-bottom:2rem;font-style: italic; }
+article ul, article ol { margin:1rem 0; }
+article ul ul, article ol ol { margin:0; }
+article li { padding:.5rem 0; }
+img, video { max-width:100%;width:auto;height:auto; }
+.frame img { border:1px solid #eee; }
+figure, table { margin:2rem 0;padding:0; }
+figure { text-align:center; }
+figcaption { font-size:90%;padding-top:1rem;color:#555;text-align:center; }
+.about { display: grid;grid-template-columns: 120px 1fr;grid-template-rows: 2fr;grid-template-areas: "gravatar bio"; }
+.about p { margin:0;line-height: 1.5rem; }
+.newsfeed { padding:0;margin:1rem 0 2rem 0;background:#fff; }
+article .center { text-align:center; }
+.newsfeed h2 { margin:0;line-height: 2rem;font-size:1.4rem;font-weight: 700; }
+.newsfeed h2 a { color:#000; }
+.newsfeed .excerpt { font-family:Georgia,"Times New Roman", Times, serif;font-size:1rem;margin:.5rem 0;line-height: 1.5rem; }
+.newsfeed .thumbnail { display:none; }
+.newsfeed .byline p { margin:0; }
+.newsfeed .tag:after { content: "\A";white-space: pre; }
+.thumbnail, .gravatar { margin-right:20px; }
+.thumbnail img { border:1px solid #eee; }
+.thumbnail a, .thumbnail a:hover { border:none; }
+article a, section a { color:#0E52AE;text-decoration:none;border-bottom:1px solid #ccc; }
+article p a { font-weight:600; }
+article a:hover, section a:hover { border-bottom:1px solid #999; }
+.share a, .share a:hover { border:none;}
+article :target:before { content:"";display:block;height:7rem;margin:-7rem 0 0; }
+/* External Link Styles
+article a[href *= "https://amzn.to"]:after, article a[href *= "https://www.amazon.com"]:after {
+	 display:inline-block;content: " " url(/amazon.svg);width:1rem;padding-left:.2rem;    
+} */
+article a[href *= "#"]:after {
+	 content: "  ⇣";color:#71708B; 
+}
+.pagination { display:grid;grid-template-columns: 1fr 1fr;padding:1rem 0; }
+.newer { grid-column-start:2;grid-column-end:3;grid-row-start:1;text-align:right; }
+.older { grid-column-start:1;grid-column-end:2;grid-row-start:1; }
+blockquote { color:#333;border-left:4px solid #ccc;padding-left:30px;margin:0;background: #eee; }
+blockquote p { font-weight:600;padding:1rem 1rem 1rem 0; }
+blockquote cite { padding:0 1rem 1rem 0;margin:0;display:block; }
+code { overflow-wrap: break-word; }
+.code { line-height:1.5rem;font-size:110%;background:#333;color:#fff;padding:1rem;display:block; }
+/*cite { font-size:80%;text-align:right;display:block; }*/
+hr { border:none;height:2px;background:#eee;margin:3rem auto;width:60%; }
+.references { background:#f1f1f1;padding:0 1rem; }
+.references h2 { padding-top:2rem; }
+.references ul { list-style:none;margin-left: 1rem;padding-bottom:2rem; }
+.references li { line-height: 1rem; }
+aside.privacy { background: #0E52AE;color:#fff;font-size:120%; }
+aside.privacy a { color:#fff;font-weight: 600; }
+footer a { text-decoration:none;border-bottom:1px solid #666; }
+footer a:hover { border-color:#aaa; }
+footer { background:#050520;padding:3rem 0;font-size:90%;font-weight:300;color:#eee; }
+footer .contain{ display:grid;grid-template-columns: 1fr; }
+footer .fnav1 { grid-column-start:1;grid-column-end:2;grid-row-start:1; }
+footer .fnav2 { grid-column-start:1;grid-column-end:2;grid-row-start:2; }
+footer .femail { grid-column-start:1;grid-column-end:2;grid-row-start:3; }
+footer .femail address { text-align: center;line-height: 1.3rem; }
+footer .femail img.avatar { float:left;margin: 0 1rem 0 0; }
+footer .fcopy { grid-column-start:1;grid-column-end:2;grid-row-start:4;text-align:center; }
+footer h2 { font-size:140%; }
+footer ul { list-style:none;margin:0;padding:0; }
+footer li { line-height:2rem; }
+footer a { color:#eee;text-decoration:none;font-weight:600; }
+
+/* Forms */
+input { border:1px solid #ccc;padding:.3rem; }
+input[type=text] {font-size:1.2rem;}
+input[type=submit],input[type=button] {-webkit-appearance: button;font-size:1.2rem;background:#eee;text-transform: uppercase;padding-left:1rem;padding-right:1rem;}
+.gform_button {font-size:1.3rem !important;margin-top: -4px !important; }
+input[type=submit]:hover { cursor: pointer; }
+label { display:none; }
+
+/* Colors */
+nav.top, nav.top a, .intro { color:#fff; }
+.tag { padding:3px .7rem;font-size:90%;-webkit-border-radius: 25px;-moz-border-radius: 25px;border-radius: 25px;color: #fff;text-decoration:none;text-transform: uppercase; }
+article .tag { font-size:110%; }
+a.tag, a:hover.tag { color:#fff;border:none; }
+.tag.seo { background: none repeat scroll 0 0 #0E52AE; }
+.tag.social { background: none repeat scroll 0 0 #078877; }
+.tag.content { background: none repeat scroll 0 0 #8A65C3; }
+.tag.productivity { background: none repeat scroll 0 0 #EB644E; }
+.tag.email { background: none repeat scroll 0 0 #B22D47; }
+.tag.startup { background: none repeat scroll 0 0 #80175F; }
+.tag.webmaster { background: none repeat scroll 0 0 #15A8C4; }
+.tag.podcast { background: none repeat scroll 0 0 #4C75E1; }
+.tag.paid { background: none repeat scroll 0 0 #336D46; }
+.tag.ecommerce { background: none repeat scroll 0 0 #80175F; }
+.wp-block-web-stories-embed { display: flex;align-items: center;justify-content: center; }
+/* Desktop */
+@media screen and (min-width:40rem) { 
+	nav.top { width:100%;display:grid;grid-template-columns: 1fr 3.5fr; }
+	nav.top .logo { grid-column-start:1;grid-column-end:2;grid-row-start:1; }
+	nav.top .menu { grid-column-start:2;grid-column-end:4.5;grid-row-start:1;background:none;display:inline-block;text-align: right;float:right;}
+	nav.top li { display:inline; }
+	nav.top a:link, nav.top a:visited { padding:0; }
+	.show-menu { display: none; }
+	h1 { font-size:2.8rem;margin:6rem 0 0 0;}
+	.intro h1 { font-size:4.5rem;font-weight:700;margin:9rem 0 0 0; }
+	h2 { font-size:200%;}
+	h3 { font-size:190%;}
+	h4 { font-size:180%;}
+	h5 { font-size:170%;}
+	h6 { font-size:160%;}
+	nav.top .logo { text-align:left; }
+	nav.top svg { height:2rem; }
+	nav.top ul { text-align:right; }
+	nav.top li { font-weight:300;padding:.5rem 1rem; }
+	.intro p { font-size:1.2rem;line-height: 2.5rem;margin-bottom:2rem; }
+	article p, article ul, article h1, article h2, article h3, article h4, article h5, article h6, .gform_wrapper, .gform_confirmation_wrapper, dl { padding:0 70px; }
+	#input_2_1 { position:relative;left:-8px; }
+	.about { border-top:1px solid #eee;border-bottom:1px solid #eee;margin:0 70px;padding:1rem 0; }
+	.about p { margin:0; }
+	.about p, .about .grid { padding:0; }
+	article p, article li { font-size:130%; }
+	article ul.jump li, article ol.jump li { line-height:2rem; }
+	header p { margin-bottom:1rem;font-size:1.4rem; }
+	article ul { margin:1.5rem 35px 1.5rem 3rem }
+	article ol { margin:1.5rem 86px 1.5rem 4rem }
+	article li, article li p { padding:1rem 0; }
+	article .byline { margin:0 70px;font-size:90%; }
+	section.category { margin-top:-7rem; }
+	.byline p { padding:0;font-size:110%; }
+	.byline span { padding:0 .8rem;display:inline;color:#ccc; }
+	time:after { content: '  ';white-space: none; }
+	article .tag { font-size:90%; }
+	article :target:before { content:"";display:block;height:5rem;margin:-5rem 0 0; }
+	time, .byline tag { display:inline; }
+	.share { display:inline;font-size:100%;padding-top:2rem; }
+	.share svg { height:1rem;vertical-align:top;padding:.6rem 0 ; }
+	.share a { line-height:2rem; }
+	.twitter { background: none repeat scroll 0 0 #00ACED;padding:.5rem 1rem;font-size:80%;-webkit-border-radius: 25px 0 0 25px;-moz-border-radius: 25px 0 0 25px;border-radius: 25px 0 0 25px;color: #fff;text-decoration:none; }
+	.reddit { background: none repeat scroll 0 0 #E95428;padding:.5rem 1rem;font-size:80%;color: #fff;text-decoration:none; }
+	.facebook { background: none repeat scroll 0 0 #3B5998;padding:.5rem 1rem;font-size:80%;color: #fff;text-decoration:none; }
+	.linkedin { background: none repeat scroll 0 0 #0077B5;padding:.5rem 1rem;font-size:80%;-webkit-border-radius: 0 25px 25px 0;-moz-border-radius: 20 25px 25px 0;border-radius: 0 25px 25px 0;color: #fff;text-decoration:none; }
+	figure, table { margin:3rem 0; }
+	.newsfeed { display: grid;grid-template-rows: 1fr;grid-template-areas: "snippet thumbnail";grid-template-columns: 2fr 1fr;column-gap:1.5rem;margin:2rem 0 4rem 0; }
+	.newsfeed .thumbnail { display:block; }
+	.newsfeed h2 { font-size:150%; }
+	.newsfeed .tag:after { content: "";white-space:normal; }
+	.thumbnail { margin-right:0; }
+	figure.reduce img, figure.reduce video, figure.reduce stream { max-width:540px; }
+	blockquote { padding:1px 66px; }
+	blockquote p { padding:.5rem 0;margin:2rem 0;font-size:120%;font-weight:700; }
+	blockquote cite { padding-bottom:.5rem;margin:0 0 2rem 0;display:block; }
+	/*cite { margin-top:-1rem; }*/
+	.references { padding:0; }
+	aside.privacy { font-size:120%;text-align: center; }
+	footer .contain{ display:grid;grid-template-columns: 1fr 1fr 1fr 1fr; }
+	footer .fnav1 { grid-column-start:1;grid-column-end:2;grid-row-start:1; }
+	footer .fnav2 { grid-column-start:2;grid-column-end:3;grid-row-start:1; }
+	footer .femail { grid-column-start:3;grid-column-end:5;grid-row-start:1; }
+	footer .femail address { text-align: left; }
+	footer .fcopy { grid-column-start:1;grid-column-end:5;grid-row-start:2;margin-top:4rem; }
+	footer h2 { font-size:170%;margin-top:0; }
+}
+.web-stories-embed { margin:0 auto;max-width:360px; }
+.video-container { position: relative;padding-bottom: 56.25%;padding-top: 30px; height: 0; overflow: hidden;}
+.video-container iframe, .video-container object, .video-container embed { position: absolute;top: 0;left: 0;width: 100%;height: 100%; }
+/* Mobile Table */
+table { width:100%;border-collapse: collapse; }
+caption { font-size:90%;padding-bottom:1rem;color:#555;text-align:center; }
+tr:nth-child(even) {  }
+thead tr { border-top:1px solid #F4F5F7; }
+thead th { padding:.5rem 0; }
+tbody tr:nth-child(odd) { background:#F4F5F7; }
+th { color:#71708B;font-weight:600; }
+td { padding:.5rem;text-align:center; }
+td.number { text-align:right; }
+@media only screen and (max-width:40rem) {
+	#no-more-tables { z-index:1; }
+	#no-more-tables table, #no-more-tables thead, #no-more-tables tbody, #no-more-tables th, #no-more-tables td, #no-more-tables tr { display: block; }
+	 #no-more-tables thead tr {position: absolute;top: -9999px;left: -9999px; }
+	#no-more-tables tr { padding:1rem; }
+	#no-more-tables td { border: none;position: relative;padding-left: 50%;white-space: normal;text-align:left; }
+	 #no-more-tables td:before { position: absolute;top: 6px;left: 6px;width: 45%;padding-right: 10px;white-space: nowrap;text-align:left;font-weight: bold; }
+	#no-more-tables td:before { content: attr(data-title); }
+}
+/* Fonts */
+body, .byline p, blockquote p, .cta p, .action, .wall { font-display:optional;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif; }	</style>
+<meta name="theme-color" content="#050520">
+<link rel="pingback" href="https://www.coywolf.news/xmlrpc.php">
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://www.coywolf.news/feed/"> <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+<title>Productivity News by Coywolf</title>
+<link rel="canonical" href="https://www.coywolf.news/topics/productivity/" />
+<link rel="next" href="https://www.coywolf.news/topics/productivity/page/2/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Productivity Archives" />
+<meta property="og:description" content="Technology news about products and services to help make working from home and remote work more productive and secure." />
+<meta property="og:url" content="https://www.coywolf.news/topics/productivity/" />
+<meta property="og:site_name" content="Marketing &amp; Technology News" />
+<meta property="og:image" content="https://www.coywolf.news/wp-content/uploads/2019/05/og-coywolf.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@coywolf" />
+
+<link rel="alternate" type="application/rss+xml" title="Marketing &amp; Technology News &raquo; Productivity Category Feed" href="https://www.coywolf.news/topics/productivity/feed/" />
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="https://api.w.org/" href="https://www.coywolf.news/wp-json/" /><link rel="alternate" type="application/json" href="https://www.coywolf.news/wp-json/wp/v2/categories/3" /> <script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
+<body class="archive category category-productivity category-3">
+<nav class="top">
+<div class="logo"><a title="Coywolf" href="https://coywolf.com"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3314.48 599.78"><desc>The Coywolf Marketing Logo</desc><path d="M1090.65,413.56c-85,0-122.39-57.72-122.39-106.26,0-48.1,37.35-105.82,122.39-105.82,43.2,0,72.9,22.3,72.9,22.3l36-70s-41.39-33.23-121.94-33.23c-105.29,0-201.14,83.95-201.14,187.59,0,103.19,96.3,186.27,201.14,186.27,80.55,0,121.94-33.23,121.94-33.23l-36-70S1133.85,413.56,1090.65,413.56Zm106.07-105.71c0-105.38,87.78-186.71,193.2-186.71,106.36,0,192.74,81.33,192.74,186.71S1500,495,1389.92,495C1276.6,495,1196.72,413.23,1196.72,307.85Zm94.28,0c0,53.78,27.4,107.57,98.92,107.57,69.67,0,98.46-53.79,98.46-107.57s-30.65-107.57-98.46-107.57C1322.58,200.28,1291,254.07,1291,307.85Zm256.83-187.28h101.69L1726.92,242l77.39-121.47H1906l-136.79,205V494.47h-84.6V325.56Zm650.31,373.9-59.4-210.13-59.4,210.13h-94l-105.75-373.9h94l63.45,253h2.25l67.49-253h63.9l67.49,253h2.25l63.45-253h93.59l-105.74,373.9Zm202-187.19c0-105.7,87.78-187.28,193.21-187.28,106.35,0,192.74,81.58,192.74,187.28S2703.45,495,2593.38,495C2480.06,495,2400.17,413,2400.17,307.28Zm94.28,0c0,54,27.4,107.9,98.93,107.9,69.66,0,98.46-53.95,98.46-107.9s-30.66-107.89-98.46-107.89C2526,199.39,2494.45,253.33,2494.45,307.28Zm421.88-186.71h-84.59v373.9h212.39V422.32h-127.8Zm387.65,0H3089.34v373.9h84.59v-159h113.38l1.13-72.15H3173.93V191.62H3304Z" style="fill:#fff;stroke:#fff;stroke-width:21px" /><path d="M577.5,443.48c.85-1.45,2-4.84,3.66-11.15C589.8,399.14,607.61,346,613.28,342s7.42-1.41,14.76-.72,17.05,1.65,20.89-.92c8.43-5.64,12.86-13.07,9.21-17.22-8.7-9.87-18.75-19.83-21.41-22.45-7.3-7.16-5.54-14.27-6.6-21.26s-5.35-17.59-5.35-17.59,18.88-38,5-31.59c-3.33,1.54-31,17.09-34.86,17.09-8,0-10.4-.55-17.61-7.64-6-5.91-12.77-22.55-20.16-35.41-4.46-7.76-12.07,4.62-16.92,18.57-1,2.76-5.86,22.47-5,29.75s-16.3,27.16-23.84,34.08a117.77,117.77,0,0,1-13.55,10.85c-16.5,8.06-40.78,16.5-86,25.14q-8.12,1.54-15.67,3l-.31.05c-5.23.82-8,1.32-8.71,1.64C265.83,350,257.22,348,222.09,390.84,202,415.32,188,484.46,185.44,522.69c-3,21.68.13,37.91,3.2,45.69,5.1,12.93,28.26,9,30.17,20.17s4.89,11.23-32.35,11.23c-11.61,0-17.83-.45-25.56-4.24s-10.23-14-12.73-21.62-17.09-61.2-19.15-85.66c-1.47-17.49,2.84-32.32,9.54-54.69A480.22,480.22,0,0,0,153,371.51c-1.21,3.58-2,5.85-2,5.85s-3.62,11.67-17.92,55.28c-1,3.16-2.15,6.39-3.43,9.65a78.34,78.34,0,0,1-8.65,16.81c-6.25,9.31-15.42,18.42-29.95,26.58Q80.68,491.54,72,495.85c-134,70.07-44.2-40.4-20.84-77.45a24.78,24.78,0,0,1,1.94-2.63c31.77-51.09,62.09-101.56,92.49-124.06,30.94-22.91,36.62-30.59,113.41-45.57,46-9,161.93-24.93,239.8-50a43.08,43.08,0,0,1-12.68-13.94c-7.75-8.85,19.2-28.88,40.34-42.7a13.63,13.63,0,0,1,1.63-1.28c8.06-4.54,6.76-15.6,8.35-26a119.12,119.12,0,0,1,6-22.25s-30.5-57.35-9.69-47.84c5,2.3,46.67,25.43,52.43,25.43,12,0,15.65-.83,26.49-11.38,9-8.79,19.21-33.53,30.33-52.65C648.62-8,659,10.43,668.38,31.18c1.77,3.92,8.27,24,10.59,34.28,1.93,8.58,24.08,48.11,30,92.71,10.33,58.58,2.37,138.86-50.35,238.05-10.35,24.94-23.43,53.79-28.72,76.43-7.52,32.19-17.9,82-12.79,95s28.05,10.56,29.32,20.15c.66,5,2.2,7.86-1.81,9.43-2.81,1.87-10.59,2.49-30,2.49-12.39,0-22.26.29-29.48-5.25-7.58-5.82-8-11.28-11.25-20.6-1.95-5.64-3.63-22.06-4.18-41.41a360.56,360.56,0,0,1,.09-40.12c.82-12.53,3.17-27.83,7.18-46.45C577.17,445.06,577.33,444.27,577.5,443.48Z" style="fill:#fff" /></svg></a></div>
+<aside>
+<label for="show-menu" class="show-menu">&#9776;</label>
+<input type="checkbox" id="show-menu" role="button">
+<ul class="menu">
+<li><a href="https://coywolf.pro/">Pro</a></li>
+<li class="select"><a href="/">News</a></li>
+<li><a href="https://coywolf.reviews/">Reviews</a></li>
+</ul>
+</aside>
+</nav>
+<div class="intro category productivity">
+<div class="contain">
+<header>
+<h1>Productivity News</h1>
+</header>
+<p>Technology news about products and services to help make <a href="https://www.coywolf.news/productivity/working-from-home-smart-lights-avoid-call-interruptions/">working from home</a> and remote work more productive and <a href="https://www.coywolf.news/productivity/amplifi-teleport-vpn/">secure</a>.</p>
+</div>
+</div>
+<main>
+<section class="contain">
+<div class="newsfeed">
+<div class="snippet">
+<h2><a href="https://www.coywolf.news/productivity/big-mail-first-look/">&#8216;Big Mail&#8217; first look: New email app attempts to make reading email enjoyable again</a></h2>
+<p class="excerpt">The Not So Big Company launched its Apple-centric multi-platform email client, Big Mail. The new email app has a stunning design, distraction-free reading, and a contact filtering tool that’s similar to Basecamp’s HEY.</p> <div class="byline">
+<p class="author"><a class="person" href="https://www.coywolf.news/jon-henshaw/">Jon Henshaw</a> <span>|</span> <nowrap><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" style="fill: rgb(0, 0, 0);" /></svg><a rel="noopener author" target="_blank" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="profiletwitter" href="https://twitter.com/henshaw">@henshaw</a></nowrap></p>
+</div>
+</div>
+<div class="thumbnail">
+<a href="https://www.coywolf.news/productivity/big-mail-first-look/"><img width="600" height="315" src="https://www.coywolf.news/wp-content/uploads/2021/06/big-mail-600x315.png" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="Big Mail" loading="lazy" srcset="https://www.coywolf.news/wp-content/uploads/2021/06/big-mail-600x315.png 600w, https://www.coywolf.news/wp-content/uploads/2021/06/big-mail-300x158.png 300w, https://www.coywolf.news/wp-content/uploads/2021/06/big-mail-1024x538.png 1024w, https://www.coywolf.news/wp-content/uploads/2021/06/big-mail-768x403.png 768w, https://www.coywolf.news/wp-content/uploads/2021/06/big-mail.png 1200w, https://www.coywolf.news/wp-content/uploads/2021/06/big-mail-150x79.png 150w" sizes="(max-width: 600px) 100vw, 600px" /></a>
+</div>
+</div>
+<div class="newsfeed">
+<div class="snippet">
+<h2><a href="https://www.coywolf.news/productivity/neeva-invites-and-connected-apps/">Neeva makes invites available and adds Slack integration</a></h2>
+<p class="excerpt">The ad-free, privacy-first, and highly personalized search engine, Neeva, provided current users with invite links and added the ability to search Slack workspaces.</p> <div class="byline">
+<p class="author"><a class="person" href="https://www.coywolf.news/jon-henshaw/">Jon Henshaw</a> <span>|</span> <nowrap><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" style="fill: rgb(0, 0, 0);" /></svg><a rel="noopener author" target="_blank" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="profiletwitter" href="https://twitter.com/henshaw">@henshaw</a></nowrap></p>
+</div>
+</div>
+<div class="thumbnail">
+<a href="https://www.coywolf.news/productivity/neeva-invites-and-connected-apps/"><img width="600" height="315" src="https://www.coywolf.news/wp-content/uploads/2021/04/neeva-og-600x315.png" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="Neeva" loading="lazy" srcset="https://www.coywolf.news/wp-content/uploads/2021/04/neeva-og-600x315.png 600w, https://www.coywolf.news/wp-content/uploads/2021/04/neeva-og-300x158.png 300w, https://www.coywolf.news/wp-content/uploads/2021/04/neeva-og-1024x538.png 1024w, https://www.coywolf.news/wp-content/uploads/2021/04/neeva-og-768x403.png 768w, https://www.coywolf.news/wp-content/uploads/2021/04/neeva-og.png 1200w, https://www.coywolf.news/wp-content/uploads/2021/04/neeva-og-150x79.png 150w" sizes="(max-width: 600px) 100vw, 600px" /></a>
+</div>
+</div>
+<div class="newsfeed">
+<div class="snippet">
+<h2><a href="https://www.coywolf.news/productivity/mozilla-removes-ftp-from-firefox/">Mozilla permanently removing FTP access from Firefox</a></h2>
+<p class="excerpt">After a year-long delay because of the concerns related to the COVID-19 pandemic, Mozilla announces they are disabling FTP in version 88 of Firefox and will altogether remove it in version 90.</p> <div class="byline">
+<p class="author"><a class="person" href="https://www.coywolf.news/jon-henshaw/">Jon Henshaw</a> <span>|</span> <nowrap><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" style="fill: rgb(0, 0, 0);" /></svg><a rel="noopener author" target="_blank" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="profiletwitter" href="https://twitter.com/henshaw">@henshaw</a></nowrap></p>
+</div>
+</div>
+<div class="thumbnail">
+<a href="https://www.coywolf.news/productivity/mozilla-removes-ftp-from-firefox/"><img width="600" height="315" src="https://www.coywolf.news/wp-content/uploads/2021/04/firefox-ftp-removed-600x315.png" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="Firefox removes FTP" loading="lazy" srcset="https://www.coywolf.news/wp-content/uploads/2021/04/firefox-ftp-removed-600x315.png 600w, https://www.coywolf.news/wp-content/uploads/2021/04/firefox-ftp-removed-300x158.png 300w, https://www.coywolf.news/wp-content/uploads/2021/04/firefox-ftp-removed-1024x538.png 1024w, https://www.coywolf.news/wp-content/uploads/2021/04/firefox-ftp-removed-768x403.png 768w, https://www.coywolf.news/wp-content/uploads/2021/04/firefox-ftp-removed.png 1200w, https://www.coywolf.news/wp-content/uploads/2021/04/firefox-ftp-removed-150x79.png 150w" sizes="(max-width: 600px) 100vw, 600px" /></a>
+</div>
+</div>
+<div class="newsfeed">
+<div class="snippet">
+<h2><a href="https://www.coywolf.news/productivity/slack-connect-launch-marred-by-invite-message-abuse/">Slack Connect launch marred by invite message abuse</a></h2>
+<p class="excerpt">Slack launched its much anticipated Connect feature that allows users from different workspaces to DM each other. The debut hit a snag when users started reporting abusive messages from DM invitations.</p> <div class="byline">
+<p class="author"><a class="person" href="https://www.coywolf.news/tamara-scott/">Tamara Scott</a> <span>|</span> <nowrap><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" style="fill: rgb(0, 0, 0);" /></svg><a rel="noopener author" target="_blank" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="profiletwitter" href="https://twitter.com/t_scottie">@t_scottie</a></nowrap></p>
+</div>
+</div>
+<div class="thumbnail">
+<a href="https://www.coywolf.news/productivity/slack-connect-launch-marred-by-invite-message-abuse/"><img width="600" height="315" src="https://www.coywolf.news/wp-content/uploads/2021/03/slack-connect-600x315.png" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="Slack Connect" loading="lazy" srcset="https://www.coywolf.news/wp-content/uploads/2021/03/slack-connect-600x315.png 600w, https://www.coywolf.news/wp-content/uploads/2021/03/slack-connect-300x158.png 300w, https://www.coywolf.news/wp-content/uploads/2021/03/slack-connect-1024x538.png 1024w, https://www.coywolf.news/wp-content/uploads/2021/03/slack-connect-768x403.png 768w, https://www.coywolf.news/wp-content/uploads/2021/03/slack-connect.png 1200w, https://www.coywolf.news/wp-content/uploads/2021/03/slack-connect-150x79.png 150w" sizes="(max-width: 600px) 100vw, 600px" /></a>
+</div>
+</div>
+<div class="newsfeed">
+<div class="snippet">
+<h2><a href="https://www.coywolf.news/productivity/textbuddy-app-transform-sort-capture-filter-plain-text/">TextBuddy is a new macOS app that transforms, sorts, captures, and filters text</a></h2>
+<p class="excerpt">The new TextBuddy app created by Click On Tyler, an independent software development company in Nashville, TN, is a Swiss Army knife-like tool with over 100 commands for manipulating plain text.</p> <div class="byline">
+<p class="author"><a class="person" href="https://www.coywolf.news/jon-henshaw/">Jon Henshaw</a> <span>|</span> <nowrap><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" style="fill: rgb(0, 0, 0);" /></svg><a rel="noopener author" target="_blank" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="profiletwitter" href="https://twitter.com/henshaw">@henshaw</a></nowrap></p>
+</div>
+</div>
+<div class="thumbnail">
+<a href="https://www.coywolf.news/productivity/textbuddy-app-transform-sort-capture-filter-plain-text/"><img width="600" height="315" src="https://www.coywolf.news/wp-content/uploads/2021/03/textbuddy-icon-600x315.png" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="TextBuddy App" loading="lazy" srcset="https://www.coywolf.news/wp-content/uploads/2021/03/textbuddy-icon-600x315.png 600w, https://www.coywolf.news/wp-content/uploads/2021/03/textbuddy-icon-300x158.png 300w, https://www.coywolf.news/wp-content/uploads/2021/03/textbuddy-icon-1024x538.png 1024w, https://www.coywolf.news/wp-content/uploads/2021/03/textbuddy-icon-768x403.png 768w, https://www.coywolf.news/wp-content/uploads/2021/03/textbuddy-icon.png 1200w, https://www.coywolf.news/wp-content/uploads/2021/03/textbuddy-icon-150x79.png 150w" sizes="(max-width: 600px) 100vw, 600px" /></a>
+</div>
+</div>
+<div class="newsfeed">
+<div class="snippet">
+<h2><a href="https://www.coywolf.news/productivity/signal-ama-on-reddit/">Signal AMA on Reddit: Team reveals future plans and discusses privacy, security, and funding</a></h2>
+<p class="excerpt">The privacy-focused messenger, Signal, is experiencing record growth, partly due to WhatsApp's changes, its usage in the Hong Kong protests, and Elon Musk promoting it. To better engage with their users, many of which are new, they held an AMA on Reddit to answer questions about the app.</p> <div class="byline">
+<p class="author"><a class="person" href="https://www.coywolf.news/jon-henshaw/">Jon Henshaw</a> <span>|</span> <nowrap><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" style="fill: rgb(0, 0, 0);" /></svg><a rel="noopener author" target="_blank" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="profiletwitter" href="https://twitter.com/henshaw">@henshaw</a></nowrap></p>
+</div>
+</div>
+<div class="thumbnail">
+<a href="https://www.coywolf.news/productivity/signal-ama-on-reddit/"><img width="600" height="315" src="https://www.coywolf.news/wp-content/uploads/2021/01/signal-reddit-600x315.png" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="Signal AMA on Reddit" loading="lazy" srcset="https://www.coywolf.news/wp-content/uploads/2021/01/signal-reddit-600x315.png 600w, https://www.coywolf.news/wp-content/uploads/2021/01/signal-reddit-300x158.png 300w, https://www.coywolf.news/wp-content/uploads/2021/01/signal-reddit-1024x538.png 1024w, https://www.coywolf.news/wp-content/uploads/2021/01/signal-reddit-768x403.png 768w, https://www.coywolf.news/wp-content/uploads/2021/01/signal-reddit.png 1200w, https://www.coywolf.news/wp-content/uploads/2021/01/signal-reddit-150x79.png 150w" sizes="(max-width: 600px) 100vw, 600px" /></a>
+</div>
+</div>
+<div class="newsfeed">
+<div class="snippet">
+<h2><a href="https://www.coywolf.news/productivity/cloudflare-browser-isolation/">Cloudflare &#8216;Browser Isolation&#8217; makes remote browser isolation (RBI) faster and more secure</a></h2>
+<p class="excerpt">As part of Cloudflare’s Zero Trust week, the company announced the beta of a new service called Browser Isolation. The service enables companies using Cloudflare for Teams to leverage its network to safely browse sites in the cloud but render web pages locally via Google Chrome.</p> <div class="byline">
+<p class="author"><a class="person" href="https://www.coywolf.news/jon-henshaw/">Jon Henshaw</a> <span>|</span> <nowrap><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" style="fill: rgb(0, 0, 0);" /></svg><a rel="noopener author" target="_blank" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="profiletwitter" href="https://twitter.com/henshaw">@henshaw</a></nowrap></p>
+</div>
+</div>
+<div class="thumbnail">
+<a href="https://www.coywolf.news/productivity/cloudflare-browser-isolation/"><img width="600" height="315" src="https://www.coywolf.news/wp-content/uploads/2020/10/og-browser-isolation-600x315.png" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="Cloudflare Browser Isolation" loading="lazy" srcset="https://www.coywolf.news/wp-content/uploads/2020/10/og-browser-isolation-600x315.png 600w, https://www.coywolf.news/wp-content/uploads/2020/10/og-browser-isolation-300x158.png 300w, https://www.coywolf.news/wp-content/uploads/2020/10/og-browser-isolation-1024x538.png 1024w, https://www.coywolf.news/wp-content/uploads/2020/10/og-browser-isolation-768x403.png 768w, https://www.coywolf.news/wp-content/uploads/2020/10/og-browser-isolation.png 1200w, https://www.coywolf.news/wp-content/uploads/2020/10/og-browser-isolation-150x79.png 150w" sizes="(max-width: 600px) 100vw, 600px" /></a>
+</div>
+</div>
+<div class="newsfeed">
+<div class="snippet">
+<h2><a href="https://www.coywolf.news/productivity/google-analytics-4-machine-learning-business-intelligence/">Google Analytics 4 leverages machine learning for business intelligence and new reports</a></h2>
+<p class="excerpt">Google Analytics 4 (GA4) replaces the apps and web beta property. This newest version of Google Analytics combines data streams from websites, iOS apps, and Android apps for a more complete view of customer behavior on your properties.</p> <div class="byline">
+<p class="author"><a class="person" href="https://www.coywolf.news/tamara-scott/">Tamara Scott</a> <span>|</span> <nowrap><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" style="fill: rgb(0, 0, 0);" /></svg><a rel="noopener author" target="_blank" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="profiletwitter" href="https://twitter.com/t_scottie">@t_scottie</a></nowrap></p>
+</div>
+</div>
+<div class="thumbnail">
+<a href="https://www.coywolf.news/productivity/google-analytics-4-machine-learning-business-intelligence/"><img width="600" height="315" src="https://www.coywolf.news/wp-content/uploads/2020/10/og-ga-4-600x315.png" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="Google Analytics 4" loading="lazy" srcset="https://www.coywolf.news/wp-content/uploads/2020/10/og-ga-4-600x315.png 600w, https://www.coywolf.news/wp-content/uploads/2020/10/og-ga-4-300x158.png 300w, https://www.coywolf.news/wp-content/uploads/2020/10/og-ga-4-1024x538.png 1024w, https://www.coywolf.news/wp-content/uploads/2020/10/og-ga-4-768x403.png 768w, https://www.coywolf.news/wp-content/uploads/2020/10/og-ga-4.png 1200w, https://www.coywolf.news/wp-content/uploads/2020/10/og-ga-4-150x79.png 150w" sizes="(max-width: 600px) 100vw, 600px" /></a>
+</div>
+</div>
+<div class="newsfeed">
+<div class="snippet">
+<h2><a href="https://www.coywolf.news/productivity/new-slack-connect-features/">New Slack Connect features will facilitate communication between organizations</a></h2>
+<p class="excerpt">The tool promises secure connections between workspaces without adding extra seats to a subscription plan. The new features debuted at the Slack Frontiers 2020 conference.</p> <div class="byline">
+<p class="author"><a class="person" href="https://www.coywolf.news/tamara-scott/">Tamara Scott</a> <span>|</span> <nowrap><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" style="fill: rgb(0, 0, 0);" /></svg><a rel="noopener author" target="_blank" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="profiletwitter" href="https://twitter.com/t_scottie">@t_scottie</a></nowrap></p>
+</div>
+</div>
+<div class="thumbnail">
+<a href="https://www.coywolf.news/productivity/new-slack-connect-features/"><img width="600" height="315" src="https://www.coywolf.news/wp-content/uploads/2020/10/og-slack-600x315.png" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="Slack" loading="lazy" srcset="https://www.coywolf.news/wp-content/uploads/2020/10/og-slack-600x315.png 600w, https://www.coywolf.news/wp-content/uploads/2020/10/og-slack-300x158.png 300w, https://www.coywolf.news/wp-content/uploads/2020/10/og-slack-1024x538.png 1024w, https://www.coywolf.news/wp-content/uploads/2020/10/og-slack-768x403.png 768w, https://www.coywolf.news/wp-content/uploads/2020/10/og-slack.png 1200w, https://www.coywolf.news/wp-content/uploads/2020/10/og-slack-150x79.png 150w" sizes="(max-width: 600px) 100vw, 600px" /></a>
+</div>
+</div>
+<div class="newsfeed">
+<div class="snippet">
+<h2><a href="https://www.coywolf.news/productivity/cloudflare-warp-vpn-multi-platform-license-sharing/">Cloudflare&#8217;s WARP VPN allows multi-platform license sharing</a></h2>
+<p class="excerpt">Cloudflare's 1.1.1.1 VPN has an unlimited and faster option called WARP+. The company allows WARP+ subscriptions to be used on up to five devices.</p> <div class="byline">
+<p class="author"><a class="person" href="https://www.coywolf.news/jon-henshaw/">Jon Henshaw</a> <span>|</span> <nowrap><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" style="fill: rgb(0, 0, 0);" /></svg><a rel="noopener author" target="_blank" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="profiletwitter" href="https://twitter.com/henshaw">@henshaw</a></nowrap></p>
+</div>
+</div>
+<div class="thumbnail">
+<a href="https://www.coywolf.news/productivity/cloudflare-warp-vpn-multi-platform-license-sharing/"><img width="600" height="315" src="https://www.coywolf.news/wp-content/uploads/2020/09/cloudflare-warp-macos-600x315.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="Cloudflare WARP+" loading="lazy" srcset="https://www.coywolf.news/wp-content/uploads/2020/09/cloudflare-warp-macos-600x315.jpg 600w, https://www.coywolf.news/wp-content/uploads/2020/09/cloudflare-warp-macos-300x158.jpg 300w, https://www.coywolf.news/wp-content/uploads/2020/09/cloudflare-warp-macos-1024x538.jpg 1024w, https://www.coywolf.news/wp-content/uploads/2020/09/cloudflare-warp-macos-768x403.jpg 768w, https://www.coywolf.news/wp-content/uploads/2020/09/cloudflare-warp-macos.jpg 1200w, https://www.coywolf.news/wp-content/uploads/2020/09/cloudflare-warp-macos-150x79.jpg 150w" sizes="(max-width: 600px) 100vw, 600px" /></a>
+</div>
+</div>
+<div class="newsfeed">
+<div class="snippet">
+<h2><a href="https://www.coywolf.news/productivity/cloudflare-1-1-1-1-warp-vpn-beta-macos-windows/">Cloudflare launches beta of 1.1.1.1 VPN with WARP for macOS and Windows</a></h2>
+<p class="excerpt">First announced in April 2020, Cloudflare has finally released beta versions of its 1.1.1.1 VPN with WARP for macOS and Windows. The VPN service also includes support for 1.1.1.1 for Families, which blocks malware and adult sites.</p> <div class="byline">
+<p class="author"><a class="person" href="https://www.coywolf.news/jon-henshaw/">Jon Henshaw</a> <span>|</span> <nowrap><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" style="fill: rgb(0, 0, 0);" /></svg><a rel="noopener author" target="_blank" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="profiletwitter" href="https://twitter.com/henshaw">@henshaw</a></nowrap></p>
+</div>
+</div>
+<div class="thumbnail">
+<a href="https://www.coywolf.news/productivity/cloudflare-1-1-1-1-warp-vpn-beta-macos-windows/"><img width="600" height="315" src="https://www.coywolf.news/wp-content/uploads/2020/08/og-cloudflare-warp-600x315.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="Cloudflare WARP VPN" loading="lazy" srcset="https://www.coywolf.news/wp-content/uploads/2020/08/og-cloudflare-warp-600x315.jpg 600w, https://www.coywolf.news/wp-content/uploads/2020/08/og-cloudflare-warp-300x158.jpg 300w, https://www.coywolf.news/wp-content/uploads/2020/08/og-cloudflare-warp-1024x538.jpg 1024w, https://www.coywolf.news/wp-content/uploads/2020/08/og-cloudflare-warp-768x403.jpg 768w, https://www.coywolf.news/wp-content/uploads/2020/08/og-cloudflare-warp.jpg 1200w, https://www.coywolf.news/wp-content/uploads/2020/08/og-cloudflare-warp-150x79.jpg 150w" sizes="(max-width: 600px) 100vw, 600px" /></a>
+</div>
+</div>
+<div class="newsfeed">
+<div class="snippet">
+<h2><a href="https://www.coywolf.news/productivity/mozilla-vpn/">Mozilla VPN extends data protection tool set to full devices</a></h2>
+<p class="excerpt">The $4.99 per month VPN protects up to 5 Android and PC devices, with iOS, Mac, and Linux versions promised soon. Mozilla partnered with Mullvad VPN and WireGuard for this comprehensive security coverage.</p> <div class="byline">
+<p class="author"><a class="person" href="https://www.coywolf.news/tamara-scott/">Tamara Scott</a> <span>|</span> <nowrap><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" style="fill: rgb(0, 0, 0);" /></svg><a rel="noopener author" target="_blank" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="profiletwitter" href="https://twitter.com/t_scottie">@t_scottie</a></nowrap></p>
+</div>
+</div>
+<div class="thumbnail">
+<a href="https://www.coywolf.news/productivity/mozilla-vpn/"><img width="600" height="315" src="https://www.coywolf.news/wp-content/uploads/2020/07/og-mozilla-vpn-600x315.png" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="Mozilla VPN" loading="lazy" srcset="https://www.coywolf.news/wp-content/uploads/2020/07/og-mozilla-vpn-600x315.png 600w, https://www.coywolf.news/wp-content/uploads/2020/07/og-mozilla-vpn-300x158.png 300w, https://www.coywolf.news/wp-content/uploads/2020/07/og-mozilla-vpn-1024x538.png 1024w, https://www.coywolf.news/wp-content/uploads/2020/07/og-mozilla-vpn-768x403.png 768w, https://www.coywolf.news/wp-content/uploads/2020/07/og-mozilla-vpn.png 1200w, https://www.coywolf.news/wp-content/uploads/2020/07/og-mozilla-vpn-150x79.png 150w" sizes="(max-width: 600px) 100vw, 600px" /></a>
+</div>
+</div>
+<div class="newsfeed">
+<div class="snippet">
+<h2><a href="https://www.coywolf.news/productivity/working-from-home-smart-lights-avoid-call-interruptions/">Do not disturb: How to use smarts lights at home to reduce Zoom and Slack call interruptions</a></h2>
+<p class="excerpt">The best way for remote workers to prevent family members from being too loud and interrupting video and phone conference calls is to use smart lights around your home. This solution works with HomeKit, Amazon Alexa, and Google Nest smart home platforms.</p> <div class="byline">
+<p class="author"><a class="person" href="https://www.coywolf.news/jon-henshaw/">Jon Henshaw</a> <span>|</span> <nowrap><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" style="fill: rgb(0, 0, 0);" /></svg><a rel="noopener author" target="_blank" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="profiletwitter" href="https://twitter.com/henshaw">@henshaw</a></nowrap></p>
+</div>
+</div>
+<div class="thumbnail">
+<a href="https://www.coywolf.news/productivity/working-from-home-smart-lights-avoid-call-interruptions/"><img width="600" height="315" src="https://www.coywolf.news/wp-content/uploads/2020/05/on-call-lights-600x315.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="Smart Lights" loading="lazy" srcset="https://www.coywolf.news/wp-content/uploads/2020/05/on-call-lights-600x315.jpg 600w, https://www.coywolf.news/wp-content/uploads/2020/05/on-call-lights-300x158.jpg 300w, https://www.coywolf.news/wp-content/uploads/2020/05/on-call-lights-1024x538.jpg 1024w, https://www.coywolf.news/wp-content/uploads/2020/05/on-call-lights-768x403.jpg 768w, https://www.coywolf.news/wp-content/uploads/2020/05/on-call-lights.jpg 1200w" sizes="(max-width: 600px) 100vw, 600px" /></a>
+</div>
+</div>
+<div class="newsfeed">
+<div class="snippet">
+<h2><a href="https://www.coywolf.news/productivity/speedtest-vpn-ipad-paid/">Speedtest VPN adds paid tier and now supports iPadOS</a></h2>
+<p class="excerpt">Ookla ended beta testing of its Speedtest VPN and added a $4.99/mo unlimited data plan. The newest release now supports iPadOS in addition to iOS and Android.</p> <div class="byline">
+<p class="author"><a class="person" href="https://www.coywolf.news/jon-henshaw/">Jon Henshaw</a> <span>|</span> <nowrap><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" style="fill: rgb(0, 0, 0);" /></svg><a rel="noopener author" target="_blank" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="profiletwitter" href="https://twitter.com/henshaw">@henshaw</a></nowrap></p>
+</div>
+</div>
+<div class="thumbnail">
+<a href="https://www.coywolf.news/productivity/speedtest-vpn-ipad-paid/"><img width="600" height="315" src="https://www.coywolf.news/wp-content/uploads/2019/12/og-speedtest-vpn-600x315.png" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="Speedtest VPN" loading="lazy" srcset="https://www.coywolf.news/wp-content/uploads/2019/12/og-speedtest-vpn-600x315.png 600w, https://www.coywolf.news/wp-content/uploads/2019/12/og-speedtest-vpn-300x158.png 300w, https://www.coywolf.news/wp-content/uploads/2019/12/og-speedtest-vpn-1024x538.png 1024w, https://www.coywolf.news/wp-content/uploads/2019/12/og-speedtest-vpn-768x403.png 768w, https://www.coywolf.news/wp-content/uploads/2019/12/og-speedtest-vpn.png 1200w" sizes="(max-width: 600px) 100vw, 600px" /></a>
+</div>
+</div>
+<div class="newsfeed">
+<div class="snippet">
+<h2><a href="https://www.coywolf.news/productivity/chrome-removing-ftp/">Google is completely removing FTP access from Chrome</a></h2>
+<p class="excerpt">Users of the Chrome browser will no longer be able to view FTP directories or download files from FTP servers.</p> <div class="byline">
+<p class="author"><a class="person" href="https://www.coywolf.news/jon-henshaw/">Jon Henshaw</a> <span>|</span> <nowrap><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" style="fill: rgb(0, 0, 0);" /></svg><a rel="noopener author" target="_blank" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="profiletwitter" href="https://twitter.com/henshaw">@henshaw</a></nowrap></p>
+</div>
+</div>
+<div class="thumbnail">
+<a href="https://www.coywolf.news/productivity/chrome-removing-ftp/"><img width="600" height="315" src="https://www.coywolf.news/wp-content/uploads/2020/01/og-chrome-ftp-directory-adobe-600x315.png" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="FTP in Chrome browser" loading="lazy" srcset="https://www.coywolf.news/wp-content/uploads/2020/01/og-chrome-ftp-directory-adobe-600x315.png 600w, https://www.coywolf.news/wp-content/uploads/2020/01/og-chrome-ftp-directory-adobe-300x158.png 300w, https://www.coywolf.news/wp-content/uploads/2020/01/og-chrome-ftp-directory-adobe-1024x538.png 1024w, https://www.coywolf.news/wp-content/uploads/2020/01/og-chrome-ftp-directory-adobe-768x403.png 768w, https://www.coywolf.news/wp-content/uploads/2020/01/og-chrome-ftp-directory-adobe.png 1200w, https://www.coywolf.news/wp-content/uploads/2020/01/og-chrome-ftp-directory-adobe-150x79.png 150w" sizes="(max-width: 600px) 100vw, 600px" /></a>
+</div>
+</div>
+<div class="newsfeed">
+<div class="snippet">
+<h2><a href="https://www.coywolf.news/productivity/ookla-speedtest-vpn/">Ookla adds free VPN to Speedtest app for iOS</a></h2>
+<p class="excerpt">A new version of the Speedtest app for iPhone and iPad includes a preview version of its free VPN service.</p> <div class="byline">
+<p class="author"><a class="person" href="https://www.coywolf.news/jon-henshaw/">Jon Henshaw</a> <span>|</span> <nowrap><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" style="fill: rgb(0, 0, 0);" /></svg><a rel="noopener author" target="_blank" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="profiletwitter" href="https://twitter.com/henshaw">@henshaw</a></nowrap></p>
+</div>
+</div>
+<div class="thumbnail">
+<a href="https://www.coywolf.news/productivity/ookla-speedtest-vpn/"><img width="600" height="315" src="https://www.coywolf.news/wp-content/uploads/2019/12/og-speedtest-vpn-600x315.png" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="Speedtest VPN" loading="lazy" srcset="https://www.coywolf.news/wp-content/uploads/2019/12/og-speedtest-vpn-600x315.png 600w, https://www.coywolf.news/wp-content/uploads/2019/12/og-speedtest-vpn-300x158.png 300w, https://www.coywolf.news/wp-content/uploads/2019/12/og-speedtest-vpn-1024x538.png 1024w, https://www.coywolf.news/wp-content/uploads/2019/12/og-speedtest-vpn-768x403.png 768w, https://www.coywolf.news/wp-content/uploads/2019/12/og-speedtest-vpn.png 1200w" sizes="(max-width: 600px) 100vw, 600px" /></a>
+</div>
+</div>
+<div class="newsfeed">
+<div class="snippet">
+<h2><a href="https://www.coywolf.news/productivity/feedly-pro-plus-leo-ai/">Feedly launches Pro+ account with new AI-powered features</a></h2>
+<p class="excerpt">Feedly debuted a major upgrade to its content discovery and reading app. The new Pro+ account uses its Leo AI technology to surface content based on interest and usage, and includes deduplication and mute filters.</p> <div class="byline">
+ <p class="author"><a class="person" href="https://www.coywolf.news/jon-henshaw/">Jon Henshaw</a> <span>|</span> <nowrap><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" style="fill: rgb(0, 0, 0);" /></svg><a rel="noopener author" target="_blank" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="profiletwitter" href="https://twitter.com/henshaw">@henshaw</a></nowrap></p>
+</div>
+</div>
+<div class="thumbnail">
+<a href="https://www.coywolf.news/productivity/feedly-pro-plus-leo-ai/"><img width="600" height="315" src="https://www.coywolf.news/wp-content/uploads/2019/09/og-feedly-leo-600x315.png" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="Leo" loading="lazy" srcset="https://www.coywolf.news/wp-content/uploads/2019/09/og-feedly-leo-600x315.png 600w, https://www.coywolf.news/wp-content/uploads/2019/09/og-feedly-leo-300x158.png 300w, https://www.coywolf.news/wp-content/uploads/2019/09/og-feedly-leo-1024x538.png 1024w, https://www.coywolf.news/wp-content/uploads/2019/09/og-feedly-leo-768x403.png 768w, https://www.coywolf.news/wp-content/uploads/2019/09/og-feedly-leo.png 1200w" sizes="(max-width: 600px) 100vw, 600px" /></a>
+</div>
+</div>
+<div class="newsfeed">
+<div class="snippet">
+<h2><a href="https://www.coywolf.news/productivity/carbonite-online-backup/">Carbonite online backup service gets acquired by OpenText</a></h2>
+<p class="excerpt">The cloud-based backup service for consumers and businesses, Carbonite, was bought by OpenText, an enterprise information management company for $1.42 billion.</p> <div class="byline">
+<p class="author"><a class="person" href="https://www.coywolf.news/jon-henshaw/">Jon Henshaw</a> <span>|</span> <nowrap><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" style="fill: rgb(0, 0, 0);" /></svg><a rel="noopener author" target="_blank" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="profiletwitter" href="https://twitter.com/henshaw">@henshaw</a></nowrap></p>
+</div>
+</div>
+<div class="thumbnail">
+<a href="https://www.coywolf.news/productivity/carbonite-online-backup/"><img width="600" height="315" src="https://www.coywolf.news/wp-content/uploads/2019/11/og-carbonite-600x315.png" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="Carbonite" loading="lazy" srcset="https://www.coywolf.news/wp-content/uploads/2019/11/og-carbonite-600x315.png 600w, https://www.coywolf.news/wp-content/uploads/2019/11/og-carbonite-300x158.png 300w, https://www.coywolf.news/wp-content/uploads/2019/11/og-carbonite-1024x538.png 1024w, https://www.coywolf.news/wp-content/uploads/2019/11/og-carbonite-768x403.png 768w, https://www.coywolf.news/wp-content/uploads/2019/11/og-carbonite.png 1200w" sizes="(max-width: 600px) 100vw, 600px" /></a>
+</div>
+</div>
+<div class="newsfeed">
+<div class="snippet">
+<h2><a href="https://www.coywolf.news/productivity/amplifi-teleport-vpn/">AmpliFi adds free VPN to its consumer Wi-Fi routers</a></h2>
+<p class="excerpt">Ubiquiti Networks updated its AmpliFi consumer Wi-Fi routers to support VPN connections. The new feature is called Teleport and it enables iOS and Android devices to securely connect to home networks.</p> <div class="byline">
+<p class="author"><a class="person" href="https://www.coywolf.news/jon-henshaw/">Jon Henshaw</a> <span>|</span> <nowrap><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" style="fill: rgb(0, 0, 0);" /></svg><a rel="noopener author" target="_blank" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="profiletwitter" href="https://twitter.com/henshaw">@henshaw</a></nowrap></p>
+</div>
+</div>
+<div class="thumbnail">
+<a href="https://www.coywolf.news/productivity/amplifi-teleport-vpn/"><img width="600" height="315" src="https://www.coywolf.news/wp-content/uploads/2019/11/og-amplifi-teleport-600x315.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="AmpliFi Teleport for iOS" loading="lazy" /></a>
+</div>
+</div>
+<div class="newsfeed">
+<div class="snippet">
+<h2><a href="https://www.coywolf.news/productivity/backblaze-version-history/">Backblaze adds &#8216;forever&#8217; version history to its automated cloud backup service</a></h2>
+<p class="excerpt">Backblaze released version 7.0 of its popular online backup app for Windows and Mac. The new version now supports saving version history for up to one year or forever.</p> <div class="byline">
+<p class="author"><a class="person" href="https://www.coywolf.news/jon-henshaw/">Jon Henshaw</a> <span>|</span> <nowrap><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.44 4.83c-.8.37-1.5.38-2.22.02.93-.56.98-.96 1.32-2.02-.88.52-1.86.9-2.9 1.1-.82-.88-2-1.43-3.3-1.43-2.5 0-4.55 2.04-4.55 4.54 0 .36.03.7.1 1.04-3.77-.2-7.12-2-9.36-4.75-.4.67-.6 1.45-.6 2.3 0 1.56.8 2.95 2 3.77-.74-.03-1.44-.23-2.05-.57v.06c0 2.2 1.56 4.03 3.64 4.44-.67.2-1.37.2-2.06.08.58 1.8 2.26 3.12 4.25 3.16C5.78 18.1 3.37 18.74 1 18.46c2 1.3 4.4 2.04 6.97 2.04 8.35 0 12.92-6.92 12.92-12.93 0-.2 0-.4-.02-.6.9-.63 1.96-1.22 2.56-2.14z" style="fill: rgb(0, 0, 0);" /></svg><a rel="noopener author" target="_blank" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" class="profiletwitter" href="https://twitter.com/henshaw">@henshaw</a></nowrap></p>
+</div>
+</div>
+<div class="thumbnail">
+<a href="https://www.coywolf.news/productivity/backblaze-version-history/"><img width="600" height="315" src="https://www.coywolf.news/wp-content/uploads/2019/10/og-backblaze-600x315.png" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="Backblaze" loading="lazy" srcset="https://www.coywolf.news/wp-content/uploads/2019/10/og-backblaze-600x315.png 600w, https://www.coywolf.news/wp-content/uploads/2019/10/og-backblaze-300x158.png 300w, https://www.coywolf.news/wp-content/uploads/2019/10/og-backblaze-1024x538.png 1024w, https://www.coywolf.news/wp-content/uploads/2019/10/og-backblaze-768x403.png 768w, https://www.coywolf.news/wp-content/uploads/2019/10/og-backblaze.png 1200w" sizes="(max-width: 600px) 100vw, 600px" /></a>
+</div>
+</div>
+<nav class="pagination">
+<div class="older"><a href="https://www.coywolf.news/topics/productivity/page/2/">&lt; Older Entries</a></div>
+<div class="newer"></div>
+</nav>
+</section>
+</main>
+<aside class="privacy">
+<div class="contain">
+<p>&#x273F; This site uses privacy-focused <a href="https://usefathom.com/ref/AANN81" onclick="fathom.trackGoal('72AAJK46', 1000);" rel="sponsored">Fathom Analytics</a> and does not track or collect personal data.</p>
+</div>
+</aside>
+<footer>
+<div class="contain">
+<nav class="fnav1">
+<div class="menu-footer-nav-1-container"><ul id="menu-footer-nav-1" class="menu"><li id="menu-item-12" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-12"><a href="https://www.coywolf.news/topics/seo/">Search Optimization</a></li>
+<li id="menu-item-252" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-252"><a href="https://www.coywolf.news/topics/webmaster/">Webmaster</a></li>
+<li id="menu-item-18" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-18"><a href="https://www.coywolf.news/topics/social/">Social Media Marketing</a></li>
+<li id="menu-item-15" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-15"><a href="https://www.coywolf.news/topics/content/">Content Marketing</a></li>
+<li id="menu-item-16" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16"><a href="https://www.coywolf.news/topics/email/">Email Marketing</a></li>
+<li id="menu-item-254" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-254"><a href="https://www.coywolf.news/topics/ecommerce/">Ecommerce</a></li>
+<li id="menu-item-2637" class="menu-item menu-item-type-taxonomy menu-item-object-category current-menu-item menu-item-2637"><a href="https://www.coywolf.news/topics/productivity/" aria-current="page">Productivity</a></li>
+<li id="menu-item-586" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-586"><a href="https://www.coywolf.news/topics/startup/">Startups</a></li>
+</ul></div> </nav>
+<nav class="fnav2">
+<div class="menu-footer-nav-2-container"><ul id="menu-footer-nav-2" class="menu"><li id="menu-item-2723" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2723"><a href="https://coywolf.email">Email Newsletter</a></li>
+<li id="menu-item-585" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-585"><a href="https://coywolf.pro/seo/google-news/">Google News Guide</a></li>
+<li id="menu-item-2638" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2638"><a href="https://coywolf.pro/seo/international-seo/">International SEO</a></li>
+<li id="menu-item-256" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-256"><a href="https://www.coywolf.news/topics/podcast/">Coywolf Podcast</a></li>
+<li id="menu-item-560" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-560"><a href="https://coywolf.blog/">Coywolf Blog</a></li>
+<li id="menu-item-22" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-22"><a href="https://www.coywolf.news/submit-tip/">Submit a Tip</a></li>
+<li id="menu-item-11" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11"><a href="https://www.coywolf.news/policies-and-standards/">Policies and Standards</a></li>
+</ul></div> </nav>
+<aside class="femail">
+<h2>Find Marketing &amp; Technology News</h2>
+<form role="search" method="get" id="searchform" class="searchform" action="https://www.coywolf.news/">
+<div>
+<label class="screen-reader-text" for="s">Search for:</label>
+<input type="text" value="" name="s" id="s" />
+<input type="submit" id="searchsubmit" value="Search" />
+</div>
+</form><br>
+<h2>Contact Coywolf News</h2>
+<address>2020 Fieldstone Pkwy, STE 900-122, Franklin, TN 37069<br><a href="tel:+16154610902">+1 615-461-0902‬</a> / <a href='mail&#116;&#111;&#58;%63o&#110;t%61c&#116;&#64;c%6F&#121;&#37;77olf&#46;&#110;ew&#37;73'>contact&#64;c&#111;ywolf&#46;&#110;ews</a>‬</address>
+</aside>
+<p class="fcopy">&#169; 2017-2021 <a rel="noopener" target="_blank" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" href="https://coywolf.llc">Coywolf <abbr title="Limited Liability Company">LLC</abbr></a> All Rights Reserved – <a rel="noopener" target="_blank" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" href="https://coywolf.llc/privacy-policy/">Privacy Policy</a> – <a rel="noopener" target="_blank" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" href="https://coywolf.llc/terms-of-use/">Terms of Service</a><br>Coywolf and the Coywolf logo are registered trademarks of Coywolf <abbr title="Limited Liability Company">LLC</abbr></p>
+</div>
+</footer>
+
+<script type="rocketlazyloadscript" src="https://dakqbwpduu.coywolf.io/script.js" site="PLWHJBZB" data-no-minify="" defer></script>
+
+<script async type='application/ld+json'>
+			{
+  				"@context": "http://schema.org",
+  				"@graph":[
+    				{
+						"@type": "Organization",
+						"name": "Coywolf LLC",
+						"url": "https://coywolf.llc",
+						"address": {
+							"@type": "PostalAddress",
+							"addressCountry": "USA",
+							"addressLocality": "Franklin",
+							"addressRegion": "TN",
+							"postOfficeBoxNumber": "900-122",
+							"postalCode": "37069",
+							"streetAddress": "2020 Fieldstone Parkway",
+							"email": "info@coywolf.llc",
+							"telephone": "+16154129238"
+						},
+						"founder": {
+							"@type": "Person",
+							"email": "jon@coywolf.llc",
+							"name": "Jon Henshaw",
+							"givenName": "Jonathan",
+							"familyName": "Henshaw",
+							"birthDate": "1973-09-09",
+							"jobTitle": "Founder",
+							"sameAs": [
+								"https://www.coywolf.news/jon-henshaw/",
+								"https://www.linkedin.com/in/jonhenshaw/",
+								"https://twitter.com/henshaw"
+							]
+						},
+						"logo": {
+				            "@type": "ImageObject",
+				            "url": "https://coywolf.llc/logo.png",
+				            "width": "800",
+				            "height": "146"
+						},
+						"sameAs":
+						[
+							"https://www.linkedin.com/company/coywolf/",
+							"https://twitter.com/coywolf"
+						]
+					},
+					{
+						"@type":"CollectionPage",
+						"mainEntityOfPage":{
+							"@type":"WebPage",
+							"publisher":{
+							    "@type":"NewsMediaOrganization",
+							    "name":"Coywolf News",
+							    "ethicsPolicy":"https://www.coywolf.news/policies-and-standards/",
+							    "missionCoveragePrioritiesPolicy":"https://www.coywolf.news/policies-and-standards/",
+							    "diversityPolicy":"https://www.coywolf.news/policies-and-standards/",
+							    "correctionsPolicy":"https://www.coywolf.news/policies-and-standards/",
+							    "verificationFactCheckingPolicy":"https://www.coywolf.news/policies-and-standards/",
+							    "unnamedSourcesPolicy":"https://www.washingtonpost.com/policies-and-standards/",
+							    "actionableFeedbackPolicy":"https://www.coywolf.news/policies-and-standards/",
+							    "logo":{
+							      "@type":"ImageObject",
+							          "url":"https://coywolf.llc/logo.png"
+							    }
+							}
+						}
+					}
+
+					]
+				}
+			</script> <script type="text/javascript">(function(){window['__CF$cv$params']={r:'66dcbd088bbbe50e',m:'4093a6029a26b3bd62ab235bc632591c4654fc81-1626118775-1800-AUd/RPXquov+S9okeBwq2ZVj5SvJX5qVs6Ru/sY6wALfrojcXQiTD2sf8kjaMv74PLo3b/RwkUaWvyT8SRWDLSxjfnuPgP0qGxwWOnt/qJ8xLa/fdKBwfFiLWZAklWEYWvdfeDWt3aQVAnD2xMdGrkg=',s:[0x9f550953b9,0x031e091698],}})();</script></body>
+</html>
+
