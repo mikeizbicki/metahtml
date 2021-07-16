@@ -109,6 +109,7 @@ class Extractor(BaseExtractor):
         ( 'treasury.gov', r'^/press-center/?$' ),
         ( 'treasury.gov', r'^/press-center/press-releases/?$' ),
         ( 'treasury.gov', r'^/resource-center/?$' ),
+        ( 'ukdefencejournal.org.uk', r'^/the-osint-bunker/?$'),
         ( 'viaouest.com', r'^/actualite-daesh.html' ),
         ( 'weather.com', r'^/health/coronavirus/?$' ),
         ( 'whitehouse.gov', r'^/briefings-statements/?$' ),
