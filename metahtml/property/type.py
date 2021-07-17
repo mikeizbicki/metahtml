@@ -87,6 +87,7 @@ class Extractor(BaseExtractor):
         ( 'nature.com', r'/nature/articles' ),
         ( 'news.kakaku.com', r'^/prdnews/page=8/?$' ),
         ( 'news.un.org', r'^/es/node?$' ),
+        ( 'onekoreanetwork.com', r'^/north-korea/?$' ),
         ( 'pattayaone.news', r'^/learning-365/$' ),
         ( 'plaza.rakuten.co.jp', r'^/[a-zA-Z0-9]*/$' ),
         ( 'pnas.org', r'^/content/118/27/eiti2721118/?$'),
