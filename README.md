@@ -192,6 +192,14 @@ There is a set of 50 urls that all annotators must label,
 and the `test_content.py` file will ensure that you label these urls first.
 You should submit a pull request with these 50 labels before moving on to labeling the remaining
 
+**NOTE:**
+Occasionally, metahtml will screw up the labeling process.
+The most common ways this happens are:
+1. Some webpages will come up blank when they should have some text content;
+1. Some webpages have incorrect language labels, and so they will not get filtered correctly when using the `--lang=XX` parameter.
+In either of these events:
+1. Post a github issue with the url so that I can go and fix the issue.
+1. Rerun the `test_contents.py` file with a new `--seed` parameter (set it equal to a number) to cause the remaining test cases to be randomly shuffled differently and you can get a new set of test cases to evaluate
 
 <!--
 The following urls have problems for some reason

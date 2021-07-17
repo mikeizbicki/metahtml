@@ -96,6 +96,7 @@ class Extractor(BaseExtractor):
         ( 'propublica.org', r'^/topics/' ),
         ( 'program.thaipbs.or.th', r'^/30SecondSomething' ),
         ( 'program.thaipbs.or.th', r'^/MyanmarPolitics/stories$' ),
+        ( 'diagnostics.roche.com', r'^/global/en/home.html'),
         ( 'scvo.org', r'^/coronavirus-covid-19-information-guidance/?$' ),
         ( 'scvo.org', r'^/coronavirus-covid-19-information-guidance/resources/?$' ),
         ( 'scvo.org', r'^/support/running-your-organisation/leaving-lockdown/?$' ),

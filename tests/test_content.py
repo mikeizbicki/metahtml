@@ -81,6 +81,8 @@ common_urls = [
     "https://www.vietnamartnews.com/1999/11/coronaviruses-symptoms-treatments-and-variants/",
     "https://www.washingtonpost.com/wp-srv/aponline/20000904/aponline133327_000.htm",
     "https://www.wsj.com/articles/PR-CO-20200330-906142",
+    "https://www.csmonitor.com/2005/1018/p25s02-lign.html",
+    "https://www.onenewspage.com/video/20200421/12998480/Kim-Jong-Un-under-treatment-after-surgery-report.htm",
     ]
 
 
