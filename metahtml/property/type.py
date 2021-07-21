@@ -124,6 +124,9 @@ class Extractor(BaseExtractor):
         ( 'ukdefencejournal.org.uk', r'^/the-osint-bunker/?$'),
         ( 'viaouest.com', r'^/actualite-daesh.html' ),
         ( 'weather.com', r'^/health/coronavirus/?$' ),
+        ( 'welt.de', r'^/wirtschaft/deutscher-ki-preis/?$'),
+        ( 'weser-kurier.de', r'^/werder/profis/?$'),
+        ( 'weser-kurier.de', r'^/landkreis-verden/?$'),
         ( 'whitehouse.gov', r'^/briefings-statements/?$' ),
 
         ( 'shutterstock.com', r'' ),
