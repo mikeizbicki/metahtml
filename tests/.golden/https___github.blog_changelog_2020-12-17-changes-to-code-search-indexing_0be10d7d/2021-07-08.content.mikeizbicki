@@ -1,0 +1,49 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script>
+function toggleSelectedText(e) {
+    if (e.shiftKey) {
+        var selection = window.getSelection();
+        var range = selection.getRangeAt(0);
+        var tags = "p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,table,tr,td,th,article,main,section,figure,figcaption,aside,section,address,blockquote";
+        if (range.commonAncestorContainer.getElementsByTagName) {
+            var allWithinRangeParent = range.commonAncestorContainer.querySelectorAll(tags);
+        }
+        else {
+            //var allWithinRangeParent = [range.commonAncestorContainer.closest(tags)];
+            var allWithinRangeParent = [range.commonAncestorContainer.parentNode.closest(tags)];
+        }
+
+        for (var i=0, el; el = allWithinRangeParent[i]; i++) {
+          // The second parameter says to include the element
+          // even if it's not fully selected
+          if (selection.containsNode(el, true) ) {
+              el.classList.toggle('rm-manual');
+          }
+        }
+        window.getSelection().removeAllRanges();
+    }
+};
+
+//var article = document.body.querySelector('article');
+document.onmouseup = toggleSelectedText;
+document.captureEvents(Event.MOUSEUP);
+</script>
+
+<style>
+.rm-manual {
+    text-decoration: line-through;
+    background-color: #faa;
+}
+</style>
+        </head><body><article><p class="rm-manual"> December 17, 2020 </p>
+<h1 class="rm-manual"> Changes to Code Search Indexing </h1>
+<p>Starting today, GitHub Code Search will only index repositories that 
+have had recent activity within the last year. Recent activity for a 
+repository means that it has had a commit or has shown up in a search 
+result. If the repository does not have any activity for an entire year,
+ the repository will be purged from the Code Search index. This change 
+will enable the most relevant content for developers to surface in the 
+code search index as well as keeping code search queries fast for all 
+customers.</p>
+<p class="rm-manual"><a href="https://github.community/c/uncategorized/1">For questions, visit the GitHub community</a></p></article>
+</body></html>
