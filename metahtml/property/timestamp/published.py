@@ -510,6 +510,7 @@ class Extractor(TimestampExtractor):
         ( 'rtl.be',                         '//span[@itemprop="datePublished"]/text()'),
         ( 'rtl.fr',                         '//div[@class="article-info"]/time/@datetime'),
         ( 'rts.ch',                         '(//span[@class="sc-141f4yq-6 cksdVr"])[1]'),
+        ( 'ruhrnachrichten.de',             '//meta[@itemprop="datePublished"]/@content'),
         ( 'russian.news.cn',                '//div[@class="info"]/text()'),
         ( 'russland.news',                  '//abbr[@itemprop="datePublished"]/@title'),
         ( 'ruthfullyyours.com',             '//div/p[@id="single-byline"]'),
