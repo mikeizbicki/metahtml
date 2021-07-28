@@ -1,10 +1,4 @@
-#!/usr/bin/env python2.5
-# encoding: utf-8
-"""
-cleaneval.py v1.0
-
-Simple and fast evaluation of CleanEval-1 tasks (precision, recall, F-score).
-"""
+#!/usr/bin/python3
 
 import time
 import sys
@@ -16,6 +10,8 @@ import re
 import requests
 sys.path.append('')
 import metahtml
+import tests.test_golden as test_golden
+import tests.test_content as test_content
 import trafilatura
 from newspaper import parsers
 from bs4 import BeautifulSoup
@@ -23,38 +19,22 @@ from glob import glob
 from math import *
 from difflib import SequenceMatcher
 from getopt import getopt, GetoptError
-from multiset import Multiset
+from collections import Counter
+
 
 help_message = '''
-This is cleaneval.py version 1.0 -- Copyright (C) 2008 by Stefan Evert
+This is a modified version of cleaneval.py version 1.0 -- Copyright (C) 2008 by Stefan Evert
 
-Usage:  cleaneval.py [options] <texts_dir> <gold_dir> [<align_dir>]
+Source comes from http://webascorpus.sourceforge.net/PHITE.php?sitesig=FILES&page=FILES_10_Software&subpage=FILES_10_CleanEval 
 
-Options:
-  -t    print total precision/recall for all files (micro-averaged)
-        (does not print results for individual files)
-  -n    omit table header (e.g. to combine multiple tables)
-  -s    calculate summary statistics (mean / s.d.) and print on STDERR
-  -a    remove non-ASCII characters before comparison
-  -u    calculate unlabelled segmentation accuracy
-
-Evaluates automatically cleaned files in directory <texts_dir> against
-gold standard files in directory <gold_dir>.  Correspoding files in the 
-two directories must have identical names and there must be no other files
-in these directories.
-
-The script prints a TAB-delimited evaluation table on standard output, which
-can be redirected to a file and read into R, Excel or a similar application.
-Precision, recall and F-score are calculated as percentages of whitespace-
-delimited words.  Accuracy of segment identification is measured by precision,
-recall and F-score for labelled or unlabelled segment marker tags (if the
-option -u is specified, no distinction is made between types <p>, <h> and <l>).
-
-If the third argument is given, full alignments will be written to separate
-files in directory <align_dir>.
+Usage: tests/test_cleaneval.py
 '''
 
-re_find_URL = re.compile('https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()!@:%_\\+.~#?&\\/\\/=]*)') # regex detecting url
+#######################################################################################
+# helper functions
+#######################################################################################
+
+re_find_URL = re.compile('https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()!@:%_\\+.~#?&\\/\\/=]*)')
 
 def __get_url(raw_html):
     '''
@@ -64,7 +44,7 @@ def __get_url(raw_html):
     Return:
         url         String  Url found in raw_html. If no url is found, return empty string
     >>> __get_url('')
-    ''
+    None 
     >>> __get_url('<html><body><h1>No URL in this file</h1></body></html>')
     ''
     >>> __get_url('<html><body><div><a href="#">http://www.abc.com</a></div></body></html>')
@@ -75,9 +55,16 @@ def __get_url(raw_html):
         url = match_obj.group(0)
         return url
     else:
-        return ''
+        return None
 
 def slurp_file(filename):
+    '''
+    Returns a content of the file
+    Argument:
+        filename    String  The path to the file
+    Return:
+        body        String  The content of the file
+    '''
     encoding = __get_encoding(filename)
     with open(filename, 'r', encoding=encoding) as fh:
         body = fh.read()
@@ -85,6 +72,13 @@ def slurp_file(filename):
         return body
 
 def __get_encoding(filename):
+    '''
+    Returns the encoding of the file
+    Argument:
+        filename    String  The path to the file
+    Return:
+        encdoing    String  The encoding of the file
+    '''
     encoding = 'ascii'
     with open(filename, 'rb') as src_file:
         detection = chardet.detect(src_file.read())
@@ -97,50 +91,49 @@ def __get_encoding(filename):
         encoding = detection['encoding']
     return encoding
 
-def __check_encoding(path):
-    files = os.listdir(path)
-    for filename in files:
-        file_path = path+'/'+filename
-        encoding = __get_encoding(file_path)
-        if encoding != 'utf-8':
-            print(encoding)
-
 re_URL = re.compile(r'^\s*URL.*$', re.MULTILINE)
+re_FRSV_URL = re.compile(r'^\s*##.*$', re.MULTILINE)
 re_TAG = re.compile(r'(<[phl]>)', re.IGNORECASE)
 re_WS = re.compile(r'\s+')
 re_CTRL = re.compile(r'[\x00-\x1F]+')
 re_HI = re.compile(r'[\x80-\xFF]+')
-re_CLEAN_URL = re.compile(r'^\s*##.*$', re.MULTILINE) #For frsv gold dataset
 
 def normalize(text, ascii=False, unlabelled=False):
-    text = re_URL.sub("", text)           # remove URL line at start of gold standard files
-    text = re_CLEAN_URL.sub("", text)
-    text = re_CTRL.sub(" ", text)         # replace any control characters by spaces (includes newlines)
-    if unlabelled:
-        text = re_TAG.sub(r'\n<p> ', text) # start each segment on new line, normalise tags
-    else:
-        text = re_TAG.sub(r'\n\g<1> ', text)  # only break lines before segment markers
-        text = re_WS.sub(" ", text)           # normalise whitespace (including line breaks) to single spaces
-        if ascii:
-            text = re_HI.sub("", text)        # delete non-ASCII characters (to avoid charset problems)
-        return text
+    '''
+    This function normalizes text as following:
+        -remove URL line at start of gold standard files
+        -replace any control characters by spaces (includes newlines)
+        -remove URL line for frsv gold standard
+        -only break lines before segment markers
+        -normalise whitespace (including line breaks) to single spaces
+    '''
+    text = re_URL.sub("", text)
+    text = re_FRSV_URL.sub("", text)
+    text = re_CTRL.sub(" ", text)
+    text = re_TAG.sub(r'\n\g<1> ', text)
+    text = re_WS.sub(" ", text)
+    return text
 
-## return diff as list of tuples ("equal"/"insert"/"delete", [text words], [gold words])
 def make_diff(alignment, text_w, gold_w):
-	diff = []
-	for tag, i1, i2, j1, j2 in alignment.get_opcodes():
-		text_region = text_w[i1:i2]
-		gold_region = gold_w[j1:j2]
-		if tag == "replace":
-			diff.append( ("delete", text_region, []) )
-			diff.append( ("insert", [], gold_region) )
-		else:
-			diff.append( (tag, text_region, gold_region) )
-	return diff
+    '''
+    Return diff as list of tuples ("equal"/"insert"/"delete", [ text words ], [ gold words ])
+    '''
+    diff = []
+    for tag, i1, i2, j1, j2 in alignment.get_opcodes():
+        text_region = text_w[i1:i2]
+        gold_region = gold_w[j1:j2]
+        if tag == "replace":
+            diff.append( ("delete", text_region, []) )
+            diff.append( ("insert", [], gold_region) )
+        else:
+            diff.append( (tag, text_region, gold_region) )
+    return diff
 
-## return evaluation measures for given diff:
-##   (f-score, precision, recall, [labelled] segmentation f-score, precision, recall)
-def evaluate(diff):
+def evaluate_F1(diff):
+    '''
+    return evaluation measures for given diff:
+    (f-score, precision, recall, [labelled] segmentation f-score, precision, recall)
+    '''
     tp = fp = fn = 0
     tag_tp = tag_fp = tag_fn = 0
     for tag, text, gold in diff:
@@ -159,39 +152,30 @@ def evaluate(diff):
             tag_tp += text_tags
             assert text_l == gold_l
             assert text_tags == gold_tags
-    result = __evaluate(tp, fp, fn, tag_tp, tag_fp, tag_fn)
+    result = __compute_F1(tp, fp, fn, tag_tp, tag_fp, tag_fn)
     return result
 
-def __evaluate(tp, fp, fn, tag_tp, tag_fp, tag_fn):
-    n_text = tp + fp if tp + fp > 0 else 1                                                                                                              
+def __compute_F1(tp, fp, fn, tag_tp, tag_fp, tag_fn):
+    '''
+    Computes F1 metrics based on tp, fp, fn, tag_tp, tag_fp, tag_fn
+    '''
+    n_text = tp + fp if tp + fp > 0 else 1
     n_gold = tp + fn if tp + fn > 0 else 1
-    precision = float(tp) / n_text
-    recall = float(tp) / n_gold
+    precision = tp / n_text
+    recall = tp / n_gold
     precision_plus_recall = precision + recall if precision + recall > 0 else 1
     f_score = 2 * precision * recall / precision_plus_recall
-                                                                                                                                                        
     tags_text = tag_tp + tag_fp if tag_tp + tag_fp > 0 else 1
     tags_gold = tag_tp + tag_fn if tag_tp + tag_fn > 0 else 1
-    tag_precision = float(tag_tp) / tags_text
-    tag_recall = float(tag_tp) / tags_gold
+    tag_precision = tag_tp / tags_text
+    tag_recall = tag_tp / tags_gold
     precision_plus_recall = tag_precision + tag_recall if tag_precision + tag_recall > 0 else 1
     tag_f_score = 2 * tag_precision * tag_recall / precision_plus_recall
-                                                                                                                                                        
     return (100 * f_score, 100 * precision, 100 * recall, 100 * tag_f_score, 100 * tag_precision, 100 * tag_recall, tp, fp, fn, tag_tp, tag_fp, tag_fn)
 
-def write_alignment(diff, filename):
-	fh = file(filename, "w")
-	for tag, text_seg, gold_seg in diff:
-		if tag == "delete":
-			print("<" * 40, "(false positive)", file=fh)
-			print(" ".join(text_seg), file=fh)
-		if tag == "insert":
-			print(">" * 40, "(false negative)", file=fh)
-			print(" ".join(gold_seg), file=fh)
-		if tag == "equal":
-			print("=" * 40, file=fh)
-			print(" ".join(gold_seg), file=fh)
-	fh.close()
+#######################################################################################
+# evaluation metrics
+#######################################################################################
 
 def do_cleaneval(gold_html, cleaned_html):
     '''
@@ -209,45 +193,45 @@ def do_cleaneval(gold_html, cleaned_html):
     gold_words = re_WS.split(gold_html)
     alignment = SequenceMatcher(None, text_words, gold_words)
     diff = make_diff(alignment, text_words, gold_words)
-    eval_list = evaluate(diff)
+    eval_list = evaluate_F1(diff)
     return eval_list
 
 def do_jaccard(gold_html, cleaned_html):
+    '''
+    Evaluate similarity between two documents:
+    gold_html       annotated document which contains merely a content of a web page
+    cleaned_html    cleaned document performed by a library
+    This function returns the jaccard similarity index where the higher index indicates greater agreement between the two documents
+    '''
     cleaned_html = normalize(cleaned_html)
-    text_words = set(re_WS.split(cleaned_html))
-    gold_words = set(re_WS.split(gold_html))
-
-    intersection = gold_words.intersection(text_words)
-    union = gold_words.union(text_words)
+    text_words = Counter(re_WS.split(cleaned_html))
+    gold_words = Counter(re_WS.split(gold_html))
     
+    intersection = list((text_words & gold_words).elements())
+    union = list((text_words | gold_words).elements())
+    
+    false_positive = list((text_words - gold_words).elements())
+    false_negative = list((gold_words - text_words).elements())
+
     tp = len(intersection) / len(union)
-    fp = len(text_words.difference(gold_words)) / len(union)
-    fn = len(gold_words.difference(text_words)) / len(union)
-    result = __evaluate(tp, fp, fn, 0, 0, 0)
+    fp = len(false_positive) / len(union)
+    fn = len(false_negative) /len(union)
+    result = __compute_F1(tp, fp, fn, 0, 0, 0)
     return result
 
-def do_jaccard_multiset(gold_html, cleaned_html):
-    cleaned_html = normalize(cleaned_html)
-    text_words = Multiset(re_WS.split(cleaned_html))
-    gold_words = Multiset(re_WS.split(gold_html))
-    intersection = gold_words.intersection(text_words)
-    union = gold_words.union(text_words)
-    
-    tp = len(intersection) / len(union)
-    fp = len(text_words.difference(gold_words)) / len(union)
-    fn = len(gold_words.difference(text_words)) / len(union)
-    result = __evaluate(tp, fp, fn, 0, 0, 0)
-    return result                                               
 
-def clean_cleaneval(raw_html):
+#######################################################################################
+# cleaning methods
+#######################################################################################
+
+def clean_none(raw_html):
     '''
-    Traditional Cleaneval does not clean any html, just return the raw html
-    >>> clean_cleaneval('<h2>Hello</h2><p> world!</p>')
+    No cleaning method is applied.
+    >>> clean_none('<h2>Hello</h2><p> world!</p>')
     '<h2>Hello</h2><p> world!</p>'
     '''
     return raw_html
 
-# List of function for different configuration of clean_metahtml
 def clean_metahtml_0(raw_html):
     extractor_config = metahtml.content.ExtractorConfig()
     return clean_metahtml(raw_html, extractor_config)
@@ -346,7 +330,8 @@ def clean_trafilatura_with_fallback(raw_html):
     return cleaned_html
 
 # Rename function names
-clean_cleaneval.__name__ = 'cleaneval'
+# Todo: Remove this... Potentially could be done by creating a function to remove "clean" before processing
+clean_none.__name__ = 'cleaneval'
 clean_metahtml.__name__ = 'metahtml'
 clean_metahtml_0.__name__ = 'metahtml-0'
 clean_metahtml_1.__name__ = 'metahtml-1'
@@ -358,6 +343,10 @@ clean_newspaper3k.__name__ = 'newspaper3k'
 clean_trafilatura_no_fallback.__name__ = 'trafilatura-no-fallback'
 clean_trafilatura_with_fallback.__name__ = 'trafilatura-with-fallback'
 
+
+#######################################################################################
+# main function
+#######################################################################################
 
 def cleaneval_from_files(gold_path, raw_path, list_of_libraries = [ lambda x: x ], eval_method=do_cleaneval, opt_latex=True, opt_total=True, opt_noheader=False, opt_summary=True, opt_ascii=False, opt_unlabelled=False):
     '''
@@ -407,51 +396,95 @@ def cleaneval_from_files(gold_path, raw_path, list_of_libraries = [ lambda x: x 
         tag_tp = sum[library.__name__][9]
         tag_fp = sum[library.__name__][10]
         tag_fn = sum[library.__name__][11]
-        result = __evaluate(tp, fp, fn, tag_tp, tag_fp, tag_fn)
+        result = __compute_F1(tp, fp, fn, tag_tp, tag_fp, tag_fn)
         if not opt_latex:
             print(library.__name__ + "\t\t" + ("%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%.2f\t%d\t%d\t%d\t%d\t%d\t%d\n" % result))
         else:
             print(r'%s & ' % library.__name__ + r'%.2f & %.2f & %.2f & %.2f & %.2f & %.2f & %d & %d & %d & %d & %d & %d \\' % result)
             print(r'\hline')
 
+cache_dir = test_golden.cache_dir 
+gold_dir = test_golden.golden_dir
+common_urls = test_content.common_urls
 
-cache_dir = "tests/.cache/"
-gold_dir = "tests/.golden/"
-
-def load_data():
+def load_metahtml_annotated():
+    '''
+    Load all annotated web pages of metahtml.
+    This function returns a list of dictionary whose keys are:
+        raw     raw html of a web page
+        gold    annotated version done by humans
+    '''
     dataset = []
-    gold_paths = glob(gold_dir+"**/*.content.*")
+    gold_paths = glob(gold_dir+'/**/*.content.*')
     for path in gold_paths:
-        split_paths = path.split('/')
-        # [ 'tests', '.golden', 'webpage', 'date.content.username' ]
-        webpage = split_paths[2]
-        date = split_paths[3].split('.')[0]
-        raw_path = cache_dir + webpage + "/" + date
+        folder, date, annotator = __extract_metahtml_path(path)
+        raw_path = cache_dir + '/' + folder + '/' + date
         raw_html = slurp_file(raw_path)
-        gold_html = slurp_file(path)
-        gold_soup = BeautifulSoup(gold_html, features="lxml")
-        body = gold_soup.body
-        if body is None:
-            style_tag = gold_soup.find('style')
-            if style_tag is not None:
-                style_tag.decompose()
-            script_tags = gold_soup.find_all('script')
-            if len(script_tags) > 0:
-                for script_tag in script_tags:
-                    script_tag.decompose()
-            body = gold_soup
-        rm_lines = body.find_all(class_="rm-manual")
-        if len(rm_lines) > 0:
-            for line in rm_lines:
-                line.decompose()
-        gold_html = normalize(body.__str__())
+        gold_html = __cleaning_annotated(slurp_file(path))
         dataset.append({
             'raw': raw_html,
             'gold': gold_html
         })
     return dataset
 
-def evaluation(dataset, list_of_libraries = [ lambda x: x ], eval_method=do_cleaneval, output='output.tex'):
+# Todo: evaluation function between annotators
+def evaluation_inner_agreement(common_dataset, latex_file=None):
+    '''
+    Evaluate agreement in annotated common webpages via Jaccard similarity index
+    results = { 'mikeizbicki': { 'mikeizbicki': 100, 'Tonnpo': 98  } }}
+    '''
+    results = {}
+    agreement = []
+    for annotator in common_dataset:
+        results[annotator] = {} 
+        for other_annotator in common_dataset:
+            n_files = 0
+            total = 0
+            for gold_path in common_dataset[annotator]:
+                folder, date, annotator = __extract_metahtml_path(gold_path)
+                gold_html = __cleaning_annotated(slurp_file(gold_path))
+                common_path = gold_dir + '/' + folder + '/' + date
+                raw_path = find_matched_raw(common_path, common_dataset[other_annotator])
+                if raw_path is not None:
+                    raw_html = __cleaning_annotated(slurp_file(raw_path))
+                    result = do_jaccard(gold_html, raw_html)
+                    # result[6] is tp
+                    total += result[6]
+                    agreement.append({
+                        'similarity': result[6],
+                        'file': common_path,
+                    })
+                n_files += 1
+            avg = (total / n_files) * 100
+            results[annotator][other_annotator] =  avg
+    sorted_agreement = sorted(agreement, key=lambda res: res['similarity'], reverse=True)
+    percentile = 90
+    rough_pos = (len(sorted_agreement)*percentile) // 100
+    print("sorted_agreement[rough_pos]=",sorted_agreement[rough_pos])
+    if latex_file:
+        with open(latex_file, 'w') as f:
+            f.writelines([ r'\begin{tabular}{ |c|'] + [r'c|']*len(common_dataset) + [ r'}\hline', '\n', 'annotators' ])
+            for annotator in results:
+                f.write('& ' + annotator)
+            f.writelines([r'\\', r'\hline', '\n'])
+            for annotator in results:
+                f.write(annotator)
+                for other_annotator in results[annotator]:
+                    f.write('& %.2f' % results[annotator][other_annotator])
+                f.writelines([ r'\\', r'\hline', '\n'])
+            f.write(r'\end{tabular}')
+            f.close()
+
+
+def find_matched_raw(common_path, paths):
+    '''
+    This function finds the matched file path of the same webpage annotated by the same annotator or other annotators
+    '''
+    matched = list(filter(lambda path: common_path in path, paths))
+    return matched[0] if len(matched) == 1 else None
+    
+# Will potentially be a replacement of cleaneval_from_files function
+def evaluation(dataset, list_of_libraries = [ lambda x: x ], eval_method=do_cleaneval, latex_file=None):
     eval_list = {}
     total = {}
     ss = {}
@@ -467,20 +500,86 @@ def evaluation(dataset, list_of_libraries = [ lambda x: x ], eval_method=do_clea
             for i, x in enumerate(eval_list[library.__name__]):
                 total[library.__name__][i] += x
                 ss[library.__name__][i] += x ** 2
-    with open(output, 'w') as f:
-        # Document setup
-        f.writelines([ r'\documentclass{article}', r'\usepackage[utf8]{inputenc}', r'\begin{document}', r'\title{Result}', r'\title{Result}', r'\maketitle' ])
-        # Table setup 
-        f.writelines([ r'\begin{tabular}{ |c|c|c|c|c|c|c|c|c|c|c|c|c| }', r'\hline', '\n', r'Library & F & P & R & F.tag & P.tag & R.tag & TP & FP & FN & TP.tag & FP.tag & FN.tag \\', r'\hline', '\n' ])
-        for library in list_of_libraries:
-            tp = total[library.__name__][6]
-            fp = total[library.__name__][7]
-            fn = total[library.__name__][8]
-            tag_tp = total[library.__name__][9]
-            tag_fp = total[library.__name__][10]
-            tag_fn = total[library.__name__][11]
-            result = __evaluate(tp, fp, fn, tag_tp, tag_fp, tag_fn)
-            f.writelines([ r'%s & ' % library.__name__ + r'%.2f & %.2f & %.2f & %.2f & %.2f & %.2f & %d & %d & %d & %d & %d & %d \\' % result, r'\hline', '\n' ])
-        f.write(r'\end{tabular}')
-        f.write(r'\end{document}')
-        f.close()
+        if latex_file:
+            with open(latex_file, 'w') as f:
+                f.writelines([ r'\begin{tabular}{ |c|c|c|c|c|c|c|c|c|c|c|c|c| }', r'\hline', '\n', r'Library & F & P & R & F.tag & P.tag & R.tag & TP & FP & FN & TP.tag & FP.tag & FN.tag \\', r'\hline', '\n' ])
+                for library in list_of_libraries:
+                    tp = total[library.__name__][6]
+                    fp = total[library.__name__][7]
+                    fn = total[library.__name__][8]
+                    tag_tp = total[library.__name__][9]
+                    tag_fp = total[library.__name__][10]
+                    tag_fn = total[library.__name__][11]
+                    result = __compute_F1(tp, fp, fn, tag_tp, tag_fp, tag_fn)
+                    f.writelines([ r'%s & ' % library.__name__ + r'%.2f & %.2f & %.2f & %.2f & %.2f & %.2f & %d & %d & %d & %d & %d & %d \\' % result, r'\hline', '\n' ])
+                f.write(r'\end{tabular}')
+                f.close()
+
+def get_metahtml_common():
+    '''
+    Get common webpages for metahtml dataset
+    Returns a dictionary whose keys are the usernames of the annotators
+    '''
+    dataset = {}
+    common_paths = []
+    for url in common_urls:
+        filename = test_golden.url2filename(url)
+        common = glob(gold_dir+'/'+filename+'/*.content.*')
+        for path in common:
+            common_paths.append(path)
+    for common_path in common_paths:
+        folder, date, annotator = __extract_metahtml_path(common_path)
+        if annotator in dataset:
+            dataset[annotator].append(common_path)
+        else:
+            dataset[annotator] = [ common_path ]
+    return dataset 
+
+def __extract_metahtml_path(path):
+    '''
+    This function takes exactly one argument:
+        path    A string representation of annotated file path
+    
+    This function returns three variables consecutively:
+        folder      A human readable name of folder storing the web page
+        date        The date when the web page was saved
+        annotator   Name of the annotator
+    '''
+    split_paths = path.split('/')
+    folder = split_paths[2]
+    split_annotated = split_paths[3].split('.')
+    date = split_annotated[0]
+    annotator = split_annotated[2]
+    return folder, date, annotator
+
+def __cleaning_annotated(annotated_html):
+    '''
+    Cleaning annotated html:
+        -Remove Style and Script tags
+        -Discard tags with class "rm-manual"
+    '''
+    annotated_soup = BeautifulSoup(annotated_html, features='lxml')
+    body = annotated_soup.body
+    if body is None:
+        style_tag = annotated_soup.find('style')
+        if style_tag is not None:
+            style_tag.decompose()
+        script_tags = annotated_soup.find_all('script')
+        if len(script_tags) > 0:
+            for script_tag in script_tags:
+                script_tag.decompose()
+        body = annotated_soup
+    rm_lines = body.find_all(class_='rm-manual')
+    if len(rm_lines) > 0:
+        for line in rm_lines:
+            line.decompose()
+    cleaned_annotated = normalize(body.__str__())
+    return cleaned_annotated
+
+if __name__ == '__main__':
+    from clize import run
+    common_dataset = get_metahtml_common()
+    evaluation_inner_agreement(common_dataset)
+    #dataset = load_metahtml_annotated()
+    #evaluation_inner_agreement(common_dataset, 'paper/fig/annotator.tex')
+    #evaluation(dataset, [ clean_none, clean_metahtml, clean_trafilatura_no_fallback, clean_trafilatura_with_fallback, clean_newspaper3k ], do_cleaneval, latex_file='paper/fig/results.tex')
