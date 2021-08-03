@@ -55,6 +55,7 @@ class Extractor(BaseExtractor):
 
         # FIXME:
         # add the following non-standard pages
+        # https://www.latimes.com/espanol/california/articulo/2020-03-23/la-contaminacion-del-aire-te-hace-mas-susceptible-al-coronavirus-a-los-californianos-no-le-gustara-la-respuesta
         # http://english.khan.co.kr/khan_art_view.html?artid=202005221946377
         # https://www.dailynk.com/english/source-kim-jong-un-recently-cardiovascular-operation/
         # https://mainichi.jp/english/articles/20200523/p2a/00m/0na/023000c

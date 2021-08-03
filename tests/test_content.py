@@ -161,7 +161,7 @@ function toggleSelectedText(e) {
     if (e.shiftKey) {
         var selection = window.getSelection();
         var range = selection.getRangeAt(0);
-        var tags = "p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,table,tr,td,th,article,main,section,figure,figcaption,aside,section,address,blockquote";
+        var tags = "p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,table,tr,td,th,article,main,section,figure,figcaption,aside,section,address,blockquote,code";
         if (range.commonAncestorContainer.getElementsByTagName) {
             var allWithinRangeParent = range.commonAncestorContainer.querySelectorAll(tags);
         }

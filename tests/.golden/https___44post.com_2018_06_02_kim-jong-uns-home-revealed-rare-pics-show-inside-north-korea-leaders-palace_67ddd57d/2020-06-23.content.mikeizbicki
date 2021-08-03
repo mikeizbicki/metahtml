@@ -1,0 +1,46 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script>
+function toggleSelectedText(e) {
+    if (e.shiftKey) {
+        var selection = window.getSelection();
+        var range = selection.getRangeAt(0);
+        var tags = "p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,table,tr,td,th,article,main,section,figure,figcaption,aside,section,address,blockquote";
+        if (range.commonAncestorContainer.getElementsByTagName) {
+            var allWithinRangeParent = range.commonAncestorContainer.querySelectorAll(tags);
+        }
+        else {
+            //var allWithinRangeParent = [range.commonAncestorContainer.closest(tags)];
+            var allWithinRangeParent = [range.commonAncestorContainer.parentNode.closest(tags)];
+        }
+
+        for (var i=0, el; el = allWithinRangeParent[i]; i++) {
+          // The second parameter says to include the element
+          // even if it's not fully selected
+          if (selection.containsNode(el, true) ) {
+              el.classList.toggle('rm-manual');
+          }
+        }
+        window.getSelection().removeAllRanges();
+    }
+};
+
+//var article = document.body.querySelector('article');
+document.onmouseup = toggleSelectedText;
+document.captureEvents(Event.MOUSEUP);
+</script>
+
+<style>
+.rm-manual {
+    text-decoration: line-through;
+    background-color: #faa;
+}
+</style>
+        </head><body><article><p class="rm-manual"> Under Construction! | Hosted by WhoGoHost </p>
+<h2 class="rm-manual">Oops! Currently this site is</h2>
+<h3 class="rm-manual">Under Construction</h3>
+<p class="rm-manual"><a href="http://www.whogohost.com/host/knowledgebase/108/I-have-purchased-a-hosting-account-What-next.html">Click here if you are the owner of this account.</a></p>
+<h4 class="rm-manual">Quote of the Day</h4>
+<h4 class="rm-manual">Powered by</h4>
+<p class="rm-manual"><a href="http://www.whogohost.com/">Reliable domain name registrations and web Hosting as low as N3000</a></p>
+<p class="rm-manual"><a href="http://www.whogohost.com/">Web Hosting in Nigeria, .ng domain registration and other domain name registrations in Nigeria for just N1,700</a></p></article>
+</body></html>
