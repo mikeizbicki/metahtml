@@ -71,8 +71,8 @@ def get_cached_webpages(url, dates=None, redownload=False):
         paths = [ path ]
         r = requests.get(url,headers={'User-Agent':'Mozilla/5.0 (X11; Linux i686; rv:88.0) Gecko/20100101 Firefox/88.0'},verify=False)
         print("r.encoding=",r.encoding)
-        if r.status_code != 200:
-            raise ValueError('status=',r.status_code,'for url=',url)
+        #if r.status_code != 200:
+        #    raise ValueError('status=',r.status_code,'for url=',url)
         html = r.text
         with open(path,'x', encoding='utf-8', newline='\n') as f:
             f.write(html)

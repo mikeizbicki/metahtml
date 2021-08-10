@@ -273,6 +273,7 @@ class BaseExtractor():
         # get match from url
         #################################################################################
 
+        disable_universal_regexes = False
         # FIXME:
         # this condition prevents the url checks from being run on webpages 
         # that use query arguments to index their pages;
@@ -280,7 +281,9 @@ class BaseExtractor():
         if len(parser.url_parsed.path) >8 or len(parser.url_parsed.query)<5:
             for hostname, regex, compiled_regex in cls.compiled_regexes:
                 date_match = re.search(regex, parser.url_parsed.path)
-                if hostname is None or hostname in parser.url_parsed.hostname:
+                if hostname is not None:
+                    disable_universal_regexes = disable_universal_regexes or (hostname == url_hostname or 'www.'+hostname == url_hostname)
+                if (hostname is None and not disable_universal_regexes) or (hostname is not None and hostname in url_hostname):
                     if date_match:
                         result_str = date_match.group(1)
                         result = cls.str_to_result(result_str)
