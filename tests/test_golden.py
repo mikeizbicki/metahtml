@@ -196,9 +196,14 @@ def test_golden(test_file, full=False):
         metahtml.parse(html, url, fast=False)
     meta = metahtml.parse_for_testing(html, url, fast=False)
 
-    # run the test
+    # run the test;
+    # for most keys we need an exact match to pass;
+    # the way that the 'type' key is currently handled, however, all types != 'article' are equivalent
     for k in meta_golden.keys():
-        assert meta_golden[k] == meta[k]
+        if k=='type':
+            assert (meta_golden[k] == 'article' and meta[k] == 'article') or (meta_golden[k] != 'article' and meta[k] != 'article')
+        else:
+            assert meta_golden[k] == meta[k]
 
 
 def convert_csv(filter_str=None, filter_key=None, verified_only=True):

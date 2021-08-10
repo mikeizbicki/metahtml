@@ -42,6 +42,7 @@ class Extractor(BaseExtractor):
         ( None, r'^/[a-zA-Z]*/?$' ), 
 
         # hostname specific regexs
+        ( '38north.org', r'^/topics?/?' ),
         ( 'abc3340.com', r'/news/nation-world$' ),
         ( 'agroberichtenbuitenland.nl', r'/actueel/nieuws/?$' ),
         ( 'bbc.co.uk', r'/asia_pacific$' ),
@@ -123,6 +124,7 @@ class Extractor(BaseExtractor):
         ( 'treasury.gov', r'^/resource-center/?$' ),
         ( 'ukdefencejournal.org.uk', r'^/the-osint-bunker/?$'),
         ( 'viaouest.com', r'^/actualite-daesh.html' ),
+        ( 'waffen-online.de', r'^/topics?/?' ),
         ( 'weather.com', r'^/health/coronavirus/?$' ),
         ( 'welt.de', r'^/wirtschaft/deutscher-ki-preis/?$'),
         ( 'weser-kurier.de', r'^/werder/profis/?$'),
