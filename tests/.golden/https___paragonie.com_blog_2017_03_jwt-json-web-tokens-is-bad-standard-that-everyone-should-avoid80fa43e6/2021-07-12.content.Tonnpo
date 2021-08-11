@@ -1,0 +1,196 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script>
+function toggleSelectedText(e) {
+    if (e.shiftKey) {
+        var selection = window.getSelection();
+        var range = selection.getRangeAt(0);
+        var tags = "p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,table,tr,td,th,article,main,section,figure,figcaption,aside,section,address,blockquote,code";
+        if (range.commonAncestorContainer.getElementsByTagName) {
+            var allWithinRangeParent = range.commonAncestorContainer.querySelectorAll(tags);
+        }
+        else {
+            //var allWithinRangeParent = [range.commonAncestorContainer.closest(tags)];
+            var allWithinRangeParent = [range.commonAncestorContainer.parentNode.closest(tags)];
+        }
+
+        for (var i=0, el; el = allWithinRangeParent[i]; i++) {
+          // The second parameter says to include the element
+          // even if it's not fully selected
+          if (selection.containsNode(el, true) ) {
+              el.classList.toggle('rm-manual');
+          }
+        }
+        window.getSelection().removeAllRanges();
+    }
+};
+
+//var article = document.body.querySelector('article');
+document.onmouseup = toggleSelectedText;
+document.captureEvents(Event.MOUSEUP);
+</script>
+
+<style>
+.rm-manual {
+    text-decoration: line-through;
+    background-color: #faa;
+}
+</style>
+        </head><body><article><p class="rm-manual"> No Way, JOSE! 
+Javascript Object Signing and Encryption is a Bad Standard That Everyone
+ Should Avoid - Paragon Initiative Enterprises Blog </p>
+<p class="rm-manual"><a href="file:///">PARAGON <span>INITIATIVE</span> </a></p>
+<ul class="rm-manual"> <li class="rm-manual"> <a href="file:///menu/info"> Info </a> <ul class="rm-manual"> <li class="rm-manual"><a href="file:///info/">About Us</a></li> <li class="rm-manual"><a href="file:///experience">Our Experience</a></li> <li class="rm-manual"><a href="file:///quick-answers">Quick Answers</a></li> <li class="rm-manual"><a href="file:///book">Technology Books</a></li> <li class="rm-manual"><a href="file:///white-papers">White Papers</a></li> </ul> </li> <li class="rm-manual"> <a href="file:///services"> Services </a> <ul class="rm-manual"> <li class="rm-manual"><a href="file:///service/technology-consulting">Consulting</a></li> <li><a href="file:///service/code-review">Code Auditing</a></li> <li><a href="file:///service/business-intelligence">Business Intelligence</a></li> <li><a href="file:///service/appsec">App Security</a></li> <li><a href="file:///service/app-dev">App Development</a></li> <li><a href="file:///service/web-development">Web Development</a></li> </ul> </li> <li><a href="file:///software">Software</a></li> <li> <a href="file:///menu/security"> Security </a> <ul> <li><a href="file:///security/advisories">Advisories</a></li> <li><a href="file:///security/audits">Code Audits</a></li> </ul> </li>
+<li><a href="file:///blog">Blog</a></li> <li><a href="file:///contact">Contact</a></li> </ul>
+<h2 class="rm-manual">Paragon Initiative Enterprises Blog</h2>
+<h4 class="rm-manual">The latest information from the team that develops cryptographically secure PHP software.</h4>
+<h3 class="rm-manual">Is Your Cryptography Reliable?</h3>
+<p class="rm-manual"> Our team specializes in studying real world cryptography implementations to assure their correctness and security. </p>
+<p class="rm-manual"> <a href="https://paragonie.com/blog/2017/06/why-you-want-paragon-initiative-enterprises-audit-your-code"> Why You Want to Hire Our Company </a> <a href="https://paragonie.com/contact"> Contact Us </a> </p>
+<h2 class="rm-manual">No Way, JOSE! Javascript Object Signing and Encryption is a Bad Standard That Everyone Should Avoid </h2>
+<p class="rm-manual"> March 14, 2017 7:18 am by <a href="file:///blog/author/scott-arciszewski">Scott Arciszewski</a> </p>
+<p class="rm-manual"> <a href="file:///blog/category/security-engineering">Security Engineering</a> </p>
+<p class="rm-manual">Update (March 2018): <a href="https://paragonie.com/blog/2018/03/paseto-platform-agnostic-security-tokens-is-secure-alternative-jose-standards-jwt-etc">Paseto is a Secure Alternative to the JOSE Standards (JWT, etc.)</a></p>
+<p class="">If you've already decided to implement Javascript Object 
+Signing and Encryption (JOSE), whether you want JSON Web Tokens, JSON 
+Web Encryption (JWE), or JSON Web Signatures (JWS), you should question 
+this decision. You're probably making a mistake.</p>
+<p>Everything in this blog post was written to be accurate as of <a href="https://tools.ietf.org/html/rfc7519">RFC 7519</a>, <a href="https://tools.ietf.org/html/rfc7515">RFC 7515</a>, and <a href="https://tools.ietf.org/html/rfc7516">RFC 7516</a>. It's possible that new RFCs in the future could supersede the flaws detailed within.</p>
+<p>If you're not already familiar with basic cryptography terms and concepts, <a href="https://paragonie.com/blog/2015/08/you-wouldnt-base64-a-password-cryptography-decoded">start here</a>. Hyperlinks are provided throughout the article to explain things in detail, for the sake of brevity.</p>
+<h1>Why You Don't Want Javascript Object Signing and Encryption</h1>
+<p>There are several problems with the JOSE family of standards. These 
+are not flaws specific to any particular implementation, and in fact 
+many libraries work around the deficits of the standards.</p>
+<h2>JSON Web Tokens are Often Misused</h2>
+<p>A lot of developers try to use JWT to avoid server-side storage for sessions. This is <a href="http://cryto.net/~joepie91/blog/2016/06/13/stop-using-jwt-for-sessions/">almost always a terrible mistake</a> and invites developers to come up with <a href="http://cryto.net/~joepie91/blog/2016/06/19/stop-using-jwt-for-sessions-part-2-why-your-solution-doesnt-work/">clever explanations and workarounds instead of careful engineering</a>.</p>
+<p>The two linked posts explain succinctly why this is a bad move, so I 
+won't delve further into the systems architecture issues. There are more
+ pressing issues at stake: The standard itself is bad and leads to 
+insecurity.</p>
+<h2>JSON Web Signatures Makes Forgery Trivial</h2>
+<p>JSON Web Signatures (JWS) is a standard that is supposed to provide <a href="https://paragonie.com/blog/2015/08/you-wouldnt-base64-a-password-cryptography-decoded#mac">message authentication</a> or <a href="https://paragonie.com/blog/2015/08/you-wouldnt-base64-a-password-cryptography-decoded#digital-signatures">digital signatures</a>.</p>
+<p>In general terms: When a cryptography protocol includes digital 
+signatures or message authentication, if an attacker can successfully 
+forge arbitrary messages at a low cost, we consider the protocol to be 
+completely broken.</p>
+<p>Quoting <a href="https://tools.ietf.org/html/rfc7515#section-4.1.1">RFC 7515, section 4.1.1</a>:</p>
+<p>The "alg" (algorithm) Header Parameter identifies the cryptographic 
+algorithm used to secure the JWS. The JWS Signature value is not valid 
+if the "alg" value does not represent a supported algorithm or if there 
+is not a key for use with that algorithm associated with the party that 
+digitally signed or MACed the content. "alg" values should either be 
+registered in the IANA "JSON Web Signature and Encryption Algorithms" 
+registry established by [JWA] or be a value that contains a 
+Collision-Resistant Name. The "alg" value is a case- sensitive ASCII 
+string containing a StringOrURI value. This Header Parameter MUST be 
+present and MUST be understood and processed by implementations.</p>
+<p>We've seen this bite JWS users before, in the form of <a href="https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/">critical vulnerabilities in most JWT libraries</a>.</p>
+<p>There were two ways to attack a standards-compliant JWS library to achieve trivial token forgery:</p>
+<ol> <li>Send a header that specifies the "none" algorithm be used</li> <li>Send a header that specifies the "HS256" algorithm when the application normally signs messages with an RSA public key.</li> </ol>
+<p>This isn't just an implementation bug, this is the result of a failed
+ standard that shouldn't be relied on for security. If you adhere to the
+ standard, you must process and "understand" the header. You are 
+explicitly forbidden, by the standard, to just disregard the header that
+ an attacker provides.</p>
+<h4>What does "understood and processed" mean?</h4>
+<p>This phrase is repeated throughout the JSON and JOSE RFCs, but a formal definition is not provided.</p>
+<p>Today, many libraries interpret "validate the </p>
+<code>alg</code><p> header against a whitelist" as satisfying the "processed" requirement. Historically, given the previous </p>
+<p><a href="https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/">token forgery vulnerability enabled by changing the <code>alg</code> header</a>, this does not appear to have always been the case.</p>
+<p>While it's tempting to applaud developers for exploiting an ambiguity
+ in a security protocol to improve the security of their 
+implementations, that doesn't fix the standard.</p>
+<h2>JSON Web Encryption is a Foot-Gun</h2>
+<p>Encryption leaves <a href="https://paragonie.com/blog/2015/05/using-encryption-and-authentication-correctly">a lot of room for potential implementation errors</a>, especially when <a href="https://paragonie.com/blog/2016/12/everything-you-know-about-public-key-encryption-in-php-is-wrong">asymmetric (a.k.a. public-key) encryption</a> is involved.</p>
+<p>The encryption algorithms permitted by JWE are spelled out in <a href="https://tools.ietf.org/html/rfc7518#page-2">RFC 7518</a>, which comes in two sections:</p>
+<ul> <li>Key encryption, which gives you options such as: <ul> <li>RSA with PKCS #1v1.5 padding</li> <li>RSA with OAEP padding</li> <li>ECDH</li> <li>AES-GCM</li> </ul> </li> <li>Message encryption, which only allows you to choose between: <ul> <li>AES-CBC + HMAC</li> <li>AES-GCM</li> </ul> </li> </ul>
+<p>Let's look at some of the key encryption choices in detail. The 
+message encryption part is OK (assuming you actually have a solid GCM 
+implementation and adequate hardware support).</p>
+<p>If you're not familiar with cryptography, this is somewhat like 
+pointing a gun with 5 out of 6 loaded chambers directly at your foot and
+ expecting to not end up with a bullet wound. Almost all of these 
+options have one or more security issues.</p>
+<h3>RSA with PKCS #1v1.5 Padding</h3>
+<p>RSA with PKCS #1v1.5 padding is vulnerable to a type of chosen-ciphertext attack, called a padding oracle. We discussed <a href="https://paragonie.com/blog/2016/12/everything-you-know-about-public-key-encryption-in-php-is-wrong">RSA attacks in detail here</a>.</p>
+<h3>RSA with OAEP Padding</h3>
+<p>RSA with OAEP padding is probably secure. OAEP has a <a href="https://eprint.iacr.org/2000/060.pdf">bogus security proof</a> but is far safer than PKCS1v1.5. However, there are serious doubts to the long-term security of RSA itself.</p>
+<p>Most cryptographers recommend migrating away from RSA.</p>
+<h3>ECDH</h3>
+<p>JWT only allows Elliptic Curve Diffie-Hellman (ECDH) over one of the 
+NIST curves (Weierstrass curves, which introduce the risk of <a href="https://blogs.adobe.com/security/2017/03/critical-vulnerability-uncovered-in-json-encryption.html">invalid-curve attacks</a> that attackers to steal your secret keys).</p>
+<p>If you attempt to avoid invalid curve attacks by using <a href="https://tools.ietf.org/html/rfc7748">one of the elliptic curves for security</a>, you're no longer JWT standards-compliant.</p>
+<h3>AES-GCM</h3>
+<p>Because no list of questionable public-key encryption modes could be 
+complete without shoehorning a shared-key encryption mode, the JOSE 
+standards also allow you to use AES-GCM to possibly exchange an AES-GCM 
+key.</p>
+<p>Cryptography algorithm selections should be made by professional 
+cryptographers, not developers. Letting developers mix-and-match 
+protocols and algorithms is the hallmark of <a href="http://bristolcrypto.blogspot.com/2015/01/real-world-crypto-2015-error-prone.html">error-prone cryptographic designs</a>.</p>
+<p>Aside: the <a href="https://blogs.adobe.com/security/2017/03/critical-vulnerability-uncovered-in-json-encryption.html">recent invalid curve attacks in JOSE</a> mentioned in this section are definitely worth reading, if you haven't already done so.</p>
+<h1>A Better Solution than JOSE</h1>
+<p>A better standard would only let you choose two parameters:</p>
+<ul> <li> <code>ver</code> - Which version of the protocol to use, which defines "one true ciphersuite" for each version; what follows are pure examples: <ul> <li>v1: Ed25519, X25519, XSalsa20poly1305, HMAC-SHA-512-256</li> <li>v2: Ed448, X448, XChaCha20Poly1305, keyed BLAKE2b</li> <li>v3: <a href="https://csrc.nist.gov/projects/post-quantum-cryptography/round-1-submissions">Something Post-Quantum</a> with <a href="https://competitions.cr.yp.to/caesar.html">AEAD</a> </li> </ul> </li> <li> <code>op</code> - What operation to perform: <ul> <li>Authenticated encryption</li> <li>Message authentication</li> <li>Public-key authenticated encryption (for server-to-server communications only)</li> <li>Public-key digital signatures (for server-to-server communications only)</li> </ul> </li> </ul>
+<p>Public-key cryptography should be avoided if possible.</p>
+<p>The closest we have to a better standard today is <a href="https://github.com/fernet/spec">Fernet</a>.</p>
+<p>We're developing a simply secure alternative, called <a href="https://github.com/paragonie/paseto">PASETO (Platform-Agnostic Security Tokens)</a>.</p>
+<h2>Wrap-Up</h2>
+<p>So in conclusion:</p>
+<ul> <li>Don't use JWT for session management, as discussed in other articles</li> <li>The JWS standard is completely broken, and total RFC compliance renders your applications vulnerable</li> <li>The JWE standard is a minefield that non-cryptographers shouldn't be forced to navigate</li> <li>JOSE is a needlessly complex suite of standards with security deficits baked in</li> </ul>
+<h3>What to use instead of JOSE / JWT / JWE / JWS?</h3>
+<p>As stated above, <a href="https://github.com/fernet/spec">Fernet</a> is an option for most JWT use-cases. In the near future, <a href="https://github.com/paragonie/paseto">PASETO</a> will hopefully replace JOSE in the modern web. That being said:</p>
+<ul> <li>For <a href="https://paragonie.com/blog/2015/04/fast-track-safe-and-secure-php-sessions">secure sessions</a>:
+ Just use cookies over HTTPS. Cookies should only store a random 
+identifier which is paired with a server-side persistent storage 
+mechanism.</li> <li>For signatures: Libsodium's <code>crypto_sign()</code> or <code>crypto_auth()</code> APIs (<a href="https://paragonie.com/blog/2017/06/libsodium-quick-reference-quick-comparison-similar-functions-and-which-one-use">depending on use-case</a>).</li> <li>For encryption: Libsodium's <code>crypto_secretbox()</code> and <code>crypto_box()</code> APIs (depending on use-case).</li> <li>If you need some bizarre stateless property for horizontal scaling your sessions (and <a href="http://cryto.net/~joepie91/blog/2016/06/13/stop-using-jwt-for-sessions">are certain you're not making a mistake</a>), see the previous recommendation about signatures. <ul> <li>It
+ is overwhelmingly likely that you do not needed crazy horizontal 
+scaling schemes at all, and that a single server-side session management
+ system is sufficient for your use case. We've included this list item 
+for the sake of completeness.</li> <li>However, if by some bizarre twist
+ of fate your project is in the &lt;0.1% of systems, your organization 
+is probably big enough to know how to solve this problem without JWT.</li> </ul> </li> </ul>
+<p>We've previously published material about <a href="https://paragonie.com/blog/2017/02/split-tokens-token-based-authentication-protocols-without-side-channels">secure token-based authentication</a> and <a href="https://paragonie.com/blog/2016/02/one-login-rule-them-all-seamless-and-secure-cross-domain-authentication">cross-domain user authentication</a> which totally obviates the need for JSON Web Tokens.</p>
+<h1>TL;DR</h1>
+<p>JOSE / JWT / JWS / JWE: Not even once.</p>
+<p class="rm-manual"> <span> <a href="file:///b/lHBERCHlF6Qsn7E5">Permalink</a> </span> </p>
+<p class="rm-manual"> <a href="https://news.ycombinator.com/item?id=13865459"> Discuss <span>on Hacker News</span> </a> </p>
+<p class="rm-manual"> License: <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="license external nofollow"> <span>Creative Commons Attribution-ShareAlike 4.0 International</span> <span>CC-BY-SA 4.0 Intl</span> </a> </p>
+<p class="rm-manual"> <a href="file:///blog/2017/03/jwt-json-web-tokens-is-bad-standard-that-everyone-should-avoid/source" rel="noopener"> View source (Markdown) </a> </p>
+<ul class="rm-manual"> <li class="rm-manual"><a href="file:///blog/tag/application-security">Application Security</a></li> <li class="rm-manual"><a href="file:///blog/tag/cryptography">Cryptography</a></li> <li class="rm-manual"><a href="file:///blog/tag/encryption">Encryption</a></li> <li class="rm-manual"><a href="file:///blog/tag/public-key-cryptography">Public Key Cryptography</a></li> <li class="rm-manual"><a href="file:///blog/tag/secret-key-cryptography">Secret Key Cryptography</a></li> <li class="rm-manual"><a href="file:///blog/tag/security">Security</a></li> <li class="rm-manual"><a href="file:///blog/tag/signatures">Signatures</a></li> </ul>
+<h3>About the Author</h3>
+<h4><a href="file:///blog/author/scott-arciszewski">Scott Arciszewski</a></h4>
+<p>Chief Development Officer</p>
+<p>With 15 years of software development, application security, and 
+system administration experience, Scott aspires to help others attain a 
+happier work-life balance by solving difficult problems and automating 
+trivial tasks. He is mostly known in the community for his open source 
+software security research and strong progressive positions on providing
+ tools and frameworks that are secure by default. <a href="https://twitter.com/CiPHPercoder">@CiPHPerCoder</a></p>
+<h4 class="rm-manual">About</h4>
+<p class="rm-manual"> Paragon Initiative Enterprises</p>
+<p class="rm-manual"> offers <a href="file:///service/technology-consulting">technology consulting</a> and <a href="file:///service/web-development">web development</a> services to businesses with attention to <a href="file:///service/appsec">security above and beyond compliance</a>. </p>
+<p class="rm-manual"> <a href="file:///experience"> Our Professional Experience </a> </p>
+<h4 class="rm-manual">Archives</h4>
+<ol class="rm-manual"> <li class="rm-manual"> <a href="file:///blog/2021"> 2021</a> <ul class="rm-manual"> <li class="rm-manual"><a href="file:///blog/2021/05"> May 2021</a></li> </ul> </li> <li class="rm-manual"> <a href="file:///blog/2019"> 2019</a> <ul class="rm-manual"> <li class="rm-manual"><a href="file:///blog/2019/01"> January 2019</a></li> <li class="rm-manual"><a href="file:///blog/2019/03"> March 2019</a></li> <li class="rm-manual"><a href="file:///blog/2019/05"> May 2019</a></li> <li class="rm-manual"><a href="file:///blog/2019/08"> August 2019</a></li> <li class="rm-manual"><a href="file:///blog/2019/10"> October 2019</a></li> </ul> </li> <li class="rm-manual"> <a href="file:///blog/2018"> 2018</a> <ul class="rm-manual"> <li class="rm-manual"><a href="file:///blog/2018/01"> January 2018</a></li> <li class="rm-manual"><a href="file:///blog/2018/03"> March 2018</a></li> <li class="rm-manual"><a href="file:///blog/2018/04"> April 2018</a></li> <li class="rm-manual"><a href="file:///blog/2018/08"> August 2018</a></li> <li class="rm-manual"><a href="file:///blog/2018/09"> September 2018</a></li> <li class="rm-manual"><a href="file:///blog/2018/11"> November 2018</a></li> </ul> </li> <li class="rm-manual"> <a href="file:///blog/2017"> 2017</a> <ul class="rm-manual"> <li class="rm-manual"><a href="file:///blog/2017/01"> January 2017</a></li> <li class="rm-manual"><a href="file:///blog/2017/02"> February 2017</a></li> <li class="rm-manual"><a href="file:///blog/2017/03"> March 2017</a></li> <li class="rm-manual"><a href="file:///blog/2017/04"> April 2017</a></li> <li class="rm-manual"><a href="file:///blog/2017/05"> May 2017</a></li> <li class="rm-manual"><a href="file:///blog/2017/06"> June 2017</a></li> <li class="rm-manual"><a href="file:///blog/2017/07"> July 2017</a></li> <li class="rm-manual"><a href="file:///blog/2017/08"> August 2017</a></li> <li class="rm-manual"><a href="file:///blog/2017/09"> September 2017</a></li> <li class="rm-manual"><a href="file:///blog/2017/10"> October 2017</a></li> <li class="rm-manual"><a href="file:///blog/2017/12"> December 2017</a></li> </ul> </li> <li class="rm-manual"> <a href="file:///blog/2016"> 2016</a> <ul class="rm-manual"> <li class="rm-manual"><a href="file:///blog/2016/01"> January 2016</a></li> <li class="rm-manual"><a href="file:///blog/2016/02"> February 2016</a></li> <li class="rm-manual"><a href="file:///blog/2016/03"> March 2016</a></li> <li class="rm-manual"><a href="file:///blog/2016/04"> April 2016</a></li> <li class="rm-manual"><a href="file:///blog/2016/05"> May 2016</a></li> <li class="rm-manual"><a href="file:///blog/2016/06"> June 2016</a></li> <li class="rm-manual"><a href="file:///blog/2016/07"> July 2016</a></li> <li class="rm-manual"><a href="file:///blog/2016/08"> August 2016</a></li> <li class="rm-manual"><a href="file:///blog/2016/09"> September 2016</a></li> <li class="rm-manual"><a href="file:///blog/2016/10"> October 2016</a></li> <li class="rm-manual"><a href="file:///blog/2016/11"> November 2016</a></li> <li class="rm-manual"><a href="file:///blog/2016/12"> December 2016</a></li> </ul> </li> <li class="rm-manual"> <a href="file:///blog/2015"> 2015</a> <ul class="rm-manual"> <li class="rm-manual"><a href="file:///blog/2015/04"> April 2015</a></li> <li class="rm-manual"><a href="file:///blog/2015/05"> May 2015</a></li> <li class="rm-manual"><a href="file:///blog/2015/06"> June 2015</a></li> <li class="rm-manual"><a href="file:///blog/2015/07"> July 2015</a></li> <li class="rm-manual"><a href="file:///blog/2015/08"> August 2015</a></li> <li class="rm-manual"><a href="file:///blog/2015/09"> September 2015</a></li> <li class="rm-manual"><a href="file:///blog/2015/10"> October 2015</a></li> <li class="rm-manual"><a href="file:///blog/2015/11"> November 2015</a></li> <li class="rm-manual"><a href="file:///blog/2015/12"> December 2015</a></li> </ul> </li> </ol>
+<h4 class="rm-manual">Blog Categories</h4>
+<ol class="rm-manual"> <li class="rm-manual"> <a href="file:///blog/category/business"> Business</a> </li> <li class="rm-manual"> <a href="file:///blog/category/paragon-initiative"> Paragon Initiative</a> <ol class="rm-manual"> <li class="rm-manual"> <a href="file:///blog/category/community"> Community</a> <ol class="rm-manual"> <li class="rm-manual"> <a href="file:///blog/category/open-source"> Open Source</a> </li> <li class="rm-manual"> <a href="file:///blog/category/pharaoh"> Pharaoh</a> </li> <li class="rm-manual"> <a href="file:///blog/category/security-advice"> Security Advice</a> </li> </ol> </li> <li class="rm-manual"> <a href="file:///blog/category/our-products"> Our Products</a> <ol class="rm-manual"> <li class="rm-manual"> <a href="file:///blog/category/airship"> Airship</a> </li> <li class="rm-manual"> <a href="file:///blog/category/asgard"> ASGard</a> </li> <li class="rm-manual"> <a href="file:///blog/category/ward"> Ward</a> </li> </ol> </li> <li class="rm-manual"> <a href="file:///blog/category/slice-pie"> Slice of PIE</a> </li> </ol> </li> <li class="rm-manual"> <a href="file:///blog/category/security-news"> Security News</a> </li> <li class="rm-manual"> <a href="file:///blog/category/technology"> Technology</a> <ol class="rm-manual"> <li class="rm-manual"> <a href="file:///blog/category/cryptology"> Cryptology</a> </li> <li class="rm-manual"> <a href="file:///blog/category/databases"> Databases</a> </li> <li class="rm-manual"> <a href="file:///blog/category/hardware"> Hardware</a> </li> <li class="rm-manual"> <a href="file:///blog/category/programming"> Programming</a> </li> <li class="rm-manual"> <a href="file:///blog/category/quality-assurance"> Quality Assurance</a> </li> <li class="rm-manual"> <a href="file:///blog/category/security-engineering"> Security Engineering</a> </li> <li class="rm-manual"> <a href="file:///blog/category/system-administration"> System Administration</a> </li> </ol> </li> <li class="rm-manual"> <a href="file:///blog/category/"> Uncategorized</a> </li> </ol>
+<h4 class="rm-manual">Tags</h4>
+<ol class="rm-manual"> <li class="rm-manual"> <a href="file:///blog/tag/access-controls"> Access Controls </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/application-security"> Application Security </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/authentication"> Authentication </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/authorization"> Authorization </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/automatic-updates"> Automatic Updates </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/business"> Business </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/central-florida"> Central Florida </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/confidentiality"> Confidentiality </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/cryptography"> Cryptography </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/csprng"> CSPRNG </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/data-science"> Data Science </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/encryption"> Encryption </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/https"> HTTPS </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/integrity"> Integrity </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/libsodium"> Libsodium </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/login"> Login </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/net"> .NET </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/networking"> Networking </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/node-js"> Node.js </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/open-source"> Open Source </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/orlando"> Orlando </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/owasp"> OWASP </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/owasp-top-ten"> OWASP Top Ten </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/php"> PHP </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/postgresql"> PostgreSQL </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/public-key-cryptography"> Public Key Cryptography </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/python"> Python </a> </li> <li class="rm-manual"> <a href="file:///blog/tag/ruby"> Ruby </a> </li> <li> <a href="file:///blog/tag/secret-key-cryptography"> Secret Key Cryptography </a> </li> <li> <a href="file:///blog/tag/security"> Security </a> </li> <li> <a href="file:///blog/tag/signatures"> Signatures </a> </li> <li> <a href="file:///blog/tag/sql"> SQL </a> </li> <li> <a href="file:///blog/tag/sql-injection"> SQL Injection </a> </li> <li> <a href="file:///blog/tag/statistics"> Statistics </a> </li> <li> <a href="file:///blog/tag/vulnerability"> Vulnerability </a> </li> <li> <a href="file:///blog/tag/web-development"> Web Development </a> </li> <li> <a href="file:///blog/tag/xss"> XSS </a> </li> </ol>
+<h4 class="rm-manual">Mailing Lists</h4>
+<ol class="rm-manual"> <li class="rm-manual"> <a href="http://eepurl.com/bqnTnf"> Paragon Initiative Quarterly </a> </li> <li class="rm-manual"> <a href="http://eepurl.com/bqnRzf"> Paragon Initiative Vanguard </a> </li> </ol>
+<h4 class="rm-manual">Elsewhere</h4>
+<ol class="rm-manual"> <li class="rm-manual"> <a href="https://github.com/paragonie"> ParagonIE on Github </a> </li> <li class="rm-manual"> <a href="https://twitter.com/ParagonIE"> @ParagonIE </a> </li> <li class="rm-manual"> <a href="https://facebook.com/ParagonIE"> Paragonie on Facebook </a> </li> </ol>
+<h2 class="rm-manual">Need Technology Consultants?</h2>
+<p class="rm-manual"> Will tomorrow bring <a href="https://paragonie.com/white-paper/2015-why-invest-application-security">costly and embarrassing data breaches</a>? Or will it bring growth, success, and peace of mind? </p>
+<p class="rm-manual"> Our team of technology consultants have extensive 
+knowledge and experience with application security and web/application 
+development. </p>
+<p class="rm-manual"> We specialize in <a href="https://paragonie.com/blog/tag/cryptography">cryptography</a> and <a href="https://paragonie.com/blog/tag/php">secure PHP development</a>. </p>
+<p class="rm-manual"><a href="file:///contact"> Let's Work Together Towards Success </a></p>
+<h2 class="rm-manual">Our Security Newsletters</h2>
+<p class="rm-manual"> Want the latest from Paragon Initiative Enterprises delivered straight to your inbox? We have two newsletters to choose from. </p>
+<p class="rm-manual"> The first mails quarterly and often showcases our behind-the-scenes projects. </p>
+<p class="rm-manual"> The other is unscheduled and gives you a direct feed into the findings of our open source security research initiatives. </p>
+<p class="rm-manual"> <a href="http://eepurl.com/bqnTnf"> Quarterly Newsletter </a> <a href="http://eepurl.com/bqnRzf"> Security Announcements </a> </p>
+<p class="rm-manual"> Copyright © 2015 - 2021 Paragon Initiative Enterprises, LLC. All right reserved. <span> Software security and cryptography specialists. </span> </p></article>
+</body></html>

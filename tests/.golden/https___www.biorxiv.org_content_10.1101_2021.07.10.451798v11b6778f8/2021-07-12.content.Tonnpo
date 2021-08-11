@@ -1,0 +1,152 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script>
+function toggleSelectedText(e) {
+    if (e.shiftKey) {
+        var selection = window.getSelection();
+        var range = selection.getRangeAt(0);
+        var tags = "p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,table,tr,td,th,article,main,section,figure,figcaption,aside,section,address,blockquote,code";
+        if (range.commonAncestorContainer.getElementsByTagName) {
+            var allWithinRangeParent = range.commonAncestorContainer.querySelectorAll(tags);
+        }
+        else {
+            //var allWithinRangeParent = [range.commonAncestorContainer.closest(tags)];
+            var allWithinRangeParent = [range.commonAncestorContainer.parentNode.closest(tags)];
+        }
+
+        for (var i=0, el; el = allWithinRangeParent[i]; i++) {
+          // The second parameter says to include the element
+          // even if it's not fully selected
+          if (selection.containsNode(el, true) ) {
+              el.classList.toggle('rm-manual');
+          }
+        }
+        window.getSelection().removeAllRanges();
+    }
+};
+
+//var article = document.body.querySelector('article');
+document.onmouseup = toggleSelectedText;
+document.captureEvents(Event.MOUSEUP);
+</script>
+
+<style>
+.rm-manual {
+    text-decoration: line-through;
+    background-color: #faa;
+}
+</style>
+        </head><body><article><p class="rm-manual"> CADD-SV - a framework to score the effects of structural variants in health and disease | bioRxiv </p>
+<p class="rm-manual"> <a href="#main-content">Skip to main content</a> </p>
+<ul class="rm-manual">
+<li class="rm-manual"><a href="file:///">Home</a></li> <li class="rm-manual"><a href="file:///about-biorxiv">About</a></li> <li class="rm-manual"><a href="file:///submit-a-manuscript">Submit</a></li> <li class="rm-manual"><a href="file:///content/alertsrss">ALERTS / RSS</a></li> </ul>
+<p class="rm-manual"> Search for this keyword </p>
+<p class="rm-manual"> <a href="file:///search">Advanced Search</a> </p>
+<p class="rm-manual"> <span> New Results </span> </p>
+<h1 class="rm-manual">CADD-SV - a framework to score the effects of structural variants in health and disease</h1>
+<p class=""><span><span><a href="http://orcid.org/0000-0003-3964-4877"> <span>View ORCID Profile</span></a><span>Philip</span> <span>Kleinert</span></span>, <span><a href="http://orcid.org/0000-0001-9278-5471"> <span>View ORCID Profile</span></a><span>Martin</span> <span>Kircher</span></span></span></p>
+<p class=""><span><span>doi:</span> https://doi.org/10.1101/2021.07.10.451798 </span></p>
+<p>Philip Kleinert </p>
+<p> Berlin Institute of Health @ Charité </p>
+<ul>
+<li><a href="file:///lookup/google-scholar?link_type=googlescholar&amp;gs_type=author&amp;author%5B0%5D=Philip%2BKleinert%2B">Find this author on Google Scholar</a></li>
+<li><a href="file:///lookup/external-ref?access_num=Kleinert%20P&amp;link_type=AUTHORSEARCH">Find this author on PubMed</a></li>
+<li><a href="file:///search/author1%3APhilip%2BKleinert%2B" rel="nofollow">Search for this author on this site</a></li>
+<li><a href="http://orcid.org/0000-0003-3964-4877">ORCID record for Philip Kleinert</a></li>
+</ul>
+<p>Martin Kircher </p>
+<p> Berlin Institute of Health @ Charité </p>
+<ul>
+<li><a href="file:///lookup/google-scholar?link_type=googlescholar&amp;gs_type=author&amp;author%5B0%5D=Martin%2BKircher%2B">Find this author on Google Scholar</a></li>
+<li><a href="file:///lookup/external-ref?access_num=Kircher%20M&amp;link_type=AUTHORSEARCH">Find this author on PubMed</a></li>
+<li><a href="file:///search/author1%3AMartin%2BKircher%2B" rel="nofollow">Search for this author on this site</a></li>
+<li><a href="http://orcid.org/0000-0001-9278-5471">ORCID record for Martin Kircher</a></li>
+<li><span>For correspondence: <a href="mailto:martin.kircher@bih-charite.de">martin.kircher@bih-charite.de</a></span></li>
+</ul>
+<ul>
+<li><a href="file:///content/10.1101/2021.07.10.451798v1">Abstract</a></li>
+<li><a href="file:///content/10.1101/2021.07.10.451798v1.article-info">Info/History</a></li>
+<li><a href="file:///content/10.1101/2021.07.10.451798v1.article-metrics">Metrics</a></li>
+<li><a href="file:///content/10.1101/2021.07.10.451798v1.supplementary-material">Supplementary material</a></li>
+<li><a href="file:///content/10.1101/2021.07.10.451798v1.external-links">Data/Code</a></li>
+<li><a href="file:///content/10.1101/2021.07.10.451798v1.full.pdf+html"> Preview PDF</a></li>
+</ul>
+<h2>Abstract</h2>
+<p>While technological advances improved the identification of 
+structural variants (SVs) in the human genome, their interpretation 
+remains challenging. Several methods utilize individual mechanistic 
+principles like the deletion of coding sequence or 3D genome 
+architecture disruptions. However, a comprehensive tool using the broad 
+spectrum of available annotations is missing. Here, we describe CADD-SV,
+ a method to retrieve and integrate a wide set of annotations to predict
+ the effects of SVs. Previously, supervised learning approaches were 
+limited due to a small number and biased set of annotated pathogenic or 
+benign SVs. We overcome this problem by using a surrogate 
+training-objective, the Combined Annotation Dependent Depletion (CADD) 
+of functional variants. We use human and chimpanzee derived SVs as 
+proxy-neutral and contrast them with matched simulated variants as 
+proxy-pathogenic, an approach that has proven powerful for SNVs. Our 
+tool computes summary statistics over diverse variant annotations and 
+uses random forest models to prioritize deleterious structural variants.
+ The resulting CADD-SV scores correlate with known pathogenic and rare 
+population variants. We further show that we can prioritize somatic 
+cancer variants as well as non-coding variants known to affect gene 
+expression. We provide a website and offline-scoring tool for easy 
+application of CADD-SV (https://cadd-sv.bihealth.org/).</p>
+<h3>Competing Interest Statement</h3>
+<p>The authors have declared no competing interest.</p>
+<h2>Footnotes</h2>
+<ul><li><p><a href="https://cadd-sv.bihealth.org/">https://cadd-sv.bihealth.org</a></p></li></ul>
+<p class="rm-manual">Copyright </p>
+<p class="rm-manual">The copyright holder for this preprint is the 
+author/funder, who has granted bioRxiv a license to display the preprint
+ in perpetuity.<span> All rights reserved. No reuse allowed without permission.</span></p>
+<p class="rm-manual"><a href="http://biorxivstage.disqus.com/?url=https%3A%2F%2Fwww.biorxiv.org%2Fcontent%2F10.1101%2F2021.07.10.451798v1">View the discussion thread.</a></p>
+<p class="rm-manual"><span><a href="file:///content/10.1101/2021.07.10.451667v1" rel="prev"> <span>Previous</span></a></span><span><a href="file:///content/10.1101/2021.07.10.450231v1" rel="next"><span>Next</span> </a></span></p>
+<p class="rm-manual"> Posted July 12, 2021. </p>
+<p class="rm-manual"> <a href="file:///content/10.1101/2021.07.10.451798v1.full.pdf"> <span>Download PDF</span></a> </p>
+<p class="rm-manual"><a href="file:///content/10.1101/2021.07.10.451798v1.supplementary-material">Supplementary Material </a></p>
+<p class="rm-manual"> <a href="file:///content/early/2021/07/12/2021.07.10.451798.external-links"> <span>Data/Code</span></a> </p>
+<p class="rm-manual"><a href="file:///"> Email</a></p>
+<p class="rm-manual">Thank you for your interest in spreading the word about bioRxiv.</p>
+<p class="rm-manual">NOTE: Your email address is requested solely to identify you as the sender of this article.</p>
+<p class="rm-manual"> Your Email <span>*</span> </p>
+<p class="rm-manual"> Your Name <span>*</span> </p>
+<p class="rm-manual"> Send To <span>*</span> </p>
+<p class="rm-manual">Enter multiple addresses on separate lines or separate them with commas.</p>
+<p class="rm-manual"> You are going to email the following <a href="file:///content/10.1101/2021.07.10.451798v1">CADD-SV - a framework to score the effects of structural variants in health and disease</a> </p>
+<p class="rm-manual"> Message Subject (Your Name) has forwarded a page to you from bioRxiv </p>
+<p class="rm-manual"> Message Body (Your Name) thought you would like to see this page from the bioRxiv website. </p>
+<p class="rm-manual"> Your Personal Message </p>
+<p class="rm-manual"><span>CAPTCHA</span></p>
+<p class="rm-manual">This question is for testing whether or not you are a human visitor and to prevent automated spam submissions.</p>
+<p class="rm-manual"> <a href="file:///"> <span>Share</span></a> </p>
+<p class="rm-manual">CADD-SV - a framework to score the effects of structural variants in health and disease</p>
+<p class="rm-manual"><span><span><span>Philip</span> <span>Kleinert</span></span>, <span><span>Martin</span> <span>Kircher</span></span></span></p>
+<p class="rm-manual"><span>bioRxiv </span><span>2021.07.10.451798; </span><span><span>doi:</span> https://doi.org/10.1101/2021.07.10.451798 </span></p>
+<p class="rm-manual"> <span> Share This Article: </span> </p>
+<p class="rm-manual"><a href="file:///"> <span>Citation Tools</span></a></p>
+<p class="rm-manual">CADD-SV - a framework to score the effects of structural variants in health and disease</p>
+<p class="rm-manual"><span><span><span>Philip</span> <span>Kleinert</span></span>, <span><span>Martin</span> <span>Kircher</span></span></span></p>
+<p class="rm-manual"><span>bioRxiv </span><span>2021.07.10.451798; </span><span><span>doi:</span> https://doi.org/10.1101/2021.07.10.451798 </span></p>
+<h2 class="rm-manual">Citation Manager Formats</h2>
+<ul class="rm-manual">
+<li class="rm-manual"><a href="file:///highwire/citation/2052412/bibtext">BibTeX</a></li>
+<li class="rm-manual"><a href="file:///highwire/citation/2052412/bookends">Bookends</a></li>
+<li class="rm-manual"><a href="file:///highwire/citation/2052412/easybib">EasyBib</a></li>
+<li class="rm-manual"><a href="file:///highwire/citation/2052412/endnote-tagged">EndNote (tagged)</a></li>
+<li class="rm-manual"><a href="file:///highwire/citation/2052412/endnote-8-xml">EndNote 8 (xml)</a></li>
+<li class="rm-manual"><a href="file:///highwire/citation/2052412/medlars">Medlars</a></li>
+<li class="rm-manual"><a href="file:///highwire/citation/2052412/mendeley">Mendeley</a></li>
+<li class="rm-manual"><a href="file:///highwire/citation/2052412/papers">Papers</a></li>
+<li class="rm-manual"><a href="file:///highwire/citation/2052412/refworks-tagged">RefWorks Tagged</a></li>
+<li class="rm-manual"><a href="file:///highwire/citation/2052412/reference-manager">Ref Manager</a></li>
+<li class="rm-manual"><a href="file:///highwire/citation/2052412/ris">RIS</a></li>
+<li class="rm-manual"><a href="file:///highwire/citation/2052412/zotero">Zotero</a></li>
+</ul>
+<h2 class="rm-manual">Subject Area</h2>
+<ul class="rm-manual"><li class="rm-manual"><span><a href="file:///collection/bioinformatics">Bioinformatics </a></span></li></ul>
+<p class="rm-manual"> Subject Areas </p>
+<p class="rm-manual"> <a href="file:///content/early/recent">All Articles</a> </p>
+<ul class="rm-manual">
+<li class="rm-manual"><p class="rm-manual"><a href="file:///collection/animal-behavior-and-cognition">Animal Behavior and Cognition</a> <span>(2829)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/biochemistry">Biochemistry</a> <span>(5702)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/bioengineering">Bioengineering</a> <span>(4051)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/bioinformatics">Bioinformatics</a> <span>(16796)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/biophysics">Biophysics</a> <span>(7885)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/cancer-biology">Cancer Biology</a> <span>(6098)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/cell-biology">Cell Biology</a> <span>(8808)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/clinical-trials">Clinical Trials</a> <span>(138)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/developmental-biology">Developmental Biology</a> <span>(5138)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/ecology">Ecology</a> <span>(8082)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/epidemiology">Epidemiology</a> <span>(2062)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/evolutionary-biology">Evolutionary Biology</a> <span>(11177)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/genetics">Genetics</a> <span>(8109)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/genomics">Genomics</a> <span>(10756)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/immunology">Immunology</a> <span>(5742)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/microbiology">Microbiology</a> <span>(15143)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/molecular-biology">Molecular Biology</a> <span>(5828)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/neuroscience">Neuroscience</a> <span>(33208)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/paleontology">Paleontology</a> <span>(234)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/pathology">Pathology</a> <span>(957)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/pharmacology-and-toxicology">Pharmacology and Toxicology</a> <span>(1637)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/physiology">Physiology</a> <span>(2434)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/plant-biology">Plant Biology</a> <span>(5415)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/scientific-communication-and-education">Scientific Communication and Education</a> <span>(1093)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/synthetic-biology">Synthetic Biology</a> <span>(1502)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/systems-biology">Systems Biology</a> <span>(4442)</span></p></li> <li class="rm-manual"><p class="rm-manual"><a href="file:///collection/zoology">Zoology</a> <span>(879)</span></p></li> </ul></article>
+</body></html>

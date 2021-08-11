@@ -1,0 +1,69 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script>
+function toggleSelectedText(e) {
+    if (e.shiftKey) {
+        var selection = window.getSelection();
+        var range = selection.getRangeAt(0);
+        var tags = "p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,table,tr,td,th,article,main,section,figure,figcaption,aside,section,address,blockquote,code";
+        if (range.commonAncestorContainer.getElementsByTagName) {
+            var allWithinRangeParent = range.commonAncestorContainer.querySelectorAll(tags);
+        }
+        else {
+            //var allWithinRangeParent = [range.commonAncestorContainer.closest(tags)];
+            var allWithinRangeParent = [range.commonAncestorContainer.parentNode.closest(tags)];
+        }
+
+        for (var i=0, el; el = allWithinRangeParent[i]; i++) {
+          // The second parameter says to include the element
+          // even if it's not fully selected
+          if (selection.containsNode(el, true) ) {
+              el.classList.toggle('rm-manual');
+          }
+        }
+        window.getSelection().removeAllRanges();
+    }
+};
+
+//var article = document.body.querySelector('article');
+document.onmouseup = toggleSelectedText;
+document.captureEvents(Event.MOUSEUP);
+</script>
+
+<style>
+.rm-manual {
+    text-decoration: line-through;
+    background-color: #faa;
+}
+</style>
+        </head><body><article><p class="rm-manual"> Frontiers launches a portal to help connect coronavirus and COVID-19 research with funding – TechCrunch </p>
+<h1 class="rm-manual">Frontiers launches a portal to help connect coronavirus and COVID-19 research with funding</h1>
+<p class="rm-manual"> <a href="https://techcrunch.com/author/darrell-etherington/"> Darrell Etherington </a> <span> <a href="https://twitter.com/etherington">@etherington</a> <span> / </span> 4 months </span> </p>
+<p>Open science platform and publisher Frontiers wants to make sure that
+ efforts by researchers to pursue science-based solutions to the global 
+coronavirus pandemic, and learn more about the virus and the COVID-19 
+disease it causes, find the funding they need. They launched a <a href="https://coronavirus.frontiersin.org/covid-19-research-funding-monitor">new portal to do just that</a>,
+ which is updated daily, and lists open funding calls, including the 
+grant type, deadline, organization behind it, and specific area it 
+supports.</p>
+<p>Sources include governments, non-profits, and commercial companies, 
+and the listings link directly to the calls for easy application. This 
+dashboard presents one fo the best organized ways for anyone with a 
+research project related to COVID-19 to find an appropriate funding 
+source, with all relevant top-line information presented up front.</p>
+<p>For anyone looking to supplement their existing knowledge of ongoing 
+coronavirus and COVID-19 research, Frontiers is also offering a portal 
+called the <a href="https://coronavirus.frontiersin.org/">‘Coronavirus Knowledge Hub,’</a> which includes links to the top research on SARS-CoV-2 / COVID-19 symptoms, treatments, transmission and much more.</p>
+<p>It’s crucial right now that research not go unfunded, since there’s a
+ global urgency around the investigation into, and development of, 
+potential solutions and treatments around COVID-19. There’s still a lot 
+we just don’t know about SARS-CoV-2 and COVID-19, even leaving aside the
+ many potential treatments under development – basic research about its 
+genetic makeup, mutation patterns and durability are still pictures we 
+need filled in to develop lasting and effective methods of prevention 
+and protection.</p>
+<p>A resource like this, which connects the dots between this work and 
+available sources of funding, is incredibly valuable. Potential funders 
+should get in touch with Frontiers via their submission form if they 
+have a way to get much-needed resources to scientists working on this 
+problem.</p></article>
+</body></html>
