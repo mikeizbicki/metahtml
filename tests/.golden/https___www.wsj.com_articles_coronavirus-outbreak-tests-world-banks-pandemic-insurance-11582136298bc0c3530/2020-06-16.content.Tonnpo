@@ -1,0 +1,62 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script>
+function toggleSelectedText(e) {
+    if (e.shiftKey) {
+        var selection = window.getSelection();
+        var range = selection.getRangeAt(0);
+        var tags = "p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,table,tr,td,th,article,main,section,figure,figcaption,aside,section,address,blockquote,code";
+        if (range.commonAncestorContainer.getElementsByTagName) {
+            var allWithinRangeParent = range.commonAncestorContainer.querySelectorAll(tags);
+        }
+        else {
+            //var allWithinRangeParent = [range.commonAncestorContainer.closest(tags)];
+            var allWithinRangeParent = [range.commonAncestorContainer.parentNode.closest(tags)];
+        }
+
+        for (var i=0, el; el = allWithinRangeParent[i]; i++) {
+          // The second parameter says to include the element
+          // even if it's not fully selected
+          if (selection.containsNode(el, true) ) {
+              el.classList.toggle('rm-manual');
+          }
+        }
+        window.getSelection().removeAllRanges();
+    }
+};
+
+//var article = document.body.querySelector('article');
+document.onmouseup = toggleSelectedText;
+document.captureEvents(Event.MOUSEUP);
+</script>
+
+<style>
+.rm-manual {
+    text-decoration: line-through;
+    background-color: #faa;
+}
+</style>
+        </head><body><article><ul class="rm-manual"> <li class="rm-manual"> <a href="https://www.wsj.com/news/markets?mod=breadcrumb"> Markets </a> </li> </ul>
+<h1 class="rm-manual"> Coronavirus Outbreak Tests World Bank’s Pandemic Insurance </h1>
+<h2 class="">If the pandemic-catastrophe bonds are triggered, critics say any eventual payments could be too little, too late</h2>
+<figcaption class=""> Test kits have been one of the main ways to 
+determine if a patient has coronavirus, but results from throat-swab 
+tests can be inaccurate. WSJ visited a lab in Singapore to see how the 
+kits work and find out why there are questions over accuracy. Photos: 
+Crystal Tai </figcaption><p class="rm-manual"> By </p>
+<h3 class="rm-manual">Nicole Friedman</h3>
+<ul class=""> <li class="rm-manual"> <a href="https://www.wsj.com/news/author/7823" rel="author"> Biography </a> </li> <li class="rm-manual"> <a href="https://twitter.com/nicolefriedman"> @nicolefriedman </a> </li> <li class="rm-manual"> <a href="mailto:nicole.friedman@wsj.com"> nicole.friedman@wsj.com </a> </li> </ul>
+<p class="rm-manual"> Updated Feb. 20, 2020 1:17 pm ET </p>
+<p>It’s the third month of the coronavirus outbreak, and investors still
+ don’t know whether the first-ever pandemic-insurance policy will pay 
+out. </p>
+<p>The World Bank issued pandemic-catastrophe bonds in 2017, a novel 
+test of the ability to insure against global epidemics. The issuance 
+marked an effort to expand the use of catastrophe bonds—financial 
+instruments that were designed to help investors bet against natural 
+disasters like hurricanes—to a new category of global risks.</p>
+<p class="rm-manual">... </p>
+<p class="rm-manual"> <span> To Read the Full Story </span> </p>
+<p class="rm-manual"> <a href="https://subscribe.wsj.com/wsjsnippet"> Subscribe </a> <a href="https://accounts.wsj.com/login?target=https%3A%2F%2Fwww.wsj.com%2Farticles%2Fcoronavirus-outbreak-tests-world-banks-pandemic-insurance-11582136298"> Sign In </a> </p>
+<p class="rm-manual">Sponsored Offers</p>
+<ul class="rm-manual"> <li class="rm-manual"> <span>Walmart:</span> <a href="https://www.wsj.com/coupons/walmart">Walmart coupon: $10 off all departments</a> </li> <li class="rm-manual"> <span>DoorDash:</span> <a href="https://www.wsj.com/coupons/doordash">$7 off with DoorDash promo code</a> </li> <li class="rm-manual"> <span>eBay:</span> <a href="https://www.wsj.com/coupons/ebay">Extra 15% off tech and more with eBay coupon</a> </li> <li class="rm-manual"> <span>Kohl's:</span> <a href="https://www.wsj.com/coupons/kohls">20% off $100+ with Kohl's coupon</a> </li> <li class="rm-manual"> <span>TurboTax:</span> <a href="https://www.wsj.com/coupons/turbotax">TurboTax coupon and discount: $60 for Deluxe version</a> </li> <li class="rm-manual"> <span>Saks Fifth Avenue:</span> <a href="https://www.wsj.com/coupons/saks-fifth-avenue">Save 10% on first order - Saks promo code</a> </li> </ul></article>
+</body></html>

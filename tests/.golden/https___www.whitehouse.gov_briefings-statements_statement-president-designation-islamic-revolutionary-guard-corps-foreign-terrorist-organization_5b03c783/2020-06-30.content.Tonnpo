@@ -1,0 +1,66 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script>
+function toggleSelectedText(e) {
+    if (e.shiftKey) {
+        var selection = window.getSelection();
+        var range = selection.getRangeAt(0);
+        var tags = "p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,table,tr,td,th,article,main,section,figure,figcaption,aside,section,address,blockquote,code";
+        if (range.commonAncestorContainer.getElementsByTagName) {
+            var allWithinRangeParent = range.commonAncestorContainer.querySelectorAll(tags);
+        }
+        else {
+            //var allWithinRangeParent = [range.commonAncestorContainer.closest(tags)];
+            var allWithinRangeParent = [range.commonAncestorContainer.parentNode.closest(tags)];
+        }
+
+        for (var i=0, el; el = allWithinRangeParent[i]; i++) {
+          // The second parameter says to include the element
+          // even if it's not fully selected
+          if (selection.containsNode(el, true) ) {
+              el.classList.toggle('rm-manual');
+          }
+        }
+        window.getSelection().removeAllRanges();
+    }
+};
+
+//var article = document.body.querySelector('article');
+document.onmouseup = toggleSelectedText;
+document.captureEvents(Event.MOUSEUP);
+</script>
+
+<style>
+.rm-manual {
+    text-decoration: line-through;
+    background-color: #faa;
+}
+</style>
+        </head><body><article><p class="rm-manual"> Statements &amp; Releases </p>
+<h1 class="rm-manual">Statement from the President on the Designation of the Islamic Revolutionary Guard Corps as a Foreign Terrorist Organization</h1>
+<p class="rm-manual"> <a href="https://www.whitehouse.gov/issues/foreign-policy/"> Foreign Policy </a></p>
+<p class="rm-manual"> <span>Issued on:</span> April 8, 2019 </p>
+<p class="rm-manual"> <span>Share:</span> </p>
+<p class="rm-manual"> <a href="https://www.whitehouse.gov/news/"> All News </a> </p>
+<p>Today, I am formally announcing my Administration’s plan to designate
+ Iran’s Islamic Revolutionary Guard Corps (IRGC), including its Qods 
+Force, as a Foreign Terrorist Organization (FTO) under Section 219 of 
+the Immigration and Nationality Act. This unprecedented step, led by the
+ Department of State, recognizes the reality that Iran is not only a 
+State Sponsor of Terrorism, but that the IRGC actively participates in, 
+finances, and promotes terrorism as a tool of statecraft. The IRGC is 
+the Iranian government’s primary means of directing and implementing its
+ global terrorist campaign.</p>
+<p>This designation will be the first time that the United States has 
+ever named a part of another government as a FTO. It underscores the 
+fact that Iran’s actions are fundamentally different from those of other
+ governments. This action will significantly expand the scope and scale 
+of our maximum pressure on the Iranian regime. It makes crystal clear 
+the risks of conducting business with, or providing support to, the 
+IRGC. If you are doing business with the IRGC, you will be bankrolling 
+terrorism.</p>
+<p>This action sends a clear message to Tehran that its support for 
+terrorism has serious consequences. We will continue to increase 
+financial pressure and raise the costs on the Iranian regime for its 
+support of terrorist activity until it abandons its malign and outlaw 
+behavior.</p></article>
+</body></html>
