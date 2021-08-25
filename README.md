@@ -213,6 +213,9 @@ https://spectrum.ieee.org/automaton/robotics/humanoids/hyundai-buys-boston-dynam
 503:
 https://blog.cloudflare.com/quic-version-1-is-live-on-cloudflare/
 
+Extracts correct div, but doesn't get the date from it
+https://www.csis.org/events/rethinking-homeland-defense-domain-awareness-information-dominance-and-decision-superiority
+
 ## Notes
 
 Some websites aggregate from other websites, but appear to be their own news source.

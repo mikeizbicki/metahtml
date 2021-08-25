@@ -73,6 +73,7 @@ class Extractor(BaseExtractor):
         ( 'frac.org', r'^/covid-19-updates/?$' ),
         ( 'fair.org', r'^/extra-newsletter/?$' ),
         ( 'focus.de', r'^/kultur/musik/?$'),
+        ( 'foreignaffairs.com', r'^/issues/'),
         ( 'gcphn.org.au', r'^/practice-support/?$' ),
         ( 'gcphn.org.au', r'^/practice-support/covid-19/?$' ),
         ( 'hannity.com', r'^/media-room/?$' ),

@@ -385,7 +385,7 @@ class TimestampExtractor(BaseExtractor):
     @staticmethod
     def filter_results(timestamps, require_valid_for_hostname=True):
         '''
-        Takes as timestamp a list of timestamp dictionaries,
+        Takes as input a list of timestamp dictionaries,
         and removes redundant timestamps from the list.
         '''
         bests = []
