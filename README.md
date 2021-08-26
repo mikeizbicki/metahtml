@@ -209,12 +209,16 @@ https://www.healthcarefinancenews.com/news/five-blues-plans-launch-evio-profit-c
 
 Javascript webpage
 https://spectrum.ieee.org/automaton/robotics/humanoids/hyundai-buys-boston-dynamics
+https://www.virusbulletin.com/blog/2021/03/vb2021-localhost-call-papers-great-opportunity/
+https://www.rsaconference.com/Library/Blog/weekly-news-roundup-january-25-29-2021
+https://news.bitcoin.com/former-ethereum-developer-virgil-griffith-arrested-for-signing-into-his-coinbase-account-report/
 
 503:
 https://blog.cloudflare.com/quic-version-1-is-live-on-cloudflare/
 
 Extracts correct div, but doesn't get the date from it
 https://www.csis.org/events/rethinking-homeland-defense-domain-awareness-information-dominance-and-decision-superiority
+https://chey.org/Eng/issues/IssuesContentsView.aspx?seq=415
 
 ## Notes
 

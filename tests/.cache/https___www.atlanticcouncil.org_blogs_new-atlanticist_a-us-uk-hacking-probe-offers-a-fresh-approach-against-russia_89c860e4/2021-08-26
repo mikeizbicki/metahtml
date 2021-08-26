@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8"><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={licenseKey:"NRJS-966aa276557c9c00e3d",applicationID:"542099521"};window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var i=e[n]={exports:{}};t[n][0].call(i.exports,function(e){var i=t[n][1][e];return r(i||e)},i,i.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var i=0;i<n.length;i++)r(n[i]);return r}({1:[function(t,e,n){function r(){}function i(t,e,n){return function(){return o(t,[u.now()].concat(f(arguments)),e?null:this,n),e?void 0:this}}var o=t("handle"),a=t(8),f=t(9),c=t("ee").get("tracer"),u=t("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var d=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],p="api-",l=p+"ixn-";a(d,function(t,e){s[e]=i(p+e,!0,"api")}),s.addPageAction=i(p+"addPageAction",!0),s.setCurrentRouteName=i(p+"routeName",!0),e.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(t,e){var n={},r=this,i="function"==typeof e;return o(l+"tracer",[u.now(),t,n],r),function(){if(c.emit((i?"":"no-")+"fn-start",[u.now(),r,i],n),i)try{return e.apply(this,arguments)}catch(t){throw c.emit("fn-err",[arguments,this,t],n),t}finally{c.emit("fn-end",[u.now()],n)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,e){m[e]=i(l+e)}),newrelic.noticeError=function(t,e){"string"==typeof t&&(t=new Error(t)),o("err",[t,u.now(),!1,e])}},{}],2:[function(t,e,n){function r(t){if(NREUM.init){for(var e=NREUM.init,n=t.split("."),r=0;r<n.length-1;r++)if(e=e[n[r]],"object"!=typeof e)return;return e=e[n[n.length-1]]}}e.exports={getConfiguration:r}},{}],3:[function(t,e,n){function r(){return f.exists&&performance.now?Math.round(performance.now()):(o=Math.max((new Date).getTime(),o))-a}function i(){return o}var o=(new Date).getTime(),a=o,f=t(10);e.exports=r,e.exports.offset=a,e.exports.getLastTimestamp=i},{}],4:[function(t,e,n){function r(t){return!(!t||!t.protocol||"file:"===t.protocol)}e.exports=r},{}],5:[function(t,e,n){function r(t,e){var n=t.getEntries();n.forEach(function(t){"first-paint"===t.name?d("timing",["fp",Math.floor(t.startTime)]):"first-contentful-paint"===t.name&&d("timing",["fcp",Math.floor(t.startTime)])})}function i(t,e){var n=t.getEntries();n.length>0&&d("lcp",[n[n.length-1]])}function o(t){t.getEntries().forEach(function(t){t.hadRecentInput||d("cls",[t])})}function a(t){if(t instanceof m&&!g){var e=Math.round(t.timeStamp),n={type:t.type};e<=p.now()?n.fid=p.now()-e:e>p.offset&&e<=Date.now()?(e-=p.offset,n.fid=p.now()-e):e=p.now(),g=!0,d("timing",["fi",e,n])}}function f(t){"hidden"===t&&d("pageHide",[p.now()])}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var c,u,s,d=t("handle"),p=t("loader"),l=t(7),m=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){c=new PerformanceObserver(r);try{c.observe({entryTypes:["paint"]})}catch(v){}u=new PerformanceObserver(i);try{u.observe({entryTypes:["largest-contentful-paint"]})}catch(v){}s=new PerformanceObserver(o);try{s.observe({type:"layout-shift",buffered:!0})}catch(v){}}if("addEventListener"in document){var g=!1,h=["click","keydown","mousedown","pointerdown","touchstart"];h.forEach(function(t){document.addEventListener(t,a,!1)})}l(f)}},{}],6:[function(t,e,n){function r(t,e){if(!i)return!1;if(t!==i)return!1;if(!e)return!0;if(!o)return!1;for(var n=o.split("."),r=e.split("."),a=0;a<r.length;a++)if(r[a]!==n[a])return!1;return!0}var i=null,o=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var f=navigator.userAgent,c=f.match(a);c&&f.indexOf("Chrome")===-1&&f.indexOf("Chromium")===-1&&(i="Safari",o=c[1])}e.exports={agent:i,version:o,match:r}},{}],7:[function(t,e,n){function r(t){function e(){t(a&&document[a]?document[a]:document[i]?"hidden":"visible")}"addEventListener"in document&&o&&document.addEventListener(o,e,!1)}e.exports=r;var i,o,a;"undefined"!=typeof document.hidden?(i="hidden",o="visibilitychange",a="visibilityState"):"undefined"!=typeof document.msHidden?(i="msHidden",o="msvisibilitychange"):"undefined"!=typeof document.webkitHidden&&(i="webkitHidden",o="webkitvisibilitychange",a="webkitVisibilityState")},{}],8:[function(t,e,n){function r(t,e){var n=[],r="",o=0;for(r in t)i.call(t,r)&&(n[o]=e(r,t[r]),o+=1);return n}var i=Object.prototype.hasOwnProperty;e.exports=r},{}],9:[function(t,e,n){function r(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,i=n-e||0,o=Array(i<0?0:i);++r<i;)o[r]=t[e+r];return o}e.exports=r},{}],10:[function(t,e,n){e.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(t,e,n){function r(){}function i(t){function e(t){return t&&t instanceof r?t:t?u(t,c,a):a()}function n(n,r,i,o,a){if(a!==!1&&(a=!0),!l.aborted||o){t&&a&&t(n,r,i);for(var f=e(i),c=v(n),u=c.length,s=0;s<u;s++)c[s].apply(f,r);var p=d[w[n]];return p&&p.push([b,n,r,f]),f}}function o(t,e){y[t]=v(t).concat(e)}function m(t,e){var n=y[t];if(n)for(var r=0;r<n.length;r++)n[r]===e&&n.splice(r,1)}function v(t){return y[t]||[]}function g(t){return p[t]=p[t]||i(n)}function h(t,e){l.aborted||s(t,function(t,n){e=e||"feature",w[n]=e,e in d||(d[e]=[])})}var y={},w={},b={on:o,addEventListener:o,removeEventListener:m,emit:n,get:g,listeners:v,context:e,buffer:h,abort:f,aborted:!1};return b}function o(t){return u(t,c,a)}function a(){return new r}function f(){(d.api||d.feature)&&(l.aborted=!0,d=l.backlog={})}var c="nr@context",u=t("gos"),s=t(8),d={},p={},l=e.exports=i();e.exports.getOrSetContext=o,l.backlog=d},{}],gos:[function(t,e,n){function r(t,e,n){if(i.call(t,e))return t[e];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:r,writable:!0,enumerable:!1}),r}catch(o){}return t[e]=r,r}var i=Object.prototype.hasOwnProperty;e.exports=r},{}],handle:[function(t,e,n){function r(t,e,n,r){i.buffer([t],r),i.emit(t,e,n)}var i=t("ee").get("handle");e.exports=r,r.ee=i},{}],id:[function(t,e,n){function r(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:a(t,o,function(){return i++})}var i=1,o="nr@id",a=t("gos");e.exports=r},{}],loader:[function(t,e,n){function r(){if(!R++){var t=M.info=NREUM.info,e=v.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&e))return u.abort();c(E,function(e,n){t[e]||(t[e]=n)});var n=a();f("mark",["onload",n+M.offset],null,"api"),f("timing",["load",n]);var r=v.createElement("script");0===t.agent.indexOf("http://")||0===t.agent.indexOf("https://")?r.src=t.agent:r.src=l+"://"+t.agent,e.parentNode.insertBefore(r,e)}}function i(){"complete"===v.readyState&&o()}function o(){f("mark",["domContent",a()+M.offset],null,"api")}var a=t(3),f=t("handle"),c=t(8),u=t("ee"),s=t(6),d=t(4),p=t(2),l=p.getConfiguration("ssl")===!1?"http":"https",m=window,v=m.document,g="addEventListener",h="attachEvent",y=m.XMLHttpRequest,w=y&&y.prototype,b=!d(m.location);NREUM.o={ST:setTimeout,SI:m.setImmediate,CT:clearTimeout,XHR:y,REQ:m.Request,EV:m.Event,PR:m.Promise,MO:m.MutationObserver};var x=""+location,E={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1210.min.js"},O=y&&w&&w[g]&&!/CriOS/.test(navigator.userAgent),M=e.exports={offset:a.getLastTimestamp(),now:a,origin:x,features:{},xhrWrappable:O,userAgent:s,disabled:b};if(!b){t(1),t(5),v[g]?(v[g]("DOMContentLoaded",o,!1),m[g]("load",r,!1)):(v[h]("onreadystatechange",i),m[h]("onload",r)),f("mark",["firstbyte",a.getLastTimestamp()],null,"api");var R=0}},{}],"wrap-function":[function(t,e,n){function r(t,e){function n(e,n,r,c,u){function nrWrapper(){var o,a,s,p;try{a=this,o=d(arguments),s="function"==typeof r?r(o,a):r||{}}catch(l){i([l,"",[o,a,c],s],t)}f(n+"start",[o,a,c],s,u);try{return p=e.apply(a,o)}catch(m){throw f(n+"err",[o,a,m],s,u),m}finally{f(n+"end",[o,a,p],s,u)}}return a(e)?e:(n||(n=""),nrWrapper[p]=e,o(e,nrWrapper,t),nrWrapper)}function r(t,e,r,i,o){r||(r="");var f,c,u,s="-"===r.charAt(0);for(u=0;u<e.length;u++)c=e[u],f=t[c],a(f)||(t[c]=n(f,s?c+r:r,i,c,o))}function f(n,r,o,a){if(!m||e){var f=m;m=!0;try{t.emit(n,r,o,e,a)}catch(c){i([c,n,r,o],t)}m=f}}return t||(t=s),n.inPlace=r,n.flag=p,n}function i(t,e){e||(e=s);try{e.emit("internal-error",t)}catch(n){}}function o(t,e,n){if(Object.defineProperty&&Object.keys)try{var r=Object.keys(t);return r.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(o){i([o],n)}for(var a in t)l.call(t,a)&&(e[a]=t[a]);return e}function a(t){return!(t&&t instanceof Function&&t.apply&&!t[p])}function f(t,e){var n=e(t);return n[p]=t,o(t,n,s),n}function c(t,e,n){var r=t[e];t[e]=f(r,n)}function u(){for(var t=arguments.length,e=new Array(t),n=0;n<t;++n)e[n]=arguments[n];return e}var s=t("ee"),d=t(9),p="nr@original",l=Object.prototype.hasOwnProperty,m=!1;e.exports=r,e.exports.wrapFunction=f,e.exports.wrapInPlace=c,e.exports.argsToArray=u},{}]},{},["loader"]);</script>
+<script type="text/javascript">
+if(!gform){document.addEventListener("gform_main_scripts_loaded",function(){gform.scriptsLoaded=!0}),window.addEventListener("DOMContentLoaded",function(){gform.domLoaded=!0});var gform={domLoaded:!1,scriptsLoaded:!1,initializeOnLoaded:function(o){gform.domLoaded&&gform.scriptsLoaded?o():!gform.domLoaded&&gform.scriptsLoaded?window.addEventListener("DOMContentLoaded",o):document.addEventListener("gform_main_scripts_loaded",o)},hooks:{action:{},filter:{}},addAction:function(o,n,r,t){gform.addHook("action",o,n,r,t)},addFilter:function(o,n,r,t){gform.addHook("filter",o,n,r,t)},doAction:function(o){gform.doHook("action",o,arguments)},applyFilters:function(o){return gform.doHook("filter",o,arguments)},removeAction:function(o,n){gform.removeHook("action",o,n)},removeFilter:function(o,n,r){gform.removeHook("filter",o,n,r)},addHook:function(o,n,r,t,i){null==gform.hooks[o][n]&&(gform.hooks[o][n]=[]);var e=gform.hooks[o][n];null==i&&(i=n+"_"+e.length),null==t&&(t=10),gform.hooks[o][n].push({tag:i,callable:r,priority:t})},doHook:function(o,n,r){if(r=Array.prototype.slice.call(r,1),null!=gform.hooks[o][n]){var t,i=gform.hooks[o][n];i.sort(function(o,n){return o.priority-n.priority});for(var e=0;e<i.length;e++)"function"!=typeof(t=i[e].callable)&&(t=window[t]),"action"==o?t.apply(null,r):r[0]=t.apply(null,r)}if("filter"==o)return r[0]},removeHook:function(o,n,r,t){if(null!=gform.hooks[o][n])for(var i=gform.hooks[o][n],e=i.length-1;0<=e;e--)null!=t&&t!=i[e].tag||null!=r&&r!=i[e].priority||i.splice(e,1)}}}
+</script>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="profile" href="https://gmpg.org/xfn/11">
+	<link rel="stylesheet" href="https://use.typekit.net/abr0lou.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
+	<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+<!-- Google Tag Manager for WordPress by gtm4wp.com -->
+<script data-cfasync="false" data-pagespeed-no-defer type="text/javascript">//<![CDATA[
+	var gtm4wp_datalayer_name = "dataLayer";
+	var dataLayer = dataLayer || [];
+//]]>
+</script>
+<!-- End Google Tag Manager for WordPress by gtm4wp.com --><script>
+var dataLayer = dataLayer || {};
+dataLayer.push({"acf_author": "Justin Sherman"});
+dataLayer.push({"acf_expert": "Justin Sherman"});
+</script>
+
+	<!-- This site is optimized with the Yoast SEO Premium plugin v16.8 (Yoast SEO v16.8) - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>A US-UK hacking probe offers a fresh approach against Russia - Atlantic Council</title>
+	<meta name="description" content="The international collaboration underscores the importance of being carefully narrow about scoping cyberspace “red lines” in talks with the Russian government." />
+	<link rel="canonical" href="https://www.atlanticcouncil.org/blogs/new-atlanticist/a-us-uk-hacking-probe-offers-a-fresh-approach-against-russia/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="A US-UK hacking probe offers a fresh approach against Russia" />
+	<meta property="og:description" content="The international collaboration underscores the importance of being carefully narrow about scoping cyberspace “red lines” in talks with the Russian government." />
+	<meta property="og:url" content="https://www.atlanticcouncil.org/blogs/new-atlanticist/a-us-uk-hacking-probe-offers-a-fresh-approach-against-russia/" />
+	<meta property="og:site_name" content="Atlantic Council" />
+	<meta property="article:published_time" content="2021-07-15T17:10:10+00:00" />
+	<meta property="article:modified_time" content="2021-07-15T17:12:30+00:00" />
+	<meta property="og:image" content="https://www.atlanticcouncil.org/wp-content/uploads/2021/07/2018-10-04T000000Z_50188007_RC1B523CCDA0_RTRMADP_3_BRITAIN-RUSSIA-CYBER-scaled.jpg" />
+	<meta property="og:image:width" content="2560" />
+	<meta property="og:image:height" content="1774" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:label1" content="Written by" />
+	<meta name="twitter:data1" content="dmalloy" />
+	<meta name="twitter:label2" content="Est. reading time" />
+	<meta name="twitter:data2" content="6 minutes" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://www.atlanticcouncil.org/#organization","name":"Atlantic Council","url":"https://www.atlanticcouncil.org/","sameAs":[],"logo":{"@type":"ImageObject","@id":"https://www.atlanticcouncil.org/#logo","inLanguage":"en-US","url":"https://www.atlanticcouncil.org/wp-content/uploads/2020/04/AC-Globe.png","contentUrl":"https://www.atlanticcouncil.org/wp-content/uploads/2020/04/AC-Globe.png","width":40,"height":40,"caption":"Atlantic Council"},"image":{"@id":"https://www.atlanticcouncil.org/#logo"}},{"@type":"WebSite","@id":"https://www.atlanticcouncil.org/#website","url":"https://www.atlanticcouncil.org/","name":"Atlantic Council","description":"Shaping the global future together","publisher":{"@id":"https://www.atlanticcouncil.org/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.atlanticcouncil.org/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"ImageObject","@id":"https://www.atlanticcouncil.org/blogs/new-atlanticist/a-us-uk-hacking-probe-offers-a-fresh-approach-against-russia/#primaryimage","inLanguage":"en-US","url":"https://www.atlanticcouncil.org/wp-content/uploads/2021/07/2018-10-04T000000Z_50188007_RC1B523CCDA0_RTRMADP_3_BRITAIN-RUSSIA-CYBER-scaled.jpg","contentUrl":"https://www.atlanticcouncil.org/wp-content/uploads/2021/07/2018-10-04T000000Z_50188007_RC1B523CCDA0_RTRMADP_3_BRITAIN-RUSSIA-CYBER-scaled.jpg","width":2560,"height":1774,"caption":"The logo of the GRU, Russia's Main Intelligence Directorate, is reflected in an eye in this picture illustration taken on October 4, 2018. Photo by Dado Ruvic/Retuers Illustration"},{"@type":"WebPage","@id":"https://www.atlanticcouncil.org/blogs/new-atlanticist/a-us-uk-hacking-probe-offers-a-fresh-approach-against-russia/#webpage","url":"https://www.atlanticcouncil.org/blogs/new-atlanticist/a-us-uk-hacking-probe-offers-a-fresh-approach-against-russia/","name":"A US-UK hacking probe offers a fresh approach against Russia - Atlantic Council","isPartOf":{"@id":"https://www.atlanticcouncil.org/#website"},"primaryImageOfPage":{"@id":"https://www.atlanticcouncil.org/blogs/new-atlanticist/a-us-uk-hacking-probe-offers-a-fresh-approach-against-russia/#primaryimage"},"datePublished":"2021-07-15T17:10:10+00:00","dateModified":"2021-07-15T17:12:30+00:00","description":"The international collaboration underscores the importance of being carefully narrow about scoping cyberspace \u201cred lines\u201d in talks with the Russian government.","breadcrumb":{"@id":"https://www.atlanticcouncil.org/blogs/new-atlanticist/a-us-uk-hacking-probe-offers-a-fresh-approach-against-russia/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://www.atlanticcouncil.org/blogs/new-atlanticist/a-us-uk-hacking-probe-offers-a-fresh-approach-against-russia/"]}]},{"@type":"BreadcrumbList","@id":"https://www.atlanticcouncil.org/blogs/new-atlanticist/a-us-uk-hacking-probe-offers-a-fresh-approach-against-russia/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.atlanticcouncil.org/"},{"@type":"ListItem","position":2,"name":"A US-UK hacking probe offers a fresh approach against Russia"}]},{"@type":"Article","@id":"https://www.atlanticcouncil.org/blogs/new-atlanticist/a-us-uk-hacking-probe-offers-a-fresh-approach-against-russia/#article","isPartOf":{"@id":"https://www.atlanticcouncil.org/blogs/new-atlanticist/a-us-uk-hacking-probe-offers-a-fresh-approach-against-russia/#webpage"},"author":{"@id":"https://www.atlanticcouncil.org/#/schema/person/b3c94dec25e5a9c40af1ade6215e9786"},"headline":"A US-UK hacking probe offers a fresh approach against Russia","datePublished":"2021-07-15T17:10:10+00:00","dateModified":"2021-07-15T17:12:30+00:00","mainEntityOfPage":{"@id":"https://www.atlanticcouncil.org/blogs/new-atlanticist/a-us-uk-hacking-probe-offers-a-fresh-approach-against-russia/#webpage"},"wordCount":1284,"publisher":{"@id":"https://www.atlanticcouncil.org/#organization"},"image":{"@id":"https://www.atlanticcouncil.org/blogs/new-atlanticist/a-us-uk-hacking-probe-offers-a-fresh-approach-against-russia/#primaryimage"},"thumbnailUrl":"https://www.atlanticcouncil.org/wp-content/uploads/2021/07/2018-10-04T000000Z_50188007_RC1B523CCDA0_RTRMADP_3_BRITAIN-RUSSIA-CYBER-scaled.jpg","articleSection":["New Atlanticist"],"inLanguage":"en-US"},{"@type":"Person","@id":"https://www.atlanticcouncil.org/#/schema/person/b3c94dec25e5a9c40af1ade6215e9786","name":"dmalloy","image":{"@type":"ImageObject","@id":"https://www.atlanticcouncil.org/#personlogo","inLanguage":"en-US","url":"https://secure.gravatar.com/avatar/042e06b86ce6d0d0b58ab3b8a2bbce4f?s=96&d=mm&r=g","contentUrl":"https://secure.gravatar.com/avatar/042e06b86ce6d0d0b58ab3b8a2bbce4f?s=96&d=mm&r=g","caption":"dmalloy"},"url":"https://www.atlanticcouncil.org/author/dmalloy/"}]}</script>
+	<!-- / Yoast SEO Premium plugin. -->
+
+
+<link rel='dns-prefetch' href='//www.atlanticcouncil.org' />
+<link rel='dns-prefetch' href='//unpkg.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Atlantic Council &raquo; Feed" href="https://www.atlanticcouncil.org/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.atlanticcouncil.org\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.8"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css'  href='https://www.atlanticcouncil.org/wp-includes/css/dist/block-library/style.min.css?ver=5.8' type='text/css' media='all' />
+<link rel='stylesheet' id='GCTLP-timeline-styles-css-css'  href='https://www.atlanticcouncil.org/wp-content/plugins/cool-timeline-pro/includes/gutenberg-instant-builder/dist/blocks.style.build.css?ver=5.8' type='text/css' media='all' />
+<link rel='stylesheet' id='qtip2css-css'  href='https://www.atlanticcouncil.org/wp-content/plugins/tooltips-pro/js/qtip3/jquery.qtip.min.css?ver=5.8' type='text/css' media='all' />
+<link rel='stylesheet' id='tooltipscss-css'  href='https://www.atlanticcouncil.org/wp-content/plugins/tooltips-pro/tooltips.css?ver=5.8' type='text/css' media='all' />
+<link rel='stylesheet' id='directorycss-css'  href='https://www.atlanticcouncil.org/wp-content/plugins/tooltips-pro/js/jdirectory/directory.min.css?ver=5.8' type='text/css' media='all' />
+<link rel='stylesheet' id='directorytemplates-css'  href='https://www.atlanticcouncil.org/wp-content/plugins/tooltips-pro/js/jdirectory/templates/glossary-blue.css?ver=5.8' type='text/css' media='all' />
+<link rel='stylesheet' id='content-visibility-public-css'  href='https://www.atlanticcouncil.org/wp-content/plugins/content-visibility/includes/public/content-visibility-public.css?ver=5.8' type='text/css' media='all' />
+<link rel='stylesheet' id='crew-theme-style-css'  href='https://www.atlanticcouncil.org/wp-content/themes/atlantic-council/dist/styles/main.css?ver=202100722' type='text/css' media='all' />
+<link rel='stylesheet' id='cookie-notice-front-css'  href='https://www.atlanticcouncil.org/wp-content/plugins/cookie-notice/includes/../css/front.min.css?ver=5.8' type='text/css' media='all' />
+<link rel='stylesheet' id='jquery-lazyloadxt-spinner-css-css'  href='//www.atlanticcouncil.org/wp-content/plugins/a3-lazy-load/assets/css/jquery.lazyloadxt.spinner.css?ver=5.8' type='text/css' media='all' />
+<script type='text/javascript' src='https://www.atlanticcouncil.org/wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
+<script type='text/javascript' src='https://www.atlanticcouncil.org/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<script type='text/javascript' src='https://www.atlanticcouncil.org/wp-content/plugins/tooltips-pro/js/imagesloaded.pkgd.min.js?ver=5.8' id='imagesloadedjs-js'></script>
+<script type='text/javascript' src='https://www.atlanticcouncil.org/wp-content/plugins/tooltips-pro/js/qtip3/jquery.qtip.min.js?ver=5.8' id='qtip2js-js'></script>
+<script type='text/javascript' src='https://www.atlanticcouncil.org/wp-content/plugins/tooltips-pro/js/jdirectory/jquery.directory.min.js?ver=5.8' id='directoryjs-js'></script>
+<script type='text/javascript' src='https://www.atlanticcouncil.org/wp-content/plugins/duracelltomi-google-tag-manager/js/gtm4wp-form-move-tracker.js?ver=1.13.1' id='gtm4wp-form-move-tracker-js'></script>
+<script type='text/javascript' src='https://www.atlanticcouncil.org/wp-content/plugins/duracelltomi-google-tag-manager/js/gtm4wp-youtube.js?ver=1.13.1' id='gtm4wp-youtube-js'></script>
+<script type='text/javascript' id='cookie-notice-front-js-extra'>
+/* <![CDATA[ */
+var cnArgs = {"ajaxUrl":"https:\/\/www.atlanticcouncil.org\/wp-admin\/admin-ajax.php","nonce":"534100e6aa","hideEffect":"slide","position":"bottom","onScroll":"0","onScrollOffset":"100","onClick":"0","cookieName":"cookie_notice_accepted","cookieTime":"2592000","cookieTimeRejected":"2592000","cookiePath":"\/","cookieDomain":"","redirection":"0","cache":"0","refuse":"0","revokeCookies":"0","revokeCookiesOpt":"automatic","secure":"1"};
+/* ]]> */
+</script>
+<script async type='text/javascript' src='https://www.atlanticcouncil.org/wp-content/plugins/cookie-notice/includes/../js/front.min.js?ver=2.1.0' id='cookie-notice-front-js'></script>
+<link rel="https://api.w.org/" href="https://www.atlanticcouncil.org/wp-json/" /><link rel="alternate" type="application/json" href="https://www.atlanticcouncil.org/wp-json/wp/v2/posts/414689" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.atlanticcouncil.org/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.atlanticcouncil.org/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.8" />
+<link rel='shortlink' href='https://www.atlanticcouncil.org/?p=414689' />
+<link rel="alternate" type="application/json+oembed" href="https://www.atlanticcouncil.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.atlanticcouncil.org%2Fblogs%2Fnew-atlanticist%2Fa-us-uk-hacking-probe-offers-a-fresh-approach-against-russia%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.atlanticcouncil.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.atlanticcouncil.org%2Fblogs%2Fnew-atlanticist%2Fa-us-uk-hacking-probe-offers-a-fresh-approach-against-russia%2F&#038;format=xml" />
+<script type="text/javascript">
+_linkedin_partner_id = "1698650";
+window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+</script><script type="text/javascript">
+
+(function(){var s = document.getElementsByTagName("script")[0];
+var b = document.createElement("script");
+b.type = "text/javascript";b.async = true;
+b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+s.parentNode.insertBefore(b, s);})();
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=1698650&fmt=gif" />
+</noscript>
+        <style type="text/css">
+					</style>
+        	<style type="text/css">
+	.tooltips_table .tooltipsall
+	{
+		border-bottom:none !important;
+	}
+	.tooltips_table span {
+		color: inherit !important;
+	}
+	.qtip-content .tooltipsall
+	{
+		border-bottom:none !important;
+		color: inherit !important;
+	}
+	</style>
+		<style type="text/css">
+	.tooltipsall:hover {
+		color: #f2783e;
+	}
+	</style>
+	<!--[if IE]>
+    <style type="text/css">
+    .qtip {
+       filter:alpha(Opacity=100); // IE7 and below
+       -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)"; // IE8
+    }
+    </style>
+<![endif]-->
+					
+<style type="text/css">
+    .qtip {
+        opacity: 1; 
+        -moz-opacity: 1; 
+        -webkit-opacity: 1; 
+    }
+    .ui-wordpress-tooltip-pro
+    {
+	width:400px;    
+	max-width:80%;
+    }
+    
+    	.ui-wordpress-tooltip-pro
+	{
+	color: #3d3d3d !important;
+	width:400px;
+	font-size:16px;
+	line-height:20px;
+	background-color: #ffffff  !important;
+	text-align:left  !important;
+	border-width:2px  !important;
+	border-color: #ffffff !important;
+	border-style: solid !important;
+	padding: 10px;
+	border-radius: 4px;
+	}
+	.qtip-content
+	{
+		text-align:left  !important;
+	}
+	.ui-wordpress-tooltip-pro
+	{
+		margin: 0px 10px 0px -6px;	
+	}
+			.tooltipglossarylinkintooltipbox a
+			{
+				color: #333;
+			}		
+					.tooltipsPopupCreditLink a
+			{
+				color: #333;
+			}		
+					.qtip-default .qtip-titlebar
+			{
+				font-size: 14px;
+				color: #81d884;
+				background-color: #3e8843;
+			}
+			.qtip-icon .ui-icon
+			{
+				padding:2px;
+			}
+						.qtip-default .qtip-icon
+			{
+				background-color: #eeee22;
+			}
+						.qtip-icon, .qtip-icon .ui-icon
+			{
+    			-moz-border-radius: 4px;
+    			-webkit-border-radius: 4px;
+    			border-radius: 4px;
+			}
+								.qtip-default .qtip-icon
+					{
+		    			color: #c43c92;
+					}
+					.qtip-default .qtip-titlebar .qtip-close
+					{
+						color: #c43c92;
+					}
+								.ui-wordpress-tooltip-pro
+			{
+				-webkit-box-shadow: 4px 4px 3px 1px rgba(0, 0, 0, 0.15);
+				-moz-box-shadow: 4px 4px 3px 1px rgba(0, 0, 0, 0.15);
+				box-shadow: 4px 4px 3px 1px rgba(0, 0, 0, 0.15);
+			}
+					.tooltipsall
+			{
+		    	border-bottom:2px dotted #888888;
+			}
+				.qtip-default
+		{
+    		border: none;
+    		background-color: initial;
+    		color: inherit;
+}			
+		}
+		</style>
+		<script type="text/javascript">
+	var ajaxurl = '/wp-admin/admin-ajax.php';
+	
+	function tooltipsdate()
+	{
+			var d=new Date();
+			str='';
+			str +=d.getFullYear()+'-';
+			str +=d.getMonth()+1+'-';
+			str +=d.getDate()+'-';
+			str +=d.getHours()+'-';
+			str +=d.getMinutes()+'-';
+			str +=d.getSeconds();
+			return str; 
+	}
+	var nowtime = tooltipsdate();
+	var tooltipsClientIP = '134.173.192.64, 172.69.35.154, 172.69.35.154';
+
+	function toolTips(whichID,theTipContent,toolTipPostID,theTipTitle, toolTipCustomizedStyle) 
+	{
+				if (typeof toolTipPostID==='undefined')
+		{
+			toolTipPostID = '0';
+		}
+
+		toolTipPostStyleName = 'ui-wordpress-tooltip-pro';
+		if (typeof toolTipCustomizedStyle==='undefined')
+		{
+			toolTipCustomizedStyle = 'ui-wordpress-tooltip-pro';
+		}
+
+			jQuery(whichID).qtip
+			(
+				{
+					content:
+					{
+													text:theTipContent,
+											},
+    				postid:toolTipPostID,  					
+					style:
+   					{
+						classes: toolTipCustomizedStyle + ' skyisblue '
+    				},
+    									position:
+    				{
+    					viewport: jQuery(window),
+    					my: 'bottom left',
+    					at: 'top right'    				},
+					show:
+						{
+														delay:0,						
+						event: 'mouseover',
+												effect: function() {
+							
+			                jQuery(this).fadeTo(200, 1);
+			                		jQuery('.qtip iframe').attr('id','stopplayingyoutube');
+			                		oldsrc =  jQuery("#stopplayingyoutube").attr("oldsrc");
+
+			                		if ('undefined' == oldsrc)
+			                		{
+
+			                		}
+			                		else
+			                		{
+
+			                			jQuery("#stopplayingyoutube").attr("src", jQuery("#stopplayingyoutube").attr("oldsrc"));
+			                		}
+			            }
+						},
+					hide:
+														{
+									fixed: true, 
+									delay: 200,
+									effect: function(offset) 
+									{
+										jQuery('.qtip iframe').attr('id','stopplayingyoutube');
+							 			jQuery("#stopplayingyoutube").attr("oldsrc", jQuery("#stopplayingyoutube").attr("src"));
+										 jQuery("#stopplayingyoutube").attr("src", '');
+							            jQuery(this).slideDown(100); // "this" refers to the tooltip
+							        }
+								}
+												
+				}
+			)
+	}
+</script>
+	
+<style type="text/css">
+                    .ctl-bullets-container {
+                display: block;
+                position: fixed;
+                bottom: 0;
+                height: 100%;
+                z-index: 1049;
+                font-weight: normal;
+                height: 70vh;
+                overflow-x: hidden;
+                overflow-y: auto;
+                margin: 15vh auto;
+            }</style>
+<!-- Google Tag Manager for WordPress by gtm4wp.com -->
+<script data-cfasync="false" data-pagespeed-no-defer type="text/javascript">//<![CDATA[
+	var dataLayer_content = {"pageTitle":"A US-UK hacking probe offers a fresh approach against Russia - Atlantic Council","pagePostType":"post","pagePostType2":"single-post","pageCategory":["new-atlanticist"],"pagePostAuthor":"dmalloy","pagePostDate":"July 15, 2021","pagePostDateYear":"2021","pagePostDateMonth":"07","pagePostDateDay":"15","pagePostTerms":{"category":["New Atlanticist"],"regions":["Russia","United Kingdom","United States and Canada"],"issues":["Cybersecurity","Intelligence","Rule of Law","Security &amp; Defense"],"programs":["Cyber Statecraft Initiative","Scowcroft Center for Strategy and Security"]},"postID":414689,"postFormat":"standard"};
+	dataLayer.push( dataLayer_content );//]]>
+</script>
+<script data-cfasync="false">//<![CDATA[
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.'+'js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WDZXTM6');//]]>
+</script>
+<!-- End Google Tag Manager -->
+<!-- End Google Tag Manager for WordPress by gtm4wp.com --><link rel="icon" href="https://www.atlanticcouncil.org/wp-content/uploads/2019/09/favicon-150x150.png" sizes="32x32" />
+<link rel="icon" href="https://www.atlanticcouncil.org/wp-content/uploads/2019/09/favicon-300x300.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://www.atlanticcouncil.org/wp-content/uploads/2019/09/favicon-300x300.png" />
+<meta name="msapplication-TileImage" content="https://www.atlanticcouncil.org/wp-content/uploads/2019/09/favicon-300x300.png" />
+		<style type="text/css" id="wp-custom-css">
+			div.general-embed-bigger {
+	font-size: 2em;
+}		</style>
+		</head>
+
+<body class="post-template-default single single-post postid-414689 single-format-standard cooltimeline-body group-blog a-us-uk-hacking-probe-offers-a-fresh-approach-against-russia cookies-not-set">
+
+<div id="page" class="site">
+
+
+	<header id="masthead" class="gta-site-header" role="banner">
+		<nav id="site-nav" class="gta-site-nav" role="navigation">
+			<div class="gta-site-nav--row">
+				<div class="gta-site-nav--branding">
+					<a href="https://www.atlanticcouncil.org/" rel="home" class="gta-site-nav--logo">
+						<img src="https://www.atlanticcouncil.org/wp-content/themes/atlantic-council/dist/images/Atlantic Council - White logotype.svg" onerror="this.src='https://www.atlanticcouncil.org/wp-content/themes/atlantic-council/dist/images/logo.png'">
+					</a>
+				</div>
+				<ul id="primary-nav" class="menu"><li id="menu-item-129063" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-129063"><a href="https://www.atlanticcouncil.org/issues/">Issues</a></li>
+<li id="menu-item-129068" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-129068"><a href="https://www.atlanticcouncil.org/regions/">Regions</a></li>
+<li id="menu-item-139971" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-139971"><a href="https://www.atlanticcouncil.org/insights-impact/">Insights &#038; impact</a></li>
+<li id="menu-item-158766" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-158766"><a href="https://www.atlanticcouncil.org/people/">People</a></li>
+<li id="menu-item-129081" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-129081"><a href="https://www.atlanticcouncil.org/programs/">Programs</a></li>
+<li id="menu-item-167077" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167077"><a href="https://www.atlanticcouncil.org/events/">Events</a></li>
+</ul>				<div class="gta-site-nav--search">
+					<a href="#" rel="home" class="j-desktop-menu--button" data-pane="search">
+						<img src="https://www.atlanticcouncil.org/wp-content/themes/atlantic-council/dist/images/icon-search.svg" alt="Site Logo" />
+					</a>
+				</div>
+			</div>
+		</nav>
+				
+<section class="gta-site-banner gta-post-marquee-site-banner" style="background-image: url(https://www.atlanticcouncil.org/wp-content/uploads/2021/07/2018-10-04T000000Z_50188007_RC1B523CCDA0_RTRMADP_3_BRITAIN-RUSSIA-CYBER-1-scaled-e1626360309929.jpg);">
+	<ul id="utility-nav" class="menu"><li id="menu-item-141249" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-141249"><a href="https://www.atlanticcouncil.org/get-involved/">Get involved</a></li>
+<li id="menu-item-141250" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-141250"><a href="https://www.atlanticcouncil.org/support-the-council/">Support the Council</a></li>
+<li id="menu-item-397180" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-397180"><a href="https://engage.atlanticcouncil.org/subscribe.html">Subscribe</a></li>
+<li id="menu-item-141254" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-141254"><a href="https://www.atlanticcouncil.org/about/">About the Council</a></li>
+<li id="menu-item-141257" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-141257"><a href="https://www.atlanticcouncil.org/media/">Media</a></li>
+<li id="menu-item-141258" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-141258"><a href="https://www.atlanticcouncil.org/careers/">Careers</a></li>
+</ul></section>
+
+	</header><!-- #masthead -->
+
+	<div class="gta-mobile-menu j-menu">
+
+        <div class="gta-mobile-menu--buttons">
+        <a href="https://atlanticcouncil.org/" class="gta-mobile-menu--buttons--button j-menu--button 
+        ">
+            <span class="gta-mobile-menu--buttons--icon icon-home"></span>
+                            <span class="gta-mobile-menu--buttons--text">Home</span>
+                    </a>
+		<a href="https://atlanticcouncil.org/issues/" class="gta-mobile-menu--buttons--button j-menu--button 
+        ">
+            <span class="gta-mobile-menu--buttons--icon icon-issues"></span>
+
+                            <span class="gta-mobile-menu--buttons--text">Issues</span>
+            
+		</a>
+        <a href="Regions"  class="gta-mobile-menu--buttons--button j-menu--button 
+        ">
+            <span class="gta-mobile-menu--buttons--icon icon-regions"></span>
+
+                            <span class="gta-mobile-menu--buttons--text">Regions</span>
+            
+        </a>
+        <span class="gta-mobile-menu--buttons--button j-menu--button" data-pane="search">
+            <span class="gta-mobile-menu--buttons--icon icon-search"></span>
+            <span class="gta-mobile-menu--buttons--text">Search</span>
+        </span>
+        <span class="gta-mobile-menu--buttons--button j-menu--button" data-pane="menu">
+            <span class="gta-mobile-menu--buttons--icon icon-menu"></span>
+            <span class="gta-mobile-menu--buttons--text">Menu</span>
+        </span>
+    </div>
+
+        <div class="gta-mobile-menu--menus gta-mobile-menu--pane j-menu--pane" data-pane="menu">
+        <span class="gta-mobile-menu--menus--close j-menu--close">
+            <span class="gta-mobile-menu--menus--close-inner">+</span>
+        </span>
+        <div class="gta-mobile-menu--main">
+            <ul id="mobile-primary-nav" class="menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-129063"><a href="https://www.atlanticcouncil.org/issues/">Issues</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-129068"><a href="https://www.atlanticcouncil.org/regions/">Regions</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-139971"><a href="https://www.atlanticcouncil.org/insights-impact/">Insights &#038; impact</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-158766"><a href="https://www.atlanticcouncil.org/people/">People</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-129081"><a href="https://www.atlanticcouncil.org/programs/">Programs</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167077"><a href="https://www.atlanticcouncil.org/events/">Events</a></li>
+</ul>        </div>
+        <div class="gta-mobile-menu--utility">
+            <ul id="mobile-utility-nav" class="menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-141249"><a href="https://www.atlanticcouncil.org/get-involved/">Get involved</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-141250"><a href="https://www.atlanticcouncil.org/support-the-council/">Support the Council</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-397180"><a href="https://engage.atlanticcouncil.org/subscribe.html">Subscribe</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-141254"><a href="https://www.atlanticcouncil.org/about/">About the Council</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-141257"><a href="https://www.atlanticcouncil.org/media/">Media</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-141258"><a href="https://www.atlanticcouncil.org/careers/">Careers</a></li>
+</ul>        </div>
+    </div>
+    <div class="gta-mobile-menu--search gta-mobile-menu--pane j-menu--pane" data-pane="search">
+	<div class="gta-mobile-search" id="v-mobile-search">
+    <div class="gta-mobile-search--search">
+        <form action="" class="gta-mobile-search--form">
+            <button class="gta-mobile-search--submit" v-on:click="searchClick">
+                <span class="fa fa-search"></span>
+            </button>
+            <input autocomplete="off" v-model="searchTerm" type="text" id="algolia-search" class="gta-mobile-search--input" placeholder="Search Atlantic Council">
+        </form>
+    </div>
+    <div class="gta-mobile-search--body">
+        <div class="gta-mobile-search--suggestions" v-if="(searchSuggestions.length > 0 && searchTerm && !showResults && !showFilters)">
+            <h4 class="gta-mobile-search--label">Search Suggestions</h4>
+            <ul class="gta-mobile-search--suggestions-list">
+                <li class="gta-mobile-search--suggestions-suggestion" v-for="suggestion in searchSuggestions" v-on:click="suggestionClick(suggestion)">
+                    {{ suggestion }}
+                    <span class="gta-mobile-search--suggestions-icon icon-arrow-diagonal"></span>
+                </li>
+            </ul>
+        </div>
+        <div class="gta-mobile-search--results" v-if="showResults && !showFilters">
+            <h4 class="gta-mobile-search--label">Total Results {{ currentCount }}/{{ totalCount }}</h4>
+            <!-- <div class="gta-mobile-search--results-sort">
+                <span class="gta-mobile-search--results-sort-type"
+                    v-on:click="sortBy = 'recent'"
+                    v-bind:class="{active : sortBy == 'recent'}">
+                    Recent
+                </span>
+                <span class="gta-mobile-search--results-sort-divider"></span>
+
+                <span class="gta-mobile-search--results-sort-type"
+                    v-on:click="sortBy = 'relevant'"
+                    v-bind:class="{ active : sortBy == 'relevant'}">
+                    Relevant
+                </span>
+            </div> -->
+            <div class="gta-mobile-search--results-container">
+
+                <section class="gta-embed" v-if="searchResults" v-for="searchResult in searchResults">
+
+                    <div class="gta-post-embed--container gta-embed--container no-thumbnail">
+
+                        <div class="gta-embed--content gta-post-embed--content">
+                            <p class="gta-post-embed--heading gta-embed--heading s-tag-button">{{ searchResult.post_type }}</p>
+                            <h3 class="gta-post-embed--title gta-embed--title" v-if="searchResult.relativeURL"><a v-bind:href="permalink + searchResult.relativeURL" v-html="searchResult.title"></a></h3>
+                            <h3 class="gta-post-embed--title gta-embed--title" v-else><a v-bind:href="searchResult.url" v-html="searchResult.title"></a></h3>
+
+                            <p class="gta-post-embed--excerpt gta-embed--excerpt" v-html="getFirstSentence( searchResult.content, 150 )"></p>
+
+                            <p class="gta-post-embed--date gta-event-embed--event-info" v-if="searchResult.date">{{ searchResult.date }}</p>
+                            <p class="gta-post-embed--author" v-if="searchResult.author.name">{{ searchResult.author.name }}</p>
+                            <p class="gta-post-embed--taxonomy" v-if="searchResult.taxonomy" v-html="searchResult.taxonomy"></p>
+                        </div>
+                    </div>
+
+
+                
+                </section>
+
+                <div class="gta-mobile-search--results-pagination" v-if="totalPages - 1 > currentPage">
+                    <span class="s-button gta-mobile-search--pagination-button" v-on:click="loadMorePosts">Load More</span>
+                </div>
+            </div>
+        </div>
+        <div class="gta-mobile-search--filters" v-if="showFilters">
+            <ul class="gta-mobile-search--filter-menu">
+                <li  class="gta-mobile-search--filter--single">
+                    <span class="gta-mobile-search--filter--label"  v-on:click="toggleMenu($event)">Issues</span>
+                    <ul class="gta-mobile-search--filter--sub">
+                        <li class="gta-mobile-search--filter--term" v-for="term in searchFilters.issues"
+                        v-bind:class="{active : currentFilters.indexOf(term) > 0 }"
+                           v-on:click="updateFilters(term)">
+						   <span class="gta-mobile-search--filter--sub-label" v-html="term.name"></span>
+                        </li>
+                    </ul>
+                </li>
+                <li class="gta-mobile-search--filter--single">
+                    <span class="gta-mobile-search--filter--label"  v-on:click="toggleMenu($event)">Region</span>
+                    <ul class="gta-mobile-search--filter--sub">
+                        <li class="gta-mobile-search--filter--term" v-for="term in searchFilters.regions"
+                        v-bind:class="{active : currentFilters.indexOf(term) > 0 }"
+                           v-on:click="updateFilters(term)">
+						   <span class="gta-mobile-search--filter--sub-label" v-html="term.name"></span>
+                        </li>
+                    </ul>
+                </li>
+                <li class="gta-mobile-search--filter--single ">
+                    <span class="gta-mobile-search--filter--label"  v-on:click="toggleMenu($event)">Focus</span>
+                    <ul class="gta-mobile-search--filter--sub">
+                        <li class="gta-mobile-search--filter--term" v-for="term in searchFilters.focus"
+                        v-bind:class="{active : currentFilters.indexOf(term) > 0 }"
+                           v-on:click="updateFilters(term)">
+						   <span class="gta-mobile-search--filter--sub-label" v-html="term.name"></span>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="gta-mobile-search--bottom">
+        <span class="gta-mobile-search--filter-toggle" v-bind:class="{active : showFilters }" v-on:click="showFilters = !showFilters">
+            <span class="gta-filter--toggle-text"> Filter Results</span>
+            <span class="gta-filter--toggle-angle fa fa-angle-down"></span>
+        </span>
+        <div class="gta-mobile-search--filter--active" v-if="currentFilters.length > 0">
+            <div class="gta-mobile-search--filter--wrap"  v-for="filter in currentFilters">
+				<span class="gta-mobile-search--active-filter" v-on:click="updateFilters(filter)" v-html="filter.name"></span>
+            </div>
+        </div>
+    </div>
+</div>
+	<a href="#" class="columns-10 column-center j-close-button gta-desktop-close-search s-button secondary">Hide</a>
+    </div>
+</div>
+
+	<div id="content" class="site-content">
+
+	
+	<section class="ac-single-post marquee">
+
+		<div class="ac-single-post--container row">
+
+			<div class="columns-12 column-center">
+
+				<div class="ac-single-post--content">
+
+																	<header class="ac-single-post--marquee">
+														<p class="ac-single-post--marquee--heading s-tag-button">Thu, Jul 15, 2021</p>
+														<h2 class="ac-single-post--marquee--title">A US-UK hacking probe offers a fresh approach against Russia</h2>
+															<p class="ac-single-post--marquee--tax">
+																			<span class="gta-site-banner--tax--cats gta-post-site-banner--tax--cats">New Atlanticist</span>
+																												<span class="gta-site-banner--tax--connect gta-post-site-banner--tax--connect">by</span>
+																												<a class="gta-site-banner--tax--expert gta-post-site-banner--tax--expert" href="https://www.atlanticcouncil.org/expert/justin-sherman/">Justin Sherman</a>																	</p>
+														
+															<div class="ac-single-post--marquee--terms">
+																			<a class="s-pill large" href="https://www.atlanticcouncil.org/issue/cybersecurity/">Cybersecurity</a>
+																			<a class="s-pill large" href="https://www.atlanticcouncil.org/issue/intelligence/">Intelligence</a>
+																			<a class="s-pill large" href="https://www.atlanticcouncil.org/issue/rule-of-law/">Rule of Law</a>
+																			<a class="s-pill large" href="https://www.atlanticcouncil.org/region/russia/">Russia</a>
+																			<a class="s-pill large" href="https://www.atlanticcouncil.org/issue/security-defense/">Security &amp; Defense</a>
+																			<a class="s-pill large" href="https://www.atlanticcouncil.org/region/united-kingdom/">United Kingdom</a>
+																			<a class="s-pill large" href="https://www.atlanticcouncil.org/region/united-states-canada/">United States and Canada</a>
+																	</div>
+							
+															<p class="ac-single-post--marquee--caption">The logo of the GRU, Russia's Main Intelligence Directorate, is reflected in an eye in this picture illustration taken on October 4, 2018. Photo by Dado Ruvic/Retuers Illustration</p>
+							
+
+							</header>
+
+
+					
+
+																
+
+															
+<p>As headlines pile up by the day about cyber hacks coming from within Russia, a recent United States-United Kingdom collaboration calling out wide-ranging Russian military hacking efforts might have been easy to miss. But it’s worth taking a closer look at a bold step by the transatlantic allies that will shape the future of global cyber diplomacy and defense.&nbsp;</p>
+
+
+
+<p>On July 1, the US National Security Agency (NSA), Cybersecurity and Infrastructure Security Agency, and Federal Bureau of Investigation, along with the United Kingdom’s National Cyber Security Centre, issued a <a href="https://media.defense.gov/2021/Jul/01/2002753896/-1/-1/0/CSA_GRU_GLOBAL_BRUTE_FORCE_CAMPAIGN_UOO158036-21.PDF">joint cybersecurity advisory</a> on the Russian military intelligence agency, the GRU, hacking cloud environments worldwide.</p>
+
+
+
+<p>The statement detailed how the GRU used <a href="https://kubernetes.io/">Kubernetes</a>, an open-source cloud management software originally developed by Google, “to conduct widespread, distributed, and anonymized brute force access attempts against hundreds of government and private-sector targets worldwide.” As expected, the Russian embassy in Washington <a href="https://apnews.com/article/joe-biden-europe-russia-health-coronavirus-pandemic-9dcfb8608fd80b76cda0e17d56ada736">denied</a> that Russian government agencies had engaged in such attacks against US agencies and private businesses.</p>
+
+
+
+<p>The advisory is noteworthy for several reasons. First, it is an example of international collaboration to publicly name the tactics, techniques, and procedures (TTPs) used in a foreign government’s cyber operations. Second, this public attribution arrives amid much discussion of Russian cyber activity and is likely to complicate US dialogue with Moscow to shape it. Third, it underscores the importance of the United States being carefully narrow about scoping its cyberspace “red lines” in talks with the Russian government.</p>
+
+
+<section class="gta-spacer gutenblock gutenblock--responsive-spacer responsive-spacer  extra-small" id="responsive-spacer-block_60f047ccd044f"></section>
+
+
+<h4 id="h-hundreds-of-targets"><strong>Hundreds of targets</strong></h4>
+
+
+<section class="gta-spacer gutenblock gutenblock--responsive-spacer responsive-spacer  extra-small" id="responsive-spacer-block_60f047d7d0450"></section>
+
+
+<p>It was a detailed report: The agencies said the GRU directs a “significant amount” of its brute-force access activity (essentially, automatically guessing many passwords in a row) at organizations using Microsoft Office 365 cloud services, in addition to other service providers and on-premise email servers. The GRU has targeted hundreds of US and foreign organizations worldwide with these activities, the report said, naming at least nine types of entities among them: government and military organizations, political consultants and party organizations, defense contractors, energy companies, logistics companies, think tanks, higher education institutions, law firms, and media companies.</p>
+
+
+
+<p>The document named specific TTPs used to identify those behind the campaign, covering everything from reconnaissance to code patterns to a command-and-control setup used by the GRU in these hacks.</p>
+
+
+
+<p>“This brute force capability allows the 85th GTsSS [the Russian cyber unit also known as Fancy Bear] actors to access protected data, including email, and identify valid account credentials. Those credentials may then be used for a variety of purposes, including initial access, persistence, privilege escalation, and defense evasion,” the agencies wrote. “After gaining remote access, many well-known TTPs are combined to move laterally, evade defenses, and collect additional information within target networks.”</p>
+
+
+<section class="gta-spacer gutenblock gutenblock--responsive-spacer responsive-spacer  extra-small" id="responsive-spacer-block_60f04424d044d"></section>
+
+
+<h4 id="h-displaying-political-will"><strong>Displaying political will</strong></h4>
+
+
+<section class="gta-spacer gutenblock gutenblock--responsive-spacer responsive-spacer  extra-small" id="responsive-spacer-block_60f04429d044e"></section>
+
+
+<p>First and foremost, the document is important as the product of international collaboration between multiple US intelligence and cybersecurity-focused agencies and the UK’s National Cyber Security Centre to protect against adversary cyber activity. Issuing such an advisory also publicly indicates to allies and partners, as well as the Russian government, that the countries’ intelligence organizations are cooperating on this issue set.</p>
+
+
+
+<p>It details techniques used in an apparently ongoing campaign (which Rob Joyce, the NSA’s cybersecurity director, <a href="https://apnews.com/article/joe-biden-europe-russia-health-coronavirus-pandemic-9dcfb8608fd80b76cda0e17d56ada736">said</a> is “on a global scale”), and provides multiple detection and mitigation options for organizations to better defend against these hacks. This information is essential given the apparent scope of the campaign.</p>
+
+
+
+<p>Publicly attributing a widespread hacking campaign to a foreign state organization is, in many ways, a political decision. Calling out a government for cyber activity can affect the bilateral relationship and raises numerous questions about what kind of activity is called out and why; thus, electing to do so here indicates some degree of political will in the United States and the UK to publicly attribute these hacks to Russia.</p>
+
+
+
+<p>The Kremlin likes to push the line that attributing cyber activity is nearly impossible—which fits into the high premium Moscow places on operational deniability. The advisory demonstrates how it can be done.</p>
+
+
+<section class="gta-spacer gutenblock gutenblock--responsive-spacer responsive-spacer  extra-small" id="responsive-spacer-block_60f043d2d044b"></section>
+
+
+<h4 id="h-complicating-diplomacy"><strong>Complicating diplomacy</strong></h4>
+
+
+<section class="gta-spacer gutenblock gutenblock--responsive-spacer responsive-spacer  extra-small" id="responsive-spacer-block_60f043d6d044c"></section>
+
+
+<p>Second, such a public attribution will likely complicate diplomacy and cyber dialogues with Moscow. Cybersecurity was on the agenda at the Geneva meeting between President Joe Biden and Russian President Vladimir Putin on June 16, on the heels of a ransomware attack <a href="https://slate.com/technology/2021/06/biden-putin-summit-cybersecurity-ransomware-cyber-sovereignty.html">launched</a> by cybercrime groups in Russia against Colonial Pipeline, the United States’ largest refined oil pipeline, as well as the large meat-processing company JBS. Biden said Russia bears some responsibility for cybercrimes committed from Russian soil.</p>
+
+
+
+<p>But the Kremlin, as recently highlighted by a <a href="https://www.washingtonpost.com/world/europe/russia-ransomware-cyber-crime/2021/06/11/e159e486-c88f-11eb-8708-64991f2acf28_story.html">former Russia-based hacker</a>, frequently looks the other way on operations conducted by non-state actors as long as such activities don’t target actors in Russia or undermine the regime’s objectives. For other activities conducted by non-state cyber groups, the state may have a range of involvement, from outright support to covert recruitment.</p>
+
+
+
+<p>Out of the Geneva meeting, Putin and Biden <a href="https://www.reuters.com/world/wide-disagreements-low-expectations-biden-putin-meet-2021-06-15/">agreed </a> to have future, lower-level cybersecurity talks. Since then, Biden has <a href="https://www.cnbc.com/2021/07/09/ransomware-biden-presses-putin-to-disrupt-cybercriminals-in-russia.html">spoken</a> by phone with Putin about cracking down on criminal cyber activity within Russia, after yet another ransomware attack from a criminal group, indicating that Washington may retaliate against Moscow. On Tuesday, the site for the Russia-based hacking group <a href="https://www.nytimes.com/2021/07/13/us/politics/russia-hacking-ransomware-revil.html">REvil disappeared</a>, though it’s unclear whether responsibility lies with the United States, Russia, the ransomware group itself, or another factor entirely.</p>
+
+
+
+<p>Now, after a public attribution of the ongoing Russian state cyber campaign, it is highly likely the Kremlin will accuse the United States of merely calling out Russia for activities (like non-destructive hacks of cloud systems) in which the US government engages, too.</p>
+
+
+<section class="gta-spacer gutenblock gutenblock--responsive-spacer responsive-spacer  extra-small" id="responsive-spacer-block_60f043c3d0449"></section>
+
+
+<h4 id="h-narrowing-the-scope-of-talks"><strong>Narrowing the scope of talks</strong></h4>
+
+
+<section class="gta-spacer gutenblock gutenblock--responsive-spacer responsive-spacer  extra-small" id="responsive-spacer-block_60f043c8d044a"></section>
+
+
+<p>This leads to a third takeaway from the US-UK advisory: Drawing red lines in cyberspace for the Kremlin requires a steady, precise hand. The potential for cooperation with the Putin regime on cybersecurity is low. Such dialogue <a href="https://www.wired.com/story/trumps-un-american-failure-to-protect-internet-freedom/">languished</a> under the Trump administration, and Biden’s team needs to revive it, as the outcome of the Geneva summit indicated. If the United States is to set red lines with Moscow—articulating the kinds of activities or targets the United States considers off-limits with more specifics and substance than Biden did in the brief Geneva meeting—its odds of success will improve if it moves both carefully and narrowly.</p>
+
+
+
+<p>Biden administration officials have already indicated they have narrowed the scope of these preliminary discussions with Moscow: one senior official <a href="https://www.reuters.com/technology/biden-tells-putin-certain-cyber-attacks-should-be-off-limits-2021-06-16/">told</a> Reuters that the administration is focused on curtailing “destructive” hacks as opposed to traditional espionage.</p>
+
+
+
+<p>Meanwhile, the multiagency advisory did not say that the GRU’s hacks of cloud systems were destructive in nature. It also did not specify whether the hacks were likely to be laying the groundwork for future destructive cyber operations or just for traditional intelligence-gathering operations (though it did say the GRU was using the hacks to gather information).</p>
+
+
+
+<p>Also unknown are the answers to the broader political questions: To what extent is the Biden administration going to continue publicly attributing these kinds of Russian espionage activities that, at least in this case, don’t appear to have destructive components? And to what extent is the advisory intended more as a defensive move—publicly indicating to the private sector and other governments the tactics, techniques, and procedures used by the GRU and offering ways to guard against ongoing hacks—versus a naming-and-shaming condemnation? Or is it both?</p>
+
+
+
+<p>If the US government, with the support of some allies, is to mitigate national-security-damaging Russian cyber activity and influence the Kremlin’s behavior, the White House must develop answers to the broader strategic questions behind these public advisories.</p>
+
+
+
+<p><em>Justin Sherman (</em><a href="https://twitter.com/jshermcyber"><em>@jshermcyber</em></a><em>) is a nonresident fellow at the Atlantic Council’s Cyber Statecraft Initiative.</em></p>
+
+
+<section class="gta-spacer gutenblock gutenblock--responsive-spacer responsive-spacer  extra-small" id="responsive-spacer-block_60f04299d0446"></section>
+
+
+<h4 id="h-further-reading">Further reading</h4>
+
+
+<section class="gta-spacer gutenblock gutenblock--responsive-spacer responsive-spacer  extra-small" id="responsive-spacer-block_60f042a6d0447"></section>
+
+<section class="gta-horizontal-featured gutenblock gutenblock--horizontal-multi-item-feature horizontal-multi-item-feature "
+	id="horizontal-multi-item-feature-block_60f042acd0448" >
+	<div class="gta-horizontal-featured--container three-up">
+					
+			
+			<div class="gta-horizontal-featured--single">
+				<div class="gta-horizontal-featured--inner">
+
+											<div class="gta-horizontal-featured--image">
+							<a href="https://www.atlanticcouncil.org/in-depth-research-reports/issue-brief/reassessing-runet-russian-internet-isolation-and-implications-for-russian-cyber-behavior/"><img src="//www.atlanticcouncil.org/wp-content/plugins/a3-lazy-load/assets/images/lazy_placeholder.gif" data-lazy-type="image" data-src="https://www.atlanticcouncil.org/wp-content/uploads/2021/06/RuNet-Issue-Brief-Cover-Image-500x350.jpg" alt="A US-UK hacking probe offers a fresh approach against Russia" class="lazy lazy-hidden gta-horizontal-featured--img"><noscript><img src="https://www.atlanticcouncil.org/wp-content/uploads/2021/06/RuNet-Issue-Brief-Cover-Image-500x350.jpg" alt="A US-UK hacking probe offers a fresh approach against Russia" class="gta-horizontal-featured--img"></noscript></a>
+						</div>
+					
+					<div class="gta-horizontal-featured--content">
+						<p class="gta-horizontal-featured--heading">Mon, Jul 12, 2021</p>
+						<h4 class="gta-horizontal-featured--title"><a href="https://www.atlanticcouncil.org/in-depth-research-reports/issue-brief/reassessing-runet-russian-internet-isolation-and-implications-for-russian-cyber-behavior/">Reassessing RuNet: Russian internet isolation and implications for Russian cyber behavior</a></h4>
+						<div class="gta-horizontal-featured--excerpt">
+                            <p>
+                                This issue brief examines recent “RuNet” developments and explores how they could elevate national security risks for the United States and Europe by changing the internet landscape in Russia and potentially shifting Russian cyber behavior.                            </p>
+                        </div>
+													<p class="gta-horizontal-featured--tax">
+																	<span class="gta-horizontal-featured--tax--cats">Issue Brief</span>
+																									<span class="gta-horizontal-featured--tax--connect">by</span>
+																									<a class="gta-site-banner--tax--expert gta-post-site-banner--tax--expert" href="https://www.atlanticcouncil.org/expert/justin-sherman/">Justin Sherman</a>								
+							</p>
+																			<div class="gta-horizontal-featured--terms">
+																	<a class="s-pill small" href="https://www.atlanticcouncil.org/issue/cybersecurity/">Cybersecurity</a>
+																	<a class="s-pill small" href="https://www.atlanticcouncil.org/region/europe-eurasia/">Europe &amp; Eurasia</a>
+															</div>
+											</div>
+				</div>
+			</div>
+					
+			
+			<div class="gta-horizontal-featured--single">
+				<div class="gta-horizontal-featured--inner">
+
+											<div class="gta-horizontal-featured--image">
+							<a href="https://www.atlanticcouncil.org/content-series/fastthinking/the-biden-putin-staredown-geneva-summit/"><img src="//www.atlanticcouncil.org/wp-content/plugins/a3-lazy-load/assets/images/lazy_placeholder.gif" data-lazy-type="image" data-src="https://www.atlanticcouncil.org/wp-content/uploads/2021/06/2021-06-16T114701Z_1825449813_RC2N1O9D7RRX_RTRMADP_3_USA-RUSSIA-SUMMIT-500x350.jpg" alt="A US-UK hacking probe offers a fresh approach against Russia" class="lazy lazy-hidden gta-horizontal-featured--img"><noscript><img src="https://www.atlanticcouncil.org/wp-content/uploads/2021/06/2021-06-16T114701Z_1825449813_RC2N1O9D7RRX_RTRMADP_3_USA-RUSSIA-SUMMIT-500x350.jpg" alt="A US-UK hacking probe offers a fresh approach against Russia" class="gta-horizontal-featured--img"></noscript></a>
+						</div>
+					
+					<div class="gta-horizontal-featured--content">
+						<p class="gta-horizontal-featured--heading">Wed, Jun 16, 2021</p>
+						<h4 class="gta-horizontal-featured--title"><a href="https://www.atlanticcouncil.org/content-series/fastthinking/the-biden-putin-staredown-geneva-summit/">FAST THINKING: The Biden-Putin staredown</a></h4>
+						<div class="gta-horizontal-featured--excerpt">
+                            <p>
+                                The meeting was far shorter than anticipated but touched on everything from the Arctic and Ukraine to cyberattacks and human rights. Did Biden or Putin come away with any wins? Can US-Russian relations ever be “stable and predictable,” as Biden desires?                            </p>
+                        </div>
+													<p class="gta-horizontal-featured--tax">
+																	<span class="gta-horizontal-featured--tax--cats">Fast Thinking</span>
+																									<span class="gta-horizontal-featured--tax--connect">by</span>
+																									<span class="gta-embed--tax--expert gta-post-embed--tax--expert" >Atlantic Council</span>								
+							</p>
+																			<div class="gta-horizontal-featured--terms">
+																	<a class="s-pill small" href="https://www.atlanticcouncil.org/issue/cybersecurity/">Cybersecurity</a>
+																	<a class="s-pill small" href="https://www.atlanticcouncil.org/issue/international-organizations/">International Organizations</a>
+															</div>
+											</div>
+				</div>
+			</div>
+					
+			
+			<div class="gta-horizontal-featured--single">
+				<div class="gta-horizontal-featured--inner">
+
+											<div class="gta-horizontal-featured--image">
+							<a href="https://www.atlanticcouncil.org/blogs/new-atlanticist/assessing-russias-role-and-responsibility-in-the-colonial-pipeline-attack/"><img src="//www.atlanticcouncil.org/wp-content/plugins/a3-lazy-load/assets/images/lazy_placeholder.gif" data-lazy-type="image" data-src="https://www.atlanticcouncil.org/wp-content/uploads/2021/06/2021-05-09T102606Z_506407625_RC2ACN9HXTVM_RTRMADP_3_WW2-ANNIVERSARY-RUSSIA-scaled-e1622569767891-500x350.jpg" alt="A US-UK hacking probe offers a fresh approach against Russia" class="lazy lazy-hidden gta-horizontal-featured--img"><noscript><img src="https://www.atlanticcouncil.org/wp-content/uploads/2021/06/2021-05-09T102606Z_506407625_RC2ACN9HXTVM_RTRMADP_3_WW2-ANNIVERSARY-RUSSIA-scaled-e1622569767891-500x350.jpg" alt="A US-UK hacking probe offers a fresh approach against Russia" class="gta-horizontal-featured--img"></noscript></a>
+						</div>
+					
+					<div class="gta-horizontal-featured--content">
+						<p class="gta-horizontal-featured--heading">Tue, Jun 1, 2021</p>
+						<h4 class="gta-horizontal-featured--title"><a href="https://www.atlanticcouncil.org/blogs/new-atlanticist/assessing-russias-role-and-responsibility-in-the-colonial-pipeline-attack/">Assessing Russia’s role and responsibility in the Colonial Pipeline attack</a></h4>
+						<div class="gta-horizontal-featured--excerpt">
+                            <p>
+                                Russia benefits politically from the chaos of this attack and Russia has the power and duty to do something about such hacks, even if the weapon is in someone else&#8217;s hands.                            </p>
+                        </div>
+													<p class="gta-horizontal-featured--tax">
+																	<span class="gta-horizontal-featured--tax--cats">New Atlanticist</span>
+																									<span class="gta-horizontal-featured--tax--connect">by</span>
+																									<span class="gta-embed--tax--expert gta-post-embed--tax--expert" >Scott Jasper</span>								
+							</p>
+																			<div class="gta-horizontal-featured--terms">
+																	<a class="s-pill small" href="https://www.atlanticcouncil.org/issue/cybersecurity/">Cybersecurity</a>
+																	<a class="s-pill small" href="https://www.atlanticcouncil.org/issue/national-security/">National Security</a>
+															</div>
+											</div>
+				</div>
+			</div>
+			</div>
+</section>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</section>
+
+
+		<div class="gta-hover-share-container">
+
+<div class="gta-hover-share">
+	<a href="/cdn-cgi/l/email-protection#615e1214030b0402155c204134324c342a410900020a080f064111130e0304410e0707041312410041071304120941001111130e00020941000600080f12154133141212080047030e05185c09151511125b4e4e1616164f00150d000f150802020e140f02080d4f0e13064e030d0e06124e0f04164c00150d000f1508020812154e004c14124c140a4c0900020a080f064c11130e03044c0e07070413124c004c07130412094c001111130e0002094c000600080f12154c1314121208004e" title="Share by Email" class="e-share-link e-share-link__email">
+		<span class="far fa-envelope"></span>
+	</a>
+	<a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.atlanticcouncil.org%2Fblogs%2Fnew-atlanticist%2Fa-us-uk-hacking-probe-offers-a-fresh-approach-against-russia%2F#"
+		title="Share on Facebook"
+		onclick="window.open(this.href,'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=800px, height=600px'); return false;"
+		class="e-share-link e-share-link__facebook">
+		<span class="fab fa-facebook-f"></span>
+	</a>
+	<a  href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.atlanticcouncil.org%2Fblogs%2Fnew-atlanticist%2Fa-us-uk-hacking-probe-offers-a-fresh-approach-against-russia%2F&text=A US-UK hacking probe offers a fresh approach against Russia"
+		title="Share on Twitter"
+		onclick="window.open(this.href,'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=800px, height=600px'); return false;"
+		class="e-share-link e-share-link__twitter">
+		<span class="fab fa-twitter"></span>
+	</a>
+	<a  href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.atlanticcouncil.org/blogs/new-atlanticist/a-us-uk-hacking-probe-offers-a-fresh-approach-against-russia/"
+		title="Share on LinkedIn"
+		onclick="window.open(this.href,'targetWindow', 'toolbar=no, location=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=800px, height=600px'); return false;"
+		class="e-share-link e-share-link__linkedin">
+		<span class="fab fa-linkedin"></span>
+	</a>
+</div>
+
+	</div>
+	</div><!-- #content -->
+
+	<footer id="colophon" class="gta-footer ps--hidden" role="contentinfo">
+		<div class="row">
+			<div class="columns-12">
+				<div class="gta-footer--upper">
+					<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript"></script>
+                <div class='gf_browser_gecko gform_wrapper gform_legacy_markup_wrapper' id='gform_wrapper_64' ><div id='gf_64' class='gform_anchor' tabindex='-1'></div>
+                        <div class='gform_heading'>
+                            <h3 class="gform_title">Subscribe to our new Fast Thinking news alerts</h3>
+                            <span class='gform_description'>Want to be the first to get up to speed on the meaning of big, breaking international developments? We have you covered! Sign up to receive rapid insight in your inbox from Atlantic Council experts on global events as they unfold.</span>
+                        </div><form method='post' enctype='multipart/form-data' target='gform_ajax_frame_64' id='gform_64'  action='/blogs/new-atlanticist/a-us-uk-hacking-probe-offers-a-fresh-approach-against-russia/#gf_64' >
+                        <div class='gform_body gform-body'><ul id='gform_fields_64' class='gform_fields top_label form_sublabel_below description_below'><li id="field_64_1" class="gfield gfield_contains_required field_sublabel_below field_description_below hidden_label gfield_visibility_visible" ><label class='gfield_label' for='input_64_1' >Email<span class="gfield_required"><span class="gfield_required gfield_required_asterisk">*</span></span></label><div class='ginput_container ginput_container_email'>
+                            <input name='input_1' id='input_64_1' type='text' value='' class='large'   placeholder='Enter your email' aria-required="true" aria-invalid="false"  />
+                        </div></li><li id="field_64_3" class="gfield gform_hidden field_sublabel_below field_description_below gfield_visibility_visible" ><div class='ginput_container ginput_container_text'><input name='input_3' id='input_64_3' type='hidden' class='gform_hidden'  aria-invalid="false" value='2254' /></div></li><li id="field_64_4" class="gfield gform_validation_container field_sublabel_below field_description_below gfield_visibility_visible" ><label class='gfield_label' for='input_64_4' >Name</label><div class='ginput_container'><input name='input_4' id='input_64_4' type='text' value='' /></div><div class='gfield_description' id='gfield_description_64_4'>This field is for validation purposes and should be left unchanged.</div></li></ul></div>
+        <div class='gform_footer top_label'> <input type='submit' id='gform_submit_button_64' class='gform_button button' value='Subscribe'  onclick='if(window["gf_submitting_64"]){return false;}  window["gf_submitting_64"]=true;  ' onkeypress='if( event.keyCode == 13 ){ if(window["gf_submitting_64"]){return false;} window["gf_submitting_64"]=true;  jQuery("#gform_64").trigger("submit",[true]); }' /> <input type='hidden' name='gform_ajax' value='form_id=64&amp;title=1&amp;description=1&amp;tabindex=0' />
+            <input type='hidden' class='gform_hidden' name='is_submit_64' value='1' />
+            <input type='hidden' class='gform_hidden' name='gform_submit' value='64' />
+            
+            <input type='hidden' class='gform_hidden' name='gform_unique_id' value='' />
+            <input type='hidden' class='gform_hidden' name='state_64' value='WyJbXSIsImYwZmU3NjQ2N2ZiYmI0NWM4ZTUzMGViYTg4ZWNhN2EzIl0=' />
+            <input type='hidden' class='gform_hidden' name='gform_target_page_number_64' id='gform_target_page_number_64' value='0' />
+            <input type='hidden' class='gform_hidden' name='gform_source_page_number_64' id='gform_source_page_number_64' value='1' />
+            <input type='hidden' name='gform_field_values' value='' />
+            
+        </div>
+                        </form>
+                        </div>
+                <iframe style='display:none;width:0px;height:0px;' src='about:blank' name='gform_ajax_frame_64' id='gform_ajax_frame_64' title='This iframe contains the logic required to handle Ajax powered Gravity Forms.'></iframe>
+                <script type="text/javascript">
+gform.initializeOnLoaded( function() {gformInitSpinner( 64, 'https://www.atlanticcouncil.org/wp-content/plugins/gravityforms/images/spinner.svg' );jQuery('#gform_ajax_frame_64').on('load',function(){var contents = jQuery(this).contents().find('*').html();var is_postback = contents.indexOf('GF_AJAX_POSTBACK') >= 0;if(!is_postback){return;}var form_content = jQuery(this).contents().find('#gform_wrapper_64');var is_confirmation = jQuery(this).contents().find('#gform_confirmation_wrapper_64').length > 0;var is_redirect = contents.indexOf('gformRedirect(){') >= 0;var is_form = form_content.length > 0 && ! is_redirect && ! is_confirmation;var mt = parseInt(jQuery('html').css('margin-top'), 10) + parseInt(jQuery('body').css('margin-top'), 10) + 100;if(is_form){jQuery('#gform_wrapper_64').html(form_content.html());if(form_content.hasClass('gform_validation_error')){jQuery('#gform_wrapper_64').addClass('gform_validation_error');} else {jQuery('#gform_wrapper_64').removeClass('gform_validation_error');}setTimeout( function() { /* delay the scroll by 50 milliseconds to fix a bug in chrome */ jQuery(document).scrollTop(jQuery('#gform_wrapper_64').offset().top - mt); }, 50 );if(window['gformInitDatepicker']) {gformInitDatepicker();}if(window['gformInitPriceFields']) {gformInitPriceFields();}var current_page = jQuery('#gform_source_page_number_64').val();gformInitSpinner( 64, 'https://www.atlanticcouncil.org/wp-content/plugins/gravityforms/images/spinner.svg' );jQuery(document).trigger('gform_page_loaded', [64, current_page]);window['gf_submitting_64'] = false;}else if(!is_redirect){var confirmation_content = jQuery(this).contents().find('.GF_AJAX_POSTBACK').html();if(!confirmation_content){confirmation_content = contents;}setTimeout(function(){jQuery('#gform_wrapper_64').replaceWith(confirmation_content);jQuery(document).scrollTop(jQuery('#gf_64').offset().top - mt);jQuery(document).trigger('gform_confirmation_loaded', [64]);window['gf_submitting_64'] = false;wp.a11y.speak(jQuery('#gform_confirmation_message_64').text());}, 50);}else{jQuery('#gform_64').append(contents);if(window['gformRedirect']) {gformRedirect();}}jQuery(document).trigger('gform_post_render', [64, current_page]);} );} );
+</script>
+				</div>
+				<div class="gta-footer--lower">
+					<ul id="footer-upper" class="menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-129063"><a href="https://www.atlanticcouncil.org/issues/">Issues</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-129068"><a href="https://www.atlanticcouncil.org/regions/">Regions</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-139971"><a href="https://www.atlanticcouncil.org/insights-impact/">Insights &#038; impact</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-158766"><a href="https://www.atlanticcouncil.org/people/">People</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-129081"><a href="https://www.atlanticcouncil.org/programs/">Programs</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167077"><a href="https://www.atlanticcouncil.org/events/">Events</a></li>
+</ul><ul id="footer-lower" class="menu"><li id="menu-item-167680" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167680"><a href="https://www.atlanticcouncil.org/get-involved/">Get involved</a></li>
+<li id="menu-item-167678" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167678"><a href="https://www.atlanticcouncil.org/support-the-council/">Support the Council</a></li>
+<li id="menu-item-397149" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-397149"><a href="https://engage.atlanticcouncil.org/preference_center.html">Subscribe</a></li>
+<li id="menu-item-167682" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167682"><a href="https://www.atlanticcouncil.org/about/">About the Council</a></li>
+<li id="menu-item-167684" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-167684"><a href="/media/">Media</a></li>
+<li id="menu-item-167679" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167679"><a href="https://www.atlanticcouncil.org/careers/">Careers</a></li>
+</ul>					<img class="gta-footer--logo" src="https://www.atlanticcouncil.org/wp-content/themes/atlantic-council/dist/images/Atlantic Council - White logotype.svg" onerror="this.src='https://www.atlanticcouncil.org/wp-content/themes/atlantic-council/dist/images/logo.png'" alt="Site Logo" />
+					<div class="gta-footer--copyright">
+						<p>&copy; 2021 Atlantic Council<br />
+						All rights reserved.</p>
+					</div>
+					<ul id="footer-legal" class="menu"><li id="menu-item-167665" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167665"><a href="https://www.atlanticcouncil.org/privacy-policy/">Privacy policy</a></li>
+<li id="menu-item-173583" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-173583"><a href="https://www.atlanticcouncil.org/cookie-policy/">Cookie policy</a></li>
+<li id="menu-item-173584" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-173584"><a href="https://www.atlanticcouncil.org/terms-of-use/">Terms and conditions of use</a></li>
+<li id="menu-item-167667" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167667"><a href="https://www.atlanticcouncil.org/intellectual-independence-policy/">Intellectual independence policy</a></li>
+<li id="menu-item-167670" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167670"><a href="https://www.atlanticcouncil.org/government-funding-review-process/">Government funding review process</a></li>
+<li id="menu-item-167668" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-167668"><a href="https://www.atlanticcouncil.org/policy-on-donor-acceptance-and-disclosure/">Policy on donor acceptance and disclosure</a></li>
+<li id="menu-item-197707" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-197707"><a href="https://www.atlanticcouncil.org/photo-credits/">Photo credits</a></li>
+</ul>				</div>
+			</div>
+		</div>
+	</footer>
+
+</div><!-- #page -->
+
+<script type="text/javascript">				jQuery(document).ready(function () {
+					jQuery('.remove_tooltip_effect .tooltipsall').each
+					(function()
+					{
+					disabletooltipinhtmltagSinglei = jQuery(this).html();
+					jQuery(this).replaceWith(disabletooltipinhtmltagSinglei);
+					})
+				})
+				</script><script type="text/javascript">
+var inboxs = new Array();
+inboxs['language'] = "en";
+inboxs['hidezeronumberitem'] = "no";
+inboxs['selectors'] = '.tooltips_list > span';
+inboxs['navitemdefaultsize'] = '12px'; 
+inboxs['navitemselectedsize'] = '14px';
+inboxs['navitembackground'] = '#007DBD';inboxs['number'] = "yes";
+//!!!jQuery('.tooltips_directory').directory(inboxs);
+jQuery(document).ready(function () {
+	jQuery('.tooltips_directory').directory(inboxs);  //!!!
+	jQuery('.navitem').css('font-size','12px');	
+})
+</script>
+<script type="text/javascript">
+jQuery(document).ready(function () {
+	jQuery('.classtoolTipsCustomShortCode').each(function()
+	{
+		   jQuery(this).html(jQuery(this).text());
+	});
+})
+</script>
+	<script type="text/javascript">
+	
+	jQuery(document).ready(function () {
+		jQuery('.tooltipsall:has(img)').css('border-bottom','0px');
+		jQuery('.tooltipsall > img').css('border-bottom','2px dotted #888888');
+		jQuery('.tooltipsall > img').css('padding','0px 0px 6px 0px');
+	})
+	</script>	
+<script type="text/javascript">jQuery("document").ready(function(){ var tt_store_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit\. Proin fringilla commodo metus, ut dictum ipsum luctus sed\. Aliquam erat volutpat\. Nulla vel ultrices nulla\."; toolTips('.classtoolTips0',tt_store_content,'280405','Tooltiptest2020',' ui-wordpress-tooltip-pro  tipscale '); });</script>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WDZXTM6"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) --><script type='text/javascript' src='https://unpkg.com/intersection-observer?ver=20210101' id='ptko-scrollama-polyfill-js'></script>
+<script type='text/javascript' src='https://unpkg.com/scrollama?ver=20210101' id='ptko-scrollama-js'></script>
+<script type='text/javascript' id='main-scripts-js-extra'>
+/* <![CDATA[ */
+var LOCALIZED = {"url":"https:\/\/www.atlanticcouncil.org","permalink":"https:\/\/www.atlanticcouncil.org","filterTerms":{"focus":[{"name":"Blogs","term":"blogs","category":"focus"},{"name":"Content Series","term":"content-series","category":"focus"},{"name":"Events","term":"events","category":"focus"},{"name":"In-Depth Research &amp; Reports","term":"in-depth-research-reports","category":"focus"},{"name":"Insights &amp; Impact","term":"insight-impact","category":"focus"},{"name":"Members","term":"members","category":"focus"},{"name":"News","term":"news","category":"focus"},{"name":"Resources","term":"resources","category":"focus"},{"name":"Timely Commentary &amp; Analysis","term":"commentary","category":"focus"},{"name":"Uncategorized","term":"uncategorized","category":"focus"},{"name":"Unused","term":"unused","category":"focus"}],"regions":[{"name":"Africa","term":"africa","category":"regions"},{"name":"Americas","term":"americas","category":"regions"},{"name":"Europe &amp; Eurasia","term":"europe-eurasia","category":"regions"},{"name":"Indo-Pacific","term":"indo-pacific","category":"regions"},{"name":"Middle East","term":"middle-east","category":"regions"}],"issues":[{"name":"Economy &amp; Business","term":"economy-business","category":"issues"},{"name":"Energy &amp; Environment","term":"energy-environment","category":"issues"},{"name":"Politics &amp; Diplomacy","term":"politics-diplomacy","category":"issues"},{"name":"Resilience &amp; Society","term":"resilience-society","category":"issues"},{"name":"Security &amp; Defense","term":"security-defense","category":"issues"},{"name":"Technology &amp; Innovation","term":"technology-innovation","category":"issues"}]}};
+/* ]]> */
+</script>
+<script type='text/javascript' src='https://www.atlanticcouncil.org/wp-content/themes/atlantic-council/dist/scripts/main.js?ver=20210212' id='main-scripts-js'></script>
+<script type='text/javascript' id='jquery-lazyloadxt-js-extra'>
+/* <![CDATA[ */
+var a3_lazyload_params = {"apply_images":"1","apply_videos":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='//www.atlanticcouncil.org/wp-content/plugins/a3-lazy-load/assets/js/jquery.lazyloadxt.extra.min.js?ver=2.4.7' id='jquery-lazyloadxt-js'></script>
+<script type='text/javascript' src='//www.atlanticcouncil.org/wp-content/plugins/a3-lazy-load/assets/js/jquery.lazyloadxt.srcset.min.js?ver=2.4.7' id='jquery-lazyloadxt-srcset-js'></script>
+<script type='text/javascript' id='jquery-lazyloadxt-extend-js-extra'>
+/* <![CDATA[ */
+var a3_lazyload_extend_params = {"edgeY":"0","horizontal_container_classnames":""};
+/* ]]> */
+</script>
+<script type='text/javascript' src='//www.atlanticcouncil.org/wp-content/plugins/a3-lazy-load/assets/js/jquery.lazyloadxt.extend.js?ver=2.4.7' id='jquery-lazyloadxt-extend-js'></script>
+<script type='text/javascript' src='https://www.atlanticcouncil.org/wp-includes/js/wp-embed.min.js?ver=5.8' id='wp-embed-js'></script>
+<script type='text/javascript' src='https://www.atlanticcouncil.org/wp-includes/js/dist/vendor/regenerator-runtime.min.js?ver=0.13.7' id='regenerator-runtime-js'></script>
+<script type='text/javascript' src='https://www.atlanticcouncil.org/wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0' id='wp-polyfill-js'></script>
+<script type='text/javascript' src='https://www.atlanticcouncil.org/wp-includes/js/dist/dom-ready.min.js?ver=71883072590656bf22c74c7b887df3dd' id='wp-dom-ready-js'></script>
+<script type='text/javascript' src='https://www.atlanticcouncil.org/wp-includes/js/dist/hooks.min.js?ver=a7edae857aab69d69fa10d5aef23a5de' id='wp-hooks-js'></script>
+<script type='text/javascript' src='https://www.atlanticcouncil.org/wp-includes/js/dist/i18n.min.js?ver=5f1269854226b4dd90450db411a12b79' id='wp-i18n-js'></script>
+<script type='text/javascript' id='wp-i18n-js-after'>
+wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
+</script>
+<script type='text/javascript' id='wp-a11y-js-translations'>
+( function( domain, translations ) {
+	var localeData = translations.locale_data[ domain ] || translations.locale_data.messages;
+	localeData[""].domain = domain;
+	wp.i18n.setLocaleData( localeData, domain );
+} )( "default", { "locale_data": { "messages": { "": {} } } } );
+</script>
+<script type='text/javascript' src='https://www.atlanticcouncil.org/wp-includes/js/dist/a11y.min.js?ver=0ac8327cc1c40dcfdf29716affd7ac63' id='wp-a11y-js'></script>
+<script type='text/javascript' defer='defer' src='https://www.atlanticcouncil.org/wp-content/plugins/gravityforms/js/jquery.json.min.js?ver=2.5.7.7' id='gform_json-js'></script>
+<script type='text/javascript' id='gform_gravityforms-js-extra'>
+/* <![CDATA[ */
+var gform_i18n = {"datepicker":{"days":{"monday":"Mon","tuesday":"Tue","wednesday":"Wed","thursday":"Thu","friday":"Fri","saturday":"Sat","sunday":"Sun"},"months":{"january":"January","february":"February","march":"March","april":"April","may":"May","june":"June","july":"July","august":"August","september":"September","october":"October","november":"November","december":"December"},"firstDay":1}};
+var gf_global = {"gf_currency_config":{"name":"U.S. Dollar","symbol_left":"$","symbol_right":"","symbol_padding":"","thousand_separator":",","decimal_separator":".","decimals":2},"base_url":"https:\/\/www.atlanticcouncil.org\/wp-content\/plugins\/gravityforms","number_formats":[],"spinnerUrl":"https:\/\/www.atlanticcouncil.org\/wp-content\/plugins\/gravityforms\/images\/spinner.svg","strings":{"newRowAdded":"New row added.","rowRemoved":"Row removed","formSaved":"The form has been saved.  The content contains the link to return and complete the form."}};
+var gf_legacy_multi = {"64":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' defer='defer' src='https://www.atlanticcouncil.org/wp-content/plugins/gravityforms/js/gravityforms.min.js?ver=2.5.7.7' id='gform_gravityforms-js'></script>
+<script type='text/javascript' defer='defer' src='https://www.atlanticcouncil.org/wp-content/plugins/gravityforms/js/placeholders.jquery.min.js?ver=2.5.7.7' id='gform_placeholder-js'></script>
+<script type="text/javascript">
+gform.initializeOnLoaded( function() { jQuery(document).on('gform_post_render', function(event, formId, currentPage){if(formId == 64) {if(typeof Placeholders != 'undefined'){
+                        Placeholders.enable();
+                    }} } );jQuery(document).bind('gform_post_conditional_logic', function(event, formId, fields, isInit){} ) } );
+</script>
+<script type="text/javascript">
+gform.initializeOnLoaded( function() { jQuery(document).trigger('gform_post_render', [64, 1]) } );
+</script>
+
+		<!-- Cookie Notice plugin v2.1.0 by Hu-manity.co https://hu-manity.co/ -->
+		<div id="cookie-notice" role="banner" class="cookie-notice-hidden cookie-revoke-hidden cn-position-bottom" aria-label="Cookie Notice" style="background-color: rgba(0,85,150,1);"><div class="cookie-notice-container" style="color: #fff;"><span id="cn-notice-text" class="cn-text-container">This website or its third-party tools use cookies, which are necessary for its functioning and required to achieve the purposes illustrated in the cookie policy.<br><br>
+You accept the use of cookies as per our <a href="/cookie-policy/" style="color:#f2783e">Cookie Policy</a> and <a href="/privacy-policy/" style="color:#f2783e">Privacy Policy</a> by closing or dismissing this notice, by scrolling this page, by clicking a link or button or by continuing to browse otherwise.<br></span><span id="cn-notice-buttons" class="cn-buttons-container"><a href="#" id="cn-accept-cookie" data-cookie-set="accept" class="cn-set-cookie cn-button wp-default button" aria-label="Ok">Ok</a></span><a href="javascript:void(0);" id="cn-close-notice" data-cookie-set="accept" class="cn-close-icon" aria-label="Ok"></a></div>
+			
+		</div>
+		<!-- / Cookie Notice plugin -->
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam-cell.nr-data.net","licenseKey":"NRJS-966aa276557c9c00e3d","applicationID":"542099521","transactionName":"YARTYhcHVktSWkcPDVlOcFURD1dWHEpaCAVbBA==","queueTime":0,"applicationTime":788,"atts":"TENQFF8dRUU=","errorBeacon":"bam-cell.nr-data.net","agent":""}</script></body>
+</html>

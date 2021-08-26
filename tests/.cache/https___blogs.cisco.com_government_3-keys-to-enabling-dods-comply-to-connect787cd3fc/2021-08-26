@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en-US" class="no-touch js ">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--<link rel="profile" href="https://gmpg.org/xfn/11"> -->
+
+	<meta name="blogsPostDate" content="2019-01-15 05:01:14"/><meta name="blogsPostAuthor" content="Matt McCook"/><meta name="blogsPostTags" content="automation,c2c,cisco-identity-service-engine-ise,cisco-identity-services-engine,cisco-ise-platform-exchange-grid-pxgrid,collaboration-endpoints,comply-to-connect,connected-military,department-of-defense,dod,federal,governmenttag,integration,ise,military,pxgrid,security-2,tanium,"/><meta name="blogsPostCat" content="Government"/><meta name="article:category" content="Government"/>	<!-- loading cdc-template web component scripts -->
+	<script type='text/javascript' src="//www.cisco.com/etc/designs/cdc/clientlibs/responsive/js/web-component-foundation.min.js"></script>
+	<script>
+	/**
+	* Invokes appropriate private methods based on input parameters based on needs of web component architecture
+	* @param {Array} wcAssets array of strings that correlate to the names of web components or array of objects containing asset name and corresponding locale/path
+	* @param {String} localePath specifies where web component should be retrieved from (expected format: en/us or en_au for all other locales); false if wcAssets, is array of objects
+	* @param {Boolean} isWem [Optional] specifies if assets are being loaded on a WEM environment
+	* @param {Boolean} needTargetter [Optional] specifies need for targetter bundle to be loaded (generally needed on external sites)
+	* @param {Boolean} isRelative [Optional] specifies if asset path(s) should be relative
+	* @param {String} env [Optional] specifies enviornment to append to relative path (should not be used with isRelative)
+	* @param {Boolean} hasEnvOverride [Optional] specifies if environment needs to be overridden (should be used with env)
+	*/
+	cdc.wcAncillaryAssetAllocator.init(['cdc-template-blogs'], 'en/us', false, true, false, 'prod');
+	if (window.cdc === undefined) { window.cdc = {}; }
+	if (cdc.cdcMasthead === undefined) { cdc.cdcMasthead = {}; }
+	if (cdc.cdcMasthead.additional === undefined) { cdc.cdcMasthead.additional = {}; }
+	cdc.cdcMasthead.additional.env = 'prod';
+	</script>
+
+		<script type="text/javascript">
+
+	if ( typeof cdc === "undefined")cdc = {};
+	if ( typeof cdc.util === "undefined")cdc.util = {};
+	cdc.util.ensureNamespace = function (namespaceStr) {
+  		if (!namespaceStr) { return;
+    		var parts = namespaceStr.split(".");
+    		var o = window;
+    		var i;
+    		var aPart;
+    		for (i = 0; i < parts.length; i++)
+      			aPart = parts[i];
+     		 	if (typeof (o[aPart]) != "object"){
+        			o[aPart] = {};
+				}
+        		o = o[aPart];
+  		}
+	};
+
+	cdc.dm = {};
+	cdc.dm.util = {};
+	cdc.dm.util.ensureNamespace = cdc.util.ensureNamespace;
+	</script>
+
+	<script type="text/javascript" src="//www.cisco.com/c/dam/cdc/t/ctm-core.js"></script>
+
+
+	<!-- This site is optimized with the Yoast SEO Premium plugin v15.2 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>3 Keys to Enabling DoD&#039;s Comply-to-Connect - Cisco Blogs</title>
+	<meta name="description" content="Answering our nation&#039;s call for integrated security – how Cisco and Tanium are making DoD device security more automated through Cisco pXGrid." />
+	<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+	<link rel="canonical" href="https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="3 Keys to Enabling DoD&#039;s Comply-to-Connect - Cisco Blogs" />
+	<meta property="og:description" content="Answering our nation&#039;s call for integrated security – how Cisco and Tanium are making DoD device security more automated through Cisco pXGrid." />
+	<meta property="og:url" content="https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect" />
+	<meta property="og:site_name" content="Cisco Blogs" />
+	<meta property="article:published_time" content="2019-01-15T13:01:14+00:00" />
+	<meta property="article:modified_time" content="2019-02-12T22:04:00+00:00" />
+	<meta property="og:image" content="https://storage.googleapis.com/blogs-images/ciscoblogs/1/5c3cf063e2400.jpg" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="628" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:label1" value="Written by">
+	<meta name="twitter:data1" value="Matt McCook">
+	<meta name="twitter:label2" value="Est. reading time">
+	<meta name="twitter:data2" value="3 minutes">
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://blogs.cisco.com/#organization","name":"Cisco Systems","url":"https://blogs.cisco.com/","sameAs":[],"logo":{"@type":"ImageObject","@id":"https://blogs.cisco.com/#logo","inLanguage":"en-US","url":"https://storage.googleapis.com/blogs-images/ciscoblogs/1/2020/10/Cisco_Logo_no_TM_Sky_Blue-RGB.png","width":912,"height":482,"caption":"Cisco Systems"},"image":{"@id":"https://blogs.cisco.com/#logo"}},{"@type":"WebSite","@id":"https://blogs.cisco.com/#website","url":"https://blogs.cisco.com/","name":"Cisco Blogs","description":"","publisher":{"@id":"https://blogs.cisco.com/#organization"},"potentialAction":[{"@type":"SearchAction","target":"https://blogs.cisco.com/?s={search_term_string}","query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"ImageObject","@id":"https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect#primaryimage","inLanguage":"en-US","url":"https://storage.googleapis.com/blogs-images/ciscoblogs/1/5c3cf063e2400.jpg","width":1200,"height":628,"caption":"Cisco_Tanium_Cybersecurity_DoD"},{"@type":"WebPage","@id":"https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect#webpage","url":"https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect","name":"3 Keys to Enabling DoD's Comply-to-Connect - Cisco Blogs","isPartOf":{"@id":"https://blogs.cisco.com/#website"},"primaryImageOfPage":{"@id":"https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect#primaryimage"},"datePublished":"2019-01-15T13:01:14+00:00","dateModified":"2019-02-12T22:04:00+00:00","description":"Answering our nation's call for integrated security \u2013 how Cisco and Tanium are making DoD device security more automated through Cisco pXGrid.","breadcrumb":{"@id":"https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect"]}]},{"@type":"BreadcrumbList","@id":"https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"WebPage","@id":"https://blogs.cisco.com/","url":"https://blogs.cisco.com/","name":"Cisco Blogs"}},{"@type":"ListItem","position":2,"item":{"@type":"WebPage","@id":"https://blogs.cisco.com/government","url":"https://blogs.cisco.com/government","name":"Government"}},{"@type":"ListItem","position":3,"item":{"@type":"WebPage","@id":"https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect","url":"https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect","name":"3 Keys to Enabling DoD&#8217;s Comply-to-Connect"}}]},{"@type":"Article","@id":"https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect#article","isPartOf":{"@id":"https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect#webpage"},"author":{"@id":"https://blogs.cisco.com/#/schema/person/d66e00116233278b7b9548c3c4a0bec8"},"headline":"3 Keys to Enabling DoD&#8217;s Comply-to-Connect","datePublished":"2019-01-15T13:01:14+00:00","dateModified":"2019-02-12T22:04:00+00:00","mainEntityOfPage":{"@id":"https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect#webpage"},"commentCount":5,"publisher":{"@id":"https://blogs.cisco.com/#organization"},"image":{"@id":"https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect#primaryimage"},"keywords":"automation,C2C,Cisco Identity Service Engine (ISE),Cisco Identity Services Engine,Cisco ISE Platform Exchange Grid (pxGrid),collaboration endpoints,Comply-to-Connect,Connected Military,Department of Defense,dod,federal,government,integration,ISE,military,pxGrid,security,tanium","articleSection":"Government","inLanguage":"en-US"},{"@type":"Person","@id":"https://blogs.cisco.com/#/schema/person/d66e00116233278b7b9548c3c4a0bec8","name":"Matt McCook","image":{"@type":"ImageObject","@id":"https://blogs.cisco.com/#personlogo","inLanguage":"en-US","url":"https://storage.googleapis.com/blogs-images/ciscoblogs/1/2020/08/cisco_logo.png","caption":"Matt McCook"},"description":"Matthew McCook is the Cyber Security Regional Manager at Cisco Systems serving the United Stated Department of Defense. Matthew has been with Cisco\u2019s Global Security Sales Organization since 2013, but serving the DoD community for over 12 years. Additionally, Matt has over 20 years experience in the telecom industry supporting enterprise and service provider markets."}]}</script>
+	<!-- / Yoast SEO Premium plugin. -->
+
+
+<link rel='dns-prefetch' href='//www.cisco.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Cisco Blogs &raquo; Feed" href="https://blogs.cisco.com/feed" />
+<link rel="alternate" type="application/rss+xml" title="Cisco Blogs &raquo; Comments Feed" href="https://blogs.cisco.com/comments/feed" />
+<link rel="alternate" type="application/rss+xml" title="Cisco Blogs &raquo; 3 Keys to Enabling DoD&#8217;s Comply-to-Connect Comments Feed" href="https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect/feed" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.0.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/blogs.cisco.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.5.1"}};
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,8205,55356,57212],[55357,56424,8203,55356,57212])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css'  href='https://blogs.cisco.com/wp-includes/css/dist/block-library/style.min.css?ver=5.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-components-css'  href='https://blogs.cisco.com/wp-includes/css/dist/components/style.min.css?ver=5.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-editor-font-css'  href='https://fonts.googleapis.com/css?family=Noto+Serif%3A400%2C400i%2C700%2C700i&#038;ver=5.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-editor-css'  href='https://blogs.cisco.com/wp-includes/css/dist/block-editor/style.min.css?ver=5.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-nux-css'  href='https://blogs.cisco.com/wp-includes/css/dist/nux/style.min.css?ver=5.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-editor-css'  href='https://blogs.cisco.com/wp-includes/css/dist/editor/style.min.css?ver=5.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='mux_video_block_style-css'  href='https://blogs.cisco.com/wp-content/plugins/ilab-media-tools/public/blocks/mediacloud-mux.blocks.style.css' type='text/css' media='all' />
+<link rel='stylesheet' id='ciscowordpress-style-css'  href='https://blogs.cisco.com/wp-content/themes/ciscowordpress/style.css?ver=5.5.1' type='text/css' media='all' />
+<style id='ciscowordpress-style-inline-css' type='text/css'>
+@media only screen and (min-width: 930px){
+ul#featured_categories li{
+width: calc(100%/ 5 );
+}}
+</style>
+<link rel='stylesheet' id='cui-standard-css'  href='https://www.cisco.com/web/fw/cisco-ui/1.3.5/dist/css/cui-standard.min.css?ver=5.5.1' type='text/css' media='all' />
+<link rel='stylesheet' id='style_login_widget-css'  href='https://blogs.cisco.com/wp-content/plugins/miniorange-oauth-oidc-single-sign-on/resources/css/style_login_widget.css?ver=5.5.1' type='text/css' media='all' />
+<script type='text/javascript' src='https://code.jquery.com/jquery-3.4.1.min.js?ver=3.1.1' id='jquery-core-js'></script>
+<script type='text/javascript' src='https://blogs.cisco.com/wp-content/themes/ciscowordpress/js/card-dropdown.js?ver=5.5.1' id='ciscowordpress-card-tag-dropdown-js'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blogs.cisco.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blogs.cisco.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 5.5.1" />
+<link rel='shortlink' href='https://blogs.cisco.com/?p=271452' />
+<link rel="alternate" type="application/json+oembed" href="https://blogs.cisco.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fblogs.cisco.com%2Fgovernment%2F3-keys-to-enabling-dods-comply-to-connect" />
+<link rel="alternate" type="text/xml+oembed" href="https://blogs.cisco.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fblogs.cisco.com%2Fgovernment%2F3-keys-to-enabling-dods-comply-to-connect&#038;format=xml" />
+<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><link rel="icon" href="https://storage.googleapis.com/blogs-images/ciscoblogs/1/2020/03/8c630e69-cropped-b44a9049-cropped-screen-shot-2019-11-08-at-12.24.33-pm-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://storage.googleapis.com/blogs-images/ciscoblogs/1/2020/03/8c630e69-cropped-b44a9049-cropped-screen-shot-2019-11-08-at-12.24.33-pm-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://storage.googleapis.com/blogs-images/ciscoblogs/1/2020/03/8c630e69-cropped-b44a9049-cropped-screen-shot-2019-11-08-at-12.24.33-pm-180x180.png" />
+<meta name="msapplication-TileImage" content="https://storage.googleapis.com/blogs-images/ciscoblogs/1/2020/03/8c630e69-cropped-b44a9049-cropped-screen-shot-2019-11-08-at-12.24.33-pm-270x270.png" />
+</head>
+<cdc-template-micro lang="en" search-set-context="blogs">
+<body class="post-template-default single single-post postid-271452 single-format-standard">
+
+<div id="page" class="site">
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+	<header id="masthead" class="site-header">
+
+	</header><!-- #masthead -->
+
+	<div id="content" class="site-content">
+
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main">
+			<p id="breadcrumbs"><span><span><a href="https://blogs.cisco.com/">Cisco Blogs</a> / <span><a href="https://blogs.cisco.com/government">Government</a> / <span class="breadcrumb_last" aria-current="page">3 Keys to Enabling DoD&#8217;s Comply-to-Connect</span></span></span></span></p>
+				<div class="blog-post-header">
+				</div>
+<article id="post-271452" class="post-271452 post type-post status-publish format-standard has-post-thumbnail hentry category-government tag-automation tag-c2c tag-cisco-identity-service-engine-ise tag-cisco-identity-services-engine tag-cisco-ise-platform-exchange-grid-pxgrid tag-collaboration-endpoints tag-comply-to-connect tag-connected-military tag-department-of-defense tag-dod tag-federal tag-governmenttag tag-integration tag-ise tag-military tag-pxgrid tag-security-2 tag-tanium">
+<div class="main-content">
+	<header class="entry-header">
+					<div class="entry-meta">
+				January 15, 2019				<a id="post-comments" href="https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect#comments">5 Comments</a>
+				<hr>
+			</div><!-- .entry-meta -->
+			</header><!-- .entry-header -->
+
+	<div class="blog-post-header">
+		<div class="thumbnail-avatar">
+			<div class="post-thumbnail" style="background-image:url(https://storage.googleapis.com/blogs-images/ciscoblogs/1/5c3cf063e2400.jpg);">
+				<img src="https://alln-extcloud-storage.cisco.com/ciscoblogs/userphoto/1544571915-bpfull.jpg" width="102" height="102" alt="Avatar" class="avatar avatar-102 wp-user-avatar wp-user-avatar-102 photo avatar-default">
+			</div>
+		</div>
+		<div class="blog-cat-post-author-container">
+			<a href=https://blogs.cisco.com/government><h5>Government</h5></a>
+			<h1 class="entry-title">3 Keys to Enabling DoD&#8217;s Comply-to-Connect</h1>			<p> <a href="https://blogs.cisco.com/author/mattmccook" title="Posts by Matt McCook" rel="author">Matt McCook</a> </p>
+		</div>
+	</div> <!-- .blog-post-header -->
+	<div class="entry-content">
+		<p><strong><img loading="lazy" class="alignleft wp-image-271453 " src="https://storage.googleapis.com/blogs-images/ciscoblogs/1/5c33857bd476e-150x150.png" alt="Chad Mitchell Cisco Tanium DoD" width="66" height="66" /></strong></p>
+<p><strong>Co-author:</strong></p>
+<p>Chad Mitchel  |  DoD Technical Solutions Architect at Cisco</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><em>The U.S. Department of Defense (DoD) has long been on the forefront of technology innovation when it comes to increasing mission success. But as technology evolves, so does the cybersecurity threat landscape. This means the military’s IT leaders must be on alert 24/7.</em></p>
+<h2>The three keys to DoD security posture</h2>
+<p>Commercial vendors are good at handling pressure. But when it comes to supporting the DoD, it is important that they also continually seek innovation; plus support military folks as much as they can and do their best to help ensure national security. But perhaps they should first ask “what do defense agencies want from technology vendors?”</p>
+<p>I’ve had conversations with agencies across the U.S. Department of Defense (DoD) and there are three things defense agencies really want regarding their security posture capability:</p>
+<ol>
+<li>To leverage security investments they already own</li>
+<li>To increase automated capabilities</li>
+<li>Get industry vendors working together to deliver solutions to protect the mission.</li>
+</ol>
+<p>Not too tall of an order, right? To help address these, Cisco built an open security architecture inviting industry collaboration across the security ecosystem. More than 150 companies have joined into Cisco’s <a href="https://www.cisco.com/c/en/us/products/security/pxgrid.html" target="_blank" rel="noopener">pXGrid</a>, which is a publisher/subscriber framework where security capabilities, information, and context are exchanged. No matter the technology vendor, security solutions work together for the sake of the defense missions at hand.</p>
+<p>For example, this exchange enables user identity and access technology to integrate with device health and posture assessments to grant policy-based network access. So a soldier with a cell phone can be granted access to certain data, pending where they are, and if their device needs an update then remediation can automatically be done. This approach saves management time on the backend and possible mission interruptions on the frontend. This is the desired end state of <a href="https://www.cisco.com/c/dam/en_us/solutions/industries/docs/fed-dod-comply2connect.pdf">DoD’s long-awaited Comply-to-Connect (C2C) initiatives</a>.</p>
+<h2>Growing our security ecosystem with Tanium</h2>
+<p>This security ecosystem is continuing to grow, and in a very exciting way. This includes a new industry integration for DoD: Cisco and <a href="https://www.tanium.com/" target="_blank" rel="noopener">Tanium</a>. Tanium is one of the leading endpoint communications architectures used by the DoD to provide quick visibility and control across every endpoint on the network. These type of security functions are essential to any defense mission, at home or on the battlefield.</p>
+<p>If a defense agency utilizes both Tanium and <a href="https://www.cisco.com/c/en/us/products/security/identity-services-engine/index.html" target="_blank" rel="noopener">Cisco’s Identity Services Engine (ISE)</a>, ISE can interrogate a workstation to determine if the Tanium client is installed. If so, ISE can complete the 802.1X authentication process and allow the endpoint onto the network with the proper network policies applied. If ISE determines Tanium is not installed, the endpoint will be placed into a remediation process to install the client before the process starts again.</p>
+<p>Additionally, once authorized and on the network, Tanium queries the endpoint to determine health, software release, patch, STIG compliance, vulnerability status, etc. If a policy requirement is unsatisfied, Tanium will message over pXGrid to Cisco ISE and automatically place the endpoint into a restricted access or remediation state. The two solutions are literally talking to each other making sure every device on the network has the security posture needed.</p>
+<p>Best of all, this level of security is automatic, flexible, and based on DoD policy. The policy and actions are shared between the ISE/Tanium consoles without administrators writing code to make it happen. Comply-to-Connect – delivered.</p>
+<h2>Tried and tested, and very cool</h2>
+<p>This is just one example of how Cisco is building simple, open, orchestrated, and effective platforms leveraging current DoD investments to better secure the country.</p>
+<p>It’s clear that the DoD needs industry vendors to work together so defense agencies can better utilize current investments and deploy more automated capabilities. As one of the leading vendors for the DoD, Cisco will continue to build the security solutions needed to protect our country.</p>
+<h2>Resource link</h2>
+<p>Learn more about Cisco pXGrid: <a href="https://www.cisco.com/c/en/us/products/security/pxgrid.html" target="_blank" rel="noopener">https://www.cisco.com/c/en/us/products/security/pxgrid.html</a></p>
+<p>Quick resource: <a href="https://www.cisco.com/c/dam/en_us/solutions/industries/docs/fed-dod-comply2connect.pdf">Get up to speed on the DoD&#8217;s Comply-to-Connect initiative</a></p>
+	<div id="share_bar_desktop">
+		<span class = "share_title">Share</span>
+			<div class="twitter">
+	<div class = "box">
+		<a class = "share" href="https://twitter.com/intent/tweet?url=http://bit.ly/2QMRToR&text=3 Keys to Enabling DoD%26#8217;s Comply-to-Connect&via=Cisco" target='_blank' data-config-metrics-group='social_shares' data-config-metrics-title='twitter_shares' data-config-metrics-item='twitter_share'>  <img class="share_image" src="https://blogs.cisco.com/wp-content/themes/ciscowordpress/svg/share_tw_white.svg" alt="share on twitter"></img></a>
+	</div>
+	</div>
+
+	<div class="facebook">
+	<div class = "box">
+		<a class = "share" href = "http://www.facebook.com/sharer/sharer.php?u=https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect&title=3 Keys to Enabling DoD&#8217;s Comply-to-Connect" data-config-metrics-group='social_shares' data-config-metrics-title='facebook_shares' data-config-metrics-item='facebook_share' onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><img class="share_image" src="https://blogs.cisco.com/wp-content/themes/ciscowordpress/svg/share_fb_white.svg" alt="share on facebook"></a>
+	</div>
+	</div>
+
+
+	<div class="linkedin">
+	<div class = "box">
+		<a class = "share" href = "https://www.linkedin.com/cws/share?url=https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect" data-title=" " data-config-metrics-group='social_shares' data-config-metrics-title='linkedin_shares' data-config-metrics-item='linkedin_share' onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><img class="share_image" src="https://blogs.cisco.com/wp-content/themes/ciscowordpress/svg/share_li_white.svg" alt="share on linkedin"></a>
+	</div>
+	</div>
+
+	<div class = "mail">
+	<div class = "box">
+	<a class="share" href="mailto:?subject=Cisco Blog: 3 Keys to Enabling DoD&#8217;s Comply-to-Connect&body=I saw this post on Cisco Blogs and thought you might like to read it.%0A%0A3 Keys to Enabling DoD&#8217;s Comply-to-Connect%0A%0Ahttps://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect%0A%0A****Disclaimer****%0A%0ACisco is not responsible for the content of this email, and its contents do not necessarily reflect Cisco’s views or opinions. Cisco has not verified the email address or name of the sender." data-config-metrics-group='social_shares' data-config-metrics-title='email_shares' data-config-metrics-item='email_share'> <img class="share_image" src="https://blogs.cisco.com/wp-content/themes/ciscowordpress/svg/share_email_white.svg"> </a>
+	</div>
+	</div>
+
+	<div class = "clear"></div>
+  </div>
+	   <br>
+	<div class = "share_text">Share:</div>
+	<div id="share_bar_mobile">
+
+			<div class="twitter">
+	<div class = "box">
+		<a class = "share" href="https://twitter.com/intent/tweet?url=http://bit.ly/2QMRToR&text=3 Keys to Enabling DoD%26#8217;s Comply-to-Connect&via=Cisco" target='_blank' data-config-metrics-group='social_shares' data-config-metrics-title='twitter_shares' data-config-metrics-item='twitter_share'>  <img class="share_image" src="https://blogs.cisco.com/wp-content/themes/ciscowordpress/svg/share_tw_white.svg" alt="share on twitter"></img></a>
+	</div>
+	</div>
+
+	<div class="facebook">
+	<div class = "box">
+		<a class = "share" href = "http://www.facebook.com/sharer/sharer.php?u=https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect&title=3 Keys to Enabling DoD&#8217;s Comply-to-Connect" data-config-metrics-group='social_shares' data-config-metrics-title='facebook_shares' data-config-metrics-item='facebook_share' onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><img class="share_image" src="https://blogs.cisco.com/wp-content/themes/ciscowordpress/svg/share_fb_white.svg" alt="share on facebook"></a>
+	</div>
+	</div>
+
+
+	<div class="linkedin">
+	<div class = "box">
+		<a class = "share" href = "https://www.linkedin.com/cws/share?url=https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect" data-title=" " data-config-metrics-group='social_shares' data-config-metrics-title='linkedin_shares' data-config-metrics-item='linkedin_share' onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;"><img class="share_image" src="https://blogs.cisco.com/wp-content/themes/ciscowordpress/svg/share_li_white.svg" alt="share on linkedin"></a>
+	</div>
+	</div>
+
+	<div class = "mail">
+	<div class = "box">
+	<a class="share" href="mailto:?subject=Cisco Blog: 3 Keys to Enabling DoD&#8217;s Comply-to-Connect&body=I saw this post on Cisco Blogs and thought you might like to read it.%0A%0A3 Keys to Enabling DoD&#8217;s Comply-to-Connect%0A%0Ahttps://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect%0A%0A****Disclaimer****%0A%0ACisco is not responsible for the content of this email, and its contents do not necessarily reflect Cisco’s views or opinions. Cisco has not verified the email address or name of the sender." data-config-metrics-group='social_shares' data-config-metrics-title='email_shares' data-config-metrics-item='email_share'> <img class="share_image" src="https://blogs.cisco.com/wp-content/themes/ciscowordpress/svg/share_email_white.svg"> </a>
+	</div>
+	</div>
+
+	<div class = "clear"></div>
+
+	</div>
+	<br>
+  	</div><!-- .entry-content -->
+		</div>
+	<footer class="entry-footer">
+			</footer><!-- .entry-footer -->
+</article><!-- #post-271452 -->
+ <div id="tags-container">Tags: <a href="https://blogs.cisco.com/tag/automation" rel="tag">automation</a> <a href="https://blogs.cisco.com/tag/c2c" rel="tag">C2C</a> <a href="https://blogs.cisco.com/tag/cisco-identity-service-engine-ise" rel="tag">Cisco Identity Service Engine (ISE)</a> <a href="https://blogs.cisco.com/tag/cisco-identity-services-engine" rel="tag">Cisco Identity Services Engine</a> <a href="https://blogs.cisco.com/tag/cisco-ise-platform-exchange-grid-pxgrid" rel="tag">Cisco ISE Platform Exchange Grid (pxGrid)</a> <a href="https://blogs.cisco.com/tag/collaboration-endpoints" rel="tag">collaboration endpoints</a> <a href="https://blogs.cisco.com/tag/comply-to-connect" rel="tag">Comply-to-Connect</a> <a href="https://blogs.cisco.com/tag/connected-military" rel="tag">Connected Military</a> <a href="https://blogs.cisco.com/tag/department-of-defense" rel="tag">Department of Defense</a> <a href="https://blogs.cisco.com/tag/dod" rel="tag">dod</a> <a href="https://blogs.cisco.com/tag/federal" rel="tag">federal</a> <a href="https://blogs.cisco.com/tag/governmenttag" rel="tag">government</a> <a href="https://blogs.cisco.com/tag/integration" rel="tag">integration</a> <a href="https://blogs.cisco.com/tag/ise" rel="tag">ISE</a> <a href="https://blogs.cisco.com/tag/military" rel="tag">military</a> <a href="https://blogs.cisco.com/tag/pxgrid" rel="tag">pxGrid</a> <a href="https://blogs.cisco.com/tag/security-2" rel="tag">security</a> <a href="https://blogs.cisco.com/tag/tanium" rel="tag">tanium</a> <hr id="comment-break-line"> </div> 
+<div id="comments" class="comments-area">
+
+	
+		<h2 class="comments-title">
+			5 Comments		</h2><!-- .comments-title -->
+
+		
+		<ul class="comment-list">
+					<li id="comment-2514752" class="comment even thread-even depth-1">
+			<article id="div-comment-2514752" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img src="https://storage.googleapis.com/blogs-images/ciscoblogs/1/2020/08/cisco_logo.png" width="32" height="23" alt="Avatar" class="avatar avatar-32wp-user-avatar wp-user-avatar-32 alignnone photo avatar-default" />						<b class="fn">Anonymous</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect#comment-2514752">
+							<time datetime="2019-01-15T17:25:22-08:00">
+								January 15, 2019 at 5:25 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Great blog Matt!</p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-2514753" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-2514753" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img src="https://storage.googleapis.com/blogs-images/ciscoblogs/1/2020/08/cisco_logo.png" width="32" height="23" alt="Avatar" class="avatar avatar-32wp-user-avatar wp-user-avatar-32 alignnone photo avatar-default" />						<b class="fn">Anonymous</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect#comment-2514753">
+							<time datetime="2019-01-15T17:26:11-08:00">
+								January 15, 2019 at 5:26 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Excellent blog Matt!</p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-2514763" class="comment even thread-even depth-1">
+			<article id="div-comment-2514763" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img src="https://storage.googleapis.com/blogs-images/ciscoblogs/1/2020/08/cisco_logo.png" width="32" height="23" alt="Avatar" class="avatar avatar-32wp-user-avatar wp-user-avatar-32 alignnone photo avatar-default" />						<b class="fn">Will Ash</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect#comment-2514763">
+							<time datetime="2019-01-16T06:49:12-08:00">
+								January 16, 2019 at 6:49 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Great piece Matt and Chad! The approach and integration therein is clearly a product of years of hard work. It stands to be very impactful in the DoD Security space. Looking forward to the progress/success. I encourage everyone to amplify on their social channels. Thanks for your leadership!</p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-2514764" class="comment odd alt thread-odd thread-alt depth-1">
+			<article id="div-comment-2514764" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img src="https://storage.googleapis.com/blogs-images/ciscoblogs/1/2020/08/cisco_logo.png" width="32" height="23" alt="Avatar" class="avatar avatar-32wp-user-avatar wp-user-avatar-32 alignnone photo avatar-default" />						<b class="fn">Anonymous</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect#comment-2514764">
+							<time datetime="2019-01-16T06:49:31-08:00">
+								January 16, 2019 at 6:49 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Great piece Matt and Chad! The approach and integration therein is clearly a product of years of hard work. It stands to be very impactful in the DoD Security space. Looking forward to the progress/success. I encourage everyone to amplify on their social channels. Thanks for your leadership!</p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-2515018" class="comment even thread-even depth-1">
+			<article id="div-comment-2515018" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img src="https://storage.googleapis.com/blogs-images/ciscoblogs/1/2020/08/cisco_logo.png" width="32" height="23" alt="Avatar" class="avatar avatar-32wp-user-avatar wp-user-avatar-32 alignnone photo avatar-default" />						<b class="fn">Kenn Dodson</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://blogs.cisco.com/government/3-keys-to-enabling-dods-comply-to-connect#comment-2515018">
+							<time datetime="2019-01-23T07:49:17-08:00">
+								January 23, 2019 at 7:49 am							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thanks for writing Matt/Chad. And thanks for the link to the Military Network Modernization event &#8211; I hope it goes well.</p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		</ul><!-- .comment-list -->
+
+					<p class="no-comments">Comments are closed.</p>
+			
+</div><!-- #comments -->
+
+
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+
+		</div><!-- #content -->
+
+		
+		<!-- Open Social Footer -->
+		<div id="social-footer" class="blog-row">
+			<ul class="social-footer-item item-full">
+				<h5> CONNECT WITH CISCO </h5>
+				<ul id="social-icons-list">
+					<li> <a href="https://www.linkedin.com/company/cisco/" target="_blank" rel=”noopener noreferrer” tabindex="0" alt="Go to Cisco's LinkedIn"><svg width="32" height="32" viewBox="0 0 32 32" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="m24.80382,24.53603l-3.70694,0l0,-5.62559c0,-1.34209 -0.02431,-3.06801 -1.92709,-3.06801c-1.92986,0 -2.22361,1.46262 -2.22361,2.97171l0,5.72189l-3.70347,0l0,-11.56902l3.55417,0l0,1.58181l0.05069,0c0.49445,-0.90976 1.70486,-1.86868 3.50903,-1.86868c3.75347,0 4.44722,2.39528 4.44722,5.51111l0,6.34478zm-15.74236,-13.1495c-1.19097,0 -2.15139,-0.934 -2.15139,-2.08552c0,-1.15084 0.96042,-2.08485 2.15139,-2.08485c1.18611,0 2.14931,0.93401 2.14931,2.08485c0,1.15152 -0.9632,2.08552 -2.14931,2.08552l0,0zm1.85486,13.1495l0,-11.56902l-3.71111,0l0,11.56902l3.71111,0zm15.73403,-20.65724l-21.30556,0c-1.01736,0 -1.84444,0.78249 -1.84444,1.74815l0,20.74545c0,0.96499 0.82708,1.74882 1.84444,1.74882l21.30556,0c1.02014,0 1.84931,-0.78383 1.84931,-1.74882l0,-20.74545c0,-0.96566 -0.82917,-1.74815 -1.84931,-1.74815l0,0z" fill="#fff" fill-rule="evenodd"></path></svg></a></li>
+					<li> <a href="https://twitter.com/Cisco" target="_blank" rel=”noopener noreferrer” tabindex="0" alt="Go to Cisco's Twitter"><svg width="32" height="32" viewBox="0 0 32 32" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="m31.38462,7.26845c-1.15385,0.48174 -2.30769,0.84304 -3.58974,0.96348c1.28205,-0.72261 2.30769,-3.54002 2.82051,-4.21523c-1.28205,1.27739 -2.5641,0.79565 -3.97436,0.55478c-1.28205,-0.79565 -2.94872,-0.07304 -4.74359,-0.07304c-3.46154,0 -6.28205,2.64957 -6.28205,5.90132c0,0.48174 0,0.96348 0.12821,1.32479c-5.25642,-0.24087 -9.8718,-2.52914 -12.94872,-6.31003c-0.64103,-0.84304 -0.89744,2.0948 -0.89744,3.17871c0,2.0474 1.15385,3.85393 2.82051,4.93784c-1.02564,-0.12043 -2.05128,-0.3613 -2.82051,-0.72261c0,0 0,0 0,0.12044c0,2.89044 2.17949,5.29914 5,5.78088c-0.51282,0.12044 -1.02564,0.24087 -1.66667,0.24087c-0.38461,0 -0.76923,0 -1.15384,-0.12043c0.76923,2.4087 3.07692,4.09479 5.89743,4.09479c-2.17948,1.56566 -4.87179,2.52914 -7.82051,2.52914c-0.51282,0 -1.02564,0 -1.53846,-0.12043c2.82051,1.50152 6.15385,2.64957 9.61538,2.64957c11.66667,0 17.94872,-9.03264 17.94872,-16.86092l0,-0.72261c1.28205,-0.84304 2.30769,-1.92696 3.20513,-3.13131" fill="#fff"></path></svg></a></li>
+					<li> <a href="https://www.facebook.com/cisco/" target="_blank" rel=”noopener noreferrer” tabindex="0" alt="Go to Cisco's Facebook"><svg width="32" height="32" viewBox="0 0 32 32" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="m26.62006,4l-22.2403,0c-0.7622,0 -1.37976,0.59894 -1.37976,1.33804l0,21.56635c0,0.73891 0.61756,1.33803 1.37976,1.33803l11.97343,0l0,-9.38796l-3.25793,0l0,-3.65868l3.25793,0l0,-2.69815c0,-3.13113 1.97213,-4.83613 4.85266,-4.83613c1.37975,0 2.56571,0.09955 2.91135,0.14415l0,3.2722l-1.99788,0.00091c-1.56654,0 -1.86993,0.72183 -1.86993,1.7812l0,2.33582l3.7362,0l-0.48652,3.65868l-3.24968,0l0,9.38796l6.37067,0c0.76191,0 1.37975,-0.59912 1.37975,-1.33803l0,-21.56635c0,-0.7391 -0.61784,-1.33804 -1.37975,-1.33804" fill="#fff"></path></svg></a></li>
+					<li> <a href="https://www.instagram.com/cisco/?hl=en" target="_blank" rel=”noopener noreferrer” tabindex="0" alt= "Go to Cisco's Instagram"><svg width="32" height="32" viewBox="0 0 32 32" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g fill="#fff"><path d="m22.23823,2.07724l-12.4768,0c-4.23706,0 -7.68419,3.44729 -7.68419,7.68435l0,12.4768c0,4.23723 3.44713,7.68436 7.68419,7.68436l12.4768,0c4.23739,0 7.68452,-3.4473 7.68452,-7.68436l0,-12.4768c0.00016,-4.23706 -3.44713,-7.68435 -7.68452,-7.68435zm5.21409,20.16115c0,2.87494 -2.33899,5.21377 -5.21393,5.21377l-12.47696,0c-2.87478,0.00016 -5.2136,-2.33883 -5.2136,-5.21377l0,-12.4768c0,-2.87477 2.33882,-5.21376 5.2136,-5.21376l12.4768,0c2.87494,0 5.21393,2.33899 5.21393,5.21376l0,12.4768l0.00016,0z"></path><path d="m15.99999,8.82524c-3.9564,0 -7.17508,3.21868 -7.17508,7.17508c0,3.95624 3.21868,7.17476 7.17508,7.17476c3.9564,0 7.17509,-3.21852 7.17509,-7.17476c0,-3.9564 -3.21869,-7.17508 -7.17509,-7.17508zm0,11.87908c-2.59395,0 -4.70449,-2.11021 -4.70449,-4.70416c0,-2.59412 2.11038,-4.7045 4.70449,-4.7045c2.59412,0 4.7045,2.11038 4.7045,4.7045c0,2.59395 -2.11054,4.70416 -4.7045,4.70416z"></path><path d="m23.47599,6.73035c-0.476,0 -0.9436,0.1927 -1.27976,0.53035c-0.33781,0.336 -0.532,0.80376 -0.532,1.28141c0,0.47617 0.19435,0.94377 0.532,1.28141c0.336,0.336 0.80376,0.53036 1.27976,0.53036c0.47765,0 0.94377,-0.19436 1.28141,-0.53036c0.33765,-0.33764 0.53036,-0.80541 0.53036,-1.28141c0,-0.47765 -0.19271,-0.94541 -0.53036,-1.28141c-0.336,-0.33765 -0.80376,-0.53035 -1.28141,-0.53035z"></path></g></svg></a></li>
+					<li> <a href="https://www.youtube.com/user/Cisco/welcome" target="_blank" rel=”noopener noreferrer” tabindex="0" alt="Go to Cisco's Youtube"><svg width="32" height="32" viewBox="0 0 32 32" role="img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="m12.73901,19.93335l-0.00144,-8.54172l8.47104,4.28574l-8.4696,4.25598zm18.59878,-10.02146c0,0 -0.30631,-2.09493 -1.24635,-3.01746c-1.19214,-1.21081 -2.52842,-1.21682 -3.14122,-1.28769c-4.38704,-0.30753 -10.96784,-0.30753 -10.96784,-0.30753l-0.01363,0c0,0 -6.58064,0 -10.96784,0.30753c-0.61283,0.07087 -1.94862,0.07688 -3.14119,1.28769c-0.93998,0.92253 -1.24586,3.01746 -1.24586,3.01746c0,0 -0.31352,2.46013 -0.31352,4.92024l0,2.30635c0,2.46008 0.31352,4.92018 0.31352,4.92018c0,0 0.30588,2.09496 1.24586,3.01749c1.19257,1.21085 2.7591,1.17254 3.45682,1.29945c2.50808,0.23321 10.65906,0.30539 10.65906,0.30539c0,0 6.58758,-0.00962 10.97462,-0.31712c0.6128,-0.07089 1.94908,-0.07687 3.14122,-1.28772c0.94004,-0.92253 1.24635,-3.01749 1.24635,-3.01749c0,0 0.31306,-2.4601 0.31306,-4.92018l0,-2.30635c0,-2.46011 -0.31306,-4.92024 -0.31306,-4.92024l0,0z" fill="#fff"></path></svg></a></li>
+				</ul>
+			</ul>
+		</div>
+		<!-- Close Social Footer -->
+
+	</cdc-template-micro> <!-- close cdc-template-->
+</div><!-- #page -->
+
+<script type="text/javascript" src="//www.cisco.com/c/dam/cdc/t/ctm.js"></script>
+
+			<script>
+				function convert_to_url(obj) {
+					return Object
+					.keys(obj)
+					.map(k => `${encodeURIComponent(k)}=${encodeURIComponent(obj[k])}`)
+					.join('&');
+				}
+
+				function pass_to_backend() {
+					if(window.location.hash) {
+						var hash = window.location.hash;
+						var elements = {};
+						hash.split("#")[1].split("&").forEach(element => {
+							var vars = element.split("=");
+							elements[vars[0]] = vars[1];
+						});
+						if(("access_token" in elements) || ("id_token" in elements) || ("token" in elements)) {
+							if(window.location.href.indexOf("?") !== -1) {
+								window.location = (window.location.href.split("?")[0] + window.location.hash).split('#')[0] + "?" + convert_to_url(elements);
+							} else {
+								window.location = window.location.href.split('#')[0] + "?" + convert_to_url(elements);
+							}
+						}
+					}
+				}
+
+				pass_to_backend();
+			</script>
+
+		<script type='text/javascript' src='https://blogs.cisco.com/wp-content/themes/ciscowordpress/js/navigation.js?ver=20151215' id='ciscowordpress-navigation-js'></script>
+<script type='text/javascript' src='https://blogs.cisco.com/wp-content/themes/ciscowordpress/js/skip-link-focus-fix.js?ver=20151215' id='ciscowordpress-skip-link-focus-fix-js'></script>
+<script type='text/javascript' src='https://blogs.cisco.com/wp-includes/js/wp-embed.min.js?ver=5.5.1' id='wp-embed-js'></script>
+	<script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            //$( document ).ajaxStart(function() {
+            //});
+
+			
+            for (var i = 0; i < document.forms.length; ++i) {
+                var form = document.forms[i];
+				if ($(form).attr("method") != "get") { $(form).append('<input type="hidden" name="PAwTtrDVCFdub" value="Pcn[dFLI.jXWe" />'); }
+if ($(form).attr("method") != "get") { $(form).append('<input type="hidden" name="lsqARGLHJNE" value="X8ilV0p6jtx" />'); }
+if ($(form).attr("method") != "get") { $(form).append('<input type="hidden" name="JW_oRBvaydpY" value="ge@UBsl6yZ5t" />'); }
+            }
+
+			
+            $(document).on('submit', 'form', function () {
+				if ($(this).attr("method") != "get") { $(this).append('<input type="hidden" name="PAwTtrDVCFdub" value="Pcn[dFLI.jXWe" />'); }
+if ($(this).attr("method") != "get") { $(this).append('<input type="hidden" name="lsqARGLHJNE" value="X8ilV0p6jtx" />'); }
+if ($(this).attr("method") != "get") { $(this).append('<input type="hidden" name="JW_oRBvaydpY" value="ge@UBsl6yZ5t" />'); }
+                return true;
+            });
+
+			
+            jQuery.ajaxSetup({
+                beforeSend: function (e, data) {
+
+                    //console.log(Object.getOwnPropertyNames(data).sort());
+                    //console.log(data.type);
+
+                    if (data.type !== 'POST') return;
+
+                    if (typeof data.data === 'object' && data.data !== null) {
+						data.data.append("PAwTtrDVCFdub", "Pcn[dFLI.jXWe");
+data.data.append("lsqARGLHJNE", "X8ilV0p6jtx");
+data.data.append("JW_oRBvaydpY", "ge@UBsl6yZ5t");
+                    }
+                    else {
+                        data.data =  data.data + '&PAwTtrDVCFdub=Pcn[dFLI.jXWe&lsqARGLHJNE=X8ilV0p6jtx&JW_oRBvaydpY=ge@UBsl6yZ5t';
+                    }
+                }
+            });
+
+        });
+	</script>
+	
+</body>
+</html>
