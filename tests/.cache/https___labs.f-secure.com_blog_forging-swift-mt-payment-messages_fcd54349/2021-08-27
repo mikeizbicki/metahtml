@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <base href="https://labs.f-secure.com/"><!--[if lte IE 6]></base><![endif]-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<meta name="x-subsite-id" content="1" />
+
+    <title>Forging SWIFT MT Payment Messages for fun and pr... research!</title>
+
+    <link rel="stylesheet" href="https://labs.f-secure.com/themes/mwr/css/style.css?t=20200715">
+    <link rel="stylesheet" href="https://labs.f-secure.com/themes/labs/css/style.css?t=20200715">
+
+    <meta name="description" content="">
+    <link rel="canonical" href="https://labs.f-secure.com/blog/forging-swift-mt-payment-messages/">
+    <meta name="robots" content="NOODP,index,follow">
+
+    
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <meta name="format-detection" content="telephone=no">
+    
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="F-Secure Labs">
+    <meta property="og:url" content="https://labs.f-secure.com/blog/forging-swift-mt-payment-messages/">
+    
+    <meta property="og:locale" content='en_GB'>
+    <meta name="twitter:card" content="summary">
+    
+    <meta name="twitter:title" content="">
+    <meta name="twitter:description" content="">
+
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;
+    j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})
+    (window,document,'script','dataLayer','GTM-KD9T85H');
+  </script>
+  <meta name="google-site-verification" content="jqRTM8I_uI-jDIu1ITng14jD-3iJy0l3TTCIl2I-BIo" />
+<link rel="stylesheet" type="text/css" href="/themes/labs/css/style.css?m=1600760392" />
+</head>
+<body class="BlogPost" dir="ltr">
+
+    <header class="head menu-opened" id="top">
+	<div class="container">
+		<div class="col12">
+			<div class="logo">
+				<a href="/">F-Secure</a>
+			</div>
+		    <a href="/blog/forging-swift-mt-payment-messages/#nav" class="btn-menu">Menu</a>
+
+<nav class="main-nav" itemscope itemtype="https://schema.org/SiteNavigationElement">
+    <ul>
+        
+            <li class="link nav-advisories"><a href="/advisories/" title="Advisories">Advisories</a></li>
+        
+            <li class="section nav-blog"><a href="/blog/" title="/var/log/messages">/var/log/messages</a></li>
+        
+            <li class="link nav-publications"><a href="/publications/" title="Publications">Publications</a></li>
+        
+            <li class="link nav-tools"><a href="/tools/" title="Tools">Tools</a></li>
+        
+            <li class="link nav-archive"><a href="/archive/" title="Archive">Archive</a></li>
+        
+        <li class="nav-careers"><a href="https://www.f-secure.com/en/web/about_global/careers/job-openings">Careers</a></li>
+    </ul>
+</nav>
+
+		</div>
+	</div>
+</header>
+
+
+    <div class="wrapper">
+
+        <section class="section">
+  <div class="page-title">
+    <div class="container">
+      <span class="content-type"></span>
+      <h1>Forging SWIFT MT Payment Messages for fun and pr... research!</h1>
+      
+      
+      <p class="blog-post-meta">
+	
+		Oliver Simonnet, 
+	
+
+	7 February 2020
+</p>
+
+      
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="col8">
+      <div class="blog-post">
+        
+        <p><strong>TLDR:</strong> With a bit of research and support we were able to demonstrate a proof of concept for introducing a fraudulent payment message to move £0.5M from one account to another, by manually forging a raw SWIFT MT103 message, and leveraging specific system trust relationships to do the hard work for us!</p><h1>Prologue</h1><p><strong>Before we begin: </strong>This research is based on work we performed in close-collaboration with one of our clients; however, the systems, architecture, and payment-related details have been generalized / redacted / modified as to not disclose information specific to their environment.</p><p>With that said... *clears throat*</p><p>The typical Tactics, Techniques and Procedures (TTPs) against SWIFT systems we see in reports and the media are - for the most part - the following:</p><ol><li>Compromise the institution's network;</li>
+<li>Move laterally towards critical payment systems;</li>
+<li>Compromise multiple SWIFT Payment Operator (PO) credentials;</li>
+<li>Access the institution's SWIFT Messaging Interface (MI);</li>
+<li>Keys in - and then authorize - payment messages using the compromised PO accounts on the MI.</li>
+</ol><p style="text-align: left;">This attack-path requires the compromise of multiple users, multiple systems, an understanding of how to use the target application, bypass of 2FA, attempts to hide access logs, avoid alerting the legitimate operators, attempts to disrupt physical evidence, bespoke malware, etc. – so, quite involved and difficult. Now that’s all good and fine, but having reviewed a few different payment system architectures over the years, I can’t help but wonder:</p><p style="text-align: center;"><em>“Can't an attacker just target the system at a lower level? Why not target the Message Queues directly? Can it be done?”</em></p><p>Well, let's find out! My mission begins!</p><h1>Phase 1 - Understand the Overall System!</h1><p>So, first things first! I needed to fully understand the specific “section” of the target institution's payment landscape I was going to focus on for this research. In this narrative, there will be a system called “Payment System” (SYS). This system is part of the institution's back-office payment landscape, receiving data in a custom format and output's an initial payment instructions in ISO 15022 / RJE / SWIFT MT format.  The reason I sought this scenario was specifically because I wanted to focus on attempting to forge an MT103 payment message - that is:</p><ul><li>MT – “Message Type” Literal;</li>
+<li>1 – Category 1 (Customer Payments and Cheques);</li>
+<li>0 – Group 0 (Financial Institution Transfer);</li>
+<li>3 – Type 3 (Notification);</li>
+<li>All together this is classified as the MT103 “Single Customer Credit Transfer”.</li>
+</ul><p>Message type aside, what does this payment flow look like at a high level? Well I’ve only gone and made a fancy diagram for this!</p><p><img class="leftAlone" title="" src="assets/Uploads/_resampled/ResizedImageWzYwMCwyNDdd/SWIFT-Architecture-01-Dark2.png" alt="SWIFT Architecture 01 Dark2" width="600" height="247"></p><p>Overall this is a very typical and generic architecture design. However, let me roughly break down what this does:</p><ol><li>The Payment System (SYS) ingests data in a custom - or alternative - message format from it's respective upstream systems. SYS then outputs an initial payment instruction in SWIFT MT format;</li>
+<li>SYS sends this initial message downstream to a shared middelware (MID) component, which converts (if necessary) the received message into the modern MT format understood by SWIFT - Essentially a message broker used by a range of upstream payment systems within the institution;</li>
+<li>MID forwards the message in it's new format on to the institution's Messaging Interface (let's say its SAA in this instance) for processing;</li>
+<li>Once received by SAA, the message content is read by the institution's sanction screening / Anti-money laundering systems (SANCT).</li>
+<li>Given no issues are found, the message is sent on to the institution's Communication Interface (SWIFT Alliance Gateway), where it's then signed and routed to the recipient institution over SWIFTNet.</li>
+</ol><p>OK, so now I have a general understanding of what I'm up against. But if I wanted to exploit the relationships between these systems to introduce a  fraudulent payment without targeting any payment operators, I was going to need to dig deeper and understand the fundamental technologies in use!</p><h1>Phase 2 – Understand the Technologies</h1><p>So how are these messages actually "passed" between each system? I need to know exactly what this looks like and how its done!</p><p>More often than not, Message Queues (MQ) are heavily used to pass messages between components in a large payment system. However, there are also various “Adapter” that may be used between systems communicating directly with the SAG (Such as SAA or other bespoke/3rd party systems). These are typically the:</p><ul><li>Remote API Host Adapter (RAHA);</li>
+<li>MQ Host Adapter (MQHA);</li>
+<li>Web Services Host Adapter (WSHA).</li>
+</ul><p>Having identified that MQ was in use, my initial assumption was that there was most likely a dedicated Queue Manager (QM) server somewhere hosting various queues that systems push and pull messages from? However, due to SWIFT CSP requirements, this would most likely - at a minimum - take the form of two Queue Managers. One which manages the queues within the SWIFT Secure Zone, and another that manages queues for the general corporate network and back office systems.</p><p>Let's update that diagram to track / represent this understanding: <br><br><img class="leftAlone" title="" src="assets/Uploads/_resampled/ResizedImageWzYwMCwyNDZd/SWIFT-Architecture-02-Dark4.png" alt="SWIFT Architecture 02 Dark4" width="600" height="246"><br><br>Now I could research how this "messaging" worked!</p><p>There are multiple ways to configure Message Queues architectures, in this case there were various dedicated input and output queues for each system, and the message flow looks something like this: <br><br><img class="leftAlone" title="" src="assets/Uploads/_resampled/ResizedImageWzYwMCw0Mzhd/SWIFT-MQ-01-Dark2.png" alt="SWIFT MQ 01 Dark2" width="600" height="438"><br><br>Full disclosure, turns out it’s hard to draw an accurate - yet simple - MQ flow diagram (that one was basically my 4th attempt). So it’s... accurate "enough" for what we needed to remember!</p><h1>Phase 3 – Defining an Attack</h1><p style="text-align: left;">Now I had a good understanding of how it all worked, it is time to define my goal: "Place a payment message directly on to a queue, and have it successfully processed by all downstream systems".</p><p style="text-align: left;">This sounds simple, just write a message to a queue, right? But there are a few complications!</p><ol><li>Why are there few indications of this attack vector in the wild?</li>
+<li>How do I even gain “write” access to the right queue?</li>
+<li>What protects the message on the queues?</li>
+<li>What protects the messages in transit?</li>
+<li>What format are the messages in?</li>
+<li>What is the correct syntax for that message format at any particular queue (0 margin for error)?</li>
+<li>Where does PKI come in? How / where / when are the messages signed?</li>
+<li>Can I somehow get around the message signing?</li>
+<li>What values in the messages are dependent / controlled / defined by the system processing them (out of my control)?</li>
+<li>What is the maximum amount I can transfer using Straight Through Processing, without alerting the institution / requiring manual validation?</li>
+</ol><p>But OK, there's no point dwelling on all of that right now, I'll just clearly define what I want to do!<br><br>The goal:</p><ol><li>Successfully write a payment instruction for 500,000 GBP;</li>
+<li>Inject that message directly onto a specific queue;</li>
+<li>Have the message pass environment-specific validation rules;</li>
+<li>Have the message pass sanctions and AML checks.</li>
+<li>Have the message successfully signed;</li>
+<li>Have the message pass SWIFTNet-specific validation rules;</li>
+</ol><p>What I was not interested in doing for this research - yet needed to understand nevertheless for a full attack chain was:</p><ol><li>How to compromise the institution's network;</li>
+<li>How to gain access to the MQ admin's workstation;</li>
+<li>How to obtain the pre-requisite credentials.</li>
+</ol><p>What I wanted to 100% avoid at all costs:</p><ol><li>The attack involving SWIFT payment operators in any way;</li>
+<li>The attack involving SWIFT application access in any way;</li>
+<li>A need to compromise signing keys / HSMs;</li>
+<li>A need to compromise SWIFTNet operator accounts or certificates or any type of PKI;.</li>
+</ol><h1>Phase 3 – Understanding the MT103 Message Body Format</h1><p>Now I had an idea of what to do, I needed to make sure I could write a raw MT103 payment instruction! Typically, even when operators write payment messages using a messaging interface application like Alliance Access, they only really write the message “body” via a nice GUI. As raw data this could look something like:</p><pre>:20:TRANSACTIONRF103<br>:23B:CRED<br>:32A:200102GBP500000,00<br>:33B:GBP500000,00<br>:50K:/GB22EBNK88227712345678<br>JOHN DOE<br>JOHN'S BUSINESS LTD<br>21 JOHN STREET, LONDON, GB<br>:59K:/FR20FBNK88332287654321<br>ALICE SMITH<br>ALICE'S COMPANY<br>10 ALICE STREET, PARIS, FR<br>:70:12345-67890<br>:71A:SHA</pre><p>I'll break this down in the following table:</p><table><tbody><tr><td>Name</td>
+<td>Field</td>
+<td>Value</td>
+</tr><tr><td>Transaction Reference</td>
+<td>20</td>
+<td>TRANSACTIONRF103</td>
+</tr><tr><td>Bank Operation Code</td>
+<td>23B</td>
+<td>CRED (Message is to "credit" some beneficiary)</td>
+</tr><tr><td>Value Date / Currency / Amount</td>
+<td>32A</td>
+<td>200102 (02/01/2020) GBP 500,000.00</td>
+</tr><tr><td>Currency / Original Credit Amount</td>
+<td>33B</td>
+<td>GBP 500000,00 (£500,000.00)</td>
+</tr><tr><td>Ordering Customer</td>
+<td>50K</td>
+<td>GB22EBNK88227712345678 (IBAN)<br>JOHN DOE (Name)<br>JOHN'S BUSINESS LTD (Line 1)<br>21 JOHN STREET, LONDON, GB (Line 2)</td>
+</tr><tr><td>Beneficiary</td>
+<td>59K</td>
+<td>FR20FBNK88332287654321 (IBAN)<br>ALICE SMITH (Name)<br>ALICE'S COMPANY (Line 1)<br>10 ALICE STREET, PARIS, FR (Line 2)</td>
+</tr><tr><td>Remittance Information</td>
+<td>70</td>
+<td>12345-67890 (essentially a payment reference)</td>
+</tr><tr><td>Details of Charge</td>
+<td>71A</td>
+<td>SHA (Shared charge between sender and receiver)</td>
+</tr></tbody></table><p>Now as this is a valid message body, if I were targeting a payment operator on SWIFT Alliance Access, I could - for the "most" part - simply paste the message into SAA's raw message creation interface and I'd be pretty much done. With the exception of adding the sender / recipient BIC codes and most likely selecting a business unit. However, these values are not stored in the message body.  <br><br>Not stored in the message body you say? Well that complicates things! Where are they stored exactly?</p><h1>Phase 4 – Understanding the full MT103 Message Format</h1><p>The message “body” is referred to as “block 4” (aka the “Text Block”) within the SWIFT MT standard. As suggested by the name, there is probably also a block 1-3. This is correct; and these blocks are typically generated by the payment processing applications - such as SWIFT Alliance Access - and not necessarily input by the operators. A "complete" MT103 message consists of 6 blocks:</p><ul><li>Block 1 – Basic Header</li>
+<li>Block 2 – Application Header</li>
+<li>Block 3 – User Header</li>
+<li>Block 4 – Text Block</li>
+<li>Block 5 – Trailer</li>
+<li>Block 6 – System block</li>
+</ul><p>So it looked like I was going to need to learn how to craft these various “blocks” from scratch.</p><h2>Block 1 (Basic header)</h2><p>Reading through some documentation, I crafted the following “Basic header” block:</p><pre>{1:F01EBNKGB20AXXX0000999999}</pre><p>A breakdown of what this translates too is as follows:</p><table><tbody><tr><td>Name</td>
+<td>Value</td>
+<td>Context</td>
+</tr><tr><td>Basic Header Flag</td>
+<td>1</td>
+<td>Block 1 (Not 2, 3, 4, or 5)</td>
+</tr><tr><td>Application Type</td>
+<td>F</td>
+<td>FIN Application</td>
+</tr><tr><td>Message Type</td>
+<td>01</td>
+<td>01 = FIN (I.e not ACK/NACK)</td>
+</tr><tr><td>Sender BIC</td>
+<td>EBNKGB20</td>
+<td>EBNK (Bank Code) GB (Country Code) 20 (Location Code)</td>
+</tr><tr><td>Sender Logical Terminal</td>
+<td>A</td>
+<td>Typically A, unless they are a significantly large institution and require multiple terminals</td>
+</tr><tr><td>Sender Branch</td>
+<td>XXX</td>
+<td>All X if no branch needed</td>
+</tr><tr><td>Session Number</td>
+<td>0000</td>
+<td>The session number for the message</td>
+</tr><tr><td>Sequence Number </td>
+<td>999999</td>
+<td>The sequence number of the message</td>
+</tr></tbody></table><p>Taking a step back, I already identified two potential problems: the “session” and “sequence” numbers! These are described as follows:</p><ul><li>Session Number – Must also equal the current application session number of the application entity that receives the input message.</li>
+<li>Sequence number – The sequence number must be equal to the next expected number.</li>
+</ul><p>Hmmm, at this point I was not sure how I could predetermine a valid session and/or sequence number - considering they seemed to be application and "traffic" specific? But there was nothing I could do at the time, so I noted it down in a list of "issues/blockers" to come back to later.</p><h2>Block 2 (Application Header)</h2><p>A bit more dry reading later, I managed to also throw together an application header:</p><pre>{2:I103FBNKFR20XXXXN}</pre><p>Again, I’ve broken this down so it makes sense (if it didn’t already; I’m not one to assume):</p><table><tbody><tr><td>Name</td>
+<td>Value</td>
+<td>Context</td>
+</tr><tr><td>Application Header Flag</td>
+<td>2</td>
+<td>Block 2</td>
+</tr><tr><td>I/O Identifier</td>
+<td>I</td>
+<td>Input Message (a message being sent)</td>
+</tr><tr><td>Message Type</td>
+<td>103</td>
+<td>103 = Single Customer Credit Transaction</td>
+</tr><tr><td>Recipient BIC</td>
+<td>FBNKFR20</td>
+<td>FBNK (Bank Code) FR (Country Code) 20 (Location Code)</td>
+</tr><tr><td>Recipient Logical Terminal</td>
+<td>X</td>
+<td>All General Purpose Application Messages must use "X"</td>
+</tr><tr><td>Recipient Branch</td>
+<td>XXX</td>
+<td>All General Purpose Application Messages must use "XXX"</td>
+</tr><tr><td>Message Priority</td>
+<td>N</td>
+<td>Normal (Not Urgent)</td>
+</tr></tbody></table><p>Awesome! No issues crafting this header!</p><p><strong>Note:</strong> At this point I should probably mention that these BIC codes are not "real", however are accurate in terms of in format and length.</p><h2>Block 3 (User Header)</h2><p>The third block is called the “User Header” block, which can be used to define some “special” processing rules. By leverage this header, I could specify that the message should be processed using “Straight Through Processing” (STP) rules which essentially attempts to ensure that the message is processed end-to-end without human intervention. This could be specified as follows:</p><pre>{3:{119:STP}}</pre><p>However, this was not yet a valid header! As of November 2018 the user header requires a mandatory “Unique end-to-end transaction reference” (UETR) value, which was introduced as part of SWIFT's Global Payments Innovation initiative (gpi)!<br><br>This is a Globally Unique Identifier (GUID) compliant with the 4th version of the generation algorithm used by the IETF standard "RFC4122". This consists of 32 hexadecimal characters, divided into 5 parts by hyphens as follows:</p><pre>xxxxxxxx-xxxx-<span style="text-decoration: underline;"><strong>4</strong></span>xxx-<span style="text-decoration: underline;"><strong>y</strong></span>xxx-xxxxxxxxxxxx</pre><p>where:</p><ul><li>x – any lowercase hexadecimal character;</li>
+<li>4 – fixed value;</li>
+<li>y – either: 8, 9, a, b.</li>
+</ul><p>This value can be generated using Python as seen below:</p><pre>$ python -c 'import uuid; id = uuid.uuid4(); print "Value:", id; print "Version:", id.version, id.variant'<br>Value: 8b1b42b5-669f-46ff-b2f2-c21f99788834<br>Version: 4 specified in RFC 4122</pre><p>With an acceptable UETR generated, this is how the third block looked:</p><pre>{3:{119:STP}{121:8b1b42b5-669f-46ff-b2f2-c21f99788834}}</pre><p>And as before, a breakdown can be found below:</p><table><tbody><tr><td>Name</td>
+<td>Value</td>
+<td>Context</td>
+</tr><tr><td>User Header Flag</td>
+<td>3</td>
+<td>Block 3</td>
+</tr><tr><td>Validation Flag</td>
+<td>119</td>
+<td>Indicates whether FIN must perform any type of special validation</td>
+</tr><tr><td>Validation Field</td>
+<td>STP</td>
+<td>Requests the FIN system to validate the message according to the s<span class="ILfuVd"><span class="e24Kjd">traight</span></span> through processing principles</td>
+</tr><tr><td>UETR Field</td>
+<td>121</td>
+<td>Indicates the Unique end-to-end transaction reference value</td>
+</tr><tr><td>UETR Value</td>
+<td>8b1b42b5-669f-46ff-b2f2-c21f99788834</td>
+<td>Unique end-to-end transaction reference used to track payment instruction</td>
+</tr></tbody></table><h2>Block 5 and 6 (Trailer and System Blocks)</h2><p>I’ve already discussed “block 4” (the message body), so to wrap this section up, I'll be looking at the final 2 blocks: Block 5, aka the “Trailer”; and block S, aka the “System” block.</p><p>Before going forward, let me take a moment to explain the pointlessly complicated concept of input and output messages:</p><ul><li>An “input” message (I) is a message which is traveling “outbound” from the institution. So this is a message being “input” by an operator and sent by the institution to another institution.</li>
+<li>An “output” message (O) is a message which is traveling “inbound” to the institution. So this is a message being “output” by SWIFTNet and being received by the institution.</li>
+</ul><p>OK, moving swiftly (aaaahhhhh!) on.</p><p>For Input messages, these blocks were not too much of a problem. The headers only really seemed to be used to flag whether the message was for training / testing or to flag if it was a possible duplicate, which syntactically took the following form:</p><pre>{5:{TNG:}}{S:{SPD:}}</pre><p>Where “TNG” indicated “training” and “SPD” indicated “possible duplicate”.</p><p>However, with Output messages, it got considerably more complicated. An example of what the trailer and system block could look like on an Output message is the following:</p><pre>{5:{MAC:13461AEF}{CHK:4A3367FD3D76}{TNG:}}{S:{SPD:}{SAC:}{COP:P} <br>{MDG:5E87F8F390E5FB886E8311E4D7C994371FA9AF3119B2C314DAE458738AFF08AC}}</pre><p>A breakdown of these various values is:</p><p><span style="text-decoration: underline;">Trailer ({5:)</span><br><strong>MAC</strong> – Message Authentication Code calculated based on the entire contents of the message using a key that has been exchanged with the destination bank and a secret algorithm;<br><strong>CHK</strong> – This is a PKI checksum of the message body, used to ensure the message has not been corrupted in transit;<br><strong>TNG</strong> – A flag to indicate that the message is a Testing and Training Message.</p><p><span style="text-decoration: underline;">System ({S:)</span><br><strong>SPD</strong> – Possible Duplicate Flag<br><strong>SAC</strong> – Successfully Authenticated and Authorized Flag. This is only present if:</p><ol><li>Signature verification was successful.</li>
+<li>RMA (Relationship Management Application) authorization and verification was successful.</li>
+</ol><p><strong>COP</strong> – Flag indicating that this is the primary message copy;<br><strong>MDG</strong> – The HMAC256 of the message using LAU keys.</p><p>However, these seemed to only be values I would need to consider if I was to try and forge an “incoming” message from SWIFTNet or an "outbound" message on the output of the SAG.</p><p>So... I'll stick with crafting an “input" message trailer:</p><pre>{5:{TNG:}}{S:{SPD:}}</pre><p>Now, having said all that, it turned out the trailer block did seem to sometimes hold a MAC code and a message checksum (sigh), meaning I actually needed to construct something like:</p><pre>{5:{MAC:XXXXXXXX}{CHK:XXXXXXXXXXXX}{TNG:}}{S:{SPD:}}</pre><p>So that was +2 to my "issues/blockers" list. However, issues aside, I now understood the complete message format, and could put it all together and save the following as a draft / template MT103 message:</p><pre>{1:F01EBNKGB20AXXX<span style="text-decoration: underline;"><strong>8888999999</strong></span>}<br>{2:I103FBNKFR20XXXXN}<br>{3:{119:STP}{121:8b1b42b5-669f-46ff-b2f2-c21f99788834}}<br>{4:<br>:20:TRANSACTIONRF103<br>:23B:CRED<br>:32A:200102GBP500000,00<br>:33B:GBP500000,00<br>:50K:/GB22EBNK88227712345678<br>JOHN DOE<br>JOHN'S BUSINESS LTD<br>21 JOHN STREET, LONDON, GB<br>:59:/FR20FBNK88332287654321<br>ALICE SMITH<br>ALICE'S COMPANY<br>10 ALICE STREET, PARIS, FR<br>:70:12345-67890<br>:71A:SHA<br>-}<br>{5:{MAC:<span style="text-decoration: underline;"><strong>XXXXXXXX</strong></span>}{CHK:<span style="text-decoration: underline;"><strong>YYYYYYYYYYYY</strong></span>}{TNG:}}{S:{SPD:}}</pre><p>Highlighted in bold above are the areas of the message I was - at this point - unable to pre-determine. Nevertheless, a summary of what that the message describes is:</p><ul><li>Using the transaction reference “TRANSACTIONRF103”;</li>
+<li>please transfer 500,000.00 GBP;</li>
+<li>from John Doe, (IBAN: GB22EBNK88227712345678) at “English Bank” (BIC: EBNKGB20);</li>
+<li>to Alice Smith (IBAN: FR20FBNK88332287654321) at “French Bank” (BIC: FBNKFR20);</li>
+<li>Furthermore, please ensure the transaction charge is shared between the two institutions;</li>
+<li>and mark the payment with a reference of “12345-67890”.</li>
+</ul><p>To wrap up this section, i wanted to take a moment to explain some logic behind the target of 500,000 GBP, as it is also important.</p><p>Aside from the many reasons it would be better to transfer [even] smaller amounts (<strong>which is an increasingly common tactic deployed by modern threat actors</strong>), why not go higher? This is where it’s important to understand the system and environment you are targeting.</p><p>In this instance, let's assume that by doing recon for a while I gathered the understanding that:</p><ul><li>If a message comes from SYS which is over £500k;</li>
+<li>even if it has been subject to a 4 eye check;</li>
+<li>and even if it is flagged for STP processing;</li>
+<li>route it to a verification queue and hold it for manual verification.</li>
+</ul><p>This was because a transaction over £500k was determined to be “abnormal” for SYS. As such, if my transaction was greater, the message would not propagate through all systems automatically.</p><p>OK, so now that I understood:</p><ul><li>how the system worked;</li>
+<li>how it communicated;</li>
+<li>the fundamental structure of a raw MT103 payment messages;</li>
+<li>and how much I could reliably [attempt] to transfer.</li>
+</ul><p>And with that, it was time to take a break from MT standards and establish an understanding of how I would even get into a position to put this into practice!</p><h1>Phase 5 - Getting into Position</h1><p>To place a message on a queue, I was going to need two things:</p><ul><li>Access to the correct queue manager;</li>
+<li>Write access to the correct queues.</li>
+</ul><p>Depending on the environment and organisation, access to queue managers could be quite different and complex. However a bare-bones setup may take the following form:</p><ul><li>An MQ Administrator accesses their dedicated workstation using AD credentials;</li>
+<li>They then remotely access a dedicated jump server via RDP which only their host is whitelisted to access;</li>
+<li>This may be required as the queues may make use of Channel Authentication Records, authorizing specific systems and user accounts access to specific queues;</li>
+<li>The channels may further be protected by MQ Message Encryption (MQME) which encrypts messages at rest based on specific channels. As such, even if someone was a “super duper master admin” they would only be able to read / write to queues specifically allocated to them within the MQME configuration file (potential target for another time?);</li>
+<li>The MQ Admin can then use tools such via the Jump Server to read/write to their desired message queues.</li>
+</ul><p>So, in this scenario, to gain access to the message queues I - as an attacker - would need to compromise the MQ admin’s AD account and workstations, then use this to gain access to the jump host, from where I could then access the message queues given I knew the correct channel name and was configured with authorization to access it... and maybe throw some MFA in there...</p><p>That is understandably a significant requirement! However, when discussion sophisticated attacks against Financial Market Infrastructure (FMI), it is more than reasonable to accept that an Advanced Persistent Threat (APT) would see this as a feasible objective - We don't need to dig into the history of how sophisticated attacks targeting SWIFT systems can be.</p><p>Next, it was time to finally identify a feasible attack vector for message forgery.</p><h1>Phase 6 – Identifying a Viable Attack Vector</h1><p>Now with an idea of how to gain the right access, as well as an understanding of the various technologies and security controls in place; I update my diagram:</p><p><img class="leftAlone" title="" src="assets/Uploads/_resampled/ResizedImageWzYwMCwyNTBd/SWIFT-Security-Dark2.png" alt="SWIFT Security Dark2" width="600" height="250"></p><p>You may have noticed I've added something called “LAU” around the SAA-to-SAG adapter, and another “LAU” to the MID-to-SAA MQ channels, which I have yet to explain.  “Local Authentication” (LAU) is a security control implemented by SWIFT to authenticate messages using a pair of shared keys between two systems. These keys are combined and used to generate a SHA256 HMAC of the message and append it to the S block. This can then be validated by the recipient system. Effectively, this validates the origin and authenticity of a message. As such, even if an attacker was in position to introduce a fraudulent payment, they'd first need to compromise both the left and the right LAU signing keys, generate the correct HMAC, and append it to the message in order to have it accepted / processed successfully.</p><p>But LAU aside, I now just needed to figure out which queue to target! There were a lot of queues to work with as each system essentially has multiple “input” and “output” queues. With that in mind, it was important to note that: an incoming message would require being in the format expected by the target system (from a specific upstream system) and an outgoing message would need to be in the format “produced” by one target system and “expected / ingested / processed” by its respective downstream system. So to figure this out, I worked backwards from the Gateway.</p><h2>Targeting SAG</h2><p>This was the least feasible attack vector!</p><ol><li>I hadn't really looked into how the SWIFT adapters worked - If only I could research literally everything);</li>
+<li>SAA and SAG implemented LAU on messages sent between them - An excellent security control!;</li>
+<li>The output of SAG was directly on to SWIFTNet which would entail all sorts of other complications - this is an understatement)!</li>
+</ol><p>Next!</p><h2>Targeting SAA</h2><p>So what if I wanted to drop a message on the “outbound” channel of SAA?</p><p>LAU and the SWIFT adapter aside, remember those session and sequence numbers? Well, messages which leave SAA are in the near-final stages of their outbound life-cycle, and as far as I understood would need to have valid session and sequence values. Given I didn't know how to generate these values without gaining access to SAA or how they worked in general (and lets not forget the LAU signing) this didn't currently seem feasible.</p><p>Next!</p><h2>Targeting SANCT</h2><p>This solution didn't actually transport messages back and forth; it just reads messages off the queues and performed checks on their details. Not much I <span style="text-decoration: line-through;">could</span> wanted to leverage here.</p><h2>Targeting MID</h2><p>To target MID, I could try and inject a message onto SAA’s “input” queue, or the “output” queue of MID. This would only need to match the format of messages produced by the Middleware solution (MID). Following this, in theory, the [mistial] message session and sequence number would be added by SAA, along with the UETR. This was promising!</p><p>However, MID was a SWIFT “message partner”, which are typically solutions developed using the Alliance Access Development Kit that allows vendors to develop SWIFTNet compatible software, and consequentially, implement LAU. So again, in-order to forge a message here, I’d need to compromise the left and right LAU signing keys used between SAA and MID, manually HMAC the message (correctly!), and then place it on the correct queue... This also no longer looked promising...</p><h2>Targeting SYS</h2><p>OK, how about the input of the next system down - the "Payment System"?</p><p>As described previously, the inbound data was a custom “application specific” payment instruction from the institutions back office systems, and not a SWIFT MT message. This would be an entirely new core concept I'd need to reverse - not ideal for this project.</p><p>But how about the output queue?</p><p>Although SYS received custom format data, I found that it output what seemed to be an initial SWIFT MT messages. This was perfect! Additionally, SYS did not have LAU between itself and MID because (unlike MID) SYS was not a SWIFT message partner, and was just one of many-many systems within the institution that formed their overall payment landscape.</p><p>Additionally, because SYS was esentially just one small piece of a much larger back office architecture, it was not part of the SWIFT Secure Zone (after all you cant have your entire estate in the Secure Zone - that defeats the purpose) and as such, made use of the Queue Manager within a more accessible section of the general corporate environment (QM1).</p><p>With this in mind, and having - in theory - compromised the MQ admin, I could leverage their access to access on the corporate network to authenticate to QM1. I could - in theory -  then write a fraudulent payment message to the SYS “output” queue, which we will call “SYS_PAY_OUT_Q” from here on.</p><p>OK! It seems like I finally had an idea of what to do! But before I could put it into practice, I of course needed to create a diagram of the attack:</p><p><img class="leftAlone" title="" src="assets/Uploads/_resampled/ResizedImageWzYwMCw0NTdd/SWIFT-Attack-Dark2.png" alt="SWIFT Attack Dark2" width="600" height="457"></p><p>I think it’s important to take a minute to refer back to the concept of “trust” which is what lead to this attack diagram. My theory behind why this may work is because the MID application, implicitly trusts whatever it receives from its respective upstream systems. This is intentional, as by design the security model of the payment landscape ensures that: at any point a message can be created, a 4 (or 6) eye check is performed. If there was a system whose purpose it was to ensure the validity of a payment message at any point upstream, the downstream systems should have no real issue processing that message (with some exceptions). After all, It would be next to-impossible to maintain a high-throughput payment system without this design.</p><p style="text-align: left;">And with that said, the plan was now clear:</p><ul><li>Leverage the access of a Message Queue administrator;</li>
+<li>to abuse the “trust relationship” between SYS, MID, and SAA;</li>
+<li>to introduce a fraudulent payment message directly on to the output queue of SYS;</li>
+<li>by leaning on my new found understanding of complete MT103 payment messages.</li>
+</ul><p>It was finally time to try to demonstrate a Proof-of-Concept attack!</p><h1>Phase 7 – PoC Attack Execution!</h1><p>So at this point I believe I had everything I needed in order to execute the attack:</p><ul><li>The target system!</li>
+<li>The message format!</li>
+<li>The queue manager!</li>
+<li>The queue!</li>
+<li>The access requirements!</li>
+<li>The generously granted access to a fully functional SWIFT messaging architecture! (that’s a good one to have!)</li>
+<li>The extra-generously granted support of various SMEs from the target institution! (This was even better to have!)</li>
+</ul><h2>Message Forgery</h2><p>I needed to begin by creating a valid payment message using valid details from the target institution. So before moving on I was provided with the following (<strong>Note:</strong> as with many things in this post, these details have been faked):</p><ul><li>Debtor Account Details – John Doe, GB12EBNK88227712345678 at EBNKGB20</li>
+<li>Creditor Account Details – Alice Smith, GB15EBNK88332287654321 at EBNKGB20</li>
+</ul><p>Some of you may have notice that the sending and receiving BIC’s are the same. This was because, for the sake of the research, I wanted to send the message back to the target institution via SWIFTNet so that I could analyse its full end-to-end message history. Furthermore, you may have noticed we are using "test &amp; training" BIC code (where the 8th character is a 0) - this was to make sure, you know, that I kept my job.</p><p>But yes, with access to these "valid" account details and the knowledge gained during the research so far, I could now forge a complete Input MT103 messages:</p><pre>{1:F01EBNKGB20AXXX0000000000}<br>{2:I103EBNKGB20XXXXN}<br>{3:{119:STP}{121:eb02c40e-e060-400a-ac74-47f076dd26e3}}<br>{4:<br>:20:TRANSACTIONREF103<br>:23B:CRED<br>:32A:200103GBP500000<br>:33B:GBP500000<br>:50K:/GB21EBNK88227712345678<br>JOHN DOE<br>JOHN'S BUSINESS LTD<br>21 JOHN STREET, LONDON, GB<br>:59:/GB22EBNK88332287654321<br>ALICE SMITH<br>ALICE'S COMPANY<br>10 ALICE STREET, MANCHESTER, GB<br>:70:FORGED-PAYMENT-TEST<br>:71A:SHA<br>-}{5:{TNG:}}{S:{SPD:}}</pre><p><strong>Note:</strong> Field 33B is actually an optional field, however, the MT standard stated that <em>“If the country codes of both the Sender’s and the Receiver’s BIC belong to the country code list, then field 33B is mandatory”</em>. As such, if 33B was not present in the message, it would fail network validation rules and SWIFTNet would return a NAK with the error code: D49.</p><p>Optional / Mandatory fields aside, it was not quite that simple! There were a few minor changes I needed to make based on the specific point in the message's its life-cycle I was planning to introduce it!</p><p>As I list these changes, remember that the objective is to introduce the message to the output queue of SYS (Which exists before MID, SAA and SAG)</p><ol><li>The first 3 blocks needed to be placed on a single line;</li>
+<li>Remove field 121 (UETR) from the User Header, as this would be generated by SAA during processing;</li>
+<li>Remove 1 character from the transaction reference as it needed to be exactly 16 characters (classic user error);</li>
+<li>Add decimal point to transaction amount using a comma - otherwise it would fail syntax validation rules;</li>
+<li>Ensure the IBAN's were real and accurate, otherwise it seemed the message would fail some type of signature validation on the SWIFT network. The IBANs are fake here, but during the real PoC we used accurate account details in collaboration with the target institution;</li>
+<li>Remove the trailer block (5) - as this would be appended by SAA during processing;</li>
+<li>Remove the System Block (S) - as this would be completed by the SAG.</li>
+</ol><p>And the final message was as follows:</p><pre>{1:F01EBNKGB20AXXX8888999999}{2:I103EBNKGB20XXXXN}{3:{119:STP}}{4:<br>:20:TRANSACTIONRF103<br>:23B:CRED<br>:32A:200103GBP500000,00<br>:33B:GBP500000,00<br>:50K:/GB21EBNK88227712345678<br>JOHN DOE<br>JOHN'S BUSINESS LTD<br>21 JOHN STREET, LONDON, GB<br>:59:/GB22EBNK88332287654321<br>ALICE SMITH<br>ALICE'S COMPANY<br>10 ALICE STREET, MANCHESTER, GB<br>:70:FORGED-PAYMENT-TEST<br>:71A:SHA<br>-}</pre><p>Note that the location in which I introduce the message has resolved all of the "issues / blockers" I'd tracked whilst researching the message structure! It would seem the further upstream you go, the easier the attack becomes - given MQ is still used as a transport medium.</p><h2>Message Injection</h2><p>Now I had my raw MT103 message, I just need to save it to a file (“Message.txt” - sure why not) and place onto the “SYS_PAY_OUT_Q” queue using one of the admin's tools:</p><ol><li>With access to a sole MQ Administrator's AD account;</li>
+<li>We connect to the MQ admins machine;</li>
+<li>Log into the Jump Server;</li>
+<li>Open our MQ tools of choice and authenticate to queue manager (QM1) where the output queue for SYS was managed;</li>
+<li>Connected to the "SYS_PAY_OUT_Q" queue;</li>
+<li>Selected my forged “Message.txt” file;</li>
+<li>Invoked the “write to queue” function;</li>
+</ol><p>And it was off!</p><p>Loggin in to Alliance Access and opening the message history tab, we sat awaiting for an update. Waiting, waiting, waiting… waiting… and...</p><p>ACK! It worked!</p><p>That's a joke; did we hell receive an ACK!</p><p>See, this last section is written slightly more "linear" than what actually happened. Remember those "tweaks" used to fix the message in the previous section? I hadn't quite figured that out yet...</p><p>So roughly seven NACKs later - each time troubleshooting and then fixing a different issues - we did indeed, see an ACK! The message was successfully processed by all systems, passed target system validation rules, passed sanctions and AML screening, passed SWIFTNet validation rules, and SWIFT’s regional processor had received the message and sent an "Acknowledgement of receipt" response to the sending institution!</p><p>For the sake of completeness, I’ve included the ACK below:</p><pre>{1:F21EBNKGB20AXXX1947392344}{4:{177:2001031102}{451:0}}</pre><p>And of course a breakdown of what it all means:</p><table><tbody><tr><td>Name</td>
+<td>Value</td>
+<td>Context</td>
+</tr><tr><td>Basic Header Flag</td>
+<td>1</td>
+<td>Block 1</td>
+</tr><tr><td>Application Type</td>
+<td>F</td>
+<td>F = FIN Application</td>
+</tr><tr><td>Message Type</td>
+<td>21</td>
+<td>21 = ACK</td>
+</tr><tr><td>Institution Code</td>
+<td>EBNKGB20AXXX</td>
+<td>EBNKGB20 (BIC) A (Logical Terminal) XXX (Branch)</td>
+</tr><tr><td>Sequence and Session No.</td>
+<td>1947392344</td>
+<td>1947 (Sequence No.) 392344 (Session No.)</td>
+</tr><tr><td>Date Tag</td>
+<td>177</td>
+<td>200103 (Date) 1102 (Time)</td>
+</tr><tr><td>Accept / Reject Tag</td>
+<td>451</td>
+<td>0 = Accepted by SWIFTNet</td>
+</tr></tbody></table><p>Excellent! WooHoo! It worked! ... That took a lot of time and effort!</p><h2>Closer Inspection</h2><p>But the ACK wasn't enough, I wanted to make sure I understood what had happened to the message throughout its life-cycle. From the message I placed on the initial queue, to being processed by SWIFTNet.</p><p>Thankfully, as we sent the message back to the target institution we could see its entire message history. I already knew what the raw message placed on the queue looked like, so I wanted to focus on what became of the message once it had been processed by SAA:</p><pre>{1:F01EBNKGB20AXXX8888999999}{2:I103EBNKGB20XXXXN}{3:{119:STP}{121:b42857ce-3931-49bf-ba34-16dd7a0c929f}}{4:<br>:20:TRANSACTIONRF103<br>:23B:CRED<br>:32A:200103GBP500000,00<br>:33B:GBP500000,00<br>:50K:/GB21EBNK88227712345678<br>JOHN DOE<br>JOHN'S BUSINESS LTD<br>21 JOHN STREET, LONDON, GB<br>:59:/GB22EBNK88332287654321<br>ALICE SMITH<br>ALICE'S COMPANY<br>10 ALICE STREET, MANCHESTER, GB<br>:70:FORGED-PAYMENT-TEST<br>:71A:SHA<br>-}<br>{5:{TNG:}}{S:{SPD:}}</pre><ul><li>The end-to-end tracking UUID had been generated and added (b42857ce-3931-49bf-ba34-16dd7a0c929f) in block 3;</li>
+<li>The message trailer had been added ({5:{TNG:}}) where I could see that - due to the BIC code used - SAA had flagged the message as "test and training".</li>
+<li>Additionally, an initial System Block segment had been added ({S:{SPD:}}), tagging the message as a possible duplicate. I wonder why - *cough* 7th attempt *cough*?</li>
+</ul><p>OK, so that was SAA. Now let’s see how it looked it once it passed through the Gateway and regional processor:</p><pre>{1:F01EBNKGB20AXXX1947392344}{2:O1031102200103EBNKGB20AXXX19473923442001031104N}{3:{119:STP}{121:b42857ce-3931-49bf-ba34-16dd7a0c929f}}{4:<br>:20:TRANSACTIONRF103<br>:23B:CRED<br>:32A:200103GBP500000<br>:33B:GBP500000<br>:50K:/GB21EBNK88227712345678<br>JOHN DOE<br>JOHN'S BUSINESS LTD<br>21 JOHN STREET, LONDON, GB<br>:59:/GB22EBNK88332287654321<br>ALICE SMITH<br>ALICE'S COMPANY<br>10 ALICE STREET, MANCHESTER, GB<br>:70:FORGED-PAYMENT-TEST<br>:71A:SHA<br>-}<br>{5:{MAC:13579112}{CHK:D8E8FCA2DC0F}{TNG:}}{S:{SPD:}{SAC:}{COP:P}}</pre><p>OK, we can see a few changes now.</p><ul><li>The session and sequence numbers have been populated (1947392344);</li>
+<li>The I/O identifier in block 2 has been updated to track that it is now an "Output" message;</li>
+<li>The additional data within Block 2 is a combination of the input time, date, BIC, session and sequence numbers, output date/time, and priority;</li>
+<li>The trailer has been updated with a message authentication code (MAC) calculated based on the entire contents of the message using a pre-shared key and a secret algorithm;</li>
+<li>Additionally, a checksum of the message body has been stored within the trailer’s “CHK” tag. This is used by the network to ensure message integrity.</li>
+</ul><p>I also took a look at the entire outbound message history, just to see all the “Success” and “No violation” statements to make it feel even more awesome!</p><h1>Phase 8 – Celebrate whilst reflecting on the meaning of life the universe and everything</h1><p>So that's that really...</p><p>With a bit of research and support I was able to demonstrate a PoC for introducing a fraudulent payment message to move funds from one account to another, by manually forging a raw SWIFT MT103 single customer credit transfer message, and leveraging various system trust relationships to do a lot of the hard work for me!</p><p>As mentioned briefly in the introduction, this is not something I have really seen or heard of happening in practice or in the "wild". Perhaps because it clearly takes a lot of work... and there is a huge margin for error. However, if an adversary has spent enough time inside your network and has had access to the right documentation and resources, this may be a viable attack vector. It definitely has its benefits:</p><ul><li>No need to compromise multiple payment operators;</li>
+<li>No requirement to compromise - or establish a foothold within - the SWIFT Secure Zone;</li>
+<li>No requirement to bypass MFA and gain credentials for a messaging interface;</li>
+<li>No generation of application user activity logs;</li>
+<li>No payment application login alerts;</li>
+<li>No bespoke app-specific and tailored malware;</li>
+<li>And all the other things associated with the complex task of gaining and leveraging payment operator access.</li>
+</ul><p>All an attacker may need to do is compromise one specific user on the corporate network: a Message Queue administrator.</p><p>The industry is spending a lot of time and effort focused on securing their payment systems, applications, processes, and users to keep - among other things - payment operators safe, Messaging Interfaces locked down, and SWIFT systems isolated. But the reality is,; the most valuable and most powerful individual in the entire model, might just be a single administrator!</p><p>As always, a security model is only as strong as its weakest link. If you're not applying the same level of security to your wider institution, there may very well be many weak links within the wider network which chain together and lead to the comrpomise of systems which feed into your various payment environment.</p><h1>Perspective and Defense</h1><p>I think the main thing to remember when reflecting on this research is that it did not abuse any vulnerabilities within the target institution's systems, or even vulnerabilities or weaknesses within the design of their architecture. It simply leverages the legitimate user access of the Message Queue administrators and the trust relationships that exist by design within these types of large-scale payment processing systems.</p><p>So the harsh reality is, there is no particular list of recommendations for preventing this type of attack in itself. However, the main point to drive home is that you must ensure the security of your users - and overall organisation - is of a high enough standard to protect your highest privileged users from being compromised. Things such as:</p><ul><li>Strong monitoring and alerting controls for anomalous behaviour;</li>
+<li>Requirements for Multi-Factor authentication for access to critical infrastructure;</li>
+<li>Segregation of critical infrastructure from the wider general IT network;</li>
+<li>Strong password policies;</li>
+<li>Well rehearsed incident detection and incident response policies and procedures;</li>
+<li>Frequent high-quality security awareness training of staff;</li>
+<li><span class="ILfuVd"><span class="e24Kjd">Secure Software Development training for your developers;<br></span></span></li>
+<li><span class="ILfuVd"><span class="e24Kjd">Routine technical security assessments of all critical systems and components;</span></span></li>
+<li><span class="ILfuVd"><span class="e24Kjd">The use of 3rd party software from reputable and trusted vendors;</span></span></li>
+</ul><p>However, in the context of Message Queues, there is one particular control which I think is extremely valuable: The implementation of channel specific message signing! This, as demonstrated by SWIFT's LAU control, is a good way in which to ensure the authenticity of a message.</p><p>As discussed, LAU is - as far as I know at the time of writing - a SWIFT product / message partner specific control. However it's concept is universal and could be implemented in many forms, two of which are:</p><ul><li>Update your in-house application's to support message signing, natively;</li>
+<li>Develop a middleware component which performs message signing on each system, locally.</li>
+</ul><p>This is a complex requirement as it requires considerable effort on the client’s behalf to implement either approach. However, SWIFT provides guidance within their Alliance Access Developers guide on how to implement LAU in Java, Objective C, Scala and Swift;</p><ol><li>Strip any S block from the FIN message input. Keep only blocks 1: through 5;</li>
+<li>Use the FIN message input as a binary value (unsigned char in C language, byte in Java). The FIN message input must be coded in the ASCII character set;</li>
+<li>Combine the left LAU key and the right LAU key as one string. The merged LAU key must be used as a binary value (unsigned char in C language, byte in Java). The merged LAU key must be coded in the ASCII character set;</li>
+<li>Call a HMAC256 routine to compute the hash value. The hash value must also be treated as a binary value (unsigned char in C language, byte in Java). The HMAC size is 32 bytes;</li>
+<li>Convert the HMAC binary values to uppercase hexadecimal printable characters.</li>
+</ol><p>An example of how this may work in the more flexible middleware solution proposed is where the original service is no longer exposed to the network, and is altered to only communicate directly with the custom "LAU-eqsue" service on its local host. This service would then sign and route the message to its respective queue.</p><p>When received, the core of the recipient payment service would seek to retrieve its messages from the queues via the "LAU-esque" signing middleware, which would retrieve the message and subsequently verify its origin and authenticity by re-calculating the signature using their shared (secret) keys. Key-pairs could further be unique per message flow. This design could allow for the signing to be used as a way to validate the origin of a message even if it had passed through multiple [local] intermediary systems.</p><p>As a final bit of creative effort, I made yet another diagram to represent what this could perhaps look like - if life was as easy as a diagram:</p><p><img class="leftAlone" title="" src="assets/Uploads/_resampled/ResizedImageWzYwMCwxNDBd/SWIFT-Help-Dark.png" alt="SWIFT Help Dark" width="600" height="140"></p><p>If you made it this far thanks for reading all... ~6k words!? I hope you found some of them interesting and maybe learned a thing or two!</p><h1>Acknowledgement</h1><p>I'd like express our gratitude to the institution who facilitated this research, as well as specifically to the various SMEs within that institution who gave their valuable time to support it throughout.</p><h1>Resources</h1><p><strong>Fineksus - SWIFT Standard Changes 2019</strong></p><p>https://fineksus.com/swift-mt-standard-changes-2019/</p><p><span class="site-title"><strong>Paiementor - SWIFT MT Message Structure Blocks 1 to 5</strong><a href="https://www.paiementor.com/"></a></span></p><p><span class="site-title">https://www.paiementor.com/swift-mt-message-structure-blocks-1-to-5/</span></p><p><span class="site-title"><span class="site-title"><strong>SEPA for corporates - The Difference between a SWIFT ACK and SWIFT NACK<br></strong></span></span></p><p><span class="site-title">https://www.sepaforcorporates.com/swift-for-corporates/quick-guide-swift-mt101-format/</span></p><p><span class="site-title"><strong>SEPA for corporates - Explained: SWIFT gpi UETR – Unique End-to-End Transaction Reference</strong><br></span></p><p><span class="site-title">https://www.sepaforcorporates.com/swift-for-corporates/explained-swift-gpi-uetr-unique-end-to-end-transaction-reference/</span></p><p><strong><span class="site-title">M DIBA - LAU for SWIFT Message Partners</span></strong></p><p><span class="site-title">https://www.linkedin.com/pulse/lau-swift-message-partners-mohammad-diba-1/</span></p><p><span class="site-title"><strong>Prowide - About SWIFT</strong><br></span></p><p><span class="site-title">https://www.prowidesoftware.com/about-SWIFT.jsp</span></p><p><strong>Microsoft - SWIFT Schemas</strong></p><p>https://docs.microsoft.com/en-us/biztalk/adapters-and-accelerators/accelerator-swift/swift-schemas</p><p><strong>SWIFT FIN Guru - SWIFT message block structure</strong></p><p>http://www.swiftfinguru.com/2017/02/swift-message-block-structure.html</p><p> </p>
+      </div>
+      <div class="social-share">
+        <p><span class="content-type">Share</span></p>
+        <ul class="social">
+  <li class="facebook"><a href="http://www.facebook.com/sharer.php?u=https://labs.f-secure.com/blog/forging-swift-mt-payment-messages/" target="_blank">Share on Facebook</a></li>
+  <li class="twitter"><a href="https://twitter.com/share?url=https://labs.f-secure.com/blog/forging-swift-mt-payment-messages/&text=Forging SWIFT MT Payment Messages for fun and pr... research!" target="_blank">Share on LinkedIn</a></li>
+  <li class="linkedin"><a href="http://www.linkedin.com/shareArticle?url=https://labs.f-secure.com/blog/forging-swift-mt-payment-messages/&title=Forging SWIFT MT Payment Messages for fun and pr... research!" target="_blank">Share on Twitter</a></li>
+</ul>
+
+      </div>
+    </div>
+    <div class="col4">
+      
+
+      
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="col12">
+        <p>&nbsp;</p>
+      </div>
+    </div>
+  </section>
+
+
+    </div>
+
+    <footer class="foot">
+	<div class="container">
+    <div class="footer-flex-wrap">
+     <p class="logo"><img src="https://labs.f-secure.com//themes/labs/img/fs-labs-logo-white.svg" alt="F-Secure" width="180" height="60"></p>
+      <ul class="top-menu">
+        <li><a href="/blog/forging-swift-mt-payment-messages/#top" class="btn-gototop">Top</a></li>
+        
+        <li class="link"><a href="https://www.f-secure.com/en/consulting/contact">Contact</a></li>
+        
+        
+      </ul>
+   </div>
+   <hr/>
+    <div class="col5 suf1 foot-about">
+      <p>F-Secure provides specialist advice and solutions in all areas of cyber security, from professional and managed services, through to developing commercial and open source security tools.  </p>
+    </div>
+    <div class="col3">
+      <ul class="footer-list no-margin">
+        
+        <li><a href="/publications/ti-report-lazarus-group-cryptocurrency-vertical/">Threat Intelligence Report: Lazarus Group Campaign Targeting the Cryptocurrency Vertical</a></li>
+        
+        <li><a href="/publications/the-fake-cisco/">The Fake Cisco</a></li>
+        
+        <li><a href="/publications/u-booting-securely/">U-Booting securely</a></li>
+        
+      </ul>
+    </div>
+    <div class="col3">
+     <ul class="footer-list">
+      
+      <li><a href="/blog/playing-with-putty/">Playing with PuTTY</a></li>
+      
+      <li><a href="/blog/prelude-to-ransomware-systembc/">Prelude to Ransomware: SystemBC</a></li>
+      
+      <li><a href="/blog/attack-detection-fundamentals-2021-azure-lab-3/">Attack Detection Fundamentals 2021: Azure - Lab #3</a></li>
+      
+    </ul>
+  </div>
+</div>
+<div class="end">
+ <div class="container">
+  <hr/>
+  <div class="footer-flex-wrap">
+   <p class="copyright">Copyright &copy; 2021 F-Secure</p>
+    <ul class="social">
+      
+      <li class="linkedin for-footer"><a href="https://www.linkedin.com/showcase/28493188" target="_blank">Connect with us on LinkedIn</a></li>
+      
+      
+      <li class="twitter for-footer"><a href="https://twitter.com/fsecurelabs" target="_blank">Follow us on Twitter</a></li>
+      
+      
+      <li class="github for-footer"><a href="https://github.com/fsecurelabs" target="_blank">Follow us on GitHub</a></li>
+      
+    </ul>
+ </div>
+</div>
+</div>
+</footer>
+
+    <script src="/themes/mwr/js/min/jquery-3.5.1.min.js" id="jqueryscript"></script>
+
+    
+    <script src="/themes/mwr/js/min/slides.min.js"></script>
+    
+
+    <script src="/themes/mwr/js/min/scripts.js?20190917" id="pagescripts"></script>
+
+    <script type="application/ld+json">
+    { "@context" : "http://schema.org",
+      "@type" : "Organization",
+      "name" : "F-Secure Labs",
+      "url" : "https://labs.f-secure.com",
+      "logo" : "https://labs.f-secure.com/themes/labs/img/fs-labs-logo-white.svg",
+      "sameAs" : [
+          "https://twitter.com/fsecurelabs",
+          "https://www.linkedin.com/showcase/28493188"],
+      "contactPoint" : [
+        { "@type" : "ContactPoint",
+          "telephone" : "+441256300920",
+          "contactType" : "customer service"
+        } ]
+    }
+    </script>
+</body>
+</html>

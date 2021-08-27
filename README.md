@@ -214,6 +214,7 @@ https://www.rsaconference.com/Library/Blog/weekly-news-roundup-january-25-29-202
 https://news.bitcoin.com/former-ethereum-developer-virgil-griffith-arrested-for-signing-into-his-coinbase-account-report/
 https://www.cato.org/blog/gay-rights-illiberal-world
 https://diariodecuba.com/cuba/1604665983_26240.html?__cf_chl_jschl_tk__=pmd_48fgeeqJCb1GH.LjtuI1ubGL7f_Oys9HOKQuWzJI1pA-1630043864-0-gqNtZGzNAfujcnBszQZl
+https://blog.cloudflare.com/cloudflares-handling-of-an-rce-vulnerability-in-cdnjs/
 
 503:
 https://blog.cloudflare.com/quic-version-1-is-live-on-cloudflare/

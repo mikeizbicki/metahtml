@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <base href="https://labs.f-secure.com/"><!--[if lte IE 6]></base><![endif]-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<meta name="x-subsite-id" content="1" />
+
+    <title>Attack Detection Fundamentals 2021: AWS - Lab #2</title>
+
+    <link rel="stylesheet" href="https://labs.f-secure.com/themes/mwr/css/style.css?t=20200715">
+    <link rel="stylesheet" href="https://labs.f-secure.com/themes/labs/css/style.css?t=20200715">
+
+    <meta name="description" content="">
+    <link rel="canonical" href="https://labs.f-secure.com/blog/attack-detection-fundamentals-2021-aws-lab-2/">
+    <meta name="robots" content="NOODP,index,follow">
+
+    
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <meta name="format-detection" content="telephone=no">
+    
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="F-Secure Labs">
+    <meta property="og:url" content="https://labs.f-secure.com/blog/attack-detection-fundamentals-2021-aws-lab-2/">
+    
+    <meta property="og:locale" content='en_GB'>
+    <meta name="twitter:card" content="summary">
+    
+    <meta name="twitter:title" content="">
+    <meta name="twitter:description" content="">
+
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
+    var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;
+    j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})
+    (window,document,'script','dataLayer','GTM-KD9T85H');
+  </script>
+  <meta name="google-site-verification" content="jqRTM8I_uI-jDIu1ITng14jD-3iJy0l3TTCIl2I-BIo" />
+<link rel="stylesheet" type="text/css" href="/themes/labs/css/style.css?m=1600760392" />
+</head>
+<body class="BlogPost" dir="ltr">
+
+    <header class="head menu-opened" id="top">
+	<div class="container">
+		<div class="col12">
+			<div class="logo">
+				<a href="/">F-Secure</a>
+			</div>
+		    <a href="/blog/attack-detection-fundamentals-2021-aws-lab-2/#nav" class="btn-menu">Menu</a>
+
+<nav class="main-nav" itemscope itemtype="https://schema.org/SiteNavigationElement">
+    <ul>
+        
+            <li class="link nav-advisories"><a href="/advisories/" title="Advisories">Advisories</a></li>
+        
+            <li class="section nav-blog"><a href="/blog/" title="/var/log/messages">/var/log/messages</a></li>
+        
+            <li class="link nav-publications"><a href="/publications/" title="Publications">Publications</a></li>
+        
+            <li class="link nav-tools"><a href="/tools/" title="Tools">Tools</a></li>
+        
+            <li class="link nav-archive"><a href="/archive/" title="Archive">Archive</a></li>
+        
+        <li class="nav-careers"><a href="https://www.f-secure.com/en/web/about_global/careers/job-openings">Careers</a></li>
+    </ul>
+</nav>
+
+		</div>
+	</div>
+</header>
+
+
+    <div class="wrapper">
+
+        <section class="section">
+  <div class="page-title">
+    <div class="container">
+      <span class="content-type"></span>
+      <h1>Attack Detection Fundamentals 2021: AWS - Lab #2</h1>
+      
+      
+      <p class="blog-post-meta">
+	
+		Alfie Champion, 
+	
+
+	21 April 2021
+</p>
+
+      
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="col8">
+      <div class="blog-post">
+        
+        <p>In part three of F-Secure Consulting's Attack Detection Fundamentals workshop series for 2021, we covered an end-to-end kill chain, from initial access and discovery using some 'compromised' credentials, through to the installation of persistence and the exfiltration of data from an S3 bucket.</p><p>The slides and recording for this workshop can be found <a href="https://www.f-secure.com/content/dam/f-secure/en/consulting/events/collaterals/digital/f-secure_attack-detection-fundamentals-workshop-3-aws_2021-04-21.pdf" target="_blank">here</a> and <a href="https://youtu.be/JpELEMm9OsY" target="_blank">here</a> respectively.</p><p>In the <a href="/blog/attack-detection-fundamentals-2021-aws-lab-1/" target="_blank">previous lab</a>, we performed some basic enumeration with our compromised user credentials. We gained an understanding of the policy applied to our user, the likely misconfigured privileges it had to modify IAM and the buckets it was provisioned to list and retrieve objects from.</p><p>While we'll leave the S3 buckets until our final lab, we've seen enough to know we have the necessary privileges to install some persistence within the target account. In this lab we'll look to add an additional access key to our compromised user, and add a login profile so we can browse the target account through the web UI.</p><p><strong>NOTE:</strong> The corresponding CloudTrail log can take fifteen minutes or more to arrive following an API call being made, so expect some delay following your activities!</p><h2>Required Tools</h2><ul>
+<li>An AWS account suitable for testing purposes.</li>
+<li><a title="Hashicorp Terraform" href="https://www.terraform.io/">Terraform</a></li>
+<li><a title="Pacu by RhinoSecurityLabs" href="https://github.com/RhinoSecurityLabs/pacu">Pacu</a></li>
+<li>The deployed <a href="https://github.com/ajpc500/F-Secure-Attack-Detection-Fundamentals-2021---AWS-Lab-Environment" target="_blank">lab environment</a> detailed in <a href="/blog/attack-detection-fundamentals-2021-aws-lab-1/" target="_blank">lab one</a></li>
+</ul><p>DISCLAMER: Set up of the tools and the testing environment is not covered comprehensively within this lab. We will assume basic familiarity with command line and the ability of the reader to build the necessary tools.</p><h1>Walkthrough</h1><h2>Pacu Setup</h2><p>For this lab we'll make use of the Pacu framework. Having installed it, we can launch it and configure a new session.</p><p><img class="leftAlone" title="" src="assets/Uploads/_resampled/ResizedImageWzExMjIsNjQzXQ/pacu-1.png" alt="pacu setup" width="1122" height="643"></p><p>Running a "set_keys" command, we can input the details of our compromised access key, providing an alias so we can keep track of the entity we're operating as.</p><p><img class="leftAlone" title="" src="assets/Uploads/_resampled/ResizedImageWzExMjIsNDMwXQ/pacu-2.png" alt="pacu set keys" width="1122" height="430"></p><p>With our identity configured, we can run an "ls" command to view the modules that Pacu has available. For our purposes, we'll take a look at the "iam__backdoor_users_keys" module. We can prepend the module name with "help" to see more information about its use.</p><p><img class="leftAlone" title="" src="assets/Uploads/_resampled/ResizedImageWzExMjEsNDUyXQ/pacu-3.png" alt="pacu" width="1121" height="452"></p><p>We can see that this module will add a new AWS API key for the users in the account that we specify. Given the IAM full control that we have, we could use this module to install a new API key to every user in the account! For now though, we'll simple add an additional key to our original compromised user.</p><p><img class="leftAlone" title="" src="assets/Uploads/_resampled/ResizedImageWzExMjEsMjk3XQ/pacu-4.png" alt="pacu" width="1121" height="297"></p><p>We can see the installation of this key in the IAM console. Browsing to the below location, we can see all access keys created for the "customer_data_management_user" (note the second key present!).</p><pre>IAM &gt; Users &gt; customer_data_management_user &gt; Security Credentials</pre><p><img class="leftAlone" title="" src="assets/Uploads/_resampled/ResizedImageWzEyOTQsOTEyXQ/iam-console.png" alt="iam console" width="1294" height="912"></p><p>OK, so we have an additional API key with which to use our compromised account; but let's take this a bit further. Take note of that "Sign-in credentials" section of the screenshot above; the user has no console password set. Looking at the information for the "iam__backdoor_users_password" module, we see that we can add a password to accounts too, allowing us to access them through the web UI!</p><p><img class="leftAlone" title="" src="assets/Uploads/pacu-5.png" alt="pacu backdoor" width="1121" height="547"></p><p>Again, we'll just apply this to our originally-compromised user, but with the privileges we hold, we could do the same to any user in the account.</p><p>Running the module against our "customer_data_management_user" identity, we are returned a randomly-generated password.</p><p><img class="leftAlone" title="" src="assets/Uploads/_resampled/ResizedImageWzExMjIsMzAxXQ/pacu-6.png" alt="pacu backdoor added" width="1122" height="301"></p><p>Viewing the users details in the console, we can see the "Console password" field has changed.</p><p><img class="leftAlone" title="" src="assets/Uploads/_resampled/ResizedImageWzk2MiwyNDJd/console-password.png" alt="console password" width="962" height="242"></p><p>Taking the account ID we can get from a GetCallerIdentity API call (as we did in lab one), we can browse to the AWS login portal and attempt to login.</p><p><img class="leftAlone" title="" src="assets/Uploads/_resampled/ResizedImageWzEyOTMsNzgyXQ/console-login.png" alt="console login" width="1293" height="782"></p><p>Well, there we go - we now have the ability to explore the account through the UI! With this access, we can explore the IAM configuration of the account, add users, modify our own permissions to escalate to a fully-fledged admin, whatever you like!</p><p><img class="leftAlone" title="" src="assets/Uploads/_resampled/ResizedImageWzEyOTMsMzc3XQ/console-view.png" alt="console view" width="1293" height="377"></p><p>It's worth noting what's happening (and not happening) here. We haven't actually really modified the permissions of our user here. While we can browse around, the same inline policy we saw in the first lab is still in place. If you attempt to view any deployed EC2s for example, you'll get lots of nice "AccessDenied" errors that will also be logged in CloudTrail. Further, the privilege escalations we mentioned above are already possible from the CLI, we've just added the ability to access the account free of the access keys that gave us the initial access.</p><h1>Detection</h1><p>So, unlike last time, we've made some significant changes to our target account. Rather than just retrieving information with 'read only' API calls, we've added a new API key, and generated a new console password to login through the browser.</p><p>Let's return to Athena and once again see what API calls have been made by our "customer_data_management_user" identity. This time, we'll add a filter to ensure 'read only' events aren't returned.</p><pre>SELECT<br>eventtime,<br>eventname,<br>eventsource,<br>additionaleventdata,<br>requestparameters,<br>useragent<br>FROM "fsecure_workshop_database"."cloudtrail_logs_[AWS_ACCOUNT_ID]"<br>WHERE userIdentity.username = 'customer_data_management_user'<br>AND readOnly = 'false'</pre><p>There's a few things we can observe from the returned log entries below (omitting the additionaleventdata field for the purposes of the screenshot).</p><p><img class="leftAlone" title="" src="assets/Uploads/_resampled/ResizedImageWzE3MzMsMjMxXQ/query-not-read-only.png" alt="query not read only" width="1733" height="231"></p><p>Firstly, the "CreateAccessKey" and "CreateLoginProfile" API calls themselves. Filtering the above columns, we can see our "customer_data_management_user" user adding a new key to itself, and creating a login profile that doesn't require a password change upon first login (based on the "requestparameters" field).</p><p>Next, as we spoke about in the last lab, our "useragent" column shows us the two API calls have been made with "boto3" (the python library behind Pacu and many other python-based tools that interact with AWS).</p><p>Things get a bit more exciting when we consider our third API event, the "ConsoleLogin". Aside from the obvious implications of that event in isolation, we now have our compromised user, which usually operates programmatically, making a web login with a browser user agent. Gulp!</p><p>Looking at the data within our "additionaleventdata" column below, we can also see greater cause for concern, the login was completed without MFA (as we might expect with our compromised user logging into the console for the first time).</p><p><img class="leftAlone" title="" src="assets/Uploads/_resampled/ResizedImageWzEyMDAsMjZd/nomfa-entry.png" alt="no mfa entry" width="1200" height="26"></p><p>As you might expect, the web-based AWS management console makes use of the same APIs we've been interacting with from the command line. If we add our read-only events back into our Athena SQL query and look at the events that occured following our "ConsoleLogin" event, we see the following:</p><pre>SELECT<br>eventtime,<br>eventname,<br>eventsource,<br>requestparameters,<br>useragent,<br>errorcode<br>FROM "fsecure_workshop_database"."cloudtrail_logs_[AWS_ACCOUNT_ID]"<br>WHERE userIdentity.username = 'customer_data_management_user'</pre><p><img class="leftAlone" title="" src="assets/Uploads/_resampled/ResizedImageWzE3MzksNTEwXQ/athena-readonly-following-login.png" alt="athena readonly following login" width="1739" height="510"></p><p>Note above how the user agent changes to "console.amazonaws.com" following the console login, and the API calls generated by exploring IAM resources have this user agent instead (with some exceptions). All very suspect for our compromised user!</p><p>While not something we'll explore here, we could do more to enrich the data from CloudTrail. As an example, we could do a geo-ip lookup to see the approximate source location of the login (and the preceeding API calls). If we're expecting the above, high-value, configuration changes to take place from known locations, what we've seen from these CloudTrail events could be worthy of investigation.</p><h1>Conclusions</h1><p>In this lab, we've started affecting change on our target account, adding a second access key, adding a login profile, before finally logging into the account.</p><p>We filtered our CloudTrail logs in Athena to omit the read-only events, and saw the "CreateAccessKey" and "CreateLoginProfile" API calls, followed by the "ConsoleLogin" event that included metadata showing a lack of MFA in use. We saw how the user agents changed as we went from command-line to web console access, and considered the potential for geo-ip enriching our logs to make more informed decisions on what is and isn't suspicious.</p><p>In the <a href="/blog/attack-detection-fundamentals-2021-aws-lab-3/" target="_blank">final lab</a>, we'll turn our attention to the customer data stored in an S3 bucket within the account; first listing its contents, before exfiltrating the customer records within.</p>
+      </div>
+      <div class="social-share">
+        <p><span class="content-type">Share</span></p>
+        <ul class="social">
+  <li class="facebook"><a href="http://www.facebook.com/sharer.php?u=https://labs.f-secure.com/blog/attack-detection-fundamentals-2021-aws-lab-2/" target="_blank">Share on Facebook</a></li>
+  <li class="twitter"><a href="https://twitter.com/share?url=https://labs.f-secure.com/blog/attack-detection-fundamentals-2021-aws-lab-2/&text=Attack Detection Fundamentals 2021: AWS - Lab #2" target="_blank">Share on LinkedIn</a></li>
+  <li class="linkedin"><a href="http://www.linkedin.com/shareArticle?url=https://labs.f-secure.com/blog/attack-detection-fundamentals-2021-aws-lab-2/&title=Attack Detection Fundamentals 2021: AWS - Lab #2" target="_blank">Share on Twitter</a></li>
+</ul>
+
+      </div>
+    </div>
+    <div class="col4">
+      
+
+      
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="col12">
+        <p>&nbsp;</p>
+      </div>
+    </div>
+  </section>
+
+
+    </div>
+
+    <footer class="foot">
+	<div class="container">
+    <div class="footer-flex-wrap">
+     <p class="logo"><img src="https://labs.f-secure.com//themes/labs/img/fs-labs-logo-white.svg" alt="F-Secure" width="180" height="60"></p>
+      <ul class="top-menu">
+        <li><a href="/blog/attack-detection-fundamentals-2021-aws-lab-2/#top" class="btn-gototop">Top</a></li>
+        
+        <li class="link"><a href="https://www.f-secure.com/en/consulting/contact">Contact</a></li>
+        
+        
+      </ul>
+   </div>
+   <hr/>
+    <div class="col5 suf1 foot-about">
+      <p>F-Secure provides specialist advice and solutions in all areas of cyber security, from professional and managed services, through to developing commercial and open source security tools.  </p>
+    </div>
+    <div class="col3">
+      <ul class="footer-list no-margin">
+        
+        <li><a href="/publications/ti-report-lazarus-group-cryptocurrency-vertical/">Threat Intelligence Report: Lazarus Group Campaign Targeting the Cryptocurrency Vertical</a></li>
+        
+        <li><a href="/publications/the-fake-cisco/">The Fake Cisco</a></li>
+        
+        <li><a href="/publications/u-booting-securely/">U-Booting securely</a></li>
+        
+      </ul>
+    </div>
+    <div class="col3">
+     <ul class="footer-list">
+      
+      <li><a href="/blog/playing-with-putty/">Playing with PuTTY</a></li>
+      
+      <li><a href="/blog/prelude-to-ransomware-systembc/">Prelude to Ransomware: SystemBC</a></li>
+      
+      <li><a href="/blog/attack-detection-fundamentals-2021-azure-lab-3/">Attack Detection Fundamentals 2021: Azure - Lab #3</a></li>
+      
+    </ul>
+  </div>
+</div>
+<div class="end">
+ <div class="container">
+  <hr/>
+  <div class="footer-flex-wrap">
+   <p class="copyright">Copyright &copy; 2021 F-Secure</p>
+    <ul class="social">
+      
+      <li class="linkedin for-footer"><a href="https://www.linkedin.com/showcase/28493188" target="_blank">Connect with us on LinkedIn</a></li>
+      
+      
+      <li class="twitter for-footer"><a href="https://twitter.com/fsecurelabs" target="_blank">Follow us on Twitter</a></li>
+      
+      
+      <li class="github for-footer"><a href="https://github.com/fsecurelabs" target="_blank">Follow us on GitHub</a></li>
+      
+    </ul>
+ </div>
+</div>
+</div>
+</footer>
+
+    <script src="/themes/mwr/js/min/jquery-3.5.1.min.js" id="jqueryscript"></script>
+
+    
+    <script src="/themes/mwr/js/min/slides.min.js"></script>
+    
+
+    <script src="/themes/mwr/js/min/scripts.js?20190917" id="pagescripts"></script>
+
+    <script type="application/ld+json">
+    { "@context" : "http://schema.org",
+      "@type" : "Organization",
+      "name" : "F-Secure Labs",
+      "url" : "https://labs.f-secure.com",
+      "logo" : "https://labs.f-secure.com/themes/labs/img/fs-labs-logo-white.svg",
+      "sameAs" : [
+          "https://twitter.com/fsecurelabs",
+          "https://www.linkedin.com/showcase/28493188"],
+      "contactPoint" : [
+        { "@type" : "ContactPoint",
+          "telephone" : "+441256300920",
+          "contactType" : "customer service"
+        } ]
+    }
+    </script>
+</body>
+</html>
