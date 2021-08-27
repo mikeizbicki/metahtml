@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head><script>if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script>class RocketLazyLoadScripts{constructor(e){this.triggerEvents=e,this.eventOptions={passive:!0},this.userEventListener=this.triggerListener.bind(this),this.delayedScripts={normal:[],async:[],defer:[]},this.allJQueries=[]}_addUserInteractionListener(e){this.triggerEvents.forEach((t=>window.addEventListener(t,e.userEventListener,e.eventOptions)))}_removeUserInteractionListener(e){this.triggerEvents.forEach((t=>window.removeEventListener(t,e.userEventListener,e.eventOptions)))}triggerListener(){this._removeUserInteractionListener(this),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",this._loadEverythingNow.bind(this)):this._loadEverythingNow()}async _loadEverythingNow(){this._delayEventListeners(),this._delayJQueryReady(this),this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async),await this._triggerDOMContentLoaded(),await this._triggerWindowLoad(),window.dispatchEvent(new Event("rocket-allScriptsLoaded"))}_registerAllDelayedScripts(){document.querySelectorAll("script[type=rocketlazyloadscript]").forEach((e=>{e.hasAttribute("src")?e.hasAttribute("async")&&!1!==e.async?this.delayedScripts.async.push(e):e.hasAttribute("defer")&&!1!==e.defer||"module"===e.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(e):this.delayedScripts.normal.push(e):this.delayedScripts.normal.push(e)}))}async _transformScript(e){return await this._requestAnimFrame(),new Promise((t=>{const n=document.createElement("script");let r;[...e.attributes].forEach((e=>{let t=e.nodeName;"type"!==t&&("data-rocket-type"===t&&(t="type",r=e.nodeValue),n.setAttribute(t,e.nodeValue))})),e.hasAttribute("src")?(n.addEventListener("load",t),n.addEventListener("error",t)):(n.text=e.text,t()),e.parentNode.replaceChild(n,e)}))}async _loadScriptsFromList(e){const t=e.shift();return t?(await this._transformScript(t),this._loadScriptsFromList(e)):Promise.resolve()}_preloadAllScripts(){var e=document.createDocumentFragment();[...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async].forEach((t=>{const n=t.getAttribute("src");if(n){const t=document.createElement("link");t.href=n,t.rel="preload",t.as="script",e.appendChild(t)}})),document.head.appendChild(e)}_delayEventListeners(){let e={};function t(t,n){!function(t){function n(n){return e[t].eventsToRewrite.indexOf(n)>=0?"rocket-"+n:n}e[t]||(e[t]={originalFunctions:{add:t.addEventListener,remove:t.removeEventListener},eventsToRewrite:[]},t.addEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.add.apply(t,arguments)},t.removeEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.remove.apply(t,arguments)})}(t),e[t].eventsToRewrite.push(n)}function n(e,t){let n=e[t];Object.defineProperty(e,t,{get:()=>n||function(){},set(r){e["rocket"+t]=n=r}})}t(document,"DOMContentLoaded"),t(window,"DOMContentLoaded"),t(window,"load"),t(window,"pageshow"),t(document,"readystatechange"),n(document,"onreadystatechange"),n(window,"onload"),n(window,"onpageshow")}_delayJQueryReady(e){let t=window.jQuery;Object.defineProperty(window,"jQuery",{get:()=>t,set(n){if(n&&n.fn&&!e.allJQueries.includes(n)){n.fn.ready=n.fn.init.prototype.ready=function(t){e.domReadyFired?t.bind(document)(n):document.addEventListener("rocket-DOMContentLoaded",(()=>t.bind(document)(n)))};const t=n.fn.on;n.fn.on=n.fn.init.prototype.on=function(){if(this[0]===window){function e(e){return e.split(" ").map((e=>"load"===e||0===e.indexOf("load.")?"rocket-jquery-load":e)).join(" ")}"string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=e(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach((t=>{delete Object.assign(arguments[0],{[e(t)]:arguments[0][t]})[t]}))}return t.apply(this,arguments),this},e.allJQueries.push(n)}t=n}})}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._requestAnimFrame(),document.rocketonreadystatechange&&document.rocketonreadystatechange()}async _triggerWindowLoad(){await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-load")),await this._requestAnimFrame(),window.rocketonload&&window.rocketonload(),await this._requestAnimFrame(),this.allJQueries.forEach((e=>e(window).trigger("rocket-jquery-load"))),window.dispatchEvent(new Event("rocket-pageshow")),await this._requestAnimFrame(),window.rocketonpageshow&&window.rocketonpageshow()}_handleDocumentWrite(){const e=new Map;document.write=document.writeln=function(t){const n=document.currentScript,r=document.createRange(),i=n.parentElement;let o=e.get(n);void 0===o&&(o=n.nextSibling,e.set(n,o));const a=document.createDocumentFragment();r.setStart(a,0),a.appendChild(r.createContextualFragment(t)),i.insertBefore(a,o)}}async _requestAnimFrame(){return new Promise((e=>requestAnimationFrame(e)))}static run(){const e=new RocketLazyLoadScripts(["keydown","mousemove","touchmove","touchstart","touchend","wheel"]);e._addUserInteractionListener(e)}}RocketLazyLoadScripts.run();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="profile" href="https://gmpg.org/xfn/11" />
+<link rel="pingback" href="https://www.eurasiareview.com/xmlrpc.php" />
+<title>The EU After The Elections: A More Plural Parliament And Council &#8211; Analysis &#8211; Eurasia Review</title><link rel="preload" as="style" href="https://fonts.googleapis.com/css?family=Open%20Sans%3A400%2C600&#038;display=swap" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open%20Sans%3A400%2C600&#038;display=swap" media="print" onload="this.media='all'" /><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open%20Sans%3A400%2C600&#038;display=swap" /></noscript><link rel="stylesheet" href="https://www.eurasiareview.com/wp-content/cache/min/1/d829fff5002b4c838eec4a5832fd315c.css" media="all" data-minify="1" />
+<meta name='robots' content='max-image-preview:large' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//ssl.google-analytics.com' />
+<link href='https://fonts.gstatic.com' crossorigin rel='preconnect' />
+<link rel="alternate" type="application/rss+xml" title="Eurasia Review &raquo; Feed" href="https://www.eurasiareview.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Eurasia Review &raquo; Comments Feed" href="https://www.eurasiareview.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Eurasia Review &raquo; The EU After The Elections: A More Plural Parliament And Council &#8211; Analysis Comments Feed" href="https://www.eurasiareview.com/02072019-the-eu-after-the-elections-a-more-plural-parliament-and-council-analysis/feed/" />
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<style id='wp-block-library-theme-inline-css' type='text/css'>
+#start-resizable-editor-section{display:none}.wp-block-audio figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-audio figcaption{color:hsla(0,0%,100%,.65)}.wp-block-code{font-family:Menlo,Consolas,monaco,monospace;color:#1e1e1e;padding:.8em 1em;border:1px solid #ddd;border-radius:4px}.wp-block-embed figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-embed figcaption{color:hsla(0,0%,100%,.65)}.blocks-gallery-caption{color:#555;font-size:13px;text-align:center}.is-dark-theme .blocks-gallery-caption{color:hsla(0,0%,100%,.65)}.wp-block-image figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-image figcaption{color:hsla(0,0%,100%,.65)}.wp-block-pullquote{border-top:4px solid;border-bottom:4px solid;margin-bottom:1.75em;color:currentColor}.wp-block-pullquote__citation,.wp-block-pullquote cite,.wp-block-pullquote footer{color:currentColor;text-transform:uppercase;font-size:.8125em;font-style:normal}.wp-block-quote{border-left:.25em solid;margin:0 0 1.75em;padding-left:1em}.wp-block-quote cite,.wp-block-quote footer{color:currentColor;font-size:.8125em;position:relative;font-style:normal}.wp-block-quote.has-text-align-right{border-left:none;border-right:.25em solid;padding-left:0;padding-right:1em}.wp-block-quote.has-text-align-center{border:none;padding-left:0}.wp-block-quote.is-large,.wp-block-quote.is-style-large{border:none}.wp-block-search .wp-block-search__label{font-weight:700}.wp-block-group.has-background{padding:1.25em 2.375em;margin-top:0;margin-bottom:0}.wp-block-separator{border:none;border-bottom:2px solid;margin-left:auto;margin-right:auto;opacity:.4}.wp-block-separator:not(.is-style-wide):not(.is-style-dots){width:100px}.wp-block-separator.has-background:not(.is-style-dots){border-bottom:none;height:1px}.wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots){height:2px}.wp-block-table thead{border-bottom:3px solid}.wp-block-table tfoot{border-top:3px solid}.wp-block-table td,.wp-block-table th{padding:.5em;border:1px solid;word-break:normal}.wp-block-table figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-table figcaption{color:hsla(0,0%,100%,.65)}.wp-block-video figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-video figcaption{color:hsla(0,0%,100%,.65)}.wp-block-template-part.has-background{padding:1.25em 2.375em;margin-top:0;margin-bottom:0}#end-resizable-editor-section{display:none}
+</style>
+<style id='colormag_style-inline-css' type='text/css'>
+.colormag-button,blockquote,button,input[type=reset],input[type=button],input[type=submit],#masthead.colormag-header-clean #site-navigation.main-small-navigation .menu-toggle,.fa.search-top:hover,#masthead.colormag-header-classic #site-navigation.main-small-navigation .menu-toggle,.main-navigation ul li.focus > a,#masthead.colormag-header-classic .main-navigation ul ul.sub-menu li.focus > a,.home-icon.front_page_on,.main-navigation a:hover,.main-navigation ul li ul li a:hover,.main-navigation ul li ul li:hover>a,.main-navigation ul li.current-menu-ancestor>a,.main-navigation ul li.current-menu-item ul li a:hover,.main-navigation ul li.current-menu-item>a,.main-navigation ul li.current_page_ancestor>a,.main-navigation ul li.current_page_item>a,.main-navigation ul li:hover>a,.main-small-navigation li a:hover,.site-header .menu-toggle:hover,#masthead.colormag-header-classic .main-navigation ul ul.sub-menu li:hover > a,#masthead.colormag-header-classic .main-navigation ul ul.sub-menu li.current-menu-ancestor > a,#masthead.colormag-header-classic .main-navigation ul ul.sub-menu li.current-menu-item > a,#masthead .main-small-navigation li:hover > a,#masthead .main-small-navigation li.current-page-ancestor > a,#masthead .main-small-navigation li.current-menu-ancestor > a,#masthead .main-small-navigation li.current-page-item > a,#masthead .main-small-navigation li.current-menu-item > a,.main-small-navigation .current-menu-item>a,.main-small-navigation .current_page_item > a,.promo-button-area a:hover,#content .wp-pagenavi .current,#content .wp-pagenavi a:hover,.format-link .entry-content a,.pagination span,.comments-area .comment-author-link span,#secondary .widget-title span,.footer-widgets-area .widget-title span,.colormag-footer--classic .footer-widgets-area .widget-title span::before,.advertisement_above_footer .widget-title span,#content .post .article-content .above-entry-meta .cat-links a,.page-header .page-title span,.entry-meta .post-format i,.more-link,.no-post-thumbnail,.widget_featured_slider .slide-content .above-entry-meta .cat-links a,.widget_highlighted_posts .article-content .above-entry-meta .cat-links a,.widget_featured_posts .article-content .above-entry-meta .cat-links a,.widget_featured_posts .widget-title span,.widget_slider_area .widget-title span,.widget_beside_slider .widget-title span,.wp-block-quote,.wp-block-quote.is-style-large,.wp-block-quote.has-text-align-right{background-color:#dd9933;}#site-title a,.next a:hover,.previous a:hover,.social-links i.fa:hover,a,#masthead.colormag-header-clean .social-links li:hover i.fa,#masthead.colormag-header-classic .social-links li:hover i.fa,#masthead.colormag-header-clean .breaking-news .newsticker a:hover,#masthead.colormag-header-classic .breaking-news .newsticker a:hover,#masthead.colormag-header-classic #site-navigation .fa.search-top:hover,#masthead.colormag-header-classic #site-navigation.main-navigation .random-post a:hover .fa-random,.dark-skin #masthead.colormag-header-classic #site-navigation.main-navigation .home-icon:hover .fa,#masthead .main-small-navigation li:hover > .sub-toggle i,.better-responsive-menu #masthead .main-small-navigation .sub-toggle.active .fa,#masthead.colormag-header-classic .main-navigation .home-icon a:hover .fa,.pagination a span:hover,#content .comments-area a.comment-edit-link:hover,#content .comments-area a.comment-permalink:hover,#content .comments-area article header cite a:hover,.comments-area .comment-author-link a:hover,.comment .comment-reply-link:hover,.nav-next a,.nav-previous a,.footer-widgets-area a:hover,a#scroll-up i,#content .post .article-content .entry-title a:hover,.entry-meta .byline i,.entry-meta .cat-links i,.entry-meta a,.post .entry-title a:hover,.search .entry-title a:hover,.entry-meta .comments-link a:hover,.entry-meta .edit-link a:hover,.entry-meta .posted-on a:hover,.entry-meta .tag-links a:hover,.single #content .tags a:hover,.post-box .entry-meta .cat-links a:hover,.post-box .entry-meta .posted-on a:hover,.post.post-box .entry-title a:hover,.widget_featured_slider .slide-content .below-entry-meta .byline a:hover,.widget_featured_slider .slide-content .below-entry-meta .comments a:hover,.widget_featured_slider .slide-content .below-entry-meta .posted-on a:hover,.widget_featured_slider .slide-content .entry-title a:hover,.byline a:hover,.comments a:hover,.edit-link a:hover,.posted-on a:hover,.tag-links a:hover,.widget_highlighted_posts .article-content .below-entry-meta .byline a:hover,.widget_highlighted_posts .article-content .below-entry-meta .comments a:hover,.widget_highlighted_posts .article-content .below-entry-meta .posted-on a:hover,.widget_highlighted_posts .article-content .entry-title a:hover,.widget_featured_posts .article-content .entry-title a:hover,.related-posts-main-title .fa,.single-related-posts .article-content .entry-title a:hover{color:#dd9933;}#site-navigation{border-top-color:#dd9933;}#masthead.colormag-header-classic .main-navigation ul ul.sub-menu li:hover,#masthead.colormag-header-classic .main-navigation ul ul.sub-menu li.current-menu-ancestor,#masthead.colormag-header-classic .main-navigation ul ul.sub-menu li.current-menu-item,#masthead.colormag-header-classic #site-navigation .menu-toggle,#masthead.colormag-header-classic #site-navigation .menu-toggle:hover,#masthead.colormag-header-classic .main-navigation ul > li:hover > a,#masthead.colormag-header-classic .main-navigation ul > li.current-menu-item > a,#masthead.colormag-header-classic .main-navigation ul > li.current-menu-ancestor > a,#masthead.colormag-header-classic .main-navigation ul li.focus > a,.promo-button-area a:hover,.pagination a span:hover{border-color:#dd9933;}#secondary .widget-title,.footer-widgets-area .widget-title,.advertisement_above_footer .widget-title,.page-header .page-title,.widget_featured_posts .widget-title,.widget_slider_area .widget-title,.widget_beside_slider .widget-title{border-bottom-color:#dd9933;}@media (max-width:768px){.better-responsive-menu .sub-toggle{background-color:#bf7b15;}}
+</style>
+<style id='rocket-lazyload-inline-css' type='text/css'>
+.rll-youtube-player{position:relative;padding-bottom:56.23%;height:0;overflow:hidden;max-width:100%;}.rll-youtube-player iframe{position:absolute;top:0;left:0;width:100%;height:100%;z-index:100;background:0 0}.rll-youtube-player img{bottom:0;display:block;left:0;margin:auto;max-width:100%;width:100%;position:absolute;right:0;top:0;border:none;height:auto;cursor:pointer;-webkit-transition:.4s all;-moz-transition:.4s all;transition:.4s all}.rll-youtube-player img:hover{-webkit-filter:brightness(75%)}.rll-youtube-player .play{height:72px;width:72px;left:50%;top:50%;margin-left:-36px;margin-top:-36px;position:absolute;background:url(https://www.eurasiareview.com/wp-content/plugins/wp-rocket/assets/img/youtube.png) no-repeat;cursor:pointer}.wp-has-aspect-ratio .rll-youtube-player{position:absolute;padding-bottom:0;width:100%;height:100%;top:0;bottom:0;left:0;right:0}
+</style>
+<script type='text/javascript' defer src='https://www.eurasiareview.com/wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
+<script type='text/javascript' defer src='https://www.eurasiareview.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<script type='text/javascript' defer src='https://www.eurasiareview.com/wp-content/plugins/wp-user-avatar/assets/flatpickr/flatpickr.min.js?ver=5.8' id='ppress-flatpickr-js'></script>
+<script type='text/javascript' defer src='https://www.eurasiareview.com/wp-content/plugins/wp-user-avatar/assets/select2/select2.min.js?ver=5.8' id='ppress-select2-js'></script>
+<!--[if lte IE 8]>
+<script type='text/javascript' defer src='https://www.eurasiareview.com/wp-content/themes/colormag/js/html5shiv.min.js?ver=2.0.4' id='html5-js'></script>
+<![endif]-->
+<link rel="https://api.w.org/" href="https://www.eurasiareview.com/wp-json/" /><link rel="alternate" type="application/json" href="https://www.eurasiareview.com/wp-json/wp/v2/posts/193521" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.eurasiareview.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.eurasiareview.com/wp-includes/wlwmanifest.xml" />
+<meta name="generator" content="WordPress 5.8" />
+<link rel="canonical" href="https://www.eurasiareview.com/02072019-the-eu-after-the-elections-a-more-plural-parliament-and-council-analysis/" />
+<link rel='shortlink' href='https://www.eurasiareview.com/?p=193521' />
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+   var _gaq = _gaq || [];
+   _gaq.push(['_setAccount', 'UA-13272849-1']);
+   _gaq.push(['_trackPageview']);
+   (function() {
+   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+   })();
+   </script>
+<meta name="follow.it-verification-code-d1h3Y2MvM0UzRW41emZGMWwyZU55QmliYjdmdStaT3dDMXAyalQwTkFSQ21qMk1lbHlLR1NITDI1bEFRamluSzhONnBWcHBheTZkTEY1bnpJNVhyZ1dqZlhZcFlQa016MHBuakdPbmhHcGszOEE1bUUxZDhhYUlReFA2UVhJUTl8RG9WQ2tQSmk0YUhmYXM0RENYeVNkdXpRdzFVNGN4QU9TTmd4bXZIOU5FOD0=" content="1CadWAQGDe3erSj2Fndw" />
+<link rel="preload" as="font" href="https://www.eurasiareview.com/wp-content/themes/colormag/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" crossorigin><style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style><style type="text/css" id="custom-background-css">
+body.custom-background { background-color: #ffffff; }
+</style>
+<link rel="icon" href="https://www.eurasiareview.com/wp-content/uploads/2017/03/ernew-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://www.eurasiareview.com/wp-content/uploads/2017/03/ernew.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://www.eurasiareview.com/wp-content/uploads/2017/03/ernew.png" />
+<meta name="msapplication-TileImage" content="https://www.eurasiareview.com/wp-content/uploads/2017/03/ernew.png" />
+<style type="text/css" id="wp-custom-css">
+			author-profile-card {
+    background: #eee;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.author-photo {
+    float: left;
+    text-align: left;
+    padding: 5px;
+}
+.single .default-wp-page {
+  display: none;
+}
+span.cat-links {
+    display: none;
+}
+		</style>
+<noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript><meta property="fb:pages" content="339585248573" />
+<meta name="p:domain_verify" content="41c8d94fd5f7f44fd3b12a0980be6024" />
+<meta name="pocket-site-verification" content="9ddf71d004ab663daa1cdce1e65bfb" />
+<script type="rocketlazyloadscript" data-ad-client="ca-pub-7107515782730935" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+<body class="post-template-default single single-post postid-193521 single-format-standard custom-background wp-custom-logo wp-embed-responsive right-sidebar wide better-responsive-menu">
+<div id="page" class="hfeed site">
+<div align="right">
+ISSN 2330-717X
+</div>
+<header id="masthead" class="site-header clearfix ">
+<div id="header-text-nav-container" class="clearfix">
+<div class="news-bar">
+<div class="inner-wrap clearfix">
+<div class="date-in-header">
+Friday, August 27, 2021 </div>
+<div class="social-links clearfix">
+<ul>
+<li><a href="https://www.facebook.com/EurasiaReview" target="_blank"><i class="fa fa-facebook"></i></a></li><li><a href="https://twitter.com/EurasiaReview" target="_blank"><i class="fa fa-twitter"></i></a></li><li><a href="https://www.pinterest.com/eurasiareview/" target="_blank"><i class="fa fa-pinterest"></i></a></li><li><a href="https://www.youtube.com/eurasiareview" target="_blank"><i class="fa fa-youtube"></i></a></li> </ul>
+</div>
+</div>
+</div>
+<div class="inner-wrap">
+<div id="header-text-nav-wrap" class="clearfix">
+<div id="header-left-section">
+<div id="header-logo-image">
+<a href="https://www.eurasiareview.com/" class="custom-logo-link" rel="home"><img width="250" height="125" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20250%20125'%3E%3C/svg%3E" class="custom-logo" alt="Eurasia Review" data-lazy-src="https://www.eurasiareview.com/wp-content/uploads/2020/06/cropped-newerlogo250-1.jpg" /><noscript><img width="250" height="125" src="https://www.eurasiareview.com/wp-content/uploads/2020/06/cropped-newerlogo250-1.jpg" class="custom-logo" alt="Eurasia Review" /></noscript></a> </div>
+<div id="header-text" class="screen-reader-text">
+<h3 id="site-title">
+<a href="https://www.eurasiareview.com/" title="Eurasia Review" rel="home">Eurasia Review</a>
+</h3>
+<p id="site-description">
+A Journal of Analysis and News </p>
+</div>
+</div>
+<div id="header-right-section">
+<div id="header-right-sidebar" class="clearfix">
+<aside id="text-48" class="widget widget_text clearfix"> <div class="textwidget"><p><script type="rocketlazyloadscript" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><br />
+<br />
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7107515782730935" data-ad-slot="3824667877" data-ad-format="auto" data-full-width-responsive="true"></ins><br />
+<script type="rocketlazyloadscript">
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></p>
+</div>
+</aside> </div>
+</div>
+</div>
+</div>
+<nav id="site-navigation" class="main-navigation clearfix" role="navigation">
+<div class="inner-wrap clearfix">
+<div class="home-icon">
+<a href="https://www.eurasiareview.com/" title="Eurasia Review">
+<i class="fa fa-home"></i>
+</a>
+</div>
+<p class="menu-toggle"></p>
+<div class="menu-primary-container"><ul id="menu-top-menu" class="menu"><li id="menu-item-85360" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-85360"><a title="World News" href="https://www.eurasiareview.com/category/world-news/">News</a>
+<ul class="sub-menu">
+<li id="menu-item-222010" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-222010"><a href="https://www.eurasiareview.com/category/africa/">Africa</a></li>
+<li id="menu-item-222013" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-222013"><a href="https://www.eurasiareview.com/category/east-asia-pacific/">East Asia Pacific</a></li>
+<li id="menu-item-222015" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-222015"><a href="https://www.eurasiareview.com/category/americas/">The Americas</a></li>
+<li id="menu-item-222009" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-222009"><a title="Europe" href="https://www.eurasiareview.com/category/europe/">Europe</a></li>
+<li id="menu-item-222011" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-222011"><a href="https://www.eurasiareview.com/category/middle-east/">Middle East</a></li>
+<li id="menu-item-222012" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-222012"><a href="https://www.eurasiareview.com/category/south-central-asia/">South and Central Asia</a></li>
+</ul>
+</li>
+<li id="menu-item-85362" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-85362"><a href="https://www.eurasiareview.com/category/analysis/">Analysis</a></li>
+<li id="menu-item-85361" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-85361"><a href="https://www.eurasiareview.com/category/opinion/">Opinion</a></li>
+<li id="menu-item-85363" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-85363"><a href="https://www.eurasiareview.com/category/business-and-finance/">Business</a>
+<ul class="sub-menu">
+<li id="menu-item-154670" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-154670"><a href="https://www.eurasiareview.com/category/business-and-finance/gdkp/">GDKP</a></li>
+</ul>
+</li>
+<li id="menu-item-85364" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-85364"><a href="https://www.eurasiareview.com/category/social-issues/">Social</a></li>
+<li id="menu-item-85365" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-85365"><a href="https://www.eurasiareview.com/category/religion/">Religion</a></li>
+<li id="menu-item-85366" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-85366"><a href="https://www.eurasiareview.com/category/entertainment/">Entertainment</a></li>
+<li id="menu-item-85367" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-85367"><a href="https://www.eurasiareview.com/category/environment/">Environment</a></li>
+<li id="menu-item-85368" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-85368"><a href="https://www.eurasiareview.com/category/technology/">Technology</a></li>
+<li id="menu-item-198258" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-198258"><a href="https://www.eurasiareview.com/category/science/">Science</a></li>
+<li id="menu-item-198259" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-198259"><a href="https://www.eurasiareview.com/category/health/">Health</a></li>
+<li id="menu-item-126079" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-126079"><a href="https://www.eurasiareview.com/about-eurasia-review/">About Eurasia Review</a>
+<ul class="sub-menu">
+<li id="menu-item-126080" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-126080"><a href="https://www.eurasiareview.com/about/">Eurasia Review&#8217;s Editorial Staff</a></li>
+<li id="menu-item-126083" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-126083"><a href="https://www.eurasiareview.com/authors/">Authors and Partners</a></li>
+<li id="menu-item-126082" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-126082"><a href="https://www.eurasiareview.com/submit-an-article/">Submit an Article</a></li>
+<li id="menu-item-126179" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-126179"><a href="https://www.eurasiareview.com/buzz-future/">Buzz Future</a></li>
+<li id="menu-item-126081" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-privacy-policy menu-item-126081"><a href="https://www.eurasiareview.com/privacy-policy-and-terms-of-use/">Privacy Policy And Terms Of Use</a></li>
+</ul>
+</li>
+<li id="menu-item-126084" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-126084"><a href="https://www.eurasiareview.com/contact/">Contact</a></li>
+</ul></div>
+</div>
+</nav>
+</div>
+</header>
+<div id="main" class="clearfix">
+<div class="inner-wrap clearfix">
+<div id="primary">
+<div id="content" class="clearfix">
+<article id="post-193521" class="post-193521 post type-post status-publish format-standard has-post-thumbnail hentry category-567 category-analysis category-social-issues">
+<div class="featured-image">
+<img width="800" height="445" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20445'%3E%3C/svg%3E" class="attachment-colormag-featured-image size-colormag-featured-image wp-post-image" alt="european flag map" data-lazy-srcset="https://www.eurasiareview.com/wp-content/uploads/2019/06/a-35.jpg 800w, https://www.eurasiareview.com/wp-content/uploads/2019/06/a-35-300x167.jpg 300w, https://www.eurasiareview.com/wp-content/uploads/2019/06/a-35-768x427.jpg 768w" data-lazy-sizes="(max-width: 800px) 100vw, 800px" data-lazy-src="https://www.eurasiareview.com/wp-content/uploads/2019/06/a-35.jpg" /><noscript><img width="800" height="445" src="https://www.eurasiareview.com/wp-content/uploads/2019/06/a-35.jpg" class="attachment-colormag-featured-image size-colormag-featured-image wp-post-image" alt="european flag map" srcset="https://www.eurasiareview.com/wp-content/uploads/2019/06/a-35.jpg 800w, https://www.eurasiareview.com/wp-content/uploads/2019/06/a-35-300x167.jpg 300w, https://www.eurasiareview.com/wp-content/uploads/2019/06/a-35-768x427.jpg 768w" sizes="(max-width: 800px) 100vw, 800px" /></noscript> </div>
+<div class="article-content clearfix">
+<div class="above-entry-meta"><span class="cat-links"><a href="https://www.eurasiareview.com/category/1/" style="background:#ffffff" rel="category tag">1</a>&nbsp;<a href="https://www.eurasiareview.com/category/analysis/" style="background:#dd3333" rel="category tag">Analysis</a>&nbsp;<a href="https://www.eurasiareview.com/category/social-issues/" style="background:#ddbcbc" rel="category tag">Social Issues</a>&nbsp;</span></div>
+<header class="entry-header">
+<h1 class="entry-title">
+The EU After The Elections: A More Plural Parliament And Council &#8211; Analysis </h1>
+</header>
+<div class="below-entry-meta">
+<span class="posted-on"><a href="https://www.eurasiareview.com/02072019-the-eu-after-the-elections-a-more-plural-parliament-and-council-analysis/" title="4:06 am" rel="bookmark"><i class="fa fa-calendar-o"></i> <time class="entry-date published" datetime="2019-07-02T04:06:44+02:00">July 2, 2019</time><time class="updated" datetime="2019-07-02T04:06:50+02:00">July 2, 2019</time></a></span>
+<span class="byline">
+<span class="author vcard">
+<i class="fa fa-user"></i>
+<a class="url fn n" href="https://www.eurasiareview.com/author/elcano-royal-institute/" title="Elcano Royal Institute">
+Elcano Royal Institute </a>
+</span>
+</span>
+<span class="comments">
+<a href="https://www.eurasiareview.com/02072019-the-eu-after-the-elections-a-more-plural-parliament-and-council-analysis/#respond"><i class="fa fa-comment"></i> 0 Comments</a> </span>
+</div> <p>By
+<a href="https://www.eurasiareview.com/author/elcano-royal-institute/" title="Posts by Elcano Royal Institute" class="author url fn" rel="author">Elcano Royal Institute</a> </p>
+<div class="entry-content clearfix">
+<div style="clear: both; margin-top: 0px; margin-right: 15px; margin-bottom: 10px; margin-left: 0px; float: left;">
+<script type="rocketlazyloadscript" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+<ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-7107515782730935" data-ad-slot="8263607075"></ins>
+<script type="rocketlazyloadscript">
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div><a data-pocket-label="pocket" data-pocket-count="none" class="pocket-btn" data-lang="en"></a>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript">!function(d,i){if(!d.getElementById(i)){var j=d.createElement("script");j.id=i;j.src="https://widgets.getpocket.com/v1/j/btn.js?v=1";var w=d.getElementById(i);d.body.appendChild(j);}}(document,"pocket-btn-js");</script>
+<p>What is the new balance of power in the EU’s institutions following the May 2019 elections?</p>
+<p>By Piotr Maciej Kaczyński*</p>
+<p>The fallout of the May 2019 European elections is only just
+becoming visible. The European democracy is maturing and in the process
+many terms are being redefined. In this paper the author analyses the
+first weeks of European politics following the elections, particularly
+the higher degree of pluralism and politicisation of Europe’s
+institutions.</p>
+<h2>Analysis</h2>
+<p>The Europeans have spoken. George Soros, the embattled US-European businessman who has spent billions on pro-democracy projects across the continent, has summed it up best: ‘the silent pro-European majority has spoken’.<sup>1</sup> What are the consequences of the end-of-May elections?</p>
+<div class="wp-block-image"><figure class="alignright"><img width="300" height="154" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20154'%3E%3C/svg%3E" alt="Figure 1. Europe’s election results" class="wp-image-193522" data-lazy-srcset="https://www.eurasiareview.com/wp-content/uploads/2019/07/b-2-300x154.png 300w, https://www.eurasiareview.com/wp-content/uploads/2019/07/b-2.png 593w" data-lazy-sizes="(max-width: 300px) 100vw, 300px" data-lazy-src="https://www.eurasiareview.com/wp-content/uploads/2019/07/b-2-300x154.png" /><noscript><img width="300" height="154" src="https://www.eurasiareview.com/wp-content/uploads/2019/07/b-2-300x154.png" alt="Figure 1. Europe’s election results" class="wp-image-193522" srcset="https://www.eurasiareview.com/wp-content/uploads/2019/07/b-2-300x154.png 300w, https://www.eurasiareview.com/wp-content/uploads/2019/07/b-2.png 593w" sizes="(max-width: 300px) 100vw, 300px" /></noscript><figcaption>Figure 1. Europe’s election results</figcaption></figure></div>
+<p>There are <a href="http://www.realinstitutoelcano.org/wps/portal/rielcano_en/contenido?WCM_GLOBAL_CONTEXT=/elcano/elcano_in/zonas_in/commentary-oteroiglesiastoygur-sanchez-must-snatch-economic-vice-presidency-for-spain">five top jobs</a>
+to be filled in by the end of the year: Presidents of the European
+Commission, the European Council, the European Parliament and of the
+European Central Bank, as well as the High Representative for Foreign
+Affairs, are in the pool. The leaders in the European Council have
+decided to agree on them all in a single package that will reflect a
+variety of balances: geographical, political, institutional, of gender
+and of the size of member states. There are a number of names in
+circulation, including those of the Spitzenkandidaten process,
+especially of the two largest political families: Manfred Weber and
+Frans Timmermans, respectively the lead candidates of the European
+People’s Party (EPP) of the Socialists and Democrats (S&amp;D).</p>
+<p>The election results confirmed many expectations but also
+threw up a few major surprises. The most important was the improved
+turnout: some 220 million Europeans, 51% of all those eligible to vote,
+cast their ballots, the highest number in a generation and a clear sign
+that the European public is regaining its interest in European affairs.</p><div class="sNmp8ozm"><div style="display:block;float:left;margin-bottom:5px;margin-right:5px;">
+<script type="rocketlazyloadscript" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+<ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-7107515782730935" data-ad-slot="8800050277"></ins>
+<script type="rocketlazyloadscript">
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div></div>
+<p>The high turnout (up 8% since 2014) and the results suggest
+that the European leadership is regaining its democratic mandate after a
+number of national referendums in member states organised between 2015
+and 2016. All of them –in Greece (on bailout in 2015), Denmark (on
+opt-outs, 2015), the Netherlands (on the EU-Ukraine trade agreement,
+2016) and, most significantly, in the UK on <a href="https://especiales.realinstitutoelcano.org/brexit/">Brexit</a> in 2016– were failures from a European standpoint.</p>
+<p>The first feature of the results is the end of the majority
+of the ‘grand coalition’ between the EPP and the S&amp;D. Even if the
+political culture of the European Parliament is far more inclusive than
+in many EU member states dominated by the pro-government majority and
+opposition logic, the fact that the two largest political groups
+provided parliamentary stability in the Parliament was significant. Now,
+the two largest families have been joined by a third, liberal, group
+generated by a new large French contingent from President Emmanuel
+Macron’s party. Following its merger with Macron’s Republique en Marche
+the ALDE group has now even altered its name to Renew Europe (RE).</p>
+<h3>Seeking a new majority</h3>
+<p>The three political groups (EPP, S&amp;D and RE) together
+could control the majority comfortably with around 440 MEPs. The same
+three political families also dominate the European Council. The three
+of them are virtually equal, as there is no majority in either of the
+institutions (Parliament and European Council) without one of them. Only
+together can they provide an effective functioning of the EU’s
+governance system.</p>
+<p>However, the process of ‘leading candidates’ (Weber, Timmermans, and the liberals Margrethe Vestager and Guy Verhofstadt) pushes the current debate in quite a different direction. On the one hand there is a centre-left coalition ‘against Weber’, consisting of the social-democratic and liberal leaders in the European Council, most notably the French President Emmanuel Macron and the Spanish Prime Minister Pedro Sánchez.<sup>2</sup> On the other hand, the German Chancellor Angela Merkel is firmly behind the EPP front candidate, also due to internal German politics, where the CSU outperformed in Bavaria and the CDU underperformed in the rest of the country. One politician said that the appointment of the Bavarian politician is of major significance to the CSU.<sup>3</sup> Manfred Weber is working to build a coalition in his favour by extending his talks to the ECR leadership.</p>
+<p>With the RE and the S&amp;D claiming the support of the
+rest of the left-wing groups –the Greens and the GUE/NGL– against Weber,
+there is the smallest centre-left positive majority in the new
+Parliament (377 mandates). At the same time there is no majority with
+the EPP and ECR, even if the centrist group were to converge with it
+(353 mandates). This is when Weber might try to stretch his support by
+talking to the new far-right group largely comprised by MEPs elected in
+Italy (La Lega) and France (Rassemblement National). This, however,
+would be highly controversial amongst the more-centrist EPP as well as
+the RE, and hence unlikely.</p>
+<p>The future of the EPP remains a mystery since the Hungarian governing party Fidesz, has been suspended due to its direct attacks against the group’s leadership during the European election campaign. Fidesz also stands accused of compromising European values, hence the suspension. Similar problems have arisen with Romania’s governing PSD, which is a member of the Social Democrats in the EU. The PSD leader Liviu Dragnea was recently jailed on corruption charges.<sup>4</sup> The liberal Czech Prime Minister Andrej Babiš has also given rise to similar suspicions and there were recently a series of major rallies in Prague demanding his resignation.<sup>5</sup></p>
+<p>As of mid-June there are eight members of the European
+Council siding with the EPP (Germany, Bulgaria, Croatia, Cyprus,
+Hungary, Ireland, Latvia and Romania), six members with the S&amp;D
+(Spain, Finland, Malta, Portugal, Slovakia and Sweden) and seven
+(France, Belgium, the Czech Republic, Estonia, Luxembourg, the
+Netherlands and Slovenia) affiliated with the Renew Europe group. The
+Austrian Chancellor is running a care-taker government. Following the
+Danish elections, the new Prime Minister Mette Frederiksen (S&amp;D)
+shall replace the previous liberal PM in the European Council, most
+likely still in June. The Greek Prime Minister Alexis Tsipras is
+associated with GUE/NGL and announced snap elections for 7 July. The EPP
+is likely to pick up one seat in Athens. The Italian Prime Minister is
+not affiliated to any of the political families. The President of
+Lithuania, Dalia Grybauskaitė, an independent, will be replaced by a new
+leader in July, also non-partisan, Gitanas Nausėda. The Polish and
+British EUCO members are affiliated with the ECR.</p>
+<p>It is very likely that by September there will be nine EPP
+members (+Greece), seven S&amp;D members (+Denmark) and seven with Renew
+Europe. The majority in the European Council needed for the appointment
+of a new Commission President is 21.</p>
+<p>Even if a centre-right or centre-left majority in the
+European Parliament were to be within reach, there is no majority
+possible in the European Council without all three of the political
+families. This is the first important message from the European
+elections: the only viable way forward is a <em>ménage à trois</em>.</p>
+<h3>The green wave</h3>
+<p>The elections brought a major surprise in that the two main
+blocks have been weakened while the two smaller centrist blocks are
+stronger, with the underlying threat from far-right nationalism. If the
+EPP and S&amp;D were to become slightly smaller, the Liberals and the
+Greens would expand their European presence.</p>
+<p>The status of the former has been strongly marked by the arrival of President Emmanuel Macron to the group: not only are 21 of the 108 group MEPs French, but the French arrival has led it into being re-named the group’s change into Renew Europe (RE). Dropping the adjective ‘liberal’ is not co-incidental. The new group leader is Dacian Cioloș, a former European Commissioner, who presented his own Romanian party PLUS last year to the world as located in the ‘centre, centre-right area’.<sup>6</sup></p>
+<p>The Greens were the major surprise in the elections. The
+party overperformed most visibly in Germany (25 mandates) and in France
+(12 seats), with a strong showing in less populous states like the
+Netherlands, Belgium, Ireland, the Czech Republic, Austria, Denmark,
+Finland and Sweden. With no presence on the European Council, the
+Greens’ strongest mandate comes from the main issue they promote:
+climate change. The Green parties across Western Europe have shown they
+enjoy the trust of the general public and the green vote should be
+interpreted as Europe’s citizens agreeing that climate change is the
+most pressing issue to be addressed.</p>
+<p>Still, the Greens underperformed in the southern and eastern EU. Some commentators point out that the green agenda is not yet shared throughout the EU.<sup>7</sup></p>
+<h3>The ECR</h3>
+<p>The other groups lost the elections. The GUE/NGL is much
+smaller than before with only Germany, France, Ireland, Greece, Spain,
+Portugal and Cyprus having two or more MEPs.</p>
+<p>The groups to the right of the EPP are not as strong as
+anticipated. There were three groups in the previous Parliament. One of
+them, the EFDD, is unlikely to continue to exist in the European
+Parliament due to the problem of gathering MEPs from seven different
+countries. Effectively two big national parties are lacking a group at
+the time of writing: the weakened Five Star Movement in Italy and the
+temporary protest-vote Brexit Party from the UK. Should the Brexiteers
+have their way, they will depart from the European Parliament before 31
+October 2019.</p>
+<p>The ECR has also lost its third-place positioning in the
+European Parliament, currently being the sixth-largest group. Its most
+significant defeat was in the UK, as Britain’s Conservatives gained only
+four seats in the new Parliament. The internal group dynamics suggest
+it will be dominated by Poland’s governing Law and Justice party (PiS).</p>
+<p>Open questions regarding the ECR include: will the Five
+Star Movement join the group? Should Fidesz leave the EPP, will it join
+the ECR? Will the ECR be included in the next European Parliament’s
+ordinary committee work?</p>
+<h3>The new far-right: Identity and Democracy (ID)</h3>
+<p>Before the elections some predicted that the far-right
+might obtain as many as 150 MEPs. This turned out to be an overestimate,
+but it was certainly viewed as a threat. Still, La Lega and
+Rassemblement National won the elections in Italy and France,
+respectively. Among their partners are the Finns Party (Finland),
+Alternative for Germany (AfD), the Freedom Party of Austria (FPO), the
+Belgian Vlaams Belang and the Danish People’s Party (DF). All in all, 73
+MEPs from nine countries form the group.</p>
+<h3>EU politics</h3>
+<p>Politics in member states are usually exercised by various
+political actors, all based on a political party system and civil
+society. In the EU, however, there are three level politics. All of them
+take place at the same time and the final outcome of any process has to
+include all three levels.</p>
+<p>The first level is the traditional party politics with
+which we are familiar at the national level. This is when the
+centre-right competes for power and ideas, support and influence, with
+the centre-left, liberals, greens, far-left or far-right, with
+single-issue-driven parties or otherwise. This level is best seen in the
+European Parliament, where the political groups negotiate between
+themselves all political appointments, agendas and solutions.</p>
+<p>The second level of political relations is between member
+states. National interests and national perspectives, along with
+differing backgrounds, political culture, finances and history all come
+to the fore. Geography, size and experience tend to play a role in the
+interaction between the member states in the Council and the European
+Council.</p>
+<p>The third level of political relations is between
+institutions. There needs to be a respect for the Parliament in the
+Council for there is hardly any respect for the member states in the
+European Parliament.</p>
+<h3>The many necessary balances</h3>
+<p>There are many different balances that must be respected in
+the EU. One is political, between the main political families. As
+argued above, the most likely compromise should include political
+figures from three European families: EPP, S&amp;D and Renew Europe.</p>
+<p>The second balance to bear in mind is geographical. In the
+past, the East was represented by the incorporation of Polish
+politicians: Jerzy Buzek became the President of the European Parliament
+in 2009 and Donald Tusk of the European Council in 2014. This time the
+South is callings for representation, linked to the departure of three
+Italian politicians –Mario Draghi, ECB, Antonio Tajani, European
+Parliament, and Federica Mogherini, High Representative– from their
+positions. Northern candidates are also being increasingly considered.</p>
+<p>The entire issue is linked with the financial balance
+between net contributors, countries known for being stringent about
+their fiscal approach.</p>
+<p>In the past a politician from a country outside the
+Eurozone could not claim the position of European Commission President
+(or, obviously, the ECB presidency). Size matters, too: compromises
+should not include politicians from Germany, France, Spain, Italy and
+Poland alone. The absence of the larger countries from appointments
+would safeguard the rights of the smaller.</p>
+<p>In addition, there is the need for a gender-balanced approach. Donald Tusk, the President of the European Council, mentioned that two women should be expected to take leading positions.<sup>8</sup></p>
+<p>Tusk was formally appointed <em>formateur</em> on 28 May.<sup>9</sup> Soon after, however, a system of informal party negotiators was created with two negotiators on behalf of the EPP (Croatia’s Andrej Plenkovič and Latvia’s Krišjānis Kariņš), two on behalf of the S&amp;D (Spain’s Pedro Sánchez and Portugal’s António Costa) and two on behalf of Renew Europe (the Netherlands’ Mark Rutte and Belgium’s Charles Michel).</p>
+<p>All of the European Council’s work should be completed
+before the new European Parliament’s first plenary sitting takes place
+in Strasbourg on 2 July. Should that be the case, the next balancing act
+will be necessary: the interinstitutional, affecting the European
+Parliament. It is not known how the European Parliament –currently in
+the process of self-organisation– will react to a European Council
+appointment if the EUCO disregards the Spitzenkandidaten process.</p>
+<p>The June 2019 European Council voted for the three candidates of the largest political families, but none of them gained the more than 21 votes necessary, despite Timmermans and the liberal candidate Vestager being supported by the S&amp;D-RE and the Greek PM while the EPP’s Weber was only backed by his party peers.<sup>10</sup> Nevertheless, all were rejected at the 20-21 June 2019 European Council.</p>
+<p>Should the next European Council be able to put forward a candidate for the Commission Presidency, there is a significant chance it will not be one of the leading candidates. ‘A more moderate EPP candidate’ could be acceptable for the left, according to one member of the European Council,<sup>11</sup> and the EPP seems to be pushing for the next Commission President to be from among its ranks.</p>
+<p>This is where other options need to be considered, rather
+than seeking a balance. The new candidate will need to be consensual,
+gaining the support of the EPP, S&amp;D and Renew Europe: probably an
+EPP politician who is not Manfred Weber. At the time of writing one name
+comes to mind, that of Michel Barnier, who as a French citizen and an
+EPP politician could gather support from both the Berlin and Paris
+governments.</p>
+<p>Still, to seek such an agreement is a matter of European Council internal politics. The candidate needs to win <em>both </em>institutions’
+approval. Michel Barnier was not a candidate in the elections. Will the
+Parliament oppose him on the principle of institutional balance? On a
+positive note, he is highly respected in the EU for his commitment to
+the European interest in the negotiations over Brexit with the British
+government.</p>
+<h2>Conclusions</h2>
+<p>The elections to the European Parliament are providing a strong mandate for EU reform. The change people want, however, <a href="https://blog.realinstitutoelcano.org/en/the-eu-the-chance-for-a-fresh-impetus/">is not unidimensional</a>. Those who voted for sovereignist parties have a different perspective from their opponents, mostly the green electorate. The <a href="https://blog.realinstitutoelcano.org/en/the-radical-right-lacks-an-international/">anti-Europeans</a> are softening their narrative, also in the context of the new post-Brexit realities. The centre-right and centre-left are seeking stability and maintain the status quo. As Ivan Krastev recently remarked, ‘everybody wants a change, but a different one’.<sup>12</sup></p>
+<p>Nobody debates the democratic deficit of the European
+project anymore. This clearly suggests that a major increase in turnout
+means there is a greater democratic mandate for the EU institutions to
+act. But the context as to how and on what to act will require some
+handcrafting, since the many expectations are sometimes contradictory.</p>
+<p>The next question to be addressed is not only who should
+lead the work of the Commission and other institutions, but also how.
+Will the next Commission be a political one? If so, in what way? The
+Juncker Commission’s experience has been very telling. There were
+controversies but the Juncker College was clearly a step up in the
+politicisation process. Still, not everyone is in favour of the
+Commission’s increased politicisation. For one thing, it is a challenge
+for a political Commission to maintain impartiality in certain important
+areas, such as competition policy; if the motivation for acting is
+political it is difficult to defend it against the accusations of its
+independence being compromised.</p>
+<p>The new European Commission may not be as liberal-minded as
+previously, depending on the new majorities in the European Parliament
+and the European Council. On the one hand, the UK’s departure may have a
+significant impact on the negotiations at the Council of Ministers. On
+the other hand, the treaties have been written in such a way that
+building a social Europe, for example, will be limited if there are no
+changes in the treaties, while there are still many of areas that could
+be liberalised.</p>
+<p>The agenda of the next European Commission is currently under negotiation. The June European Council adopted the ‘New Strategic Agenda 2019-2014’<sup>13</sup> and in the European Parliament there are agenda negotiations involving four groups: EPP, S&amp;D, RE and the Greens. Some have dubbed the policy priority negotiations a coalition-forming process similar to government-forming in countries like Belgium or the Netherlands.<sup>14</sup> The process will be finalised with the presentation of the new Commission President. Five and 10 years ago the documents were known as Political Guidelines for the Next European Commission.<sup>15</sup></p>
+<p>If a political Commission is the reality, then enhancing European democracy is the next challenge. Among the issues debated during the elections was the idea of allowing the European Parliament to present its own legislative proposals, breaking the European Commission’s quasi-monopoly. Another idea for enhancing European democracy is to change the Union’s communication policy. So far it has largely focused on the role of member states being responsible for communicating the ‘EU’ to its citizens. While this might have been largely successful in places like Germany or Belgium, in many other counties that has not been the case. For instance, regarding the Brexit campaign in the UK, President Juncker admitted it was a mistake to entrust the communications policy to the British Prime Minister: ‘It was a mistake not to intervene and not to interfere because we would have been the only ones to destroy the lies which were circulated around. I was wrong to be silent at an important moment’.<sup>16</sup></p>
+<p>The new European Commission needs a <strong>new communications policy</strong>
+with the EU’s citizens. The Union must become a more concrete reality.
+The stakes are very high for the EU’s citizens and thus they have real
+alternatives: on security, jobs, the economy, climate and many other
+vital issues. Their input should not be set aside for a five-year-long
+halt. There is a need for a new set of instruments to be developed by
+the European executive and that will be on the agenda of the next
+European Commission.</p>
+<p><strong>*About the author:</strong> Piotr Maciej Kaczyński, Independent expert on EU affairs | @pm_kaczynski</p>
+<p><strong>Source:</strong> This article was published by <a href="http://www.realinstitutoelcano.org/wps/portal/rielcano_en/contenido?WCM_GLOBAL_CONTEXT=/elcano/elcano_in/zonas_in/ari76-2019-kaczynski-eu-after-elections-a-more-plural-parliament-and-council">Elcano Royal Institute</a></p>
+<hr class="wp-block-separator" />
+<p><sup>1</sup> George Soros (2019), ‘Europe’s silent majority speaks out’, <em>Project Syndicate</em>, 7/VII/2019.</p>
+<p><sup>2</sup> ‘<a href="https://www.ft.com/content/88e9e00c-815c-11e9-b592-5fe435b57a3b">Sánchez sides with Macron to thwart Weber’s European Commission bid</a>’, <em>Financial Times</em>, 29/V/2019.</p>
+<p><sup>3</sup> Interviews in Kielce, 9/VI/2019, and in Berlin, 11/VI/2019.</p>
+<p><sup>4</sup> ‘<a href="https://www.bbc.com/news/world-europe-48421430">Romania corruption: PSD chief Liviu Dragnea jailed</a>’, <em>BBC</em>, 27/V/2019.</p>
+<p><sup>5</sup> ‘<a href="https://www.euronews.com/2019/06/23/hundreds-of-thousands-expected-to-rally-in-prague-in-biggest-protests-since-velvet-revolut">Tens of thousands rally in Prague in biggest protests since Velvet Revolution</a>’, <em>Euronews</em>, 23/VI/2019.</p>
+<p><sup>6</sup> ‘Domnul Dragnea n-are dreptul să arunce în aer societatea românească’, <em>PressOne</em>, 17/XII/2018.</p>
+<p><sup>7</sup> Ivan Krastev (2019), ‘<a href="https://calendar.boell.de/en/event/after-european-elections">After the European elections where is the European Union headed?</a>’, Heinrich Böll Stiftung, Berlin, 3/VI/2019.</p>
+<p><sup>8</sup> ‘<a href="https://euobserver.com/eu-election/145047">Women should fill two EU top jobs, Tusk says</a>’, <em>EU Observer</em>, 29/V/2019.</p>
+<p><sup>9</sup> ‘<a href="https://www.consilium.europa.eu/en/meetings/european-council/2019/05/28/">Informal dinner of heads of state or government</a>’, European Council.</p>
+<p><sup>10</sup> ‘<a href="https://www.euractiv.com/section/eu-elections-2019/news/tsipras-unlike-weber-timmermans-and-vestager-had-wide-support/">Tsipras: unlike Weber, Timmermans and Vestager had wide support</a>’, <em>Euractiv,</em> 21/VI/2019.</p>
+<p><sup>11</sup> <em>Ibid</em>.</p>
+<p><sup>12</sup> Krastev (2019), <em>op. cit</em>.</p>
+<p><sup>13</sup> ‘<a href="https://www.consilium.europa.eu/media/39914/a-new-strategic-agenda-2019-2024.pdf">A New Strategic Agenda 2019-2024</a>’, European Council, 20/VI/2019.</p>
+<p><sup>14</sup> Interview with Professor Steven Van Hecke of KU Leuven, 22/VI/2019.</p>
+<p><sup>15</sup> Jean-Claude Juncker (2014), ‘<a href="https://ec.europa.eu/commission/publications/president-junckers-political-guidelines_en">A new start for Europe: my agenda for jobs, growth, fairness and democratic change. Political guidelines for the next European Commission’</a>, 15/VII/2014; and José Manuel Durão Barroso (2009), ‘<a href="https://sbe.org.gr/newsletters/eflashnews/2009_21/Barroso_Political_Guidelines_2009.pdf">Political guidelines for the next Commission</a>’, 3/IX/2009.</p>
+<p><sup>16</sup> ‘<a href="https://www.reuters.com/article/us-britain-eu-juncker-mistake/juncker-regrets-eu-silence-on-brexit-campaign-lies-idUSKCN1SD1BI">Juncker regrets EU silence on Brexit campaign “lies”</a>’, Reuters, 7/V/2019.</p>
+</div>
+</div>
+Click <a href="https://follow.it/eurasiareview?action=followPub">here to have Eurasia Review's newsletter</a> delivered via RSS, as an email newsletter, via mobile or on your personal news page.
+<br><br>
+</article>
+</div>
+<ul class="default-wp-page clearfix">
+<li class="previous"><a href="https://www.eurasiareview.com/02072019-nepal-the-guthi-bill-and-lessons-learnt-brute-majority-is-not-enough-oped/" rel="prev"><span class="meta-nav">&larr;</span> Nepal: The Guthi Bill And Lessons Learnt (Brute Majority Is Not Enough) &#8211; OpEd</a></li>
+<li class="next"><a href="https://www.eurasiareview.com/03072019-remote-but-remarkable-illuminating-the-smallest-inhabitants-of-the-largest-ocean-desert/" rel="next">Remote But Remarkable: Illuminating The Smallest Inhabitants Of The Largest Ocean Desert <span class="meta-nav">&rarr;</span></a></li>
+</ul>
+<div class="author-box">
+<div class="author-img"><img data-del="avatar" alt='' src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3C/svg%3E" class='avatar pp-user-avatar avatar-100 photo ' height='100' width='100' data-lazy-src="https://www.eurasiareview.com/wp-content/uploads/2015/07/Elcano-Royal-Institute-128x128.png" /><noscript><img data-del="avatar" alt='' src='https://www.eurasiareview.com/wp-content/uploads/2015/07/Elcano-Royal-Institute-128x128.png' class='avatar pp-user-avatar avatar-100 photo ' height='100' width='100'/></noscript></div>
+<h4 class="author-name">Elcano Royal Institute</h4>
+<p class="author-description">The Elcano Royal Institute (Real Instituto Elcano) is a private entity, independent of both the Public Administration and the companies that provide most of its funding. It was established, under the honorary presidency of HRH the Prince of Asturias, on 2 December 2001 as a forum for analysis and debate on international affairs and particularly on Spain’s international relations. Its output aims to be of use to Spain’s decision-makers, both public and private, active on the international scene. Its work should similarly promote the knowledge of Spain in the strategic scenarios in which the country’s interests are at stake.</p>
+</div>
+<div id="comments" class="comments-area">
+<div id="respond" class="comment-respond">
+<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/02072019-the-eu-after-the-elections-a-more-plural-parliament-and-council-analysis/#respond" style="display:none;">Cancel reply</a></small></h3><form action="https://www.eurasiareview.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate><p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p><p class="comment-form-comment"><label for="comment">Comment</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" required='required' /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes" required='required' /></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="url" value="" size="30" maxlength="200" /></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='193521' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="52e0c43de3" /></p><input type="hidden" id="ak_js" name="ak_js" value="17" /><textarea name="ak_hp_textarea" cols="45" rows="8" maxlength="100" style="display: none !important;"></textarea></form> </div>
+<p class="akismet_comment_form_privacy_notice">This site uses Akismet to reduce spam. <a href="https://akismet.com/privacy/" target="_blank" rel="nofollow noopener">Learn how your comment data is processed</a>.</p>
+</div>
+</div>
+<div id="secondary">
+<aside id="text-42" class="widget widget_text clearfix"> <div class="textwidget"><script type="rocketlazyloadscript" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+<ins class="adsbygoogle" style="display:inline-block;width:300px;height:600px" data-ad-client="ca-pub-7107515782730935" data-ad-slot="7016981075"></ins>
+<script type="rocketlazyloadscript">
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+</aside><aside id="text-45" class="widget widget_text clearfix"><h3 class="widget-title"><span>Search</span></h3> <div class="textwidget"><p><script type="rocketlazyloadscript">
+  (function() {
+    var cx = 'partner-pub-7107515782730935:6933006405';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script><br />
+<gcse:searchbox-only></gcse:searchbox-only></p>
+</div>
+</aside><aside id="colormag_featured_posts_vertical_widget-23" class="widget widget_featured_posts widget_featured_posts_vertical widget_featured_meta clearfix">
+<h3 class="widget-title"><span>Latest</span></h3><div class="first-post">
+<div class="single-article clearfix">
+<figure><a href="https://www.eurasiareview.com/27082021-to-mask-or-not-a-state-of-resistance-oped/" title="To Mask, Or Not? A State Of Resistance &#8211; OpEd"><img width="390" height="205" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20390%20205'%3E%3C/svg%3E" class="attachment-colormag-featured-post-medium size-colormag-featured-post-medium wp-post-image" alt="Mask Face Mask Flag Hands Usa America Virus United States COVID-19 Coronavirus" title="To Mask, Or Not? A State Of Resistance &#8211; OpEd" data-lazy-src="https://www.eurasiareview.com/wp-content/uploads/2021/08/d-82-390x205.jpg" /><noscript><img width="390" height="205" src="https://www.eurasiareview.com/wp-content/uploads/2021/08/d-82-390x205.jpg" class="attachment-colormag-featured-post-medium size-colormag-featured-post-medium wp-post-image" alt="Mask Face Mask Flag Hands Usa America Virus United States COVID-19 Coronavirus" title="To Mask, Or Not? A State Of Resistance &#8211; OpEd" /></noscript></a></figure>
+<div class="article-content">
+<div class="above-entry-meta"><span class="cat-links"><a href="https://www.eurasiareview.com/category/1/" style="background:#ffffff" rel="category tag">1</a>&nbsp;<a href="https://www.eurasiareview.com/category/opinion/" style="background:#16868e" rel="category tag">Opinion</a>&nbsp;<a href="https://www.eurasiareview.com/category/americas/" rel="category tag">The Americas</a>&nbsp;</span></div> <h3 class="entry-title">
+<a href="https://www.eurasiareview.com/27082021-to-mask-or-not-a-state-of-resistance-oped/" title="To Mask, Or Not? A State Of Resistance &#8211; OpEd">
+To Mask, Or Not? A State Of Resistance &#8211; OpEd </a>
+</h3>
+<div class="below-entry-meta"><span class="posted-on"><a href="https://www.eurasiareview.com/27082021-to-mask-or-not-a-state-of-resistance-oped/" title="2:55 am" rel="bookmark"><i class="fa fa-calendar-o"></i> <time class="entry-date published" datetime="2021-08-27T02:55:12+02:00">August 27, 2021</time><time class="updated" datetime="2021-08-27T02:56:19+02:00">August 27, 2021</time></a></span>
+<span class="byline">
+<span class="author vcard">
+<i class="fa fa-user"></i>
+<a class="url fn n" href="https://www.eurasiareview.com/author/randall-g-holcombe/" title="Randall G. Holcombe">
+Randall G. Holcombe </a>
+</span>
+</span>
+<span class="comments">
+<i class="fa fa-comment"></i><a href="https://www.eurasiareview.com/27082021-to-mask-or-not-a-state-of-resistance-oped/#respond">0</a> </span>
+</div>
+<div class="entry-content">
+<p>The state of resistance, in this case, is Florida. Many readers will be aware that Florida Governor Ron DeSantis has</p>
+</div>
+</div>
+</div>
+</div><div class="following-post">
+<div class="single-article clearfix">
+<figure><a href="https://www.eurasiareview.com/27082021-us-investors-to-explore-opportunities-in-afcfta/" title="US Investors To Explore Opportunities In AfCFTA"><img width="130" height="90" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20130%2090'%3E%3C/svg%3E" class="attachment-colormag-featured-post-small size-colormag-featured-post-small wp-post-image" alt="U.S.-Africa Business Summit. Credit: Corporate Council on Africa (CCA)." title="US Investors To Explore Opportunities In AfCFTA" data-lazy-srcset="https://www.eurasiareview.com/wp-content/uploads/2021/08/c-54-130x90.jpg 130w, https://www.eurasiareview.com/wp-content/uploads/2021/08/c-54-392x272.jpg 392w" data-lazy-sizes="(max-width: 130px) 100vw, 130px" data-lazy-src="https://www.eurasiareview.com/wp-content/uploads/2021/08/c-54-130x90.jpg" /><noscript><img width="130" height="90" src="https://www.eurasiareview.com/wp-content/uploads/2021/08/c-54-130x90.jpg" class="attachment-colormag-featured-post-small size-colormag-featured-post-small wp-post-image" alt="U.S.-Africa Business Summit. Credit: Corporate Council on Africa (CCA)." title="US Investors To Explore Opportunities In AfCFTA" srcset="https://www.eurasiareview.com/wp-content/uploads/2021/08/c-54-130x90.jpg 130w, https://www.eurasiareview.com/wp-content/uploads/2021/08/c-54-392x272.jpg 392w" sizes="(max-width: 130px) 100vw, 130px" /></noscript></a></figure>
+<div class="article-content">
+<div class="above-entry-meta"><span class="cat-links"><a href="https://www.eurasiareview.com/category/1/" style="background:#ffffff" rel="category tag">1</a>&nbsp;<a href="https://www.eurasiareview.com/category/africa/" rel="category tag">Africa</a>&nbsp;<a href="https://www.eurasiareview.com/category/business-and-finance/" style="background:#635357" rel="category tag">Business</a>&nbsp;<a href="https://www.eurasiareview.com/category/americas/" rel="category tag">The Americas</a>&nbsp;</span></div> <h3 class="entry-title">
+<a href="https://www.eurasiareview.com/27082021-us-investors-to-explore-opportunities-in-afcfta/" title="US Investors To Explore Opportunities In AfCFTA">
+US Investors To Explore Opportunities In AfCFTA </a>
+</h3>
+<div class="below-entry-meta"><span class="posted-on"><a href="https://www.eurasiareview.com/27082021-us-investors-to-explore-opportunities-in-afcfta/" title="2:48 am" rel="bookmark"><i class="fa fa-calendar-o"></i> <time class="entry-date published" datetime="2021-08-27T02:48:31+02:00">August 27, 2021</time><time class="updated" datetime="2021-08-27T02:48:48+02:00">August 27, 2021</time></a></span>
+<span class="byline">
+<span class="author vcard">
+<i class="fa fa-user"></i>
+<a class="url fn n" href="https://www.eurasiareview.com/author/kester-kenn-klomegah/" title="Kester Kenn Klomegah">
+Kester Kenn Klomegah </a>
+</span>
+</span>
+<span class="comments">
+<i class="fa fa-comment"></i><a href="https://www.eurasiareview.com/27082021-us-investors-to-explore-opportunities-in-afcfta/#respond">0</a> </span>
+</div>
+</div>
+</div>
+<div class="single-article clearfix">
+<figure><a href="https://www.eurasiareview.com/27082021-afghan-fiasco-to-have-repercussions-in-iraq-and-beyond-oped/" title="Afghan Fiasco To Have Repercussions In Iraq And Beyond &#8211; OpEd"><img width="130" height="90" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20130%2090'%3E%3C/svg%3E" class="attachment-colormag-featured-post-small size-colormag-featured-post-small wp-post-image" alt="Protestors in Iraq. Photo Credit: Tasnim News Agency." title="Afghan Fiasco To Have Repercussions In Iraq And Beyond &#8211; OpEd" data-lazy-srcset="https://www.eurasiareview.com/wp-content/uploads/2018/08/a-77-130x90.jpg 130w, https://www.eurasiareview.com/wp-content/uploads/2018/08/a-77-392x272.jpg 392w" data-lazy-sizes="(max-width: 130px) 100vw, 130px" data-lazy-src="https://www.eurasiareview.com/wp-content/uploads/2018/08/a-77-130x90.jpg" /><noscript><img width="130" height="90" src="https://www.eurasiareview.com/wp-content/uploads/2018/08/a-77-130x90.jpg" class="attachment-colormag-featured-post-small size-colormag-featured-post-small wp-post-image" alt="Protestors in Iraq. Photo Credit: Tasnim News Agency." title="Afghan Fiasco To Have Repercussions In Iraq And Beyond &#8211; OpEd" srcset="https://www.eurasiareview.com/wp-content/uploads/2018/08/a-77-130x90.jpg 130w, https://www.eurasiareview.com/wp-content/uploads/2018/08/a-77-392x272.jpg 392w" sizes="(max-width: 130px) 100vw, 130px" /></noscript></a></figure>
+<div class="article-content">
+<div class="above-entry-meta"><span class="cat-links"><a href="https://www.eurasiareview.com/category/1/" style="background:#ffffff" rel="category tag">1</a>&nbsp;<a href="https://www.eurasiareview.com/category/middle-east/" rel="category tag">Middle East</a>&nbsp;<a href="https://www.eurasiareview.com/category/opinion/" style="background:#16868e" rel="category tag">Opinion</a>&nbsp;<a href="https://www.eurasiareview.com/category/south-central-asia/" rel="category tag">South and Central Asia</a>&nbsp;</span></div> <h3 class="entry-title">
+<a href="https://www.eurasiareview.com/27082021-afghan-fiasco-to-have-repercussions-in-iraq-and-beyond-oped/" title="Afghan Fiasco To Have Repercussions In Iraq And Beyond &#8211; OpEd">
+Afghan Fiasco To Have Repercussions In Iraq And Beyond &#8211; OpEd </a>
+</h3>
+<div class="below-entry-meta"><span class="posted-on"><a href="https://www.eurasiareview.com/27082021-afghan-fiasco-to-have-repercussions-in-iraq-and-beyond-oped/" title="2:42 am" rel="bookmark"><i class="fa fa-calendar-o"></i> <time class="entry-date published" datetime="2021-08-27T02:42:21+02:00">August 27, 2021</time><time class="updated" datetime="2021-08-27T02:42:40+02:00">August 27, 2021</time></a></span>
+<span class="byline">
+<span class="author vcard">
+<i class="fa fa-user"></i>
+<a class="url fn n" href="https://www.eurasiareview.com/author/arab-news/" title="Arab News">
+Arab News </a>
+</span>
+</span>
+<span class="comments">
+<i class="fa fa-comment"></i><a href="https://www.eurasiareview.com/27082021-afghan-fiasco-to-have-repercussions-in-iraq-and-beyond-oped/#respond">0</a> </span>
+</div>
+</div>
+</div>
+<div class="single-article clearfix">
+<figure><a href="https://www.eurasiareview.com/27082021-biden-on-afghanistan-lies-contradictions-and-spin-oped/" title="Biden On Afghanistan: Lies, Contradictions, And Spin &#8211; OpEd"><img width="130" height="90" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20130%2090'%3E%3C/svg%3E" class="attachment-colormag-featured-post-small size-colormag-featured-post-small wp-post-image" alt="US President Joe Biden. Photo Credit: Screenshot White House video" title="Biden On Afghanistan: Lies, Contradictions, And Spin &#8211; OpEd" data-lazy-srcset="https://www.eurasiareview.com/wp-content/uploads/2021/08/e-4-130x90.jpg 130w, https://www.eurasiareview.com/wp-content/uploads/2021/08/e-4-392x272.jpg 392w" data-lazy-sizes="(max-width: 130px) 100vw, 130px" data-lazy-src="https://www.eurasiareview.com/wp-content/uploads/2021/08/e-4-130x90.jpg" /><noscript><img width="130" height="90" src="https://www.eurasiareview.com/wp-content/uploads/2021/08/e-4-130x90.jpg" class="attachment-colormag-featured-post-small size-colormag-featured-post-small wp-post-image" alt="US President Joe Biden. Photo Credit: Screenshot White House video" title="Biden On Afghanistan: Lies, Contradictions, And Spin &#8211; OpEd" srcset="https://www.eurasiareview.com/wp-content/uploads/2021/08/e-4-130x90.jpg 130w, https://www.eurasiareview.com/wp-content/uploads/2021/08/e-4-392x272.jpg 392w" sizes="(max-width: 130px) 100vw, 130px" /></noscript></a></figure>
+<div class="article-content">
+<div class="above-entry-meta"><span class="cat-links"><a href="https://www.eurasiareview.com/category/1/" style="background:#ffffff" rel="category tag">1</a>&nbsp;<a href="https://www.eurasiareview.com/category/opinion/" style="background:#16868e" rel="category tag">Opinion</a>&nbsp;<a href="https://www.eurasiareview.com/category/south-central-asia/" rel="category tag">South and Central Asia</a>&nbsp;<a href="https://www.eurasiareview.com/category/americas/" rel="category tag">The Americas</a>&nbsp;</span></div> <h3 class="entry-title">
+<a href="https://www.eurasiareview.com/27082021-biden-on-afghanistan-lies-contradictions-and-spin-oped/" title="Biden On Afghanistan: Lies, Contradictions, And Spin &#8211; OpEd">
+Biden On Afghanistan: Lies, Contradictions, And Spin &#8211; OpEd </a>
+</h3>
+<div class="below-entry-meta"><span class="posted-on"><a href="https://www.eurasiareview.com/27082021-biden-on-afghanistan-lies-contradictions-and-spin-oped/" title="2:36 am" rel="bookmark"><i class="fa fa-calendar-o"></i> <time class="entry-date published" datetime="2021-08-27T02:36:06+02:00">August 27, 2021</time><time class="updated" datetime="2021-08-27T02:36:19+02:00">August 27, 2021</time></a></span>
+<span class="byline">
+<span class="author vcard">
+<i class="fa fa-user"></i>
+<a class="url fn n" href="https://www.eurasiareview.com/author/liberty-nation/" title="Liberty Nation">
+Liberty Nation </a>
+</span>
+</span>
+<span class="comments">
+<i class="fa fa-comment"></i><a href="https://www.eurasiareview.com/27082021-biden-on-afghanistan-lies-contradictions-and-spin-oped/#respond">0</a> </span>
+</div>
+</div>
+</div>
+</div></aside><aside id="recent-comments-4" class="widget widget_recent_comments clearfix"><h3 class="widget-title"><span>Recent Comments</span></h3><ul id="recentcomments"><li class="recentcomments"><span class="comment-author-link">Peter Givens</span> on <a href="https://www.eurasiareview.com/25082021-nato-secretary-general-stoltenberg-participates-in-g7-meeting-on-afghanistan/#comment-868952">NATO Secretary General Stoltenberg Participates In G7 Meeting On Afghanistan</a></li><li class="recentcomments"><span class="comment-author-link">Estella Yeo</span> on <a href="https://www.eurasiareview.com/24102012-rapture-likely-to-occur-by-2021-claims-world-bible-society-president/#comment-868903">&#8216;Rapture&#8217; Likely To Occur By 2021, Claims World Bible Society President</a></li><li class="recentcomments"><span class="comment-author-link">Don Dreher</span> on <a href="https://www.eurasiareview.com/26082021-robert-reich-the-real-socialism-in-america-isnt-what-you-think-oped/#comment-868884">Robert Reich: The Real Socialism In America Isn&#8217;t What You Think &#8211; OpEd</a></li><li class="recentcomments"><span class="comment-author-link"><a href='https://alphabatik.com' rel='external nofollow ugc' class='url'>Park Jhin Sung</a></span> on <a href="https://www.eurasiareview.com/13022021-indonesias-modest-new-sovereign-wealth-fund-analysis/#comment-868880">Indonesia&#8217;s Modest New Sovereign Wealth Fund &#8211; Analysis</a></li><li class="recentcomments"><span class="comment-author-link">Andrew Cornish</span> on <a href="https://www.eurasiareview.com/26082021-us-vp-harris-inaugurates-cdc-office-for-southeast-asia/#comment-868878">US VP Harris Inaugurates CDC Office For Southeast Asia</a></li></ul></aside><aside id="custom_html-3" class="widget_text widget widget_custom_html clearfix"><h3 class="widget-title"><span>Please Donate Today</span></h3><div class="textwidget custom-html-widget"><p>
+Did you enjoy this article? Then please consider donating today to ensure that Eurasia Review can continue to be able to provide similar content.</p>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick" />
+<input type="hidden" name="hosted_button_id" value="FLR6KLQ89SCA6" />
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+<img alt="" border="0" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201%201'%3E%3C/svg%3E" width="1" height="1" data-lazy-src="https://www.paypal.com/en_US/i/scr/pixel.gif" /><noscript><img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" /></noscript>
+</form>
+</div></aside>
+</div>
+</div>
+</div>
+<footer id="colophon" class="clearfix ">
+<div class="footer-socket-wrapper clearfix">
+<div class="inner-wrap">
+<div class="footer-socket-area">
+<div class="footer-socket-right-section">
+<div class="social-links clearfix">
+<ul>
+<li><a href="https://www.facebook.com/EurasiaReview" target="_blank"><i class="fa fa-facebook"></i></a></li><li><a href="https://twitter.com/EurasiaReview" target="_blank"><i class="fa fa-twitter"></i></a></li><li><a href="https://www.pinterest.com/eurasiareview/" target="_blank"><i class="fa fa-pinterest"></i></a></li><li><a href="https://www.youtube.com/eurasiareview" target="_blank"><i class="fa fa-youtube"></i></a></li> </ul>
+</div>
+</div>
+<div class="footer-socket-left-section">
+<div class="copyright"> Copyright <span>Eurasia Review.</span> All rights are reserved.</div>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<a href="#masthead" id="scroll-up"><i class="fa fa-chevron-up"></i></a>
+</div>
+<script type='text/javascript' id='ppress-frontend-script-js-extra'>
+/* <![CDATA[ */
+var pp_ajax_form = {"ajaxurl":"https:\/\/www.eurasiareview.com\/wp-admin\/admin-ajax.php","confirm_delete":"Are you sure?","deleting_text":"Deleting...","deleting_error":"An error occurred. Please try again.","nonce":"207ad588b5","disable_ajax_form":"false"};
+/* ]]> */
+</script>
+<script type='text/javascript' defer src='https://www.eurasiareview.com/wp-content/plugins/wp-user-avatar/assets/js/frontend.min.js?ver=3.1.17' id='ppress-frontend-script-js'></script>
+<script type='text/javascript' id='rocket-browser-checker-js-after'>
+"use strict";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||!1,descriptor.configurable=!0,"value"in descriptor&&(descriptor.writable=!0),Object.defineProperty(target,descriptor.key,descriptor)}}return function(Constructor,protoProps,staticProps){return protoProps&&defineProperties(Constructor.prototype,protoProps),staticProps&&defineProperties(Constructor,staticProps),Constructor}}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor))throw new TypeError("Cannot call a class as a function")}var RocketBrowserCompatibilityChecker=function(){function RocketBrowserCompatibilityChecker(options){_classCallCheck(this,RocketBrowserCompatibilityChecker),this.passiveSupported=!1,this._checkPassiveOption(this),this.options=!!this.passiveSupported&&options}return _createClass(RocketBrowserCompatibilityChecker,[{key:"_checkPassiveOption",value:function(self){try{var options={get passive(){return!(self.passiveSupported=!0)}};window.addEventListener("test",null,options),window.removeEventListener("test",null,options)}catch(err){self.passiveSupported=!1}}},{key:"initRequestIdleCallback",value:function(){!1 in window&&(window.requestIdleCallback=function(cb){var start=Date.now();return setTimeout(function(){cb({didTimeout:!1,timeRemaining:function(){return Math.max(0,50-(Date.now()-start))}})},1)}),!1 in window&&(window.cancelIdleCallback=function(id){return clearTimeout(id)})}},{key:"isDataSaverModeOn",value:function(){return"connection"in navigator&&!0===navigator.connection.saveData}},{key:"supportsLinkPrefetch",value:function(){var elem=document.createElement("link");return elem.relList&&elem.relList.supports&&elem.relList.supports("prefetch")&&window.IntersectionObserver&&"isIntersecting"in IntersectionObserverEntry.prototype}},{key:"isSlowConnection",value:function(){return"connection"in navigator&&"effectiveType"in navigator.connection&&("2g"===navigator.connection.effectiveType||"slow-2g"===navigator.connection.effectiveType)}}]),RocketBrowserCompatibilityChecker}();
+</script>
+<script type='text/javascript' id='rocket-preload-links-js-extra'>
+/* <![CDATA[ */
+var RocketPreloadLinksConfig = {"excludeUris":"\/world-news\/|\/analysis\/|\/opinion\/|\/business-and-finance\/|\/social-issues\/|\/religion\/|\/entertainment\/|\/environment\/|\/technology\/|\/science\/|\/health\/|\/(.+\/)?feed\/?.+\/?|\/(?:.+\/)?embed\/|\/(index\\.php\/)?wp\\-json(\/.*|$)|\/wp-admin\/|\/logout\/|\/wp-login.php","usesTrailingSlash":"1","imageExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif","fileExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|php|pdf|html|htm","siteUrl":"https:\/\/www.eurasiareview.com","onHoverDelay":"100","rateThrottle":"3"};
+/* ]]> */
+</script>
+<script type='text/javascript' id='rocket-preload-links-js-after'>
+(function() {
+"use strict";var r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e=function(){function i(e,t){for(var n=0;n<t.length;n++){var i=t[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}return function(e,t,n){return t&&i(e.prototype,t),n&&i(e,n),e}}();function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var t=function(){function n(e,t){i(this,n),this.browser=e,this.config=t,this.options=this.browser.options,this.prefetched=new Set,this.eventTime=null,this.threshold=1111,this.numOnHover=0}return e(n,[{key:"init",value:function(){!this.browser.supportsLinkPrefetch()||this.browser.isDataSaverModeOn()||this.browser.isSlowConnection()||(this.regex={excludeUris:RegExp(this.config.excludeUris,"i"),images:RegExp(".("+this.config.imageExt+")$","i"),fileExt:RegExp(".("+this.config.fileExt+")$","i")},this._initListeners(this))}},{key:"_initListeners",value:function(e){-1<this.config.onHoverDelay&&document.addEventListener("mouseover",e.listener.bind(e),e.listenerOptions),document.addEventListener("mousedown",e.listener.bind(e),e.listenerOptions),document.addEventListener("touchstart",e.listener.bind(e),e.listenerOptions)}},{key:"listener",value:function(e){var t=e.target.closest("a"),n=this._prepareUrl(t);if(null!==n)switch(e.type){case"mousedown":case"touchstart":this._addPrefetchLink(n);break;case"mouseover":this._earlyPrefetch(t,n,"mouseout")}}},{key:"_earlyPrefetch",value:function(t,e,n){var i=this,r=setTimeout(function(){if(r=null,0===i.numOnHover)setTimeout(function(){return i.numOnHover=0},1e3);else if(i.numOnHover>i.config.rateThrottle)return;i.numOnHover++,i._addPrefetchLink(e)},this.config.onHoverDelay);t.addEventListener(n,function e(){t.removeEventListener(n,e,{passive:!0}),null!==r&&(clearTimeout(r),r=null)},{passive:!0})}},{key:"_addPrefetchLink",value:function(i){return this.prefetched.add(i.href),new Promise(function(e,t){var n=document.createElement("link");n.rel="prefetch",n.href=i.href,n.onload=e,n.onerror=t,document.head.appendChild(n)}).catch(function(){})}},{key:"_prepareUrl",value:function(e){if(null===e||"object"!==(void 0===e?"undefined":r(e))||!1 in e||-1===["http:","https:"].indexOf(e.protocol))return null;var t=e.href.substring(0,this.config.siteUrl.length),n=this._getPathname(e.href,t),i={original:e.href,protocol:e.protocol,origin:t,pathname:n,href:t+n};return this._isLinkOk(i)?i:null}},{key:"_getPathname",value:function(e,t){var n=t?e.substring(this.config.siteUrl.length):e;return n.startsWith("/")||(n="/"+n),this._shouldAddTrailingSlash(n)?n+"/":n}},{key:"_shouldAddTrailingSlash",value:function(e){return this.config.usesTrailingSlash&&!e.endsWith("/")&&!this.regex.fileExt.test(e)}},{key:"_isLinkOk",value:function(e){return null!==e&&"object"===(void 0===e?"undefined":r(e))&&(!this.prefetched.has(e.href)&&e.origin===this.config.siteUrl&&-1===e.href.indexOf("?")&&-1===e.href.indexOf("#")&&!this.regex.excludeUris.test(e.href)&&!this.regex.images.test(e.href))}}],[{key:"run",value:function(){"undefined"!=typeof RocketPreloadLinksConfig&&new n(new RocketBrowserCompatibilityChecker({capture:!0,passive:!0}),RocketPreloadLinksConfig).init()}}]),n}();t.run();
+}());
+</script>
+<script type='text/javascript' defer src='https://www.eurasiareview.com/wp-includes/js/comment-reply.min.js?ver=5.8' id='comment-reply-js'></script>
+<script type='text/javascript' defer src='https://www.eurasiareview.com/wp-content/themes/colormag/js/jquery.bxslider.min.js?ver=2.0.4' id='colormag-bxslider-js'></script>
+<script type='text/javascript' defer src='https://www.eurasiareview.com/wp-content/themes/colormag/js/navigation.min.js?ver=2.0.4' id='colormag-navigation-js'></script>
+<script type='text/javascript' defer src='https://www.eurasiareview.com/wp-content/themes/colormag/js/fitvids/jquery.fitvids.min.js?ver=2.0.4' id='colormag-fitvids-js'></script>
+<script type='text/javascript' defer src='https://www.eurasiareview.com/wp-content/themes/colormag/js/skip-link-focus-fix.min.js?ver=2.0.4' id='colormag-skip-link-focus-fix-js'></script>
+<script type='text/javascript' defer src='https://www.eurasiareview.com/wp-content/themes/colormag/js/colormag-custom.min.js?ver=2.0.4' id='colormag-custom-js'></script>
+<script data-minify="1" defer type='text/javascript' defer src='https://www.eurasiareview.com/wp-content/cache/min/1/wp-content/plugins/akismet/_inc/form.js?ver=1629472315' id='akismet-form-js'></script>
+<script>window.lazyLoadOptions={elements_selector:"img[data-lazy-src],.rocket-lazyload,iframe[data-lazy-src]",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}};window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){continue}
+if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){continue}
+images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
+if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async src="https://www.eurasiareview.com/wp-content/plugins/wp-rocket/assets/js/lazyload/16.1/lazyload.min.js"></script><script>function lazyLoadThumb(e){var t='<img loading="lazy" data-lazy-src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" width="480" height="360"><noscript><img src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" width="480" height="360"></noscript>',a='<div class="play"></div>';return t.replace("ID",e)+a}function lazyLoadYoutubeIframe(){var e=document.createElement("iframe"),t="ID?autoplay=1";t+=0===this.dataset.query.length?'':'&'+this.dataset.query;e.setAttribute("src",t.replace("ID",this.dataset.src)),e.setAttribute("frameborder","0"),e.setAttribute("allowfullscreen","1"),e.setAttribute("allow", "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"),this.parentNode.replaceChild(e,this)}document.addEventListener("DOMContentLoaded",function(){var e,t,a=document.getElementsByClassName("rll-youtube-player");for(t=0;t<a.length;t++)e=document.createElement("div"),e.setAttribute("data-id",a[t].dataset.id),e.setAttribute("data-query", a[t].dataset.query),e.setAttribute("data-src", a[t].dataset.src),e.innerHTML=lazyLoadThumb(a[t].dataset.id),e.onclick=lazyLoadYoutubeIframe,a[t].appendChild(e)});</script></body>
+</html>

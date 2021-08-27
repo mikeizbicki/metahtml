@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en-US" class="no-js">
+<head>
+
+<script type="text/javascript"> document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/, 'js'); </script>
+<meta charset="UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge"><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={licenseKey:"NRJS-3a3ee7b9e08776dceae",applicationID:"715493739"};window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var i=e[n]={exports:{}};t[n][0].call(i.exports,function(e){var i=t[n][1][e];return r(i||e)},i,i.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var i=0;i<n.length;i++)r(n[i]);return r}({1:[function(t,e,n){function r(){}function i(t,e,n){return function(){return o(t,[u.now()].concat(f(arguments)),e?null:this,n),e?void 0:this}}var o=t("handle"),a=t(8),f=t(9),c=t("ee").get("tracer"),u=t("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var d=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],p="api-",l=p+"ixn-";a(d,function(t,e){s[e]=i(p+e,!0,"api")}),s.addPageAction=i(p+"addPageAction",!0),s.setCurrentRouteName=i(p+"routeName",!0),e.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(t,e){var n={},r=this,i="function"==typeof e;return o(l+"tracer",[u.now(),t,n],r),function(){if(c.emit((i?"":"no-")+"fn-start",[u.now(),r,i],n),i)try{return e.apply(this,arguments)}catch(t){throw c.emit("fn-err",[arguments,this,t],n),t}finally{c.emit("fn-end",[u.now()],n)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,e){m[e]=i(l+e)}),newrelic.noticeError=function(t,e){"string"==typeof t&&(t=new Error(t)),o("err",[t,u.now(),!1,e])}},{}],2:[function(t,e,n){function r(t){if(NREUM.init){for(var e=NREUM.init,n=t.split("."),r=0;r<n.length-1;r++)if(e=e[n[r]],"object"!=typeof e)return;return e=e[n[n.length-1]]}}e.exports={getConfiguration:r}},{}],3:[function(t,e,n){function r(){return f.exists&&performance.now?Math.round(performance.now()):(o=Math.max((new Date).getTime(),o))-a}function i(){return o}var o=(new Date).getTime(),a=o,f=t(10);e.exports=r,e.exports.offset=a,e.exports.getLastTimestamp=i},{}],4:[function(t,e,n){function r(t){return!(!t||!t.protocol||"file:"===t.protocol)}e.exports=r},{}],5:[function(t,e,n){function r(t,e){var n=t.getEntries();n.forEach(function(t){"first-paint"===t.name?d("timing",["fp",Math.floor(t.startTime)]):"first-contentful-paint"===t.name&&d("timing",["fcp",Math.floor(t.startTime)])})}function i(t,e){var n=t.getEntries();n.length>0&&d("lcp",[n[n.length-1]])}function o(t){t.getEntries().forEach(function(t){t.hadRecentInput||d("cls",[t])})}function a(t){if(t instanceof m&&!g){var e=Math.round(t.timeStamp),n={type:t.type};e<=p.now()?n.fid=p.now()-e:e>p.offset&&e<=Date.now()?(e-=p.offset,n.fid=p.now()-e):e=p.now(),g=!0,d("timing",["fi",e,n])}}function f(t){"hidden"===t&&d("pageHide",[p.now()])}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var c,u,s,d=t("handle"),p=t("loader"),l=t(7),m=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){c=new PerformanceObserver(r);try{c.observe({entryTypes:["paint"]})}catch(v){}u=new PerformanceObserver(i);try{u.observe({entryTypes:["largest-contentful-paint"]})}catch(v){}s=new PerformanceObserver(o);try{s.observe({type:"layout-shift",buffered:!0})}catch(v){}}if("addEventListener"in document){var g=!1,h=["click","keydown","mousedown","pointerdown","touchstart"];h.forEach(function(t){document.addEventListener(t,a,!1)})}l(f)}},{}],6:[function(t,e,n){function r(t,e){if(!i)return!1;if(t!==i)return!1;if(!e)return!0;if(!o)return!1;for(var n=o.split("."),r=e.split("."),a=0;a<r.length;a++)if(r[a]!==n[a])return!1;return!0}var i=null,o=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var f=navigator.userAgent,c=f.match(a);c&&f.indexOf("Chrome")===-1&&f.indexOf("Chromium")===-1&&(i="Safari",o=c[1])}e.exports={agent:i,version:o,match:r}},{}],7:[function(t,e,n){function r(t){function e(){t(a&&document[a]?document[a]:document[i]?"hidden":"visible")}"addEventListener"in document&&o&&document.addEventListener(o,e,!1)}e.exports=r;var i,o,a;"undefined"!=typeof document.hidden?(i="hidden",o="visibilitychange",a="visibilityState"):"undefined"!=typeof document.msHidden?(i="msHidden",o="msvisibilitychange"):"undefined"!=typeof document.webkitHidden&&(i="webkitHidden",o="webkitvisibilitychange",a="webkitVisibilityState")},{}],8:[function(t,e,n){function r(t,e){var n=[],r="",o=0;for(r in t)i.call(t,r)&&(n[o]=e(r,t[r]),o+=1);return n}var i=Object.prototype.hasOwnProperty;e.exports=r},{}],9:[function(t,e,n){function r(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,i=n-e||0,o=Array(i<0?0:i);++r<i;)o[r]=t[e+r];return o}e.exports=r},{}],10:[function(t,e,n){e.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(t,e,n){function r(){}function i(t){function e(t){return t&&t instanceof r?t:t?u(t,c,a):a()}function n(n,r,i,o,a){if(a!==!1&&(a=!0),!l.aborted||o){t&&a&&t(n,r,i);for(var f=e(i),c=v(n),u=c.length,s=0;s<u;s++)c[s].apply(f,r);var p=d[w[n]];return p&&p.push([b,n,r,f]),f}}function o(t,e){y[t]=v(t).concat(e)}function m(t,e){var n=y[t];if(n)for(var r=0;r<n.length;r++)n[r]===e&&n.splice(r,1)}function v(t){return y[t]||[]}function g(t){return p[t]=p[t]||i(n)}function h(t,e){l.aborted||s(t,function(t,n){e=e||"feature",w[n]=e,e in d||(d[e]=[])})}var y={},w={},b={on:o,addEventListener:o,removeEventListener:m,emit:n,get:g,listeners:v,context:e,buffer:h,abort:f,aborted:!1};return b}function o(t){return u(t,c,a)}function a(){return new r}function f(){(d.api||d.feature)&&(l.aborted=!0,d=l.backlog={})}var c="nr@context",u=t("gos"),s=t(8),d={},p={},l=e.exports=i();e.exports.getOrSetContext=o,l.backlog=d},{}],gos:[function(t,e,n){function r(t,e,n){if(i.call(t,e))return t[e];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:r,writable:!0,enumerable:!1}),r}catch(o){}return t[e]=r,r}var i=Object.prototype.hasOwnProperty;e.exports=r},{}],handle:[function(t,e,n){function r(t,e,n,r){i.buffer([t],r),i.emit(t,e,n)}var i=t("ee").get("handle");e.exports=r,r.ee=i},{}],id:[function(t,e,n){function r(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:a(t,o,function(){return i++})}var i=1,o="nr@id",a=t("gos");e.exports=r},{}],loader:[function(t,e,n){function r(){if(!R++){var t=M.info=NREUM.info,e=v.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&e))return u.abort();c(E,function(e,n){t[e]||(t[e]=n)});var n=a();f("mark",["onload",n+M.offset],null,"api"),f("timing",["load",n]);var r=v.createElement("script");0===t.agent.indexOf("http://")||0===t.agent.indexOf("https://")?r.src=t.agent:r.src=l+"://"+t.agent,e.parentNode.insertBefore(r,e)}}function i(){"complete"===v.readyState&&o()}function o(){f("mark",["domContent",a()+M.offset],null,"api")}var a=t(3),f=t("handle"),c=t(8),u=t("ee"),s=t(6),d=t(4),p=t(2),l=p.getConfiguration("ssl")===!1?"http":"https",m=window,v=m.document,g="addEventListener",h="attachEvent",y=m.XMLHttpRequest,w=y&&y.prototype,b=!d(m.location);NREUM.o={ST:setTimeout,SI:m.setImmediate,CT:clearTimeout,XHR:y,REQ:m.Request,EV:m.Event,PR:m.Promise,MO:m.MutationObserver};var x=""+location,E={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1210.min.js"},O=y&&w&&w[g]&&!/CriOS/.test(navigator.userAgent),M=e.exports={offset:a.getLastTimestamp(),now:a,origin:x,features:{},xhrWrappable:O,userAgent:s,disabled:b};if(!b){t(1),t(5),v[g]?(v[g]("DOMContentLoaded",o,!1),m[g]("load",r,!1)):(v[h]("onreadystatechange",i),m[h]("onload",r)),f("mark",["firstbyte",a.getLastTimestamp()],null,"api");var R=0}},{}],"wrap-function":[function(t,e,n){function r(t,e){function n(e,n,r,c,u){function nrWrapper(){var o,a,s,p;try{a=this,o=d(arguments),s="function"==typeof r?r(o,a):r||{}}catch(l){i([l,"",[o,a,c],s],t)}f(n+"start",[o,a,c],s,u);try{return p=e.apply(a,o)}catch(m){throw f(n+"err",[o,a,m],s,u),m}finally{f(n+"end",[o,a,p],s,u)}}return a(e)?e:(n||(n=""),nrWrapper[p]=e,o(e,nrWrapper,t),nrWrapper)}function r(t,e,r,i,o){r||(r="");var f,c,u,s="-"===r.charAt(0);for(u=0;u<e.length;u++)c=e[u],f=t[c],a(f)||(t[c]=n(f,s?c+r:r,i,c,o))}function f(n,r,o,a){if(!m||e){var f=m;m=!0;try{t.emit(n,r,o,e,a)}catch(c){i([c,n,r,o],t)}m=f}}return t||(t=s),n.inPlace=r,n.flag=p,n}function i(t,e){e||(e=s);try{e.emit("internal-error",t)}catch(n){}}function o(t,e,n){if(Object.defineProperty&&Object.keys)try{var r=Object.keys(t);return r.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(o){i([o],n)}for(var a in t)l.call(t,a)&&(e[a]=t[a]);return e}function a(t){return!(t&&t instanceof Function&&t.apply&&!t[p])}function f(t,e){var n=e(t);return n[p]=t,o(t,n,s),n}function c(t,e,n){var r=t[e];t[e]=f(r,n)}function u(){for(var t=arguments.length,e=new Array(t),n=0;n<t;++n)e[n]=arguments[n];return e}var s=t("ee"),d=t(9),p="nr@original",l=Object.prototype.hasOwnProperty,m=!1;e.exports=r,e.exports.wrapFunction=f,e.exports.wrapInPlace=c,e.exports.argsToArray=u},{}]},{},["loader"]);</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>The Miracle and Tragedy of the 2020 U.S. Election | Journal of Democracy</title>
+<meta name='robots' content='max-image-preview:large' />
+
+<meta name="description" content="The covid-19 pandemic nearly upended the U.S. election, but after a rocky primary season changes were made to save it. Alarmingly, however, a large portion of&#8230;" />
+<meta property="og:image" content="https://www.journalofdemocracy.org/wp-content/uploads/2021/04/32.2-Persily-photo-1-scaled-e1618239976133.jpg" />
+<meta property="og:image:width" content="2131" />
+<meta property="og:image:height" content="1318" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="The Miracle and Tragedy of the 2020 U.S. Election | Journal of Democracy" />
+<meta property="og:description" content="The covid-19 pandemic nearly upended the U.S. election, but after a rocky primary season changes were made to save it. Alarmingly, however, a large portion of voters have rejected the result." />
+<meta property="og:url" content="https://www.journalofdemocracy.org/articles/the-miracle-and-tragedy-of-the-2020-u-s-election/" />
+<meta property="og:site_name" content="Journal of Democracy" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="The Miracle and Tragedy of the 2020 U.S. Election | Journal of Democracy" />
+<meta name="twitter:description" content="The covid-19 pandemic nearly upended the U.S. election, but after a rocky primary season changes were made to save it. Alarmingly, however, a large portion of voters have rejected the result." />
+<meta name="twitter:image" content="https://www.journalofdemocracy.org/wp-content/uploads/2021/04/32.2-Persily-photo-1-scaled-e1618239976133.jpg" />
+<meta name="twitter:image:width" content="2131" />
+<meta name="twitter:image:height" content="1318" />
+<link rel="canonical" href="https://www.journalofdemocracy.org/articles/the-miracle-and-tragedy-of-the-2020-u-s-election/" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"https://www.journalofdemocracy.org/","name":"Journal of Democracy"}},{"@type":"ListItem","position":2,"item":{"@id":"https://www.journalofdemocracy.org/countries/united-states/","name":"United States"}},{"@type":"ListItem","position":3,"item":{"@id":"https://www.journalofdemocracy.org/articles/the-miracle-and-tragedy-of-the-2020-u-s-election/","name":"The Miracle and Tragedy of the 2020 U.S. Election"}}]}</script>
+
+<link rel='dns-prefetch' href='//www.journalofdemocracy.org' />
+<link rel='stylesheet' id='wp-block-library-css'  href='https://www.journalofdemocracy.org/wp-includes/css/dist/block-library/style.min.css?ver=5.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='flickity-css'  href='https://www.journalofdemocracy.org/wp-content/themes/jod/assets/vendor/flickity/dist/flickity.min.css?ver=1629960420' type='text/css' media='all' />
+<link rel='stylesheet' id='selectr-css'  href='https://www.journalofdemocracy.org/wp-content/themes/jod/assets/vendor/mobius1-selectr/dist/selectr.min.css?ver=1629960420' type='text/css' media='all' />
+<link rel='stylesheet' id='site-css'  href='https://www.journalofdemocracy.org/wp-content/themes/jod/assets/dist/site.min.css?ver=1629960420' type='text/css' media='all' />
+<link rel="https://api.w.org/" href="https://www.journalofdemocracy.org/wp-json/" /><link rel="alternate" type="application/json" href="https://www.journalofdemocracy.org/wp-json/wp/v2/article/10470" />		<style type="text/css" id="wp-custom-css">
+			.simple-banner { z-index: 0; }		</style>
+		<link rel="apple-touch-icon-precomposed" sizes="57x57" href="https://www.journalofdemocracy.org/wp-content/themes/jod/assets/img/apple-touch-icon-57x57.png" />
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="https://www.journalofdemocracy.org/wp-content/themes/jod/assets/img/apple-touch-icon-114x114.png" />
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="https://www.journalofdemocracy.org/wp-content/themes/jod/assets/img/apple-touch-icon-72x72.png" />
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://www.journalofdemocracy.org/wp-content/themes/jod/assets/img/apple-touch-icon-144x144.png" />
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="https://www.journalofdemocracy.org/wp-content/themes/jod/assets/img/apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="https://www.journalofdemocracy.org/wp-content/themes/jod/assets/img/apple-touch-icon-152x152.png" />
+<link rel="icon" type="image/png" href="https://www.journalofdemocracy.org/wp-content/themes/jod/assets/img/favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="https://www.journalofdemocracy.org/wp-content/themes/jod/assets/img/favicon-16x16.png" sizes="16x16" />
+<meta name="application-name" content="Journal of Democracy"/>
+<meta name="msapplication-TileColor" content="#FFFFFF" />
+<meta name="msapplication-TileImage" content="https://www.journalofdemocracy.org/wp-content/themes/jod/assets/img/mstile-144x144.png" />
+<meta name="theme-color" content="#4e96c8" />
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-356463-3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-356463-3');
+</script>
+</head>
+
+<body class="article-template-default single single-article postid-10470 article" data-template="single-article.php">
+
+
+<header id="header" class="header">
+	<div class="header__wrap">
+		<div class="header__menu">
+			<button type="button" class="header__menu-open"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="24" height="24" viewBox="0 0 24 24" role="img" class="svg svg--menu"><title>menu</title><path d="M3 6h18v2.016h-18v-2.016zM3 12.984v-1.969h18v1.969h-18zM3 18v-2.016h18v2.016h-18z"></path></svg></button>
+			<button type="button" class="header__menu-close"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="24" height="24" viewBox="0 0 24 24" role="img" class="svg svg--close"><title>close</title><path d="M18.984 6.422l-5.578 5.578 5.578 5.578-1.406 1.406-5.578-5.578-5.578 5.578-1.406-1.406 5.578-5.578-5.578-5.578 1.406-1.406 5.578 5.578 5.578-5.578z"></path></svg></button>
+		</div>
+
+		<figure class="header__logo">
+			<a href="https://www.journalofdemocracy.org"><img src="https://www.journalofdemocracy.org/wp-content/themes/jod/assets/img/logo.png" alt="Journal of Democracy" srcset="https://www.journalofdemocracy.org/wp-content/themes/jod/assets/img/logo@2x.png 570w, https://www.journalofdemocracy.org/wp-content/themes/jod/assets/img/logo@3x.png 855w"></a>
+		</figure>
+
+					<a href="https://www.journalofdemocracy.org?s=" class="header__search header__search--mobile"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="24" height="24" viewBox="0 0 24 24" role="img" class="svg svg--search"><title>search</title><path d="M21.7 20.3l-3.7-3.7c1.2-1.5 2-3.5 2-5.6 0-5-4-9-9-9s-9 4-9 9c0 5 4 9 9 9 2.1 0 4.1-0.7 5.6-2l3.7 3.7c0.2 0.2 0.5 0.3 0.7 0.3s0.5-0.1 0.7-0.3c0.4-0.4 0.4-1 0-1.4zM4 11c0-3.9 3.1-7 7-7s7 3.1 7 7c0 1.9-0.8 3.7-2 4.9 0 0 0 0 0 0s0 0 0 0c-1.3 1.3-3 2-4.9 2-4 0.1-7.1-3-7.1-6.9z"></path></svg></a>
+		
+		<div class="header__content">
+				<nav class="nav nav--primary"><ul class="nav__menu nav__menu--level-0"><li class=" nav__menu-item nav__menu-item--type-post_type nav__menu-item--object-page nav__menu-item--183 nav__menu-item--has-children nav__menu-item--level-0"><a class="nav__link" href="https://www.journalofdemocracy.org/about/">About</a><button class="nav__menu-toggle">+</button><ul class="nav__menu nav__menu--level-1"><li class=" nav__menu-item nav__menu-item--type-post_type nav__menu-item--object-page nav__menu-item--3704 nav__menu-item--level-1"><a class="nav__link" href="https://www.journalofdemocracy.org/about/editorial-board-and-staff/">Editorial Board and Staff</a></li><li class=" nav__menu-item nav__menu-item--type-post_type nav__menu-item--object-page nav__menu-item--3713 nav__menu-item--level-1"><a class="nav__link" href="https://www.journalofdemocracy.org/authors/">Authors</a></li><li class=" nav__menu-item nav__menu-item--type-post_type nav__menu-item--object-page nav__menu-item--3716 nav__menu-item--level-1"><a class="nav__link" href="https://www.journalofdemocracy.org/about/submissions/">Submissions</a></li><li class=" nav__menu-item nav__menu-item--type-post_type nav__menu-item--object-page nav__menu-item--3705 nav__menu-item--level-1"><a class="nav__link" href="https://www.journalofdemocracy.org/about/reprints/">Reprints</a></li><li class=" nav__menu-item nav__menu-item--type-post_type nav__menu-item--object-page nav__menu-item--3717 nav__menu-item--level-1"><a class="nav__link" href="https://www.journalofdemocracy.org/about/accolades/">Accolades</a></li><li class=" nav__menu-item nav__menu-item--type-post_type nav__menu-item--object-page nav__menu-item--3664 nav__menu-item--level-1"><a class="nav__link" href="https://www.journalofdemocracy.org/contact/">Contact</a></li></ul></li><li class=" nav__menu-item nav__menu-item--type-custom nav__menu-item--object-custom nav__menu-item--current-menu-parent nav__menu-item--current-menu-ancestor nav__menu-item--10586 nav__menu-item--has-children nav__menu-item--level-0"><a class="nav__link" href="http://www.journalofdemocracy.org/issue/july-2021">Articles</a><button class="nav__menu-toggle">+</button><ul class="nav__menu nav__menu--level-1"><li class=" nav__menu-item nav__menu-item--type-post_type nav__menu-item--object-page nav__menu-item--3767 nav__menu-item--level-1"><a class="nav__link" href="https://www.journalofdemocracy.org/tables-of-contents/">Tables of Contents</a></li><li class=" nav__menu-item nav__menu-item--type-post_type_archive nav__menu-item--object-article nav__menu-item--current nav__menu-item--3708 nav__menu-item--level-1"><a class="nav__link" href="https://www.journalofdemocracy.org/articles/">All Articles</a></li><li class=" nav__menu-item nav__menu-item--type-custom nav__menu-item--object-custom nav__menu-item--3718 nav__menu-item--level-1"><a class="nav__link" href="https://www.journalofdemocracy.org/articles/free/">Free Articles</a></li><li class=" nav__menu-item nav__menu-item--type-taxonomy nav__menu-item--object-section nav__menu-item--3709 nav__menu-item--level-1"><a class="nav__link" href="https://www.journalofdemocracy.org/sections/books-in-review/">Books in Review</a></li><li class=" nav__menu-item nav__menu-item--type-taxonomy nav__menu-item--object-section nav__menu-item--3710 nav__menu-item--level-1"><a class="nav__link" href="https://www.journalofdemocracy.org/sections/documents-on-democracy/">Documents on Democracy</a></li><li class=" nav__menu-item nav__menu-item--type-taxonomy nav__menu-item--object-section nav__menu-item--3711 nav__menu-item--level-1"><a class="nav__link" href="https://www.journalofdemocracy.org/sections/election-watch/">Election Watch</a></li><li class=" nav__menu-item nav__menu-item--type-taxonomy nav__menu-item--object-section nav__menu-item--3712 nav__menu-item--level-1"><a class="nav__link" href="https://www.journalofdemocracy.org/sections/news-and-notes/">News and Notes</a></li></ul></li><li class=" nav__menu-item nav__menu-item--type-post_type_archive nav__menu-item--object-book nav__menu-item--179 nav__menu-item--level-0"><a class="nav__link" href="https://www.journalofdemocracy.org/books/">Books</a></li><li class=" nav__menu-item nav__menu-item--type-post_type nav__menu-item--object-page nav__menu-item--current-page-parent nav__menu-item--184 nav__menu-item--has-children nav__menu-item--level-0"><a class="nav__link" href="https://www.journalofdemocracy.org/news/">News &#038; Features</a><button class="nav__menu-toggle">+</button><ul class="nav__menu nav__menu--level-1"><li class=" nav__menu-item nav__menu-item--type-custom nav__menu-item--object-custom nav__menu-item--4830 nav__menu-item--level-1"><a class="nav__link" href="https://www.journalofdemocracy.org/news/">Main</a></li><li class=" nav__menu-item nav__menu-item--type-custom nav__menu-item--object-custom nav__menu-item--3719 nav__menu-item--level-1"><a class="nav__link" href="https://www.journalofdemocracy.org/articles/supplements/">Article Supplements</a></li><li class=" nav__menu-item nav__menu-item--type-custom nav__menu-item--object-custom nav__menu-item--4833 nav__menu-item--level-1"><a class="nav__link" href="https://www.journalofdemocracy.org/jod-content-now-available-in-apple-books-format/">EBook Downloads</a></li><li class=" nav__menu-item nav__menu-item--type-custom nav__menu-item--object-custom nav__menu-item--4834 nav__menu-item--level-1"><a class="nav__link" href="https://www.journalofdemocracy.org/podcasts/">Podcasts</a></li></ul></li><li class=" nav__menu-item nav__menu-item--type-custom nav__menu-item--object-custom nav__menu-item--5707 nav__menu-item--level-0"><a class="nav__link" href="https://www.journalofdemocracy.org/subscribe/">Subscribe</a></li></ul></nav>
+							<a href="https://www.journalofdemocracy.org?s=" class="header__search header__search--desktop"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="24" height="24" viewBox="0 0 24 24" role="img" class="svg svg--search"><title>search</title><path d="M21.7 20.3l-3.7-3.7c1.2-1.5 2-3.5 2-5.6 0-5-4-9-9-9s-9 4-9 9c0 5 4 9 9 9 2.1 0 4.1-0.7 5.6-2l3.7 3.7c0.2 0.2 0.5 0.3 0.7 0.3s0.5-0.1 0.7-0.3c0.4-0.4 0.4-1 0-1.4zM4 11c0-3.9 3.1-7 7-7s7 3.1 7 7c0 1.9-0.8 3.7-2 4.9 0 0 0 0 0 0s0 0 0 0c-1.3 1.3-3 2-4.9 2-4 0.1-7.1-3-7.1-6.9z"></path></svg></a>
+			
+							<nav class="header__social">
+									<a class="header__social--network" href="https://www.facebook.com/journalofdemocracy" title="Facebook"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="32" height="32" viewBox="0 0 32 32" role="img" class="svg svg--facebook"><title>facebook</title><path d="M19 6h5v-6h-5c-3.86 0-7 3.14-7 7v3h-4v6h4v16h6v-16h5l1-6h-6v-3c0-0.542 0.458-1 1-1z"></path></svg></a></li>
+									<a class="header__social--network" href="https://twitter.com/JoDemocracy" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="32" height="32" viewBox="0 0 32 32" role="img" class="svg svg--twitter"><title>twitter</title><path d="M32 7.075c-1.175 0.525-2.444 0.875-3.769 1.031 1.356-0.813 2.394-2.1 2.887-3.631-1.269 0.75-2.675 1.3-4.169 1.594-1.2-1.275-2.906-2.069-4.794-2.069-3.625 0-6.563 2.938-6.563 6.563 0 0.512 0.056 1.012 0.169 1.494-5.456-0.275-10.294-2.888-13.531-6.862-0.563 0.969-0.887 2.1-0.887 3.3 0 2.275 1.156 4.287 2.919 5.463-1.075-0.031-2.087-0.331-2.975-0.819 0 0.025 0 0.056 0 0.081 0 3.181 2.263 5.838 5.269 6.437-0.55 0.15-1.131 0.231-1.731 0.231-0.425 0-0.831-0.044-1.237-0.119 0.838 2.606 3.263 4.506 6.131 4.563-2.25 1.762-5.075 2.813-8.156 2.813-0.531 0-1.050-0.031-1.569-0.094 2.913 1.869 6.362 2.95 10.069 2.95 12.075 0 18.681-10.006 18.681-18.681 0-0.287-0.006-0.569-0.019-0.85 1.281-0.919 2.394-2.075 3.275-3.394z"></path></svg></a></li>
+								</nav>
+			
+							<div class="header__button">
+					<a href="https://muse.jhu.edu/journal/98" class="button">Project MUSE</a>
+				</div>
+					</div>
+	</div>
+</header>
+
+<main id="main" class="main">
+	
+	<div class="article__header article__header--image">
+				<figure class="article__cover">
+			<img src="https://www.journalofdemocracy.org/wp-content/uploads/2021/04/32.2-Persily-photo-1-scaled-e1618239976133-1920x1080.jpg" srcset="https://www.journalofdemocracy.org/wp-content/uploads/2021/04/32.2-Persily-photo-1-scaled-e1618239976133.jpg 2131w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/32.2-Persily-photo-1-scaled-e1618239976133-300x186.jpg 300w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/32.2-Persily-photo-1-scaled-e1618239976133-1024x633.jpg 1024w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/32.2-Persily-photo-1-scaled-e1618239976133-768x475.jpg 768w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/32.2-Persily-photo-1-scaled-e1618239976133-1536x950.jpg 1536w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/32.2-Persily-photo-1-scaled-e1618239976133-2048x1267.jpg 2048w" alt="" height="" width="">
+		</figure>
+		
+		<div class="article__header-wrap">
+			<h1 class="article__title">The Miracle and Tragedy of the 2020 U.S. Election</h1>
+
+				<ul class="authors article__authors">
+				<li class="authors__author"><a href="https://www.journalofdemocracy.org/authors/nathaniel-persily/">Nathaniel Persily</a></li>
+				<li class="authors__author"><a href="https://www.journalofdemocracy.org/authors/charles-stewart-iii/">Charles Stewart III</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="article__wrap">
+		<div class="article__actions">
+											<div class="article__action article__action--issue-date">
+					<strong>Issue Date</strong>
+					<a href="https://www.journalofdemocracy.org/issue/april-2021/">April 2021</a>
+				</div>
+				<div class="article__action article__action--issue">
+					<strong>Volume</strong>
+					32
+				</div>
+				<div class="article__action article__action--issue">
+					<strong>Issue</strong>
+					2
+				</div>
+									<div class="article__action article__action--page-numbers">
+				<strong>Page Numbers</strong>
+				159–78
+			</div>
+						<div class="article__action article__action--print no-js__hide print__hide">
+				<a href="javascript:window.print()">
+					<i class="icon article__icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="32" height="32" viewBox="0 0 32 32" role="img" class="svg svg--file"><title>file</title><path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path></svg></i>
+					Print
+				</a>
+			</div>
+						<div class="article__action article__action--muse print__hide">
+				<a href="https://muse.jhu.edu/article/787843">
+					<i class="icon article__icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="32" height="32" viewBox="0 0 32 32" role="img" class="svg svg--arrow-down-thin"><title>arrow-down-thin</title><path d="M27.414 19.414l-10 10c-0.781 0.781-2.047 0.781-2.828 0l-10-10c-0.781-0.781-0.781-2.047 0-2.828s2.047-0.781 2.828 0l6.586 6.586v-19.172c0-1.105 0.895-2 2-2s2 0.895 2 2v19.172l6.586-6.586c0.39-0.39 0.902-0.586 1.414-0.586s1.024 0.195 1.414 0.586c0.781 0.781 0.781 2.047 0 2.828z"></path></svg></i>
+					Download from Project MUSE
+				</a>
+			</div>
+						<div class="article__action article__action--view-citation no-js__hide print__hide">
+				<a href="#citation">
+					<i class="icon article__icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="24" height="24" viewBox="0 0 24 24" role="img" class="svg svg--external"><title>external</title><path d="M18 12c-0.6 0-1 0.4-1 1v6c0 0.6-0.4 1-1 1h-11c-0.6 0-1-0.4-1-1v-11c0-0.6 0.4-1 1-1h6c0.6 0 1-0.4 1-1s-0.4-1-1-1h-6c-1.7 0-3 1.3-3 3v11c0 1.7 1.3 3 3 3h11c1.7 0 3-1.3 3-3v-6c0-0.6-0.4-1-1-1z"></path><path d="M21.9 2.6c-0.1-0.2-0.3-0.4-0.5-0.5-0.1-0.1-0.3-0.1-0.4-0.1h-6c-0.6 0-1 0.4-1 1s0.4 1 1 1h3.6l-9.3 9.3c-0.4 0.4-0.4 1 0 1.4 0.2 0.2 0.4 0.3 0.7 0.3s0.5-0.1 0.7-0.3l9.3-9.3v3.6c0 0.6 0.4 1 1 1s1-0.4 1-1v-6c0-0.1 0-0.3-0.1-0.4z"></path></svg></i>
+					View Citation
+				</a>
+			</div>
+		</div>
+
+		
+				
+<div class="citation no-js__hide article__citation">
+	<p><label for="citation__format"><strong>Select your citation format:</strong></label></p>
+	<div class="citation__format-wrap"><select class="citation__format" name="citation__format" data-post-id="10470"><option value="Turabian-9th-edition-Notes-Bib">Turabian 9th edition (Notes and Bibliography)</option><option value="mla8">Modern Language Association 8th edition</option><option value="apa">APA</option></select></div>
+	<div class="citation__wrap">
+		<div class="citation__content"></div>
+	</div>
+</div>
+
+		<div class="article__content">
+			<p class="article__abstract article__abstract--format">The 2020 election was both a miracle and a tragedy. In the midst of a pandemic posing unprecedented challenges, local and state administrators pulled off a safe, secure, and professional election. This article discusses metrics of success in the adaptations that took place—record-high turnout, widespread voter satisfaction, a doubling of mail voting without a concomitant increase in problems often associated with absentee ballots, and the recruitment of hundreds of thousands of new poll workers. However, a competing narrative of a “stolen election” led to a historically deep chasm between partisans in their trust of the election process and outcome.</p>
+<p>&nbsp;</p>
+<p><strong>T</strong>he 2020 U.S. election was both a miracle and a tragedy. It was a miracle in that election administrators, facing unprecedented challenges from a pandemic, were able to pull off a safe, secure, and professional election in which a record number of Americans turned out to vote. It was also a tragedy, though, because, despite these heroic efforts, lies about vote fraud and the performance of the system have cemented a perception among tens of millions of Americans that the election was &#8220;rigged.&#8221; This manufactured distrust has deeply damaged our democracy; the path to repairing it is not at all clear.</p>
+<p>The Capitol Insurrection of 6 January 2021 will forever constitute the image of the 2020 election and the distrust that accompanied it. Despite the heroism and success we detail below, more than a hundred members of Congress voted to question and overturn the results in one or more states.</p>
+<div class="article__about-the-author article__about-the-author--left">
+	<h2 class="article__about-the-author-title">
+					About the Authors			</h2>
+
+						<h3 class="article__about-the-author-name">Nathaniel Persily</h3>
+		
+					<div class="article__about-the-author-desc">
+				<p><em><strong>Nathaniel Persily</strong> is James B. McClatchy Professor of Law at Stanford Law School. His essay &#8220;The 2016 U.S. Election: Can Democracy Survive the Internet?&#8221; appeared in the April 2017 issue of the </em>Journal of Democracy.</p>
+
+			</div>
+		
+		<p><a href="https://www.journalofdemocracy.org/authors/nathaniel-persily/">View all work by Nathaniel Persily</a></p>
+						<h3 class="article__about-the-author-name">Charles Stewart III</h3>
+		
+					<div class="article__about-the-author-desc">
+				<p><em><strong>Charles Stewart III</strong> is Kenan Sahin Distinguished Professor of Political Science at the Massachusetts Institute of Technology. His essay &#8220;The 2016 U.S. Election: Fears and Facts About Electoral Integrity&#8221; appeared in the April 2017 issue of the </em>Journal of Democracy.</p>
+
+			</div>
+		
+		<p><a href="https://www.journalofdemocracy.org/authors/charles-stewart-iii/">View all work by Charles Stewart III</a></p>
+	</div>
+
+<p>The enduring images of the 2020 election should have been very different. During the primary elections early in the year, the picture looked bleak, as poll-worker and polling-place shortages caused long lines of frustrated voters to risk their lives, while thousands of absentee ballots were rejected in places that had little experience with large-scale voting by mail. In the general election, however, an army of new poll workers, wearing personal protective equipment (PPE) and often administering the voting behind Lucite barriers, staffed polling places. Absentee voting<strong> [End Page 159] </strong>also set records, as rates of canceled mail ballots were dramatically lower than before the pandemic.</p>
+<p>How did the country pull off a successful election under pandemic circumstances? What changes to the election infrastructure were necessary to accomplish this task? How can we reconcile this measurable success with convictions, strongly held by a sizeable share of the electorate, that the election was rigged? These are the questions this article seeks to answer.</p>
+<p>Given the unfounded, partisan criticism that the election was &#8220;rigged&#8221; and &#8220;disastrous,&#8221; it is difficult in hindsight to reimagine what a true electoral disaster would have looked like and how close the United States came to experiencing one. The primary-season meltdowns in several states painted an ominous picture of institutional collapse threatening the general election. In several respects, the election system benefited from the timing of the pandemic, coming as it did in the middle of the presidential-primary season but hitting hardest just as Joseph Biden wrapped up the Democratic Party&#8217;s nomination. The baptism by fire in the primaries provided necessary lessons in how to solve pandemic-related problems so that both mail and polling-place voting could work properly come November.</p>
+<p>The primary season began with few covid-related concerns, as Iowa, New Hampshire, South Carolina, and Nevada held their primaries and caucuses in late February. Super Tuesday (March 3) also came at the beginning of the pandemic, with California the only state of the fourteen holding primaries that day which had thus far recorded a case. Ohio, with its primary scheduled for March 17, became the first state to sound the alarm when the state&#8217;s public-health director ordered all polling places closed. The state then switched to almost all-mail balloting and extended the time to vote in the primary through April 28.<sup><a href="#f1" name="f1-text">1</a></sup> Most other states with March primaries then postponed their elections until May and June. By late March, governors throughout the country had issued stay-at-home orders. The presidential-nomination process escaped pandemic-related disaster by just a few weeks, as Biden&#8217;s nomination seemed by that point all but assured.</p>
+<p>Wisconsin was one of the states that did not reschedule its primary, and it became the cautionary tale as to what to avoid when conducting elections during a pandemic.<sup><a href="#f2" name="f2-text">2</a></sup> On the ballot in that primary was an election for the state Supreme Court; partisan concerns replaced the flexible attitude toward postponement seen in other states. As the April 7 primary date approached and more than 2,500 covid cases were confirmed in the state, Governor Tony Evers ordered the election postponed. However, Republican legislative leaders successfully sued, and the Wisconsin Supreme Court ordered the election to go ahead as scheduled. Only on April 6 did it become clear that the primary would be held the next day.</p>
+<p>The last-minute wrangling among the governor, the legislature, and<strong> [End Page 160] </strong>the courts exacerbated the state&#8217;s lack of preparedness to run a primary during the pandemic. The state faced a shortage of seven-thousand poll workers. To replace them, the governor mobilized 2,400 members of the National Guard. The state closed only 15 percent of its planned polling places, but the largest cities cut back dramatically on the numbers of polling places they made available. Milwaukee, the state&#8217;s biggest city, went from 180 polling places to just five, while Kenosha County went from 22 to ten and Green Bay opened just a pair of polling places instead of the 31 it normally would have. Hardest hit were voters of color; their turnout rate lagged whites by more than twenty percentage points.</p>
+<p>Absentee voting rescued the Wisconsin primary from complete disaster.<sup><a href="#f3" name="f3-text">3</a></sup> Nearly 60 percent of the 1.5 million voters who turned out cast their ballots absentee, compared to 3.6 percent in the 2016 primary. Total turnout declined from 2.1 million in 2016, when competitive primaries for both parties brought out both Democrats and Republicans. (Most of the dropoff in 2020 was concentrated among Republicans.) Rejection rates of absentee ballots decreased from 2016, as 13,614 ballots were rejected because of &#8220;insufficient certification&#8221; and another 7,085 were rejected because they were late or did not have a postmark. Rejection rates for African Americans were about twice that of whites, however, and rejections of first-time voters&#8217; ballots were about a third higher than had been typical in previous elections.</p>
+<p>The states with primaries scheduled for after April 7 heard the warning shot from Wisconsin loud and clear. Most shifted significantly toward mail balloting for the remainder of the primary season. As a result, absentee voting exploded in the primaries, but only in states that voted after March. Among states that voted in February and March, mail-ballot usage was virtually unchanged.<sup><a href="#f4" name="f4-text">4</a></sup></p>
+<p>Beginning with Wisconsin&#8217;s April 7 primary and ending with Louisiana (July 11), every state saw a dramatic increase in mail-ballot usage—on average, 60 percentage points greater than 2016. <a href="#fig_1" name="fig01-text">Figure 1</a> depicts the shift in the mode of voting in the primaries that took place once the pandemic hit.</p>
+<p>With increasing rates of mail balloting in the primaries came increases in ballot rejections. A nationwide study conducted by NPR estimated more than 550,000 mail ballots were rejected during the primaries, as compared to 318,728 in the 2016 general election.<sup><a href="#f5" name="f5-text">5</a></sup> Given the dramatic rise in mail balloting, though, the share of rejected ballots even for the primary went down in many states. Georgia&#8217;s decline in mail-ballot rejections<strong> [End Page 161]</strong></p>
+<p><a id="fig_1"></a><img loading="lazy" class="aligncenter wp-image-10545 size-large" src="https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig1-1018x1024.jpg" alt="" width="1018" height="1024" srcset="https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig1-1018x1024.jpg 1018w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig1-298x300.jpg 298w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig1-150x150.jpg 150w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig1-768x772.jpg 768w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig1.jpg 1251w" sizes="(max-width: 1018px) 100vw, 1018px" /></p>
+<div class="sec no-title">
+<p class="continued">was particularly notable, dropping from 17 percent in the 2016 primary to less than 1 percent in the 2020 primary.<sup><a href="#f6" name="f6-text">6</a></sup> Not every state experienced a drop, however. North Carolina—a state with relatively few mail ballots—saw its rate of mail-ballot rejections climb from 7 percent in the 2016 primary to 10 percent in the 2020 primary, mostly because of a dramatic increase in ballots that lacked a signature.<sup><a href="#f7" name="f7-text">7</a></sup></p>
+<p>Just as Wisconsin provided the cautionary tale for polling-place voting, New York City&#8217;s June 23 primary demonstrated the problems that plagued mail balloting. A whopping 84,000 ballots, representing 21 percent of all those coming from the city, went uncounted.<sup><a href="#f8" name="f8-text">8</a></sup> Some ballots arrived late, while others were missing postmarks or the voter&#8217;s signature on the oath envelope. Ballot-design problems and poor coordination between local officials and the U.S. Postal Service seemed to underlie many of the rejections.</p>
+<p>The primary period showed election administrators, policy makers, and the public that only an unprecedented effort could save the November election. New York highlighted problems with absentee voting, and illustrated what might happen if states with more traditional laws and practices did not change their ways, at least on an emergency, one-time<strong> [End Page 162] </strong>basis. Wisconsin provided an object lesson regarding the fragility of the in-person voting infrastructure, and a reminder that millions of people still preferred to vote in person even when doing so was dangerous. The nation&#8217;s election community had its work cut out for it in preparing for the fall.</p>
+</div>
+<div class="sec">
+<h2 class="sec-headA">Mobilizing to Cope with Covid</h2>
+<p>The shift to mail voting and healthy polling places in the general election did not just &#8220;happen.&#8221; States had to change their laws. Governors, health officials, and judges needed to impose emergency measures to deal with the pandemic.</p>
+<p>Twenty-nine states and the District of Columbia enacted 79 different bills to expand voting access in 2020.<sup><a href="#f9" name="f9-text">9</a></sup> Some states, such as California, New Jersey, Vermont, and Nevada, mailed every voter a ballot for the first time. Twelve states mailed absentee-ballot applications to all voters, and eight expanded eligibility for mail voting (whether by designating covid concerns as a valid excuse or by removing excuse requirements altogether). Four states enacted new &#8220;notice-and-cure&#8221; processes so that voters could remedy mistakes related to mail balloting; four provided prepaid postage for all mail ballots; four extended ballot-receipt deadlines; and five moved to permit the preprocessing of mail ballots so that ballots would be ready for counting once polls closed.</p>
+<p>With respect to polling places, states relaxed rules on who could become a poll worker, raised the pay of poll workers, and required that jurisdictions not reduce polling-place numbers below a certain minimum. Some of these changes were permanent, while others were designated emergency steps taken only to deal with the pandemic. Many states that did not willingly make these changes were forced to do so by courts as a result of litigation.<sup><a href="#f10" name="f10-text">10</a></sup></p>
+<p>Along with policy makers and courts, civil society groups made an unprecedented effort to help local election administrators deal with the pandemic. The Stanford-MIT Healthy Elections Project, which we led, was a small part of that effort. Other organizations, such as the Center for Tech and Civic Life (CTCL), the Center for Secure and Modern Elections, the Center for Inclusive Democracy, the National Vote at Home Institute, Democracy Works, the Center for Civic Design, the Center for Election Innovation and Research, and a multitude of state-based organizations worked with election officials to provide resources and technical assistance in support of mail voting and safe polling places.</p>
+<p>A key achievement of this civil society mobilization was the recruitment of poll workers. Following the primaries, poll-worker shortages appeared to present a critical threat to the November election. In previous elections, roughly half the poll workers nationwide had been more<strong> [End Page 163] </strong>than 61 years old, putting them into a higher-risk group amid a pandemic.</p>
+<p>A host of organizations representing students (Campus Compact and Students Learn Students Vote), lawyers (the Association of ProBono Counsel and the American Bar Association), physicians, and other groups mobilized to fill the need. None was more influential than PowerthePolls. org. Working with the database of election offices provided by <a href="http://workelections.com/">WorkElections.com</a> and a multitude of partners at the state level, Power the Polls initiated a national poll-worker recruitment program that signed up more than 600,000 volunteers. (To give some context, roughly a million people served as poll workers in the 2016 election.) Exactly how many of those who signed up ended up serving is not known, but poll-worker shortages did not appear to afflict any major jurisdiction in the November election.</p>
+<p>Perhaps the most unprecedented outside effort to bolster the election infrastructure came in the form of philanthropic contributions to election offices. Through the CARES Act, Congress had appropriated $400 million for assistance to election jurisdictions.<sup><a href="#f11" name="f11-text">11</a></sup> In the end, private philanthropy contributed even more. Mark Zuckerberg and Priscilla Chan alone contributed $400 million.<sup><a href="#f12" name="f12-text">12</a></sup> This money was administered through a CTCL grant program to more than 2,500 election jurisdictions. It paid for staffing, mail-voting equipment, drop boxes for ballots, PPE for poll workers, election security, polling-place rentals and sanitation, staffing and real-estate costs, poll-worker training, and a host of other things. By all accounts, these added funds were critical to the successful administration of the election. The same could be said for corporate in-kind donations, which included the arenas that National Basketball Association franchises lent for use as early-voting centers as well as other kinds of donations that were made through groups such as Business for America.<sup><a href="#f13" name="f13-text">13</a></sup></p>
+<p>One final set of outside actors deserves mention: internet platforms. Google and Facebook were widely reviled in 2016 for being sources of foreign election interference through both advertising and organic content. While they continued in 2020 to serve as platforms on which domestic disinformation and propaganda prospered, they developed products to provide and amplify authoritative information from election officials. The Google Civic Information API, developed from the Voting Information Center run by Democracy Works in consultation with local election offices, powered numerous web portals that provided information on polling places, voter-registration procedures, ballot-dropbox locations, and much else.<sup><a href="#f14" name="f14-text">14</a></sup> Facebook&#8217;s Voting Information Center provided similar data, as well as information from third parties such as the Bipartisan Policy Center that could be deployed in users&#8217; feeds to mute the impact of other, potentially less authoritative, stories on the voting process.<sup><a href="#f15" name="f15-text">15</a></sup> In addition, Facebook reports that the portal, which also produced top-of-feed reminders, assisted more than 4.5 million people in registering<strong> [End Page 164] </strong>to vote and more than a hundred-thousand people in signing up to serve as poll workers.<sup><a href="#f16" name="f16-text">16</a></sup></p>
+</div>
+<div class="sec">
+<h2 class="sec-headA">Success Against All Odds</h2>
+<p>The most basic measure of the success of an election is turnout. By this metric, the 2020 election was an unalloyed success by U.S. standards. Nearly 160 million votes were cast in 2020, up by more than 20 million from 2016. This amounted to two-thirds of the eligible electorate, six points higher than 2016 and the highest turnout rate since 1904.<sup><a href="#f17" name="f17-text">17</a></sup></p>
+<p>Turnout as a percentage of the voting-eligible population increased in every state, although there was considerable variation. The most significant increases came in the West and along much of the Eastern Seaboard. The smallest increases—they were in the low single digits—occurred in the country&#8217;s midsection, where states went to the least trouble to increase access to the polls and where the presidential race was mostly uncompetitive.</p>
+<p>What explains the turnout surges and where they occurred? Our own statistical analysis finds that heightened electoral competition in the battleground states and the availability of election-day registration (EDR) were important. The most competitive states (measured by the margin of victory) and states that instituted EDR after 2016 saw the biggest turnout increases that pass the standard criteria of statistical significance.<sup><a href="#f18" name="f18-text">18</a></sup> Mailing a ballot to all voters and adopting no-excuse absentee voting did not have statistically significant effects.</p>
+<p>Turnout was not the whole story, of course. The main story, indeed, was the shift to mail balloting. Even if efforts to encourage more voting by mail played a modest role in boosting turnout, the shift to vote-by-mail was as much as anything an effort to protect public health in a high-intensity election. Mail balloting had already been increasing in importance over the past two decades, as 21 percent of voters cast votes by mail in 2016, up from 8 percent in 1996. But that figure doubled in 2020 as 46 percent of voters cast their ballots by mail. Election-day voting dropped by half, consequently, from 60 percent of voters in 2016 to 28 percent in 2020.<sup><a href="#f19" name="f19-text">19</a></sup></p>
+<p>The national trend toward mail voting masks considerable variability in the degree of change across states and, in some cases, the exact mix of election-day, early in-person, and mail voting. This is illustrated in <a href="#fig_2" name="fig02-text">Figure 2</a>, which uses a ternary plot to show the changing mix of voting modes from 2016 to 2020. This plot employs points to show the mix of voting modes used in each state, as reported by voters in the 2020 Survey of the Performance of American Elections (SPAE).<sup><a href="#f20" name="f20-text">20</a></sup> Attached to each point is a line that indicates the distribution of modes in 2016. Election-day voting dominated in the states toward the top of the plot; states toward the lower right mostly voted in person before election day;<strong> [End Page 165]</strong></p>
+<p><a id="fig_2"></a><img loading="lazy" class="aligncenter wp-image-10546 size-large" src="https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig2-954x1024.jpg" alt="" width="954" height="1024" srcset="https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig2-954x1024.jpg 954w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig2-280x300.jpg 280w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig2-768x824.jpg 768w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig2.jpg 1345w" sizes="(max-width: 954px) 100vw, 954px" /></p>
+<div class="sec">
+<p class="continued">and mail balloting dominated in states toward the lower left.</p>
+<p>The most common type of change was toward the southwest in the graph—that is, substituting election-day voting for mail ballots. In only eight states (Arizona, Arkansas, Indiana, Kentucky, Louisiana, Mississippi, Missouri, and Texas) did the increased share of in-person voters before election day exceed the increased share of mail voters.</p>
+<p>Postelection responses to the SPAE describe the reasons behind the shift to mail balloting. Overall, 59 percent of respondents who stated that they were very worried about family members catching covid reported having voted by mail, compared to 28 percent who said they had no covid worries. This difference was visible within each party. Among Republicans, 42 percent who were very worried about covid voted by mail, while only 26 percent who had no covid worries at all said they had cast their ballots this way. Among Democrats, those figures were 62 and 35 percent.<strong> [End Page 166]</strong></p>
+<p>A state&#8217;s legal regime dramatically affected its rate of absentee balloting. Voters in states with no-excuse absentee voting used mail ballots at a much higher rate (55 percent) than voters in other states (35 percent); voters in states that mailed ballots to all registered voters likewise voted by mail at double the rate of other states (81 percent versus 40 percent). The only policy that did not appear to affect usage rates was mailing an absentee-ballot application to all voters.<sup><a href="#f21" name="f21-text">21</a></sup> Our analysis of relevant statistics indicates that the biggest increases in mail-ballot usage from 2016 to 2020 came in states that mailed ballots to all registered voters and that also had largely Democratic electorates.<sup><a href="#f22" name="f22-text">22</a></sup></p>
+<p>During the run-up to the November election, officials and commentators in the field expressed concern about whether voters who were new to mail voting would complete the vote-by-mail process successfully. In prior elections, voter mistakes and administrative problems had resulted in hundreds of thousands of mail ballots being turned down.<sup><a href="#f23" name="f23-text">23</a></sup> With the volume of mail ballots seemingly set to double or triple, there was heightened concern that voters using mail voting for the first time might be disenfranchised, and that controversies over mail-balloting problems would generate broader doubts about the election&#8217;s legitimacy. Efforts by election officials, civil society, and the courts addressed these concerns. In the end, voters followed directions and returned their ballots quickly.</p>
+<p>Fears also arose over late-arriving ballots. All states have deadlines for the receipt of mail ballots. Most require ballots to be &#8220;in hand&#8221; by the time the polls close on election day. A few allow a ballot to arrive within a given period after election day so long as there is proof (usually in the form of a postmark) that it had been mailed by the date of the election. With millions of voters poised to cast their first-ever mail-in ballots, and in view of the Postal Service&#8217;s well-known struggles, many worried that large numbers of voters would have their ballots tossed simply because the mail was too slow in delivering them. In 2016, late arrival was the most common reason save one for the rejection of postal ballots.<sup><a href="#f24" name="f24-text">24</a></sup> Would the same happen in 2020?</p>
+<p>It appears that it did not. Although comprehensive statistics have yet to be published, examination of absentee-ballot files from a few states reveals that a surprisingly small number of mail ballots arrived after November 3. Georgia, for instance, saw the number of ballots that arrived after that date (and which were therefore rejected) fall from 0.8 percent of ballots returned in 2016 to 0.2 percent in 2020. Consequently, although the number of mail ballots cast grew sixfold in the state, the number of ballots rejected for arriving too late grew only slightly (from 1,836 to 2,368). The numbers were similar in Wisconsin, despite the number of ballots cast by mail growing fifteenfold, from 91,000 to nearly 1.4 million.<strong> [End Page 167]</strong></p>
+<p>In North Carolina, as part of a legal settlement, the deadline for the receipt of absentee ballots after election day was lengthened from the normal three-day period to nine days because of the pandemic.<sup><a href="#f25" name="f25-text">25</a></sup> In the course of the election, the number of mail ballots rose fivefold, from 198,035 in 2016 to 1,026,364 in 2020. Yet the number of ballots that arrived during the new nine-day grace period increased by only about five thousand (to 16,313). Indeed, the number of ballots that were rejected for arriving too late actually <em>declined</em> from 1,038 in 2016 to 797 in 2020. North Carolina was not unique: Data from the SPAE indicate that a greater percentage of mail voters reported returning their ballots more than a week before Election Day (73 percent) than had done so in the past two presidential elections (61 percent in each). Voters heeded the warnings and returned their ballots with enough time to spare.</p>
+<p>Finally, preliminary evidence suggests that mail ballots were rejected at much lower rates in 2020 than in 2016. Final statistics from the 2020 election were not available at the time of this writing in March 2021. However, the website FiveThirtyEight has been able to gather data from 22 states plus the District of Columbia, and reports that rejection rates are down from the 2016 level in all but three of these jurisdictions.<sup><a href="#f26" name="f26-text">26</a></sup> The website Ballotpedia, relying on different data sources in some cases, reports rejection rates as dropping in fourteen of twenty states.<sup><a href="#f27" name="f27-text">27</a></sup></p>
+<p>Direct analysis of the absentee-ballot files from the states that make them readily available tells a similar story. For instance, Wisconsin reported that only 0.2 percent of absentee ballots were rejected for any reason, compared to 1.8 percent in the April presidential primary and 2.3 percent in the 2016 presidential election.<sup><a href="#f28" name="f28-text">28</a></sup> The percentage rejected for &#8220;certification insufficient,&#8221; which includes a missing voter or witness signature or a missing witness address, was a miniscule 0.07 percent (1,434 ballots out of nearly two-million returned). In Georgia, the number of mail ballots that were cast grew sixfold in 2020, to 1.3 million.<sup><a href="#f29" name="f29-text">29</a></sup> But the overall number of rejected mail ballots declined from about 6,056 in 2016 (2.9 percent of all mail ballots returned) to 4,003 (0.3 percent). Of the state&#8217;s 2020 rejected mail ballots, 1,563 were for either missing or invalid signatures.</p>
+</div>
+<div class="sec">
+<h2 class="sec-headA">The Maintenance of In-Person Voting</h2>
+<p>Although the shift to voting by mail was the element of election administration that drew the most public attention, election officials were equally attentive to the challenges of maintaining polling places for both early voting and election day. Even with the big shift to mail balloting, maintaining polling places remained critical to the safe and effective conduct of the election. Some voters needed services that could only be provided in person, others distrusted the Postal Service, and still others heeded President Donald Trump&#8217;s calls to vote in person.<strong> [End Page 168] </strong>Many voters, including Democrats, still strongly desire to vote in person.<sup><a href="#f30" name="f30-text">30</a></sup></p>
+<p>According to one report, the 2016 election had involved about a hundred-thousand polling places, nearly 21,000 of which were eliminated in 2020.<sup><a href="#f31" name="f31-text">31</a></sup> Half the eliminated polling places were in California alone, which mailed ballots to all registered voters. Most of the other states with the biggest drops in the number of polling places either mailed ballots to all registered voters (Nevada, New Jersey, and Vermont) or worked hard to divert voters to early voting at centers set up for that purpose (Kentucky and Maryland).</p>
+<p>The type of facility in which people voted also changed in 2020. Between 2008 and 2016, the three most common sites for polling places had been schools (25 percent of in-person voters), churches (17 percent), and community centers (16 percent). In 2020, the top three were &#8220;other&#8221; government buildings (courthouses, municipal buildings, or city halls, but not schools, community centers, firehouses, or police stations) at 23 percent, community centers at 21 percent, and schools at 18 percent. In other words, in-person voting shifted to larger facilities over which local governments had greater control.</p>
+<p>Although we cannot yet document precisely how well local officials maintained access to in-person voting, we can assess the experience of voters who cast ballots in person and judge indirectly how well the system performed. Here, as with mail voting, the conclusions are mostly positive, although things were far from perfect.</p>
+<p>First, despite the net reduction of 21,000 polling places and the relocation of thousands more, in-person voters did not report greater difficulty finding their polling place in 2020. Second, among the other measures that the SPAE has followed over the years to assess the experience of in-person voters, 2020 was no different from past years. Third, in-person voters largely encountered polling places where they felt that safety measures were appropriately in place.<sup><a href="#f32" name="f32-text">32</a></sup></p>
+<p>That said, other public-health measures were less often observed. Barely half of in-person respondents (56 percent) reported that they found voting booths spaced out to respect social distancing, while fewer than half reported finding protective barriers between themselves and poll workers or seeing voting booths cleaned between uses (47 and 42 percent of respondents, respectively).</p>
+<p>The one measure on which voters reported having a worse experience than in 2016 was the time spent waiting to vote in person. This was not surprising given the demands of social distancing and the closure of many polling places during the pandemic. The benchmark that we use is the percentage of in-person voters who had to wait more than thirty minutes to vote (the standard suggested by the Presidential Commission on Election Administration in its 2014 report).<sup><a href="#f33" name="f33-text">33</a></sup></p>
+<p>Wait times increased in 2020 up to levels not seen since 2008, the<strong> [End Page 169]</strong></p>
+<p><img loading="lazy" class="aligncenter wp-image-10547 size-large" src="https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig3A-1024x912.jpg" alt="" width="1024" height="912" srcset="https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig3A-1024x912.jpg 1024w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig3A-300x267.jpg 300w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig3A-768x684.jpg 768w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig3A.jpg 1349w" sizes="(max-width: 1024px) 100vw, 1024px" /></p>
+<div class="sec">
+<p class="continued">election year with the longest wait times on record. Roughly one in five early voters waited more than a half-hour to vote, as did one in seven election-day voters. The racial gap in wait times had closed for election-day voting in 2016, but not for early voting. The same remained true in 2020, just at longer wait times. On election day 2016, the share of both white and African American voters who had needed to wait more than thirty minutes had been 8.5 percent. In 2020, those proportions rose to 14.3 and 15.6 percent, respectively. In 2020 early voting, the disparity was greater: More than a quarter (26.6 percent) of African American early voters needed to wait a half-hour or more to vote, while this was true for just over a fifth (20.5 percent) of white early voters. This gap of six percentage points was similar to the nine-point gap (18 percent versus 9.2 percent) that had been observed in 2016.</p>
+</div>
+<div class="sec">
+<h2 class="sec-headA">Perception versus Reality</h2>
+<p>The story told here of a historic and heroic administration of the 2020 election is based on the observed facts and data. A competing narrative of dysfunction and a &#8220;stolen election&#8221; emerged in the election&#8217;s<strong> [End Page 170]</strong></p>
+<p><img loading="lazy" class="aligncenter wp-image-10548 size-large" src="https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig3B-1024x912.jpg" alt="" width="1024" height="912" srcset="https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig3B-1024x912.jpg 1024w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig3B-300x267.jpg 300w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig3B-768x684.jpg 768w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig3B.jpg 1349w" sizes="(max-width: 1024px) 100vw, 1024px" /></p>
+<p class="continued">aftermath, propagated by President Trump and his supporters. Seeds of that narrative actually preceded the election, as Trump and his surrogates had primed the U.S. public, and more particularly his supporters, to expect fraud of historic proportions, which would be the cause of his defeat, if he lost. That lie then became weaponized on January 6, as the &#8220;Stop the Steal&#8221; movement descended on the Capitol for a deadly attempt at insurrection.</p>
+<p>Partisan polarization concerning the fairness of a presidential election is not new, and to a large degree the basic patterns in 2020 mimicked what political scientists have found over the past two decades. In the case of 2020, roughly half of respondents to the Economist/YouGov series of polls between August and election day expressed &#8220;a great deal&#8221; or &#8220;quite a bit&#8221; of confidence that their own votes would be counted accurately in the upcoming election, while between 30 and 40 percent expressed confidence that the election would be &#8220;held fairly&#8221; (with Democrats slightly more confident on both measures than Republicans).</p>
+<p>After November 3, the overall measures of confidence remained roughly unchanged, but the degree of partisan polarization exploded. (See Figure 3.) Before the election, Democrats were 10.9 points more confident their votes would be counted accurately than Republicans; after<strong> [End Page 171]</strong></p>
+<p><img loading="lazy" class="aligncenter wp-image-10549 size-large" src="https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig4A-1024x913.jpg" alt="" width="1024" height="913" srcset="https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig4A-1024x913.jpg 1024w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig4A-300x267.jpg 300w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig4A-768x684.jpg 768w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig4A.jpg 1369w" sizes="(max-width: 1024px) 100vw, 1024px" /></p>
+<p class="continued">Election Day, this gap was 51.7 points. The gap in confidence that the presidential election was fair increased even more sharply, going from 15 points prior to November 3 to 72.6 points afterward.</p>
+<p>As documented in earlier studies of voter confidence, the partisan split over assessing the election&#8217;s fairness can be attributed, to some extent, to the &#8220;winners-and-losers effect,&#8221; with the losing candidate&#8217;s supporters more likely to question the integrity of the process.<sup><a href="#f34" name="f34-text">34</a></sup> In comparison to recent elections, however, the 2020 gap is extreme. A study of changes in voter confidence from before to after election day in the 2004, 2008, and 2012 presidential elections found that on average the gap between the parties increased 22 points on the question about confidence in one&#8217;s own vote being fairly counted, and 32 points on the question about confidence in the overall fairness of the election.<sup><a href="#f35" name="f35-text">35</a></sup> We find that the net changes in 2016 were similar—17 and 18 points, respectively. In 2020, by contrast, the net gaps in confidence and trust increased 41 points for one&#8217;s own vote and 58 points on the election&#8217;s fairness overall.</p>
+<p>Although this yawning partisan gap in perceptions of the accuracy and fairness of the 2020 election may be historic, the degree of partisan mistrust that has opened up at the state and local levels is also new.<strong> [End Page 172]</strong></p>
+<p><img loading="lazy" class="aligncenter wp-image-10550 size-large" src="https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig4B-1024x913.jpg" alt="" width="1024" height="913" srcset="https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig4B-1024x913.jpg 1024w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig4B-300x267.jpg 300w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig4B-768x684.jpg 768w, https://www.journalofdemocracy.org/wp-content/uploads/2021/04/Persily-Fig4B.jpg 1369w" sizes="(max-width: 1024px) 100vw, 1024px" /></p>
+<div class="sec">
+<p class="continued">That mistrust will likely have more important near-term consequences, because of the preeminent role that states play in determining election policy. In the past, even when the two parties disagreed about the fairness of the national result, they were willing to acknowledge that local elections were conducted well, with only a small dose of loser&#8217;s effect thrown in. And, as recently as 2016, the two parties were virtually identical in how they judged state and local election administration.</p>
+<p>Not so in 2020. The Republicans most distrustful of the accuracy of state election results live in states that Trump barely lost. In fact, the chasm in trust between Republicans in states where he barely lost and those in states where he barely won is vast—40 percentage points.</p>
+<p>Data from the SPAE help to illustrate the point. Figure 4 plots the percentage of respondents from the two parties who were either very or somewhat confident that votes in their state were counted as intended against the percentage of the two-party vote received by Trump. The discontinuity right at the 50 percent mark in the Republican graph is stark. Among Republicans, simply living in a state that Trump barely won is worth approximately 40 points in confidence regarding whether state votes were counted properly, compared to living in a state that Trump barely lost.<strong> [End Page 173]</strong></p>
+<p>Republicans report being especially distrustful of the state vote count where Trump lost by less than three percentage points. And Republicans feel even more dissatisfied in states with high use of mail ballots—such as California, Maryland, New Jersey, Oregon, and Washington—and much less dissatisfied in states with low mail-ballot usage (Connecticut, Delaware, Maine, and New Hampshire).<sup><a href="#f36" name="f36-text">36</a></sup> The gap among Democrats&#8217; perceptions across different states was much smaller, and the usage of mail ballots had no influence on their attitudes toward the state vote count whether Trump won their state or lost it.</p>
+<p>In almost every state, Democrats feel more confidence in the 2020 vote count than do Republicans, and by a wide margin. It is unsurprising, therefore, that immediately after the election news reports began to surface of efforts by Republican legislators to rein in forms of voting that Democrats seemed to favor. Across the country, state lawmakers from the Republican Party have put forward scores of bills to restrict mail balloting. The states with the most legislative activity are Arizona, Georgia, New Hampshire, and Pennsylvania.<sup><a href="#f37" name="f37-text">37</a></sup></p>
+</div>
+<div class="sec">
+<h2 class="sec-headA">A Test Passed, a Future in the Balance</h2>
+<p>How the country interprets the 2020 election will, in many respects, shape the future of U.S. democracy. The electoral system confronted and passed its most severe test in recent memory. Any fair appraisal would focus on the heroism of election officials, civil society actors, and voters, who turned out in record numbers despite the threat of a pandemic. It would lead to renewed attention to the needs of election officials and the changing expectations of voters who increasingly seek flexibility in how they vote.</p>
+<p>That legacy is far from guaranteed, however. The doubt cast on all aspects of the electoral process, from voting machines to ballot dropboxes to mail balloting, threatens Americans&#8217; faith in the machinery of democracy and in those who dedicate their lives to administering it. On the receiving end of hate mail and death threats, large numbers of officials who administered the 2020 election are anticipating retirement, citing the political pressures of the job as a primary reason.<sup><a href="#f38" name="f38-text">38</a></sup> It remains to be seen who will replace these veterans, given the pressure, low pay, threats, and lack of support from political leaders.</p>
+<p>One consequence of the election may be a leadership crisis in election administration, as exhausted and frustrated officials step down and state and local governments struggle to find replacements who are equally dedicated to tireless and fair implementation of election laws. An even worse future will be in store if the next generation of election officials who step forward do so out of a conviction that the 2020 election was fundamentally flawed.</p>
+<p>For longtime observers of election administration and law, the 2020<strong> [End Page 174] </strong>election offers a number of obvious lessons that should demand immediate attention in state capitals and Washington, while the memory of the election is fresh. In particular, we stress the needs to fund election administration sufficiently, to clarify emergency legislation relating to elections, to cement ties between election officials and social-media outlets for communicating with voters, to enact comprehensive postelection-auditing programs, to develop workable observation procedures, and to acknowledge fully the critical role that the Postal Service plays in conducting elections. Other obvious issues that need attention include regularizing the use of drop-off locations for mail ballots, requiring greater use of the internet to track absentee ballots and manage mail-ballot transactions, establishing uniform standards for curing absentee-ballot defects, reforming the Electoral Count Act of 1887 to clarify the procedures for resolving disputes over Electoral College votes, and making election day a school holiday.<sup><a href="#f39" name="f39-text">39</a></sup></p>
+<p>Instead, the motivating memory driving much election-administration lawmaking is amplified through a continued barrage of false claims about the election. As state legislatures convene and begin their work, efforts are mounting to restrict absentee voting—by instituting heightened identification requirements, by shortening the period during which such ballots can be requested, or by eliminating no-excuse absentee voting. By the end of March 2021, state legislatures had seen the filing of at least 3,914 bills dealing with election administration, more than half of them addressing absentee or mail voting.<sup><a href="#f40" name="f40-text">40</a></sup> While some of these bills are earnest attempts to adapt what was learned from the 2020 election to future mail-ballot policy, in most states these bills will likely provoke heated partisan debates in which grievances from the election will be relitigated. The overattention to mail voting to the neglect of the other pressing issues that arose during the election will result in a lost opportunity to improve the functioning of the election-administration system.</p>
+<p>As the United States navigates its way forward, the stakes could not be higher. The 2020 election demonstrated how false claims about election fraud can lead to deadly results. At the same time, the election also demonstrated the resilience of U.S. voters and election administrators. The open question at this point is whether, when we look back on 2020, we will see it as a turning point in strengthening the mechanics of voting, or as the moment when a new generation of violent voter suppression began.</p>
+<p>&nbsp;</p>
+<h3 class="fn-head">NOTES</h3>
+<div class="fn">
+<p>The authors would like to thank Zahavah Levine, Chelsey Davidson, Alexandra Taylor, Tom Westphal, Claire De Soi, and the entire team at the Stanford-MIT Healthy Elections Project for their research assistance.</p>
+</div>
+<div class="fn">
+<p><a href="#f1-text" name="f1">1.</a> For a list of primary-date changes see &#8220;2020 State Primary Election Dates,&#8221; National Conference of State Legislatures, 3 November 2020, <em><a href="http://www.ncsl.org/research/elections-and-campaigns/2020-state-primary-election-dates.aspx">www.ncsl.org/research/elections-and-campaigns/2020-state-primary-election-dates.aspx</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f2-text" name="f2">2.</a> For a complete description of the Wisconsin primary, which is only summarized here, see Grace Scullion et al., &#8220;Wisconsin&#8217;s 2020 Primary in the Wake of COVID-19,&#8221; Stanford-MIT Healthy Elections Project, 30 June 2020, <em><a href="https://healthyelections.org/sites/default/files/2020-06/Wisconsin%E2%80%99s%202020%20Primary%20in%20the%20Wake%20of%20COVID-19.pdf">https://healthyelections.org/sites/default/files/2020-06/Wisconsin%E2%80%99s%202020%20Primary%20in%20the%20Wake%20of%20COVID-19.pdf</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f3-text" name="f3">3.</a> See John Curiel and Angelo Dagonel, &#8220;Wisconsin Election Analysis,&#8221; Stanford-MIT Healthy Elections Project, 6 August 2020, <em><a href="https://healthyelections.org/sites/default/files/2020-08/Wisconsin%20Election%20Analysis%20Version%202.pdf">https://healthyelections.org/sites/default/files/2020-08/Wisconsin%20Election%20Analysis%20Version%202.pdf</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f4-text" name="f4">4.</a> The exceptions were California, which was already transitioning to a quasi–vote-by-mail system in most counties; Florida, which has a flexible vote-by-mail system that swung into play during its March 17 primary; and Michigan, where voters had in 2018 passed a referendum providing no-excuse absentee voting.</p>
+</div>
+<div class="fn">
+<p><a href="#f5-text" name="f5">5.</a> Pam Fessler and Elena Moore, &#8220;More Than 550,000 Primary Absentee Ballots Rejected in 2020, Far Outpacing 2016,&#8221; Hawai&#8217;i Public Radio, 21 August 2020, <em><a href="http://www.hawaiipublicradio.org/post/more-550000-primary-absentee-ballots-rejected-2020-faroutpacing-2016#stream/0">www.hawaiipublicradio.org/post/more-550000-primary-absentee-ballots-rejected-2020-faroutpacing-2016#stream/0</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f6-text" name="f6">6.</a> Kevin DeLuca, &#8220;Georgia Primary Election Analysis,&#8221; Stanford-MIT Healthy Elections Project, 15 September 2020, <em><a href="https://healthyelections.org/sites/default/files/2020-10/georgia_election_analysis_memo.pdf">https://healthyelections.org/sites/default/files/2020-10/georgia_election_analysis_memo.pdf</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f7-text" name="f7">7.</a> Blair Read, &#8220;North Carolina Election Analysis,&#8221; Stanford-MIT Healthy Elections Project, 19 July 2020, <em><a href="https://healthyelections.org/sites/default/files/2020-08/North%20Carolina%20Memo%281%29.pdf">https://healthyelections.org/sites/default/files/2020-08/North%20Carolina%20Memo%281%29.pdf</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f8-text" name="f8">8.</a> Carl Campanile, Nolan Hicks, and Bernadette Hogan, &#8220;Over 80,000 Mail-in Ballots Disqualified in NYC Primary Mess,&#8221; <em>New York Post</em>, 5 August 2020.</p>
+</div>
+<div class="fn">
+<p><a href="#f9-text" name="f9">9.</a> &#8220;Voting Laws Roundup 2020,&#8221; Brennan Center for Justice, 8 December 2020, <em><a href="http://www.brennancenter.org/our-work/research-reports/voting-laws-roundup-2020-0">www.brennancenter.org/our-work/research-reports/voting-laws-roundup-2020-0</a></em>; &#8220;Changes to Election Dates, Procedures, and Administration in Response to the Coronavirus (Covid-19) Pandemic, 2020,&#8221; Ballotpedia, 19 November 2020, <em><a href="https://ballotpedia.org/Changes_to_election_dates,_procedures,_and_administration_in_response_to_the_coronavirus_(COVID-19)_pandemic,_2020">https://ballotpedia.org/Changes_to_election_dates,_procedures,_and_administration_in_response_to_the_coronavirus_(COVID-19)_pandemic,_2020</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f10-text" name="f10">10.</a> Connor Clerkin et al., &#8220;Mail Voting Litigation During the Coronavirus Pandemic,&#8221; Stanford-MIT Healthy Elections Project, 29 October 2020, <em><a href="https://healthyelections.org/sites/default/files/2020-11/Mail_Voting_Litigation.pdf">https://healthyelections.org/sites/default/files/2020-11/Mail_Voting_Litigation.pdf</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f11-text" name="f11">11.</a> H.R. 748, CARES Act, Public Law 116-136.</p>
+</div>
+<div class="fn">
+<p><a href="#f12-text" name="f12">12.</a> Nicholas Riccardi, &#8220;Mark Zuckerberg Donates $100M More to Help Election Offices,&#8221; Associated Press, 13 October 2020.</p>
+</div>
+<div class="fn">
+<p><a href="#f13-text" name="f13">13.</a> &#8220;NBA Arenas and Facilities Being Used for 2020 Election,&#8221; NBA.com, <em><a href="http://www.nba.com/nba-arenas-polling-place-voting-center-2020-election">www.nba.com/nba-arenas-polling-place-voting-center-2020-election</a></em>; Alex Tausanovitch, Sarah Bonk, and Richard Eidlin, &#8220;17 Ways Companies Can Help Americans Vote Safely,&#8221; Center for American Progress, 9 September 2020, <em><a href="http://www.americanprogress.org/issues/democracy/reports/2020/09/09/490167/17-ways-companies-can-help-americans-vote-safely">www.americanprogress.org/issues/democracy/reports/2020/09/09/490167/17-ways-companies-can-help-americans-vote-safely</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f14-text" name="f14">14.</a> &#8220;Google Civic Information API,&#8221; Google, <em><a href="https://developers.google.com/civic-information">https://developers.google.com/civic-information</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f15-text" name="f15">15.</a> &#8220;Voting Information Center,&#8221; Facebook, <em><a href="http://www.facebook.com/votinginformation-center">www.facebook.com/votinginformation-center</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f16-text" name="f16">16.</a> &#8220;A Look at Facebook and U.S. 2020 Elections,&#8221; Facebook, December 2020, <em><a href="https://about.fb.com/wp-content/uploads/2020/12/US-2020-Elections-Report.pdf">https://about.fb.com/wp-content/uploads/2020/12/US-2020-Elections-Report.pdf</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f17-text" name="f17">17.</a> &#8220;Voter Turnout Data,&#8221; United States Elections Project, <em><a href="http://www.electproject.org/home/voter-turnout/voter-turnout-data">www.electproject.org/home/voter-turnout/voter-turnout-data</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f18-text" name="f18">18.</a> The findings discussed in this paragraph are based on multivariate regression analysis available from the authors upon request.</p>
+</div>
+<div class="fn">
+<p><a href="#f19-text" name="f19">19.</a> Data on voting-mode usage from 1996 to 2016 come from various years of the U.S. Census Bureau&#8217;s <em>Voting and Registration Supplement</em>. Statistics from 2020 were calculated from responses to the Survey of the Performance of American Elections (SPAE).</p>
+</div>
+<div class="fn">
+<p><a href="#f20-text" name="f20">20.</a> Undertaken by MIT every presidential-election year since 2008, the SPAE is a post-election survey that is meant to gauge the experience of voters in the most recent presidential election. The survey is designed to allow comparisons across states. In 2020, the sample size was 10,800 respondents. In every state, at least two-hundred interviews took place.</p>
+</div>
+<div class="fn">
+<p><a href="#f21-text" name="f21">21.</a> The rate of mail-ballot usage among voters in states that mailed an application to all registered voters was virtually identical (48.8 percent) to the rate among voters in states that did not (47.6 percent).</p>
+</div>
+<div class="fn">
+<p><a href="#f22-text" name="f22">22.</a> The statistical analysis referenced here is available from the authors upon request.</p>
+</div>
+<div class="fn">
+<p><a href="#f23-text" name="f23">23.</a> Charles H. Stewart III, &#8220;Reconsidering Lost Votes by Mail,&#8221; <em>Harvard Data Science Review</em> 2.4 (Fall 2020), <em><a href="https://doi.org/10.1162/99608f92.6c591bd4">https://doi.org/10.1162/99608f92.6c591bd4</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f24-text" name="f24">24.</a> &#8220;The Election Administration and Voting Survey: 2016 Comprehensive Report—A Report to the 115<sup>th</sup> Congress,&#8221; U.S. Election Assistance Commission, <em><a href="http://www.eac.gov/sites/default/files/eac_assets/1/6/2016_EAVS_Comprehensive_Report.pdf">www.eac.gov/sites/default/files/eac_assets/1/6/2016_EAVS_Comprehensive_Report.pdf</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f25-text" name="f25">25.</a> This settlement was challenged by Republican legislative leaders, but a 5–3 majority of the U.S. Supreme Court upheld it. See Christopher Middleton, &#8220;North Carolina: 2020 Election Policies and Practices,&#8221; Stanford-MIT Healthy Elections Project, <em><a href="https://healthyelections.org/sites/default/files/2020-11/northcarolina-110220.pdf">https://healthyelections.org/sites/default/files/2020-11/northcarolina-110220.pdf</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f26-text" name="f26">26.</a> Nathaniel Rakich, &#8220;Why So Few Absentee Ballots Were Rejected in 2020,&#8221; <em>FiveThirtyEight</em>, 17 February 2021, <em><a href="https://fivethirtyeight.com/features/why-so-few-absentee-ballots-were-rejected-in-2020">https://fivethirtyeight.com/features/why-so-few-absentee-ballots-were-rejected-in-2020</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f27-text" name="f27">27.</a> &#8220;Election Results, 2020: Analysis of Rejected Ballots,&#8221; Ballotpedia, 10 February 2021, <em><a href="https://ballotpedia.org/Election_results,_2020:_Analysis_of_rejected_ballots">https://ballotpedia.org/Election_results,_2020:_Analysis_of_rejected_ballots</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f28-text" name="f28">28.</a> &#8220;November 3, 2020 Election Data Report,&#8221; Wisconsin Elections Commission, 3 February 2021, <em><a href="https://elections.wi.gov/sites/elections.wi.gov/files/2021-01/D.%20November%202020%20Election%20Data%20Report.pdf">https://elections.wi.gov/sites/elections.wi.gov/files/2021-01/D.%20November%202020%20Election%20Data%20Report.pdf</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f29-text" name="f29">29.</a> Here we include ballots recorded as arriving after November 3, because the bulk of ballots rejected on account of signature problems are recorded as arriving after that date. This fact, and other details in the state absentee file, suggest that when recording these ballots, counties regularly entered the date on which they were rejected than the date on which they were received.</p>
+</div>
+<div class="fn">
+<p><a href="#f30-text" name="f30">30.</a> In a poll that the Pew Research Center took in August, before any states had begun distributing mail ballots, 60 percent of Trump supporters and 23 percent of Biden supporters said that they intended to vote on election day. African Americans were the demographic group most likely to express a preference for voting early and in person. See &#8220;Views of the 2020 Campaign and Voting in November,&#8221; Pew Research Center, 13 August 2020, <em><a href="http://www.pewresearch.org/politics/2020/08/13/views-of-the-2020-campaign-and-voting-in-november">www.pewresearch.org/politics/2020/08/13/views-of-the-2020-campaign-and-voting-in-november</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f31-text" name="f31">31.</a> Cameron Joseph and Robert Arthur, &#8220;The U.S. Eliminated Nearly 21,000 Election Day Polling Locations for 2020,&#8221; <em>VICE News</em>, 22 October 2020, <em><a href="http://www.vice.com/en/article/pkdenn/the-us-eliminated-nearly-21000-election-day-polling-locations-for-2020">www.vice.com/en/article/pkdenn/the-us-eliminated-nearly-21000-election-day-polling-locations-for-2020</a></em>. The authors thank Cameron Joseph for sharing the data that formed the basis of this report.</p>
+</div>
+<div class="fn">
+<p><a href="#f32-text" name="f32">32.</a> Charles Stewart III, &#8220;How We Voted in 2020: A First Look at the Survey of the Performance of American Elections,&#8221; MIT Election Data and Science Lab, 15 December 2020, <em><a href="http://electionlab.mit.edu/sites/default/files/2020-12/How-we-voted-in-2020-v01.pdf">http://electionlab.mit.edu/sites/default/files/2020-12/How-we-voted-in-2020-v01.pdf</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f33-text" name="f33">33.</a> &#8220;The American Voting Experience: Report and Recommendations of the Presidential Commission on Election Administration,&#8221; U.S. Presidential Commission on Election Administration, January 2014, <em><a href="http://web.mit.edu/supportthevoter/www/files/2014/01/Amer-Voting-Exper-final-draft-01-09-14-508.pdf">http://web.mit.edu/supportthevoter/www/files/2014/01/Amer-Voting-Exper-final-draft-01-09-14-508.pdf</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f34-text" name="f34">34.</a> Michael W. Sances and Charles Stewart III, &#8220;Partisanship and Confidence in the Vote Count: Evidence from U.S. National Elections Since 2000,&#8221; <em>Electoral Studies</em> 40 (December 2015): 176–88; Betsy Sinclair, Stephen S. Smith, and Patrick D. Tucker, &#8220;&#8216;It&#8217;s Largely a Rigged System&#8217;: Voter Confidence and the Winner Effect in 2016,&#8221; <em>Political Research Quarterly</em> 71 (December 2018): 854–68.</p>
+</div>
+<div class="fn">
+<p><a href="#f35-text" name="f35">35.</a> The method is this: First, calculate the gap in confidence (as expressed <em>before</em> the election) between supporters of the candidate who would go on to win and supporters of the candidate who would go on to lose. This is the preelection difference. Second, calculate the same gap after the election. This is the postelection difference. Third, calculate the difference-in-differences, which is simply the postelection difference minus the preelection difference. In 2020, for instance, the average preelection gap on the question about one&#8217;s own vote was 11 points (Democrats were more confident), while the average postelection gap was 52 points. The difference between the two was 41 points, which is the estimate reported in this paragraph. (All figures given in this note are rounded.)</p>
+</div>
+<div class="fn">
+<p><a href="#f36-text" name="f36">36.</a> This point is confirmed by a simple multiple regression in which we add the percentage of ballots cast by mail to the lines fit in the two figures. Among Republicans in states that Trump lost, each percentage-point increase in the use of mail ballots decreased state-level confidence by 0.239 points; in states that Trump won, the corresponding coefficient is 0.002 points. The former effect is significant at <em>p</em> &lt; 0.026; the latter as a <em>p</em>-value of 0.967.</p>
+</div>
+<div class="fn">
+<p><a href="#f37-text" name="f37">37.</a> &#8220;Voting Laws Roundup: February 2021,&#8221; Brennan Center for Justice, 8 February 2021, <em><a href="http://www.brennancenter.org/our-work/research-reports/voting-laws-roundup-february-2021">www.brennancenter.org/our-work/research-reports/voting-laws-roundup-february-2021</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f38-text" name="f38">38.</a> Fredreka Schouten and Kelly Mena, &#8220;High-Profile Election Officials Leave Posts After a Tumultuous 2020,&#8221; CNN, 19 February 2021, <em><a href="http://www.cnn.com/2021/02/19/politics/election-officials-lose-and-leave-jobs/index.html">www.cnn.com/2021/02/19/politics/election-officials-lose-and-leave-jobs/index.html</a></em>. See also Marie Albiges and Tom Lisi, &#8220;Pa. Election Officials Are Burnt out and Leaving Their Jobs After 2020 &#8216;Nightmare,'&#8221; <em>Philadelphia Inquirer</em>, 21 December 2020, <em><a href="http://www.inquirer.com/politics/election/spl/pennsylvania-election-2020-officials-retiring-nightmare-20201221.html">www.inquirer.com/politics/election/spl/pennsylvania-election-2020-officials-retiring-nightmare-20201221.html</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f39-text" name="f39">39.</a> Nathaniel Persily and Charles Stewart III, &#8220;A 12-Step Rehabilitation Program for American Election Administration,&#8221; <em>Lawfare</em>, 27 January 2021, <em><a href="http://www.lawfareblog.com/12-step-rehabilitation-program-american-election-administration">www.lawfareblog.com/12-step-rehabilitation-program-american-election-administration</a></em>.</p>
+</div>
+<div class="fn">
+<p><a href="#f40-text" name="f40">40.</a> National Conference of State Legislatures, State Elections Legislation Database, <em><a href="http://www.ncsl.org/research/elections-and-campaigns/elections-legislation-database.aspx">www.ncsl.org/research/elections-and-campaigns/elections-legislation-database.aspx</a></em>.</p>
+<p>&nbsp;</p>
+<div class="copyright-statement">Copyright © 2021 <em>National Endowment for Democracy and Johns Hopkins University Pres</em><em>s</em></div>
+<p class="font--sans-serif font--small">Image Credit: Trevor Bexon/Shutterstock.com</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+			<div class="article__attachments">
+				
+				
+							</div>
+
+					</div>
+
+		<aside class="article__aside">
+						<div class="article__subject">
+				<p><strong>Subject</strong></p>
+				<p>
+									<a href="https://www.journalofdemocracy.org/subjects/covid-19/">Covid-19</a>, 									<a href="https://www.journalofdemocracy.org/subjects/elections/">Elections</a>, 									<a href="https://www.journalofdemocracy.org/subjects/electoral-integrity/">Electoral integrity</a>								</p>
+			</div>
+									<div class="article__region">
+				<p><strong>Region</strong></p>
+				<p>
+									<a href="https://www.journalofdemocracy.org/regions/advanced-democracies/">Advanced Democracies</a>, 									<a href="https://www.journalofdemocracy.org/regions/north-america/">North America</a>								</p>
+			</div>
+									<div class="article__country">
+				<p><strong>Country</strong></p>
+				<p>
+									<a href="https://www.journalofdemocracy.org/countries/united-states/">United States</a>								</p>
+			</div>
+			
+			<div class="share article__share">
+	<p class="share__label"><strong>Share</strong></p>
+	<ul class="share__actions">
+		<li class="share__action share__action--facebook">
+			<a href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.journalofdemocracy.org%2Farticles%2Fthe-miracle-and-tragedy-of-the-2020-u-s-election%2F" target="_blank" rel="noopener">
+				<svg class="svg svg--facebook" width="32" height="32" viewBox="0 0 32 32">
+					<path d="M19 6h5v-6h-5c-3.86 0-7 3.14-7 7v3h-4v6h4v16h6v-16h5l1-6h-6v-3c0-0.542 0.458-1 1-1z"></path>
+				</svg>
+			</a>
+		</li>
+		<li class="share__action share__action--twitter">
+			<a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.journalofdemocracy.org%2Farticles%2Fthe-miracle-and-tragedy-of-the-2020-u-s-election%2F&amp;text=The%20Miracle%20and%20Tragedy%20of%20the%202020%20U.S.%20Election&amp;via=JoDemocracy" target="_blank" rel="noopener">
+				<svg class="svg svg--twitter" width="32" height="32" viewBox="0 0 32 32">
+					<path d="M32 7.075c-1.175 0.525-2.444 0.875-3.769 1.031 1.356-0.813 2.394-2.1 2.887-3.631-1.269 0.75-2.675 1.3-4.169 1.594-1.2-1.275-2.906-2.069-4.794-2.069-3.625 0-6.563 2.938-6.563 6.563 0 0.512 0.056 1.012 0.169 1.494-5.456-0.275-10.294-2.888-13.531-6.862-0.563 0.969-0.887 2.1-0.887 3.3 0 2.275 1.156 4.287 2.919 5.463-1.075-0.031-2.087-0.331-2.975-0.819 0 0.025 0 0.056 0 0.081 0 3.181 2.263 5.838 5.269 6.437-0.55 0.15-1.131 0.231-1.731 0.231-0.425 0-0.831-0.044-1.237-0.119 0.838 2.606 3.263 4.506 6.131 4.563-2.25 1.762-5.075 2.813-8.156 2.813-0.531 0-1.050-0.031-1.569-0.094 2.913 1.869 6.362 2.95 10.069 2.95 12.075 0 18.681-10.006 18.681-18.681 0-0.287-0.006-0.569-0.019-0.85 1.281-0.919 2.394-2.075 3.275-3.394z"></path>
+				</svg>
+			</a>
+		</li>
+		<li class="share__action share__action--linkedin">
+			<a href="https://www.linkedin.com/shareArticle?url=https%3A%2F%2Fwww.journalofdemocracy.org%2Farticles%2Fthe-miracle-and-tragedy-of-the-2020-u-s-election%2F&amp;title=The%20Miracle%20and%20Tragedy%20of%20the%202020%20U.S.%20Election&amp;mini=true" target="_blank" rel="noopener">
+				<svg class="svg svg--linkedin" width="32" height="32" viewBox="0 0 32 32">
+					<path d="M12 12h5.535v2.837h0.079c0.77-1.381 2.655-2.837 5.464-2.837 5.842 0 6.922 3.637 6.922 8.367v9.633h-5.769v-8.54c0-2.037-0.042-4.657-3.001-4.657-3.005 0-3.463 2.218-3.463 4.509v8.688h-5.767v-18z"></path>
+					<path d="M2 12h6v18h-6v-18z"></path>
+					<path d="M8 7c0 1.657-1.343 3-3 3s-3-1.343-3-3c0-1.657 1.343-3 3-3s3 1.343 3 3z"></path>
+				</svg>
+			</a>
+		</li>
+		<li class="share__action share__action--copy">
+			<button type="button" data-clipboard-text="https://www.journalofdemocracy.org/articles/the-miracle-and-tragedy-of-the-2020-u-s-election/">
+				<svg class="svg svg--link" width="32" height="32" viewBox="0 0 32 32">
+					<path d="M13.757 19.868c-0.416 0-0.832-0.159-1.149-0.476-2.973-2.973-2.973-7.81 0-10.783l6-6c1.44-1.44 3.355-2.233 5.392-2.233s3.951 0.793 5.392 2.233c2.973 2.973 2.973 7.81 0 10.783l-2.743 2.743c-0.635 0.635-1.663 0.635-2.298 0s-0.635-1.663 0-2.298l2.743-2.743c1.706-1.706 1.706-4.481 0-6.187-0.826-0.826-1.925-1.281-3.094-1.281s-2.267 0.455-3.094 1.281l-6 6c-1.706 1.706-1.706 4.481 0 6.187 0.635 0.635 0.635 1.663 0 2.298-0.317 0.317-0.733 0.476-1.149 0.476z"></path>
+					<path d="M8 31.625c-2.037 0-3.952-0.793-5.392-2.233-2.973-2.973-2.973-7.81 0-10.783l2.743-2.743c0.635-0.635 1.664-0.635 2.298 0s0.635 1.663 0 2.298l-2.743 2.743c-1.706 1.706-1.706 4.481 0 6.187 0.826 0.826 1.925 1.281 3.094 1.281s2.267-0.455 3.094-1.281l6-6c1.706-1.706 1.706-4.481 0-6.187-0.635-0.635-0.635-1.663 0-2.298s1.663-0.635 2.298 0c2.973 2.973 2.973 7.81 0 10.783l-6 6c-1.44 1.44-3.355 2.233-5.392 2.233z"></path>
+				</svg>
+			</button>
+		</li>
+		<li class="share__action share__action--email">
+			<a href="mailto:?subject=The%20Miracle%20and%20Tragedy%20of%20the%202020%20U.S.%20Election&amp;body=The%20covid-19%20pandemic%20nearly%20upended%20the%20U.S.%20election%2C%20but%20after%20a%20rocky%20primary%20season%20changes%20were%20made%20to%20save%20it.%20Alarmingly%2C%20however%2C%20a%20large%20portion%20of%20voters%20have%20rejected%20the%20result.%20The%20challenge%20of%20overcoming%20lies%20about%20a%20%E2%80%9Crigged%E2%80%9D%20election%20is%20great.%0A%0A%0Ahttps%3A%2F%2Fwww.journalofdemocracy.org%2Farticles%2Fthe-miracle-and-tragedy-of-the-2020-u-s-election%2F" target="_blank" rel="noopener">
+				<svg width="32" height="32" viewBox="0 0 32 32">
+					<path d="M29 4h-26c-1.65 0-3 1.35-3 3v20c0 1.65 1.35 3 3 3h26c1.65 0 3-1.35 3-3v-20c0-1.65-1.35-3-3-3zM12.461 17.199l-8.461 6.59v-15.676l8.461 9.086zM5.512 8h20.976l-10.488 7.875-10.488-7.875zM12.79 17.553l3.21 3.447 3.21-3.447 6.58 8.447h-19.579l6.58-8.447zM19.539 17.199l8.461-9.086v15.676l-8.461-6.59z"></path>
+				</svg>
+			</a>
+		</li>
+	</ul>
+</div>
+		</aside>
+	</div>
+
+			<div class="related article__related">
+	<div class="related__wrap">
+		<h3 class="related__label">Further Reading</h3>
+		<div class="related__items">
+						<div class="related__item">
+									<p class="related__issue">
+						Volume 12, Issue 2					</p>
+				
+				<h4 class="related__title"><a href="https://www.journalofdemocracy.org/articles/revisiting-florida-2000-2/">Revisiting Florida 2000</a></h4>
+
+										<ul class="authors related__authors">
+				<li class="authors__author"><a href="https://www.journalofdemocracy.org/authors/the-editors/">The Editors</a></li>
+			</ul>
+				
+				<div class="related__excerpt">
+					<p>The Editors&#8217; introduction to &#8220;Revisiting Florida 2000.&#8221; </p>
+
+				</div>
+			</div>
+						<div class="related__item">
+									<p class="related__issue">
+						Volume 8, Issue 3					</p>
+				
+				<h4 class="related__title"><a href="https://www.journalofdemocracy.org/articles/the-rise-of-election-monitoring-the-observers-observed/">The Rise of Election Monitoring: The Observers Observed</a></h4>
+
+										<ul class="authors related__authors">
+				<li class="authors__author"><a href="https://www.journalofdemocracy.org/authors/thomas-carothers/">Thomas Carothers</a></li>
+			</ul>
+				
+				<div class="related__excerpt">
+					
+				</div>
+			</div>
+						<div class="related__item">
+									<p class="related__issue">
+						Volume 12, Issue 2					</p>
+				
+				<h4 class="related__title"><a href="https://www.journalofdemocracy.org/articles/revisiting-florida-2000-reflections-from-russia/">Revisiting Florida 2000: Reflections from Russia</a></h4>
+
+										<ul class="authors related__authors">
+				<li class="authors__author"><a href="https://www.journalofdemocracy.org/authors/a-a-veshnyakov/">A.A. Veshnyakov</a></li>
+			</ul>
+				
+				<div class="related__excerpt">
+					
+				</div>
+			</div>
+					</div>
+	</div>
+</div>
+	</main>
+
+<footer id="footer" class="footer">
+	<div class="footer__wrap">
+		
+<div class="footer__cta">
+	<h6>Subscribe and view the full <i>Journal</i> at Project MUSE.</h6>
+
+			<p class="footer__buttons">
+					<a href="https://www.journalofdemocracy.org/subscribe/" class="button button--light-blue">Subscribe</a>
+					<a href="https://muse.jhu.edu/journal/98" class="button button--light-blue">Project MUSE </a>
+					<a href="http://eepurl.com/gpmc3D" class="button button--transparent">Get Issue Alerts</a>
+				</p>
+	</div>
+
+<div class="footer__content">
+	<div class="footer__nav">
+				<nav class="footer__social">
+			<a href="https://www.journalofdemocracy.org" class="footer__logo"><img src="https://www.journalofdemocracy.org/wp-content/themes/jod/assets/img/logo-footer.png" alt="Journal of Democracy" srcset="https://www.journalofdemocracy.org/wp-content/themes/jod/assets/img/logo-footer@2x.png 520w, https://www.journalofdemocracy.org/wp-content/themes/jod/assets/img/logo-footer@3x.png 780w"></a>
+							<a href="https://www.facebook.com/journalofdemocracy" class="footer__social-network" title="Facebook"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="32" height="32" viewBox="0 0 32 32" role="img" class="svg svg--facebook"><title>facebook</title><path d="M19 6h5v-6h-5c-3.86 0-7 3.14-7 7v3h-4v6h4v16h6v-16h5l1-6h-6v-3c0-0.542 0.458-1 1-1z"></path></svg></a>
+							<a href="https://twitter.com/JoDemocracy" class="footer__social-network" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="32" height="32" viewBox="0 0 32 32" role="img" class="svg svg--twitter"><title>twitter</title><path d="M32 7.075c-1.175 0.525-2.444 0.875-3.769 1.031 1.356-0.813 2.394-2.1 2.887-3.631-1.269 0.75-2.675 1.3-4.169 1.594-1.2-1.275-2.906-2.069-4.794-2.069-3.625 0-6.563 2.938-6.563 6.563 0 0.512 0.056 1.012 0.169 1.494-5.456-0.275-10.294-2.888-13.531-6.862-0.563 0.969-0.887 2.1-0.887 3.3 0 2.275 1.156 4.287 2.919 5.463-1.075-0.031-2.087-0.331-2.975-0.819 0 0.025 0 0.056 0 0.081 0 3.181 2.263 5.838 5.269 6.437-0.55 0.15-1.131 0.231-1.731 0.231-0.425 0-0.831-0.044-1.237-0.119 0.838 2.606 3.263 4.506 6.131 4.563-2.25 1.762-5.075 2.813-8.156 2.813-0.531 0-1.050-0.031-1.569-0.094 2.913 1.869 6.362 2.95 10.069 2.95 12.075 0 18.681-10.006 18.681-18.681 0-0.287-0.006-0.569-0.019-0.85 1.281-0.919 2.394-2.075 3.275-3.394z"></path></svg></a>
+					</nav>
+		
+			<nav class="nav nav--footer"><ul class="nav__menu nav__menu--level-0"><li class=" nav__menu-item nav__menu-item--type-post_type nav__menu-item--object-page nav__menu-item--183 nav__menu-item--has-children nav__menu-item--level-0"><a class="nav__link" href="https://www.journalofdemocracy.org/about/">About</a></li><li class=" nav__menu-item nav__menu-item--type-custom nav__menu-item--object-custom nav__menu-item--current-menu-parent nav__menu-item--current-menu-ancestor nav__menu-item--10586 nav__menu-item--has-children nav__menu-item--level-0"><a class="nav__link" href="http://www.journalofdemocracy.org/issue/july-2021">Articles</a></li><li class=" nav__menu-item nav__menu-item--type-post_type_archive nav__menu-item--object-book nav__menu-item--179 nav__menu-item--level-0"><a class="nav__link" href="https://www.journalofdemocracy.org/books/">Books</a></li><li class=" nav__menu-item nav__menu-item--type-post_type nav__menu-item--object-page nav__menu-item--current-page-parent nav__menu-item--184 nav__menu-item--has-children nav__menu-item--level-0"><a class="nav__link" href="https://www.journalofdemocracy.org/news/">News &#038; Features</a></li><li class=" nav__menu-item nav__menu-item--type-custom nav__menu-item--object-custom nav__menu-item--5707 nav__menu-item--level-0"><a class="nav__link" href="https://www.journalofdemocracy.org/subscribe/">Subscribe</a></li></ul></nav>	</div>
+
+	<div class="footer__legal">
+		<div class="footer__address">
+			1201 Pennsylvania Ave, NW, Suite 1100, Washington, DC 20004, USA
+		</div>
+
+		<div class="footer__copyright">
+			Published by the National Endowment for Democracy By the Johns Hopkins University Press
+		</div>
+	</div>
+</div>
+	</div>
+</footer>
+
+
+	<div class="overlay">
+	<div class="overlay__content">
+					<div class="overlay__search">
+				<form role="search" method="get" class="search-form search-form--overlay" action="https://www.journalofdemocracy.org">
+	<label class="search-form__label"><span class="search-form__label-text">Search for:</span><input type="text" class="search-form__field" placeholder="Type your search &hellip;" value="" name="s"><button type="submit" class="search-form__icon"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="24" height="24" viewBox="0 0 24 24" role="img" class="svg svg--search"><title>search</title><path d="M21.7 20.3l-3.7-3.7c1.2-1.5 2-3.5 2-5.6 0-5-4-9-9-9s-9 4-9 9c0 5 4 9 9 9 2.1 0 4.1-0.7 5.6-2l3.7 3.7c0.2 0.2 0.5 0.3 0.7 0.3s0.5-0.1 0.7-0.3c0.4-0.4 0.4-1 0-1.4zM4 11c0-3.9 3.1-7 7-7s7 3.1 7 7c0 1.9-0.8 3.7-2 4.9 0 0 0 0 0 0s0 0 0 0c-1.3 1.3-3 2-4.9 2-4 0.1-7.1-3-7.1-6.9z"></path></svg></button></label>	</form>
+			</div>
+			</div>
+	<button type="button" class="overlay__close"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="24" height="24" viewBox="0 0 24 24" role="img" class="svg svg--close"><title>close</title><path d="M18.984 6.422l-5.578 5.578 5.578 5.578-1.406 1.406-5.578-5.578-5.578 5.578-1.406-1.406 5.578-5.578-5.578-5.578 1.406-1.406 5.578 5.578 5.578-5.578z"></path></svg></button>
+	</div>
+
+
+
+
+<div class="wp-footer">
+<script type='text/javascript' src='https://www.journalofdemocracy.org/wp-content/themes/jod/assets/dist/polyfill.min.js?ver=1629960420' id='polyfill-js'></script>
+<script type='text/javascript' src='https://www.journalofdemocracy.org/wp-content/themes/jod/assets/vendor/jquery/dist/jquery.min.js?ver=1629960420' id='jquery-js'></script>
+<script type='text/javascript' src='https://www.journalofdemocracy.org/wp-content/themes/jod/assets/vendor/bows/dist/bows.min.js?ver=1629960420' id='bows-js'></script>
+<script type='text/javascript' src='https://www.journalofdemocracy.org/wp-includes/js/clipboard.min.js?ver=5.7.1' id='clipboard-js'></script>
+<script type='text/javascript' src='https://www.journalofdemocracy.org/wp-content/themes/jod/assets/vendor/autocompleter/autocomplete.js?ver=1629960420' id='autocompleter-js'></script>
+<script type='text/javascript' src='https://www.journalofdemocracy.org/wp-content/themes/jod/assets/vendor/twig/twig.min.js?ver=1629960420' id='twig-js'></script>
+<script type='text/javascript' src='https://www.journalofdemocracy.org/wp-content/themes/jod/assets/vendor/flickity/dist/flickity.pkgd.min.js?ver=1629960420' id='flickity-js'></script>
+<script type='text/javascript' src='https://www.journalofdemocracy.org/wp-content/themes/jod/assets/vendor/mobius1-selectr/dist/selectr.min.js?ver=1629960420' id='selectr-js'></script>
+<script type='text/javascript' src='https://www.journalofdemocracy.org/wp-content/themes/jod/assets/dist/site.min.js?ver=1629960420' id='site-js'></script>
+<script type='text/javascript' id='site-js-after'>
+window.site = new Site();
+</script>
+
+</div>
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"NRJS-3a3ee7b9e08776dceae","applicationID":"715493739","transactionName":"YgFRMhBTDUQCB0AIXFtLcgUWWwxZTBddD1RZAR4HEEYKVA8B","queueTime":0,"applicationTime":476,"atts":"TkZSRFhJHko=","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+</html>

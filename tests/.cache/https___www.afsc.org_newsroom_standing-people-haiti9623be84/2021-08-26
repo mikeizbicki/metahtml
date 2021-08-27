@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="ie6 ie" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 ie" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 ie" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 9]>    <html class="ie9 ie" lang="en" dir="ltr"> <![endif]-->
+<!--[if !IE]> --> <html lang="en" dir="ltr"> <!-- <![endif]-->
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={licenseKey:"5854be2b35",applicationID:"187536741"};window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var i=e[n]={exports:{}};t[n][0].call(i.exports,function(e){var i=t[n][1][e];return r(i||e)},i,i.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var i=0;i<n.length;i++)r(n[i]);return r}({1:[function(t,e,n){function r(){}function i(t,e,n){return function(){return o(t,[u.now()].concat(f(arguments)),e?null:this,n),e?void 0:this}}var o=t("handle"),a=t(8),f=t(9),c=t("ee").get("tracer"),u=t("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var d=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],p="api-",l=p+"ixn-";a(d,function(t,e){s[e]=i(p+e,!0,"api")}),s.addPageAction=i(p+"addPageAction",!0),s.setCurrentRouteName=i(p+"routeName",!0),e.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(t,e){var n={},r=this,i="function"==typeof e;return o(l+"tracer",[u.now(),t,n],r),function(){if(c.emit((i?"":"no-")+"fn-start",[u.now(),r,i],n),i)try{return e.apply(this,arguments)}catch(t){throw c.emit("fn-err",[arguments,this,t],n),t}finally{c.emit("fn-end",[u.now()],n)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,e){m[e]=i(l+e)}),newrelic.noticeError=function(t,e){"string"==typeof t&&(t=new Error(t)),o("err",[t,u.now(),!1,e])}},{}],2:[function(t,e,n){function r(t){if(NREUM.init){for(var e=NREUM.init,n=t.split("."),r=0;r<n.length-1;r++)if(e=e[n[r]],"object"!=typeof e)return;return e=e[n[n.length-1]]}}e.exports={getConfiguration:r}},{}],3:[function(t,e,n){function r(){return f.exists&&performance.now?Math.round(performance.now()):(o=Math.max((new Date).getTime(),o))-a}function i(){return o}var o=(new Date).getTime(),a=o,f=t(10);e.exports=r,e.exports.offset=a,e.exports.getLastTimestamp=i},{}],4:[function(t,e,n){function r(t){return!(!t||!t.protocol||"file:"===t.protocol)}e.exports=r},{}],5:[function(t,e,n){function r(t,e){var n=t.getEntries();n.forEach(function(t){"first-paint"===t.name?d("timing",["fp",Math.floor(t.startTime)]):"first-contentful-paint"===t.name&&d("timing",["fcp",Math.floor(t.startTime)])})}function i(t,e){var n=t.getEntries();n.length>0&&d("lcp",[n[n.length-1]])}function o(t){t.getEntries().forEach(function(t){t.hadRecentInput||d("cls",[t])})}function a(t){if(t instanceof m&&!g){var e=Math.round(t.timeStamp),n={type:t.type};e<=p.now()?n.fid=p.now()-e:e>p.offset&&e<=Date.now()?(e-=p.offset,n.fid=p.now()-e):e=p.now(),g=!0,d("timing",["fi",e,n])}}function f(t){"hidden"===t&&d("pageHide",[p.now()])}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var c,u,s,d=t("handle"),p=t("loader"),l=t(7),m=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){c=new PerformanceObserver(r);try{c.observe({entryTypes:["paint"]})}catch(v){}u=new PerformanceObserver(i);try{u.observe({entryTypes:["largest-contentful-paint"]})}catch(v){}s=new PerformanceObserver(o);try{s.observe({type:"layout-shift",buffered:!0})}catch(v){}}if("addEventListener"in document){var g=!1,h=["click","keydown","mousedown","pointerdown","touchstart"];h.forEach(function(t){document.addEventListener(t,a,!1)})}l(f)}},{}],6:[function(t,e,n){function r(t,e){if(!i)return!1;if(t!==i)return!1;if(!e)return!0;if(!o)return!1;for(var n=o.split("."),r=e.split("."),a=0;a<r.length;a++)if(r[a]!==n[a])return!1;return!0}var i=null,o=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var f=navigator.userAgent,c=f.match(a);c&&f.indexOf("Chrome")===-1&&f.indexOf("Chromium")===-1&&(i="Safari",o=c[1])}e.exports={agent:i,version:o,match:r}},{}],7:[function(t,e,n){function r(t){function e(){t(a&&document[a]?document[a]:document[i]?"hidden":"visible")}"addEventListener"in document&&o&&document.addEventListener(o,e,!1)}e.exports=r;var i,o,a;"undefined"!=typeof document.hidden?(i="hidden",o="visibilitychange",a="visibilityState"):"undefined"!=typeof document.msHidden?(i="msHidden",o="msvisibilitychange"):"undefined"!=typeof document.webkitHidden&&(i="webkitHidden",o="webkitvisibilitychange",a="webkitVisibilityState")},{}],8:[function(t,e,n){function r(t,e){var n=[],r="",o=0;for(r in t)i.call(t,r)&&(n[o]=e(r,t[r]),o+=1);return n}var i=Object.prototype.hasOwnProperty;e.exports=r},{}],9:[function(t,e,n){function r(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,i=n-e||0,o=Array(i<0?0:i);++r<i;)o[r]=t[e+r];return o}e.exports=r},{}],10:[function(t,e,n){e.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(t,e,n){function r(){}function i(t){function e(t){return t&&t instanceof r?t:t?u(t,c,a):a()}function n(n,r,i,o,a){if(a!==!1&&(a=!0),!l.aborted||o){t&&a&&t(n,r,i);for(var f=e(i),c=v(n),u=c.length,s=0;s<u;s++)c[s].apply(f,r);var p=d[w[n]];return p&&p.push([b,n,r,f]),f}}function o(t,e){y[t]=v(t).concat(e)}function m(t,e){var n=y[t];if(n)for(var r=0;r<n.length;r++)n[r]===e&&n.splice(r,1)}function v(t){return y[t]||[]}function g(t){return p[t]=p[t]||i(n)}function h(t,e){l.aborted||s(t,function(t,n){e=e||"feature",w[n]=e,e in d||(d[e]=[])})}var y={},w={},b={on:o,addEventListener:o,removeEventListener:m,emit:n,get:g,listeners:v,context:e,buffer:h,abort:f,aborted:!1};return b}function o(t){return u(t,c,a)}function a(){return new r}function f(){(d.api||d.feature)&&(l.aborted=!0,d=l.backlog={})}var c="nr@context",u=t("gos"),s=t(8),d={},p={},l=e.exports=i();e.exports.getOrSetContext=o,l.backlog=d},{}],gos:[function(t,e,n){function r(t,e,n){if(i.call(t,e))return t[e];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:r,writable:!0,enumerable:!1}),r}catch(o){}return t[e]=r,r}var i=Object.prototype.hasOwnProperty;e.exports=r},{}],handle:[function(t,e,n){function r(t,e,n,r){i.buffer([t],r),i.emit(t,e,n)}var i=t("ee").get("handle");e.exports=r,r.ee=i},{}],id:[function(t,e,n){function r(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:a(t,o,function(){return i++})}var i=1,o="nr@id",a=t("gos");e.exports=r},{}],loader:[function(t,e,n){function r(){if(!R++){var t=M.info=NREUM.info,e=v.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&e))return u.abort();c(E,function(e,n){t[e]||(t[e]=n)});var n=a();f("mark",["onload",n+M.offset],null,"api"),f("timing",["load",n]);var r=v.createElement("script");0===t.agent.indexOf("http://")||0===t.agent.indexOf("https://")?r.src=t.agent:r.src=l+"://"+t.agent,e.parentNode.insertBefore(r,e)}}function i(){"complete"===v.readyState&&o()}function o(){f("mark",["domContent",a()+M.offset],null,"api")}var a=t(3),f=t("handle"),c=t(8),u=t("ee"),s=t(6),d=t(4),p=t(2),l=p.getConfiguration("ssl")===!1?"http":"https",m=window,v=m.document,g="addEventListener",h="attachEvent",y=m.XMLHttpRequest,w=y&&y.prototype,b=!d(m.location);NREUM.o={ST:setTimeout,SI:m.setImmediate,CT:clearTimeout,XHR:y,REQ:m.Request,EV:m.Event,PR:m.Promise,MO:m.MutationObserver};var x=""+location,E={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1210.min.js"},O=y&&w&&w[g]&&!/CriOS/.test(navigator.userAgent),M=e.exports={offset:a.getLastTimestamp(),now:a,origin:x,features:{},xhrWrappable:O,userAgent:s,disabled:b};if(!b){t(1),t(5),v[g]?(v[g]("DOMContentLoaded",o,!1),m[g]("load",r,!1)):(v[h]("onreadystatechange",i),m[h]("onload",r)),f("mark",["firstbyte",a.getLastTimestamp()],null,"api");var R=0}},{}],"wrap-function":[function(t,e,n){function r(t,e){function n(e,n,r,c,u){function nrWrapper(){var o,a,s,p;try{a=this,o=d(arguments),s="function"==typeof r?r(o,a):r||{}}catch(l){i([l,"",[o,a,c],s],t)}f(n+"start",[o,a,c],s,u);try{return p=e.apply(a,o)}catch(m){throw f(n+"err",[o,a,m],s,u),m}finally{f(n+"end",[o,a,p],s,u)}}return a(e)?e:(n||(n=""),nrWrapper[p]=e,o(e,nrWrapper,t),nrWrapper)}function r(t,e,r,i,o){r||(r="");var f,c,u,s="-"===r.charAt(0);for(u=0;u<e.length;u++)c=e[u],f=t[c],a(f)||(t[c]=n(f,s?c+r:r,i,c,o))}function f(n,r,o,a){if(!m||e){var f=m;m=!0;try{t.emit(n,r,o,e,a)}catch(c){i([c,n,r,o],t)}m=f}}return t||(t=s),n.inPlace=r,n.flag=p,n}function i(t,e){e||(e=s);try{e.emit("internal-error",t)}catch(n){}}function o(t,e,n){if(Object.defineProperty&&Object.keys)try{var r=Object.keys(t);return r.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(o){i([o],n)}for(var a in t)l.call(t,a)&&(e[a]=t[a]);return e}function a(t){return!(t&&t instanceof Function&&t.apply&&!t[p])}function f(t,e){var n=e(t);return n[p]=t,o(t,n,s),n}function c(t,e,n){var r=t[e];t[e]=f(r,n)}function u(){for(var t=arguments.length,e=new Array(t),n=0;n<t;++n)e[n]=arguments[n];return e}var s=t("ee"),d=t(9),p="nr@original",l=Object.prototype.hasOwnProperty,m=!1;e.exports=r,e.exports.wrapFunction=f,e.exports.wrapInPlace=c,e.exports.argsToArray=u},{}]},{},["loader"]);</script>
+<link rel="shortcut icon" href="https://www.afsc.org/favicon.ico" type="image/vnd.microsoft.icon" />
+<meta name="description" content="On Saturday, Aug. 14, a magnitude-7.2 earthquake killed at least 1,400 people and injured thousands more in western Haiti. The catastrophe is the latest faced by the country, which never fully recovered from a 2010 quake that claimed an estimated 250,000 lives. Last month, the president of Haiti was assassinated, creating more turmoil in a country that has long grappled with" />
+<meta name="generator" content="Drupal 7 (https://www.drupal.org)" />
+<link rel="canonical" href="https://www.afsc.org/newsroom/standing-people-haiti" />
+<link rel="shortlink" href="https://www.afsc.org/node/26880" />
+<meta property="og:site_name" content="American Friends Service Committee" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.afsc.org/newsroom/standing-people-haiti" />
+<meta property="og:title" content="Standing with people in Haiti" />
+<meta property="og:description" content="On Saturday, Aug. 14, a magnitude-7.2 earthquake killed at least 1,400 people and injured thousands more in western Haiti. The catastrophe is the latest faced by the country, which never fully recovered from a 2010 quake that claimed an estimated 250,000 lives. Last month, the president of Haiti was assassinated, creating more turmoil in a country that has long grappled with deep poverty and violence. And earlier this week, Tropical Storm Grace brought heavy rains and winds to Haiti, further complicating relief efforts." />
+<meta property="og:updated_time" content="2021-08-18T15:21:26-04:00" />
+<meta property="og:image" content="https://www.afsc.org/sites/default/files/styles/maxsize/public/images/PB_33321_3V2V0006-lpr.JPG?itok=ZCLBn8VW" />
+<meta property="og:image:url" content="https://www.afsc.org/sites/default/files/styles/maxsize/public/images/PB_33321_3V2V0006-lpr.JPG?itok=ZCLBn8VW" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:url" content="https://www.afsc.org/newsroom/standing-people-haiti" />
+<meta name="twitter:title" content="Standing with people in Haiti" />
+<meta name="twitter:description" content="On Saturday, Aug. 14, a magnitude-7.2 earthquake killed at least 1,400 people and injured thousands more in western Haiti. The catastrophe is the latest faced by the country, which never fully" />
+<meta name="twitter:image" content="https://www.afsc.org/sites/default/files/styles/maxsize/public/images/PB_33321_3V2V0006-lpr.JPG?itok=ZCLBn8VW" />
+<meta property="article:published_time" content="2021-08-17T00:00:00-04:00" />
+<meta property="article:modified_time" content="2021-08-18T15:21:26-04:00" />
+  <!-- Set the viewport width to device width for mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Standing with people in Haiti | American Friends Service Committee</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+  <link type="text/css" rel="stylesheet" href="https://www.afsc.org/sites/default/files/css/css_xE-rWrJf-fncB6ztZfd2huxqgxu4WO-qwma6Xer30m4.css" media="all" />
+<link type="text/css" rel="stylesheet" href="https://www.afsc.org/sites/default/files/css/css_lovlGLoq1EFZwVKj6PTR8J9QXAgq6M1LmAqGE6aIrws.css" media="all" />
+<link type="text/css" rel="stylesheet" href="https://www.afsc.org/sites/default/files/css/css_DrKAePJRpABpqZkuMPDIVIr6KUmo_dzWJdQHMoIXF7o.css" media="all" />
+<link type="text/css" rel="stylesheet" href="https://www.afsc.org/sites/default/files/css/css_A2AuMkVQ8_Zav9GJ2q4leVK53xuvAr539r7Jx7xtGuk.css" media="all" />
+<link type="text/css" rel="stylesheet" href="https://www.afsc.org/sites/default/files/css/css_ac8ktljMnBy8dcLzT2QYm1tYMmKPXP_9Lef0WDiMKSM.css" media="all" />
+<link type="text/css" rel="stylesheet" href="https://www.afsc.org/sites/default/files/css/css_PxsPpITToy8ZnO0bJDA1TEC6bbFpGTfSWr2ZP8LuFYo.css" media="all" />
+  <script type="text/javascript" src="https://www.afsc.org/sites/default/files/js/js_SreDGOcdHvhCM3Ez8HhOaeeK7Krmhuv-w8tJSm6dzsw.js"></script>
+<script type="text/javascript" src="https://www.afsc.org/sites/default/files/js/js_gsDMSzbWNwqNsTjLT1wTh64U7K3BJJMaWnRQlYz8moM.js"></script>
+<script type="text/javascript" src="https://www.afsc.org/sites/default/files/js/js_CwA9uD2kYGc1ubylea-Ul8iN5PWYS40GWBA4ue9Bo4w.js"></script>
+<script type="text/javascript" src="https://www.afsc.org/sites/default/files/js/js_u9PQ_4Z1Qw4KosZAa_B4rVny0ihh1s-Dsn9MgOzayxk.js"></script>
+<script type="text/javascript" src="https://www.afsc.org/sites/default/files/js/js_YZZmBLBJlczVVV2VneXGftbaP_egtoDpyZp5eQxZMko.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create", "UA-395473-1", {"cookieDomain":"auto"});ga("require", "linkid", "linkid.js");ga("set", "anonymizeIp", true);ga("send", "pageview");
+//--><!]]>
+</script>
+<script type="text/javascript" src="https://www.afsc.org/sites/default/files/js/js_D1I9rFDaJYnE8sHD_0qRtgkfUVB4nnmTqOGmj6e4FW0.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"afsc_seven_21","theme_token":"r8veLYsdvdM4ZogA4cWaqR94MxD49WK4Lwh5joGzpPk","js":{"sites\/all\/modules\/panopoly_widgets\/panopoly-widgets.js":1,"sites\/all\/modules\/panopoly_widgets\/panopoly-widgets-spotlight.js":1,"sites\/all\/modules\/splash_block\/js\/splash_block_banner.js":1,"sites\/all\/modules\/splash_block\/js\/splash_block.js":1,"public:\/\/google_tag\/google_tag.script.js":1,"sites\/all\/modules\/jquery_update\/replace\/jquery\/1.8\/jquery.min.js":1,"misc\/jquery-extend-3.4.0.js":1,"misc\/jquery-html-prefilter-3.5.0-backport.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"sites\/all\/libraries\/fitvids\/jquery.fitvids.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.core.min.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.widget.min.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.tabs.min.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.accordion.min.js":1,"sites\/all\/modules\/panopoly_images\/panopoly-images.js":1,"sites\/all\/modules\/fitvids\/fitvids.js":1,"sites\/all\/libraries\/colorbox\/jquery.colorbox-min.js":1,"sites\/all\/modules\/colorbox\/js\/colorbox.js":1,"sites\/all\/modules\/colorbox\/styles\/default\/colorbox_style.js":1,"sites\/all\/libraries\/jquery.imagesloaded\/jquery.imagesloaded.min.js":1,"sites\/all\/modules\/responsive_menus\/styles\/responsive_menus_simple\/js\/responsive_menus_simple.js":1,"sites\/all\/libraries\/jstorage\/jstorage.min.js":1,"sites\/all\/modules\/google_analytics\/googleanalytics.js":1,"0":1,"sites\/all\/themes\/afsc_seven_21\/js\/global.js":1,"sites\/all\/themes\/afsc_seven_21\/js\/search.js":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"misc\/ui\/jquery.ui.core.css":1,"misc\/ui\/jquery.ui.theme.css":1,"misc\/ui\/jquery.ui.tabs.css":1,"misc\/ui\/jquery.ui.accordion.css":1,"sites\/all\/modules\/afsc_custom_bystander\/css\/bystander-intervention.css":1,"sites\/all\/modules\/afsc_custom_not_at_risk\/css\/not-at-risk.css":1,"modules\/aggregator\/aggregator.css":1,"modules\/comment\/comment.css":1,"sites\/all\/modules\/date\/date_api\/date.css":1,"sites\/all\/modules\/date\/date_popup\/themes\/datepicker.1.7.css":1,"modules\/field\/theme\/field.css":1,"sites\/all\/modules\/fitvids\/fitvids.css":1,"sites\/all\/modules\/logintoboggan\/logintoboggan.css":1,"modules\/node\/node.css":1,"sites\/all\/modules\/panopoly_admin\/1":1,"sites\/all\/modules\/panopoly_magic\/1":1,"sites\/all\/modules\/panopoly_theme\/2":1,"sites\/all\/modules\/panopoly_widgets\/panopoly-widgets.css":1,"sites\/all\/modules\/panopoly_widgets\/panopoly-widgets-spotlight.css":1,"sites\/all\/modules\/radix_layouts\/radix_layouts.css":1,"modules\/search\/search.css":1,"sites\/all\/modules\/siteimprove\/css\/siteimprove.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/calendar\/css\/calendar_multiday.css":1,"sites\/all\/modules\/views\/css\/views.css":1,"sites\/all\/modules\/colorbox\/styles\/default\/colorbox_style.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"sites\/all\/modules\/panels\/css\/panels.css":1,"sites\/all\/modules\/responsive_menus\/styles\/responsive_menus_simple\/css\/responsive_menus_simple.css":1,"sites\/all\/themes\/afsc_seven_21\/css\/font-awesome.css":1,"sites\/all\/themes\/afsc_seven_21\/css\/style.css":1,"sites\/all\/modules\/splash_block\/css\/splash_block_splash.css":1,"sites\/all\/modules\/panopoly_images\/panopoly-images.css":1}},"colorbox":{"opacity":"0.85","current":"{current} of {total}","previous":"\u00ab Prev","next":"Next \u00bb","close":"Close","maxWidth":"98%","maxHeight":"98%","fixed":true,"mobiledetect":true,"mobiledevicewidth":"480px"},"CToolsModal":{"modalSize":{"type":"scale","width":".9","height":".9","addWidth":0,"addHeight":0,"contentRight":25,"contentBottom":75},"modalOptions":{"opacity":".55","background-color":"#FFF"},"animationSpeed":"fast","modalTheme":"CToolsModalDialog","throbberTheme":"CToolsModalThrobber"},"panopoly_magic":{"pane_add_preview_mode":"single"},"better_exposed_filters":{"views":{"Blog_Blocks":{"displays":{"block_11":{"filters":[]}}},"related_content":{"displays":{"block_1":{"filters":[]}}}}},"fitvids":{"custom_domains":[],"selectors":["body"],"simplifymarkup":true},"responsive_menus":[{"toggler_text":"\u003Ci class=\u0022fa fa-bars\u0022\u003E\u003C\/i\u003E","selectors":["#superfish-1"],"media_size":"768","media_unit":"px","remove_attributes":"1","responsive_menus_style":"responsive_menus_simple"}],"googleanalytics":{"trackOutbound":1,"trackMailto":1,"trackDownload":1,"trackDownloadExtensions":"7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x|m)?|dot(x|m)?|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt(x|m)?|pot(x|m)?|pps(x|m)?|ppam|sld(x|m)?|thmx|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls(x|m|b)?|xlt(x|m)|xlam|xml|z|zip","trackColorbox":1},"urlIsAjaxTrusted":{"\/newsroom\/standing-people-haiti":true},"splashBlock":{"block_182":{"module":"block","delta":"182","time":3600000,"delay":2000,"size":"450","bootstrap_size":"default","type":"fixed_banner","banner_position":"before","banner_selector":"#header","id":"block-block-182"},"block_208":{"module":"block","delta":"208","time":14400000,"delay":0,"size":"450","bootstrap_size":"default","type":"banner","banner_position":"before","banner_selector":"#header","id":"block-block-208"}}});
+//--><!]]>
+</script>
+  <!-- IE Fix for HTML5 Tags -->
+  <!--[if lt IE 9]>
+    <script src="/sites/all/themes/open_framework/js/html5shiv.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="https://use.typekit.net/dyt5fdz.css">
+
+  <script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','//connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '2776448460118312');
+  fbq('track', 'PageView');
+  </script>
+  <noscript>
+  <img height="1" width="1"
+  src="https://www.facebook.com/tr?id=277644846011831&ev=PageView
+  &noscript=1"/>
+  </noscript>  
+</head>
+
+<body class="splash-fixed_banner splash-banner html not-front not-logged-in one-sidebar sidebar-second page-node page-node- page-node-26880 node-type-story" >
+  <noscript aria-hidden="true"><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NC3LB8" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>  <a href="#main" class="element-invisible element-focusable">Skip to content</a>
+<a href="#main-nav" class="element-invisible element-focusable" data-target=".nav-collapse" data-toggle="collapse">Skip to navigation</a>
+<!-- /#skipnav -->
+<!-- /#admin-shortcuts -->
+<div id="header" class="clearfix header no-print" role="banner">
+  <div class="header-hidden-section invisible" id="hidden-header">
+    <div class="container">
+      <div class="row">
+        <div class="header-search-section">
+        <form action="/newsroom/standing-people-haiti" method="post" id="search-block-form" accept-charset="UTF-8"><div><div class="container-inline">
+      <h2 class="element-invisible">Search form</h2>
+    <div class="form-item form-type-textfield form-item-search-block-form">
+  <label class="element-invisible" for="edit-search-block-form--2">Search </label>
+ <input title="Enter the terms you wish to search for." type="text" id="edit-search-block-form--2" name="search_block_form" value="" size="15" maxlength="128" class="form-text" />
+</div>
+<div class="form-actions form-wrapper" id="edit-actions"><input type="submit" id="edit-submit" name="op" value="Search" class="form-submit" /></div><input type="hidden" name="form_build_id" value="form-GLe-gK78z5jYkBMfcr8jJcD3Jhckxe1EmtbL7cOMEz0" />
+<input type="hidden" name="form_id" value="search_block_form" />
+</div>
+</div></form>        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row header-section">
+        <div class="mobile-menu-container">
+          <a href="#" id="mobile-menu-toggle"><i class="fa fa-bars" aria-hidden="true"></i></a>
+          <div id="mobile-menu">
+            <ul class="menu"><li class="first leaf"><a href="/">Home</a></li>
+<li class="leaf"><a href="/about">About AFSC</a></li>
+<li class="leaf"><a href="/key-issues">Key Issues</a></li>
+<li class="leaf red"><a href="https://secure.afsc.org/onlineactions/RemdYLCO00KH_y-zw40Y7Q2?ms=mob21NV">Donate</a></li>
+<li class="leaf"><a href="/get-involved">Get Involved</a></li>
+<li class="leaf"><a href="/where-we-work">Where We Work</a></li>
+<li class="leaf"><a href="/blogs">Blog</a></li>
+<li class="last leaf"><a href="/contact">Contact</a></li>
+</ul>          </div>
+        </div>
+      
+                  <div id="logo" class="site-logo">
+            <a href="/" title="Home" rel="home"><img class="mobile-logo" src="/sites/all/themes/afsc_seven_21/images/afsc-logo-short.png"  alt="American Friends Service Committee" role="presentation" /><img class="desktop-logo" src="https://www.afsc.org/sites/all/themes/afsc_seven_21/logo.png" alt="American Friends Service Committee" role="presentation" /></a>
+                          <div id="slogan" class="site-slogan">Quaker action for a just world</div>
+                        <!-- /#slogan -->
+
+          </div>
+                <!-- /#logo -->
+
+        <div class="header-menu-section">
+          <div class="header-top-menu">
+            <ul class="menu"><li class="first leaf"><a href="/about" title="">About AFSC</a></li>
+<li class="last leaf"><a href="/where-we-work" title="Locations of AFSC&#039;s projects, offices, and staff in the U.S. and internationally.">Where We Work</a></li>
+</ul>            <div class="header-post-menu">
+              <a href="https://www.afsc.org/instagram" target="_blank" class="instagram-icon"><i class="fa fa-instagram"></i></a>
+              <a href="https://www.afsc.org/facebook" target="_blank" class="facebook-icon"><i class="fa fa-facebook"></i></a>
+              <a href="https://www.afsc.org/twitter" target="_blank" class="twitter-icon"><i class="fa fa-twitter"></i></a>
+              <a href="#" id="search-icon"><i class="fa fa-search" aria-hidden="true"></i></a>
+            </div>
+          </div>
+          <div class="header-main-menu">
+            <ul class="menu"><li class="first leaf"><a href="/blogs">Blog</a></li>
+<li class="leaf"><a href="/get-involved">Get Involved</a></li>
+<li class="leaf"><a href="/key-issues" title="Resources and campaign materials on key issues of AFSC’s work.">Key issues</a></li>
+<li class="last expanded red"><a href="https://secure.afsc.org/onlineactions/RemdYLCO00KH_y-zw40Y7Q2?test=true&amp;ms=WEB21NV">Donate</a><ul class="menu"><li class="first leaf red"><a href="https://secure.afsc.org/onlineactions/RemdYLCO00KH_y-zw40Y7Q2?test=true&amp;ms=WEB21SN">Give Now</a></li>
+<li class="leaf"><a href="https://secure.afsc.org/onlineactions/V_4-COrnEUejxg34RlJm7A2?ms=WEB21SN">Give Monthly</a></li>
+<li class="leaf"><a href="https://legacyofpeace.afsc.org/donor-advised-funds">Donor Advised Fund</a></li>
+<li class="leaf"><a href="https://secure.afsc.org/onlineactions/uTT-qNbH70qAi2GI9nQRgQ2?ms=WEB21SN">Give in Non-U.S. Currency</a></li>
+<li class="leaf"><a href="https://secure.afsc.org/onlineactions/qsEOQ5Kl6Eq5a0Io7nRczQ2?ms=WEB21SN">Make a tribute</a></li>
+<li class="last leaf dark"><a href="/give">All Giving Options</a></li>
+</ul></li>
+</ul>          </div>
+        </div>
+        <!-- /#header-content -->
+
+      <!-- /#site-login -->
+    </div>
+  </div>
+</div>
+<!-- /#header -->
+
+
+<div id="main" class="clearfix main " role="main">
+  
+  
+  
+  <div class="container">
+
+    <div id="main-top" class="row main-top">
+      <div class="col-12">
+        
+                          <!-- Title Region for Delta Blocks Title -->
+            <div class="region region-main-top">
+    <div id="block-delta-blocks-page-title" class="block block-delta-blocks">
+
+    
+  <div class="content">
+    <h1 id="page-title" class="title">Standing with people in Haiti </h1>  </div>
+</div>
+  </div>
+
+                                                  <h5 class="page-byline">Aug 17, 2021</h5>
+              </div>
+    </div>
+    
+  </div>
+
+  
+  
+  
+  <div class="container">
+
+    <div id="main-content" class="main-content">
+
+          <div id="content-head" class="row content-head">
+                        <div id="highlighted" class="col-12">  <div class="region region-highlighted">
+    <div id="block-afsc-custom-seven-custom-share-widgets" class="block block-afsc-custom-seven">
+
+    
+  <div class="content">
+    
+	  <div class="afsc-share afsc-share-block">
+	    <div class="addthis_toolbox">
+	      <div class="custom_images">
+	        <a class="addthis_button_facebook facebook-icon"><i class="fa fa-facebook"></i></a>
+	        <a class="addthis_button_twitter twitter-icon"><i class="fa fa-twitter"></i></a>
+	        <a class="addthis_button_email email-icon"><i class="fa fa-envelope"></i></a>
+	      </div>
+	    </div>
+	  </div>
+	  <script type="text/javascript">
+		var addthis_config = {
+		  data_ga_property: 'UA-395473-1',
+		  data_ga_social : true
+		};
+		var addthis_share = {
+		  url_transforms : {
+		    shorten: {
+		      twitter: 'bitly'
+		    }
+		  },
+		  shorteners : {
+		    bitly : {}
+		  }
+		};
+	  </script>
+	  <script type="text/javascript" src="https://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-537cfc37095c5d60"></script>
+	  </div>
+</div>
+  </div>
+</div>
+            
+                      </div>
+          
+          
+                    
+          
+          
+                    
+        <div class="primary-content row">
+                    <div id="content-body" class="col-sm-8 content-body">
+              <div class="region region-content">
+    <div id="block-system-main" class="block block-system">
+
+    
+  <div class="content">
+    <article id="node-26880" class="node node-story clearfix">          <div class="content">
+      	<div class="afsc-custom-media-area"><div class="full-width-media"><img src="https://www.afsc.org/sites/default/files/styles/maxsize/public/images/PB_33321_3V2V0006-lpr.JPG?itok=ZCLBn8VW" alt="Candle at vigil" title="" /><div class="afsc-caption"></em><em>Photo: Tudor Stanley / AFSC</em></div></div></div>    
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+    <div class="field-items">
+          <div class="field-item even"><p>On Saturday, Aug. 14, a magnitude-7.2 earthquake killed at least 1,400 people and injured thousands more in western Haiti. The catastrophe is the latest faced by the country, which never fully recovered from a 2010 quake that claimed an estimated 250,000 lives. Last month, the president of Haiti was assassinated, creating more turmoil in a country that has long grappled with deep poverty and violence. And earlier this week, Tropical Storm Grace brought heavy rains and winds to Haiti, further complicating relief efforts.</p>
+<p>For far too long, Haiti has experienced the ravages of militarism, colonialism, and disaster after disaster. Our hearts go out to the people of Haiti, and we will hold them in the Light as they face this humanitarian crisis.</p>
+<p>We pray for a better future for everyone, and we encourage people across the U.S. and around the world to do all they can to support long-term recovery efforts—and work toward a just and sustainable peace in Haiti.</p>
+<p><strong>To support humanitarian efforts in Haiti, visit: </strong></p>
+<ul>
+<li><a href="https://ademen.org/fokal-haiti-relief-fund/">FOKAL  </a></li>
+<li><a href="https://fonkoze.org/">Fonkoze</a></li>
+<li><a href="https://haitianrefugees.org/">Haitian Women for Haitian Refugees</a></li>
+</ul>
+<p style="text-align: center;"> <em># # #</em> </p>
+<p><em>The American Friends Service Committee (AFSC) promotes a world free of violence, inequality, and oppression. Guided by the Quaker belief in the divine light within each person, we nurture the seeds of change and the respect for human life to fundamentally transform our societies and institutions.</em></p>
+</div>
+      </div>
+</div>  </div>
+    </article>
+  </div>
+</div>
+  </div>
+ 
+                       </div>
+                              <div id="sidebar-second" class="sidebar col-sm-4 site-sidebar-second no-print">
+              <div class="region region-sidebar-second">
+    <div id="block-cck-blocks-field-related-content" class="block block-cck-blocks">
+
+    <h2>Related Content</h2>
+  
+  <div class="content">
+    <div class="field field-name-field-related-content field-type-node-reference field-label-hidden">
+    <div class="field-items">
+          <div class="field-item even"><div class="media"><div class="media-image media-image-left"><a href="/blogs/news-and-commentary/standing-haiti-el-salvador-and-all-countries-against-racism"><img src="https://www.afsc.org/sites/default/files/styles/issue_tease/public/images/HaitiGroupPhoto.jpg?itok=fya0ASAI" width="268" height="166" alt="" title="" /></a></div><div class="media-content"><div class="media-body"><div class="slug">blog</div><a href="/blogs/news-and-commentary/standing-haiti-el-salvador-and-all-countries-against-racism"><div class="media-title">Standing with Haiti, El Salvador, and all countries against racism and bigotry</div></a></div></div></div></div>
+      </div>
+</div>  </div>
+</div>
+<div id="block-block-10" class="block block-block">
+
+    <h2>Media Relations</h2>
+  
+  <div class="content">
+    <p style="font-size: 110%;"><em>Layne Mullett<br />Director of Media Relations</em></p>
+<p>215-241-7085<br /><a href="mailto:news@afsc.org">news@afsc.org</a></p>
+<p><a href="https://www.afsc.org/newsroom">Visit our newsroom</a><br /><a title="AFSC Logo" href="/logo">Get our logo</a></p>
+  </div>
+</div>
+  </div>
+          </div>
+                  </div>
+
+        
+        
+        
+      </div>
+    </div>
+  </div>
+
+  
+  
+  
+  
+  
+</div>
+
+<!-- /#main, /#main-wrapper -->
+<div id="footer" class="clearfix footer no-print" role="contentinfo">
+  <div class="container">
+    <div class="row">
+      <div id="footer-left" class="footer-left">
+        <div id="logo" class="site-logo">
+          <a href="/" title="Home" rel="home">
+            <img class="mobile-logo" src="/sites/all/themes/afsc_seven_21/images/afsc-logo-inverted-simple.png"  alt="American Friends Service Committee" role="presentation" />
+          </a>
+        </div>
+
+                  <div id="slogan--footer" class="site-slogan">Quaker action for a just world</div>
+                <!-- /#slogan -->
+
+          <div class="region region-footer-left">
+    <div id="block-block-141" class="block block-block">
+
+    
+  <div class="content">
+    <p>American Friends Service Committee<br />1501 Cherry Street, Philadelphia, PA 19102<br />215-241-7000</p>
+  </div>
+</div>
+  </div>
+      </div>
+      <div id="footer-middle" class="footer-middle">
+        <div class="footer-menu">
+          <ul class="menu"><li class="first leaf"><a href="/about">Who We Are</a></li>
+<li class="leaf"><a href="/signup?ms=WEB21FT">Subscribe</a></li>
+<li class="leaf"><a href="/where-we-work">Where We Work</a></li>
+<li class="leaf"><a href="/contact">Contact Us</a></li>
+<li class="leaf"><a href="/newsroom">Newsroom</a></li>
+<li class="leaf"><a href="/give">Ways to Give</a></li>
+<li class="leaf"><a href="/job-center">Employment</a></li>
+<li class="last leaf"><a href="/videos">Video</a></li>
+</ul>        </div>
+        <div class="footer-social">
+          <a href="https://www.afsc.org/instagram" target="_blank" class="instagram-icon"><i class="fa fa-instagram"></i></a>
+          <a href="https://www.afsc.org/facebook" target="_blank" class="facebook-icon"><i class="fa fa-facebook"></i></a>
+          <a href="https://www.afsc.org/twitter" target="_blank" class="twitter-icon"><i class="fa fa-twitter"></i></a>
+        </div>
+      </div>
+      <div id="footer-right" class="footer-right">   <div class="region region-footer-right">
+    <div id="block-block-6" class="block block-block">
+
+    <h2>Who we are</h2>
+  
+  <div class="content">
+    <p>American Friends Service Committee is a Quaker organization devoted to service, development, and peace programs throughout the world. Our work is based on the belief in the worth of every person, and faith in the power of love to overcome violence and injustice.</p>
+  </div>
+</div>
+<div id="block-block-207" class="block block-block">
+
+    
+  <div class="content">
+    <p><a class="btn btn-primary btn-medium btn-large" href="https://secure.afsc.org/onlineactions/RemdYLCO00KH_y-zw40Y7Q2?test=true&amp;ms=WEB21FT">Donate Today</a></p>
+  </div>
+</div>
+<div id="block-block-4" class="block block-block">
+
+    
+  <div class="content">
+    <p><img src="/sites/all/themes/afsc_seven/images/charity_watch.png" alt="Seal showing the rating awarded to AFSC by the American Institute of Philanthropy, www.charitywatch.org" height="60" /><img class="align-left mceItem" src="/sites/all/themes/afsc_seven/images/BBB.png" alt="Better Business Bureau accredited charity seal" height="60" /><img src="/sites/default/files/u1965/Gold_seal.png" alt="" height="60" /> </p>
+<p class="contact"><a href="/node/119">Privacy Policy</a>   <a href="/node/120">Site Credits</a></p>
+<p class="contact creative-commons">This website is licensed under a <a href="http://creativecommons.org/licenses/by-nc-nd/2.0/">Creative Commons License</a> except where noted.</p>
+  </div>
+</div>
+  </div>
+ </div>
+    </div>
+  </div>
+</div>
+<!-- /#footer -->
+  <div class="splash-block-banner custom-splash-block-banner" id="block-block-182">
+  <div class="splash-block-banner-content">
+      <div class="banner-row">
+<div class="banner-description">The AFSC newsletter connects activism to the issues that matter. Join today!</div>
+<div class="banner-button">
+<form class="block-signup-form" action="/signup?ms=emailbanner" method="GET"><input name="email" type="text" placeholder="yourname@email.com" /><input class="btn btn-primary" type="submit" value="subscribe" /></form>
+<p><a class="splash-block-banner-close" href="#">X</a></p></div>
+</div>
+          </div>
+  </div>
+</div>
+<div class="splash-block-banner splash-block-new-banner" id="block-block-208">
+  <div class="splash-block-banner-content">
+      <div class="container-fluid">
+  <div class="row">
+    <a href="https://secure.afsc.org/onlineactions/RemdYLCO00KH_y-zw40Y7Q2?ms=WEB21SB0001AS" class="bg-image col-sm" style="background-image: url('/sites/default/files/styles/panopoly_image_original/public/promo_template_2021_site_wideSite-wide-banner.png');">
+  		<div class="bg-backup-image">
+        <img src="/sites/default/files/styles/panopoly_image_original/public/promo_template_2021_site_wideSite-wide-banner.png" />
+      </div>
+    </a>
+    <div class="col-sm text-column">
+      <h2>Become a partner for Peace!</h2>
+      <p>
+Partners for Peace make monthly donations to bring critical support to communities worldwide. Help AFSC meet urgent needs in times of crisis. Stand with people acting with courage to overcome oppression. Help us meet our goal of 147 new Partners for Peace by August 31. Start your monthly gift today.</p>
+      <p>
+        <a href="https://secure.afsc.org/onlineactions/RemdYLCO00KH_y-zw40Y7Q2?ms=WEB21SB0001AS" class="btn btn-bare">Give Now →</a>
+    </p></div>
+  </div>
+</div>      <a class="splash-block-banner-close" href="#">CLOSE&nbsp;&nbsp;&nbsp;X</a>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="https://www.afsc.org/sites/default/files/js/js_26QGMmREVe-CtFPYyJFU44BGtQBOA84v6AXw8FyxXHc.js"></script>
+
+  
+  <!-- Google Code for Remarketing Tag -->
+  <script type="text/javascript">
+    /* <![CDATA[ */
+    var google_conversion_id = 853918855;
+    var google_custom_params = window.google_tag_params;
+    var google_remarketing_only = true;
+    /* ]]> */
+  </script>
+  <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+  </script>
+  <noscript>
+    <div style="display:inline;">
+      <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/853918855/?guid=ON&amp;script=0"/>
+    </div>
+  </noscript>
+  <!-- Go to www.addthis.com/dashboard to customize your tools --> <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-537cfc37095c5d60"></script>
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam-cell.nr-data.net","licenseKey":"5854be2b35","applicationID":"187536741","transactionName":"Z1ZRMRFQXUdZB00KXl4ccgYXWFxaFwpWB1RvQ1ICBm5FXV0T","queueTime":0,"applicationTime":413,"atts":"SxFSR1lKTkk=","errorBeacon":"bam-cell.nr-data.net","agent":""}</script></body>
+
+</html>

@@ -212,13 +212,22 @@ https://spectrum.ieee.org/automaton/robotics/humanoids/hyundai-buys-boston-dynam
 https://www.virusbulletin.com/blog/2021/03/vb2021-localhost-call-papers-great-opportunity/
 https://www.rsaconference.com/Library/Blog/weekly-news-roundup-january-25-29-2021
 https://news.bitcoin.com/former-ethereum-developer-virgil-griffith-arrested-for-signing-into-his-coinbase-account-report/
+https://www.cato.org/blog/gay-rights-illiberal-world
+https://diariodecuba.com/cuba/1604665983_26240.html?__cf_chl_jschl_tk__=pmd_48fgeeqJCb1GH.LjtuI1ubGL7f_Oys9HOKQuWzJI1pA-1630043864-0-gqNtZGzNAfujcnBszQZl
 
 503:
 https://blog.cloudflare.com/quic-version-1-is-live-on-cloudflare/
+https://www.aspi.org.au/report/flipside-chinas-central-bank-digital-currency
 
 Extracts correct div, but doesn't get the date from it
 https://www.csis.org/events/rethinking-homeland-defense-domain-awareness-information-dominance-and-decision-superiority
 https://chey.org/Eng/issues/IssuesContentsView.aspx?seq=415
+https://diplomaticos.org/noticias/comunicado-sobre-vacunacion-del-personal-destinado-en-el-exterior/
+https://www.es.amnesty.org/en-que-estamos/blog/historia/articulo/culpables-de-solidaridad-el-caso-iuventa/
+https://blog.elhacker.net/2021/08/hackea-mas-de-300-cuentas-de-icloud.html
+
+Too much info in div:
+https://www.es.amnesty.org/en-que-estamos/la-pesadilla-de-las-familias-uigures/
 
 ## Notes
 

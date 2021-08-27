@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="https://philwalter1058.com/xmlrpc.php">
+
+<title>Quick Thoughts on “Outsourcing War”</title>
+<meta name='robots' content='max-image-preview:large' />
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.parentNode.removeChild( dom_node ); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[ i ].parentNode.removeChild( dom_nodes[ i ] );
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+					+ '//' + window.location.hostname
+					+ '&postid=1097'
+					+ '&is_singular=1';
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9waGlsd2FsdGVyMTA1OC5jb20%3D"
+		+ "&wpcomid=74581210"
+		+ "&time=1630050665";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='//s2.wp.com' />
+<link rel='dns-prefetch' href='//philwalter1058.wordpress.com' />
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//wordpress.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel="alternate" type="application/rss+xml" title=" &raquo; Feed" href="https://philwalter1058.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title=" &raquo; Comments Feed" href="https://philwalter1058.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title=" &raquo; Quick Thoughts on “Outsourcing&nbsp;War” Comments Feed" href="https://philwalter1058.com/2016/08/13/quick-thoughts-on-outsourcing-war/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s2.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1625065786h&ver=5.8"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s0.wp.com/_static/??-eJyNkt1uwyAMhV9oxMuyVdrFtGeBYDFa/oRNu7z9SLJWadN0u0HY+PM5GOCURB8DY2DwRSRXjA0EGZ1k1CJF4puo6Yme4D7m7AEJ9shJ9gcxRavyc60pNVSYTT3JCMe2bbrmGVSxToNycWqgsswDEA8OL41s6F3Row6BR20lOvSTkUWQnBwwC4dG9kPjbfgbr2fL+AraNj85XdxZDrGwMNnqG9v/bpEl22BoA19Me5xbzfsk1+YfYCerDdZXrSW/e8H4/RhJVUYolTISibp6W7zgr6r18D9UanQz/4RJ8CozoxZCZFtpumxWPWcpSEWBi/XxWOaN+dyrlETnC8+zHqlP/9HuXt67ttu9vu1/ABbBJMY=?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<style id='lodestar-style-inline-css'>
+.tags-links, .byline { clip: rect(1px, 1px, 1px, 1px); height: 1px; position: absolute; overflow: hidden; width: 1px; }
+</style>
+<link crossorigin="anonymous" rel='stylesheet' id='lodestar_fonts_url-css'  href='https://fonts.googleapis.com/css?family=Work+Sans%3A800%7CKarla%3A400%2C400italic%2C700%2C700italic&#038;subset=latin%2Clatin-ext' media='all' />
+<link rel='stylesheet' id='all-css-2-1' href='https://s0.wp.com/_static/??-eJx9jcEKAjEMRH/IGgR3pQfxW7o11kqalCZF/HvrbRfR2wzzHgPP6qKwIRuU7ir1lFkhIWPLY/gR91F1ByvX7lhQofYFSK6oFhpkjgOJUpzai/DL2fyJI4nBsvCmuBuF3P6pDReSNGKCQa3qR7qU8+E4n7yfJj8/3hQsWKI=?cssminify=yes' type='text/css' media='all' />
+<link rel='stylesheet' id='print-css-3-1' href='https://s2.wp.com/wp-content/mu-plugins/global-print/global-print.css?m=1465851035h&cssminify=yes' type='text/css' media='print' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-6-1' href='https://s1.wp.com/_static/??-eJxti0EKgCAQAD+ULUaJl+gtJqbG6opr9P3o0CHqNAzMwFmEpdxcbpAOUfDwMTMU4iY2NLECB1Nj9g97y9zB/8Vko0GB5Oktn6kFlxxDGMEjrQbvYEmzVHIclNZy2i9lFDfR?cssminify=yes' type='text/css' media='all' />
+<script id='jetpack_related-posts-js-extra'>
+var related_posts_js_options = {"post_heading":"h4"};
+</script>
+<script id='wpcom-actionbar-placeholder-js-extra'>
+var actionbardata = {"siteID":"74581210","siteName":"philwalter1058.com","siteURL":"https:\/\/philwalter1058.com","siteHost":"philwalter1058.com","icon":"<img alt='' src='https:\/\/philwalter1058.files.wordpress.com\/2020\/09\/cropped-1unnamed-1.jpg?w=50' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/lodestar","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fr-login.wordpress.com%2Fremote-login.php%3Faction%3Dlink%26back%3Dhttps%253A%252F%252Fphilwalter1058.com%252F2016%252F08%252F13%252Fquick-thoughts-on-outsourcing-war%252F","themeURL":"https:\/\/wordpress.com\/theme\/lodestar\/","xhrURL":"https:\/\/philwalter1058.com\/wp-admin\/admin-ajax.php","nonce":"87bbc0a745","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"c8a47b1e14\" \/>","referer":"https:\/\/philwalter1058.com\/2016\/08\/13\/quick-thoughts-on-outsourcing-war\/","canFollow":"1","feedID":"25108191","statusMessage":"","customizeLink":"https:\/\/philwalter1058.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fphilwalter1058.wordpress.com%2F2016%2F08%2F13%2Fquick-thoughts-on-outsourcing-war%2F","postID":"1097","shortlink":"https:\/\/wp.me\/p52VYK-hH","canEditPost":"","editLink":"https:\/\/wordpress.com\/post\/philwalter1058.com\/1097","statsLink":"https:\/\/wordpress.com\/stats\/post\/1097\/philwalter1058.com","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: Lodestar","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"Join 3,236 other followers","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fr-login.wordpress.com%2Fremote-login.php%3Faction%3Dlink%26back%3Dhttps%253A%252F%252Fphilwalter1058.com%252F2016%252F08%252F13%252Fquick-thoughts-on-outsourcing-war%252F\">Log in now.<\/a>","stats":"Stats"}};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s2.wp.com/_static/??-eJyFjt0KwjAMhV/IrKjM6YX4LPuJJaVNa5Oie3s7UJi78eoQzpePY54JxsiKrMaJSVE0oEhvsXGyM79tiAN5hCKYK8AKxPe45UKB5IslFpPR94oTLNbN9f0iHn2ZUBa9exTM8yeaQPwXgkA2V+kaXu3NXiHl+JprdwvX/enQXc5t1x7dGzW/W5Y='></script>
+<script type='text/javascript'>
+	window.addEventListener( 'DOMContentLoaded', function() {
+		rltInitialize( {"token":null,"iframeOrigins":["https:\/\/widgets.wp.com"]} );
+	} );
+</script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://philwalter1058.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="https://philwalter1058.com/2016/08/13/quick-thoughts-on-outsourcing-war/" />
+<link rel='shortlink' href='https://wp.me/p52VYK-hH' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fphilwalter1058.com%2F2016%2F08%2F13%2Fquick-thoughts-on-outsourcing-war%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fphilwalter1058.com%2F2016%2F08%2F13%2Fquick-thoughts-on-outsourcing-war%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Quick Thoughts on “Outsourcing War”" />
+<meta property="og:url" content="https://philwalter1058.com/2016/08/13/quick-thoughts-on-outsourcing-war/" />
+<meta property="og:description" content="On August 13, 2016 I shared a few quick thoughts on the &#8220;outsourcing of war&#8221; via Twitter.  I felt the need to archive these tweets here in case I need them in the future.  I hope you fi…" />
+<meta property="article:published_time" content="2016-08-13T22:37:47+00:00" />
+<meta property="article:modified_time" content="2016-08-13T22:37:47+00:00" />
+<meta property="og:image" content="https://philwalter1058.files.wordpress.com/2020/09/cropped-1unnamed-1.jpg?w=200" />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:creator" content="@philwalter1058" />
+<meta name="twitter:site" content="@philwalter1058" />
+<meta name="twitter:text:title" content="Quick Thoughts on “Outsourcing&nbsp;War”" />
+<meta name="twitter:image" content="https://philwalter1058.files.wordpress.com/2020/09/cropped-1unnamed-1.jpg?w=240" />
+<meta name="twitter:card" content="summary" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel='openid.server' href='https://philwalter1058.com/?openidserver=1' />
+<link rel='openid.delegate' href='https://philwalter1058.com/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://philwalter1058.com/osd.xml" title="" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+		<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta name="application-name" content="WordPress.com" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-task" content="name=Subscribe;action-uri=https://philwalter1058.com/feed/;icon-uri=https://philwalter1058.files.wordpress.com/2020/09/cropped-1unnamed-1.jpg?w=16" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="description" content="On August 13, 2016 I shared a few quick thoughts on the &quot;outsourcing of war&quot; via Twitter.  I felt the need to archive these tweets here in case I need them in the future.  I hope you find them useful. -  There have been a few books &amp; articles recently published regarding the U.S. use of&hellip;" />
+<link rel="amphtml" href="https://philwalter1058.com/2016/08/13/quick-thoughts-on-outsourcing-war/amp/"><link rel="icon" href="https://philwalter1058.files.wordpress.com/2020/09/cropped-1unnamed-1.jpg?w=32" sizes="32x32" />
+<link rel="icon" href="https://philwalter1058.files.wordpress.com/2020/09/cropped-1unnamed-1.jpg?w=192" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://philwalter1058.files.wordpress.com/2020/09/cropped-1unnamed-1.jpg?w=180" />
+<meta name="msapplication-TileImage" content="https://philwalter1058.files.wordpress.com/2020/09/cropped-1unnamed-1.jpg?w=270" />
+</head>
+
+<body class="post-template-default single single-post postid-1097 single-format-standard wp-embed-responsive customizer-styles-applied lodestar-footer-image has-top-content tags-hidden author-hidden highlander-enabled highlander-light">
+<div id="page" class="site">
+	<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+
+	<header id="masthead" class="site-header" role="banner">
+
+		<div class="header-top">
+			<div class="wrap">
+				<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="Top Menu">
+	<button class="menu-toggle" aria-controls="top-menu" aria-expanded="false">Menu</button>
+	<div class="menu-menu-1-container"><ul id="top-menu" class="menu"><li id="menu-item-583" class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-583"><a href="https://philwalter1058.com/writings/">All Writings</a></li>
+<li id="menu-item-16" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-16"><a href="https://philwalter1058.com/category/national-security/">National Security</a></li>
+<li id="menu-item-56" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-56"><a href="https://philwalter1058.com/category/defense/">Defense</a></li>
+<li id="menu-item-57" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-57"><a href="https://philwalter1058.com/category/intelligence/">Intelligence</a></li>
+<li id="menu-item-12" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-12"><a href="https://philwalter1058.com/category/congress/">Congress</a></li>
+<li id="menu-item-11" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-11"><a href="https://philwalter1058.com/category/budget/">Budget</a></li>
+<li id="menu-item-589" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-589"><a href="https://philwalter1058.com/category/mindset/">Mindset</a></li>
+<li id="menu-item-631" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-631"><a href="https://philwalter1058.com/category/podcasts/">Podcasts</a></li>
+<li id="menu-item-1096" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-1096"><a href="https://philwalter1058.com/category/quick-thoughts/">Quick Thoughts</a></li>
+<li id="menu-item-2200" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2200"><a href="https://philwalter1058.com/category/written-by-others/">Written by Others</a></li>
+<li id="menu-item-575" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-575"><a href="https://philwalter1058.com/about-me/">About Me</a></li>
+</ul></div></nav><!-- #site-navigation -->
+											</div>
+		</div><!-- .header-top -->
+
+		
+<div class="custom-header">
+	
+			<div class="custom-header-image" style="background-image: url(https://philwalter1058.files.wordpress.com/2020/09/1unnamed.jpg)">
+				<div class="site-branding">
+	<div class="wrap">
+
+		
+					<p class="site-title"><a href="https://philwalter1058.com/" rel="home"></a></p>
+		
+		
+	</div><!-- .wrap -->
+</div><!-- .site-branding -->
+			</div>
+
+		
+</div><!-- .custom-header -->
+
+	</header>
+
+	<div id="content" class="site-content">
+
+<div class="wrap">
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+
+			
+<article id="post-1097" class="post-1097 post type-post status-publish format-standard hentry category-defense category-quick-thoughts">
+	
+	<header class="entry-header">
+		<h1 class="entry-title">Quick Thoughts on “Outsourcing&nbsp;War”</h1>				<div class="entry-meta">
+					<span class="posted-on">Posted on <a href="https://philwalter1058.com/2016/08/13/quick-thoughts-on-outsourcing-war/" rel="bookmark"><time class="entry-date published updated" datetime="2016-08-13T18:37:47-04:00">August 13, 2016</time></a></span><span class="byline"> <span class="byline-prefix">by</span> <span class="author vcard"><a class="url fn n" href="https://philwalter1058.com/author/philwalter1058/">philwalter1058</a></span></span><span class="cat-links"> <span class="cat-prefix">in</span> <a href="https://philwalter1058.com/category/defense/" rel="category tag">Defense</a>, <a href="https://philwalter1058.com/category/quick-thoughts/" rel="category tag">Quick Thoughts</a></span>				</div><!-- .entry-meta -->
+
+				</header>
+	<div class="entry-content">
+		<p><em><strong>On August 13, 2016 I shared a few quick thoughts on the &#8220;outsourcing of war&#8221; via Twitter.  </strong></em><em><strong>I felt the need to archive these tweets here in case I need them in the future.  I hope you find them useful.</strong></em></p>
+<p class="p2"><span class="s1">&#8211;<span class="Apple-converted-space">  </span>There have been a few books &amp; articles recently published regarding the U.S. use of Contractors in places like Iraq &amp; Afghanistan.</span></p>
+<p class="p2"><span class="s1">&#8211;<span class="Apple-converted-space">  </span>These articles are often critical of this practice.</span></p>
+<p class="p2"><span class="s1">&#8211;<span class="Apple-converted-space">  </span>I recently had a senior military officer tell me that he thought “If it’s important enough to do, it should be done by the U.S. military.”</span></p>
+<p class="p2"><span class="s1">&#8211;<span class="Apple-converted-space">  </span>I look at this from a standpoint of Capability vs Symbolism.</span></p>
+<p class="p2"><span class="s1">&#8211;<span class="Apple-converted-space">  </span>Capabilities-wise, above all else, I want the U.S. military to be able to deter near-peer Competitors &amp; defeat them if necessary.</span></p>
+<p class="p2"><span class="s1">&#8211;<span class="Apple-converted-space">  </span>To me, if I take a U.S. Military Member &amp; send them overseas to do things that a Contractor could do it hurts U.S. military capability.</span></p>
+<p class="p2"><span class="s1">&#8211;<span class="Apple-converted-space">  </span>1st, the U.S. Military Member, instead of training to defeat a near-peer Competitor, is doing something else, &amp; his skills are atrophying.</span></p>
+<p class="p2"><span class="s1">&#8211;<span class="Apple-converted-space">  </span>2nd, U.S. Military units aren&#8217;t as available to conduct the kind of training necessary to be prepared to defeat a near-peer Competitor.</span></p>
+<p class="p2"><span class="s1">&#8211;<span class="Apple-converted-space">  </span>And their unit skills are atrophying.</span></p>
+<p class="p2"><span class="s1">&#8211;<span class="Apple-converted-space">  </span>Thus the U.S. Military should use Contractors whenever possible as a way to ensure their near-peer competitor defeat skills don’t atrophy.</span></p>
+<p class="p2"><span class="s1">&#8211;<span class="Apple-converted-space">  </span>To make a bad analogy, why take a Surgeon away from his surgery duties at a major nationwide hospital chain when a part-time EMT will do?</span></p>
+<p class="p2"><span class="s1">&#8211;<span class="Apple-converted-space">  </span>Now let’s talk about Symbolism.</span></p>
+<p class="p2"><span class="s1">&#8211;<span class="Apple-converted-space">  </span>In U.S. politics Contractors aren&#8217;t “Boots on the Ground” so conflicts can enlarge while maintaining soundbites that make voters smile.</span></p>
+<p class="p2"><span class="s1">&#8211;<span class="Apple-converted-space">  </span>Externally, the rest of the world may view the U.S. using Contractors vice U.S. Military Members as an indication of lack of commitment. </span></p>
+<p class="p2"><span class="s1">&#8211;<span class="Apple-converted-space">  </span>Another bad analogy, other countries may look at the U.S. Military like a Hallmark commercial “When You Care Enough to Send the Very Best.”</span></p>
+<p class="p2"><span class="s1">&#8211;<span class="Apple-converted-space">  </span>Contractors are critical &amp; the U.S. can’t go to contingency without them.<span class="Apple-converted-space">  </span>However, there is no perfect answer &amp; everything is a tradeoff.</span></p>
+<p class="p2"><span class="s1">&#8211;<span class="Apple-converted-space">  </span>Tweet series complete.</span></p>
+<div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-email"><a rel="nofollow noopener noreferrer" data-shared="" class="share-email sd-button share-icon" href="https://philwalter1058.com/2016/08/13/quick-thoughts-on-outsourcing-war/?share=email" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li class="share-print"><a rel="nofollow noopener noreferrer" data-shared="" class="share-print sd-button share-icon" href="https://philwalter1058.com/2016/08/13/quick-thoughts-on-outsourcing-war/#print" target="_blank" title="Click to print"><span>Print</span></a></li><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-1097" class="share-twitter sd-button share-icon" href="https://philwalter1058.com/2016/08/13/quick-thoughts-on-outsourcing-war/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-1097" class="share-facebook sd-button share-icon" href="https://philwalter1058.com/2016/08/13/quick-thoughts-on-outsourcing-war/?share=facebook" target="_blank" title="Click to share on Facebook"><span>Facebook</span></a></li><li class="share-pinterest"><a rel="nofollow noopener noreferrer" data-shared="sharing-pinterest-1097" class="share-pinterest sd-button share-icon" href="https://philwalter1058.com/2016/08/13/quick-thoughts-on-outsourcing-war/?share=pinterest" target="_blank" title="Click to share on Pinterest"><span>Pinterest</span></a></li><li class="share-tumblr"><a rel="nofollow noopener noreferrer" data-shared="" class="share-tumblr sd-button share-icon" href="https://philwalter1058.com/2016/08/13/quick-thoughts-on-outsourcing-war/?share=tumblr" target="_blank" title="Click to share on Tumblr"><span>Tumblr</span></a></li><li class="share-reddit"><a rel="nofollow noopener noreferrer" data-shared="" class="share-reddit sd-button share-icon" href="https://philwalter1058.com/2016/08/13/quick-thoughts-on-outsourcing-war/?share=reddit" target="_blank" title="Click to share on Reddit"><span>Reddit</span></a></li><li class="share-pocket"><a rel="nofollow noopener noreferrer" data-shared="" class="share-pocket sd-button share-icon" href="https://philwalter1058.com/2016/08/13/quick-thoughts-on-outsourcing-war/?share=pocket" target="_blank" title="Click to share on Pocket"><span>Pocket</span></a></li><li class="share-linkedin"><a rel="nofollow noopener noreferrer" data-shared="sharing-linkedin-1097" class="share-linkedin sd-button share-icon" href="https://philwalter1058.com/2016/08/13/quick-thoughts-on-outsourcing-war/?share=linkedin" target="_blank" title="Click to share on LinkedIn"><span>LinkedIn</span></a></li><li class="share-end"></li></ul></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-74581210-1097-6128996911eaf' data-src='//widgets.wp.com/likes/index.html?ver=20210818#blog_id=74581210&amp;post_id=1097&amp;origin=philwalter1058.wordpress.com&amp;obj_id=74581210-1097-6128996911eaf&amp;domain=philwalter1058.com' data-name='like-post-frame-74581210-1097-6128996911eaf' data-title='Like or Reblog'><h3 class='sd-title'>Like this:</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>Like</span></span> <span class="loading">Loading...</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div>
+<div id='jp-relatedposts' class='jp-relatedposts' >
+	<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
+</div></div>	</div>
+	<footer class="entry-footer">
+			</footer><!-- .entry-footer -->
+
+		<div class="entry-author author-avatar-show">
+				<div class="author-avatar">
+			<span class="avatar-container"><img alt='' src='https://0.gravatar.com/avatar/94799b48e81d9e42eb0172e4695b1b97?s=100&#038;d=identicon&#038;r=G' class='avatar avatar-100' height='100' width='100' /></span>		</div><!-- .author-avatar -->
+		
+		<div class="author-heading">
+			<h2 class="author-title">Published by <span class="author-name">philwalter1058</span></h2>
+		</div><!-- .author-heading -->
+
+		<p class="author-bio">
+						<a class="author-link" href="https://philwalter1058.com/author/philwalter1058/" rel="author">
+				View all posts by philwalter1058			</a>
+		</p><!-- .author-bio -->
+	</div><!-- .entry-auhtor -->
+</article><!-- #post-## -->
+
+	<nav class="navigation post-navigation" role="navigation" aria-label="Posts">
+		<h2 class="screen-reader-text">Post navigation</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="https://philwalter1058.com/2016/07/31/prediction-dec-2015-isil-july-2016/" rel="prev"><span class="nav-subtitle">Previous Post</span> <span class="nav-title">A December, 2015 Prediction about the Islamic State of Iraq and the Levant in July,&nbsp;2016</span></a></div><div class="nav-next"><a href="https://philwalter1058.com/2016/08/18/war-and-the-new-normal-part-five/" rel="next"><span class="nav-subtitle">Next Post</span> <span class="nav-title">War and the New Normal Part&nbsp;Five</span></a></div></div>
+	</nav>		</main><!-- #main -->
+	</div><!-- #primary -->
+	</div><!-- .wrap -->
+
+	</div>
+
+	
+	<footer id="colophon" class="site-footer" role="contentinfo">
+		
+
+
+	<aside class="widget-area" role="complementary">
+		<div class="wrap">
+							<div class="widget-column">
+					<section id="text-23" class="widget widget_text"><h2 class="widget-title">Content Disclaimer</h2>			<div class="textwidget"><p>The content of www.philwalter1058.com represents Phil Walter’s thoughts alone and does not represent his current employer or any previous employers.  These thoughts do not not contain information of an official nature nor does the content represent the official position of any government, any organization, or any group.</p>
+</div>
+		</section>				</div>
+							<div class="widget-column">
+					<section id="search-11" class="widget widget_search"><form role="search" method="get" class="search-form" action="https://philwalter1058.com/">
+				<label>
+					<span class="screen-reader-text">Search for:</span>
+					<input type="search" class="search-field" placeholder="Search &hellip;" value="" name="s" />
+				</label>
+				<input type="submit" class="search-submit" value="Search" />
+			</form></section><section id="blog_subscription-11" class="widget widget_blog_subscription jetpack_subscription_widget"><h2 class="widget-title"><label for="subscribe-field">Subscribe to Blog via Email</label></h2>
+			<form
+				action="https://subscribe.wordpress.com"
+				method="post"
+				accept-charset="utf-8"
+				id=""
+			>
+				<p>Enter your email address to subscribe to this blog and receive notifications of new posts by email.</p>
+					<div class="jetpack-subscribe-count">
+						<p>
+						Join 3,236 other followers						</p>
+					</div>
+									<p id="subscribe-email">
+					<label
+						id="subscribe-field-label"
+						for="subscribe-field"
+						class="screen-reader-text"
+					>
+						Email Address:					</label>
+
+					<input
+							type="email"
+							name="email"
+							
+							style="width: 95%; padding: 1px 10px"
+							placeholder="Enter your email address"
+							value=""
+							id="subscribe-field"
+						/>				</p>
+
+				<p id="subscribe-submit"
+									>
+                    <input type="hidden" name="action" value="subscribe"/>
+                    <input type="hidden" name="blog_id" value="74581210"/>
+                    <input type="hidden" name="source" value="https://philwalter1058.com/2016/08/13/quick-thoughts-on-outsourcing-war/"/>
+                    <input type="hidden" name="sub-type" value="widget"/>
+                    <input type="hidden" name="redirect_fragment" value="blog_subscription-11"/>
+					<input type="hidden" id="_wpnonce" name="_wpnonce" value="c8a47b1e14" />                    <button type="submit"
+	                    		                	                >
+	                    Subscribe                    </button>
+                </p>
+            </form>
+			
+</section>				</div>
+							<div class="widget-column">
+					<section id="text-22" class="widget widget_text"><h2 class="widget-title">#NATSECGIRLSQUAD</h2>			<div class="textwidget"><h2 class="widget-title"><span style="font-size:16px;">www.natsecgirlsquad.com</span></h2>
+<div class="textwidget">
+<p>#NatSecGirlSquad is a membership organization for people committed to competent diversity across the national security apparatus, with an emphasis on defense and security.</p>
+<p>Focused on building expertise among women, confidence in that expertise, and creating systems to institutionalize success, #NatSecGirlSquad uses social media, traditional professional development programming methods, and informal engagement opportunities to support its members.</p>
+</div>
+</div>
+		</section>					</div>
+	</aside><!-- .widget-area -->
+
+<div class="site-info">
+	<div class="wrap">
+		<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Blog at WordPress.com.</a>
+		
+			</div><!-- .wrap -->
+</div><!-- .site-info -->
+	</footer>
+</div><!-- #page -->
+<!--  -->
+<script src='//0.gravatar.com/js/gprofiles.js?ver=202134y' id='grofiles-cards-js'></script>
+<script id='wpgroho-js-extra'>
+var WPGroHo = {"my_hash":""};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1610363240h'></script>
+
+	<script>
+		// Initialize and attach hovercards to all gravatars
+		( function() {
+			function init() {
+				if ( typeof Gravatar === 'undefined' ) {
+					return;
+				}
+
+				if ( typeof Gravatar.init !== 'function' ) {
+					return;
+				}
+
+				Gravatar.profile_cb = function ( hash, id ) {
+					WPGroHo.syncProfileData( hash, id );
+				};
+
+				Gravatar.my_hash = WPGroHo.my_hash;
+				Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+			}
+
+			if ( document.readyState !== 'loading' ) {
+				init();
+			} else {
+				document.addEventListener( 'DOMContentLoaded', init );
+			}
+		} )();
+	</script>
+
+		<div style="display:none">
+	<div class="grofile-hash-map-94799b48e81d9e42eb0172e4695b1b97">
+	</div>
+	</div>
+
+<script>
+window.addEventListener( "load", function( event ) {
+	var link = document.createElement( "link" );
+	link.href = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.css?v=20201002";
+	link.type = "text/css";
+	link.rel = "stylesheet";
+	document.head.appendChild( link );
+
+	var script = document.createElement( "script" );
+	script.src = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.js?v=20210817";
+	script.defer = true;
+	document.body.appendChild( script );
+} );
+</script>
+
+	
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/philwalter1058.com\/2016\/08\/13\/quick-thoughts-on-outsourcing-war\/":1097};
+	</script>
+					<div id="sharing_email" style="display: none;">
+		<form action="/2016/08/13/quick-thoughts-on-outsourcing-war/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" title="This field is for validation and should not be changed" />
+			
+			<div
+				class="g-recaptcha"
+				data-sitekey="6LcmyE0UAAAAALID28yVNg7pFCodGaArJzHitez_"
+				data-theme="light"
+				data-type="image"
+				data-tabindex="0"
+				data-lazy="true"
+				data-url="https://www.google.com/recaptcha/api.js?hl=en"></div>
+			
+			<img style="float: right; display: none" class="loading" src="https://s2.wp.com/wp-content/mu-plugins/post-flair/sharing/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Send Email" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel" role="button">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div>
+		<script id='comment-like-js-extra'>
+var comment_like_text = {"loading":"Loading..."};
+</script>
+<script id='sharing-js-js-extra'>
+var sharing_js_options = {"lang":"en","counts":"1","is_stats_active":"1"};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s1.wp.com/_static/??-eJyVkdtuwyAMhl9oBCUXlXox7Vk4OMSE0zAk3Z5+ZN2mtpEy9cpg/s/4t/mamIqhQCjcEtewoIJ06Sy98Psn+14hf/yEDsOCsP4rs1CSUDPLQPgJj3JfWXLVYCDucAbiDaowiaAd5AOxit63FLtCdqMlpxXT0Q876C7xCJYJfJOlKrmLGqiIzAURlG80iAWNKBjDc5xxUQr3HEMzptZjmNkYVSU24m47Ny6F9hiYbBW8oAK5nVjJbQV/DjEoV/V1BO0KXoLuGnRQdEVttm6oSlIZ02Z8N7EbfYpU2OgEZk6TyBjMb2zQm3/tT8P53A/DqbdfTELwWA=='></script>
+<script type='text/javascript'>
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-twitter' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-twitter' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+						return false;
+					}
+				} );
+			} )();
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-facebook' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-facebook' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+						return false;
+					}
+				} );
+			} )();
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-tumblr' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-tumblr' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomtumblr', 'menubar=1,resizable=1,width=450,height=450' );
+						return false;
+					}
+				} );
+			} )();
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-pocket' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-pocket' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcompocket', 'menubar=1,resizable=1,width=450,height=450' );
+						return false;
+					}
+				} );
+			} )();
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-linkedin' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-linkedin' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomlinkedin', 'menubar=1,resizable=1,width=580,height=450' );
+						return false;
+					}
+				} );
+			} )();
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>	<iframe src='https://widgets.wp.com/likes/master.html?ver=20210818#ver=20210818&amp;origin=https://philwalter1058.com' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+	<div id='likes-other-gravatars'>
+		<div class="likes-text">
+			<span>%d</span> bloggers like this:		</div>
+		<ul class="wpl-avatars sd-like-gravatars"></ul>
+	</div>
+	
+		<script src="//stats.wp.com/w.js?61" defer></script> <script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'74581210','blog_tz':'-4','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'74581210','v':'wpcom','tz':'-4','user_id':'0','post':'1097','subd':'philwalter1058'}]);
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1TaVhzUzFMbjdWNHpwZGhTayxPSUFCMGNrd29+Smw0TDhnZmRTK0hlRi9QSGh6bi9GXVhBJWIlZlR5U1JMLU8/MkNtblkvY1dTTWQzalZQT1kyPzNNMy12XUZlK1VEaF9ZMkRhXS9kfnpXU3U3LUtbLS5YREFEeSZDd2d6MGYvMndxM2M5cmU3NStlfC5WbGQ/MTY9dmIxVytZNy5qYUxVXWRxMml5PURScmNEN1BzfnFKV1FEVEpPS2JwRU1GUEQweHNmMi1qQWVNLlpwb0Q9YmhOL1hUej8mRG84fml5fC5zb3wtbVY0TEcyUVo9Qmg2ODJfeVlIXSZOcWRhVUZ8L09bMG9hcEhtVz8yTStybmVHcHpnU3c9OUh3SFRKRWM9'}]);
+_stq.push([ 'clickTrackerInit', '74581210', '1097' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:1px;width:1px;overflow:hidden;position:absolute;bottom:1px;" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>

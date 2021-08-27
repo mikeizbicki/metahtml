@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html id="ie8" lang="en">
+<![endif]-->
+<!--[if !(IE 8)]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Don’t Call It a Cold War: Findings from the Russian-American Relations Survey | Working Group on the Future of U.S.-Russia Relations</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="https://us-russiafuture.org/xmlrpc.php" />
+<!--[if lt IE 9]>
+<script src="https://s2.wp.com/wp-content/themes/pub/oxygen/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+
+<meta name='robots' content='max-image-preview:large' />
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.parentNode.removeChild( dom_node ); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[ i ].parentNode.removeChild( dom_nodes[ i ] );
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+					+ '//' + window.location.hostname
+					+ '&postid=843'
+					+ '&is_singular=1';
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly91cy1ydXNzaWFmdXR1cmUub3Jn"
+		+ "&wpcomid=24715996"
+		+ "&time=1630053094";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='//s2.wp.com' />
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//futureofusrussiarelations.wordpress.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel="alternate" type="application/rss+xml" title="Working Group on the Future of U.S.-Russia Relations &raquo; Feed" href="https://us-russiafuture.org/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Working Group on the Future of U.S.-Russia Relations &raquo; Comments Feed" href="https://us-russiafuture.org/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Working Group on the Future of U.S.-Russia Relations &raquo; Don’t Call It a Cold War: Findings from the Russian-American Relations Survey Comments Feed" href="https://us-russiafuture.org/2020/07/27/dont-call-it-a-cold-war-findings-from-the-russian-american-relations-survey/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s2.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1625065786h&ver=5.8"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s2.wp.com/_static/??-eJyNkt1OBCEMhV9IBsfRTbwwPgs/DXa3MITCjry9LFEzzrqjN4RD+7WHglyiMHPIELL0RUQqDgPLJZrZC/ZIUDdqMMx38ncsAakMVsSZ80btYYQnYHmEHJU5ia6u0r9yXWlSQ3ItkkCex3GYhnupC5KVmuZeQCeVquRcCb4LYTBU7KUPSw8WFRD4bmQlIqkKSRA4ZergMfyNt9ha/4Bum+9OV3dWdS5ZuIR2Y/vfJZLKGBzfwFfTvsytnfuors3vYAtaB+1VW8rnXmR430f6v9E6JmAWbfVYvMhvrVd/4Ff/Mh4enqdxOjw+HT8Aihf1lQ==?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<link rel='stylesheet' id='screen-css-1-1' href='https://s0.wp.com/wp-content/themes/pub/oxygen/style.css?m=1499391730h&cssminify=yes' type='text/css' media='screen' />
+<link crossorigin="anonymous" rel='stylesheet' id='font-abel-css'  href='https://fonts.googleapis.com/css?family=Abel&#038;ver=20120821' media='all' />
+<link rel='stylesheet' id='all-css-4-1' href='https://s0.wp.com/_static/??-eJx9y0EOwiAQheELiZMmGHVhPAvQKY6FGVIgtLcX46Zuunt/8j5oSTnhglygvDBihlQtyLp5ZCB2kMsWULXkJJ5dzifYiVhVCtUTZ2g0eiwZJuPQiswq0NzH+vNH0qOoIM4UEv4LNQVDyxFd0AbxfXror11+0TM+Bn25a327Dvr9AWvsVsY=?cssminify=yes' type='text/css' media='all' />
+<link rel='stylesheet' id='print-css-5-1' href='https://s2.wp.com/wp-content/mu-plugins/global-print/global-print.css?m=1465851035h&cssminify=yes' type='text/css' media='print' />
+<link rel='stylesheet' id='all-css-6-1' href='https://s0.wp.com/wp-content/mu-plugins/infinity/themes/pub/oxygen.css?m=1339516582h&cssminify=yes' type='text/css' media='all' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-8-1' href='https://s1.wp.com/_static/??-eJxti0EKgCAQAD+ULUaJl+gtJqbG6opr9P3o0CHqNAzMwFmEpdxcbpAOUfDwMTMU4iY2NLECB1Nj9g97y9zB/8Vko0GB5Oktn6kFlxxDGMEjrQbvYEmzVHIclNZy2i9lFDfR?cssminify=yes' type='text/css' media='all' />
+<script id='jetpack_related-posts-js-extra'>
+var related_posts_js_options = {"post_heading":"h4"};
+</script>
+<script id='wpcom-actionbar-placeholder-js-extra'>
+var actionbardata = {"siteID":"24715996","siteName":"Working Group on the Future of U.S.-Russia Relations","siteURL":"https:\/\/us-russiafuture.org","siteHost":"us-russiafuture.org","icon":"<img alt='' src='https:\/\/secure.gravatar.com\/blavatar\/95b2b0cf2a21ca726082fae48e174ea1?s=50&d=https%3A%2F%2Fs2.wp.com%2Fi%2Flogo%2Fwpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/oxygen","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fr-login.wordpress.com%2Fremote-login.php%3Faction%3Dlink%26back%3Dhttps%253A%252F%252Fus-russiafuture.org%252F2020%252F07%252F27%252Fdont-call-it-a-cold-war-findings-from-the-russian-american-relations-survey%252F","themeURL":"","xhrURL":"https:\/\/us-russiafuture.org\/wp-admin\/admin-ajax.php","nonce":"87bbc0a745","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"d258b3117c\" \/>","referer":"https:\/\/us-russiafuture.org\/2020\/07\/27\/dont-call-it-a-cold-war-findings-from-the-russian-american-relations-survey\/","canFollow":"1","feedID":"649876","statusMessage":"","customizeLink":"https:\/\/futureofusrussiarelations.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Ffutureofusrussiarelations.wordpress.com%2F2020%2F07%2F27%2Fdont-call-it-a-cold-war-findings-from-the-russian-american-relations-survey%2F","postID":"843","shortlink":"https:\/\/wp.me\/p1FHL6-dB","canEditPost":"","editLink":"https:\/\/wordpress.com\/post\/us-russiafuture.org\/843","statsLink":"https:\/\/wordpress.com\/stats\/post\/843\/us-russiafuture.org","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: Oxygen","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fr-login.wordpress.com%2Fremote-login.php%3Faction%3Dlink%26back%3Dhttps%253A%252F%252Fus-russiafuture.org%252F2020%252F07%252F27%252Fdont-call-it-a-cold-war-findings-from-the-russian-american-relations-survey%252F\">Log in now.<\/a>","stats":"Stats"}};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s2.wp.com/_static/??-eJyFjt0KwjAMhV/IrKjM6YX4LPuJJaVNa5Oie3s7UJi78eoQzpePY54JxsiKrMaJSVE0oEhvsXGyM79tiAN5hCKYK8AKxPe45UKB5IslFpPR94oTLNbN9f0iHn2ZUBa9exTM8yeaQPwXgkA2V+kaXu3NXiHl+JprdwvX/enQXc5t1x7dGzW/W5Y='></script>
+<script type='text/javascript'>
+	window.addEventListener( 'DOMContentLoaded', function() {
+		rltInitialize( {"token":null,"iframeOrigins":["https:\/\/widgets.wp.com"]} );
+	} );
+</script>
+<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1625210320h&cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s2.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://futureofusrussiarelations.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="https://us-russiafuture.org/2020/07/27/dont-call-it-a-cold-war-findings-from-the-russian-american-relations-survey/" />
+<link rel='shortlink' href='https://wp.me/p1FHL6-dB' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fus-russiafuture.org%2F2020%2F07%2F27%2Fdont-call-it-a-cold-war-findings-from-the-russian-american-relations-survey%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fus-russiafuture.org%2F2020%2F07%2F27%2Fdont-call-it-a-cold-war-findings-from-the-russian-american-relations-survey%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Don’t Call It a Cold War: Findings from the Russian-American Relations Survey" />
+<meta property="og:url" content="https://us-russiafuture.org/2020/07/27/dont-call-it-a-cold-war-findings-from-the-russian-american-relations-survey/" />
+<meta property="og:description" content="Russian-American relations seem to be worsening with every year. After an attempted “reset” under U.S. President Barack Obama and Russian President Dmitry Medvedev exhausted itself, a steady stream…" />
+<meta property="article:published_time" content="2020-07-27T16:30:00+00:00" />
+<meta property="article:modified_time" content="2020-08-04T21:00:27+00:00" />
+<meta property="og:site_name" content="Working Group on the Future of U.S.-Russia Relations" />
+<meta property="og:image" content="https://secure.gravatar.com/blavatar/95b2b0cf2a21ca726082fae48e174ea1?s=200&#038;ts=1630053094" />
+<meta property="og:image:width" content="200" />
+<meta property="og:image:height" content="200" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:site" content="@wordpressdotcom" />
+<meta name="twitter:text:title" content="Don’t Call It a Cold War: Findings from the Russian-American Relations Survey" />
+<meta name="twitter:image" content="https://secure.gravatar.com/blavatar/95b2b0cf2a21ca726082fae48e174ea1?s=240" />
+<meta name="twitter:card" content="summary" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/95b2b0cf2a21ca726082fae48e174ea1?s=32" sizes="16x16" />
+<link rel="icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/95b2b0cf2a21ca726082fae48e174ea1?s=32" sizes="16x16" />
+<link rel="apple-touch-icon" href="https://secure.gravatar.com/blavatar/95b2b0cf2a21ca726082fae48e174ea1?s=114" />
+<link rel='openid.server' href='https://us-russiafuture.org/?openidserver=1' />
+<link rel='openid.delegate' href='https://us-russiafuture.org/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://us-russiafuture.org/osd.xml" title="Working Group on the Future of U.S.-Russia Relations" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+<meta name="theme-color" content="#ffffff" />
+	<style type="text/css">
+		#page {
+			background-color: #ffffff		}
+	</style>
+	<style>
+		html {
+			font-size: 16px;
+		}
+		h1, h2, h3, h4, h5, h6, dl dt, blockquote, blockquote blockquote blockquote, .site-title, .main-navigation a, .widget_calendar caption {
+			font-family: 'Arial', sans-serif;
+		}
+		.error, .entry-title a, .entry-content a, entry-summary a, .main-navigation > div > ul > li > a, .widget a, .post-navigation a, #image-navigation a, .pingback a, .logged-in-as a, .more-articles .entry-title a:hover, .widget_flickr #flickr_badge_uber_wrapper a {
+			color: #518ac2;
+		}
+		a:hover, .comment-meta a, .comment-meta a:visited {
+			border-color: #518ac2;
+		}
+		a.read-more, a.read-more:visited, .pagination a:hover, .comment-navigation a:hover, button, html input[type="button"], input[type="reset"], input[type="submit"], #infinite-handle span {
+			background-color: #518ac2;
+		}
+	</style>
+<meta name="application-name" content="Working Group on the Future of U.S.-Russia Relations" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="Рабочая группа по будущему российско-американских отношений" /><meta name="msapplication-task" content="name=Subscribe;action-uri=https://us-russiafuture.org/feed/;icon-uri=https://secure.gravatar.com/blavatar/95b2b0cf2a21ca726082fae48e174ea1?s=16" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="description" content="Russian-American relations seem to be worsening with every year. After an attempted “reset” under U.S. President Barack Obama and Russian President Dmitry Medvedev exhausted itself, a steady stream of events has kept tensions on a high burn. Russia’s 2014 annexation of Crimea. American economic sanctions on Russia. Russian countersanctions. Accusations of Russian “meddling” in the&hellip;" />
+	<style type="text/css">
+			.site-title,
+		.site-description {
+			position: absolute;
+			clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+			clip: rect(1px, 1px, 1px, 1px);
+		}
+		</style>
+	<link rel="amphtml" href="https://us-russiafuture.org/2020/07/27/dont-call-it-a-cold-war-findings-from-the-russian-american-relations-survey/amp/"></head>
+
+<body class="post-template-default single single-post postid-843 single-format-standard no-js customizer-styles-applied highlander-enabled highlander-light">
+<div id="page" class="hfeed site">
+		<header id="masthead" class="site-header" role="banner">
+		<hgroup>
+			<a href="https://us-russiafuture.org/" class="site-logo-link" rel="home" itemprop="url"></a>			<h1 class="site-title"><a href="https://us-russiafuture.org/" title="Working Group on the Future of U.S.-Russia Relations" rel="home">Working Group on the Future of U.S.-Russia Relations</a></h1>
+			<h2 class="site-description">Рабочая группа по будущему российско-американских отношений</h2>
+		</hgroup>
+
+		
+		
+			<a href="https://us-russiafuture.org/" title="Working Group on the Future of U.S.-Russia Relations" rel="home">
+				<img src="https://futureofusrussiarelations.files.wordpress.com/2012/06/new_wordpress_banner.png" width="940" height="150" alt="" class="custom-header" />
+			</a>
+
+		
+		<nav role="navigation" class="site-navigation main-navigation clear-fix">
+			<h1 class="assistive-text">Main Menu</h1>
+			<div class="assistive-text skip-link"><a href="#content" title="Skip to content">Skip to content</a></div>
+
+			<div class="menu"><ul>
+<li class="page_item page-item-2"><a href="https://us-russiafuture.org/about/">About/О Группе</a></li>
+<li class="page_item page-item-18"><a href="https://us-russiafuture.org/members/">Members/Участники</a></li>
+<li class="page_item page-item-5 page_item_has_children"><a href="https://us-russiafuture.org/publications/">Publications/Публикации</a>
+<ul class='children'>
+	<li class="page_item page-item-144"><a href="https://us-russiafuture.org/publications/publications-by-working-group-members/">Publications by Working Group members</a></li>
+	<li class="page_item page-item-151 page_item_has_children"><a href="https://us-russiafuture.org/publications/working-group-papers/">Working Group Papers</a>
+	<ul class='children'>
+		<li class="page_item page-item-825"><a href="https://us-russiafuture.org/publications/working-group-papers/envisioning-opportunities-for-u-s-russia-cooperation-in-and-with-central-asia/">Envisioning Opportunities for U.S.-Russia Cooperation in and with Central Asia</a></li>
+		<li class="page_item page-item-475"><a href="https://us-russiafuture.org/publications/working-group-papers/us-russia-relations-in-post-soviet-eurasia-transcending-the-zero-sum-game/">U.S.-Russia Relations in Post-Soviet Eurasia: Transcending the Zero-Sum Game</a></li>
+		<li class="page_item page-item-467"><a href="https://us-russiafuture.org/publications/working-group-papers/us-russia-relations-and-the-hydrocarbon-markets-of-eurasia/">U.S.-Russia Relations and the Hydrocarbon Markets of Eurasia</a></li>
+		<li class="page_item page-item-529"><a href="https://us-russiafuture.org/publications/working-group-papers/prospects-for-u-s-russia-cooperation-in-the-asia-pacific-region/">Prospects for U.S.-Russia Cooperation in the Asia-Pacific Region</a></li>
+		<li class="page_item page-item-580"><a href="https://us-russiafuture.org/publications/working-group-papers/the-sword-and-the-shield-towards-us-russian-strategic-compatibility/">The Sword and the Shield: Toward U.S.-Russian Strategic Compatibility</a></li>
+		<li class="page_item page-item-687"><a href="https://us-russiafuture.org/publications/working-group-papers/the-u-s-and-russian-interventions-in-syria/">The U.S. and Russian Interventions in Syria</a></li>
+		<li class="page_item page-item-740"><a href="https://us-russiafuture.org/publications/working-group-papers/toward-u-s-russia-bilateral-cooperation-in-the-sphere-of-cybersecurity/">Toward U.S.-Russia Bilateral Cooperation in the Sphere of Cybersecurity</a></li>
+		<li class="page_item page-item-762"><a href="https://us-russiafuture.org/publications/working-group-papers/the-fragmentation-of-the-global-economy-and-u-s-russia-relations/">The Fragmentation of the Global Economy and U.S.-Russia Relations</a></li>
+		<li class="page_item page-item-795"><a href="https://us-russiafuture.org/publications/working-group-papers/nuclear-arms-control-and-u-s-russia-relations/">Nuclear Arms Control and U.S.-Russia Relations</a></li>
+	</ul>
+</li>
+</ul>
+</li>
+<li class="page_item page-item-13"><a href="https://us-russiafuture.org/contact/">Contact/Контакты</a></li>
+<li class="page_item page-item-278 current_page_parent"><a href="https://us-russiafuture.org/blog/">Blog/Блог</a></li>
+</ul></div>
+		</nav>
+	</header><!-- #masthead .site-header -->
+
+	<div id="main" class="clear-fix">
+		<div id="primary" class="site-content">
+			<div id="content" role="main">
+
+			
+				
+<article id="post-843" class="clear-fix post-843 post type-post status-publish format-standard hentry category-uncategorized">
+	<header class="entry-header">
+		<h1 class="entry-title">Don’t Call It a Cold War: Findings from the Russian-American Relations Survey</h1>
+
+		<div class="entry-meta">
+			<span class="entry-date"><a href="https://us-russiafuture.org/2020/07/27/dont-call-it-a-cold-war-findings-from-the-russian-american-relations-survey/" title="12:30 pm" rel="bookmark"><time class="entry-date" datetime="2020-07-27T12:30:00-04:00" pubdate>July 27, 2020</time></a></span>			<span class="sep">&middot;</span>
+			<span class="byline">by <span class="author vcard"><a class="url fn n" href="https://us-russiafuture.org/author/sfailla/" title="View all posts by us-russiafuture" rel="author">us-russiafuture</a></span></span>			<span class="sep">&middot;</span>
+			Bookmark the <a href="https://us-russiafuture.org/2020/07/27/dont-call-it-a-cold-war-findings-from-the-russian-american-relations-survey/" title="Permalink to Don’t Call It a Cold War: Findings from the Russian-American Relations Survey" rel="bookmark">permalink</a>.			<span class="sep">&middot;</span>
+					</div><!-- .entry-meta -->
+	</header><!-- .entry-header -->
+
+	<div class="entry-content clear-fix">
+		<p>Russian-American relations seem to be worsening with every year. After an attempted “reset” under U.S. President Barack Obama and Russian President Dmitry Medvedev exhausted itself, a steady stream of events has kept tensions on a high burn. Russia’s 2014 annexation of Crimea. American economic sanctions on Russia. Russian countersanctions. Accusations of Russian “meddling” in the 2016 election of Donald Trump and the theft of COVID-19 vaccine research. Spy scandals. Mass expulsions of large numbers of embassy personnel. The list goes on.</p>
+<p>At the same time, we find considerable hope for an eventual improvement in relations coming from the U.S. and Russian populations. While neither side appears willing to give in on some of the most important flash points, we at least do detect more underlying popular willingness to seek ways to avoid conflict and improve relations than may appear to be the case if one watches the news regularly in either country.</p>
+<p>This report presents the results of a survey conducted by <strong>Henry Hale</strong> and <strong>Olga Kamenchuk</strong> simultaneously in both Russia and the United States in 2019 on these countries’ mutual relations.</p>
+<p> </p>
+
+
+<div class="wp-block-file"><a href="https://futureofusrussiarelations.files.wordpress.com/2020/08/survey-on-russian-american-relations-2019.pdf">Survey on Russian American Relations 2019</a><a href="https://futureofusrussiarelations.files.wordpress.com/2020/08/survey-on-russian-american-relations-2019.pdf" class="wp-block-file__button" download>Download</a></div>
+<div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-843" class="share-twitter sd-button share-icon" href="https://us-russiafuture.org/2020/07/27/dont-call-it-a-cold-war-findings-from-the-russian-american-relations-survey/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-843" class="share-facebook sd-button share-icon" href="https://us-russiafuture.org/2020/07/27/dont-call-it-a-cold-war-findings-from-the-russian-american-relations-survey/?share=facebook" target="_blank" title="Click to share on Facebook"><span>Facebook</span></a></li><li class="share-linkedin"><a rel="nofollow noopener noreferrer" data-shared="sharing-linkedin-843" class="share-linkedin sd-button share-icon" href="https://us-russiafuture.org/2020/07/27/dont-call-it-a-cold-war-findings-from-the-russian-american-relations-survey/?share=linkedin" target="_blank" title="Click to share on LinkedIn"><span>LinkedIn</span></a></li><li class="share-end"></li></ul></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-24715996-843-6128a2e669ed5' data-src='//widgets.wp.com/likes/index.html?ver=20210818#blog_id=24715996&amp;post_id=843&amp;origin=futureofusrussiarelations.wordpress.com&amp;obj_id=24715996-843-6128a2e669ed5&amp;domain=us-russiafuture.org' data-name='like-post-frame-24715996-843-6128a2e669ed5' data-title='Like or Reblog'><h3 class='sd-title'>Like this:</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>Like</span></span> <span class="loading">Loading...</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div>
+<div id='jp-relatedposts' class='jp-relatedposts' >
+	<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
+</div></div>			</div><!-- .entry-content -->
+
+	</article><!-- #post-843 -->
+
+				
+					<nav role="navigation" id="nav-below" class="site-navigation post-navigation clear-fix">
+		<h1 class="assistive-text">Post navigation</h1>
+
+	
+		<div class="nav-previous"><a href="https://us-russiafuture.org/2019/04/26/envisioning-opportunities-for-u-s-russia-cooperation-in-and-with-central-asia/" rel="prev"><span class="meta-nav">&larr;</span> Envisioning Opportunities for U.S.-Russia Cooperation in and with Central Asia</a></div>		
+	
+	</nav><!-- #nav-below -->
+	
+				
+	
+	<div id="comments" class="comments-area">
+
+	
+	
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2020/07/27/dont-call-it-a-cold-war-findings-from-the-russian-american-relations-survey/#respond" style="display:none;">Cancel reply</a></small></h3><form action="https://us-russiafuture.org/wp-comments-post.php" method="post" id="commentform" class="comment-form"><input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="442c23638c" /><input type="hidden" name="_wp_http_referer" value="/2020/07/27/dont-call-it-a-cold-war-findings-from-the-russian-american-relations-survey/" />
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest" />
+
+<div class="comment-form-field comment-textarea">
+	<label for="comment">Enter your comment here...</label>
+	<div id="comment-form-comment"><textarea id="comment" name="comment" title="Enter your comment here..."></textarea></div>
+</div>
+
+<div id="comment-form-identity">
+	<div id="comment-form-nascar">
+		<p>Fill in your details below or click an icon to log in:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="#comment-form-guest" id="postas-guest" class="nascar-signin-link"
+                   title="Login via Guest">
+									</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:WordPress.com" id="postas-wordpress" class="nascar-signin-link"
+                   title="Login via WordPress.com">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Twitter" id="postas-twitter" class="nascar-signin-link"
+                   title="Login via Twitter">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Facebook" id="postas-facebook" class="nascar-signin-link"
+                   title="Login via Facebook">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg>				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Gravatar" width="25" class="no-grav" />
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">Email <span class="required">(required)</span> <span class="nopublish">(Address never made public)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Name <span class="required">(required)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Website</label>
+					<div class="comment-form-input"><input id="url" name="url" type="url" value="" /></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="WordPress.com Logo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="" />
+						<p class="comment-form-posting-as pa-wordpress">
+			<strong></strong>
+			You are commenting using your WordPress.com account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Google photo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="" />
+						<p class="comment-form-posting-as pa-googleplus">
+			<strong></strong>
+			You are commenting using your Google account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" x="0px" y="0px" viewBox="0 0 60 60" ><path fill="#519bf7" d="M56.3,30c0,-1.6 -0.2,-3.4 -0.6,-5h-3.1H42.2H30v10.6h14.8C44,39.3 42,42 39.1,43.9l8.8,6.8C53,46 56.3,39 56.3,30z" /><path fill="#3db366" d="M30,57.5c6.7,0 13.1,-2.4 17.9,-6.8l-8.8,-6.8c-2.5,1.6 -5.6,2.4 -9.1,2.4c-7.2,0 -13.3,-4.7 -15.4,-11.2l-9.3,7.1C9.8,51.3 19.1,57.5 30,57.5z" /><path fill="#fdc600" d="M5.3,42.2l9.3,-7.1c-0.5,-1.6 -0.8,-3.3 -0.8,-5.1s0.3,-3.5 0.8,-5.1l-9.3,-7.1C3.5,21.5 2.5,25.6 2.5,30S3.5,38.5 5.3,42.2z" /><path fill="#f15b44" d="M40.1,17.4l8,-8C43.3,5.1 37,2.5 30,2.5C19.1,2.5 9.8,8.7 5.3,17.8l9.3,7.1c2.1,-6.5 8.2,-11.1 15.4,-11.1C33.9,13.7 37.4,15.1 40.1,17.4z" /></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Twitter picture" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="" />
+						<p class="comment-form-posting-as pa-twitter">
+			<strong></strong>
+			You are commenting using your Twitter account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="" alt="Facebook photo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="" />
+						<p class="comment-form-posting-as pa-facebook">
+			<strong></strong>
+			You are commenting using your Facebook account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Cancel</a></div>
+		<p>Connecting to %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function () {
+
+	function hide( sel ) {
+		var el = document.querySelector( sel );
+		if ( el ) {
+			el.style.setProperty( 'display', 'none' );
+		}
+	}
+
+	function show( sel ) {
+		var el = document.querySelector( sel );
+		if ( el ) {
+			el.style.removeProperty( 'display' );
+		}
+	}
+
+	var input = document.createElement( 'input' );
+	var comment = document.querySelector( '#comment' );
+
+	if ( input && comment && 'placeholder' in input ) {
+		var label = document.querySelector( '.comment-textarea label' );
+		if ( label ) {
+			var text = label.textContent;
+			label.parentNode.removeChild( label );
+			comment.setAttribute( 'placeholder', text );
+		}
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	hide( '#comment-form-identity' );
+	hide( '#comment-form-subscribe' );
+	hide( '#commentform .form-submit' );
+
+	if ( comment ) {
+		comment.style.height = '10px';
+
+		var handler = function () {
+			comment.style.height = HighlanderComments.initialHeight + 'px';
+			show( '#comment-form-identity' );
+			show( '#comment-form-subscribe' );
+			show( '#commentform .form-submit' );
+			HighlanderComments.resizeCallback();
+
+			comment.removeEventListener( 'focus', handler );
+		};
+
+		comment.addEventListener( 'focus', handler );
+	}
+}
+
+if ( document.readyState !== 'loading' ) {
+	highlander_expando_javascript();
+} else {
+	if ( typeof window.jQuery === 'function' ) {
+		// Use jQuery's `ready` if available.
+		// This solves some scheduling issues between this script and the main highlander script.
+		jQuery( document ).ready( highlander_expando_javascript );
+	} else {
+		// If not available, add a vanilla event listener.
+		document.addEventListener( 'DOMContentLoaded', highlander_expando_javascript );
+	}
+}
+
+</script>
+
+<div id="comment-form-subscribe">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Notify me of new comments via email.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog"  style="display: inline;">Notify me of new posts via email.</label></p></div>
+
+
+
+
+<p class="form-submit wp-block-button"><input name="submit" type="submit" id="comment-submit" class="submit wp-block-button__link" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='843' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="c03a75af48" /></p>
+<input type="hidden" name="genseq" value="1630053094" />
+<input type="hidden" id="ak_js" name="ak_js" value="78"/><textarea name="ak_hp_textarea" cols="45" rows="8" maxlength="100" style="display: none !important;"></textarea></form>	</div><!-- #respond -->
+	<div style="clear: both"></div>
+</div><!-- #comments .comments-area -->
+			
+			</div><!-- #content -->
+		</div><!-- #primary .site-content -->
+
+<div id="secondary" class="clear-fix" role="complementary">
+
+
+	<div class="widget-area" role="complementary">
+
+	
+	<aside id="facebook-likebox-3" class="widget widget_facebook_likebox"><h1 class="widgettitle"><a href="https://www.facebook.com/usrussiafuture">Working Group on Facebook</a></h1>		<div id="fb-root"></div>
+		<div class="fb-page" data-href="https://www.facebook.com/usrussiafuture" data-width="200"  data-height="130" data-hide-cover="false" data-show-facepile="false" data-tabs="false" data-hide-cta="false" data-small-header="false">
+		<div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/usrussiafuture"><a href="https://www.facebook.com/usrussiafuture">Working Group on Facebook</a></blockquote></div>
+		</div>
+		</aside><aside id="linkcat-96089057" class="widget widget_links"><h1 class="widgettitle">Read Working Group Papers</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="https://us-russiafuture.org/publications/working-group-papers/prospects-for-u-s-russia-cooperation-in-the-asia-pacific-region/" title="Working Group Paper 3 by Jeffrey Mankoff and Oleg Barabanov, July 2013">Prospects for U.S.-Russia Cooperation in the Asia-Pacific Region: The United States and Russia in the Pacific Century</a></li>
+<li><a href="https://us-russiafuture.org/publications/working-group-papers/the-sword-and-the-shield-towards-us-russian-strategic-compatibility/">The Sword and the Shield: Toward U.S.-Russian Strategic Compatibility</a></li>
+<li><a href="https://us-russiafuture.org/publications/working-group-papers/us-russia-relations-and-the-hydrocarbon-markets-of-eurasia/" title="Working Group Paper 2 by Rawi Abdelal and Tatiana Mitrova, January 2013">U.S.-Russia Relations and the Hydrocarbon Markets of Eurasia</a></li>
+<li><a href="https://us-russiafuture.org/publications/working-group-papers/us-russia-relations-in-post-soviet-eurasia-transcending-the-zero-sum-game/" title="Working Group Paper 1 by Samuel Charap and Mikhail Troitskiy, September 2011">U.S.-Russia Relations in Post-Soviet Eurasia: Transcending the Zero-Sum Game</a></li>
+
+	</ul>
+</aside>
+
+	</div><!-- .widget-area -->
+
+</div><!-- #secondary --><div id="tertiary" class="widget-area" role="complementary">
+
+	
+	<aside id="linkcat-96081427" class="widget widget_links"><h1 class="widgettitle">Working Group Partners</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="http://daviscenter.fas.harvard.edu" title="Davis Center for Russian and Eurasian Studies at Harvard University / Центр российских и евразийских исследований имени Дэвиса">Davis Center for Russian and Eurasian Studies / Центр российских и евразийских исследований имени Дэвиса</a></li>
+<li><a href="http://www.hse.ru/" title="National Research University—Higher School of Economics / Национальный исследовательский университет Высшая школа экономики">National Research University—Higher School of Economics / Национальный исследовательский университет Высшая школа экономики</a></li>
+
+	</ul>
+</aside>
+<aside id="text-3" class="widget widget_text"><h1 class="widgettitle">Working Group Supporters</h1>			<div class="textwidget">The activities of the Working Group on the Future of U.S.-Russia Relations have been made possible with support from Carnegie Corporation of New York, Open Society Foundations, the MacArthur Foundation, the Valdai International Discussion Club, and Mr. John Cogan.</div>
+		</aside>
+</div><!-- #secondary .widget-area -->
+	</div><!-- #main -->
+
+	
+	<footer id="colophon" class="site-footer clear-fix" role="contentinfo">
+		<div class="site-info">
+						<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Blog at WordPress.com.</a>
+			
+					</div><!-- .site-info -->
+			</footer><!-- .site-footer .site-footer -->
+</div><!-- #page .hfeed .site -->
+
+<!--  -->
+<script src='//0.gravatar.com/js/gprofiles.js?ver=202134y' id='grofiles-cards-js'></script>
+<script id='wpgroho-js-extra'>
+var WPGroHo = {"my_hash":""};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1610363240h'></script>
+
+	<script>
+		// Initialize and attach hovercards to all gravatars
+		( function() {
+			function init() {
+				if ( typeof Gravatar === 'undefined' ) {
+					return;
+				}
+
+				if ( typeof Gravatar.init !== 'function' ) {
+					return;
+				}
+
+				Gravatar.profile_cb = function ( hash, id ) {
+					WPGroHo.syncProfileData( hash, id );
+				};
+
+				Gravatar.my_hash = WPGroHo.my_hash;
+				Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+			}
+
+			if ( document.readyState !== 'loading' ) {
+				init();
+			} else {
+				document.addEventListener( 'DOMContentLoaded', init );
+			}
+		} )();
+	</script>
+
+		<div style="display:none">
+	</div>
+<script id='highlander-comments-js-extra'>
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"https:\/\/futureofusrussiarelations.wordpress.com\/public.api\/connect\/?action=request&domain=us-russiafuture.org","logoutURL":"https:\/\/futureofusrussiarelations.wordpress.com\/wp-login.php?action=logout&_wpnonce=31dde06b5e","homeURL":"https:\/\/us-russiafuture.org\/","postID":"843","gravDefault":"identicon","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"0","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s1.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1626677336j'></script>
+
+<script>
+window.addEventListener( "load", function( event ) {
+	var link = document.createElement( "link" );
+	link.href = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.css?v=20201002";
+	link.type = "text/css";
+	link.rel = "stylesheet";
+	document.head.appendChild( link );
+
+	var script = document.createElement( "script" );
+	script.src = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.js?v=20210817";
+	script.defer = true;
+	document.body.appendChild( script );
+} );
+</script>
+
+	
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/us-russiafuture.org\/2020\/07\/27\/dont-call-it-a-cold-war-findings-from-the-russian-american-relations-survey\/":843};
+	</script>
+				<script id='jetpack-facebook-embed-js-extra'>
+var jpfbembed = {"appid":"249643311490","locale":"en_US"};
+</script>
+<script id='sharing-js-js-extra'>
+var sharing_js_options = {"lang":"en","counts":"1","is_stats_active":"1"};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s0.wp.com/_static/??-eJyNkVtSwzAMRTeEY2hpZ/hgWAqjOGqixLKNH23D6lEhnUlLKP3yQ+deXdn6EJTxLqPLuk+6wT0ZDMeqTw/6stR/FIzjtFTk9oSHf7EecwAzqIiJPvEa56KCLS25pC0NmLSICnbgGovxGs4dsiCh1NofxxbdqVtisFYxunIXPqUyo7FYMbmziJyxpRFcGGJoMVkPDTZ/MQzJOzGale/pe2F9j+77cimA8SxDZ3nXYBdjzJ52+gP9LgZ6BwZr7weFXP8OMVNBI66qhngaNmOUncpRfNJSHjn+GN6OAgMlxqzW1eMUx0e+wQefstpZoKhTB5Fce15F9MavT9vV9nm13rxs+i9w5gmI'></script>
+<script type='text/javascript'>
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-twitter' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-twitter' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+						return false;
+					}
+				} );
+			} )();
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-facebook' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-facebook' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+						return false;
+					}
+				} );
+			} )();
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-linkedin' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-linkedin' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomlinkedin', 'menubar=1,resizable=1,width=580,height=450' );
+						return false;
+					}
+				} );
+			} )();
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>	<iframe src='https://widgets.wp.com/likes/master.html?ver=20210818#ver=20210818&amp;origin=https://us-russiafuture.org' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+	<div id='likes-other-gravatars'>
+		<div class="likes-text">
+			<span>%d</span> bloggers like this:		</div>
+		<ul class="wpl-avatars sd-like-gravatars"></ul>
+	</div>
+	
+		<script src="//stats.wp.com/w.js?61" defer></script> <script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'24715996','blog_tz':'-4','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'24715996','v':'wpcom','tz':'-4','user_id':'0','post':'843','subd':'futureofusrussiarelations'}]);
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1TaVhzUzFMbjdWNHpwZGhTayxPSUFCMGNrd29+Smw0TDhnZmRTK0hlRi9QSGh6bi9GXVhBJWIlZlR5U1JMLU8/MkNtblkvY1dkVGJJUnZvbyZ2U0g9LzAsWVFHW28/U0JfcD9SNVZobUxCQ0cwP0RXZiVmSVRZX2VPdjJrVG85dXRiRjU0MnlOfiZYcmlpRUdrYVdzeDVOZnc9Y2NjSV13Tj9DWEcxV2o9a1o5eGIuS042LlJ6LVZmPUpDcXJwOHRqOSthQz9BSlRidDRSYi1dSGF+XXFfSnl2RjlpUlFqWj1ibFB1QjR5USxKN3JZSFNVRTkrMmp0Y3ZPSiwyeW05VFlUR1tBaVVnditxdjB1dmMtXzF1U3ZZR2ZES2F3SFE2Z05y'}]);
+_stq.push([ 'clickTrackerInit', '24715996', '843' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:1px;width:1px;overflow:hidden;position:absolute;bottom:1px;" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>

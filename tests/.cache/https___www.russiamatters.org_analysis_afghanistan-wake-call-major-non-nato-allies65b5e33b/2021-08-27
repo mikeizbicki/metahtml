@@ -1,0 +1,446 @@
+
+
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="ie6 lt-ie9 lt-ie8 lt-ie7 no-js" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 7]>         <html class="ie7 lt-ie9 lt-ie8 no-js" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 8]>         <html class="ie8 lt-ie9 no-js" lang="en" dir="ltr"> <![endif]-->
+<!--[if IE 9]>         <html class="ie9 no-js" lang="en" dir="ltr"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="" lang="en" dir="ltr"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8" /><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={licenseKey:"NRJS-ee4e37a3c7ad3aaa4d3",applicationID:"764481018"};window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var i=e[n]={exports:{}};t[n][0].call(i.exports,function(e){var i=t[n][1][e];return r(i||e)},i,i.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var i=0;i<n.length;i++)r(n[i]);return r}({1:[function(t,e,n){function r(){}function i(t,e,n){return function(){return o(t,[u.now()].concat(f(arguments)),e?null:this,n),e?void 0:this}}var o=t("handle"),a=t(8),f=t(9),c=t("ee").get("tracer"),u=t("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var d=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],p="api-",l=p+"ixn-";a(d,function(t,e){s[e]=i(p+e,!0,"api")}),s.addPageAction=i(p+"addPageAction",!0),s.setCurrentRouteName=i(p+"routeName",!0),e.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(t,e){var n={},r=this,i="function"==typeof e;return o(l+"tracer",[u.now(),t,n],r),function(){if(c.emit((i?"":"no-")+"fn-start",[u.now(),r,i],n),i)try{return e.apply(this,arguments)}catch(t){throw c.emit("fn-err",[arguments,this,t],n),t}finally{c.emit("fn-end",[u.now()],n)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(t,e){m[e]=i(l+e)}),newrelic.noticeError=function(t,e){"string"==typeof t&&(t=new Error(t)),o("err",[t,u.now(),!1,e])}},{}],2:[function(t,e,n){function r(t){if(NREUM.init){for(var e=NREUM.init,n=t.split("."),r=0;r<n.length-1;r++)if(e=e[n[r]],"object"!=typeof e)return;return e=e[n[n.length-1]]}}e.exports={getConfiguration:r}},{}],3:[function(t,e,n){function r(){return f.exists&&performance.now?Math.round(performance.now()):(o=Math.max((new Date).getTime(),o))-a}function i(){return o}var o=(new Date).getTime(),a=o,f=t(10);e.exports=r,e.exports.offset=a,e.exports.getLastTimestamp=i},{}],4:[function(t,e,n){function r(t){return!(!t||!t.protocol||"file:"===t.protocol)}e.exports=r},{}],5:[function(t,e,n){function r(t,e){var n=t.getEntries();n.forEach(function(t){"first-paint"===t.name?d("timing",["fp",Math.floor(t.startTime)]):"first-contentful-paint"===t.name&&d("timing",["fcp",Math.floor(t.startTime)])})}function i(t,e){var n=t.getEntries();n.length>0&&d("lcp",[n[n.length-1]])}function o(t){t.getEntries().forEach(function(t){t.hadRecentInput||d("cls",[t])})}function a(t){if(t instanceof m&&!g){var e=Math.round(t.timeStamp),n={type:t.type};e<=p.now()?n.fid=p.now()-e:e>p.offset&&e<=Date.now()?(e-=p.offset,n.fid=p.now()-e):e=p.now(),g=!0,d("timing",["fi",e,n])}}function f(t){"hidden"===t&&d("pageHide",[p.now()])}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var c,u,s,d=t("handle"),p=t("loader"),l=t(7),m=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){c=new PerformanceObserver(r);try{c.observe({entryTypes:["paint"]})}catch(v){}u=new PerformanceObserver(i);try{u.observe({entryTypes:["largest-contentful-paint"]})}catch(v){}s=new PerformanceObserver(o);try{s.observe({type:"layout-shift",buffered:!0})}catch(v){}}if("addEventListener"in document){var g=!1,h=["click","keydown","mousedown","pointerdown","touchstart"];h.forEach(function(t){document.addEventListener(t,a,!1)})}l(f)}},{}],6:[function(t,e,n){function r(t,e){if(!i)return!1;if(t!==i)return!1;if(!e)return!0;if(!o)return!1;for(var n=o.split("."),r=e.split("."),a=0;a<r.length;a++)if(r[a]!==n[a])return!1;return!0}var i=null,o=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var f=navigator.userAgent,c=f.match(a);c&&f.indexOf("Chrome")===-1&&f.indexOf("Chromium")===-1&&(i="Safari",o=c[1])}e.exports={agent:i,version:o,match:r}},{}],7:[function(t,e,n){function r(t){function e(){t(a&&document[a]?document[a]:document[i]?"hidden":"visible")}"addEventListener"in document&&o&&document.addEventListener(o,e,!1)}e.exports=r;var i,o,a;"undefined"!=typeof document.hidden?(i="hidden",o="visibilitychange",a="visibilityState"):"undefined"!=typeof document.msHidden?(i="msHidden",o="msvisibilitychange"):"undefined"!=typeof document.webkitHidden&&(i="webkitHidden",o="webkitvisibilitychange",a="webkitVisibilityState")},{}],8:[function(t,e,n){function r(t,e){var n=[],r="",o=0;for(r in t)i.call(t,r)&&(n[o]=e(r,t[r]),o+=1);return n}var i=Object.prototype.hasOwnProperty;e.exports=r},{}],9:[function(t,e,n){function r(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,i=n-e||0,o=Array(i<0?0:i);++r<i;)o[r]=t[e+r];return o}e.exports=r},{}],10:[function(t,e,n){e.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(t,e,n){function r(){}function i(t){function e(t){return t&&t instanceof r?t:t?u(t,c,a):a()}function n(n,r,i,o,a){if(a!==!1&&(a=!0),!l.aborted||o){t&&a&&t(n,r,i);for(var f=e(i),c=v(n),u=c.length,s=0;s<u;s++)c[s].apply(f,r);var p=d[w[n]];return p&&p.push([b,n,r,f]),f}}function o(t,e){y[t]=v(t).concat(e)}function m(t,e){var n=y[t];if(n)for(var r=0;r<n.length;r++)n[r]===e&&n.splice(r,1)}function v(t){return y[t]||[]}function g(t){return p[t]=p[t]||i(n)}function h(t,e){l.aborted||s(t,function(t,n){e=e||"feature",w[n]=e,e in d||(d[e]=[])})}var y={},w={},b={on:o,addEventListener:o,removeEventListener:m,emit:n,get:g,listeners:v,context:e,buffer:h,abort:f,aborted:!1};return b}function o(t){return u(t,c,a)}function a(){return new r}function f(){(d.api||d.feature)&&(l.aborted=!0,d=l.backlog={})}var c="nr@context",u=t("gos"),s=t(8),d={},p={},l=e.exports=i();e.exports.getOrSetContext=o,l.backlog=d},{}],gos:[function(t,e,n){function r(t,e,n){if(i.call(t,e))return t[e];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:r,writable:!0,enumerable:!1}),r}catch(o){}return t[e]=r,r}var i=Object.prototype.hasOwnProperty;e.exports=r},{}],handle:[function(t,e,n){function r(t,e,n,r){i.buffer([t],r),i.emit(t,e,n)}var i=t("ee").get("handle");e.exports=r,r.ee=i},{}],id:[function(t,e,n){function r(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:a(t,o,function(){return i++})}var i=1,o="nr@id",a=t("gos");e.exports=r},{}],loader:[function(t,e,n){function r(){if(!R++){var t=M.info=NREUM.info,e=v.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(t&&t.licenseKey&&t.applicationID&&e))return u.abort();c(E,function(e,n){t[e]||(t[e]=n)});var n=a();f("mark",["onload",n+M.offset],null,"api"),f("timing",["load",n]);var r=v.createElement("script");0===t.agent.indexOf("http://")||0===t.agent.indexOf("https://")?r.src=t.agent:r.src=l+"://"+t.agent,e.parentNode.insertBefore(r,e)}}function i(){"complete"===v.readyState&&o()}function o(){f("mark",["domContent",a()+M.offset],null,"api")}var a=t(3),f=t("handle"),c=t(8),u=t("ee"),s=t(6),d=t(4),p=t(2),l=p.getConfiguration("ssl")===!1?"http":"https",m=window,v=m.document,g="addEventListener",h="attachEvent",y=m.XMLHttpRequest,w=y&&y.prototype,b=!d(m.location);NREUM.o={ST:setTimeout,SI:m.setImmediate,CT:clearTimeout,XHR:y,REQ:m.Request,EV:m.Event,PR:m.Promise,MO:m.MutationObserver};var x=""+location,E={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1210.min.js"},O=y&&w&&w[g]&&!/CriOS/.test(navigator.userAgent),M=e.exports={offset:a.getLastTimestamp(),now:a,origin:x,features:{},xhrWrappable:O,userAgent:s,disabled:b};if(!b){t(1),t(5),v[g]?(v[g]("DOMContentLoaded",o,!1),m[g]("load",r,!1)):(v[h]("onreadystatechange",i),m[h]("onload",r)),f("mark",["firstbyte",a.getLastTimestamp()],null,"api");var R=0}},{}],"wrap-function":[function(t,e,n){function r(t,e){function n(e,n,r,c,u){function nrWrapper(){var o,a,s,p;try{a=this,o=d(arguments),s="function"==typeof r?r(o,a):r||{}}catch(l){i([l,"",[o,a,c],s],t)}f(n+"start",[o,a,c],s,u);try{return p=e.apply(a,o)}catch(m){throw f(n+"err",[o,a,m],s,u),m}finally{f(n+"end",[o,a,p],s,u)}}return a(e)?e:(n||(n=""),nrWrapper[p]=e,o(e,nrWrapper,t),nrWrapper)}function r(t,e,r,i,o){r||(r="");var f,c,u,s="-"===r.charAt(0);for(u=0;u<e.length;u++)c=e[u],f=t[c],a(f)||(t[c]=n(f,s?c+r:r,i,c,o))}function f(n,r,o,a){if(!m||e){var f=m;m=!0;try{t.emit(n,r,o,e,a)}catch(c){i([c,n,r,o],t)}m=f}}return t||(t=s),n.inPlace=r,n.flag=p,n}function i(t,e){e||(e=s);try{e.emit("internal-error",t)}catch(n){}}function o(t,e,n){if(Object.defineProperty&&Object.keys)try{var r=Object.keys(t);return r.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(o){i([o],n)}for(var a in t)l.call(t,a)&&(e[a]=t[a]);return e}function a(t){return!(t&&t instanceof Function&&t.apply&&!t[p])}function f(t,e){var n=e(t);return n[p]=t,o(t,n,s),n}function c(t,e,n){var r=t[e];t[e]=f(r,n)}function u(){for(var t=arguments.length,e=new Array(t),n=0;n<t;++n)e[n]=arguments[n];return e}var s=t("ee"),d=t(9),p="nr@original",l=Object.prototype.hasOwnProperty,m=!1;e.exports=r,e.exports.wrapFunction=f,e.exports.wrapInPlace=c,e.exports.argsToArray=u},{}]},{},["loader"]);</script>
+<script async src="/sites/default/files/google_analytics/gtag.js?qyg4fh"></script>
+<script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments)};gtag("js", new Date());gtag("config", "UA-81592297-1", {"groups":"default","anonymize_ip":true,"link_attribution":true,"allow_ad_personalization_signals":false});</script>
+<meta name="Generator" content="Drupal 8 (https://www.drupal.org)" />
+<meta name="MobileOptimized" content="width" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="/sites/default/files/favicon_0.png" type="image/png" />
+<link rel="canonical" href="https://www.russiamatters.org/analysis/afghanistan-wake-call-major-non-nato-allies" />
+<link rel="shortlink" href="https://www.russiamatters.org/node/24216" />
+<link rel="revision" href="https://www.russiamatters.org/analysis/afghanistan-wake-call-major-non-nato-allies" />
+
+    <title>Afghanistan Is a Wake-Up Call for ‘Major Non-NATO Allies’ | Russia Matters</title>
+    <link rel="stylesheet" media="all" href="/sites/default/files/css/css_syAqUyy15zi_1GsTcW6Pt63J1C3yNOtxkDmzA51gR74.css" />
+<link rel="stylesheet" media="all" href="//fonts.googleapis.com/css?family=Alegreya:400,400i|Open+Sans:400,300,300i,400i,700,700i|Arimo:400,400i,700,700i" />
+
+<!--[if gte IE 9]><!-->
+<link rel="stylesheet" media="all" href="/sites/default/files/css/css_rJuXyUnoegEV1YBU8gUVZx9f1VIBKnjlJ9SfvG7jAXQ.css" />
+<!--<![endif]-->
+
+<!--[if lte IE 8]>
+<link rel="stylesheet" media="all" href="/sites/default/files/css/css_Gn8rpHKZ5De39pHJqjd8THky3y5UkomKoEKm2AH_FYA.css" />
+<![endif]-->
+
+    
+<!--[if lte IE 8]>
+<script src="/sites/default/files/js/js_VtafjXmRvoUgAzqzYTA3Wrjkx9wcWhjP0G4ZnnqRamA.js"></script>
+<![endif]-->
+
+  </head>
+  <body class="path-node not-front page--node-type-analysis">
+    
+      <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
+    
+<div class="page-container">
+  <div class="skiplinks">
+    <a href="#main" class="skiplinks__link element-focusable">Skip to main content</a>
+  </div>
+
+  <div class="header" role="banner">
+  <div class="header__utility">
+    <div class="header__utility-inner">
+      <nav role="navigation" aria-labelledby="block-gesso-utility-menu" id="block-gesso-utility">
+            
+  <h2 class="visually-hidden" id="block-gesso-utility-menu">Utility</h2>
+  
+
+                      <ul class="nav nav--utility-menu">
+    
+                
+      <li class="nav__item">
+        <a href="/about" class="nav__link" data-drupal-link-system-path="node/526">About</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/partners/institutional-partners" class="nav__link" data-drupal-link-system-path="node/4">Partners</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="http://russiamatters.us13.list-manage2.com/subscribe?u=c32e0458934cade1e5881c7df&amp;id=c5ec9e9ad8" class="nav__link">Subscribe</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/search" class="nav__link" data-drupal-link-system-path="node/581">Search</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="https://www.facebook.com/russiamattersorg/" title="Follow us on Facebook" class="nav__link">Facebook</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="https://twitter.com/russia_matters" title="Follow us on Twitter" class="nav__link">Twitter</a>
+              </li>
+    
+    </ul>
+  
+
+
+  </nav>
+
+    </div>
+  </div>
+
+  <div class="header__branding">
+    <div class="header__branding-inner">
+      <div class="header__branding-logo">
+        <a id="toggle-icon" class="toggle responsive-menu-toggle-icon" title="Menu" href="#off-canvas"><span class="icon"></span></a>
+<a class="site-name" href="/" title="Home" rel="home"><h1 class="site-name__text">Russia Matters</h1></a>
+
+      </div>
+      <div class="header__branding-partner">
+        <a class="belfercenter" href="http://belfercenter.ksg.harvard.edu/"><img title="Belfer Center for Science and International Affairs Logo" src="/themes/gesso/images/belfer.png"/></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="header__menu">
+    <div class="header__menu-inner">
+      <h2 class="element-invisible block__title">Main Menu</h2>
+    
+          <ul class="nav nav--main-menu" id="main-menu">
+    
+                
+      <li class="nav__item">
+        <a href="/analysis" class="nav__link" data-drupal-link-system-path="node/22">Analysis</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/news" class="nav__link" data-drupal-link-system-path="node/12179">News</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/blog" class="nav__link" data-drupal-link-system-path="node/6359">Blog</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/facts" class="nav__link" data-drupal-link-system-path="node/51">Facts and Documents</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/contestable-claims" class="nav__link" data-drupal-link-system-path="node/9653">Contestable Claims</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/quoteworthy" class="nav__link" data-drupal-link-system-path="node/4633">Quoteworthy</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/events" class="nav__link" data-drupal-link-system-path="node/11">Events</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/resources" class="nav__link" data-drupal-link-system-path="node/13787">Resources</a>
+              </li>
+    
+    </ul>
+  
+
+
+
+    </div>
+  </div>
+
+</div>
+  
+  
+  <div class="region region-highlighted layout-constrain">
+    <div data-drupal-messages-fallback class="hidden"></div>
+
+  </div>
+
+  
+  
+
+  <main id="main" class="main" role="main" tabindex="-1">
+    
+  <div class="region region-content">
+    
+
+
+
+<article role="article" class="node node--type-analysis node--display-mode-full">
+  <div class="layout-constrain">
+    <div class="node-detail">
+      <div class="node-detail__main">
+                <div class="node__photo">
+          <figure>
+              <img src="/sites/default/files/styles/slider/public/media/full/27029507408_95bfbf9a6a_c.jpg?h=c9f93661&amp;itok=CI3IX3xp" width="1300" height="600" alt="NATO hq" />
+
+
+
+                      </figure>
+        </div>
+                <div class="node-inner">
+          <h1 class="node__title">Afghanistan Is a Wake-Up Call for ‘Major Non-NATO Allies’</h1>
+          <div class="node__published">August 16, 2021</div>
+          <div class="node__author">Nikolas K. Gvosdev</div>
+
+                      <div class="node__source">
+              <em>Originally published by the <a href="https://nationalinterest.org/feature/afghanistan-wake-call-%E2%80%98major-non-nato-allies%E2%80%99-191864">National Interest</a>. </em>
+            </div>
+          
+          <div class="node__main-content">
+            
+<section class="section section--type-full-text section--display-mode-default">
+  <p>From Afghanistan to Hungary, there is confusion about what alliance means and what steps the United States is prepared to take on behalf of those it considers allies. These matters need resolution because the United States cannot allow any doubt about what commitments it is prepared to enforce, especially with great power competitors more prepared to test any ambiguity in America’s stance.</p>
+
+<p>A point that I have tried to make in these pages for the last two decades is the importance of clarity in language, particularly when it comes to commitments. Back in 2003, I worried that the careless <a href="https://nationalinterest.org/article/diplomatic-gobblygook-alliances-and-the-national-interest-2382">bandying-about of terms</a> like partner or ally “increasingly muddle policy, especially when they create assumptions or expectations that are then unfulfilled.” In the aftermath of Russian actions taken against Georgia (in 2008) and Ukraine (in 2004), I warned about the dangers of <a href="https://nationalinterest.org/commentary/ukraine-the-failure-strategic-ambiguity-9992">blurring the line</a> between an ally with a Senate-confirmed mutual defense treaty and concrete contingency planning for security, and a “partner” who received U.S. security assistance funds and basked in presidential speeches and non-binding Congressional resolutions promising support.</p>
+
+<p>Commitments matter, because the reliability of one’s guarantees directly influences the deterrent power that they exercise over a challenger’s strategic calculus. Over the last seven years, we have seen how Russia has tested, most notably with <a href="https://nationalinterest.org/blog/buzz/russia-claims-nato-deploying-more-troops-border-and-increasing-spy-flights-168545">Ukraine</a>, the gap between rhetorical promises of support for Kyiv with what the United States was actually prepared to put on the line. In addition, the U.S. ability to get other key allies to adopt its rhetorical commitments as binding on them has waned. <a href="https://nationalinterest.org/blog/buzz/can-germany-break-status-quo-eu-russia-relations-190222">Germany</a>, pursuing its own national security imperative of securing <a href="https://nationalinterest.org/blog/buzz/dont-overestimate-russian-natural-gas-threat-191496">unimpeded access</a> to <a href="https://nationalinterest.org/blog/buzz/eastern-europe-will-have-learn-live-nord-stream-2-191341">energy supplies</a> at a price and quantity that allows its economy to remain competitive (and, in turn, to pull along the overall economies of the <a href="https://nationalinterest.org/blog/buzz/nord-stream-ii-deal-embarrassment-european-union-191264">European Union</a> member states), has successfully pushed back against U.S. efforts to stop the construction of the Nord Stream II pipeline that will allow Russian natural gas to be sent directly to Germany—without the need to <a href="https://nationalinterest.org/blog/buzz/german-american-support-ukraine-after-nord-stream-2-wont-be-enough-191046">transit states</a> which have difficult relations with Moscow. From Germany’s perspective, <a href="https://nationalinterest.org/blog/buzz/nord-stream-and-beyond-rescuing-ukraine-while-repairing-russia-ties-190838">Ukraine</a> is a European partner (which is why Berlin offers to use its good offices to ensure some Russian energy transit continues across Ukrainian territory, and to invest in modernizing the Ukrainian energy infrastructure)—but not a treaty ally, meaning that Germany does not believe it is obligated out of any sense of formal alliance commitments to prioritize Ukrainian concerns as part of the bilateral German-Russian relationship.</p>
+
+<p>Moreover, as the United States seeks to get consensus from its <a href="https://nationalinterest.org/blog/buzz/nato-vs-china-planet-earths-future-180853">NATO allies</a> to expand the focus of the alliance to consider the Chinese challenge, negotiating within the alliance in order to bolster America’s ability to recommit to its formal Asian allies, starting with Japan and South Korea, takes precedence. Ukraine, like Georgia before it, is receiving an unpleasant reminder that, no matter how many members of Congress use the term “ally” to describe Ukraine, there is in fact a clear, sharp, and bright dividing line in U.S. foreign policy between treaty allies and “everyone else.” <a href="https://www.thechicagocouncil.org/research/public-opinion-survey/treaty-allies-matter-us-foreign-policy-experts-they-are-not">Recent studies</a> also indicate that “foreign policy experts in the United States consider treaty alliances to be the most important type of relationship” and draw distinctions between states with formal treaty commitments versus states that may be described on the floor of the U.S. Senate as an ally but lack any documents that have been signed on the dotted line.</p>
+
+<p>A number of years ago, seeking to remedy this deficiency, there was a <a href="https://www.worldpoliticsreview.com/articles/14088/u-s-ally-status-without-treaty-a-hollow-gesture-for-ukraine">push within Congress</a> to formally <a href="https://nationalinterest.org/blog/buzz/should-ukraine-join-nato-114926">designate Ukraine</a> as a non-NATO ally of the United States. In theory, this would put Ukraine at the same level as countries like Israel (another state which lacks a formal treaty of alliance with the United States). However, watching events unfold in Afghanistan, Ukrainian policymakers might reconsider the value of such a declaration. After all, with much ballyhoo, in 2012 Afghanistan was so designated as a “major non-NATO ally” of the United States, a step that then-Secretary of State Hillary Clinton <a href="https://www.dw.com/en/us-designates-afghanistan-as-major-non-nato-ally/a-16080270">declared</a> represented “a powerful commitment to Afghanistan’s future” through which “a number of benefits” would accrue to Kabul. At the time, this declaration was seen as significant given that such a status continued to be denied to Ukraine and Georgia but also was not even being considered in the context of the India-U.S. strategic dialogue. It also seemed to suggest that the United States was invested in the success of Afghanistan as a keystone for U.S. power and influence in the region.</p>
+
+<p>Over the last two weeks, in all of the discussions of what is going to happen to the government of Afghanistan as the United States completes its withdrawal, I have not come across any discussion of how Afghanistan’s status as a designated “ally” of the United States is playing out. In other words, the <a href="https://nationalinterest.org/blog/middle-east-watch/afghanistan-collapse-continues-ghani-dostum-rally-troops-mazar-i-sharif">erosion of the power</a> of the recognized government in Kabul—with predictions of complete <a href="https://nationalinterest.org/feature/collapse-afghanistan-could-mean-trouble-americas-enemies-191685">collapse</a> now increasingly being heard—is discussed without any reference to its status as a formally designated ally of the United States.</p>
+
+<p>In retrospect, giving that designation to Afghanistan nine years ago was not strategically sound, given the problems that the Afghan government faced, but reflected a view that <a href="https://www.carnegiecouncil.org/studio/multimedia/20210326-doorstep-trump-legacy-biden-foreign-policy-colin-dueck">Colin Dueck</a> has pointed out about “getting things right verbally” and “thinking that the words in themselves are self-executing”—that making the designation of Afghanistan as an ally would somehow either lock in the U.S. public commitment to the Afghan mission or cause the Afghans themselves to change their behavior. And yet, the formal designation of Afghanistan as an ally has not captured the U.S. public imagination. As the most recent <a href="https://www.thechicagocouncil.org/commentary-and-analysis/blogs/us-public-supports-withdrawal-afghanistan">Chicago Council</a> surveys show, some 70 percent of Americans support the withdrawal of U.S. forces—and this support spans partisan affiliations, and in fact may be one of the few issues where large numbers of Democrats, Republicans, and independents agree.</p>
+
+<p>But what it also suggests is that the non-NATO ally designation—which can be done by the Executive Branch and is not confirmed or ratified by Congress, but also does not formally commit the United States to anything—may not be worth as much. Moreover, because it lacks Senate ratification, there is less buy-in should the U.S. public not support taking action. Watching events in Kabul, a government in Kyiv, or Tbilisi, or Chisinau would wonder whether getting even the non-NATO status would bring much benefit. (I assume that they would still lobby for such a status, both for the possibilities for enhanced partnerships in the development and purchase of advanced military equipment, and even because the non-NATO designation would allow the claim of being an “ally” of the United States to rest on an actual U.S. government designation on official letterhead, even if it did not rise to the level of a mutual-defense commitment.)</p>
+
+<p>But while other non-NATO allies may look at the fate of the Kabul government as an unpleasant reminder that their status as partners of the United States is not as far-reaching as they might hope, there is another trend currently in play: countries that are fulfilling the letter of their formal alliance commitments but who are pursuing domestic or foreign policies at odds with U.S. preferences being cast out, at least in terms of public and elite discourse, from the ranks of U.S. allies. I do not wish to discuss the specifics or merit of any steps taken in recent months by governments in <a href="https://nationalinterest.org/blog/buzz/erdogan-escalates-turkish-campaign-disenfranchise-six-million-pro-kurdish-voters-190653">Turkey</a>, <a href="https://www.newyorker.com/news/q-and-a/why-conservatives-around-the-world-have-embraced-hungarys-viktor-orban">Hungary</a>, or Poland, but as of August 2021, all three were still formal members of NATO and carrying out the terms of their specified commitments to the alliance. In particular, Turkey still continues <a href="https://nationalinterest.org/blog/buzz/why-turkey-wants-protect-kabul%E2%80%99s-airport-187945">to provide its personnel</a> for a variety of NATO missions across the alliance. And yet the fraternal bonds of the alliance are fraying because of the sense that Ankara, Budapest, and now Warsaw may increasingly be at odds with the ethos of the other NATO members. This speaks to a larger problem that NATO must resolve: is it a security community aligned against concrete geopolitical threats or is its purpose to strengthening democratic values? In <a href="https://nationalinterest.org/feature/don%E2%80%99t-believe-doomsayers-nato-has-future-52712?page=0%2C4">writing for this journal</a> on the seventieth anniversary of the signing of the Washington Treaty creating the North Atlantic alliance, I quoted Ahmet Berat Conkar, the then-head of Turkey’s NATO parliamentary assembly, who noted that the alliance would have “to come to terms with those divergences.”</p>
+
+<p>From Afghanistan to Hungary, there is confusion about what alliance means and what steps the United States is prepared to take on behalf of those it considers allies. These matters need resolution because the United States cannot allow any doubt about what commitments it is prepared to enforce, especially with great power competitors more prepared to test any ambiguity in America’s stance.</p>
+</section>
+
+<section class="section section--type-author section--display-mode-default">
+  <div class="author-label">Author</div>
+  <h4 class="author-name">Nikolas Gvosdev</h4>
+  <div class="author-bio"><h4>Nikolas Gvosdev is a <a href="https://usnwc.edu/Faculty-and-Departments/Directory/Nikolas-K-Gvosdev">professor</a> of national security affairs at the U.S. Naval War College and a <a href="https://www.fpri.org/contributor/nikolas-gvosdev-2/">senior fellow</a> for Eurasia at the Foreign Policy Research Institute.</h4></div>
+</section>
+
+<section class="section section--type-full-text section--display-mode-default">
+  <p><em><a href="https://www.flickr.com/photos/nato/27029507408">Photo</a> by NATO, shared via a Creative Commons license. The opinions expressed herein are solely those of the author.</em></p>
+</section>
+
+          </div>
+        </div>
+      </div>
+
+      
+                    <div class="node-detail__comments">
+                
+            </div>
+        
+    </div>
+
+
+
+  </div>
+</article>
+
+
+  </div>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+  <div class="layout-constrain">
+    <div class="footer__top">
+      <div class="footer__top-logo"><span></span></div>
+      <div class="footer__top-branding">
+        <a class="belfercenter" href="http://belfercenter.ksg.harvard.edu/"><img title="Belfer Center for Science and International Affairs Logo" src="/themes/gesso/images/belfer.png"/></a>
+      </div>
+    </div>
+
+    <div class="footer__middle">
+      <div class="footer__middle-grid">
+        <div class="footer__middle-menu">
+          <h2 class="element-invisible block__title">Footer Menu</h2>
+    
+          <ul class="nav nav--footer-menu">
+    
+                
+      <li class="nav__item">
+        <a href="/" class="nav__link" data-drupal-link-system-path="&lt;front&gt;">Home</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/analysis" class="nav__link" data-drupal-link-system-path="node/22">Analysis</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/news" class="nav__link" data-drupal-link-system-path="node/12179">News</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/blog" class="nav__link" data-drupal-link-system-path="node/6359">Blog</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/facts" class="nav__link" data-drupal-link-system-path="node/51">Facts and Documents</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/contestable-claims" class="nav__link" data-drupal-link-system-path="node/9653">Contestable Claims</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/quoteworthy" class="nav__link" data-drupal-link-system-path="node/4633">Quoteworthy</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/events" class="nav__link" data-drupal-link-system-path="node/11">Events</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/resources" class="nav__link" data-drupal-link-system-path="node/13787">Resources</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/about" class="nav__link" data-drupal-link-system-path="node/526">About</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/partners/institutional-partners" class="nav__link" data-drupal-link-system-path="node/4">Partners</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="http://russiamatters.us13.list-manage2.com/subscribe?u=c32e0458934cade1e5881c7df&amp;id=c5ec9e9ad8" class="nav__link">Subscribe</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/search" class="nav__link" data-drupal-link-system-path="node/581">Search</a>
+              </li>
+    
+    </ul>
+  
+
+
+
+        </div>
+        <div class="footer__middle-contact">
+          <div class="contact">
+  <div class="contact__republication">
+      <a href="/node/7406" title="Republication Guidelines">Republication Guidelines</a>
+
+  </div>
+
+  
+  
+  <div class="contact__social">
+      <a class="link-icon link-icon--facebook" href="https://www.facebook.com/russiamattersorg/" title="Follow us on Facebook">Facebook
+      </a>
+
+      <a class="link-icon link-icon--twitter" href="https://twitter.com/russia_matters" title="Follow us on Twitter">Twitter
+      </a>
+
+  </div>
+</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <div class="footer-utility">
+  <div class="layout-constrain">
+    <div class="footer-utility-inner">
+      <div class="copyright">
+  &copy; Russia Matters 2018 | This project has been made possible with support from Carnegie Corporation of New York.
+</div>
+
+      <div class="menu">
+  <h2 class="element-invisible block__title">Footer Utiltity</h2>
+
+            
+              <ul class="nav nav--footer-utility-menu">
+      
+                      
+        <li class="nav__item">
+          <a href="/node/2284" class="nav__link" data-drupal-link-system-path="node/2284">Privacy Policy</a>
+                  </li>
+      
+      </ul>
+      
+
+  </div>
+
+    </div>
+  </div>
+</div>
+
+    </div>
+  </div>
+</footer>
+
+
+</div>
+  </div>
+
+    <div class="off-canvas-wrapper"><div id="off-canvas">    
+          <ul class="nav nav--footer-menu">
+    
+                
+      <li class="nav__item">
+        <a href="/" class="nav__link" data-drupal-link-system-path="&lt;front&gt;">Home</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/analysis" class="nav__link" data-drupal-link-system-path="node/22">Analysis</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/news" class="nav__link" data-drupal-link-system-path="node/12179">News</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/blog" class="nav__link" data-drupal-link-system-path="node/6359">Blog</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/facts" class="nav__link" data-drupal-link-system-path="node/51">Facts and Documents</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/contestable-claims" class="nav__link" data-drupal-link-system-path="node/9653">Contestable Claims</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/quoteworthy" class="nav__link" data-drupal-link-system-path="node/4633">Quoteworthy</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/events" class="nav__link" data-drupal-link-system-path="node/11">Events</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/resources" class="nav__link" data-drupal-link-system-path="node/13787">Resources</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/about" class="nav__link" data-drupal-link-system-path="node/526">About</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/partners/institutional-partners" class="nav__link" data-drupal-link-system-path="node/4">Partners</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="http://russiamatters.us13.list-manage2.com/subscribe?u=c32e0458934cade1e5881c7df&amp;id=c5ec9e9ad8" class="nav__link">Subscribe</a>
+              </li>
+                
+      <li class="nav__item">
+        <a href="/search" class="nav__link" data-drupal-link-system-path="node/581">Search</a>
+              </li>
+    
+    </ul>
+  
+
+</div></div>
+    <script type="application/json" data-drupal-selector="drupal-settings-json">{"path":{"baseUrl":"\/","scriptPath":null,"pathPrefix":"","currentPath":"node\/24216","currentPathIsAdmin":false,"isFront":false,"currentLanguage":"en"},"pluralDelimiter":"\u0003","suppressDeprecationErrors":true,"responsive_menu":{"position":"left","theme":"theme-dark","pagedim":"pagedim","breakpoint":"(min-width: 960px)","extension_keyboard":true,"superfish":{"active":false,"delay":300,"speed":100,"speedOut":100}},"google_analytics":{"account":"UA-81592297-1","trackOutbound":true,"trackMailto":true,"trackDownload":true,"trackDownloadExtensions":"7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x|m)?|dot(x|m)?|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt(x|m)?|pot(x|m)?|pps(x|m)?|ppam|sld(x|m)?|thmx|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls(x|m|b)?|xlt(x|m)|xlam|xml|z|zip"},"data":{"extlink":{"extTarget":true,"extTargetNoOverride":false,"extNofollow":false,"extNoreferrer":false,"extFollowNoOverride":false,"extClass":"0","extLabel":"(link is external)","extImgClass":false,"extSubdomains":false,"extExclude":"","extInclude":"","extCssExclude":"","extCssExplicit":"","extAlert":false,"extAlertText":"","mailtoClass":"0","mailtoLabel":"(link sends email)","extUseFontAwesome":false,"extIconPlacement":"append","extFaLinkClasses":"fa fa-external-link","extFaMailtoClasses":"fa fa-envelope-o","whitelistedDomains":null}},"user":{"uid":0,"permissionsHash":"2c18c17018939497730465ad7560c485228bd411fa7ff088c118fee035d5b92e"}}</script>
+<script src="/sites/default/files/js/js_7LZjPyXYOKrpJTbanwY4IHCvl2mzf_TnoaGpz170jpE.js"></script>
+<script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-579a5cbdac39e0af"></script>
+
+  <script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"NRJS-ee4e37a3c7ad3aaa4d3","applicationID":"764481018","transactionName":"YAEDNxcFDUACUkMMDllLIAARDQxdTEFWAgRoBwAADQE=","queueTime":0,"applicationTime":20,"atts":"TEYAQV8fHk4=","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+</html>

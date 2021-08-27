@@ -106,6 +106,9 @@ def parse(html, url, property_filter=None, fast=False, extractor_config=metahtml
     # remove ads
     hostnames_adblock_breaks = [
         'archive.thinkprogress.org',
+        'resources.infosecinstitute.com',
+        'cjr.org',
+        'www.cjr.org',
         ]
     if not fast and parser.url_parsed.hostname not in hostnames_adblock_breaks:
         metahtml.adblock.rm_ads(parser)
