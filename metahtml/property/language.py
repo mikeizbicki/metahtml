@@ -49,7 +49,7 @@ class Extractor(BaseExtractor):
         # https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
         if len(text)>=2:
             return {
-                'value' : text.replace('_','-').lower(),
+                'value' : text.replace('_','-').lower().strip('"'),
                 'raw' : text,
                 }
 
