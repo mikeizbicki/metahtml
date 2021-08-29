@@ -69,6 +69,7 @@ class Extractor(BaseExtractor):
         # direct translations without links:
         # https://bles.com/mundo/rusia-uso-hidroxicloroquina-medicamento-tratar-virus-pcch-sugerido-trump.html
         # https://thebl.com/world-news/russia-supports-hydroxychloroquine-drug-ccp-virus-trump.html
+        # https://calmatters.org/environment/2021/02/california-desert-lithium-valley/
 
         return results
 
