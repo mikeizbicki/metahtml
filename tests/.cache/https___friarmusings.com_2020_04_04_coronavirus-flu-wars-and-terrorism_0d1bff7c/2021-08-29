@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<!--[if IE 6]>
+<html id="ie6" lang="en">
+<![endif]-->
+<!--[if IE 7]>
+<html id="ie7" lang="en">
+<![endif]-->
+<!--[if IE 8]>
+<html id="ie8" lang="en">
+<![endif]-->
+<!--[if !(IE 6) & !(IE 7) & !(IE 8)]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>
+Coronavirus, flu, wars and terrorism | friarmusings	</title>
+<link rel="profile" href="https://gmpg.org/xfn/11" />
+<link rel="stylesheet" type="text/css" media="all" href="https://s2.wp.com/wp-content/themes/pub/twentyeleven/style.css?ver=20190507" />
+<link rel="pingback" href="https://friarmusings.com/xmlrpc.php">
+<!--[if lt IE 9]>
+<script src="https://s2.wp.com/wp-content/themes/pub/twentyeleven/js/html5.js?ver=3.7.0" type="text/javascript"></script>
+<![endif]-->
+<meta name='robots' content='max-image-preview:large' />
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.parentNode.removeChild( dom_node ); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[ i ].parentNode.removeChild( dom_nodes[ i ] );
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+					+ '//' + window.location.hostname
+					+ '&postid=9848'
+					+ '&is_singular=1';
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9mcmlhcm11c2luZ3MuY29t"
+		+ "&wpcomid=27400597"
+		+ "&time=1630256458";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='//s2.wp.com' />
+<link rel='dns-prefetch' href='//friarmusings.wordpress.com' />
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel="alternate" type="application/rss+xml" title="friarmusings &raquo; Coronavirus, flu, wars and&nbsp;terrorism Comments Feed" href="https://friarmusings.com/2020/04/04/coronavirus-flu-wars-and-terrorism/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s2.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1625065786h&ver=5.8"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s1.wp.com/_static/??-eJytUttOwzAM/SFSUwqTeEB8S5KakC035bIqf4+bCtGtrOyBlyjH9nGOjwNTYNK7jC6DLSyYorRLMAXpLUtWG6xXqJMpPcDvNKNPmOCIOXB5Yg1tyr9rVSEoMCrKRIRz33dD9wiiaDOCML41EJHHCilXg//RKH+i/WmknTRlnAUnsDhqjobS80QrEAyvGJlBxWXtrHZ/0ym3xhek2+Kb0pV5vPqSmYp6vHv+qxaRZ+1UukFfrW32jeI28K34HdryLYQIEVNidFpdLGseb9e+hCEUAXmiQKUHzuiWBd1f3mZh7eVdaXpUmBNkH1jwKd9hgkLPSAt55t0FYB+G67hHjUhTKLoqoKoVnEnv9q0/PL0O/XB4fjl+AXc8S9w=?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-2-1' href='https://s1.wp.com/_static/??-eJxti0EKgCAQAD+ULUaJl+gtJqbG6opr9P3o0CHqNAzMwFmEpdxcbpAOUfDwMTMU4iY2NLECB1Nj9g97y9zB/8Vko0GB5Oktn6kFlxxDGMEjrQbvYEmzVHIclNZy2i9lFDfR?cssminify=yes' type='text/css' media='all' />
+<script id='wpcom-actionbar-placeholder-js-extra'>
+var actionbardata = {"siteID":"27400597","siteName":"friarmusings","siteURL":"https:\/\/friarmusings.com","siteHost":"friarmusings.com","icon":"<img alt='' src='https:\/\/s2.wp.com\/i\/logo\/wpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/twentyeleven","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fr-login.wordpress.com%2Fremote-login.php%3Faction%3Dlink%26back%3Dhttps%253A%252F%252Ffriarmusings.com%252F2020%252F04%252F04%252Fcoronavirus-flu-wars-and-terrorism%252F","themeURL":"https:\/\/wordpress.com\/theme\/twentyeleven\/","xhrURL":"https:\/\/friarmusings.com\/wp-admin\/admin-ajax.php","nonce":"936edb544a","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"90cdaefa16\" \/>","referer":"https:\/\/friarmusings.com\/2020\/04\/04\/coronavirus-flu-wars-and-terrorism\/","canFollow":"1","feedID":"78586603","statusMessage":"","customizeLink":"https:\/\/friarmusings.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Ffriarmusings.wordpress.com%2F2020%2F04%2F04%2Fcoronavirus-flu-wars-and-terrorism%2F","postID":"9848","shortlink":"https:\/\/wp.me\/p1QY97-2yQ","canEditPost":"","editLink":"https:\/\/wordpress.com\/post\/friarmusings.com\/9848","statsLink":"https:\/\/wordpress.com\/stats\/post\/9848\/friarmusings.com","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: Twenty Eleven","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"Join 1,091 other followers","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fr-login.wordpress.com%2Fremote-login.php%3Faction%3Dlink%26back%3Dhttps%253A%252F%252Ffriarmusings.com%252F2020%252F04%252F04%252Fcoronavirus-flu-wars-and-terrorism%252F\">Log in now.<\/a>","stats":"Stats"}};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s1.wp.com/_static/??-eJyFzUEKwkAMheELmQ4qtboQz9LWWGaYJGOSQXt7KyjUlau3+D944VFgFHZkD8lCEXNCs37CJtkm/FaSIWaEaqgLYIfIN/m6yGOuV7Q3TPeKOn+moch/EVCctHdc49WzZoei8pyXdqHz9rDrTse2a/fpBYU+RvU='></script>
+<script type='text/javascript'>
+	window.addEventListener( 'DOMContentLoaded', function() {
+		rltInitialize( {"token":null,"iframeOrigins":["https:\/\/widgets.wp.com"]} );
+	} );
+</script>
+<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1625210320h&cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s2.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://friarmusings.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="https://friarmusings.com/2020/04/04/coronavirus-flu-wars-and-terrorism/" />
+<link rel='shortlink' href='https://wp.me/p1QY97-2yQ' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Ffriarmusings.com%2F2020%2F04%2F04%2Fcoronavirus-flu-wars-and-terrorism%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Ffriarmusings.com%2F2020%2F04%2F04%2Fcoronavirus-flu-wars-and-terrorism%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Coronavirus, flu, wars and terrorism" />
+<meta property="og:url" content="https://friarmusings.com/2020/04/04/coronavirus-flu-wars-and-terrorism/" />
+<meta property="og:description" content="I hope that we are all taking the pandemic seriously. I remain appalled at the local pastor who held services in his church despite warning about large crowd gatherings. Before he was arrested, the…" />
+<meta property="article:published_time" content="2020-04-04T12:47:39+00:00" />
+<meta property="article:modified_time" content="2020-04-04T12:47:48+00:00" />
+<meta property="og:site_name" content="friarmusings" />
+<meta property="og:image" content="https://friarmusings.files.wordpress.com/2020/03/covid-blog.png?w=300" />
+<meta property="og:image:width" content="300" />
+<meta property="og:image:height" content="169" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:creator" content="@GeorgeOFM" />
+<meta name="twitter:site" content="@GeorgeOFM" />
+<meta name="twitter:text:title" content="Coronavirus, flu, wars and&nbsp;terrorism" />
+<meta name="twitter:image" content="https://friarmusings.files.wordpress.com/2020/03/covid-blog.png?w=640" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://s1.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="icon" type="image/x-icon" href="https://s1.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="apple-touch-icon" href="https://s2.wp.com/i/webclip.png" />
+<link rel='openid.server' href='https://friarmusings.com/?openidserver=1' />
+<link rel='openid.delegate' href='https://friarmusings.com/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://friarmusings.com/osd.xml" title="friarmusings" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+<meta name="application-name" content="friarmusings" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="the musings of a Franciscan friar..." /><meta name="msapplication-task" content="name=Subscribe;action-uri=https://friarmusings.com/feed/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="description" content="I hope that we are all taking the pandemic seriously. I remain appalled at the local pastor who held services in his church despite warning about large crowd gatherings. Before he was arrested, the sheriff noted that the church was already equipped to broadcast its services online and had been doing so. Our parish is&hellip;" />
+<link rel="amphtml" href="https://friarmusings.com/2020/04/04/coronavirus-flu-wars-and-terrorism/amp/">		<link rel="stylesheet" id="custom-css-css" type="text/css" href="https://s1.wp.com/?custom-css=1&#038;csblog=1QY97&#038;cscache=6&#038;csrev=1" />
+		<!-- Your Google Analytics Plugin is missing the tracking ID -->
+</head>
+
+<body class="post-template-default single single-post postid-9848 single-format-standard wp-embed-responsive customizer-styles-applied single-author singular two-column right-sidebar highlander-enabled highlander-light">
+<div class="skip-link"><a class="assistive-text" href="#content">Skip to primary content</a></div><div id="page" class="hfeed">
+	<header id="branding" role="banner">
+			<hgroup>
+				<h1 id="site-title"><span><a href="https://friarmusings.com/" rel="home">friarmusings</a></span></h1>
+				<h2 id="site-description">the musings of a Franciscan friar&#8230;</h2>
+			</hgroup>
+
+						<a href="https://friarmusings.com/">
+									<img src="https://friarmusings.files.wordpress.com/2015/08/vigil1_gc4.jpg" width="1000" height="288" alt="friarmusings" />
+								</a>
+			
+									<form method="get" id="searchform" action="https://friarmusings.com/">
+		<label for="s" class="assistive-text">Search</label>
+		<input type="text" class="field" name="s" id="s" placeholder="Search" />
+		<input type="submit" class="submit" name="submit" id="searchsubmit" value="Search" />
+	</form>
+			
+			<nav id="access" role="navigation">
+				<h3 class="assistive-text">Main menu</h3>
+				<div class="menu-menu-1-container"><ul id="menu-menu-1" class="menu"><li id="menu-item-7143" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-7143"><a href="https://friarmusings.wordpress.com/">Home</a></li>
+<li id="menu-item-7144" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7144"><a href="https://friarmusings.com/about/">About</a></li>
+<li id="menu-item-7146" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7146"><a href="https://friarmusings.com/francis-of-assisi/">Francis of Assisi</a></li>
+<li id="menu-item-7567" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7567"><a href="https://friarmusings.com/belonging/">Belonging</a></li>
+<li id="menu-item-8870" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8870"><a href="https://friarmusings.com/stewardship/">Stewardship</a></li>
+<li id="menu-item-7939" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7939"><a href="https://friarmusings.com/gratitude/">Gratitude</a></li>
+<li id="menu-item-13349" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-13349"><a href="#">Gospels</a>
+<ul class="sub-menu">
+	<li id="menu-item-11251" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11251"><a href="https://friarmusings.com/mark-year-b/">Mark /Year B</a></li>
+	<li id="menu-item-9004" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-9004"><a href="https://friarmusings.com/matthew/">Matthew/Year A</a></li>
+	<li id="menu-item-8028" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8028"><a href="https://friarmusings.com/luke/">Luke /Year C</a></li>
+</ul>
+</li>
+</ul></div>			</nav><!-- #access -->
+	</header><!-- #branding -->
+
+
+	<div id="main">
+
+		<div id="primary">
+			<div id="content" role="main">
+
+				
+					<nav id="nav-single">
+						<h3 class="assistive-text">Post navigation</h3>
+						<span class="nav-previous"><a href="https://friarmusings.com/2020/04/04/a-good-and-beautiful-thing/" rel="prev"><span class="meta-nav">&larr;</span> Previous</a></span>
+						<span class="nav-next"><a href="https://friarmusings.com/2020/04/04/opportunities-given-us/" rel="next">Next <span class="meta-nav">&rarr;</span></a></span>
+					</nav><!-- #nav-single -->
+
+					
+<article id="post-9848" class="post-9848 post type-post status-publish format-standard hentry category-catholic tag-covid-19">
+	<header class="entry-header">
+		<h1 class="entry-title">Coronavirus, flu, wars and&nbsp;terrorism</h1>
+
+				<div class="entry-meta">
+						<span class="sep">Posted on </span><a href="https://friarmusings.com/2020/04/04/coronavirus-flu-wars-and-terrorism/" title="8:47 am" rel="bookmark"><time class="entry-date" datetime="2020-04-04T08:47:39-04:00">April 4, 2020</time></a><span class="by-author"> <span class="sep"> by </span> <span class="author vcard"><a class="url fn n" href="https://friarmusings.com/author/friarmusings/" title="View all posts by Friar Musings" rel="author">Friar Musings</a></span></span>		</div><!-- .entry-meta -->
+			</header><!-- .entry-header -->
+
+	<div class="entry-content">
+		<p><img loading="lazy" data-attachment-id="9659" data-permalink="https://friarmusings.com/2020/03/19/the-rhythm-of-being-church/covid-blog/" data-orig-file="https://friarmusings.files.wordpress.com/2020/03/covid-blog.png" data-orig-size="900,506" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="COVID-Blog" data-image-description="&lt;p&gt;COVID-19&lt;/p&gt;
+" data-image-caption="" data-medium-file="https://friarmusings.files.wordpress.com/2020/03/covid-blog.png?w=300" data-large-file="https://friarmusings.files.wordpress.com/2020/03/covid-blog.png?w=584" class="alignleft size-medium wp-image-9659" src="https://friarmusings.files.wordpress.com/2020/03/covid-blog.png?w=300&#038;h=169" alt="" width="300" height="169" srcset="https://friarmusings.files.wordpress.com/2020/03/covid-blog.png?w=300&amp;h=169 300w, https://friarmusings.files.wordpress.com/2020/03/covid-blog.png?w=600&amp;h=338 600w, https://friarmusings.files.wordpress.com/2020/03/covid-blog.png?w=150&amp;h=84 150w" sizes="(max-width: 300px) 100vw, 300px" />I hope that we are all taking the pandemic seriously. I remain appalled at the <a href="https://www.tampabay.com/news/hillsborough/2020/04/02/tampa-pastor-arrested-for-defying-virus-orders-closes-church-due-to-tyrannical-government/" target="_blank" rel="noopener">local pastor who held services in his church</a> despite warning about large crowd gatherings. Before he was arrested, the sheriff noted that the church was already equipped to broadcast its services online and had been doing so. Our parish is closed out of love and concern for the parishioners &#8211; even as we figure out ways to continue our works of charity. <span id="more-9848"></span></p>
+<p>Some perspective on the seriousness of this pandemic is needed:</p>
+<ul>
+<li>On a typical day, 7,700 Americans die—from all causes, natural and violent.</li>
+<li>Last Monday about 500 people died.</li>
+<li>Wednesday it was reported that more than 1,000 people died here in the United States because of the virus.</li>
+<li>2,501: Americans were killed in action on D-Day.</li>
+<li>2,977: people who died on 9-11 terror attacks</li>
+<li>As of Saturday morning (April 4) a total of 7,146 people are reported to have died of the virus.</li>
+</ul>
+<p>The Office of the President is reporting that between 100,000 and 240,000 Americans will die because of the virus.</p>
+<ul>
+<li>Under 100,000: Americans died in the Korean War, Vietnam War and the war in Afghanistan combined.</li>
+<li>658,000: The total number of Americans who have died in combat in all of the wars in U.S. history.</li>
+<li>675,000: Americans died of the Spanish flu in 1918-19.</li>
+</ul>
+<p>We are not to the worst of days. The number of coronavirus cases is increasing exponentially, so every day will be magnitude worse than the one before. The toughest days are still ahead in terms of illness and death.</p>
+<p>May God watch over us and keep us safe.</p>
+<hr />
+<p><em>data from the Tampa Bay Times</em></p>
+<div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-9848" class="share-twitter sd-button share-icon no-text" href="https://friarmusings.com/2020/04/04/coronavirus-flu-wars-and-terrorism/?share=twitter" target="_blank" title="Click to share on Twitter"><span></span><span class="sharing-screen-reader-text">Click to share on Twitter (Opens in new window)</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-9848" class="share-facebook sd-button share-icon no-text" href="https://friarmusings.com/2020/04/04/coronavirus-flu-wars-and-terrorism/?share=facebook" target="_blank" title="Click to share on Facebook"><span></span><span class="sharing-screen-reader-text">Click to share on Facebook (Opens in new window)</span></a></li><li class="share-email"><a rel="nofollow noopener noreferrer" data-shared="" class="share-email sd-button share-icon no-text" href="https://friarmusings.com/2020/04/04/coronavirus-flu-wars-and-terrorism/?share=email" target="_blank" title="Click to email this to a friend"><span></span><span class="sharing-screen-reader-text">Click to email this to a friend (Opens in new window)</span></a></li><li class="share-tumblr"><a rel="nofollow noopener noreferrer" data-shared="" class="share-tumblr sd-button share-icon no-text" href="https://friarmusings.com/2020/04/04/coronavirus-flu-wars-and-terrorism/?share=tumblr" target="_blank" title="Click to share on Tumblr"><span></span><span class="sharing-screen-reader-text">Click to share on Tumblr (Opens in new window)</span></a></li><li class="share-end"></li></ul></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-27400597-9848-612bbd4a74e3f' data-src='//widgets.wp.com/likes/index.html?ver=20210818#blog_id=27400597&amp;post_id=9848&amp;origin=friarmusings.wordpress.com&amp;obj_id=27400597-9848-612bbd4a74e3f&amp;domain=friarmusings.com' data-name='like-post-frame-27400597-9848-612bbd4a74e3f' data-title='Like or Reblog'><h3 class='sd-title'>Like this:</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>Like</span></span> <span class="loading">Loading...</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div></div>			</div><!-- .entry-content -->
+
+	<footer class="entry-meta">
+		This entry was posted in <a href="https://friarmusings.com/category/catholic/" rel="category tag">Catholic</a> and tagged <a href="https://friarmusings.com/tag/covid-19/" rel="tag">covid-19</a> by <a href="https://friarmusings.com/author/friarmusings/">Friar Musings</a>. Bookmark the <a href="https://friarmusings.com/2020/04/04/coronavirus-flu-wars-and-terrorism/" title="Permalink to Coronavirus, flu, wars and&nbsp;terrorism" rel="bookmark">permalink</a>.
+		
+			</footer><!-- .entry-meta -->
+</article><!-- #post-9848 -->
+
+						<div id="comments">
+	
+	
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2020/04/04/coronavirus-flu-wars-and-terrorism/#respond" style="display:none;">Cancel reply</a></small></h3><form action="https://friarmusings.com/wp-comments-post.php" method="post" id="commentform" class="comment-form"><input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="e4aedf5d1e" /><input type="hidden" name="_wp_http_referer" value="/2020/04/04/coronavirus-flu-wars-and-terrorism/" />
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest" />
+
+<div class="comment-form-field comment-textarea">
+	<label for="comment">Enter your comment here...</label>
+	<div id="comment-form-comment"><textarea id="comment" name="comment" title="Enter your comment here..."></textarea></div>
+</div>
+
+<div id="comment-form-identity">
+	<div id="comment-form-nascar">
+		<p>Fill in your details below or click an icon to log in:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="#comment-form-guest" id="postas-guest" class="nascar-signin-link"
+                   title="Login via Guest">
+									</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:WordPress.com" id="postas-wordpress" class="nascar-signin-link"
+                   title="Login via WordPress.com">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Twitter" id="postas-twitter" class="nascar-signin-link"
+                   title="Login via Twitter">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Facebook" id="postas-facebook" class="nascar-signin-link"
+                   title="Login via Facebook">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg>				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Gravatar" width="25" class="no-grav" />
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">Email <span class="required">(required)</span> <span class="nopublish">(Address never made public)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Name <span class="required">(required)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Website</label>
+					<div class="comment-form-input"><input id="url" name="url" type="url" value="" /></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="WordPress.com Logo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="" />
+						<p class="comment-form-posting-as pa-wordpress">
+			<strong></strong>
+			You are commenting using your WordPress.com account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Google photo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="" />
+						<p class="comment-form-posting-as pa-googleplus">
+			<strong></strong>
+			You are commenting using your Google account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" x="0px" y="0px" viewBox="0 0 60 60" ><path fill="#519bf7" d="M56.3,30c0,-1.6 -0.2,-3.4 -0.6,-5h-3.1H42.2H30v10.6h14.8C44,39.3 42,42 39.1,43.9l8.8,6.8C53,46 56.3,39 56.3,30z" /><path fill="#3db366" d="M30,57.5c6.7,0 13.1,-2.4 17.9,-6.8l-8.8,-6.8c-2.5,1.6 -5.6,2.4 -9.1,2.4c-7.2,0 -13.3,-4.7 -15.4,-11.2l-9.3,7.1C9.8,51.3 19.1,57.5 30,57.5z" /><path fill="#fdc600" d="M5.3,42.2l9.3,-7.1c-0.5,-1.6 -0.8,-3.3 -0.8,-5.1s0.3,-3.5 0.8,-5.1l-9.3,-7.1C3.5,21.5 2.5,25.6 2.5,30S3.5,38.5 5.3,42.2z" /><path fill="#f15b44" d="M40.1,17.4l8,-8C43.3,5.1 37,2.5 30,2.5C19.1,2.5 9.8,8.7 5.3,17.8l9.3,7.1c2.1,-6.5 8.2,-11.1 15.4,-11.1C33.9,13.7 37.4,15.1 40.1,17.4z" /></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Twitter picture" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="" />
+						<p class="comment-form-posting-as pa-twitter">
+			<strong></strong>
+			You are commenting using your Twitter account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="" alt="Facebook photo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="" />
+						<p class="comment-form-posting-as pa-facebook">
+			<strong></strong>
+			You are commenting using your Facebook account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Cancel</a></div>
+		<p>Connecting to %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function () {
+
+	function hide( sel ) {
+		var el = document.querySelector( sel );
+		if ( el ) {
+			el.style.setProperty( 'display', 'none' );
+		}
+	}
+
+	function show( sel ) {
+		var el = document.querySelector( sel );
+		if ( el ) {
+			el.style.removeProperty( 'display' );
+		}
+	}
+
+	var input = document.createElement( 'input' );
+	var comment = document.querySelector( '#comment' );
+
+	if ( input && comment && 'placeholder' in input ) {
+		var label = document.querySelector( '.comment-textarea label' );
+		if ( label ) {
+			var text = label.textContent;
+			label.parentNode.removeChild( label );
+			comment.setAttribute( 'placeholder', text );
+		}
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	hide( '#comment-form-identity' );
+	hide( '#comment-form-subscribe' );
+	hide( '#commentform .form-submit' );
+
+	if ( comment ) {
+		comment.style.height = '10px';
+
+		var handler = function () {
+			comment.style.height = HighlanderComments.initialHeight + 'px';
+			show( '#comment-form-identity' );
+			show( '#comment-form-subscribe' );
+			show( '#commentform .form-submit' );
+			HighlanderComments.resizeCallback();
+
+			comment.removeEventListener( 'focus', handler );
+		};
+
+		comment.addEventListener( 'focus', handler );
+	}
+}
+
+if ( document.readyState !== 'loading' ) {
+	highlander_expando_javascript();
+} else {
+	if ( typeof window.jQuery === 'function' ) {
+		// Use jQuery's `ready` if available.
+		// This solves some scheduling issues between this script and the main highlander script.
+		jQuery( document ).ready( highlander_expando_javascript );
+	} else {
+		// If not available, add a vanilla event listener.
+		document.addEventListener( 'DOMContentLoaded', highlander_expando_javascript );
+	}
+}
+
+</script>
+
+<div id="comment-form-subscribe">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Notify me of new comments via email.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog"  style="display: inline;">Notify me of new posts via email.</label></p></div>
+
+
+
+
+<p class="form-submit wp-block-button"><input name="submit" type="submit" id="comment-submit" class="submit wp-block-button__link" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='9848' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="c7646f64a7" /></p>
+<input type="hidden" name="genseq" value="1630256458" />
+<input type="hidden" id="ak_js" name="ak_js" value="13"/><textarea name="ak_hp_textarea" cols="45" rows="8" maxlength="100" style="display: none !important;"></textarea></form>	</div><!-- #respond -->
+	<div style="clear: both"></div><p class="akismet_comment_form_privacy_notice">This site uses Akismet to reduce spam. <a href="https://akismet.com/privacy/" target="_blank" rel="nofollow noopener">Learn how your comment data is processed</a>.</p>
+</div><!-- #comments -->
+
+				
+			</div><!-- #content -->
+		</div><!-- #primary -->
+
+
+	</div><!-- #main -->
+
+	<footer id="colophon" role="contentinfo">
+
+			
+<div id="supplementary" class="two">
+		<div id="first" class="widget-area" role="complementary">
+		<aside id="wp_tag_cloud-2" class="widget wp_widget_tag_cloud"><h3 class="widget-title">musings</h3><div style="overflow:hidden"><ul class='wp-tag-cloud' role='list'>
+	<li><a href="https://friarmusings.com/tag/2nd-advent/" class="tag-cloud-link tag-link-22425175 tag-link-position-1" style="font-size: 13.675675675676pt;" aria-label="2nd Advent (29 items)">2nd Advent</a></li>
+	<li><a href="https://friarmusings.com/tag/3rd-advent/" class="tag-cloud-link tag-link-71491129 tag-link-position-2" style="font-size: 9.8918918918919pt;" aria-label="3rd Advent (18 items)">3rd Advent</a></li>
+	<li><a href="https://friarmusings.com/tag/4th-advent/" class="tag-cloud-link tag-link-29096469 tag-link-position-3" style="font-size: 10.648648648649pt;" aria-label="4th Advent (20 items)">4th Advent</a></li>
+	<li><a href="https://friarmusings.com/tag/admonition/" class="tag-cloud-link tag-link-1305450 tag-link-position-4" style="font-size: 12.162162162162pt;" aria-label="Admonition (24 items)">Admonition</a></li>
+	<li><a href="https://friarmusings.com/tag/advent/" class="tag-cloud-link tag-link-17942 tag-link-position-5" style="font-size: 13.108108108108pt;" aria-label="Advent (27 items)">Advent</a></li>
+	<li><a href="https://friarmusings.com/tag/annunciation/" class="tag-cloud-link tag-link-739106 tag-link-position-6" style="font-size: 8.9459459459459pt;" aria-label="Annunciation (16 items)">Annunciation</a></li>
+	<li><a href="https://friarmusings.com/tag/ascension/" class="tag-cloud-link tag-link-193199 tag-link-position-7" style="font-size: 13.297297297297pt;" aria-label="Ascension (28 items)">Ascension</a></li>
+	<li><a href="https://friarmusings.com/tag/ash-wednesday/" class="tag-cloud-link tag-link-624509 tag-link-position-8" style="font-size: 9.8918918918919pt;" aria-label="Ash Wednesday (18 items)">Ash Wednesday</a></li>
+	<li><a href="https://friarmusings.com/tag/assisi/" class="tag-cloud-link tag-link-1122556 tag-link-position-9" style="font-size: 11.783783783784pt;" aria-label="assisi (23 items)">assisi</a></li>
+	<li><a href="https://friarmusings.com/tag/baptism/" class="tag-cloud-link tag-link-64933 tag-link-position-10" style="font-size: 10.648648648649pt;" aria-label="Baptism (20 items)">Baptism</a></li>
+	<li><a href="https://friarmusings.com/tag/baptism-of-the-lord/" class="tag-cloud-link tag-link-4104941 tag-link-position-11" style="font-size: 9.8918918918919pt;" aria-label="Baptism of the Lord (18 items)">Baptism of the Lord</a></li>
+	<li><a href="https://friarmusings.com/tag/belonging/" class="tag-cloud-link tag-link-122789 tag-link-position-12" style="font-size: 10.27027027027pt;" aria-label="belonging (19 items)">belonging</a></li>
+	<li><a href="https://friarmusings.com/tag/bonaventure/" class="tag-cloud-link tag-link-678979 tag-link-position-13" style="font-size: 8.3783783783784pt;" aria-label="Bonaventure (15 items)">Bonaventure</a></li>
+	<li><a href="https://friarmusings.com/tag/bread-of-life/" class="tag-cloud-link tag-link-268756 tag-link-position-14" style="font-size: 20.675675675676pt;" aria-label="bread of life (69 items)">bread of life</a></li>
+	<li><a href="https://friarmusings.com/tag/bread-of-life-discourse/" class="tag-cloud-link tag-link-46292304 tag-link-position-15" style="font-size: 11.783783783784pt;" aria-label="Bread of Life Discourse (23 items)">Bread of Life Discourse</a></li>
+	<li><a href="https://friarmusings.com/tag/christmas/" class="tag-cloud-link tag-link-15607 tag-link-position-16" style="font-size: 8pt;" aria-label="Christmas (14 items)">Christmas</a></li>
+	<li><a href="https://friarmusings.com/tag/christ-the-king/" class="tag-cloud-link tag-link-1633588 tag-link-position-17" style="font-size: 8.3783783783784pt;" aria-label="Christ the King (15 items)">Christ the King</a></li>
+	<li><a href="https://friarmusings.com/tag/corpus-christi/" class="tag-cloud-link tag-link-218654 tag-link-position-18" style="font-size: 13.108108108108pt;" aria-label="Corpus Christi (27 items)">Corpus Christi</a></li>
+	<li><a href="https://friarmusings.com/tag/covid-19/" class="tag-cloud-link tag-link-694479852 tag-link-position-19" style="font-size: 15.189189189189pt;" aria-label="covid-19 (35 items)">covid-19</a></li>
+	<li><a href="https://friarmusings.com/tag/discipleship/" class="tag-cloud-link tag-link-10139 tag-link-position-20" style="font-size: 9.5135135135135pt;" aria-label="discipleship (17 items)">discipleship</a></li>
+	<li><a href="https://friarmusings.com/tag/doubting-thomas/" class="tag-cloud-link tag-link-1100117 tag-link-position-21" style="font-size: 8pt;" aria-label="doubting thomas (14 items)">doubting thomas</a></li>
+	<li><a href="https://friarmusings.com/tag/easter/" class="tag-cloud-link tag-link-18653 tag-link-position-22" style="font-size: 12.351351351351pt;" aria-label="Easter (25 items)">Easter</a></li>
+	<li><a href="https://friarmusings.com/tag/emmaus/" class="tag-cloud-link tag-link-419460 tag-link-position-23" style="font-size: 9.8918918918919pt;" aria-label="Emmaus (18 items)">Emmaus</a></li>
+	<li><a href="https://friarmusings.com/tag/epiphany/" class="tag-cloud-link tag-link-16840 tag-link-position-24" style="font-size: 9.8918918918919pt;" aria-label="Epiphany (18 items)">Epiphany</a></li>
+	<li><a href="https://friarmusings.com/tag/eucharist/" class="tag-cloud-link tag-link-43813 tag-link-position-25" style="font-size: 15.378378378378pt;" aria-label="Eucharist (36 items)">Eucharist</a></li>
+	<li><a href="https://friarmusings.com/tag/faith/" class="tag-cloud-link tag-link-401 tag-link-position-26" style="font-size: 10.27027027027pt;" aria-label="faith (19 items)">faith</a></li>
+	<li><a href="https://friarmusings.com/tag/fishers-of-men/" class="tag-cloud-link tag-link-862851 tag-link-position-27" style="font-size: 11.405405405405pt;" aria-label="fishers of men (22 items)">fishers of men</a></li>
+	<li><a href="https://friarmusings.com/tag/forgiveness/" class="tag-cloud-link tag-link-71131 tag-link-position-28" style="font-size: 13.297297297297pt;" aria-label="forgiveness (28 items)">forgiveness</a></li>
+	<li><a href="https://friarmusings.com/tag/franciscan/" class="tag-cloud-link tag-link-525076 tag-link-position-29" style="font-size: 18.216216216216pt;" aria-label="franciscan (51 items)">franciscan</a></li>
+	<li><a href="https://friarmusings.com/tag/francis-of-assisi/" class="tag-cloud-link tag-link-1470697 tag-link-position-30" style="font-size: 19.540540540541pt;" aria-label="Francis of Assisi (60 items)">Francis of Assisi</a></li>
+	<li><a href="https://friarmusings.com/tag/good-samaritan/" class="tag-cloud-link tag-link-729579 tag-link-position-31" style="font-size: 8.9459459459459pt;" aria-label="Good Samaritan (16 items)">Good Samaritan</a></li>
+	<li><a href="https://friarmusings.com/tag/good-shepherd/" class="tag-cloud-link tag-link-895469 tag-link-position-32" style="font-size: 14.621621621622pt;" aria-label="Good Shepherd (33 items)">Good Shepherd</a></li>
+	<li><a href="https://friarmusings.com/tag/gospel-of-john/" class="tag-cloud-link tag-link-46947 tag-link-position-33" style="font-size: 11.783783783784pt;" aria-label="Gospel of John (23 items)">Gospel of John</a></li>
+	<li><a href="https://friarmusings.com/tag/gospel-of-luke/" class="tag-cloud-link tag-link-154937 tag-link-position-34" style="font-size: 13.864864864865pt;" aria-label="Gospel of Luke (30 items)">Gospel of Luke</a></li>
+	<li><a href="https://friarmusings.com/tag/gospel-of-matthew/" class="tag-cloud-link tag-link-154938 tag-link-position-35" style="font-size: 8.9459459459459pt;" aria-label="Gospel of Matthew (16 items)">Gospel of Matthew</a></li>
+	<li><a href="https://friarmusings.com/tag/grace/" class="tag-cloud-link tag-link-18215 tag-link-position-36" style="font-size: 9.8918918918919pt;" aria-label="grace (18 items)">grace</a></li>
+	<li><a href="https://friarmusings.com/tag/gratitude/" class="tag-cloud-link tag-link-5411 tag-link-position-37" style="font-size: 12.162162162162pt;" aria-label="gratitude (24 items)">gratitude</a></li>
+	<li><a href="https://friarmusings.com/tag/holy-week/" class="tag-cloud-link tag-link-327258 tag-link-position-38" style="font-size: 9.5135135135135pt;" aria-label="Holy Week (17 items)">Holy Week</a></li>
+	<li><a href="https://friarmusings.com/tag/hope/" class="tag-cloud-link tag-link-20816 tag-link-position-39" style="font-size: 13.864864864865pt;" aria-label="Hope (30 items)">Hope</a></li>
+	<li><a href="https://friarmusings.com/tag/humility/" class="tag-cloud-link tag-link-104576 tag-link-position-40" style="font-size: 9.8918918918919pt;" aria-label="humility (18 items)">humility</a></li>
+	<li><a href="https://friarmusings.com/tag/jesus/" class="tag-cloud-link tag-link-8329 tag-link-position-41" style="font-size: 22pt;" aria-label="Jesus (83 items)">Jesus</a></li>
+	<li><a href="https://friarmusings.com/tag/john-6/" class="tag-cloud-link tag-link-2882536 tag-link-position-42" style="font-size: 8.3783783783784pt;" aria-label="John 6 (15 items)">John 6</a></li>
+	<li><a href="https://friarmusings.com/tag/john-10/" class="tag-cloud-link tag-link-1227099 tag-link-position-43" style="font-size: 8.3783783783784pt;" aria-label="JOhn 10 (15 items)">JOhn 10</a></li>
+	<li><a href="https://friarmusings.com/tag/john-14/" class="tag-cloud-link tag-link-1209686 tag-link-position-44" style="font-size: 10.27027027027pt;" aria-label="John 14 (19 items)">John 14</a></li>
+	<li><a href="https://friarmusings.com/tag/john-2019-31/" class="tag-cloud-link tag-link-12296544 tag-link-position-45" style="font-size: 10.648648648649pt;" aria-label="John 20:19-31 (20 items)">John 20:19-31</a></li>
+	<li><a href="https://friarmusings.com/tag/john-the-baptist/" class="tag-cloud-link tag-link-134196 tag-link-position-46" style="font-size: 16.135135135135pt;" aria-label="John the Baptist (40 items)">John the Baptist</a></li>
+	<li><a href="https://friarmusings.com/tag/jonah/" class="tag-cloud-link tag-link-85759 tag-link-position-47" style="font-size: 10.27027027027pt;" aria-label="Jonah (19 items)">Jonah</a></li>
+	<li><a href="https://friarmusings.com/tag/joy/" class="tag-cloud-link tag-link-5840 tag-link-position-48" style="font-size: 9.8918918918919pt;" aria-label="Joy (18 items)">Joy</a></li>
+	<li><a href="https://friarmusings.com/tag/judas/" class="tag-cloud-link tag-link-144373 tag-link-position-49" style="font-size: 9.5135135135135pt;" aria-label="Judas (17 items)">Judas</a></li>
+	<li><a href="https://friarmusings.com/tag/judgment/" class="tag-cloud-link tag-link-115475 tag-link-position-50" style="font-size: 9.8918918918919pt;" aria-label="judgment (18 items)">judgment</a></li>
+	<li><a href="https://friarmusings.com/tag/lazarus/" class="tag-cloud-link tag-link-559668 tag-link-position-51" style="font-size: 8pt;" aria-label="Lazarus (14 items)">Lazarus</a></li>
+	<li><a href="https://friarmusings.com/tag/lent/" class="tag-cloud-link tag-link-26095 tag-link-position-52" style="font-size: 12.162162162162pt;" aria-label="Lent (24 items)">Lent</a></li>
+	<li><a href="https://friarmusings.com/tag/leper/" class="tag-cloud-link tag-link-632596 tag-link-position-53" style="font-size: 10.27027027027pt;" aria-label="leper (19 items)">leper</a></li>
+	<li><a href="https://friarmusings.com/tag/love/" class="tag-cloud-link tag-link-3785 tag-link-position-54" style="font-size: 12.162162162162pt;" aria-label="love (24 items)">love</a></li>
+	<li><a href="https://friarmusings.com/tag/matthew-2816-20/" class="tag-cloud-link tag-link-5413535 tag-link-position-55" style="font-size: 8.3783783783784pt;" aria-label="Matthew 28:16-20 (15 items)">Matthew 28:16-20</a></li>
+	<li><a href="https://friarmusings.com/tag/mercy/" class="tag-cloud-link tag-link-100179 tag-link-position-56" style="font-size: 11.027027027027pt;" aria-label="mercy (21 items)">mercy</a></li>
+	<li><a href="https://friarmusings.com/tag/mission/" class="tag-cloud-link tag-link-13924 tag-link-position-57" style="font-size: 13.675675675676pt;" aria-label="mission (29 items)">mission</a></li>
+	<li><a href="https://friarmusings.com/tag/mustard-seed/" class="tag-cloud-link tag-link-203899 tag-link-position-58" style="font-size: 8pt;" aria-label="mustard seed (14 items)">mustard seed</a></li>
+	<li><a href="https://friarmusings.com/tag/nazareth/" class="tag-cloud-link tag-link-258098 tag-link-position-59" style="font-size: 11.783783783784pt;" aria-label="Nazareth (23 items)">Nazareth</a></li>
+	<li><a href="https://friarmusings.com/tag/palm-sunday/" class="tag-cloud-link tag-link-903750 tag-link-position-60" style="font-size: 13.297297297297pt;" aria-label="Palm Sunday (28 items)">Palm Sunday</a></li>
+	<li><a href="https://friarmusings.com/tag/pentecost/" class="tag-cloud-link tag-link-26096 tag-link-position-61" style="font-size: 16.135135135135pt;" aria-label="Pentecost (40 items)">Pentecost</a></li>
+	<li><a href="https://friarmusings.com/tag/peter/" class="tag-cloud-link tag-link-42649 tag-link-position-62" style="font-size: 8pt;" aria-label="Peter (14 items)">Peter</a></li>
+	<li><a href="https://friarmusings.com/tag/pharisee/" class="tag-cloud-link tag-link-474066 tag-link-position-63" style="font-size: 10.648648648649pt;" aria-label="Pharisee (20 items)">Pharisee</a></li>
+	<li><a href="https://friarmusings.com/tag/pope-francis/" class="tag-cloud-link tag-link-154615063 tag-link-position-64" style="font-size: 16.513513513514pt;" aria-label="Pope Francis (42 items)">Pope Francis</a></li>
+	<li><a href="https://friarmusings.com/tag/prayer/" class="tag-cloud-link tag-link-853 tag-link-position-65" style="font-size: 18.216216216216pt;" aria-label="prayer (51 items)">prayer</a></li>
+	<li><a href="https://friarmusings.com/tag/resurrection/" class="tag-cloud-link tag-link-93648 tag-link-position-66" style="font-size: 16.135135135135pt;" aria-label="Resurrection (40 items)">Resurrection</a></li>
+	<li><a href="https://friarmusings.com/tag/sermon-on-the-mount/" class="tag-cloud-link tag-link-131401 tag-link-position-67" style="font-size: 16.513513513514pt;" aria-label="Sermon on the Mount (42 items)">Sermon on the Mount</a></li>
+	<li><a href="https://friarmusings.com/tag/spirit/" class="tag-cloud-link tag-link-1096 tag-link-position-68" style="font-size: 8.9459459459459pt;" aria-label="Spirit (16 items)">Spirit</a></li>
+	<li><a href="https://friarmusings.com/tag/st-francis/" class="tag-cloud-link tag-link-384718 tag-link-position-69" style="font-size: 11.783783783784pt;" aria-label="St Francis (23 items)">St Francis</a></li>
+	<li><a href="https://friarmusings.com/tag/st-francis-of-assisi/" class="tag-cloud-link tag-link-524277 tag-link-position-70" style="font-size: 10.27027027027pt;" aria-label="St Francis of Assisi (19 items)">St Francis of Assisi</a></li>
+	<li><a href="https://friarmusings.com/tag/temptation/" class="tag-cloud-link tag-link-58876 tag-link-position-71" style="font-size: 9.8918918918919pt;" aria-label="Temptation (18 items)">Temptation</a></li>
+	<li><a href="https://friarmusings.com/tag/transfiguration/" class="tag-cloud-link tag-link-189664 tag-link-position-72" style="font-size: 13.108108108108pt;" aria-label="Transfiguration (27 items)">Transfiguration</a></li>
+	<li><a href="https://friarmusings.com/tag/trust/" class="tag-cloud-link tag-link-57610 tag-link-position-73" style="font-size: 9.8918918918919pt;" aria-label="trust (18 items)">trust</a></li>
+	<li><a href="https://friarmusings.com/tag/vineyard/" class="tag-cloud-link tag-link-74363 tag-link-position-74" style="font-size: 10.27027027027pt;" aria-label="Vineyard (19 items)">Vineyard</a></li>
+	<li><a href="https://friarmusings.com/tag/zacchaeus/" class="tag-cloud-link tag-link-1286170 tag-link-position-75" style="font-size: 8pt;" aria-label="Zacchaeus (14 items)">Zacchaeus</a></li>
+</ul>
+</div></aside>	</div><!-- #first .widget-area -->
+	
+	
+		<div id="third" class="widget-area" role="complementary">
+		<aside id="calendar-3" class="widget widget_calendar"><div id="calendar_wrap" class="calendar_wrap"><table id="wp-calendar" class="wp-calendar-table">
+	<caption>April 2020</caption>
+	<thead>
+	<tr>
+		<th scope="col" title="Monday">M</th>
+		<th scope="col" title="Tuesday">T</th>
+		<th scope="col" title="Wednesday">W</th>
+		<th scope="col" title="Thursday">T</th>
+		<th scope="col" title="Friday">F</th>
+		<th scope="col" title="Saturday">S</th>
+		<th scope="col" title="Sunday">S</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td colspan="2" class="pad">&nbsp;</td><td><a href="https://friarmusings.com/2020/04/01/" aria-label="Posts published on April 1, 2020">1</a></td><td><a href="https://friarmusings.com/2020/04/02/" aria-label="Posts published on April 2, 2020">2</a></td><td><a href="https://friarmusings.com/2020/04/03/" aria-label="Posts published on April 3, 2020">3</a></td><td><a href="https://friarmusings.com/2020/04/04/" aria-label="Posts published on April 4, 2020">4</a></td><td><a href="https://friarmusings.com/2020/04/05/" aria-label="Posts published on April 5, 2020">5</a></td>
+	</tr>
+	<tr>
+		<td><a href="https://friarmusings.com/2020/04/06/" aria-label="Posts published on April 6, 2020">6</a></td><td><a href="https://friarmusings.com/2020/04/07/" aria-label="Posts published on April 7, 2020">7</a></td><td><a href="https://friarmusings.com/2020/04/08/" aria-label="Posts published on April 8, 2020">8</a></td><td><a href="https://friarmusings.com/2020/04/09/" aria-label="Posts published on April 9, 2020">9</a></td><td><a href="https://friarmusings.com/2020/04/10/" aria-label="Posts published on April 10, 2020">10</a></td><td><a href="https://friarmusings.com/2020/04/11/" aria-label="Posts published on April 11, 2020">11</a></td><td><a href="https://friarmusings.com/2020/04/12/" aria-label="Posts published on April 12, 2020">12</a></td>
+	</tr>
+	<tr>
+		<td><a href="https://friarmusings.com/2020/04/13/" aria-label="Posts published on April 13, 2020">13</a></td><td><a href="https://friarmusings.com/2020/04/14/" aria-label="Posts published on April 14, 2020">14</a></td><td><a href="https://friarmusings.com/2020/04/15/" aria-label="Posts published on April 15, 2020">15</a></td><td><a href="https://friarmusings.com/2020/04/16/" aria-label="Posts published on April 16, 2020">16</a></td><td>17</td><td><a href="https://friarmusings.com/2020/04/18/" aria-label="Posts published on April 18, 2020">18</a></td><td><a href="https://friarmusings.com/2020/04/19/" aria-label="Posts published on April 19, 2020">19</a></td>
+	</tr>
+	<tr>
+		<td><a href="https://friarmusings.com/2020/04/20/" aria-label="Posts published on April 20, 2020">20</a></td><td><a href="https://friarmusings.com/2020/04/21/" aria-label="Posts published on April 21, 2020">21</a></td><td><a href="https://friarmusings.com/2020/04/22/" aria-label="Posts published on April 22, 2020">22</a></td><td><a href="https://friarmusings.com/2020/04/23/" aria-label="Posts published on April 23, 2020">23</a></td><td>24</td><td><a href="https://friarmusings.com/2020/04/25/" aria-label="Posts published on April 25, 2020">25</a></td><td><a href="https://friarmusings.com/2020/04/26/" aria-label="Posts published on April 26, 2020">26</a></td>
+	</tr>
+	<tr>
+		<td><a href="https://friarmusings.com/2020/04/27/" aria-label="Posts published on April 27, 2020">27</a></td><td><a href="https://friarmusings.com/2020/04/28/" aria-label="Posts published on April 28, 2020">28</a></td><td><a href="https://friarmusings.com/2020/04/29/" aria-label="Posts published on April 29, 2020">29</a></td><td>30</td>
+		<td class="pad" colspan="3">&nbsp;</td>
+	</tr>
+	</tbody>
+	</table><nav aria-label="Previous and next months" class="wp-calendar-nav">
+		<span class="wp-calendar-nav-prev"><a href="https://friarmusings.com/2020/03/">&laquo; Mar</a></span>
+		<span class="pad">&nbsp;</span>
+		<span class="wp-calendar-nav-next"><a href="https://friarmusings.com/2020/05/">May &raquo;</a></span>
+	</nav></div></aside>	</div><!-- #third .widget-area -->
+	</div><!-- #supplementary -->
+			<div id="site-generator">
+				 								<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Blog at WordPress.com.</a>
+			</div>
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+
+<!--  -->
+<script src='//0.gravatar.com/js/gprofiles.js?ver=202134y' id='grofiles-cards-js'></script>
+<script id='wpgroho-js-extra'>
+var WPGroHo = {"my_hash":""};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1610363240h'></script>
+
+	<script>
+		// Initialize and attach hovercards to all gravatars
+		( function() {
+			function init() {
+				if ( typeof Gravatar === 'undefined' ) {
+					return;
+				}
+
+				if ( typeof Gravatar.init !== 'function' ) {
+					return;
+				}
+
+				Gravatar.profile_cb = function ( hash, id ) {
+					WPGroHo.syncProfileData( hash, id );
+				};
+
+				Gravatar.my_hash = WPGroHo.my_hash;
+				Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+			}
+
+			if ( document.readyState !== 'loading' ) {
+				init();
+			} else {
+				document.addEventListener( 'DOMContentLoaded', init );
+			}
+		} )();
+	</script>
+
+		<div style="display:none">
+	</div>
+<script id='highlander-comments-js-extra'>
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"https:\/\/friarmusings.wordpress.com\/public.api\/connect\/?action=request&domain=friarmusings.com","logoutURL":"https:\/\/friarmusings.wordpress.com\/wp-login.php?action=logout&_wpnonce=a340eb623d","homeURL":"https:\/\/friarmusings.com\/","postID":"9848","gravDefault":"identicon","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s1.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1626677336j'></script>
+
+<script>
+window.addEventListener( "load", function( event ) {
+	var link = document.createElement( "link" );
+	link.href = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.css?v=20201002";
+	link.type = "text/css";
+	link.rel = "stylesheet";
+	document.head.appendChild( link );
+
+	var script = document.createElement( "script" );
+	script.src = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.js?v=20210817";
+	script.defer = true;
+	document.body.appendChild( script );
+} );
+</script>
+
+			<div id="jp-carousel-loading-overlay">
+			<div id="jp-carousel-loading-wrapper">
+				<span id="jp-carousel-library-loading">&nbsp;</span>
+			</div>
+		</div>
+		<div class="jp-carousel-overlay" style="display: none;">
+
+		<div class="jp-carousel-container">
+			<!-- The Carousel Swiper -->
+			<div
+				class="jp-carousel-wrap swiper-container jp-carousel-swiper-container jp-carousel-transitions"
+				itemscope
+				itemtype="https://schema.org/ImageGallery">
+				<div class="jp-carousel swiper-wrapper"></div>
+				<div class="jp-swiper-button-prev swiper-button-prev">
+					<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<mask id="maskPrev" mask-type="alpha" maskUnits="userSpaceOnUse" x="8" y="6" width="9" height="12">
+							<path d="M16.2072 16.59L11.6496 12L16.2072 7.41L14.8041 6L8.8335 12L14.8041 18L16.2072 16.59Z" fill="white"/>
+						</mask>
+						<g mask="url(#maskPrev)">
+							<rect x="0.579102" width="23.8823" height="24" fill="#FFFFFF"/>
+						</g>
+					</svg>
+				</div>
+				<div class="jp-swiper-button-next swiper-button-next">
+					<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<mask id="maskNext" mask-type="alpha" maskUnits="userSpaceOnUse" x="8" y="6" width="8" height="12">
+							<path d="M8.59814 16.59L13.1557 12L8.59814 7.41L10.0012 6L15.9718 12L10.0012 18L8.59814 16.59Z" fill="white"/>
+						</mask>
+						<g mask="url(#maskNext)">
+							<rect x="0.34375" width="23.8822" height="24" fill="#FFFFFF"/>
+						</g>
+					</svg>
+				</div>
+			</div>
+			<!-- The main close buton -->
+			<div class="jp-carousel-close-hint">
+				<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<mask id="maskClose" mask-type="alpha" maskUnits="userSpaceOnUse" x="5" y="5" width="15" height="14">
+						<path d="M19.3166 6.41L17.9135 5L12.3509 10.59L6.78834 5L5.38525 6.41L10.9478 12L5.38525 17.59L6.78834 19L12.3509 13.41L17.9135 19L19.3166 17.59L13.754 12L19.3166 6.41Z" fill="white"/>
+					</mask>
+					<g mask="url(#maskClose)">
+						<rect x="0.409668" width="23.8823" height="24" fill="#FFFFFF"/>
+					</g>
+				</svg>
+			</div>
+			<!-- Image info, comments and meta -->
+			<div class="jp-carousel-info">
+				<div class="jp-carousel-info-footer">
+					<div class="jp-carousel-pagination-container">
+						<div class="jp-swiper-pagination swiper-pagination"></div>
+						<div class="jp-carousel-pagination"></div>
+					</div>
+					<div class="jp-carousel-photo-title-container">
+						<h2 class="jp-carousel-photo-caption"></h2>
+					</div>
+					<div class="jp-carousel-photo-icons-container">
+						<a href="#" class="jp-carousel-icon-btn jp-carousel-icon-info" aria-label="Toggle photo metadata visibility">
+							<span class="jp-carousel-icon">
+								<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<mask id="maskInfo" mask-type="alpha" maskUnits="userSpaceOnUse" x="2" y="2" width="21" height="20">
+										<path fill-rule="evenodd" clip-rule="evenodd" d="M12.7537 2C7.26076 2 2.80273 6.48 2.80273 12C2.80273 17.52 7.26076 22 12.7537 22C18.2466 22 22.7046 17.52 22.7046 12C22.7046 6.48 18.2466 2 12.7537 2ZM11.7586 7V9H13.7488V7H11.7586ZM11.7586 11V17H13.7488V11H11.7586ZM4.79292 12C4.79292 16.41 8.36531 20 12.7537 20C17.142 20 20.7144 16.41 20.7144 12C20.7144 7.59 17.142 4 12.7537 4C8.36531 4 4.79292 7.59 4.79292 12Z" fill="white"/>
+									</mask>
+									<g mask="url(#maskInfo)">
+										<rect x="0.8125" width="23.8823" height="24" fill="#FFFFFF"/>
+									</g>
+								</svg>
+							</span>
+						</a>
+												<a href="#" class="jp-carousel-icon-btn jp-carousel-icon-comments" aria-label="Toggle photo comments visibility">
+							<span class="jp-carousel-icon">
+								<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<mask id="maskComments" mask-type="alpha" maskUnits="userSpaceOnUse" x="2" y="2" width="21" height="20">
+										<path fill-rule="evenodd" clip-rule="evenodd" d="M4.3271 2H20.2486C21.3432 2 22.2388 2.9 22.2388 4V16C22.2388 17.1 21.3432 18 20.2486 18H6.31729L2.33691 22V4C2.33691 2.9 3.2325 2 4.3271 2ZM6.31729 16H20.2486V4H4.3271V18L6.31729 16Z" fill="white"/>
+									</mask>
+									<g mask="url(#maskComments)">
+										<rect x="0.34668" width="23.8823" height="24" fill="#FFFFFF"/>
+									</g>
+								</svg>
+
+								<span class="jp-carousel-has-comments-indicator" aria-label="This image has comments."></span>
+							</span>
+						</a>
+											</div>
+				</div>
+				<div class="jp-carousel-info-extra">
+					<div class="jp-carousel-info-content-wrapper">
+						<div class="jp-carousel-photo-title-container">
+							<h2 class="jp-carousel-photo-title"></h2>
+						</div>
+						<div class="jp-carousel-comments-wrapper">
+															<div id="jp-carousel-comments-loading">
+									<span>Loading Comments...</span>
+								</div>
+								<div class="jp-carousel-comments"></div>
+								<div id="jp-carousel-comment-form-container">
+									<span id="jp-carousel-comment-form-spinner">&nbsp;</span>
+									<div id="jp-carousel-comment-post-results"></div>
+																														<form id="jp-carousel-comment-form">
+												<label for="jp-carousel-comment-form-comment-field" class="screen-reader-text">Write a Comment...</label>
+												<textarea
+													name="comment"
+													class="jp-carousel-comment-form-field jp-carousel-comment-form-textarea"
+													id="jp-carousel-comment-form-comment-field"
+													placeholder="Write a Comment..."
+												></textarea>
+												<div id="jp-carousel-comment-form-submit-and-info-wrapper">
+													<div id="jp-carousel-comment-form-commenting-as">
+																													<fieldset>
+																<label for="jp-carousel-comment-form-email-field">Email (Required)</label>
+																<input type="text" name="email" class="jp-carousel-comment-form-field jp-carousel-comment-form-text-field" id="jp-carousel-comment-form-email-field" />
+															</fieldset>
+															<fieldset>
+																<label for="jp-carousel-comment-form-author-field">Name (Required)</label>
+																<input type="text" name="author" class="jp-carousel-comment-form-field jp-carousel-comment-form-text-field" id="jp-carousel-comment-form-author-field" />
+															</fieldset>
+															<fieldset>
+																<label for="jp-carousel-comment-form-url-field">Website</label>
+																<input type="text" name="url" class="jp-carousel-comment-form-field jp-carousel-comment-form-text-field" id="jp-carousel-comment-form-url-field" />
+															</fieldset>
+																											</div>
+													<input
+														type="submit"
+														name="submit"
+														class="jp-carousel-comment-form-button"
+														id="jp-carousel-comment-form-button-submit"
+														value="Post Comment" />
+												</div>
+											</form>
+																											</div>
+													</div>
+						<div class="jp-carousel-image-meta">
+							<div class="jp-carousel-title-and-caption">
+								<div class="jp-carousel-photo-info">
+									<h3 class="jp-carousel-caption" itemprop="caption description"></h3>
+								</div>
+
+								<div class="jp-carousel-photo-description"></div>
+							</div>
+							<ul class="jp-carousel-image-exif" style="display: none;"></ul>
+							<a class="jp-carousel-image-download" target="_blank" style="display: none;">
+								<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="3" y="3" width="19" height="18">
+										<path fill-rule="evenodd" clip-rule="evenodd" d="M5.84615 5V19H19.7775V12H21.7677V19C21.7677 20.1 20.8721 21 19.7775 21H5.84615C4.74159 21 3.85596 20.1 3.85596 19V5C3.85596 3.9 4.74159 3 5.84615 3H12.8118V5H5.84615ZM14.802 5V3H21.7677V10H19.7775V6.41L9.99569 16.24L8.59261 14.83L18.3744 5H14.802Z" fill="white"/>
+									</mask>
+									<g mask="url(#mask0)">
+										<rect x="0.870605" width="23.8823" height="24" fill="#FFFFFF"/>
+									</g>
+								</svg>
+								<span class="jp-carousel-download-text"></span>
+							</a>
+							<div class="jp-carousel-image-map" style="display: none;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		</div>
+		
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/friarmusings.com\/2020\/04\/04\/coronavirus-flu-wars-and-terrorism\/":9848};
+	</script>
+					<div id="sharing_email" style="display: none;">
+		<form action="/2020/04/04/coronavirus-flu-wars-and-terrorism/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" title="This field is for validation and should not be changed" />
+			
+			<div
+				class="g-recaptcha"
+				data-sitekey="6LcmyE0UAAAAALID28yVNg7pFCodGaArJzHitez_"
+				data-theme="light"
+				data-type="image"
+				data-tabindex="0"
+				data-lazy="true"
+				data-url="https://www.google.com/recaptcha/api.js?hl=en"></div>
+			
+			<img style="float: right; display: none" class="loading" src="https://s2.wp.com/wp-content/mu-plugins/post-flair/sharing/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Send Email" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel" role="button">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div>
+<link rel='stylesheet' id='all-css-0-3' href='https://s0.wp.com/_static/??/wp-content/mu-plugins/carousel/swiper-bundle.css,/wp-content/mu-plugins/carousel/jetpack-carousel.css?m=1628632150j&cssminify=yes' type='text/css' media='all' />
+<script id='jetpack-carousel-js-extra'>
+var jetpackSwiperLibraryPath = {"url":"\/wp-content\/mu-plugins\/carousel\/swiper-bundle.js"};
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"en","ajaxurl":"https:\/\/friarmusings.com\/wp-admin\/admin-ajax.php","nonce":"e27d92374c","display_exif":"1","display_comments":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Comment","post_comment":"Post Comment","write_comment":"Write a Comment...","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/friarmusings.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Ffriarmusings.com%2F2020%2F04%2F04%2Fcoronavirus-flu-wars-and-terrorism%2F","blog_id":"27400597","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"stats_query_args":"blog=27400597&v=wpcom&tz=-4&user_id=0&subd=friarmusings","is_public":"1"};
+</script>
+<script id='sharing-js-js-extra'>
+var sharing_js_options = {"lang":"en","counts":"1","is_stats_active":"1"};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s1.wp.com/_static/??-eJyNj0tSAzEMRC+ERyEU+SwojkI5tpLI4x+SnSGcPlowC1LUhJUsd/eTBFM1ruSGuUEQ8Hghh/VrCPIEv6Xw2ZGvP2WgfCGcHtoCtmrdaBiFvvHenrqpsZ8oC0QaUUBDHc82+4g8mym72L2KCnclJQ0qrsbrkCgvEK1X3RwsQ7LSkPVlGusy8hdZW0wH9A+gznLpghHmw+aPpUVGkoTNvAwr+NCZcCyc/jHDTFXvvWsXcrVIM8doiUHOlimf5qqh9/T2vFnvd+vd634bbtKbuzo='></script>
+<script type='text/javascript'>
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-twitter' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-twitter' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+						return false;
+					}
+				} );
+			} )();
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-facebook' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-facebook' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+						return false;
+					}
+				} );
+			} )();
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-tumblr' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-tumblr' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomtumblr', 'menubar=1,resizable=1,width=450,height=450' );
+						return false;
+					}
+				} );
+			} )();
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>	<iframe src='https://widgets.wp.com/likes/master.html?ver=20210818#ver=20210818&amp;origin=https://friarmusings.com' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+	<div id='likes-other-gravatars'>
+		<div class="likes-text">
+			<span>%d</span> bloggers like this:		</div>
+		<ul class="wpl-avatars sd-like-gravatars"></ul>
+	</div>
+	
+		<script src="//stats.wp.com/w.js?61" defer></script> <script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'27400597','blog_tz':'-4','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'27400597','v':'wpcom','tz':'-4','user_id':'0','post':'9848','subd':'friarmusings'}]);
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1TaVhzUzFMbjdWNHpwZGhTayxPSUFCMGNrd29+Smw0TDhnZmRTK0hlRi9QSGh6bi9GXVhBJWIlZlR5U1JMLU8/MkNtblkvY1dzK3YrWW1CbjZiL2VlLnR6QkUsbDdSejJMclp1JjF8LWJsMi1MWEE1Ll83OXUvaHxXcXxsXzVwWTlWbzZdWDBbcFI9MXxqfFhiYnQ4dzVXUWZmOTFSK25YTEVNY3NrQ0JBb3RHfnRaSHVSSWlSZHpuX3JLSE85OWh6Nk54bUROeG9jV0UyZTArUVZQRXQmWzFmU0I3U0wmNVMlTkExOGhXbGs4XTdpT3VPOGRjWnl4bitRQ0MmJlg0a1dFTi4rfjNITkhBVVF4UHYsNFZCNTA9K2ZNZCVnR0kuLjN6NnRrVVE9c2NLTkFlXzVVWytMXyt5'}]);
+_stq.push([ 'clickTrackerInit', '27400597', '9848' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:1px;width:1px;overflow:hidden;position:absolute;bottom:1px;" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>

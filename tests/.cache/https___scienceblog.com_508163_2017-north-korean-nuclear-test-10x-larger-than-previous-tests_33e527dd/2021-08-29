@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head><script type="4a7a86a156d0da4abbd436a5-text/javascript">if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script type="4a7a86a156d0da4abbd436a5-text/javascript">class RocketLazyLoadScripts{constructor(e){this.triggerEvents=e,this.eventOptions={passive:!0},this.userEventListener=this.triggerListener.bind(this),this.delayedScripts={normal:[],async:[],defer:[]},this.allJQueries=[]}_addUserInteractionListener(e){this.triggerEvents.forEach((t=>window.addEventListener(t,e.userEventListener,e.eventOptions)))}_removeUserInteractionListener(e){this.triggerEvents.forEach((t=>window.removeEventListener(t,e.userEventListener,e.eventOptions)))}triggerListener(){this._removeUserInteractionListener(this),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",this._loadEverythingNow.bind(this)):this._loadEverythingNow()}async _loadEverythingNow(){this._delayEventListeners(),this._delayJQueryReady(this),this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async),await this._triggerDOMContentLoaded(),await this._triggerWindowLoad(),window.dispatchEvent(new Event("rocket-allScriptsLoaded"))}_registerAllDelayedScripts(){document.querySelectorAll("script[type=rocketlazyloadscript]").forEach((e=>{e.hasAttribute("src")?e.hasAttribute("async")&&!1!==e.async?this.delayedScripts.async.push(e):e.hasAttribute("defer")&&!1!==e.defer||"module"===e.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(e):this.delayedScripts.normal.push(e):this.delayedScripts.normal.push(e)}))}async _transformScript(e){return await this._requestAnimFrame(),new Promise((t=>{const n=document.createElement("script");let r;[...e.attributes].forEach((e=>{let t=e.nodeName;"type"!==t&&("data-rocket-type"===t&&(t="type",r=e.nodeValue),n.setAttribute(t,e.nodeValue))})),e.hasAttribute("src")?(n.addEventListener("load",t),n.addEventListener("error",t)):(n.text=e.text,t()),e.parentNode.replaceChild(n,e)}))}async _loadScriptsFromList(e){const t=e.shift();return t?(await this._transformScript(t),this._loadScriptsFromList(e)):Promise.resolve()}_preloadAllScripts(){var e=document.createDocumentFragment();[...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async].forEach((t=>{const n=t.getAttribute("src");if(n){const t=document.createElement("link");t.href=n,t.rel="preload",t.as="script",e.appendChild(t)}})),document.head.appendChild(e)}_delayEventListeners(){let e={};function t(t,n){!function(t){function n(n){return e[t].eventsToRewrite.indexOf(n)>=0?"rocket-"+n:n}e[t]||(e[t]={originalFunctions:{add:t.addEventListener,remove:t.removeEventListener},eventsToRewrite:[]},t.addEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.add.apply(t,arguments)},t.removeEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.remove.apply(t,arguments)})}(t),e[t].eventsToRewrite.push(n)}function n(e,t){let n=e[t];Object.defineProperty(e,t,{get:()=>n||function(){},set(r){e["rocket"+t]=n=r}})}t(document,"DOMContentLoaded"),t(window,"DOMContentLoaded"),t(window,"load"),t(window,"pageshow"),t(document,"readystatechange"),n(document,"onreadystatechange"),n(window,"onload"),n(window,"onpageshow")}_delayJQueryReady(e){let t=window.jQuery;Object.defineProperty(window,"jQuery",{get:()=>t,set(n){if(n&&n.fn&&!e.allJQueries.includes(n)){n.fn.ready=n.fn.init.prototype.ready=function(t){e.domReadyFired?t.bind(document)(n):document.addEventListener("rocket-DOMContentLoaded",(()=>t.bind(document)(n)))};const t=n.fn.on;n.fn.on=n.fn.init.prototype.on=function(){if(this[0]===window){function e(e){return e.split(" ").map((e=>"load"===e||0===e.indexOf("load.")?"rocket-jquery-load":e)).join(" ")}"string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=e(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach((t=>{delete Object.assign(arguments[0],{[e(t)]:arguments[0][t]})[t]}))}return t.apply(this,arguments),this},e.allJQueries.push(n)}t=n}})}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._requestAnimFrame(),document.rocketonreadystatechange&&document.rocketonreadystatechange()}async _triggerWindowLoad(){await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-load")),await this._requestAnimFrame(),window.rocketonload&&window.rocketonload(),await this._requestAnimFrame(),this.allJQueries.forEach((e=>e(window).trigger("rocket-jquery-load"))),window.dispatchEvent(new Event("rocket-pageshow")),await this._requestAnimFrame(),window.rocketonpageshow&&window.rocketonpageshow()}_handleDocumentWrite(){const e=new Map;document.write=document.writeln=function(t){const n=document.currentScript,r=document.createRange(),i=n.parentElement;let o=e.get(n);void 0===o&&(o=n.nextSibling,e.set(n,o));const a=document.createDocumentFragment();r.setStart(a,0),a.appendChild(r.createContextualFragment(t)),i.insertBefore(a,o)}}async _requestAnimFrame(){return new Promise((e=>requestAnimationFrame(e)))}static run(){const e=new RocketLazyLoadScripts(["keydown","mousemove","touchmove","touchstart","touchend","wheel"]);e._addUserInteractionListener(e)}}RocketLazyLoadScripts.run();
+</script>
+<meta charset="UTF-8">
+<link rel="profile" href="https://gmpg.org/xfn/11">
+<meta name='robots' content='max-image-preview:large' />
+
+<title>2017 North Korean nuclear test 10x larger than previous tests - ScienceBlog.com</title><style id="rocket-critical-css">.screen-reader-text{border:0;clip:rect(1px,1px,1px,1px);-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-wrap:normal!important}blockquote,body,h1,h2,h3,html,li,p,ul{margin:0;padding:0;border:0}html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}main{display:block}html{box-sizing:border-box}*,::after,::before{box-sizing:inherit}button,input{font-family:inherit;font-size:100%;margin:0}::-moz-focus-inner{border-style:none;padding:0}:-moz-focusring{outline:1px dotted ButtonText}body,button,input{font-family:-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";font-weight:400;text-transform:none;font-size:17px;line-height:1.5}p{margin-bottom:1.5em}h1,h2,h3{font-family:inherit;font-size:100%;font-style:inherit;font-weight:inherit}blockquote{border-left:5px solid rgba(0,0,0,.05);padding:20px;font-size:1.2em;font-style:italic;margin:0 0 1.5em;position:relative}h1{font-size:42px;margin-bottom:20px;line-height:1.2em;font-weight:400;text-transform:none}h2{font-size:35px;margin-bottom:20px;line-height:1.2em;font-weight:400;text-transform:none}h3{font-size:29px;margin-bottom:20px;line-height:1.2em;font-weight:400;text-transform:none}ul{margin:0 0 1.5em 3em}ul{list-style:disc}strong{font-weight:700}em{font-style:italic}ins{text-decoration:none}img{height:auto;max-width:100%}button,input[type=submit]{background:#55555e;color:#fff;border:1px solid transparent;-webkit-appearance:button;padding:10px 20px}input[type=email],input[type=text]{border:1px solid;border-radius:0;padding:10px 15px;max-width:100%}a,a:visited{text-decoration:none}.size-medium{max-width:100%;height:auto}.screen-reader-text{border:0;clip:rect(1px,1px,1px,1px);-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute!important;width:1px;word-wrap:normal!important}.main-navigation{z-index:100;padding:0;clear:both;display:block}.main-navigation a{display:block;text-decoration:none;font-weight:400;text-transform:none;font-size:15px}.main-navigation ul{list-style:none;margin:0;padding-left:0}.main-navigation .main-nav ul li a{padding-left:20px;padding-right:20px;line-height:60px}.inside-navigation{position:relative}.main-navigation .inside-navigation{display:flex;align-items:center;flex-wrap:wrap;justify-content:space-between}.main-navigation .main-nav>ul{display:flex;flex-wrap:wrap;align-items:center}.main-navigation li{position:relative}.site-header{position:relative}.inside-header{padding:20px 40px}.site-logo{display:inline-block;max-width:100%}.site-header .header-image{vertical-align:middle}.inside-header{display:flex;align-items:center}.nav-float-right #site-navigation{margin-left:auto}.byline,.single .byline{display:inline}.entry-content:not(:first-child){margin-top:2em}.entry-header,.site-content{word-wrap:break-word}.entry-title{margin-bottom:0}.entry-meta{font-size:85%;margin-top:.5em;line-height:1.5}.widget-area .widget{padding:40px}.sidebar .widget :last-child{margin-bottom:0}.widget-title{margin-bottom:30px;font-size:20px;line-height:1.5;font-weight:400;text-transform:none}.widget ul{margin:0}.widget ul li{list-style-type:none;position:relative;margin-bottom:.5em}.site-content{display:flex}.grid-container{margin-left:auto;margin-right:auto;max-width:1200px}.sidebar .widget,.site-main>*{margin-bottom:20px}.separate-containers .inside-article{padding:40px}.separate-containers .site-main{margin:20px}.separate-containers.right-sidebar .site-main{margin-left:0}.separate-containers .inside-right-sidebar{margin-top:20px;margin-bottom:20px}.separate-containers .site-main>:last-child{margin-bottom:0}.gp-icon{display:inline-flex;align-self:center}.gp-icon svg{height:1em;width:1em;top:.125em;position:relative;fill:currentColor}.icon-menu-bars svg:nth-child(2){display:none}.container.grid-container{width:auto}.menu-toggle{display:none}.menu-toggle{padding:0 20px;line-height:60px;margin:0;font-weight:400;text-transform:none;font-size:15px}button.menu-toggle{background-color:transparent;flex-grow:1;border:0;text-align:center}.mobile-menu-control-wrapper{display:none;margin-left:auto;align-items:center}@media (max-width:768px){.inside-header{flex-direction:column;text-align:center}.site-content{flex-direction:column}.container .site-content .content-area{width:auto}.is-right-sidebar.sidebar{width:auto;order:initial}#main{margin-left:0;margin-right:0}body:not(.no-sidebar) #main{margin-bottom:0}.entry-meta{font-size:inherit}.entry-meta a{line-height:1.8em}}.rpwwt-widget ul{list-style:outside none none;margin-left:0;margin-right:0;padding-left:0;padding-right:0}.rpwwt-widget ul li{overflow:hidden;margin:0 0 1.5em}.rpwwt-widget ul li img{display:inline;float:left;margin:.3em .75em .75em 0}@import '//fonts.googleapis.com/css?family=Montserrat:200';.pum-container,.pum-content,.pum-content+.pum-close,.pum-overlay{background:0 0;border:none;bottom:auto;clear:none;float:none;font-family:inherit;font-size:medium;font-style:normal;font-weight:400;height:auto;left:auto;letter-spacing:normal;line-height:normal;max-height:none;max-width:none;min-height:0;min-width:0;overflow:visible;position:static;right:auto;text-align:left;text-decoration:none;text-indent:0;text-transform:none;top:auto;visibility:visible;white-space:normal;width:auto;z-index:auto}.pum-content{position:relative;z-index:1}.pum-overlay{position:fixed}.pum-overlay{height:100%;width:100%;top:0;left:0;right:0;bottom:0;z-index:1999999999;overflow:initial;display:none}.pum-overlay,.pum-overlay *,.pum-overlay :after,.pum-overlay :before,.pum-overlay:after,.pum-overlay:before{box-sizing:border-box}.pum-container{top:100px;position:absolute;margin-bottom:3em;z-index:1999999999}.pum-container.pum-responsive{left:50%;margin-left:-47.5%;width:95%;height:auto;overflow:visible}@media only screen and (min-width:1024px){.pum-container.pum-responsive.pum-responsive-medium{margin-left:-30%;width:60%}}.pum-container .pum-content>:last-child{margin-bottom:0}.pum-container .pum-content>:first-child{margin-top:0}.pum-container .pum-content+.pum-close{text-decoration:none;text-align:center;line-height:1;position:absolute;min-width:1em;z-index:2;background-color:transparent}.pum-theme-515831,.pum-theme-cutting-edge{background-color:rgba(0,0,0,0.50)}.pum-theme-515831 .pum-container,.pum-theme-cutting-edge .pum-container{padding:18px;border-radius:0;border:1px #000;box-shadow:0 10px 25px 0 rgba(2,2,2,0.50);background-color:rgba(58,58,58,1.00)}.pum-theme-515831 .pum-content,.pum-theme-cutting-edge .pum-content{color:#fff;font-family:inherit;font-weight:100}.pum-theme-515831 .pum-content+.pum-close,.pum-theme-cutting-edge .pum-content+.pum-close{position:absolute;height:24px;width:24px;left:auto;right:0;bottom:auto;top:0;padding:0;color:#fff;font-family:Times New Roman;font-weight:100;font-size:32px;line-height:24px;border:1px #fff;border-radius:0;box-shadow:-1px 1px 1px 0 rgba(2,2,2,0.10);text-shadow:-1px 1px 1px rgba(0,0,0,0.10);background-color:rgba(30,115,190,1.00)}#pum-523610{z-index:1999999999}body{background-color:#ffffff;color:#3a3a3a}a{color:#1e73be}.grid-container{max-width:1140px}.site-header .header-image{width:225px}body,button,input{font-family:inherit}body{line-height:1.7}p{margin-bottom:1.1em}.widget-title{margin-bottom:11px}.sidebar .widget{font-size:14px}h1{font-weight:300;font-size:40px}h2{font-weight:300;font-size:25px}h3{font-size:20px}@media (max-width:768px){h1{font-size:30px}h2{font-size:25px}}.site-header{background-color:#ffffff;color:#3a3a3a}.site-header a{color:#3a3a3a}.mobile-menu-control-wrapper .menu-toggle{background-color:rgba(0,0,0,0.02)}.main-navigation{background-color:#ffffff}.main-navigation .main-nav ul li a,.menu-toggle{color:#1e73be}.separate-containers .inside-article{background-color:#ffffff}.entry-meta{color:#595959}.entry-meta a{color:#595959}.sidebar .widget{background-color:#ffffff}.sidebar .widget .widget-title{color:#000000}input[type="text"],input[type="email"]{color:#666666;background-color:#fafafa;border-color:#cccccc}button,input[type="submit"]{color:#ffffff;background-color:#666666}.separate-containers .inside-article{padding:25px 40px 10px 40px}.sidebar .widget,.site-main>*{margin-bottom:45px}.separate-containers .site-main{margin:45px}.separate-containers .inside-right-sidebar{margin-top:45px;margin-bottom:45px}.main-navigation .main-nav ul li a,.menu-toggle{line-height:40px}@media (max-width:768px){.separate-containers .inside-article{padding:30px}}@media (max-width:768px){.main-navigation .menu-toggle{padding-left:0px;padding-right:0px}.main-navigation .main-nav ul li a,.main-navigation .menu-toggle{line-height:20px}}.entry-content:not(:first-child){margin-top:0.9em}:root{--swiper-theme-color:#007aff}:root{--swiper-navigation-size:44px}#jp-relatedposts{display:none;padding-top:1em;margin:1em 0;position:relative;clear:both}.jp-relatedposts:after{content:'';display:block;clear:both}#jp-relatedposts h3.jp-relatedposts-headline{margin:0 0 1em 0;display:inline-block;float:left;font-size:9pt;font-weight:700;font-family:inherit}#jp-relatedposts h3.jp-relatedposts-headline em:before{content:"";display:block;width:100%;min-width:30px;border-top:1px solid #dcdcde;border-top:1px solid rgba(0,0,0,.2);margin-bottom:1em}#jp-relatedposts h3.jp-relatedposts-headline em{font-style:normal;font-weight:700}#sharing_email .sharing_send{text-decoration:none!important;display:inline-block;font-size:12px;font-family:"Open Sans",sans-serif;font-weight:400;border-radius:3px;color:#656565!important;background:#f8f8f8;border:1px solid #ccc;box-shadow:0 1px 0 rgba(0,0,0,.08);text-shadow:none;line-height:23px;padding:1px 8px 0 5px}#sharing_email{width:342px;position:absolute;z-index:1001;border:1px solid #ccc;padding:15px;background:#fff;box-shadow:0 5px 20px rgba(0,0,0,.2);text-align:left}#sharing_email .errors{color:#fff;background-color:#771a09;font-size:12px;padding:5px 8px;line-height:1;margin:10px 0 0 0}#sharing_email label{font-size:12px;color:#333;font-weight:700;display:block;padding:0 0 4px 0;text-align:left;text-shadow:none}#sharing_email form{margin:0}#sharing_email input[type=email],#sharing_email input[type=text]{width:100%;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;border:1px solid #ccc;margin-bottom:1em;background:#fff;font-size:12px;color:#333;max-width:none;padding:1px 3px}#jetpack-source_f_name{display:none!important;position:absolute!important;left:-9000px}#sharing_email .sharing_cancel{padding:0 0 0 1em;font-size:12px;text-shadow:none}.screen-reader-text{border:0;clip:rect(1px,1px,1px,1px);-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute!important;width:1px;word-wrap:normal!important}.screen-reader-text{border:0;clip:rect(1px,1px,1px,1px);-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute!important;width:1px;word-wrap:normal!important}</style><script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="4a7a86a156d0da4abbd436a5-|49"></script><link rel="preload" href="https://scienceblog.com/wp-content/cache/min/1/e8207b1e9164d3e1ed6ea8898fb26464.css" data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" media="all" data-minify="1" />
+<meta name="description" content="North Korea detonated a nuclear device in 2017 equivalent to about 250 kilotons of TNT, a new study estimates, creating an explosion 16 times the size of" />
+<meta name="robots" content="index, follow" />
+<meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+<meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+<link rel="canonical" href="https://scienceblog.com/508163/2017-north-korean-nuclear-test-10x-larger-than-previous-tests/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="2017 North Korean nuclear test 10x larger than previous tests - ScienceBlog.com" />
+<meta property="og:description" content="North Korea detonated a nuclear device in 2017 equivalent to about 250 kilotons of TNT, a new study estimates, creating an explosion 16 times the size of" />
+<meta property="og:url" content="https://scienceblog.com/508163/2017-north-korean-nuclear-test-10x-larger-than-previous-tests/" />
+<meta property="og:site_name" content="ScienceBlog.com" />
+<meta property="article:publisher" content="https://www.facebook.com/scienceblogfan" />
+<meta property="article:author" content="http://www.facebook.com/scienceblogfan" />
+<meta property="article:published_time" content="2019-06-04T12:57:29+00:00" />
+<meta property="og:image" content="https://scienceblog.com/wp-content/uploads/2019/06/2017-North-Korean-nuclear-test-10-times-larger-than-previous-tests-new-study-finds.jpg" />
+<meta property="og:image:width" content="1350" />
+<meta property="og:image:height" content="900" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@http://twitter.com/#!/scienceblogtwit" />
+<meta name="twitter:site" content="@ScienceBlogTwit" />
+<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://scienceblog.com/#organization","name":"ScienceBlog.com","url":"https://scienceblog.com/","sameAs":["https://www.facebook.com/scienceblogfan","https://www.pinterest.com/scienceblog/","https://twitter.com/ScienceBlogTwit"],"logo":{"@type":"ImageObject","@id":"https://scienceblog.com/#logo","inLanguage":"en-US","url":"https://scienceblog.com/wp-content/uploads/2017/09/science-blog-logo-research-news-300x74-1.png","width":300,"height":74,"caption":"ScienceBlog.com"},"image":{"@id":"https://scienceblog.com/#logo"}},{"@type":"WebSite","@id":"https://scienceblog.com/#website","url":"https://scienceblog.com/","name":"ScienceBlog.com","description":"Science news straight from the source.","publisher":{"@id":"https://scienceblog.com/#organization"},"potentialAction":[{"@type":"SearchAction","target":"https://scienceblog.com/?s={search_term_string}","query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"ImageObject","@id":"https://scienceblog.com/508163/2017-north-korean-nuclear-test-10x-larger-than-previous-tests/#primaryimage","inLanguage":"en-US","url":"https://scienceblog.com/wp-content/uploads/2019/06/2017-North-Korean-nuclear-test-10-times-larger-than-previous-tests-new-study-finds.jpg","width":1350,"height":900},{"@type":"WebPage","@id":"https://scienceblog.com/508163/2017-north-korean-nuclear-test-10x-larger-than-previous-tests/#webpage","url":"https://scienceblog.com/508163/2017-north-korean-nuclear-test-10x-larger-than-previous-tests/","name":"2017 North Korean nuclear test 10x larger than previous tests - ScienceBlog.com","isPartOf":{"@id":"https://scienceblog.com/#website"},"primaryImageOfPage":{"@id":"https://scienceblog.com/508163/2017-north-korean-nuclear-test-10x-larger-than-previous-tests/#primaryimage"},"datePublished":"2019-06-04T12:57:29+00:00","dateModified":"2019-06-04T12:57:29+00:00","description":"North Korea detonated a nuclear device in 2017 equivalent to about 250 kilotons of TNT, a new study estimates, creating an explosion 16 times the size of","inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://scienceblog.com/508163/2017-north-korean-nuclear-test-10x-larger-than-previous-tests/"]}]},{"@type":["Article","NewsArticle"],"@id":"https://scienceblog.com/508163/2017-north-korean-nuclear-test-10x-larger-than-previous-tests/#article","isPartOf":{"@id":"https://scienceblog.com/508163/2017-north-korean-nuclear-test-10x-larger-than-previous-tests/#webpage"},"author":{"@id":"https://scienceblog.com/#/schema/person/5401c7e8b13477c930e1c6c108116f1a"},"headline":"2017 North Korean nuclear test 10x larger than previous tests","datePublished":"2019-06-04T12:57:29+00:00","dateModified":"2019-06-04T12:57:29+00:00","mainEntityOfPage":{"@id":"https://scienceblog.com/508163/2017-north-korean-nuclear-test-10x-larger-than-previous-tests/#webpage"},"publisher":{"@id":"https://scienceblog.com/#organization"},"image":{"@id":"https://scienceblog.com/508163/2017-north-korean-nuclear-test-10x-larger-than-previous-tests/#primaryimage"},"articleSection":"Earth, Energy &amp; Environment,Physics &amp; Mathematics","inLanguage":"en-US","potentialAction":[{"@type":"CommentAction","name":"Comment","target":["https://scienceblog.com/508163/2017-north-korean-nuclear-test-10x-larger-than-previous-tests/#respond"]}],"copyrightYear":"2019","copyrightHolder":{"@id":"https://scienceblog.com/#organization"}},{"@type":"Person","@id":"https://scienceblog.com/#/schema/person/5401c7e8b13477c930e1c6c108116f1a","name":"ScienceBlog.com","sameAs":["http://www.facebook.com/scienceblogfan","https://twitter.com/http://twitter.com/#!/scienceblogtwit"]}]}</script>
+
+<link rel="amphtml" href="https://scienceblog.com/508163/2017-north-korean-nuclear-test-10x-larger-than-previous-tests/amp/" /><meta name="generator" content="AMP for WP 1.0.77.20" /><link rel='dns-prefetch' href='//graph.facebook.com' />
+<link rel='dns-prefetch' href='//0.gravatar.com' />
+<link rel='dns-prefetch' href='//1.gravatar.com' />
+<link rel='dns-prefetch' href='//2.gravatar.com' />
+<link rel='dns-prefetch' href='//38k1fc3x33ow2utzkw1hx9fqfom-wpengine.netdna-ssl.com' />
+<link rel='dns-prefetch' href='//ad.doubleclick.net' />
+<link rel='dns-prefetch' href='//adservice.google.com' />
+<link rel='dns-prefetch' href='//ajax.aspnetcdn.com' />
+<link rel='dns-prefetch' href='//ajax.googleapis.com' />
+<link rel='dns-prefetch' href='//ajax.microsoft.com' />
+<link rel='dns-prefetch' href='//api.pinterest.com' />
+<link rel='dns-prefetch' href='//apis.google.com' />
+<link rel='dns-prefetch' href='//assets.pinterest.com' />
+<link rel='dns-prefetch' href='//c.disquscdn.com' />
+<link rel='dns-prefetch' href='//cdnjs.cloudflare.com' />
+<link rel='dns-prefetch' href='//cm.g.doubleclick.net' />
+<link rel='dns-prefetch' href='//code.jquery.com' />
+<link rel='dns-prefetch' href='//connect.facebook.net' />
+<link rel='dns-prefetch' href='//disqus.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//fonts.gstatic.com' />
+<link rel='dns-prefetch' href='//github.githubassets.com' />
+<link rel='dns-prefetch' href='//google-analytics.com' />
+<link rel='dns-prefetch' href='//googleads.g.doubleclick.net' />
+<link rel='dns-prefetch' href='//i.ytimg.com' />
+<link rel='dns-prefetch' href='//maps.googleapis.com' />
+<link rel='dns-prefetch' href='//maps.gstatic.com' />
+<link rel='dns-prefetch' href='//pagead2.googlesyndication.com' />
+<link rel='dns-prefetch' href='//partner.googleadservices.com' />
+<link rel='dns-prefetch' href='//pixel.wp.com' />
+<link rel='dns-prefetch' href='//platform.instagram.com' />
+<link rel='dns-prefetch' href='//platform.linkedin.com' />
+<link rel='dns-prefetch' href='//platform.twitter.com' />
+<link rel='dns-prefetch' href='//player.vimeo.com' />
+<link rel='dns-prefetch' href='//referrer.disqus.com' />
+<link rel='dns-prefetch' href='//rules.quantcount.com' />
+<link rel='dns-prefetch' href='//s.gravatar.com' />
+<link rel='dns-prefetch' href='//s0.2mdn.net' />
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//s1.wp.com' />
+<link rel='dns-prefetch' href='//s2.wp.com' />
+<link rel='dns-prefetch' href='//s3.amazonaws.com' />
+<link rel='dns-prefetch' href='//s3.buysellads.com' />
+<link rel='dns-prefetch' href='//s7.addthis.com' />
+<link rel='dns-prefetch' href='//sitename.disqus.com' />
+<link rel='dns-prefetch' href='//ssl.google-analytics.com' />
+<link rel='dns-prefetch' href='//stackpath.bootstrapcdn.com' />
+<link rel='dns-prefetch' href='//stats.buysellads.com' />
+<link rel='dns-prefetch' href='//stats.g.doubleclick.net' />
+<link rel='dns-prefetch' href='//stats.wp.com' />
+<link rel='dns-prefetch' href='//syndication.twitter.com' />
+<link rel='dns-prefetch' href='//tpc.googlesyndication.com' />
+<link rel='dns-prefetch' href='//use.fontawesome.com' />
+<link rel='dns-prefetch' href='//w.sharethis.com' />
+<link rel='dns-prefetch' href='//www.google-analytics.com' />
+<link rel='dns-prefetch' href='//www.google.com' />
+<link rel='dns-prefetch' href='//www.googletagmanager.com' />
+<link rel='dns-prefetch' href='//www.googletagservices.com' />
+<link rel='dns-prefetch' href='//www.gstatic.com' />
+<link rel='dns-prefetch' href='//youtube.com' />
+<link rel='dns-prefetch' href='//widgets.wp.com' />
+<link rel="alternate" type="application/rss+xml" title="ScienceBlog.com &raquo; Feed" href="https://scienceblog.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="ScienceBlog.com &raquo; Comments Feed" href="https://scienceblog.com/comments/feed/" />
+<style>
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify{text-align:justify;}
+</style>
+<style id='generate-style-inline-css'>
+.no-featured-image-padding .featured-image {margin-left:-40px;margin-right:-40px;}.post-image-above-header .no-featured-image-padding .inside-article .featured-image {margin-top:-25px;}@media (max-width:768px){.no-featured-image-padding .featured-image {margin-left:-30px;margin-right:-30px;}.post-image-above-header .no-featured-image-padding .inside-article .featured-image {margin-top:-30px;}}
+.is-right-sidebar{width:30%;}.is-left-sidebar{width:35%;}.site-content .content-area{width:70%;}@media (max-width: 768px){.main-navigation .menu-toggle,.sidebar-nav-mobile:not(#sticky-placeholder){display:block;}.main-navigation ul,.gen-sidebar-nav,.main-navigation:not(.slideout-navigation):not(.toggled) .main-nav > ul,.has-inline-mobile-toggle #site-navigation .inside-navigation > *:not(.navigation-search):not(.main-nav){display:none;}.nav-align-right .inside-navigation,.nav-align-center .inside-navigation{justify-content:space-between;}.has-inline-mobile-toggle .mobile-menu-control-wrapper{display:flex;flex-wrap:wrap;}.has-inline-mobile-toggle .inside-header{flex-direction:row;text-align:left;flex-wrap:wrap;}.has-inline-mobile-toggle .header-widget,.has-inline-mobile-toggle #site-navigation{flex-basis:100%;}.nav-float-left .has-inline-mobile-toggle #site-navigation{order:10;}}
+.dynamic-author-image-rounded{border-radius:100%;}.dynamic-featured-image, .dynamic-author-image{vertical-align:middle;}.one-container.blog .dynamic-content-template:not(:last-child), .one-container.archive .dynamic-content-template:not(:last-child){padding-bottom:0px;}.dynamic-entry-excerpt > p:last-child{margin-bottom:0px;}
+</style>
+<style id='rocket-lazyload-inline-css'>
+.rll-youtube-player{position:relative;padding-bottom:56.23%;height:0;overflow:hidden;max-width:100%;}.rll-youtube-player iframe{position:absolute;top:0;left:0;width:100%;height:100%;z-index:100;background:0 0}.rll-youtube-player img{bottom:0;display:block;left:0;margin:auto;max-width:100%;width:100%;position:absolute;right:0;top:0;border:none;height:auto;cursor:pointer;-webkit-transition:.4s all;-moz-transition:.4s all;transition:.4s all}.rll-youtube-player img:hover{-webkit-filter:brightness(75%)}.rll-youtube-player .play{height:72px;width:72px;left:50%;top:50%;margin-left:-36px;margin-top:-36px;position:absolute;background:url(https://scienceblog.com/wp-content/plugins/wp-rocket/assets/img/youtube.png) no-repeat;cursor:pointer}.wp-has-aspect-ratio .rll-youtube-player{position:absolute;padding-bottom:0;width:100%;height:100%;top:0;bottom:0;left:0;right:0}
+</style>
+<script src='https://scienceblog.com/wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js' defer type="4a7a86a156d0da4abbd436a5-text/javascript"></script>
+<script src='https://scienceblog.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js' defer type="4a7a86a156d0da4abbd436a5-text/javascript"></script>
+<link rel="https://api.w.org/" href="https://scienceblog.com/wp-json/" /><link rel="alternate" type="application/json" href="https://scienceblog.com/wp-json/wp/v2/posts/508163" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://scienceblog.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://scienceblog.com/wp-includes/wlwmanifest.xml" />
+<link rel='shortlink' href='https://scienceblog.com/?p=508163' />
+
+<script type="application/ld+json">{"@context":"https:\/\/schema.org\/","@type":"NewsArticle","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/scienceblog.com\/508163\/2017-north-korean-nuclear-test-10x-larger-than-previous-tests\/"},"url":"https:\/\/scienceblog.com\/508163\/2017-north-korean-nuclear-test-10x-larger-than-previous-tests\/","headline":"2017 North Korean nuclear test 10x larger than previous tests","datePublished":"2019-06-04T05:57:29-07:00","dateModified":"2019-06-04T05:57:29-07:00","publisher":{"@type":"Organization","@id":"https:\/\/scienceblog.com\/#organization","name":"ScienceBlog.com","logo":{"@type":"ImageObject","url":"https:\/\/scienceblog.com\/wp-content\/uploads\/2019\/08\/onlinelogomaker-082919-1527-1025-2000-transparent.png","width":600,"height":60}},"image":{"@type":"ImageObject","url":"https:\/\/scienceblog.com\/wp-content\/uploads\/2019\/06\/2017-North-Korean-nuclear-test-10-times-larger-than-previous-tests-new-study-finds.jpg","width":1350,"height":900},"articleSection":"Earth, Energy &amp; Environment","description":"North Korea detonated a nuclear device in 2017 equivalent to about 250 kilotons of TNT, a new study estimates, creating an explosion 16 times the size of the bomb the United States detonated over Hiroshima, Japan, in 1945. The new assessment of the 2017 explosion's size is on the","author":{"@type":"Person","name":"ScienceBlog.com","url":"https:\/\/scienceblog.com\/author\/admin\/","image":{"@type":"ImageObject","url":"https:\/\/secure.gravatar.com\/avatar\/31578535f7ab1db0aec052d2a7863984?s=96&d=blank&r=g","height":96,"width":96},"sameAs":["https:\/\/scienceblog.com","https:\/\/plus.google.com\/116203405486447979698\/posts","http:\/\/www.facebook.com\/scienceblogfan","https:\/\/twitter.com\/http:\/\/twitter.com\/#!\/scienceblogtwit"]}}</script>
+<meta name="generator" content="Site Kit by Google 1.39.0" /><meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script type="application/ld+json">{
+    "@context": "http://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "item": {
+                "@id": "https://scienceblog.com",
+                "name": "Home"
+            }
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "item": {
+                "@id": "https://scienceblog.com/508163/2017-north-korean-nuclear-test-10x-larger-than-previous-tests/",
+                "name": "2017 North Korean nuclear test 10x larger than previous tests",
+                "image": "https://scienceblog.com/wp-content/uploads/2019/06/2017-North-Korean-nuclear-test-10-times-larger-than-previous-tests-new-study-finds.jpg"
+            }
+        }
+    ]
+}</script>
+<script type="rocketlazyloadscript" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1680599806301730" crossorigin="anonymous"></script>
+<meta property="fb:pages" content="147924778610801" /><link rel="icon" href="https://scienceblog.com/wp-content/uploads/2021/05/cropped-cropped-sb1000-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://scienceblog.com/wp-content/uploads/2021/05/cropped-cropped-sb1000-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://scienceblog.com/wp-content/uploads/2021/05/cropped-cropped-sb1000-180x180.png" />
+<meta name="msapplication-TileImage" content="https://scienceblog.com/wp-content/uploads/2021/05/cropped-cropped-sb1000-270x270.png" />
+<style id="wp-custom-css">
+			/*
+You can add your own CSS here.
+
+Click the help icon above to learn more.
+*/
+
+.entry-title {  text-transform: capitalize; }
+
+
+
+/* Frontpage slider headline size */
+.su-image-carousel-item-content  {
+    font-size: 2.3em;
+}
+
+/* Frontpage block(s) headline size */
+.ab-block-post-grid header .ab-block-post-grid-title {
+	font-size: 1.4em;
+	font-weight: 300;
+}
+.ab-post-grid-section-title {
+	font-size: 1.8em;
+	font-weight: 600;
+}
+
+
+/* Add divider in byline 
+.author:before {
+    content: "| ";
+}*/
+
+
+#wp-subscribe input.submit { background: #3b73b9; color: #fff; font-size: 18px; padding: 10px 0; }
+#wp-subscribe  { background: #474b52; color: #fff; font-size: 14px; padding: 10px,10px,10px.10px; }
+#wp-subscribe input.email-field {background: #ffffff; color: #1e73be;}
+
+
+#mobile-header  .menu-toggle {
+    display: none !important;
+}
+
+
+.featured-image .wp-caption-text {
+    text-align: left;
+	padding: 10px;
+    max-width: 700px;
+    margin: auto;
+    line-height: 1.4em;
+}
+		</style>
+<noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript><script type="rocketlazyloadscript">
+/*! loadCSS rel=preload polyfill. [c]2017 Filament Group, Inc. MIT License */
+(function(w){"use strict";if(!w.loadCSS){w.loadCSS=function(){}}
+var rp=loadCSS.relpreload={};rp.support=(function(){var ret;try{ret=w.document.createElement("link").relList.supports("preload")}catch(e){ret=!1}
+return function(){return ret}})();rp.bindMediaToggle=function(link){var finalMedia=link.media||"all";function enableStylesheet(){link.media=finalMedia}
+if(link.addEventListener){link.addEventListener("load",enableStylesheet)}else if(link.attachEvent){link.attachEvent("onload",enableStylesheet)}
+setTimeout(function(){link.rel="stylesheet";link.media="only x"});setTimeout(enableStylesheet,3000)};rp.poly=function(){if(rp.support()){return}
+var links=w.document.getElementsByTagName("link");for(var i=0;i<links.length;i++){var link=links[i];if(link.rel==="preload"&&link.getAttribute("as")==="style"&&!link.getAttribute("data-loadcss")){link.setAttribute("data-loadcss",!0);rp.bindMediaToggle(link)}}};if(!rp.support()){rp.poly();var run=w.setInterval(rp.poly,500);if(w.addEventListener){w.addEventListener("load",function(){rp.poly();w.clearInterval(run)})}else if(w.attachEvent){w.attachEvent("onload",function(){rp.poly();w.clearInterval(run)})}}
+if(typeof exports!=="undefined"){exports.loadCSS=loadCSS}
+else{w.loadCSS=loadCSS}}(typeof global!=="undefined"?global:this))
+</script></head>
+<body class="post-template-default single single-post postid-508163 single-format-standard wp-custom-logo wp-embed-responsive post-image-above-header post-image-aligned-center sticky-menu-fade right-sidebar nav-float-right separate-containers header-aligned-left dropdown-hover featured-image-active" itemtype="https://schema.org/Blog" itemscope>
+<a class="screen-reader-text skip-link" href="#content" title="Skip to content">Skip to content</a> <header id="masthead" class="site-header has-inline-mobile-toggle" itemtype="https://schema.org/WPHeader" itemscope>
+<div class="inside-header">
+<div class="site-logo">
+<a href="https://scienceblog.com/" title="ScienceBlog.com" rel="home">
+<img class="header-image is-logo-image" alt="ScienceBlog.com" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%2060'%3E%3C/svg%3E" title="ScienceBlog.com" data-lazy-srcset="https://scienceblog.com/wp-content/uploads/2019/08/cropped-science-blog-logo-research-news-300x74-1-300x74-1.png 1x, https://scienceblog.com/wp-content/uploads/2019/08/onlinelogomaker-082919-1527-1025-2000-transparent.png 2x" width="300" height="60" data-lazy-src="https://scienceblog.com/wp-content/uploads/2019/08/cropped-science-blog-logo-research-news-300x74-1-300x74-1.png" /><noscript><img  class="header-image is-logo-image" alt="ScienceBlog.com" src="https://scienceblog.com/wp-content/uploads/2019/08/cropped-science-blog-logo-research-news-300x74-1-300x74-1.png" title="ScienceBlog.com" srcset="https://scienceblog.com/wp-content/uploads/2019/08/cropped-science-blog-logo-research-news-300x74-1-300x74-1.png 1x, https://scienceblog.com/wp-content/uploads/2019/08/onlinelogomaker-082919-1527-1025-2000-transparent.png 2x" width="300" height="60" /></noscript>
+</a>
+</div> <nav id="mobile-menu-control-wrapper" class="main-navigation mobile-menu-control-wrapper">
+<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false" data-nav="site-navigation">
+<span class="gp-icon icon-menu-bars"><svg viewBox="0 0 512 512" aria-hidden="true" role="img" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1em" height="1em">
+<path d="M0 96c0-13.255 10.745-24 24-24h464c13.255 0 24 10.745 24 24s-10.745 24-24 24H24c-13.255 0-24-10.745-24-24zm0 160c0-13.255 10.745-24 24-24h464c13.255 0 24 10.745 24 24s-10.745 24-24 24H24c-13.255 0-24-10.745-24-24zm0 160c0-13.255 10.745-24 24-24h464c13.255 0 24 10.745 24 24s-10.745 24-24 24H24c-13.255 0-24-10.745-24-24z" />
+</svg><svg viewBox="0 0 512 512" aria-hidden="true" role="img" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1em" height="1em">
+<path d="M71.029 71.029c9.373-9.372 24.569-9.372 33.942 0L256 222.059l151.029-151.03c9.373-9.372 24.569-9.372 33.942 0 9.372 9.373 9.372 24.569 0 33.942L289.941 256l151.03 151.029c9.372 9.373 9.372 24.569 0 33.942-9.373 9.372-24.569 9.372-33.942 0L256 289.941l-151.029 151.03c-9.373 9.372-24.569 9.372-33.942 0-9.372-9.373-9.372-24.569 0-33.942L222.059 256 71.029 104.971c-9.372-9.373-9.372-24.569 0-33.942z" />
+</svg></span><span class="screen-reader-text">Menu</span> </button>
+</nav>
+<nav id="site-navigation" class="main-navigation sub-menu-right" itemtype="https://schema.org/SiteNavigationElement" itemscope>
+<div class="inside-navigation grid-container">
+<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+<span class="gp-icon icon-menu-bars"><svg viewBox="0 0 512 512" aria-hidden="true" role="img" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1em" height="1em">
+<path d="M0 96c0-13.255 10.745-24 24-24h464c13.255 0 24 10.745 24 24s-10.745 24-24 24H24c-13.255 0-24-10.745-24-24zm0 160c0-13.255 10.745-24 24-24h464c13.255 0 24 10.745 24 24s-10.745 24-24 24H24c-13.255 0-24-10.745-24-24zm0 160c0-13.255 10.745-24 24-24h464c13.255 0 24 10.745 24 24s-10.745 24-24 24H24c-13.255 0-24-10.745-24-24z" />
+</svg><svg viewBox="0 0 512 512" aria-hidden="true" role="img" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1em" height="1em">
+<path d="M71.029 71.029c9.373-9.372 24.569-9.372 33.942 0L256 222.059l151.029-151.03c9.373-9.372 24.569-9.372 33.942 0 9.372 9.373 9.372 24.569 0 33.942L289.941 256l151.03 151.029c9.372 9.373 9.372 24.569 0 33.942-9.373 9.372-24.569 9.372-33.942 0L256 289.941l-151.029 151.03c-9.373 9.372-24.569 9.372-33.942 0-9.372-9.373-9.372-24.569 0-33.942L222.059 256 71.029 104.971c-9.372-9.373-9.372-24.569 0-33.942z" />
+</svg></span><span class="screen-reader-text">Menu</span> </button>
+<div id="primary-menu" class="main-nav"><ul id="menu-new-main-menu" class=" menu sf-menu"><li id="menu-item-514263" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-514263"><a href="https://news.google.com/publications/CAAqBwgKMOuljQswpZafAw?hl=en-US&#038;gl=US&#038;ceid=US%3Aen">Find Us on Google News</a></li>
+<li id="menu-item-523497" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-523497"><a href="https://newsletter.scienceblog.com/">Subscribe via Revue</a></li>
+<li id="menu-item-496185" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-496185"><a href="https://scienceblog.com/category/childblog/">Bloggers</a></li>
+<li id="menu-item-69548" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-69548"><a href="https://scienceblog.com/topics/">Topics</a></li>
+<li id="menu-item-486520" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-486520"><a href="https://scienceblog.com/contact/">Contribute/Contact</a></li>
+</ul></div> </div>
+</nav>
+</div>
+</header>
+<div id="page" class="site grid-container container hfeed">
+<div id="content" class="site-content">
+<div id="primary" class="content-area">
+<main id="main" class="site-main">
+<article id="post-508163" class="post-508163 post type-post status-publish format-standard has-post-thumbnail hentry category-earth-energy-environment category-physics-math no-featured-image-padding" itemtype="https://schema.org/CreativeWork" itemscope>
+<div class="inside-article">
+<div class="featured-image  page-header-image-single ">
+<img title="2017 North Korean nuclear test 10x larger than previous tests" width="798" height="532" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20798%20532'%3E%3C/svg%3E" class="attachment-large size-large" alt="2017 North Korean nuclear test 10x larger than previous tests" itemprop="image" data-lazy-srcset="https://scienceblog.com/wp-content/uploads/2019/06/2017-North-Korean-nuclear-test-10-times-larger-than-previous-tests-new-study-finds-900x600.jpg 900w, https://scienceblog.com/wp-content/uploads/2019/06/2017-North-Korean-nuclear-test-10-times-larger-than-previous-tests-new-study-finds-600x400.jpg 600w, https://scienceblog.com/wp-content/uploads/2019/06/2017-North-Korean-nuclear-test-10-times-larger-than-previous-tests-new-study-finds-300x200.jpg 300w, https://scienceblog.com/wp-content/uploads/2019/06/2017-North-Korean-nuclear-test-10-times-larger-than-previous-tests-new-study-finds.jpg 1350w" data-lazy-sizes="(max-width: 798px) 100vw, 798px" data-lazy-src="https://scienceblog.com/wp-content/uploads/2019/06/2017-North-Korean-nuclear-test-10-times-larger-than-previous-tests-new-study-finds-900x600.jpg" /><noscript><img  title = "2017 North Korean nuclear test 10x larger than previous tests" width="798" height="532" src="https://scienceblog.com/wp-content/uploads/2019/06/2017-North-Korean-nuclear-test-10-times-larger-than-previous-tests-new-study-finds-900x600.jpg" class="attachment-large size-large" alt = "2017 North Korean nuclear test 10x larger than previous tests"  itemprop="image" srcset="https://scienceblog.com/wp-content/uploads/2019/06/2017-North-Korean-nuclear-test-10-times-larger-than-previous-tests-new-study-finds-900x600.jpg 900w, https://scienceblog.com/wp-content/uploads/2019/06/2017-North-Korean-nuclear-test-10-times-larger-than-previous-tests-new-study-finds-600x400.jpg 600w, https://scienceblog.com/wp-content/uploads/2019/06/2017-North-Korean-nuclear-test-10-times-larger-than-previous-tests-new-study-finds-300x200.jpg 300w, https://scienceblog.com/wp-content/uploads/2019/06/2017-North-Korean-nuclear-test-10-times-larger-than-previous-tests-new-study-finds.jpg 1350w" sizes="(max-width: 798px) 100vw, 798px" /></noscript>
+</div> <header class="entry-header">
+<h1 class="entry-title" itemprop="headline">2017 North Korean nuclear test 10x larger than previous tests</h1> <div class="entry-meta">
+<span class="posted-on"><time class="entry-date published" datetime="2019-06-04T05:57:29-07:00" itemprop="datePublished">June 4, 2019</time></span> <span class="byline"><span class="author vcard" itemtype="https://schema.org/Person" itemscope="itemscope" itemprop="author"><a class="url fn n" href="https://scienceblog.com/author/admin/" title="View all posts by ScienceBlog.com" rel="author" itemprop="url"><span class="author-name" itemprop="name">ScienceBlog.com</span></a></span></span> </div>
+</header>
+<div class="entry-content" itemprop="text">
+<p>North Korea detonated a nuclear device in 2017 equivalent to about 250 kilotons of TNT, a new study estimates, creating an explosion 16 times the size of the bomb the United States detonated over Hiroshima, Japan, in 1945. The new assessment of the 2017 explosion&#8217;s size is on the high end of previous estimate ranges.</p>
+<p>The 2017 test was an order of magnitude larger than the previous five underground tests at North Korea&#8217;s Punggye-ri test site, according to the <a href="https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2019JB017418" target="_blank" rel="noopener noreferrer">new study</a> in AGU&#8217;s <em>Journal of Geophysical Research: Solid Earth</em>. The new study took into account the geology of the test site to estimate the size of the explosions from distant seismic recordings of the blasts.</p>
+<p>&#8220;From 2006 to 2016 North Korea steadily increased the size of the events, from somewhere around 1 kiloton up to around 20 kilotons. The very early events looked like they didn&#8217;t work very well, because they were unusually small. And then in one year they jumped up to 250-ish kilotons,&#8221; said Thorne Lay, a seismologist at the University of California Santa Cruz and an author of the new study. &#8220;The scary thing is that this was such a big device.&#8221;</p>
+<p>North Korea has been testing nuclear devices underground since 2006. The 2017 nuclear test caused a magnitude 6.3 <a href="https://earthquake.usgs.gov/earthquakes/eventpage/us2000aert/executive#shakemap">earthquake</a>, according to the US Geological Survey, and produced sound waves recorded by seismometers around the world. These reverberations are clues to the size of the blast, but determining the size of the explosion from a distance based on seismic recordings is not simple, said Lay, who has served on the Air Force Technical Application Center Seismic Review Panel tasked with advising on nuclear testing for over 25 years.</p>
+<p>Unknown characteristics of the nuclear devices, the test sites and their geologic context create large uncertainties in estimates of explosion size. Previously published scientific estimates of the 2017 test&#8217;s size have ranged from 30 to 300 kilotons. The U.S. intelligence community has estimated the size of the explosion at 140 kilotons according to a report in <a href="https://thediplomat.com/2017/09/us-intelligence-north-koreas-sixth-test-was-a-140-kiloton-advanced-nuclear-device/" target="_blank" rel="noopener noreferrer"><em>The Diplomat</em></a> magazine.</p>
+<p>U.S. intelligence typically applies an uncertainty range of a factor of two to reported estimates. A reported yield of 100 kilotons, for example, would include the caveat that it could be as small as 50 kilotons or as large as 200 kilotons.</p>
+<p>The new research puts the magnitude of the 2017 test in a range of 148 to 328 kilotons.</p>
+<p>Steven Gibbons, a geophysicist with the program for Array Seismology and Test-Ban-Treaty Verification at NORSAR and a researcher unaffiliated with the new study, said the new research accurately determines the relative size of the six tests made by North Korea from 2006 to 2016.</p>
+<p>&#8220;I think the uncertainty the authors quote is quite a realistic range,&#8221; said Gibbons. &#8220;The ratios between the exact numbers are quite accurate, so if the North Koreans told us, for example, that the second test shot in 2016 was exactly 25 kilotons, we could calculate the others accurately from it.&#8221;</p>
+<p>Knowing the size of the tests relative to each other is itself useful information, Gibbons said, demonstrating steady progress in North Korea&#8217;s nuclear program.</p>
+<p>&#8220;In 2006, when there was this little rumble, many people were quite dismissive that North Korea had the technology to do this properly, but I think from the progression we&#8217;ve seen with the increases of yield, it&#8217;s been a very well-executed weapons development program,&#8221; Gibbons said. &#8220;When you got to 2017, there&#8217;s no question that this is an incredibly destructive weapon. Even at the lower end of this uncertain yield, it&#8217;s a horrific weapon.&#8221;</p>
+<p>A 250-kiloton explosion could plausibly be produced by either a boosted fission bomb or a modest fusion device, Lay said. The fission bomb detonated at Hiroshima released a blast equivalent to 15 kilotons of TNT by splitting apart atomic nuclei. Fusion devices, also known as thermonuclear or hydrogen bombs, derive their enormous explosive power from combining hydrogen nuclei to form helium and can yield as much as 50,000 kilotons.</p>
+<p><strong>Inherent uncertainties</strong></p>
+<p>The researchers had information about how sound travels in different types of rock from previous research. &#8220;There are differences, depending on the rock conditions under the test site, in how loud the sound is when you are listening far away,&#8221; Lay said. &#8220;It would be different in granite than in say, sandstone. So we calibrated by setting tests off in our own diverse rock environments and recording right next to the source.&#8221;</p>
+<p>Other factors like the depth of the explosion, geometry of the access tunnel, tectonic history of the region, and temperature and fluid content of the rock also influence the rate at which sound waves created by the explosion are dampened, Lay said. Only a tiny amount of the energy generated by the blast is converted to sound and travels away from the test site as seismic waves.</p>
+<p>Because of North Korea&#8217;s seclusion, details of the underground geology are not well known. The area experiences very few natural earthquakes that can reveal information about properties of the underlying rock. Researchers used satellite images and other information to estimate the type of rock at the North Korea test site.</p>
+<p>The researchers used the explosions from the nuclear tests North Korea conducted beginning in 2006 to calibrate models of how much explosive force transferred to the rock at the test site and how the sound waves traveled through the planet.</p>
+<p>The echo of the explosion off the surface of the test site distorts the sound recorded far away. The distortion is affected by the depth and size of the explosion. If the echo were not present, the outgoing sound from the six test explosions would be similar. The researchers used this idea to estimate the relative sizes of the bombs by finding a combination of depth and yield that compensated for the reflection of the sound from the surface.</p>
+<p>&#8220;They&#8217;ve modeled what the reflection would look like for different yields and depths and solved for what the signal would look like if you didn&#8217;t have to account for this returning wave. The most impressive thing in the paper for me is how similar these waveforms are. This is what gives me confidence that they&#8217;ve done a good job,&#8221; Gibbons said.</p>
+<p><strong>Rebooting cold war strategies</strong></p>
+<p>The new study revived modeling strategies developed in the early 1980s to resolve suspicions that the Soviet Union had cheated on the Treaty on the Limitation of Underground Nuclear Weapon Tests by testing bombs larger than the 150-kiloton size <a href="https://armscontrolcenter.org/fact-sheet-threshold-test-ban-treaty-ttbt/" target="_blank" rel="noopener noreferrer">threshold</a> for testing they agreed to in 1974.</p>
+<p>The treaty had been signed but not ratified by the U.S. Senate. The Regan Administration publicly aired intelligence concerns that Russian tests exceeded the size threshold, because observed sound waves produced by the tests were bigger than known test shots at the U.S.&#8217;s Nevada test site.</p>
+<p>But seismologists believed the signals from the Soviet tests were bigger because they transmitted through the earth more efficiently.</p>
+<p>&#8220;The mantle under the Nevada test site is very hot and has processes that dampen down the sound. It is very different from the former Soviet test site in Kazakhstan, where the rock under the test site is old and cold and transmits sound very efficiently, without much loss,&#8221; Lay said.</p>
+<p>During negotiations for the 1987 Intermediate-Range Nuclear Forces (INF) Treaty, U.S. and Soviet scientists travelled to the test sites in Nevada and Kazakhstan and conducted joint tests. Measurements at the test sites confirmed geologists&#8217; methods for estimating the extra dampening effect in Nevada compared to the Soviet test site.</p>
+<p>The new study applied some of the same methods validated in the 1980s to the North Korean tests.</p>
+<p>&#8220;The methods were nothing particularly new. The difference is that the quality and availability of the data is much better now than 40 years ago,&#8221; Lay said.</p>
+<p>Gibbons said the new study&#8217;s results are likely as close as scientists outside North Korea could to the true size of the nuclear tests without data from the test sites. &#8220;I think the authors have pushed it to the limits with this paper. I would be surprised if we can get tighter constraints on the absolute yield without additional information,&#8221; he said.</p>
+<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-text sd-sharing"><h3 class="sd-title">COMMENTS: Let us know what you think via Twitter or Facebook</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-508163" class="share-twitter sd-button no-icon" href="https://scienceblog.com/508163/2017-north-korean-nuclear-test-10x-larger-than-previous-tests/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-508163" class="share-facebook sd-button no-icon" href="https://scienceblog.com/508163/2017-north-korean-nuclear-test-10x-larger-than-previous-tests/?share=facebook" target="_blank" title="Click to share on Facebook"><span>Facebook</span></a></li><li class="share-email"><a rel="nofollow noopener noreferrer" data-shared="" class="share-email sd-button no-icon" href="https://scienceblog.com/508163/2017-north-korean-nuclear-test-10x-larger-than-previous-tests/?share=email" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li class="share-end"></li></ul></div></div></div>
+<div id='jp-relatedposts' class='jp-relatedposts'>
+<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
+</div><div class='code-block code-block-4' style='margin: 8px 0; clear: both;'>
+<hr><strong><h2>Subscribe to our newsletter!</h2></strong><div id="revue-embed"><form id="revue-form" action="https://newsletter.scienceblog.com/add_subscriber" method="post" name="revue-form" target="_blank">
+<div>
+<strong>Important news once a day. NASA to Nano. Medicine to Muons. Environment to Energy.</strong>
+</div>
+<br>
+<div class="revue-form-group">
+<input id="member_email" class="revue-form-field" name="member[email]" type="email" placeholder="Your email address..." /></div>
+&nbsp;
+<div class="revue-form-actions"><input id="member_submit" name="member[subscribe]" type="submit" value="Subscribe" /></div>
+&nbsp;
+<div class="revue-form-footer"><a href="https://www.getrevue.co/terms" target="_blank" rel="noopener">Terms of Service</a> | <a href="https://www.getrevue.co/privacy" target="_blank" rel="noopener">Privacy Policy</a></div></form></div><hr></div>
+
+</div>
+<footer class="entry-meta">
+<span class="cat-links"><span class="gp-icon icon-categories"><svg viewBox="0 0 512 512" aria-hidden="true" role="img" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1em" height="1em">
+<path d="M0 112c0-26.51 21.49-48 48-48h110.014a48 48 0 0 1 43.592 27.907l12.349 26.791A16 16 0 0 0 228.486 128H464c26.51 0 48 21.49 48 48v224c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V112z" fill-rule="nonzero" />
+</svg></span><span class="screen-reader-text">Categories </span><a href="https://scienceblog.com/category/earth-energy-environment/" rel="category tag">Earth, Energy &amp; Environment</a>, <a href="https://scienceblog.com/category/physics-math/" rel="category tag">Physics &amp; Mathematics</a></span> <nav id="nav-below" class="post-navigation">
+<span class="screen-reader-text">Post navigation</span>
+<div class="nav-previous"><span class="gp-icon icon-arrow-left"><svg viewBox="0 0 192 512" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414">
+<path d="M178.425 138.212c0 2.265-1.133 4.813-2.832 6.512L64.276 256.001l111.317 111.277c1.7 1.7 2.832 4.247 2.832 6.513 0 2.265-1.133 4.813-2.832 6.512L161.43 394.46c-1.7 1.7-4.249 2.832-6.514 2.832-2.266 0-4.816-1.133-6.515-2.832L16.407 262.514c-1.699-1.7-2.832-4.248-2.832-6.513 0-2.265 1.133-4.813 2.832-6.512l131.994-131.947c1.7-1.699 4.249-2.831 6.515-2.831 2.265 0 4.815 1.132 6.514 2.831l14.163 14.157c1.7 1.7 2.832 3.965 2.832 6.513z" fill-rule="nonzero" />
+</svg></span><span class="prev" title="Previous"><a href="https://scienceblog.com/508159/einstein-letters-on-reality-problem-in-quantum-physics-epr-on-view-at-christies/" rel="prev">Einstein Letters on &#8216;Reality Problem&#8217; in Quantum Physics &#038; EPR on View at Christie’s</a></span></div><div class="nav-next"><span class="gp-icon icon-arrow-right"><svg viewBox="0 0 192 512" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414">
+<path d="M178.425 256.001c0 2.266-1.133 4.815-2.832 6.515L43.599 394.509c-1.7 1.7-4.248 2.833-6.514 2.833s-4.816-1.133-6.515-2.833l-14.163-14.162c-1.699-1.7-2.832-3.966-2.832-6.515 0-2.266 1.133-4.815 2.832-6.515l111.317-111.316L16.407 144.685c-1.699-1.7-2.832-4.249-2.832-6.515s1.133-4.815 2.832-6.515l14.163-14.162c1.7-1.7 4.249-2.833 6.515-2.833s4.815 1.133 6.514 2.833l131.994 131.993c1.7 1.7 2.832 4.249 2.832 6.515z" fill-rule="nonzero" />
+</svg></span><span class="next" title="Next"><a href="https://scienceblog.com/508167/exomoons-may-be-home-to-extra-terrestrial-life/" rel="next">Exomoons may be home to extra-terrestrial life</a></span></div> </nav>
+</footer>
+<br><em>The material in this press release comes from the originating research organization. Content may be edited for style and length. Want more? <a href="http://newsletter.scienceblog.com/">Sign up for our daily email.</a></em> </div>
+</article>
+</main>
+</div>
+<div id="right-sidebar" class="widget-area sidebar is-right-sidebar" itemtype="https://schema.org/WPSideBar" itemscope>
+<div class="inside-right-sidebar">
+<aside id="block-13" class="widget inner-padding widget_block"><h2 class="widget-title">Subscribe to Our Newsletter!</h2>
+<div id="revue-embed">
+<form id="revue-form" action="https://newsletter.scienceblog.com/add_subscriber" method="post" name="revue-form" target="_blank">
+<div>
+<strong>Important news once a day. NASA to Nano. Medicine to Muons. Environment to Energy.</strong>
+</div>
+<p></p>
+<div class="revue-form-group">
+<input id="member_email" class="revue-form-field" name="member[email]" type="email" placeholder="Your email address..."></div>
+<p>&nbsp;</p>
+<div class="revue-form-actions"><input id="member_submit" name="member[subscribe]" type="submit" value="Subscribe"></div>
+<p>&nbsp;</p>
+<div class="revue-form-footer"><a href="https://www.getrevue.co/terms" target="_blank" rel="noopener">Terms of Service</a> | <a href="https://www.getrevue.co/privacy" target="_blank" rel="noopener">Privacy Policy</a></div>
+</form>
+</div></aside><aside id="recent-posts-widget-with-thumbnails-6" class="widget inner-padding recent-posts-widget-with-thumbnails">
+<div id="rpwwt-recent-posts-widget-with-thumbnails-6" class="rpwwt-widget">
+<h2 class="widget-title">Bloggers</h2>
+<ul>
+<li><a href="https://fredbortz.scienceblog.com/35446/news-from-the-ice-giant-planets/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=news-from-the-ice-giant-planets"><img title="News from the Ice Giant Planets" width="125" height="83" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20125%2083'%3E%3C/svg%3E" class="attachment-125x125 size-125x125 wp-post-image" alt="News from the Ice Giant Planets" data-lazy-src="https://scienceblog.com/wp-content/uploads/2021/08/PBCoverLg-300x200.jpg" /><noscript><img  title = "News from the Ice Giant Planets" width="125" height="83" src="https://scienceblog.com/wp-content/uploads/2021/08/PBCoverLg-300x200.jpg" class="attachment-125x125 size-125x125 wp-post-image" alt = "News from the Ice Giant Planets"  /></noscript><span class="rpwwt-post-title">News from the Ice Giant Planets</span></a></li>
+<li><a href="https://thepoetryofscience.scienceblog.com/2290/the-urbanisation-of-birds/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=the-urbanisation-of-birds"><img title="The Urbanisation of Birds" width="125" height="83" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20125%2083'%3E%3C/svg%3E" class="attachment-125x125 size-125x125 wp-post-image" alt="The Urbanisation of Birds" data-lazy-src="https://scienceblog.com/wp-content/uploads/2021/08/bird-catcher-1-300x200.jpeg" /><noscript><img  title = "The Urbanisation of Birds" width="125" height="83" src="https://scienceblog.com/wp-content/uploads/2021/08/bird-catcher-1-300x200.jpeg" class="attachment-125x125 size-125x125 wp-post-image" alt = "The Urbanisation of Birds"  /></noscript><span class="rpwwt-post-title">The Urbanisation of Birds</span></a></li>
+<li><a href="https://horizon.scienceblog.com/1796/out-with-air-conditioners-in-with-chilled-water-how-europe-could-slash-its-cooling-footprint/"><img title="Out with air conditioners, in with chilled water – how Europe could slash its cooling footprint" width="125" height="83" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20125%2083'%3E%3C/svg%3E" class="attachment-125x125 size-125x125 wp-post-image" alt="Out with air conditioners, in with chilled water – how Europe could slash its cooling footprint" data-lazy-srcset="https://scienceblog.com/wp-content/uploads/2021/08/Out-with-air-conditioners-in-with-chilled-water-chuttersnap-ifmqouokaoa-unsplash-scaled-1-300x200.jpg 300w, https://scienceblog.com/wp-content/uploads/2021/08/Out-with-air-conditioners-in-with-chilled-water-chuttersnap-ifmqouokaoa-unsplash-scaled-1-600x400.jpg 600w, https://scienceblog.com/wp-content/uploads/2021/08/Out-with-air-conditioners-in-with-chilled-water-chuttersnap-ifmqouokaoa-unsplash-scaled-1-900x600.jpg 900w, https://scienceblog.com/wp-content/uploads/2021/08/Out-with-air-conditioners-in-with-chilled-water-chuttersnap-ifmqouokaoa-unsplash-scaled-1.jpg 1348w" data-lazy-sizes="(max-width: 125px) 100vw, 125px" data-lazy-src="https://scienceblog.com/wp-content/uploads/2021/08/Out-with-air-conditioners-in-with-chilled-water-chuttersnap-ifmqouokaoa-unsplash-scaled-1-300x200.jpg" /><noscript><img  title = "Out with air conditioners, in with chilled water – how Europe could slash its cooling footprint" width="125" height="83" src="https://scienceblog.com/wp-content/uploads/2021/08/Out-with-air-conditioners-in-with-chilled-water-chuttersnap-ifmqouokaoa-unsplash-scaled-1-300x200.jpg" class="attachment-125x125 size-125x125 wp-post-image" alt = "Out with air conditioners, in with chilled water – how Europe could slash its cooling footprint"  srcset="https://scienceblog.com/wp-content/uploads/2021/08/Out-with-air-conditioners-in-with-chilled-water-chuttersnap-ifmqouokaoa-unsplash-scaled-1-300x200.jpg 300w, https://scienceblog.com/wp-content/uploads/2021/08/Out-with-air-conditioners-in-with-chilled-water-chuttersnap-ifmqouokaoa-unsplash-scaled-1-600x400.jpg 600w, https://scienceblog.com/wp-content/uploads/2021/08/Out-with-air-conditioners-in-with-chilled-water-chuttersnap-ifmqouokaoa-unsplash-scaled-1-900x600.jpg 900w, https://scienceblog.com/wp-content/uploads/2021/08/Out-with-air-conditioners-in-with-chilled-water-chuttersnap-ifmqouokaoa-unsplash-scaled-1.jpg 1348w" sizes="(max-width: 125px) 100vw, 125px" /></noscript><span class="rpwwt-post-title">Out with air conditioners, in with chilled water – how Europe could slash its cooling footprint</span></a></li>
+<li><a href="https://horizon.scienceblog.com/1798/cooler-data-centres-help-take-the-heat-off-electric-bills/"><img title="Cooler data centres help take the heat off electric bills" width="125" height="83" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20125%2083'%3E%3C/svg%3E" class="attachment-125x125 size-125x125 wp-post-image" alt="Cooler data centres help take the heat off electric bills" data-lazy-srcset="https://scienceblog.com/wp-content/uploads/2021/08/HM_cooling-datacentres1_Yentafern-Shutterstock_136294739-300x200.jpg 300w, https://scienceblog.com/wp-content/uploads/2021/08/HM_cooling-datacentres1_Yentafern-Shutterstock_136294739-600x400.jpg 600w, https://scienceblog.com/wp-content/uploads/2021/08/HM_cooling-datacentres1_Yentafern-Shutterstock_136294739-900x600.jpg 900w, https://scienceblog.com/wp-content/uploads/2021/08/HM_cooling-datacentres1_Yentafern-Shutterstock_136294739.jpg 1349w" data-lazy-sizes="(max-width: 125px) 100vw, 125px" data-lazy-src="https://scienceblog.com/wp-content/uploads/2021/08/HM_cooling-datacentres1_Yentafern-Shutterstock_136294739-300x200.jpg" /><noscript><img  title = "Cooler data centres help take the heat off electric bills" width="125" height="83" src="https://scienceblog.com/wp-content/uploads/2021/08/HM_cooling-datacentres1_Yentafern-Shutterstock_136294739-300x200.jpg" class="attachment-125x125 size-125x125 wp-post-image" alt = "Cooler data centres help take the heat off electric bills"  srcset="https://scienceblog.com/wp-content/uploads/2021/08/HM_cooling-datacentres1_Yentafern-Shutterstock_136294739-300x200.jpg 300w, https://scienceblog.com/wp-content/uploads/2021/08/HM_cooling-datacentres1_Yentafern-Shutterstock_136294739-600x400.jpg 600w, https://scienceblog.com/wp-content/uploads/2021/08/HM_cooling-datacentres1_Yentafern-Shutterstock_136294739-900x600.jpg 900w, https://scienceblog.com/wp-content/uploads/2021/08/HM_cooling-datacentres1_Yentafern-Shutterstock_136294739.jpg 1349w" sizes="(max-width: 125px) 100vw, 125px" /></noscript><span class="rpwwt-post-title">Cooler data centres help take the heat off electric bills</span></a></li>
+<li><a href="https://joshmitteldorf.scienceblog.com/2021/08/22/statistical-fraud-in-the-fda-vaccine-approval-process/"><img title="Statistical Fraud in the FDA Vaccine Approval Process" width="125" height="83" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20125%2083'%3E%3C/svg%3E" class="attachment-125x125 size-125x125 wp-post-image" alt="Statistical Fraud in the FDA Vaccine Approval Process" data-lazy-srcset="https://scienceblog.com/wp-content/uploads/2021/01/1024px-Pfizer-BioNTech_COVID-19_vaccine_2020_F-300x200.jpg 300w, https://scienceblog.com/wp-content/uploads/2021/01/1024px-Pfizer-BioNTech_COVID-19_vaccine_2020_F-600x400.jpg 600w, https://scienceblog.com/wp-content/uploads/2021/01/1024px-Pfizer-BioNTech_COVID-19_vaccine_2020_F-900x600.jpg 900w, https://scienceblog.com/wp-content/uploads/2021/01/1024px-Pfizer-BioNTech_COVID-19_vaccine_2020_F.jpg 1024w" data-lazy-sizes="(max-width: 125px) 100vw, 125px" data-lazy-src="https://scienceblog.com/wp-content/uploads/2021/01/1024px-Pfizer-BioNTech_COVID-19_vaccine_2020_F-300x200.jpg" /><noscript><img  title = "Statistical Fraud in the FDA Vaccine Approval Process" width="125" height="83" src="https://scienceblog.com/wp-content/uploads/2021/01/1024px-Pfizer-BioNTech_COVID-19_vaccine_2020_F-300x200.jpg" class="attachment-125x125 size-125x125 wp-post-image" alt = "Statistical Fraud in the FDA Vaccine Approval Process"  srcset="https://scienceblog.com/wp-content/uploads/2021/01/1024px-Pfizer-BioNTech_COVID-19_vaccine_2020_F-300x200.jpg 300w, https://scienceblog.com/wp-content/uploads/2021/01/1024px-Pfizer-BioNTech_COVID-19_vaccine_2020_F-600x400.jpg 600w, https://scienceblog.com/wp-content/uploads/2021/01/1024px-Pfizer-BioNTech_COVID-19_vaccine_2020_F-900x600.jpg 900w, https://scienceblog.com/wp-content/uploads/2021/01/1024px-Pfizer-BioNTech_COVID-19_vaccine_2020_F.jpg 1024w" sizes="(max-width: 125px) 100vw, 125px" /></noscript><span class="rpwwt-post-title">Statistical Fraud in the FDA Vaccine Approval Process</span></a></li>
+</ul>
+</div>
+</aside><aside id="block-10" class="widget inner-padding widget_block widget_search"><form role="search" method="get" action="https://scienceblog.com/" class="wp-block-search__button-outside wp-block-search__text-button wp-block-search"><label for="wp-block-search__input-1" class="wp-block-search__label screen-reader-text">Search</label><div class="wp-block-search__inside-wrapper"><input type="search" id="wp-block-search__input-1" class="wp-block-search__input" name="s" value="" placeholder="" required /><button type="submit" class="wp-block-search__button ">Search</button></div></form></aside> </div>
+</div>
+</div>
+</div>
+<div class="site-footer">
+<footer class="site-info" itemtype="https://schema.org/WPFooter" itemscope>
+<div class="inside-site-info grid-container">
+<div class="copyright-bar">
+&copy; 2021 <a href="https://scienceblog.com">ScienceBlog.com</a> | Follow our <a href="https://feeds.feedburner.com/scienceblogrssfeed">RSS / XML feed</a> </div>
+</div>
+</footer>
+</div>
+<div id="pum-523610" class="pum pum-overlay pum-theme-515831 pum-theme-cutting-edge popmake-overlay pum-click-to-close auto_open click_open" data-popmake="{&quot;id&quot;:523610,&quot;slug&quot;:&quot;revue-form&quot;,&quot;theme_id&quot;:515831,&quot;cookies&quot;:[{&quot;event&quot;:&quot;on_popup_close&quot;,&quot;settings&quot;:{&quot;name&quot;:&quot;pum-523610&quot;,&quot;key&quot;:&quot;&quot;,&quot;session&quot;:false,&quot;path&quot;:&quot;1&quot;,&quot;time&quot;:&quot;1 month&quot;}},{&quot;event&quot;:&quot;on_popup_open&quot;,&quot;settings&quot;:{&quot;name&quot;:&quot;pum-523610&quot;,&quot;key&quot;:&quot;&quot;,&quot;session&quot;:null,&quot;path&quot;:true,&quot;time&quot;:&quot;1 month&quot;}}],&quot;triggers&quot;:[{&quot;type&quot;:&quot;auto_open&quot;,&quot;settings&quot;:{&quot;cookie_name&quot;:[&quot;pum-523610&quot;],&quot;delay&quot;:&quot;7500&quot;}},{&quot;type&quot;:&quot;click_open&quot;,&quot;settings&quot;:{&quot;extra_selectors&quot;:&quot;&quot;,&quot;cookie_name&quot;:null}}],&quot;mobile_disabled&quot;:null,&quot;tablet_disabled&quot;:null,&quot;meta&quot;:{&quot;display&quot;:{&quot;stackable&quot;:false,&quot;overlay_disabled&quot;:false,&quot;scrollable_content&quot;:false,&quot;disable_reposition&quot;:false,&quot;size&quot;:&quot;medium&quot;,&quot;responsive_min_width&quot;:&quot;0%&quot;,&quot;responsive_min_width_unit&quot;:false,&quot;responsive_max_width&quot;:&quot;100%&quot;,&quot;responsive_max_width_unit&quot;:false,&quot;custom_width&quot;:&quot;640px&quot;,&quot;custom_width_unit&quot;:false,&quot;custom_height&quot;:&quot;380px&quot;,&quot;custom_height_unit&quot;:false,&quot;custom_height_auto&quot;:false,&quot;location&quot;:&quot;center&quot;,&quot;position_from_trigger&quot;:false,&quot;position_top&quot;:&quot;100&quot;,&quot;position_left&quot;:&quot;0&quot;,&quot;position_bottom&quot;:&quot;0&quot;,&quot;position_right&quot;:&quot;0&quot;,&quot;position_fixed&quot;:false,&quot;animation_type&quot;:&quot;fade&quot;,&quot;animation_speed&quot;:&quot;350&quot;,&quot;animation_origin&quot;:&quot;center top&quot;,&quot;overlay_zindex&quot;:false,&quot;zindex&quot;:&quot;1999999999&quot;},&quot;close&quot;:{&quot;text&quot;:&quot;&quot;,&quot;button_delay&quot;:&quot;0&quot;,&quot;overlay_click&quot;:&quot;1&quot;,&quot;esc_press&quot;:&quot;1&quot;,&quot;f4_press&quot;:false},&quot;click_open&quot;:[]}}" role="dialog" aria-hidden="true">
+<div id="popmake-523610" class="pum-container popmake theme-515831 pum-responsive pum-responsive-medium responsive size-medium">
+<div class="pum-content popmake-content" tabindex="0">
+<div align="center">
+<h2>SUBSCRIBE</h2>
+<div id="revue-embed" style="text-align: center;">
+<form id="revue-form" action="https://newsletter.scienceblog.com/add_subscriber" method="post" name="revue-form" target="_blank">
+<div>
+<p><strong>Important news once a day. NASA to Nano. Medicine to Muons. Environment to Energy.</strong></p>
+</div>
+<div class="revue-form-group"><input id="member_email" class="revue-form-field" name="member[email]" type="email" placeholder="Your email address..." /></div>
+<p>&nbsp;</p>
+<div class="revue-form-actions"><input id="member_submit" name="member[subscribe]" type="submit" value="Subscribe" /></div>
+<p>&nbsp;</p>
+</form>
+</div>
+</div>
+</div>
+<button type="button" class="pum-close popmake-close" aria-label="Close">
+× </button>
+</div>
+</div>
+
+<script type="rocketlazyloadscript" async src="https://www.googletagmanager.com/gtag/js?id=UA-8392556-1"></script>
+<script type="rocketlazyloadscript">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-8392556-1');
+</script>
+
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+var _qevents = _qevents || [];
+
+(function() {
+var elem = document.createElement('script');
+elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
+elem.async = true;
+elem.type = "text/javascript";
+var scpt = document.getElementsByTagName('script')[0];
+scpt.parentNode.insertBefore(elem, scpt);
+})();
+
+_qevents.push({
+qacct:"p-31HblYr5WPj-Q"
+});
+</script>
+<noscript>
+<div style="display:none;">
+<img src="https://pixel.quantserve.com/pixel/p-31HblYr5WPj-Q.gif" border="0" height="1" width="1" alt="Quantcast"/>
+</div>
+</noscript>
+
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/scienceblog.com\/508163\/2017-north-korean-nuclear-test-10x-larger-than-previous-tests\/":508163};
+	</script>
+<div id="sharing_email" style="display: none;">
+<form action="/508163/2017-north-korean-nuclear-test-10x-larger-than-previous-tests/" method="post">
+<label for="target_email">Send to Email Address</label>
+<input type="email" name="target_email" id="target_email" value="" />
+<label for="source_name">Your Name</label>
+ <input type="text" name="source_name" id="source_name" value="" />
+<label for="source_email">Your Email Address</label>
+<input type="email" name="source_email" id="source_email" value="" />
+<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" title="This field is for validation and should not be changed" />
+<img style="float: right; display: none" class="loading" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2016%2016'%3E%3C/svg%3E" alt="loading" width="16" height="16" data-lazy-src="https://scienceblog.com/wp-content/plugins/jetpack/modules/sharedaddy/images/loading.gif" /><noscript><img style="float: right; display: none" class="loading" src="https://scienceblog.com/wp-content/plugins/jetpack/modules/sharedaddy/images/loading.gif" alt="loading" width="16" height="16" /></noscript>
+<input type="submit" value="Send Email" class="sharing_send" />
+<a rel="nofollow" href="#cancel" class="sharing_cancel" role="button">Cancel</a>
+<div class="errors errors-1" style="display: none;">
+Post was not sent - check your email addresses! </div>
+<div class="errors errors-2" style="display: none;">
+Email check failed, please try again </div>
+<div class="errors errors-3" style="display: none;">
+Sorry, your blog cannot share posts by email. </div>
+</form>
+</div>
+<script id='generate-smooth-scroll-js-extra' type="4a7a86a156d0da4abbd436a5-text/javascript">
+var smooth = {"elements":[".smooth-scroll","li.smooth-scroll a"],"duration":"800"};
+</script>
+<script src='https://scienceblog.com/wp-content/plugins/gp-premium/general/js/smooth-scroll.min.js?ver=2.0.3' id='generate-smooth-scroll-js' defer type="4a7a86a156d0da4abbd436a5-text/javascript"></script>
+<script id='rocket-browser-checker-js-after' type="4a7a86a156d0da4abbd436a5-text/javascript">
+"use strict";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||!1,descriptor.configurable=!0,"value"in descriptor&&(descriptor.writable=!0),Object.defineProperty(target,descriptor.key,descriptor)}}return function(Constructor,protoProps,staticProps){return protoProps&&defineProperties(Constructor.prototype,protoProps),staticProps&&defineProperties(Constructor,staticProps),Constructor}}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor))throw new TypeError("Cannot call a class as a function")}var RocketBrowserCompatibilityChecker=function(){function RocketBrowserCompatibilityChecker(options){_classCallCheck(this,RocketBrowserCompatibilityChecker),this.passiveSupported=!1,this._checkPassiveOption(this),this.options=!!this.passiveSupported&&options}return _createClass(RocketBrowserCompatibilityChecker,[{key:"_checkPassiveOption",value:function(self){try{var options={get passive(){return!(self.passiveSupported=!0)}};window.addEventListener("test",null,options),window.removeEventListener("test",null,options)}catch(err){self.passiveSupported=!1}}},{key:"initRequestIdleCallback",value:function(){!1 in window&&(window.requestIdleCallback=function(cb){var start=Date.now();return setTimeout(function(){cb({didTimeout:!1,timeRemaining:function(){return Math.max(0,50-(Date.now()-start))}})},1)}),!1 in window&&(window.cancelIdleCallback=function(id){return clearTimeout(id)})}},{key:"isDataSaverModeOn",value:function(){return"connection"in navigator&&!0===navigator.connection.saveData}},{key:"supportsLinkPrefetch",value:function(){var elem=document.createElement("link");return elem.relList&&elem.relList.supports&&elem.relList.supports("prefetch")&&window.IntersectionObserver&&"isIntersecting"in IntersectionObserverEntry.prototype}},{key:"isSlowConnection",value:function(){return"connection"in navigator&&"effectiveType"in navigator.connection&&("2g"===navigator.connection.effectiveType||"slow-2g"===navigator.connection.effectiveType)}}]),RocketBrowserCompatibilityChecker}();
+</script>
+<script id='rocket-preload-links-js-extra' type="4a7a86a156d0da4abbd436a5-text/javascript">
+var RocketPreloadLinksConfig = {"excludeUris":"\/521955-2\/|\/(.+\/)?feed\/?.+\/?|\/(?:.+\/)?embed\/|\/(index\\.php\/)?wp\\-json(\/.*|$)|\/wp-admin\/|\/logout\/|\/wp-login.php","usesTrailingSlash":"1","imageExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif","fileExt":"jpg|jpeg|gif|png|tiff|bmp|webp|avif|php|pdf|html|htm","siteUrl":"https:\/\/scienceblog.com","onHoverDelay":"100","rateThrottle":"3"};
+</script>
+<script id='rocket-preload-links-js-after' type="4a7a86a156d0da4abbd436a5-text/javascript">
+(function() {
+"use strict";var r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e=function(){function i(e,t){for(var n=0;n<t.length;n++){var i=t[n];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}return function(e,t,n){return t&&i(e.prototype,t),n&&i(e,n),e}}();function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}var t=function(){function n(e,t){i(this,n),this.browser=e,this.config=t,this.options=this.browser.options,this.prefetched=new Set,this.eventTime=null,this.threshold=1111,this.numOnHover=0}return e(n,[{key:"init",value:function(){!this.browser.supportsLinkPrefetch()||this.browser.isDataSaverModeOn()||this.browser.isSlowConnection()||(this.regex={excludeUris:RegExp(this.config.excludeUris,"i"),images:RegExp(".("+this.config.imageExt+")$","i"),fileExt:RegExp(".("+this.config.fileExt+")$","i")},this._initListeners(this))}},{key:"_initListeners",value:function(e){-1<this.config.onHoverDelay&&document.addEventListener("mouseover",e.listener.bind(e),e.listenerOptions),document.addEventListener("mousedown",e.listener.bind(e),e.listenerOptions),document.addEventListener("touchstart",e.listener.bind(e),e.listenerOptions)}},{key:"listener",value:function(e){var t=e.target.closest("a"),n=this._prepareUrl(t);if(null!==n)switch(e.type){case"mousedown":case"touchstart":this._addPrefetchLink(n);break;case"mouseover":this._earlyPrefetch(t,n,"mouseout")}}},{key:"_earlyPrefetch",value:function(t,e,n){var i=this,r=setTimeout(function(){if(r=null,0===i.numOnHover)setTimeout(function(){return i.numOnHover=0},1e3);else if(i.numOnHover>i.config.rateThrottle)return;i.numOnHover++,i._addPrefetchLink(e)},this.config.onHoverDelay);t.addEventListener(n,function e(){t.removeEventListener(n,e,{passive:!0}),null!==r&&(clearTimeout(r),r=null)},{passive:!0})}},{key:"_addPrefetchLink",value:function(i){return this.prefetched.add(i.href),new Promise(function(e,t){var n=document.createElement("link");n.rel="prefetch",n.href=i.href,n.onload=e,n.onerror=t,document.head.appendChild(n)}).catch(function(){})}},{key:"_prepareUrl",value:function(e){if(null===e||"object"!==(void 0===e?"undefined":r(e))||!1 in e||-1===["http:","https:"].indexOf(e.protocol))return null;var t=e.href.substring(0,this.config.siteUrl.length),n=this._getPathname(e.href,t),i={original:e.href,protocol:e.protocol,origin:t,pathname:n,href:t+n};return this._isLinkOk(i)?i:null}},{key:"_getPathname",value:function(e,t){var n=t?e.substring(this.config.siteUrl.length):e;return n.startsWith("/")||(n="/"+n),this._shouldAddTrailingSlash(n)?n+"/":n}},{key:"_shouldAddTrailingSlash",value:function(e){return this.config.usesTrailingSlash&&!e.endsWith("/")&&!this.regex.fileExt.test(e)}},{key:"_isLinkOk",value:function(e){return null!==e&&"object"===(void 0===e?"undefined":r(e))&&(!this.prefetched.has(e.href)&&e.origin===this.config.siteUrl&&-1===e.href.indexOf("?")&&-1===e.href.indexOf("#")&&!this.regex.excludeUris.test(e.href)&&!this.regex.images.test(e.href))}}],[{key:"run",value:function(){"undefined"!=typeof RocketPreloadLinksConfig&&new n(new RocketBrowserCompatibilityChecker({capture:!0,passive:!0}),RocketPreloadLinksConfig).init()}}]),n}();t.run();
+}());
+</script>
+<!--[if lte IE 11]>
+<script src='https://scienceblog.com/wp-content/themes/generatepress/assets/js/classList.min.js?ver=3.0.4' id='generate-classlist-js'></script>
+<![endif]-->
+<script id='generate-main-js-extra' type="4a7a86a156d0da4abbd436a5-text/javascript">
+var generatepressMenu = {"toggleOpenedSubMenus":"1","openSubMenuLabel":"Open Sub-Menu","closeSubMenuLabel":"Close Sub-Menu"};
+</script>
+<script src='https://scienceblog.com/wp-content/themes/generatepress/assets/js/main.min.js?ver=3.0.4' id='generate-main-js' defer type="4a7a86a156d0da4abbd436a5-text/javascript"></script>
+<script data-minify="1" src='https://scienceblog.com/wp-content/cache/min/1/wp-content/plugins/page-links-to/dist/new-tab.js?ver=1628274840' id='page-links-to-js' defer type="4a7a86a156d0da4abbd436a5-text/javascript"></script>
+<script src='https://scienceblog.com/wp-includes/js/jquery/ui/core.min.js?ver=1.12.1' id='jquery-ui-core-js' defer type="4a7a86a156d0da4abbd436a5-text/javascript"></script>
+<script id='popup-maker-site-js-extra' type="4a7a86a156d0da4abbd436a5-text/javascript">
+var pum_vars = {"version":"1.16.2","pm_dir_url":"https:\/\/scienceblog.com\/wp-content\/plugins\/popup-maker\/","ajaxurl":"https:\/\/scienceblog.com\/wp-admin\/admin-ajax.php","restapi":"https:\/\/scienceblog.com\/wp-json\/pum\/v1","rest_nonce":null,"default_theme":"515827","debug_mode":"","disable_tracking":"","home_url":"\/","message_position":"top","core_sub_forms_enabled":"1","popups":[],"analytics_route":"analytics","analytics_api":"https:\/\/scienceblog.com\/wp-json\/pum\/v1"};
+var pum_sub_vars = {"ajaxurl":"https:\/\/scienceblog.com\/wp-admin\/admin-ajax.php","message_position":"top"};
+var pum_popups = {"pum-523610":{"triggers":[{"type":"auto_open","settings":{"cookie_name":["pum-523610"],"delay":"7500"}}],"cookies":[{"event":"on_popup_close","settings":{"name":"pum-523610","key":"","session":false,"path":"1","time":"1 month"}},{"event":"on_popup_open","settings":{"name":"pum-523610","key":"","session":null,"path":true,"time":"1 month"}}],"disable_on_mobile":false,"disable_on_tablet":false,"atc_promotion":null,"explain":null,"type_section":null,"theme_id":"515831","size":"medium","responsive_min_width":"0%","responsive_max_width":"100%","custom_width":"640px","custom_height_auto":false,"custom_height":"380px","scrollable_content":false,"animation_type":"fade","animation_speed":"350","animation_origin":"center top","open_sound":"none","custom_sound":"","location":"center","position_top":"100","position_bottom":"0","position_left":"0","position_right":"0","position_from_trigger":false,"position_fixed":false,"overlay_disabled":false,"stackable":false,"disable_reposition":false,"zindex":"1999999999","close_button_delay":"0","fi_promotion":null,"close_on_form_submission":false,"close_on_form_submission_delay":"0","close_on_overlay_click":true,"close_on_esc_press":true,"close_on_f4_press":false,"disable_form_reopen":false,"disable_accessibility":false,"theme_slug":"cutting-edge","id":523610,"slug":"revue-form"}};
+</script>
+<script data-minify="1" src='https://scienceblog.com/wp-content/cache/min/1/wp-content/uploads/pum/pum-site-scripts-1.js?ver=1628274840' id='popup-maker-site-js' defer type="4a7a86a156d0da4abbd436a5-text/javascript"></script>
+<script id='jetpack_related-posts-js-extra' type="4a7a86a156d0da4abbd436a5-text/javascript">
+var related_posts_js_options = {"post_heading":"h4"};
+</script>
+<script src='https://scienceblog.com/wp-content/plugins/jetpack/_inc/build/related-posts/related-posts.min.js?ver=20210604' id='jetpack_related-posts-js' defer type="4a7a86a156d0da4abbd436a5-text/javascript"></script>
+<script id='sharing-js-js-extra' type="4a7a86a156d0da4abbd436a5-text/javascript">
+var sharing_js_options = {"lang":"en","counts":"1","is_stats_active":"1"};
+</script>
+<script src='https://scienceblog.com/wp-content/plugins/jetpack/_inc/build/sharedaddy/sharing.min.js?ver=10.0' id='sharing-js-js' defer type="4a7a86a156d0da4abbd436a5-text/javascript"></script>
+<script id='sharing-js-js-after' type="4a7a86a156d0da4abbd436a5-text/javascript">
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-twitter' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-twitter' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+						return false;
+					}
+				} );
+			} )();
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-facebook' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-facebook' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+						return false;
+					}
+				} );
+			} )();
+</script>
+<script src='https://stats.wp.com/e-202134.js' defer type="4a7a86a156d0da4abbd436a5-text/javascript"></script>
+<script type="4a7a86a156d0da4abbd436a5-text/javascript">
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:10.0',blog:'33193182',post:'508163',tz:'-7',srv:'scienceblog.com'} ]);
+	_stq.push([ 'clickTrackerInit', '33193182', '508163' ]);
+</script>
+<script type="4a7a86a156d0da4abbd436a5-text/javascript">window.lazyLoadOptions={elements_selector:"img[data-lazy-src],.rocket-lazyload,iframe[data-lazy-src]",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}};window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){continue}
+if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){continue}
+images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
+if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async src="https://scienceblog.com/wp-content/plugins/wp-rocket/assets/js/lazyload/16.1/lazyload.min.js" type="4a7a86a156d0da4abbd436a5-text/javascript"></script><script type="4a7a86a156d0da4abbd436a5-text/javascript">function lazyLoadThumb(e){var t='<img loading="lazy" data-lazy-src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" width="480" height="360"><noscript><img src="https://i.ytimg.com/vi/ID/hqdefault.jpg" alt="" width="480" height="360"></noscript>',a='<div class="play"></div>';return t.replace("ID",e)+a}function lazyLoadYoutubeIframe(){var e=document.createElement("iframe"),t="ID?autoplay=1";t+=0===this.dataset.query.length?'':'&'+this.dataset.query;e.setAttribute("src",t.replace("ID",this.dataset.src)),e.setAttribute("frameborder","0"),e.setAttribute("allowfullscreen","1"),e.setAttribute("allow", "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"),this.parentNode.replaceChild(e,this)}document.addEventListener("DOMContentLoaded",function(){var e,t,a=document.getElementsByClassName("rll-youtube-player");for(t=0;t<a.length;t++)e=document.createElement("div"),e.setAttribute("data-id",a[t].dataset.id),e.setAttribute("data-query", a[t].dataset.query),e.setAttribute("data-src", a[t].dataset.src),e.innerHTML=lazyLoadThumb(a[t].dataset.id),e.onclick=lazyLoadYoutubeIframe,a[t].appendChild(e)});</script>
+<script type="rocketlazyloadscript">"use strict";var wprRemoveCPCSS=function wprRemoveCPCSS(){var elem;document.querySelector('link[data-rocket-async="style"][rel="preload"]')?setTimeout(wprRemoveCPCSS,200):(elem=document.getElementById("rocket-critical-css"))&&"remove"in elem&&elem.remove()};window.addEventListener?window.addEventListener("load",wprRemoveCPCSS):window.attachEvent&&window.attachEvent("onload",wprRemoveCPCSS);</script><noscript><link rel="stylesheet" href="https://scienceblog.com/wp-content/cache/min/1/e8207b1e9164d3e1ed6ea8898fb26464.css" media="all" data-minify="1" /></noscript><script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="4a7a86a156d0da4abbd436a5-|49" defer=""></script><script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"rayId":"68674c6d58b6522d","token":"9c27f975182e4a4186638b966a3f5c3d","version":"2021.8.1","si":10}'></script>
+</body>
+</html>
