@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>
+The Price of Promotion | James Thomas Snyder</title>
+<link rel="profile" href="https://gmpg.org/xfn/11" />
+<link rel="stylesheet" type="text/css" media="all" href="https://s2.wp.com/wp-content/themes/pub/twentyten/style.css?ver=20190507" />
+<link rel="pingback" href="https://jamesthomassnyder.com/xmlrpc.php">
+<meta name='robots' content='max-image-preview:large' />
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.parentNode.removeChild( dom_node ); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[ i ].parentNode.removeChild( dom_nodes[ i ] );
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+					+ '//' + window.location.hostname
+					+ '&postid=1444'
+					+ '&is_singular=1';
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9qYW1lc3Rob21hc3NueWRlci5jb20%3D"
+		+ "&wpcomid=29998790"
+		+ "&time=1630707107";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='//s2.wp.com' />
+<link rel='dns-prefetch' href='//s1.wp.com' />
+<link rel='dns-prefetch' href='//jamesthomassnyder.wordpress.com' />
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel="alternate" type="application/rss+xml" title="James Thomas Snyder &raquo; Feed" href="https://jamesthomassnyder.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="James Thomas Snyder &raquo; Comments Feed" href="https://jamesthomassnyder.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="James Thomas Snyder &raquo; The Price of&nbsp;Promotion Comments Feed" href="https://jamesthomassnyder.com/2019/09/24/the-price-of-promotion/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s2.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1625065786h&ver=5.8.1-alpha-51081"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s2.wp.com/_static/??-eJytU8tywjAM/KE6bkrLTA+dfovtCCOQY48fhPx9FdMOAUrKoRePV9LKq4flEITxfYY+S1dEoGKxT3IIxjuRHBKMV6gxKT3J32kRSGXoRPApX6ElGuEektxBDsrsRUU34T+xtjDUEC17IshD2zar5lnqgtRJTb4m0FHFUaY8EvxHorwFd06EvaHSTYKTdNChAmL3VNEMBFIjREFglRkbh/3fdPbN8QXpvviqdNY8NfqShY3YPVz/VYqoMvY23aHPxjb1je0uqFvxC7QBOwu8HhzyfRcZjsuUuoBahwgpCT4dFifqWG435WSWoWiZBzaMbD0N9MHYWrioby6JSkUnEzFk9Iw2nsgPS/Fbf+CN0EVrgge6a8ELFq2m9BdAbEhhXP6GXK7lq61NPsOJ9Ok+2vXL+6pdrV/fdl9aKILY?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-2-1' href='https://s2.wp.com/_static/??-eJyNjs0KwjAQhF/IdYnU0ov4LGmaJiubbMim9PVbQQ/+IJ5mBuYbBtcCTnLzuWFaoPASKCsW0QYzW6qo0VbK4alHp3rA75SKI8vAEuQ1fEAt+uQVY4eBZbT8a3WlKfimuFceHkKlCWyegEnbP+y431AgmIVZ1rd4H7imi+lNd+qHwZxvGxseZt4=?cssminify=yes' type='text/css' media='all' />
+<script id='jetpack_related-posts-js-extra'>
+var related_posts_js_options = {"post_heading":"h4"};
+</script>
+<script id='wpcom-actionbar-placeholder-js-extra'>
+var actionbardata = {"siteID":"29998790","siteName":"James Thomas Snyder","siteURL":"https:\/\/jamesthomassnyder.com","siteHost":"jamesthomassnyder.com","icon":"<img alt='' src='https:\/\/s2.wp.com\/i\/logo\/wpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/twentyten","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fr-login.wordpress.com%2Fremote-login.php%3Faction%3Dlink%26back%3Dhttps%253A%252F%252Fjamesthomassnyder.com%252F2019%252F09%252F24%252Fthe-price-of-promotion%252F","themeURL":"","xhrURL":"https:\/\/jamesthomassnyder.com\/wp-admin\/admin-ajax.php","nonce":"592b33ce95","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"88074dcf50\" \/>","referer":"https:\/\/jamesthomassnyder.com\/2019\/09\/24\/the-price-of-promotion\/","canFollow":"1","feedID":"4453079","statusMessage":"","customizeLink":"https:\/\/jamesthomassnyder.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fjamesthomassnyder.wordpress.com%2F2019%2F09%2F24%2Fthe-price-of-promotion%2F","postID":"1444","shortlink":"https:\/\/wp.me\/p21S3s-ni","canEditPost":"","editLink":"https:\/\/wordpress.com\/post\/jamesthomassnyder.com\/1444","statsLink":"https:\/\/wordpress.com\/stats\/post\/1444\/jamesthomassnyder.com","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: Twenty Ten","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/read\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"Join 101 other followers","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fr-login.wordpress.com%2Fremote-login.php%3Faction%3Dlink%26back%3Dhttps%253A%252F%252Fjamesthomassnyder.com%252F2019%252F09%252F24%252Fthe-price-of-promotion%252F\">Log in now.<\/a>","stats":"Stats","notifyNewPosts":"Notify me of new posts","notifyNewPostsDetails":"Receive web and mobile notifications for new posts from this site.","emailNewPosts":"Email me new posts","emailNewPostsDetails":"You can customize your notification settings further <a href=\"https:\/\/wordpress.com\/following\/manage?s=jamesthomassnyder.com\">here<\/a>.","emailNewComments":"Email me new comments"}};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s2.wp.com/_static/??-eJyFjtsOgkAMRH/IslGD6IPxWwTKppu9ue2K/L3gJUEe8KmdzJnJqD5CE7ygF2VYxcDikPmqsTC8Ub+uCzVZhMyYRsALkO/CknMZos2aPKuE9irYwtS6UN8U+cbmFnmqN7eMaficwpH/C4EjncbSOTzbm6xATOExrGzkXHOTKAqFUXXB2tCv4D21GuW15P1CnV2EO+GUurjz9rCrTseyKvfmCct/gjc='></script>
+<script type='text/javascript'>
+	window.addEventListener( 'DOMContentLoaded', function() {
+		rltInitialize( {"token":null,"iframeOrigins":["https:\/\/widgets.wp.com"]} );
+	} );
+</script>
+<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1625210320h&cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s2.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://jamesthomassnyder.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s1.wp.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="https://jamesthomassnyder.com/2019/09/24/the-price-of-promotion/" />
+<link rel='shortlink' href='https://wp.me/p21S3s-ni' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fjamesthomassnyder.com%2F2019%2F09%2F24%2Fthe-price-of-promotion%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fjamesthomassnyder.com%2F2019%2F09%2F24%2Fthe-price-of-promotion%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="The Price of Promotion" />
+<meta property="og:url" content="https://jamesthomassnyder.com/2019/09/24/the-price-of-promotion/" />
+<meta property="og:description" content="The State Department’s employee evaluation process is worse than terrible.  It is no better than a gamble. Consider this career choice: you are a second-tour FS-04 consular officer serving your cou…" />
+<meta property="article:published_time" content="2019-09-24T16:10:05+00:00" />
+<meta property="article:modified_time" content="2019-09-24T16:10:16+00:00" />
+<meta property="og:site_name" content="James Thomas Snyder" />
+<meta property="og:image" content="https://jhfc.duke.edu/wp-content/uploads/2016/01/US_Department_of_State_official_seal.png" />
+<meta property="og:image:width" content="358" />
+<meta property="og:image:height" content="361" />
+<meta property="og:image:alt" content="Department of state seal" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:site" content="@wordpressdotcom" />
+<meta name="twitter:text:title" content="The Price of&nbsp;Promotion" />
+<meta name="twitter:image" content="https://jhfc.duke.edu/wp-content/uploads/2016/01/US_Department_of_State_official_seal.png?w=640" />
+<meta name="twitter:image:alt" content="Department of state seal" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://s1.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="icon" type="image/x-icon" href="https://s1.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="apple-touch-icon" href="https://s2.wp.com/i/webclip.png" />
+<link rel='openid.server' href='https://jamesthomassnyder.com/?openidserver=1' />
+<link rel='openid.delegate' href='https://jamesthomassnyder.com/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://jamesthomassnyder.com/osd.xml" title="James Thomas Snyder" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+<meta name="application-name" content="James Thomas Snyder" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-task" content="name=Subscribe;action-uri=https://jamesthomassnyder.com/feed/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" /><meta name="description" content="The State Department’s employee evaluation process is worse than terrible.  It is no better than a gamble. Consider this career choice: you are a second-tour FS-04 consular officer serving your country in an American embassy abroad.  You have tenure, which means that you’re more or less guaranteed employment with the State Department for the next&hellip;" />
+<link rel="amphtml" href="https://jamesthomassnyder.com/2019/09/24/the-price-of-promotion/amp/"><!-- Your Google Analytics Plugin is missing the tracking ID -->
+</head>
+
+<body class="post-template-default single single-post postid-1444 single-format-standard customizer-styles-applied single-author highlander-enabled highlander-light">
+<div id="wrapper" class="hfeed">
+	<div id="header">
+		<div id="masthead">
+			<div id="branding" role="banner">
+								<div id="site-title">
+					<span>
+						<a href="https://jamesthomassnyder.com/" title="James Thomas Snyder" rel="home">James Thomas Snyder</a>
+					</span>
+				</div>
+				<div id="site-description"></div>
+
+									<a class="home-link" href="https://jamesthomassnyder.com/" title="James Thomas Snyder" rel="home">
+						<img src="https://jamesthomassnyder.files.wordpress.com/2012/02/cropped-dsc_0085.jpg" width="940" height="197" alt="" />
+					</a>
+								</div><!-- #branding -->
+
+			<div id="access" role="navigation">
+								<div class="skip-link screen-reader-text"><a href="#content" title="Skip to content">Skip to content</a></div>
+				<div class="menu"><ul>
+<li ><a href="https://jamesthomassnyder.com/">Home</a></li><li class="page_item page-item-2"><a href="https://jamesthomassnyder.com/about/">About James Thomas&nbsp;Snyder</a></li>
+<li class="page_item page-item-266"><a href="https://jamesthomassnyder.com/public-diplomacy/">Public Diplomacy</a></li>
+<li class="page_item page-item-112"><a href="https://jamesthomassnyder.com/literary-interludes/">Published Work</a></li>
+</ul></div>
+			</div><!-- #access -->
+		</div><!-- #masthead -->
+	</div><!-- #header -->
+
+	<div id="main">
+
+		<div id="container">
+			<div id="content" role="main">
+
+			
+
+				<div id="nav-above" class="navigation">
+					<div class="nav-previous"><a href="https://jamesthomassnyder.com/2019/09/17/the-cost-of-lies/" rel="prev"><span class="meta-nav">&larr;</span> The Cost of&nbsp;Lies</a></div>
+					<div class="nav-next"><a href="https://jamesthomassnyder.com/2019/11/22/update-the-price-of-promotion-diversity-and-retention/" rel="next">UPDATE: The Price of Promotion &#8211; Diversity and&nbsp;Retention <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-above -->
+
+				<div id="post-1444" class="post-1444 post type-post status-publish format-standard hentry category-public-diplomacy category-uncategorized tag-amos-tversky tag-behavioral-economics tag-careers tag-cognitive-fallacies tag-cognitive-psychology tag-consulate tag-daniel-kahneman tag-embassy tag-foreign-service-officers tag-michael-lewis tag-promotion tag-richard-thaler tag-u-s-state-department">
+											<h2 class="entry-title"><a href="https://jamesthomassnyder.com/2019/09/24/the-price-of-promotion/" rel="bookmark">The Price of&nbsp;Promotion</a></h2>					
+					<div class="entry-meta">
+						<span class="meta-prep meta-prep-author">Posted on</span> <a href="https://jamesthomassnyder.com/2019/09/24/the-price-of-promotion/" title="11:10" rel="bookmark"><span class="entry-date">September 24, 2019</span></a> <span class="meta-sep">by</span> <span class="author vcard"><a class="url fn n" href="https://jamesthomassnyder.com/author/jamesnyder/" title="View all posts by James Thomas Snyder">James Thomas Snyder</a></span>					</div><!-- .entry-meta -->
+
+					<div class="entry-content">
+						<h2>The State Department’s employee evaluation process is worse than terrible.  It is no better than a gamble.</h2>
+<p><img class=" alignleft" src="https://jhfc.duke.edu/wp-content/uploads/2016/01/US_Department_of_State_official_seal.png" alt="Department of state seal" width="358" height="361" /></p>
+<p>Consider this career choice: you are a second-tour FS-04 consular officer serving your country in an American embassy abroad.  You have tenure, which means that you’re more or less guaranteed employment with the State Department for the next 15 years.  You are now being considered for promotion to FS-03.  In a bid to speed up the process, the Management Bureau Office of Performance Evaluation approaches you with this offer: you may proceed with the promotion board selection process or, more simply, flip a coin.  Heads, you will be promoted.  Tails, you will not.</p>
+<p>Even odds are not great but they’re better than the 2018 promotion statistics suggest you have, which is closer to one in three.  Still, you’re told promotion is a merit-based process decided after rational, impartial evaluation of your accomplishments.  You’re a hard worker and have made no mistakes.  Your peers and supervisors like you and your Employee Evaluation Reports (EERs) have all been stellar.  So you decide to go with the promotion panel.</p>
+<p>Everybody in the department believes this, or at the very least, cynically behaves as if it were true.  And it may well be true.  But here’s the problem: social scientific research argues strongly that the State Department’s promotion process produces decisions little better than random chance.  The department has the data available to determine whether panel decisions are indeed correlated with future performance rather than blind luck but it has not used that information to improve the process.</p>
+<p>This should alarm everyone and not just those being considered for promotion.  If the department cannot accurately select future high-performers, then we are rewarding people who do not deserve it and punishing those who don’t deserve that, either.  And it means, when it comes to the future leadership of the premier executive department, we are doing no better than throwing dice and hoping for the best.</p>
+<p>The EER has a long history.  The Rogers Act of 1924 set up the modern Foreign Service, replacing prodigal heirs populating the diplomatic corps with a professional and meritocratic promotion system.  The 1980 Foreign Service Act instituted new reforms, significantly eliminating the evaluation of a diplomat’s spouse, then almost entirely women, as part of the employee’s evaluation.  The Foreign Service now uses a narrative system primarily devised in 2002, amended partially in 2015, resulting in the goals-oriented, short-narrative EER in use today.</p>
+<p>Each year the Performance Evaluation office convenes around 20 boards made up of about six panelists, including an outside civilian.  For six to eight weeks each panelist reviews 40 candidate folders per day, which include the past five years’ EERs.  That accounts for some 30,000 EERs reviewed or more than 200,000 pages in total for each board, a daunting task by any measure.</p>
+<p>The best thing to be said about this promotion process is that it is worse than a similar system the Israeli army abandoned in 1955.  Daniel Kahneman, then a 22-year-old psychology graduate, was asked to assess how the nascent Israeli army selected its officers.  The army used a process adapted from the British following World War II.  It involved evaluating a group of officer candidates working together to physically bridge an obstacle.  Here, Kahneman writes in his Nobel Prize biography,</p>
+<p style="padding-left:30px;">[w]e were looking for manifestations of the candidates’ characters, and we saw plenty: true leaders, loyal followers, empty boasters, wimps – there were all kinds. Under the stress of the event, we felt, the soldiers’ true nature would reveal itself, and we would be able to tell who would be a good leader and who would not.</p>
+<p style="padding-left:30px;">But the trouble was that, in fact, we could not tell. Every month or so we had a “statistics day,” during which we would get feedback from the officer-training school, indicating the accuracy of our ratings of candidates’ potential. The story was always the same: our ability to predict performance at the school was negligible. … I was so impressed by the complete lack of connection between the statistical information and the compelling experience of insight that I coined a term for it: “the illusion of validity.”</p>
+<p>Kahneman, along with his partner Amos Tversky, documented another cognitive fallacy in this exercise: the human tendency to make extreme forecasts based on very little data.  Overconfidence in predicting future performance has been documented in fields as diverse as football, economics, the weather, and the stock market.  It should come as no surprise, then, that predicting future performance of diplomats would be shot through with overconfidence as well.</p>
+<p>He continues:</p>
+<p style="padding-left:30px;">Closely related to the illusion of validity was another feature of our discussions about the candidates we observed: our willingness to make extreme predictions about their future performance on the basis of a small sample of behavior. … As I understood clearly only when I taught statistics some years later, the idea that predictions should be less extreme than the information on which they are based is deeply counterintuitive.</p>
+<p>Kahneman subsequently drew up a more objective measure of performance using a numerical scale to rank candidates based on certain attributes correlated with future success in officer training.  It was not perfect but it has remained, more or less unaltered, with the Israeli army ever since.</p>
+<p>The similarities between the two evaluation systems are striking.  Like the Israeli army of 1955, the State Department panels rank candidates into three tiers.  Like the Israeli army, the Foreign Service Officers serving as judge and jury over lower-ranking strangers are not human resources professionals or executives with hiring and firing experience.  They are beneficiaries of the same system that selected them.  They have no reason to doubt the process that promoted them and in fact have quite a psychological incentive to perpetuate it.  Kahneman and his disciples were skeptical of expert judgment.  Kahneman cites as an influence the work of psychologist Paul Meehl, who famously determined the superiority of actuarial prediction to clinical judgment in medical prognosis.  Kahneman eventually came to understand the value of training and experience to improve professional judgement.  But the one-time panel members only receive minimal training for their task and rarely serve on a panel again.</p>
+<p>The only fundamental difference between the two selection processes was the Israeli army actually observed the individuals being ranked.  The department, using a record of paper, is basing its decision on hearsay.  There is no interaction with the candidates themselves.  The selection process is done by consensus, which means the entire panel must agree on every individual file.  Indeed, officers I have talked to say there is rarely any dissent, that they all see the same things the same way, and that what they are seeing is blindingly obvious on its face.  Kahneman saw the same thing, too.  As he told the author Michael Lewis, “[t]he impression we had of each candidate’s character was as direct and compelling as the color of the sky.”  But he could not correlate these judgments to their outcomes.</p>
+<p>The Foreign Service promotion system is explicitly designed to predict future performance.  It is projecting: EERs should tell us who will succeed at the next level and who will fail.  The Procedural Precepts for the 2018 Foreign Service Selection Boards specifically state, “[p]romotion is recognition that an employee has demonstrated readiness to successfully perform at the next highest level.”  It continues:</p>
+<p style="padding-left:30px;">A recommendation for promotion is not a reward for prior service.  Boards should recommend for immediate advancement only those employees whose records indicate superior long-range potential and a present ability to perform at a higher level.</p>
+<p>But as Kahneman demonstrated and has been amply documented from economists like Richard Thaler and statisticians like Scott Armstrong, people are very poor predictors of future human behavior.</p>
+<p>In addition to overconfidence, Armstrong outlines two ways people often get predictions wrong.  First, he notes that agreement or consensus is not that same thing as accuracy.  The board process requires each member to rank the top promotable candidates but then, strangely, come to a group agreement about the order of those candidates (as well as those mid-ranked and low-ranked).  Second, Armstrong notes that increasing complexity makes prediction correspondingly more difficult.  Variables and uncertainty, which perfectly describes the Foreign Service career assignment system, make predictions of future performance much less tenable.</p>
+<p>All this perpetuates a system governed by subjectivity and intuition, both of which Kahneman and his partisans have exposed as no better than chance.  There is very little objective measurement of performance or potential.  Not even the straightforward U.S. military requirement to tick a box recommending promotion or not is available in the EER.  State Department panel members, already unable to read the entirety of each individual EER because of sheer volume, must parse a hundred different ways raters recommend promotion, looking for evidence of faint praise or lack of enthusiasm.</p>
+<p>Performance Evaluation considered these issues, including objectivity and bias, in an declassified 2013 cable.   The cable argued that the Defense Department’s system of numerical ranking was more appropriate to the task of evaluating hundreds of thousands of members of the armed forces.  But if it were simply a matter of scale, shouldn’t there be enough military officers reviewing their peers in similar ratios to Foreign Service boards?  More importantly, it is difficult to argue that the Pentagon is concerned more with efficiency than efficacy when lives are literally at risk if the system fails.</p>
+<p>In another unclassified cable in 2015 accompanying the modestly reformed EER, the department attempted to address rank-and-file requests for a more objective performance evaluation system.  The department responded by saying it had conducted external consultations and concluded metric evaluation fed bias and grade inflation.  But these are precisely the problems with the current system as evidenced by the department’s concern with unconscious bias on the one hand and inflation of performance evaluation on the other hand.  A 2017 unclassified cable noted specifically how difficult board members found it to rank candidates who were all, to borrow a phrase, above average.  There is no question about the problem of bias and grade inflation.  The question to ask is which system – narrative/subjective or quantitative/objective – best reduces these biases and has the highest correlation with future performance of employees.</p>
+<p>The consequence is a collective, department-wide effort to game the promotion system.  Conventional wisdom among the department rank and file accepts that there is a proper way to write or couch the EER, that deviating from this unwritten rule spells career doom, and that there is absolutely no quarter to be allowed to document poor performance, individual struggle, or personal failing.  The logical outcome of this conventional wisdom should be no surprise.  It produces highly inflated and hyperbolic EERs crammed with superlative performance and exceptional personal achievement, not any rational or reasonable measure of performance or readiness for promotion.  It is absurd, especially at the lower ranks, to expect that all officers will be equally excellent at all things, which is the picture the EERs in the aggregate indicate and about which promotion panels perennially complain.</p>
+<p>Given this, the lack of quantitative measurement of performance is especially glaring.  This may not seem important given the depth and rigor of a professional, narrative evaluation.  But quantitative data is the standard measure of performance we get in high school, university, and graduate and professional schools.  High school grades are more strongly correlated than the Scholastic Aptitude Test to university success.  Performance in individual subjects can be aggregated in a grade point average, and that grade point average along with standardized test scores can be correlated with future performance as measured in future grades and earnings.</p>
+<p>The 2013 cable notes eight systemic biases without addressing explicitly how the EER and promotion board system are designed to minimize bias.  It is worth quoting in full:</p>
+<p style="padding-left:30px;">Boards can help to cut through overt or subtle biases at the line manager level.  In addition to invidious general biases (age, gender, race, ethnic origin, sexual orientation, religion), more nuanced types of bias are also workplace hazards.  The [Foreign Service] Board system, by having an impartial objective group, mitigate possible bias.  The Foreign Service grievance system adds additional safeguards.  Bias is simply a personality-based tendency, either toward or against something.</p>
+<p>In other words, the boards are impartial and objective because the bureau says they are impartial and objective.</p>
+<p>The department has recently required unconscious bias training for selection panel members and has long screened EER drafts for inadmissible information.  This is an important start.  But the panels themselves are structured in a way to protect, not remove, bias.  Panel members are not required to recuse themselves unless they are reviewing a family member.  The panel decision itself cannot be appealed; employees can only grieve language they have already consented to send to the boards.</p>
+<p>While the department expresses concern about bias and forbids most explicit (race, sexual orientation, age) and implicit (“staffing” to replace “manpower,” for example) bias, importantly quite a lot of information is still not scrubbed from standard EERs.  Importantly, gender – a legally suspect class specifically mentioned in Equal Employment Opportunity laws and regulations – is permitted.  Additionally, names are also allowed which, in a diverse country like the United States, one can use to make reasonable guesses about a candidate’s religion, national origin, ethnic group, mother tongue, and race.</p>
+<p>The department explicitly dismissed calls for a more quantitative or objective evaluation system.  The 2015 cable dismissing a proposal for quantitative performance evaluation specifically endorses a narrative approach and the 2017 cable reinforces it.   Unfortunately, social science research has repeatedly identified the “narrative fallacy” as a flawed heuristic people apply to interpret the past and anticipate the future.  The panels agree, in other words, to build a third cognitive fallacy right into the structure of the evaluation.</p>
+<p>The lack of objective measurement lends itself to all sorts of abuses, including watered-down and “coded” language that experienced raters and reviewers use to communicate <em>sub rosa</em> to the panel, while lying to the candidate, that they are not promotable.  I am stunned that the use of coded language in EERs is not only an acknowledged practice but in fact accepted as the price of promotion in the department.  We would not tolerate secret communications from our children’s teachers or guidance counselors in letters of recommendation for jobs or university admission.  If such a practice were discovered, it would garner the same kind of legal and press attention the university admission-bribing scandal recently did.  Raters and reviewers who communicate in coded language are committing fraud.  This subterfuge would not survive an Inspector General investigation, Congressional scrutiny, or class-action lawsuit.</p>
+<p>The EER, as a narrative instrument, lacks objective utility at a minimum and otherwise eschews any quantitative measurement of performance.  But this data is not entirely missing. The process has the statistical tools to correlate prior evaluations with future performance and promotion rates but has not used these tools. Promotion panels routinely rank EERs into three tiers and then rank order every EER in the top tier.  This could very easily be correlated with prior and future evaluations and promotion rates, but these ranks are not permanently assigned to individual officers or their EER files.  This is a mistake, the equivalent of grading classwork without issuing a transcript at the end of high school.</p>
+<p>The panel’s purview is guided by two massive documents: the “Procedural Precepts” for Foreign Service Selection Boards (31 pages) and the “Decision Criteria for Tenure and Promotion in the Foreign Service,” confusingly also known as the Core Precepts (15 pages).  The Procedural Precepts outline the duties and procedures the panel must follow while the Core Precepts outline the skills and objectives an officer must demonstrate.  The Core Precepts refer to these as “guidelines by which Tenure and Selection Boards determine the tenure and promotability” of officers.  But nowhere in either document are instructions that explain <em>how</em> the board should apply the Core Precepts.  That’s the equivalent of applying the A-F grading system without explaining what distinguishes an A from an F.</p>
+<p>There are six Core Precepts containing 31 subsections.  This is simply too much for any one narrative evaluation – the line count is just above 100 – to consider in any depth.  Even if several narratives over the last five years are evaluated, that leaves little more than 500 lines total.  So employees, raters and reviewers must select their most important accomplishments and skimp on covering all facets of the Core Precepts.</p>
+<p>Panelists are left to parsing nuance of language, which is simply more noise above the randomness of assignment, location, experience, work product, and outcome, not to mention unconscious bias and writing ability.  How can a panel rationally evaluate a 25-year-old consular officer with no prior job experience working in a nonimmigrant visa mill in Mexico against a 50-year-old second career officer handling American Citizen Services cases following an earthquake in Japan?  How can panels distinguish between competent performance and sheer circumstance?</p>
+<p>Fortunately, the Core Precepts actually provide the solution to this otherwise subjective mind game.  Instead of the laborious negotiation over the narrative evaluation, the employee, rater, reviewer, and a peer or local staff member would grade the employee against their peers in a given post on each of the Core Precepts subsections.  The employee would have no control over the grading but would be allowed to see it.  The individual grades and aggregate would be assigned to the employee’s file for future panels to view.</p>
+<p>A numerical evaluation has more utility than its narrative counterpart.  It is more objective because in this case the reviewer is rating the employee directly against their immediate peers whereas under the current system the panel measures performance against an unseen global population.  The global view introduces much more noise, subjectivity, and randomness to the process.  A graded system can be averaged over a year, a grade, or a precept; it can be correlated to future performance; it can track improvement; it eliminates <em>sub rosa</em> sabotage (using regression analysis, we could determine whether a particular low rank was within the standard deviation of the other reviewers or prior evaluations).</p>
+<p>Any kind of human evaluation system is prone to bias, error, and luck.  The best we can do is find the tools that limit our bias, reduce error, and account for luck.  The current State Department promotion system makes no systematic attempt to do that.  The result is the opposite of meritocratic: it is pure fortune.</p>
+<p>###</p>
+<p style="font-weight:400;"><em>The opinions and characterizations in this piece are those of the author and do not necessarily represent those of the U.S. government.</em></p>
+<p style="font-weight:400;">
+<p>&nbsp;</p>
+<div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-1444" class="share-twitter sd-button share-icon" href="https://jamesthomassnyder.com/2019/09/24/the-price-of-promotion/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-1444" class="share-facebook sd-button share-icon" href="https://jamesthomassnyder.com/2019/09/24/the-price-of-promotion/?share=facebook" target="_blank" title="Click to share on Facebook"><span>Facebook</span></a></li><li class="share-end"></li></ul></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-29998790-1444-61329da3be464' data-src='//widgets.wp.com/likes/index.html?ver=20210818#blog_id=29998790&amp;post_id=1444&amp;origin=jamesthomassnyder.wordpress.com&amp;obj_id=29998790-1444-61329da3be464&amp;domain=jamesthomassnyder.com' data-name='like-post-frame-29998790-1444-61329da3be464' data-title='Like or Reblog'><h3 class='sd-title'>Like this:</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>Like</span></span> <span class="loading">Loading...</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div>
+<div id='jp-relatedposts' class='jp-relatedposts' >
+	<h3 class="jp-relatedposts-headline"><em>Related</em></h3>
+</div></div>											</div><!-- .entry-content -->
+
+							<div id="entry-author-info">
+						<div id="author-avatar">
+							<img alt='' src='https://0.gravatar.com/avatar/ce5ab93b2bad10925ebf571eee22a77c?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						</div><!-- #author-avatar -->
+						<div id="author-description">
+							<h2>
+							About James Thomas Snyder							</h2>
+							NATO fan, ex-diplomat, author, critic, translator, and former U.S. Congressional speechwriter.  All opinions expressed here are my own and do not necessarily represent the views of the U.S. government or any employer, past or present.							<div id="author-link">
+								<a href="https://jamesthomassnyder.com/author/jamesnyder/" rel="author">
+									View all posts by James Thomas Snyder <span class="meta-nav">&rarr;</span>								</a>
+							</div><!-- #author-link	-->
+						</div><!-- #author-description -->
+					</div><!-- #entry-author-info -->
+
+						<div class="entry-utility">
+							This entry was posted in <a href="https://jamesthomassnyder.com/category/public-diplomacy/" rel="category tag">Public Diplomacy</a>, <a href="https://jamesthomassnyder.com/category/uncategorized/" rel="category tag">Uncategorized</a> and tagged <a href="https://jamesthomassnyder.com/tag/amos-tversky/" rel="tag">Amos Tversky</a>, <a href="https://jamesthomassnyder.com/tag/behavioral-economics/" rel="tag">behavioral economics</a>, <a href="https://jamesthomassnyder.com/tag/careers/" rel="tag">careers</a>, <a href="https://jamesthomassnyder.com/tag/cognitive-fallacies/" rel="tag">cognitive fallacies</a>, <a href="https://jamesthomassnyder.com/tag/cognitive-psychology/" rel="tag">cognitive psychology</a>, <a href="https://jamesthomassnyder.com/tag/consulate/" rel="tag">consulate</a>, <a href="https://jamesthomassnyder.com/tag/daniel-kahneman/" rel="tag">Daniel Kahneman</a>, <a href="https://jamesthomassnyder.com/tag/embassy/" rel="tag">embassy</a>, <a href="https://jamesthomassnyder.com/tag/foreign-service-officers/" rel="tag">Foreign Service Officers</a>, <a href="https://jamesthomassnyder.com/tag/michael-lewis/" rel="tag">Michael Lewis</a>, <a href="https://jamesthomassnyder.com/tag/promotion/" rel="tag">promotion</a>, <a href="https://jamesthomassnyder.com/tag/richard-thaler/" rel="tag">Richard Thaler</a>, <a href="https://jamesthomassnyder.com/tag/u-s-state-department/" rel="tag">U.S. State Department</a>. Bookmark the <a href="https://jamesthomassnyder.com/2019/09/24/the-price-of-promotion/" title="Permalink to The Price of&nbsp;Promotion" rel="bookmark">permalink</a>.													</div><!-- .entry-utility -->
+					</div><!-- #post-1444 -->
+
+				<div id="nav-below" class="navigation">
+					<div class="nav-previous"><a href="https://jamesthomassnyder.com/2019/09/17/the-cost-of-lies/" rel="prev"><span class="meta-nav">&larr;</span> The Cost of&nbsp;Lies</a></div>
+					<div class="nav-next"><a href="https://jamesthomassnyder.com/2019/11/22/update-the-price-of-promotion-diversity-and-retention/" rel="next">UPDATE: The Price of Promotion &#8211; Diversity and&nbsp;Retention <span class="meta-nav">&rarr;</span></a></div>
+				</div><!-- #nav-below -->
+
+				
+			<div id="comments">
+
+
+			<h3 id="comments-title">
+			9 Responses to <em>The Price of&nbsp;Promotion</em>			</h3>
+
+
+			<ol class="commentlist">
+						<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-7370">
+		<div id="comment-7370">
+			<div class="comment-author vcard">
+				<img alt='' src='https://1.gravatar.com/avatar/41db42071085183e5d74cf3832125891?s=40&#038;d=identicon&#038;r=G' class='avatar avatar-40' height='40' width='40' />				<cite class="fn">Charity Boyette</cite> <span class="says">says:</span>			</div><!-- .comment-author .vcard -->
+
+				
+				
+			<div class="comment-meta commentmetadata"><a href="https://jamesthomassnyder.com/2019/09/24/the-price-of-promotion/#comment-7370">
+				September 24, 2019 at 11:53</a>			</div><!-- .comment-meta .commentmetadata -->
+
+			<div class="comment-body"><p>Very interesting points here, though I would add that attempting to correlate promotion decisions to actual performance is currently impossible in the Foreign Service, as the only measure of actual performance is the same EER on which promotion decisions are currently made.  It always shocked me that the FS made zero attempt to quantify actual performance, even during entry level (pre-tenure) periods.  That structural deficiencies in people management are baked into the FS was the primary motivation behind my decision to resign last year and embark on an academic career, focused on research into &#8211; surprise &#8211; how organizations can identify and develop managerial talent better.  Thank you for the excellent analysis.</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://jamesthomassnyder.com/2019/09/24/the-price-of-promotion/?replytocom=7370#respond' data-commentid="7370" data-postid="1444" data-belowelement="comment-7370" data-respondelement="respond" data-replyto="Reply to Charity Boyette" aria-label='Reply to Charity Boyette'>Reply</a>			</div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+				<ul class="children">
+		<li class="comment byuser comment-author-jamesnyder bypostauthor odd alt depth-2 highlander-comment" id="li-comment-7373">
+		<div id="comment-7373">
+			<div class="comment-author vcard">
+				<img alt='' src='https://0.gravatar.com/avatar/ce5ab93b2bad10925ebf571eee22a77c?s=40&#038;d=identicon&#038;r=G' class='avatar avatar-40' height='40' width='40' />				<cite class="fn"><a href='https://jamesthomassnyder.wordpress.com' rel='external nofollow ugc' class='url'>James Thomas Snyder</a></cite> <span class="says">says:</span>			</div><!-- .comment-author .vcard -->
+
+				
+				
+			<div class="comment-meta commentmetadata"><a href="https://jamesthomassnyder.com/2019/09/24/the-price-of-promotion/#comment-7373">
+				September 25, 2019 at 08:54</a>			</div><!-- .comment-meta .commentmetadata -->
+
+			<div class="comment-body"><p>Thank you, Charity, for your perspective.  I didn&#8217;t really know if my experience was exceptional until I wrote this. </p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://jamesthomassnyder.com/2019/09/24/the-price-of-promotion/?replytocom=7373#respond' data-commentid="7373" data-postid="1444" data-belowelement="comment-7373" data-respondelement="respond" data-replyto="Reply to James Thomas Snyder" aria-label='Reply to James Thomas Snyder'>Reply</a>			</div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+				</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-7371">
+		<div id="comment-7371">
+			<div class="comment-author vcard">
+				<img alt='' src='https://2.gravatar.com/avatar/8f98e4c23e553cbaee327319f7159a71?s=40&#038;d=identicon&#038;r=G' class='avatar avatar-40' height='40' width='40' />				<cite class="fn">Nancy Barreda</cite> <span class="says">says:</span>			</div><!-- .comment-author .vcard -->
+
+				
+				
+			<div class="comment-meta commentmetadata"><a href="https://jamesthomassnyder.com/2019/09/24/the-price-of-promotion/#comment-7371">
+				September 24, 2019 at 18:46</a>			</div><!-- .comment-meta .commentmetadata -->
+
+			<div class="comment-body"><p>Very interesting and concerning. I work for gov. What I have  learned is how many mistakes are made in the gov. sector. That would never be tolerated in the private sector.</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://jamesthomassnyder.com/2019/09/24/the-price-of-promotion/?replytocom=7371#respond' data-commentid="7371" data-postid="1444" data-belowelement="comment-7371" data-respondelement="respond" data-replyto="Reply to Nancy Barreda" aria-label='Reply to Nancy Barreda'>Reply</a>			</div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+				<ul class="children">
+		<li class="comment byuser comment-author-jamesnyder bypostauthor odd alt depth-2 highlander-comment" id="li-comment-7372">
+		<div id="comment-7372">
+			<div class="comment-author vcard">
+				<img alt='' src='https://0.gravatar.com/avatar/ce5ab93b2bad10925ebf571eee22a77c?s=40&#038;d=identicon&#038;r=G' class='avatar avatar-40' height='40' width='40' />				<cite class="fn"><a href='https://jamesthomassnyder.wordpress.com' rel='external nofollow ugc' class='url'>James Thomas Snyder</a></cite> <span class="says">says:</span>			</div><!-- .comment-author .vcard -->
+
+				
+				
+			<div class="comment-meta commentmetadata"><a href="https://jamesthomassnyder.com/2019/09/24/the-price-of-promotion/#comment-7372">
+				September 25, 2019 at 08:52</a>			</div><!-- .comment-meta .commentmetadata -->
+
+			<div class="comment-body"><p>Thank you, Nancy, for sharing this post and commenting on it.  Even though this is very much about the State Department, I thought it might resonate with a larger audience.</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://jamesthomassnyder.com/2019/09/24/the-price-of-promotion/?replytocom=7372#respond' data-commentid="7372" data-postid="1444" data-belowelement="comment-7372" data-respondelement="respond" data-replyto="Reply to James Thomas Snyder" aria-label='Reply to James Thomas Snyder'>Reply</a>			</div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+				</li><!-- #comment-## -->
+		<li class="comment even depth-2 highlander-comment" id="li-comment-7376">
+		<div id="comment-7376">
+			<div class="comment-author vcard">
+				<img alt='' src='https://0.gravatar.com/avatar/374198903dbd5d6a8949c27f35aec42c?s=40&#038;d=identicon&#038;r=G' class='avatar avatar-40' height='40' width='40' />				<cite class="fn"><a href='https://historyofnavymedicine.org' rel='external nofollow ugc' class='url'>SemiSaltyDoc</a></cite> <span class="says">says:</span>			</div><!-- .comment-author .vcard -->
+
+				
+				
+			<div class="comment-meta commentmetadata"><a href="https://jamesthomassnyder.com/2019/09/24/the-price-of-promotion/#comment-7376">
+				September 25, 2019 at 10:54</a>			</div><!-- .comment-meta .commentmetadata -->
+
+			<div class="comment-body"><p>I sat on two Navy Selection boards. The one tool in the Navy Fitness Reports (our EER equivalent) that I found consistently useful was the peer ranking box, where the officer’s performance was ranked with his peers within the command. We tended to discount or ignore the narratives unless they were written by a senior officer known to the board to be a tough but fair and objective judge of performance.</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://jamesthomassnyder.com/2019/09/24/the-price-of-promotion/?replytocom=7376#respond' data-commentid="7376" data-postid="1444" data-belowelement="comment-7376" data-respondelement="respond" data-replyto="Reply to SemiSaltyDoc" aria-label='Reply to SemiSaltyDoc'>Reply</a>			</div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+				</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-7801">
+		<div id="comment-7801">
+			<div class="comment-author vcard">
+				<img alt='' src='https://2.gravatar.com/avatar/e77459fe7ce87a45c2ef1c84f4dffcd2?s=40&#038;d=identicon&#038;r=G' class='avatar avatar-40' height='40' width='40' />				<cite class="fn">CareerDiplomat</cite> <span class="says">says:</span>			</div><!-- .comment-author .vcard -->
+
+				
+				
+			<div class="comment-meta commentmetadata"><a href="https://jamesthomassnyder.com/2019/09/24/the-price-of-promotion/#comment-7801">
+				June 15, 2020 at 15:58</a>			</div><!-- .comment-meta .commentmetadata -->
+
+			<div class="comment-body"><p>As a career diplomat with 30 years of service I agree and could cite numerous examples based on personal experience. But speaking out on such issues  is career-destructive under the current system.   The Department takes a dim view of any form  of constructive dissent</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://jamesthomassnyder.com/2019/09/24/the-price-of-promotion/?replytocom=7801#respond' data-commentid="7801" data-postid="1444" data-belowelement="comment-7801" data-respondelement="respond" data-replyto="Reply to CareerDiplomat" aria-label='Reply to CareerDiplomat'>Reply</a>			</div><!-- .reply -->
+		</div><!-- #comment-##  -->
+
+				</li><!-- #comment-## -->
+		<li class="post pingback">
+		<p>Pingback: <a href='https://warontherocks.com/2021/09/why-americas-diplomats-want-to-quit/' rel='external nofollow ugc' class='url'>Why Some of America’s Diplomats Want to Quit - War on the Rocks</a></p>
+				</li><!-- #comment-## -->
+		<li class="post pingback">
+		<p>Pingback: <a href='https://internationalpk.com/politics/why-some-of-americas-diplomats-want-to-quit-war-on-the-rocks/' rel='external nofollow ugc' class='url'>Why Some of America’s Diplomats Want to Quit - War on the Rocks - News International</a></p>
+				</li><!-- #comment-## -->
+		<li class="post pingback">
+		<p>Pingback: <a href='https://staging.taktikz.com/why-some-of-americas-diplomats-want-to-quit/' rel='external nofollow ugc' class='url'>Why Some of America’s Diplomats Want to Quit | taktik(z) GDI (Government Defense Infrastructure)</a></p>
+				</li><!-- #comment-## -->
+			</ol>
+
+
+	
+
+	<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2019/09/24/the-price-of-promotion/#respond" style="display:none;">Cancel reply</a></small></h3><form action="https://jamesthomassnyder.com/wp-comments-post.php" method="post" id="commentform" class="comment-form"><input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="31adbb114f" /><input type="hidden" name="_wp_http_referer" value="/2019/09/24/the-price-of-promotion/" />
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest" />
+
+<div class="comment-form-field comment-textarea">
+	<label for="comment">Enter your comment here...</label>
+	<div id="comment-form-comment"><textarea id="comment" name="comment" title="Enter your comment here..."></textarea></div>
+</div>
+
+<div id="comment-form-identity">
+	<div id="comment-form-nascar">
+		<p>Fill in your details below or click an icon to log in:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="#comment-form-guest" id="postas-guest" class="nascar-signin-link"
+                   title="Login via Guest">
+									</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:WordPress.com" id="postas-wordpress" class="nascar-signin-link"
+                   title="Login via WordPress.com">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Twitter" id="postas-twitter" class="nascar-signin-link"
+                   title="Login via Twitter">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Facebook" id="postas-facebook" class="nascar-signin-link"
+                   title="Login via Facebook">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg>				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Gravatar" width="25" class="no-grav" />
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">Email <span class="required">(required)</span> <span class="nopublish">(Address never made public)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Name <span class="required">(required)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Website</label>
+					<div class="comment-form-input"><input id="url" name="url" type="url" value="" /></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="WordPress.com Logo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="" />
+						<p class="comment-form-posting-as pa-wordpress">
+			<strong></strong>
+			You are commenting using your WordPress.com account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Google photo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="" />
+						<p class="comment-form-posting-as pa-googleplus">
+			<strong></strong>
+			You are commenting using your Google account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" x="0px" y="0px" viewBox="0 0 60 60" ><path fill="#519bf7" d="M56.3,30c0,-1.6 -0.2,-3.4 -0.6,-5h-3.1H42.2H30v10.6h14.8C44,39.3 42,42 39.1,43.9l8.8,6.8C53,46 56.3,39 56.3,30z" /><path fill="#3db366" d="M30,57.5c6.7,0 13.1,-2.4 17.9,-6.8l-8.8,-6.8c-2.5,1.6 -5.6,2.4 -9.1,2.4c-7.2,0 -13.3,-4.7 -15.4,-11.2l-9.3,7.1C9.8,51.3 19.1,57.5 30,57.5z" /><path fill="#fdc600" d="M5.3,42.2l9.3,-7.1c-0.5,-1.6 -0.8,-3.3 -0.8,-5.1s0.3,-3.5 0.8,-5.1l-9.3,-7.1C3.5,21.5 2.5,25.6 2.5,30S3.5,38.5 5.3,42.2z" /><path fill="#f15b44" d="M40.1,17.4l8,-8C43.3,5.1 37,2.5 30,2.5C19.1,2.5 9.8,8.7 5.3,17.8l9.3,7.1c2.1,-6.5 8.2,-11.1 15.4,-11.1C33.9,13.7 37.4,15.1 40.1,17.4z" /></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Twitter picture" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="" />
+						<p class="comment-form-posting-as pa-twitter">
+			<strong></strong>
+			You are commenting using your Twitter account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="" alt="Facebook photo" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="" />
+						<p class="comment-form-posting-as pa-facebook">
+			<strong></strong>
+			You are commenting using your Facebook account.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Log&nbsp;Out</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Cancel</a></div>
+		<p>Connecting to %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function () {
+
+	function hide( sel ) {
+		var el = document.querySelector( sel );
+		if ( el ) {
+			el.style.setProperty( 'display', 'none' );
+		}
+	}
+
+	function show( sel ) {
+		var el = document.querySelector( sel );
+		if ( el ) {
+			el.style.removeProperty( 'display' );
+		}
+	}
+
+	var input = document.createElement( 'input' );
+	var comment = document.querySelector( '#comment' );
+
+	if ( input && comment && 'placeholder' in input ) {
+		var label = document.querySelector( '.comment-textarea label' );
+		if ( label ) {
+			var text = label.textContent;
+			label.parentNode.removeChild( label );
+			comment.setAttribute( 'placeholder', text );
+		}
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	hide( '#comment-form-identity' );
+	hide( '#comment-form-subscribe' );
+	hide( '#commentform .form-submit' );
+
+	if ( comment ) {
+		comment.style.height = '10px';
+
+		var handler = function () {
+			comment.style.height = HighlanderComments.initialHeight + 'px';
+			show( '#comment-form-identity' );
+			show( '#comment-form-subscribe' );
+			show( '#commentform .form-submit' );
+			HighlanderComments.resizeCallback();
+
+			comment.removeEventListener( 'focus', handler );
+		};
+
+		comment.addEventListener( 'focus', handler );
+	}
+}
+
+if ( document.readyState !== 'loading' ) {
+	highlander_expando_javascript();
+} else {
+	if ( typeof window.jQuery === 'function' ) {
+		// Use jQuery's `ready` if available.
+		// This solves some scheduling issues between this script and the main highlander script.
+		jQuery( document ).ready( highlander_expando_javascript );
+	} else {
+		// If not available, add a vanilla event listener.
+		document.addEventListener( 'DOMContentLoaded', highlander_expando_javascript );
+	}
+}
+
+</script>
+
+<div id="comment-form-subscribe">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Notify me of new comments via email.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog"  style="display: inline;">Notify me of new posts via email.</label></p></div>
+
+
+
+
+<p class="form-submit wp-block-button"><input name="submit" type="submit" id="comment-submit" class="submit wp-block-button__link" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='1444' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="08ec80a156" /></p>
+<input type="hidden" name="genseq" value="1630707107" />
+<input type="hidden" id="ak_js" name="ak_js" value="111"/><textarea name="ak_hp_textarea" cols="45" rows="8" maxlength="100" style="display: none !important;"></textarea></form>	</div><!-- #respond -->
+	<div style="clear: both"></div>
+</div><!-- #comments -->
+
+	
+			</div><!-- #content -->
+		</div><!-- #container -->
+
+
+		<div id="primary" class="widget-area" role="complementary">
+						<ul class="xoxo">
+
+<li id="search-2" class="widget-container widget_search"><form role="search" method="get" id="searchform" class="searchform" action="https://jamesthomassnyder.com/">
+				<div>
+					<label class="screen-reader-text" for="s">Search for:</label>
+					<input type="text" value="" name="s" id="s" />
+					<input type="submit" id="searchsubmit" value="Search" />
+				</div>
+			</form></li>
+		<li id="recent-posts-2" class="widget-container widget_recent_entries">
+		<h3 class="widget-title">Recent Posts</h3>
+		<ul>
+											<li>
+					<a href="https://jamesthomassnyder.com/2021/08/07/herzegovina-blogging-black-lamb-and-grey-falcon/">Herzegovina (Blogging Black Lamb and Grey&nbsp;Falcon)</a>
+									</li>
+											<li>
+					<a href="https://jamesthomassnyder.com/2021/08/02/expedition-blogging-black-lamb-and-grey-falcon/">Expedition (Blogging Black Lamb and Grey&nbsp;Falcon)</a>
+									</li>
+											<li>
+					<a href="https://jamesthomassnyder.com/2021/06/27/dalmatia-blogging-black-lamb-and-grey-falcon/">Dalmatia (Blogging Black Lamb and Grey&nbsp;Falcon)</a>
+									</li>
+											<li>
+					<a href="https://jamesthomassnyder.com/2021/05/06/croatia-blogging-black-lamb-and-grey-falcon/">Croatia (Blogging Black Lamb and Grey&nbsp;Falcon)</a>
+									</li>
+											<li>
+					<a href="https://jamesthomassnyder.com/2021/04/26/journey-blogging-black-lamb-and-grey-falcon/">Journey (Blogging Black Lamb and Grey&nbsp;Falcon)</a>
+									</li>
+					</ul>
+
+		</li><li id="archives-2" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>
+			<ul>
+					<li><a href='https://jamesthomassnyder.com/2021/08/'>August 2021</a></li>
+	<li><a href='https://jamesthomassnyder.com/2021/06/'>June 2021</a></li>
+	<li><a href='https://jamesthomassnyder.com/2021/05/'>May 2021</a></li>
+	<li><a href='https://jamesthomassnyder.com/2021/04/'>April 2021</a></li>
+	<li><a href='https://jamesthomassnyder.com/2021/03/'>March 2021</a></li>
+	<li><a href='https://jamesthomassnyder.com/2020/10/'>October 2020</a></li>
+	<li><a href='https://jamesthomassnyder.com/2020/04/'>April 2020</a></li>
+	<li><a href='https://jamesthomassnyder.com/2020/03/'>March 2020</a></li>
+	<li><a href='https://jamesthomassnyder.com/2019/11/'>November 2019</a></li>
+	<li><a href='https://jamesthomassnyder.com/2019/09/'>September 2019</a></li>
+	<li><a href='https://jamesthomassnyder.com/2019/04/'>April 2019</a></li>
+	<li><a href='https://jamesthomassnyder.com/2016/07/'>July 2016</a></li>
+	<li><a href='https://jamesthomassnyder.com/2016/05/'>May 2016</a></li>
+	<li><a href='https://jamesthomassnyder.com/2016/01/'>January 2016</a></li>
+	<li><a href='https://jamesthomassnyder.com/2015/11/'>November 2015</a></li>
+	<li><a href='https://jamesthomassnyder.com/2015/09/'>September 2015</a></li>
+	<li><a href='https://jamesthomassnyder.com/2015/08/'>August 2015</a></li>
+	<li><a href='https://jamesthomassnyder.com/2015/04/'>April 2015</a></li>
+	<li><a href='https://jamesthomassnyder.com/2014/11/'>November 2014</a></li>
+	<li><a href='https://jamesthomassnyder.com/2014/07/'>July 2014</a></li>
+	<li><a href='https://jamesthomassnyder.com/2014/05/'>May 2014</a></li>
+	<li><a href='https://jamesthomassnyder.com/2014/04/'>April 2014</a></li>
+	<li><a href='https://jamesthomassnyder.com/2014/03/'>March 2014</a></li>
+	<li><a href='https://jamesthomassnyder.com/2014/02/'>February 2014</a></li>
+	<li><a href='https://jamesthomassnyder.com/2014/01/'>January 2014</a></li>
+	<li><a href='https://jamesthomassnyder.com/2013/12/'>December 2013</a></li>
+	<li><a href='https://jamesthomassnyder.com/2013/11/'>November 2013</a></li>
+	<li><a href='https://jamesthomassnyder.com/2013/10/'>October 2013</a></li>
+	<li><a href='https://jamesthomassnyder.com/2013/09/'>September 2013</a></li>
+	<li><a href='https://jamesthomassnyder.com/2013/08/'>August 2013</a></li>
+	<li><a href='https://jamesthomassnyder.com/2013/07/'>July 2013</a></li>
+	<li><a href='https://jamesthomassnyder.com/2013/06/'>June 2013</a></li>
+	<li><a href='https://jamesthomassnyder.com/2013/05/'>May 2013</a></li>
+	<li><a href='https://jamesthomassnyder.com/2013/04/'>April 2013</a></li>
+	<li><a href='https://jamesthomassnyder.com/2013/03/'>March 2013</a></li>
+	<li><a href='https://jamesthomassnyder.com/2013/02/'>February 2013</a></li>
+	<li><a href='https://jamesthomassnyder.com/2013/01/'>January 2013</a></li>
+	<li><a href='https://jamesthomassnyder.com/2012/12/'>December 2012</a></li>
+	<li><a href='https://jamesthomassnyder.com/2012/11/'>November 2012</a></li>
+	<li><a href='https://jamesthomassnyder.com/2012/10/'>October 2012</a></li>
+	<li><a href='https://jamesthomassnyder.com/2012/09/'>September 2012</a></li>
+	<li><a href='https://jamesthomassnyder.com/2012/08/'>August 2012</a></li>
+	<li><a href='https://jamesthomassnyder.com/2012/07/'>July 2012</a></li>
+	<li><a href='https://jamesthomassnyder.com/2012/06/'>June 2012</a></li>
+	<li><a href='https://jamesthomassnyder.com/2012/05/'>May 2012</a></li>
+	<li><a href='https://jamesthomassnyder.com/2012/04/'>April 2012</a></li>
+	<li><a href='https://jamesthomassnyder.com/2012/03/'>March 2012</a></li>
+	<li><a href='https://jamesthomassnyder.com/2012/02/'>February 2012</a></li>
+	<li><a href='https://jamesthomassnyder.com/2011/11/'>November 2011</a></li>
+			</ul>
+
+			</li><li id="categories-2" class="widget-container widget_categories"><h3 class="widget-title">Categories</h3>
+			<ul>
+					<li class="cat-item cat-item-4338"><a href="https://jamesthomassnyder.com/category/afghanistan/">Afghanistan</a>
+</li>
+	<li class="cat-item cat-item-3328"><a href="https://jamesthomassnyder.com/category/book-reviews/">Book Reviews</a>
+</li>
+	<li class="cat-item cat-item-178"><a href="https://jamesthomassnyder.com/category/books/">Books</a>
+</li>
+	<li class="cat-item cat-item-1640725"><a href="https://jamesthomassnyder.com/category/north-atlantic-treaty-organization/">North Atlantic Treaty Organization</a>
+</li>
+	<li class="cat-item cat-item-6369068"><a href="https://jamesthomassnyder.com/category/politics-and-political-theory/">Politics and Political Theory</a>
+</li>
+	<li class="cat-item cat-item-13722"><a href="https://jamesthomassnyder.com/category/propaganda/">propaganda</a>
+</li>
+	<li class="cat-item cat-item-367941"><a href="https://jamesthomassnyder.com/category/public-diplomacy/">Public Diplomacy</a>
+</li>
+	<li class="cat-item cat-item-26217561"><a href="https://jamesthomassnyder.com/category/the-former-yugoslavia/">The Former Yugoslavia</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="https://jamesthomassnyder.com/category/uncategorized/">Uncategorized</a>
+</li>
+	<li class="cat-item cat-item-428343"><a href="https://jamesthomassnyder.com/category/watergate/">Watergate</a>
+</li>
+			</ul>
+
+			</li><li id="meta-2" class="widget-container widget_meta"><h3 class="widget-title">Meta</h3>
+		<ul>
+			<li><a href="https://wordpress.com/start?ref=wplogin">Register</a></li>			<li><a href="https://jamesthomassnyder.wordpress.com/wp-login.php">Log in</a></li>
+			<li><a href="https://jamesthomassnyder.com/feed/">Entries feed</a></li>
+			<li><a href="https://jamesthomassnyder.com/comments/feed/">Comments feed</a></li>
+
+			<li><a href="https://wordpress.com/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.com</a></li>
+		</ul>
+
+		</li><li id="blog_subscription-2" class="widget-container widget_blog_subscription jetpack_subscription_widget"><h3 class="widget-title"><label for="subscribe-field">Follow Blog via Email</label></h3>
+			<form
+				action="https://subscribe.wordpress.com"
+				method="post"
+				accept-charset="utf-8"
+				id=""
+			>
+				<p>Enter your email address to follow this blog and receive notifications of new posts by email.</p>
+					<div class="jetpack-subscribe-count">
+						<p>
+						Join 101 other followers						</p>
+					</div>
+									<p id="subscribe-email">
+					<label
+						id="subscribe-field-label"
+						for="subscribe-field"
+						class="screen-reader-text"
+					>
+						Email Address:					</label>
+
+					<input
+							type="email"
+							name="email"
+							
+							style="width: 95%; padding: 1px 10px"
+							placeholder="Enter your email address"
+							value=""
+							id="subscribe-field"
+						/>				</p>
+
+				<p id="subscribe-submit"
+									>
+                    <input type="hidden" name="action" value="subscribe"/>
+                    <input type="hidden" name="blog_id" value="29998790"/>
+                    <input type="hidden" name="source" value="https://jamesthomassnyder.com/2019/09/24/the-price-of-promotion/"/>
+                    <input type="hidden" name="sub-type" value="widget"/>
+                    <input type="hidden" name="redirect_fragment" value="blog_subscription-2"/>
+					<input type="hidden" id="_wpnonce" name="_wpnonce" value="88074dcf50" />                    <button type="submit"
+	                    		                	                >
+	                    Follow                    </button>
+                </p>
+            </form>
+			
+</li><li id="text-4" class="widget-container widget_text"><h3 class="widget-title">Donate to VetDogs!</h3>			<div class="textwidget">http://www.vetdogs.org/</div>
+		</li><li id="text-2" class="widget-container widget_text"><h3 class="widget-title">Disclaimer</h3>			<div class="textwidget">The opinions expressed here represent interests personal to the author and do not represent those of any employer, past or present.</div>
+		</li>			</ul>
+		</div><!-- #primary .widget-area -->
+
+
+		<div id="secondary" class="widget-area" role="complementary">
+			<ul class="xoxo">
+							</ul>
+		</div><!-- #secondary .widget-area -->
+
+	</div><!-- #main -->
+
+	<div id="footer" role="contentinfo">
+		<div id="colophon">
+
+
+
+			<div id="site-info">
+				<a href="https://jamesthomassnyder.com/" title="James Thomas Snyder" rel="home">
+					James Thomas Snyder				</a>
+							</div><!-- #site-info -->
+
+			<div id="site-generator">
+								<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Blog at WordPress.com.</a>
+			</div><!-- #site-generator -->
+
+		</div><!-- #colophon -->
+	</div><!-- #footer -->
+
+</div><!-- #wrapper -->
+
+<!--  -->
+<script src='//0.gravatar.com/js/gprofiles.js?ver=202135y' id='grofiles-cards-js'></script>
+<script id='wpgroho-js-extra'>
+var WPGroHo = {"my_hash":""};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1610363240h'></script>
+
+	<script>
+		// Initialize and attach hovercards to all gravatars
+		( function() {
+			function init() {
+				if ( typeof Gravatar === 'undefined' ) {
+					return;
+				}
+
+				if ( typeof Gravatar.init !== 'function' ) {
+					return;
+				}
+
+				Gravatar.profile_cb = function ( hash, id ) {
+					WPGroHo.syncProfileData( hash, id );
+				};
+
+				Gravatar.my_hash = WPGroHo.my_hash;
+				Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+			}
+
+			if ( document.readyState !== 'loading' ) {
+				init();
+			} else {
+				document.addEventListener( 'DOMContentLoaded', init );
+			}
+		} )();
+	</script>
+
+		<div style="display:none">
+	<div class="grofile-hash-map-ce5ab93b2bad10925ebf571eee22a77c">
+	</div>
+	<div class="grofile-hash-map-41db42071085183e5d74cf3832125891">
+	</div>
+	<div class="grofile-hash-map-ce5ab93b2bad10925ebf571eee22a77c">
+	</div>
+	<div class="grofile-hash-map-8f98e4c23e553cbaee327319f7159a71">
+	</div>
+	<div class="grofile-hash-map-374198903dbd5d6a8949c27f35aec42c">
+	</div>
+	<div class="grofile-hash-map-e77459fe7ce87a45c2ef1c84f4dffcd2">
+	</div>
+	</div>
+<script id='highlander-comments-js-extra'>
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"https:\/\/jamesthomassnyder.wordpress.com\/public.api\/connect\/?action=request&domain=jamesthomassnyder.com","logoutURL":"https:\/\/jamesthomassnyder.wordpress.com\/wp-login.php?action=logout&_wpnonce=22302c1021","homeURL":"https:\/\/jamesthomassnyder.com\/","postID":"1444","gravDefault":"identicon","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"0","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s1.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1626677336j'></script>
+
+<script>
+window.addEventListener( "load", function( event ) {
+	var link = document.createElement( "link" );
+	link.href = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.css?v=20210901";
+	link.type = "text/css";
+	link.rel = "stylesheet";
+	document.head.appendChild( link );
+
+	var script = document.createElement( "script" );
+	script.src = "https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.js?v=20210901";
+	script.defer = true;
+	document.body.appendChild( script );
+} );
+</script>
+
+	
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/jamesthomassnyder.com\/2019\/09\/24\/the-price-of-promotion\/":1444};
+	</script>
+				<script id='sharing-js-js-extra'>
+var sharing_js_options = {"lang":"en","counts":"1","is_stats_active":"1"};
+</script>
+<script crossorigin='anonymous' type='text/javascript' src='https://s1.wp.com/_static/??-eJyNj91OwzAMhV+INLSTJu0C8SgoTdzObf6wk2Xl6fEFk2CglSvH8TlH59MtK5tigVj0wtrBBS3ka7fwk/55Wt4r0PY1OowXhLYrW6BkY1dFwPgB9/JQVfZ1xsja4wqsxVThbKLzQDcxRuurk6OE2xSCGCUu+60LGB8kNnQzFNajTzMrVFPyPrW79YHfOMlXoyEdDBcgealCAsO71C1LUZUpXTepKn9c/qKRFcIIbgfErMgBijp0z/pN/HpKFP4BznVkS5gLpvir8zd9TlzU5A2S5rMhjPNtiuk1vPTH4XTqh+HYL58AQdCi'></script>
+<script type='text/javascript'>
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-twitter' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-twitter' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+						return false;
+					}
+				} );
+			} )();
+var windowOpen;
+			( function () {
+				function matches( el, sel ) {
+					return !! (
+						el.matches && el.matches( sel ) ||
+						el.msMatchesSelector && el.msMatchesSelector( sel )
+					);
+				}
+
+				document.body.addEventListener( 'click', function ( event ) {
+					if ( ! event.target ) {
+						return;
+					}
+
+					var el;
+					if ( matches( event.target, 'a.share-facebook' ) ) {
+						el = event.target;
+					} else if ( event.target.parentNode && matches( event.target.parentNode, 'a.share-facebook' ) ) {
+						el = event.target.parentNode;
+					}
+
+					if ( el ) {
+						event.preventDefault();
+
+						// If there's another sharing window open, close it.
+						if ( typeof windowOpen !== 'undefined' ) {
+							windowOpen.close();
+						}
+						windowOpen = window.open( el.getAttribute( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+						return false;
+					}
+				} );
+			} )();
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>	<iframe src='https://widgets.wp.com/likes/master.html?ver=20210818#ver=20210818&amp;origin=https://jamesthomassnyder.com' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+	<div id='likes-other-gravatars'>
+		<div class="likes-text">
+			<span>%d</span> bloggers like this:		</div>
+		<ul class="wpl-avatars sd-like-gravatars"></ul>
+	</div>
+	
+		<script src="//stats.wp.com/w.js?61" defer></script> <script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'29998790','blog_tz':'-5','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'29998790','v':'wpcom','tz':'-5','user_id':'0','post':'1444','subd':'jamesthomassnyder'}]);
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1TaVhzUzFMbjdWNHpwZGhTayxPSUFCMGRVYVNrSFguN3FwSmQ5RGtNX3VQcj1yVzhiflM1THQtLGFdQ2toOXYlQjYrMC9LMGRJJjR6ajd1Lm9nQXNlX3RUODVsUjZzM1BLQVs1aC4zWTR5VTRZW09DQUdwcWJlSGpDZjlzODYyZ0tsYUp6b1FtSVIzP3wzd01YREJ0aTFaTl0rQmZYWlZzdUFBX3ljaDBLL0tlXy8tPU16dTd5eEIxZU1LX0huVFRZZ0xQJTIxbDFqUHA9SVVIcmRCJWhofF80Wk9hdi13T1cxOG1HW1VbTUotb3UzeXxBRDFpJVVWemhRNDYtRF1aVFJzVUJqT19ibkFua1tNUkNhNHhha2wsc3o='}]);
+_stq.push([ 'clickTrackerInit', '29998790', '1444' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:1px;width:1px;overflow:hidden;position:absolute;bottom:1px;" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script></body>
+</html>

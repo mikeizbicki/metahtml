@@ -1,0 +1,430 @@
+<?xml version='1.0' encoding='iso-8859-1'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0 plus SVG 1.1//EN" "http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg-flat.dtd" >
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+
+<title>Cospans and Computation - Part 2 | The n-Category Caf&#xE9;</title>
+
+<meta name="ICBM" content="30.2893, -97.7367" />
+<meta name="DC.title" content="The n-Category Caf&#xE9;" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<style type="text/css" media="all" title="The n-Category Caf&#xE9; Stylesheet">@import url("/category/styles-site.css");</style>
+<link rel="stylesheet" href="/category/print.css" type="text/css" media="print" />
+
+<link rel="alternate" type="application/atom+xml" title="Atom 1.0" href="/category/atom10.xml" />
+<link rel="alternate" type="application/atom+xml" title="Atom 1.0 Comments Feed" href="/category/comments.atom" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="/category/rsd.xml" />
+<link rel="shortcut icon" type="image/x-icon" href="/category/images/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="/category/images/favicon2.ico" />
+<link rel="pgpkey" href="/category/urs.asc" title="Urs Schreiber's PGP Public Key" />
+<link rel="start" href="/category/" title="Home" />
+<link rel="search" href="/cgi-bin/MT-3.0/mt-search.cgi?IncludeBlogs=3&amp;Template=category" title="Search" />
+<link rel="contents" href="/category/archives.html" title="Comprehensive List of Blog Entries" />
+
+
+<link rel="bookmark" href="#content" title="Main Content" />
+<link rel="bookmark" href="#comments" title="Comments" />
+<link rel="bookmark" href="#search" title="Search Box" />
+<link rel="bookmark" href="#related" title="Related entries" />
+<link rel="bookmark" href="#AccessKeyList" title="AccessKeys" />
+<link rel="prev" href="/category/2021/08/logic_as_invariant_theory_revi.html" title="Logic as Invariant Theory Revisited" />
+<link rel="next" href="/category/2021/08/you_could_have_invented_de_bru.html" title="You Could Have Invented De Bruijn Indices" />
+<link rel="up" href="/category/2021/08/" title="August, 2021" />
+
+<script type="text/javascript" src="/category/prototype.js"></script>
+<script type="text/javascript" src="/category/ie.js"></script>
+<script type="text/x-mathjax-config">
+  <!--//--><![CDATA[//><!--
+    MathJax.Hub.Config({
+      MathML: { useMathMLspacing: true },
+      "HTML-CSS": { scale: 90,
+                    noReflows: false,
+                    extensions: ["handle-floats.js"],
+                    linebreaks: { width: "container" }
+       }
+    });
+    MathJax.Hub.Queue( function () {
+       var fos = document.getElementsByTagName('foreignObject');
+       for (var i = 0; i < fos.length; i++) {
+         MathJax.Hub.Typeset(fos[i]);
+       }
+    });
+  //--><!]]>
+</script>
+<script type="text/javascript">
+  <!--//--><![CDATA[//><!--
+  window.addEventListener("DOMContentLoaded", function () {
+    var div = document.createElement('div');
+    var math = document.createElementNS('http://www.w3.org/1998/Math/MathML', 'math');
+    document.body.appendChild(div);
+    div.appendChild(math);
+  // Test for MathML support comparable to WebKit version https://trac.webkit.org/changeset/203640 or higher.
+    div.setAttribute('style', 'font-style: italic');
+    var mathml_unsupported = !(window.getComputedStyle(div.firstChild).getPropertyValue('font-style') === 'normal');
+    div.parentNode.removeChild(div);
+    if (mathml_unsupported) {
+      // MathML does not seem to be supported...
+      var s = document.createElement('script');
+      s.src = "/wiki/MathJax/MathJax.js?config=MML_HTMLorMML-full";
+      document.querySelector('head').appendChild(s);
+    } else {
+      document.head.insertAdjacentHTML("beforeend", '<style>svg[viewBox] {max-width: 100%}</style>');
+    }
+  });
+  //--><!]]>
+</script>
+
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/">
+<rdf:Description
+    rdf:about="https://golem.ph.utexas.edu/category/2021/08/cospans_and_computation_part_2.html"
+    trackback:ping="https://golem.ph.utexas.edu/cgi-bin/MT-3.0/dxy-tb.fcgi/3344"
+    dc:title="Cospans and Computation - Part 2"
+    dc:identifier="https://golem.ph.utexas.edu/category/2021/08/cospans_and_computation_part_2.html"
+    dc:subject=""
+    dc:description="Structured cospans for network security, by Angeline Aguinaldo."
+    dc:creator="John Baez"
+    dc:date="2021-08-23T21:41:47+00:00" />
+</rdf:RDF>
+-->
+
+
+</head>
+
+<body>
+
+<div class="frame">
+
+<div id="banner">
+<h1><a href="/category/" accesskey="1" title="Jump to the blog main page">The n-Category Caf&#xE9;</a></h1>
+<div class="description">A group blog on math, physics and philosophy</div>
+</div>
+
+
+<h2 class="skip">Skip to the Main Content</h2>
+<div class="skip">
+<a href="#content" accesskey="2">Enough, already! Skip to the content.</a>
+</div>
+<p style="display:none;">
+<strong>Note:</strong>These pages make extensive use of the latest XHTML and CSS <a href="http://www.w3.org">Standards</a>. They ought to look great in any standards-compliant modern browser. Unfortunately, they will probably look horrible in older browsers, like Netscape 4.x and IE 4.x. Moreover, many posts use MathML, which is, currently <em>only</em> supported in Mozilla. My best suggestion (and you will <em>thank</em> me when surfing an ever-increasing number of sites on the web which have been crafted to use the new standards) is to upgrade to the latest version of your browser. If that's not possible, consider moving  to the Standards-compliant and open-source <a href="http://www.mozilla.org">Mozilla</a> browser.
+</p>
+
+
+<div class="blog">
+
+<div><div id='menu'>
+<a href='/category/2021/08/logic_as_invariant_theory_revi.html' accesskey='p'>&#xab; Logic as Invariant Theory Revisited</a> |
+
+<a href='/category/'>Main</a>
+| <a href='/category/2021/08/you_could_have_invented_de_bru.html' accesskey='n'>You Could Have Invented De Bruijn Indices &#xbb;</a>
+
+</div>
+
+<h2 class='date'>August 23, 2021</h2>
+
+<div id='content' class='blogbody'>
+
+<h3 class='title'>Cospans and Computation - Part 2</h3>
+
+<h4 class='posted'>Posted by John Baez</h4>
+
+<div><a href='http://golem.ph.utexas.edu/~distler/blog/mathml.html' onclick='window.open(this.href, &#x27;MathML&#x27;, &#x27;width=310,height=150,scrollbars=no,resizable=yes,status=no&#x27;); return false;' onkeypress='if(window.event.keyCode == 13){window.open(this.href, &#x27;MathML&#x27;, &#x27;width=310,height=150,scrollbars=no,resizable=yes,status=no&#x27;); return false;}'><img class='mathlogo' src='https://golem.ph.utexas.edu/~distler/blog/images/MathML.png' alt='MathML-enabled post (click for more details).' title='MathML-enabled post (click for details).' /></a></div>
+
+<p><i>guest post by <b>Angeline Aguinaldo</b> as part of the Adjoint School for Applied Category Theory 2021</i> </p>
+
+<p>In this second part we discuss an application of structured cospans to network security!</p>
+
+
+<div id='more'>
+<div><a href='http://golem.ph.utexas.edu/~distler/blog/mathml.html' onclick='window.open(this.href, &#x27;MathML&#x27;, &#x27;width=310,height=150,scrollbars=no,resizable=yes,status=no&#x27;); return false;' onkeypress='if(window.event.keyCode == 13){window.open(this.href, &#x27;MathML&#x27;, &#x27;width=310,height=150,scrollbars=no,resizable=yes,status=no&#x27;); return false;}'><img class='mathlogo' src='https://golem.ph.utexas.edu/~distler/blog/images/MathML.png' alt='MathML-enabled post (click for more details).' title='MathML-enabled post (click for details).' /></a></div>
+
+<h2>Application: Intrusion detection in computer networks</h2>
+
+<p>The revolution of the internet, short for internetwork, has made our fantasies of space travel and teleportation a near reality. As you are reading this blogpost, your computer is transferring messages to other computers possibly thousands of miles away, using common communication protocols like the Transmission Control Protocol (TCP). These messages contain the data that is shown in your browser including the internet protocol (<abbr title='Internet Protocol'>IP</abbr>) address you are receiving the data from. For example, your laptop or desktop computer has just received the <abbr title='HyperText Markup Language'>HTML</abbr> describing the layout and content of you words you are reading on the screen from another computer at the University of Texas (as indicated by the <code>golem.ph.utexas.edu</code> hostname). </p>
+
+<p>Aside from TCP/<abbr>IP</abbr>, there are other types of communication protocols that you can use to pass different messages to other computers. Suppose you are interested in logging into another computer from your laptop or desktop without walking all the way over to its location. Well you can do this via the remote desktop protocol (RDP) to forward the target computer&#x2019;s desktop screen, or you can use a secure shell (<abbr title='Secure SHell'>SSH</abbr>) connection to log into the computer from a terminal. A secure shell (<abbr>SSH</abbr>) connection may give you read and write access to a computer&#x2019;s file system, applications, services via a terminal. If you find that a bad actor has gained access to your system via <abbr>SSH</abbr>, you may find yourself in a precarious situation. A recent example of this involves the failure to filter <abbr>SSH</abbr> connections in <a href='https://nvd.nist.gov/vuln/detail/CVE-2021-27245'>TP-Link Archer A7 AC1750 routers</a>. If you own this as your home or enterprise router, it may be possible gain access to your personal computer from a remote location without your knowledge. </p>
+
+<p>Evidently, this powerful access could lead to sensitive data exposures or malicious attacks on critical computers. Most enterprise information technology departments mitigate this risk by sanctioning certain machines onto isolated networks via firewalls or accessibility lists. This means that only a subset of the computers existing in the enterprise will have the ability to communicate with each other via TCP/ICP, <abbr>SSH</abbr>, and other protocols. If you are working on your personal laptop but need to gain access to sensitive data existing on a computer on the isolated network, you may need to &#x201c;pass through&#x201d; a computer that you have access to in order to gain access to the highly restricted machine. This &#x201c;pass through&#x201d; computer is often called a <em>jump box</em> or <em>jump host</em>.</p>
+
+<h3>Intrusion detection</h3>
+
+<p>Now imagine you are a network administrator of a hospital&#x2019;s IT department who has just discovered that a disgruntled employee has chosen to <abbr>SSH</abbr> into a machine containing patient healthcare data with a desire to delete or tamper with these documents. There are thousands of machines on your enterprise network so you cannot simply shutdown the whole network because there are some essential for patient care. One way to combat this action is to identify the computer that they are using as their jump box and shut it down. You know the <abbr>IP</abbr> address of the employee&#x2019;s computer, you know the <abbr>IP</abbr> address of the machine containing the patient data, and you have a suspicion about which jump box the employee is using. Before taking action, you want to validate that the employee&#x2019;s computer does <em>in fact</em> have access to the patient data via the <em>specific</em> jump box. Your question then becomes can <code>computer A</code> access <code>computer B</code> via <code>computer C</code>?</p>
+
+<p><img width='700' src='https://github.com/appliedcategorytheory/act2021_adjoint-school/blob/main/images/group_1-1/jumpbox_problem.png?raw=true' alt='img' /></p>
+
+<h3><abbr>SSH</abbr> Connection Logs</h3>
+
+<p>To solve this problem we can do a network scan using tools like <a href='https://zeek.org/'>Zeek</a> to capture all <a href='https://docs.zeek.org/en/v4.0.0/logs/ssh.html'><abbr>SSH</abbr> connections</a> occuring within a given duration of time. Luckily, we have historical <abbr>SSH</abbr> connection logs for our hospital IT infrastruture! These logs are comma-separated text files that contain  the <abbr>IP</abbr> and port information about the source machine and target machine for every <abbr>SSH</abbr> connection. </p>
+
+<p><img width='700' src='https://github.com/appliedcategorytheory/act2021_adjoint-school/blob/main/images/group_1-1/ssh_logs_annotated.png?raw=true' alt='img' /></p>
+
+<p>A digraph can be generated from this description.</p>
+
+<p><strong>Definition (digraph)</strong>: A <em>digraph</em> is a pair of sets, <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mo stretchy='false'>(</mo><mi>V</mi><mo>,</mo><mi>E</mi><mo stretchy='false'>)</mo></mrow><annotation encoding='application/x-tex'>(V, E)</annotation></semantics></math>, with <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>E</mi><mo>&#x2286;</mo><mo stretchy='false'>(</mo><mi>V</mi><mo>&#xd7;</mo><mi>V</mi><mo stretchy='false'>)</mo></mrow><annotation encoding='application/x-tex'>E \subseteq (V \times V)</annotation></semantics></math>. The elements of <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>V</mi></mrow><annotation encoding='application/x-tex'>V</annotation></semantics></math> are vertices and the elements of <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>E</mi></mrow><annotation encoding='application/x-tex'>E</annotation></semantics></math> are edges. For <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>e</mi><mo>=</mo><mo stretchy='false'>{</mo><mo stretchy='false'>(</mo><msub><mi>v</mi> <mi>i</mi></msub><mo>,</mo><msub><mi>v</mi> <mi>j</mi></msub><mo stretchy='false'>)</mo><mo stretchy='false'>|</mo><msub><mi>v</mi> <mi>i</mi></msub><mo>,</mo><msub><mi>v</mi> <mi>j</mi></msub><mo>&#x2208;</mo><mi>V</mi><mo stretchy='false'>}</mo></mrow><annotation encoding='application/x-tex'>e = \{(v_i, v_j) | v_i, v_j \in V\}</annotation></semantics></math>, where <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><msub><mi>v</mi> <mi>i</mi></msub></mrow><annotation encoding='application/x-tex'>v_i</annotation></semantics></math> is the <em>source</em> of <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>e</mi></mrow><annotation encoding='application/x-tex'>e</annotation></semantics></math> and <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><msub><mi>v</mi> <mi>j</mi></msub></mrow><annotation encoding='application/x-tex'>v_j</annotation></semantics></math> is the <em>target</em> of <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>e</mi></mrow><annotation encoding='application/x-tex'>e</annotation></semantics></math>. The source and target can be captured using maps <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>s</mi><mo>:</mo><mi>E</mi><mo>&#x2192;</mo><mi>V</mi></mrow><annotation encoding='application/x-tex'>s: E \rightarrow V</annotation></semantics></math> and <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>t</mi><mo>:</mo><mi>E</mi><mo>&#x2192;</mo><mi>V</mi></mrow><annotation encoding='application/x-tex'>t: E \rightarrow V</annotation></semantics></math>, respectively.</p>
+
+<p><strong>Example (Connection Logs)</strong>: A <em>digraph for connection logs</em> can be instantiated by providing the set of unique machine IPs as <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>V</mi></mrow><annotation encoding='application/x-tex'>V</annotation></semantics></math> and the set of connections, denoted by every row in the log, as <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>E</mi></mrow><annotation encoding='application/x-tex'>E</annotation></semantics></math>.</p>
+
+<p>Notice that the set of unique host machine IPs exist in the category <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>&#x1d53d;&#x1d55a;&#x1d55f;&#x1d54a;&#x1d556;&#x1d565;</mi></mrow><annotation encoding='application/x-tex'>\mathbb{FinSet}</annotation></semantics></math>. A full definition of <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>&#x1d53d;&#x1d55a;&#x1d55f;&#x1d54a;&#x1d556;&#x1d565;</mi></mrow><annotation encoding='application/x-tex'>\mathbb{FinSet}</annotation></semantics></math> can be found in <a href='https://ncatlab.org/nlab/show/FinSet'>nlab</a>.</p>
+
+<p><strong>Definition (digraph category <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>&#x1d53b;&#x1d558;&#x1d563;</mi></mrow><annotation encoding='application/x-tex'>\mathbb{Dgr}</annotation></semantics></math>)</strong>: The category <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>&#x1d53b;&#x1d558;&#x1d563;</mi></mrow><annotation encoding='application/x-tex'>\mathbb{Dgr}</annotation></semantics></math> has digraphs as objects, and a morphism from the digraph <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mo stretchy='false'>(</mo><mi>V</mi><mo>,</mo><mi>E</mi><mo stretchy='false'>)</mo></mrow><annotation encoding='application/x-tex'>(V, E)</annotation></semantics></math> to the digraph <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mo stretchy='false'>(</mo><mi>V</mi><mo>&#x2032;</mo><mo>,</mo><mi>E</mi><mo>&#x2032;</mo><mo stretchy='false'>)</mo></mrow><annotation encoding='application/x-tex'>(V', E')</annotation></semantics></math> is a function <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>f</mi><mo>:</mo><mi>V</mi><mo>&#x2192;</mo><mi>V</mi><mo>&#x2032;</mo></mrow><annotation encoding='application/x-tex'>f: V \rightarrow V'</annotation></semantics></math> such that <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mo stretchy='false'>{</mo><mi>f</mi><mo stretchy='false'>(</mo><mi>v</mi><mo stretchy='false'>)</mo><mo>,</mo><mi>f</mi><mo stretchy='false'>(</mo><mi>w</mi><mo stretchy='false'>)</mo><mo stretchy='false'>)</mo><mo>&#x2208;</mo><mi>E</mi><mo>&#x2032;</mo><mo stretchy='false'>|</mo><mo stretchy='false'>(</mo><mi>v</mi><mo>,</mo><mi>w</mi><mo stretchy='false'>)</mo><mo>&#x2208;</mo><mi>E</mi><mo stretchy='false'>}</mo></mrow><annotation encoding='application/x-tex'>\{f(v), f(w)) \in E' | (v, w) \in E\}</annotation></semantics></math>. See <a href='https://ncatlab.org/nlab/show/digraph'>nlab</a>.</p>
+
+<h2>Example</h2>
+
+<p>We can simulate this problem using <abbr>SSH</abbr> connection logs derived from a <a href='https://www.secrepo.com/Datasets%20Description/Network/ssh.html'>dataset</a> hosted by <a href='https://www.secrepo.com/#about'>SecRepo by Mike Sconzo</a>. This dataset captures logs for a single network. The dataset has been sampled to generate two separate sub-digraphs with <em>at least</em> one common node, which will emulate our jump box. Note: This permits both digraphs to have more than one overlapping node. This characteric further emphasizes the value of the structured cospan method. We name the networks produced by the two digraphs as <a href='https://github.com/appliedcategorytheory/act2021_adjoint-school/blob/main/images/group_1-1/datasetA.json'><strong>Network 1 (A)</strong></a> and <a href='https://github.com/appliedcategorytheory/act2021_adjoint-school/blob/main/images/group_1-1/datasetB.json'><strong>Network 2 (B)</strong></a>. </p>
+
+<p>In our example, we can identify a source <abbr>IP</abbr> in our dataset as being <code>"192.168.25.253"</code>, our target <abbr>IP</abbr> as being <code>"192.168.202.68"</code>, and our jump box <abbr>IP</abbr> as being <code>"192.168.202.108"</code>. </p>
+
+<p><img width='700' src='https://github.com/appliedcategorytheory/act2021_adjoint-school/blob/main/images/group_1-1/experiment_problem.png?raw=true' alt='img' /></p>
+
+<p><img width='700' src='https://github.com/appliedcategorytheory/act2021_adjoint-school/blob/main/images/group_1-1/experiment_setup.png?raw=true' alt='img' /></p>
+
+<p>Using this information, we can set-up our code in Julia to be:</p>
+
+<pre><code># Julia
+import JSON
+datasetA = JSON.parsefile("datasetA.json")
+datasetB = JSON.parsefile("datasetB.json")
+
+source_ip = "192.168.25.253"
+target_ip = "192.168.202.68"
+jumpbox_ip = "192.168.202.108"
+</code></pre>
+
+<h3>Structured cospans</h3>
+
+<p>The structured cospan construction was defined by John Baez and Kenny Courser to provide a formal way to compose open systems. In this context, an open system is a combinatorial object (i.e. set, graph, &#x2026;) that contain the notion of having inputs or outputs. The basic ingredients to making a structured cospan include:
+* a cospan in a &#x201c;less structured&#x201d; category
+* a decoration functor (<math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>F</mi></mrow><annotation encoding='application/x-tex'>F</annotation></semantics></math>) to a &#x201c;more structured&#x201d; category</p>
+
+<p>To formulate this problem as a structured cospan, we can say our &#x201c;more structured&#x201d; category is <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>&#x1d53b;&#x1d558;&#x1d563;</mi></mrow><annotation encoding='application/x-tex'>\mathbb{Dgr}</annotation></semantics></math> and our &#x201c;less structured&#x201d; category is then <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>&#x1d53d;&#x1d55a;&#x1d55f;&#x1d54a;&#x1d556;&#x1d565;</mi></mrow><annotation encoding='application/x-tex'>\mathbb{FinSet}</annotation></semantics></math>. This means that the cospan exists in <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>&#x1d53d;&#x1d55a;&#x1d55f;&#x1d54a;&#x1d556;&#x1d565;</mi></mrow><annotation encoding='application/x-tex'>\mathbb{FinSet}</annotation></semantics></math>. Semantically, a leg in the cospan means that we are marking a host <abbr>IP</abbr> in one network as being significant. More specifically, the following functions are defined:</p>
+
+<p><math xmlns="http://www.w3.org/1998/Math/MathML" display='block'><semantics><mrow><mi>source</mi><mo>:</mo><msub><mi>S</mi> <mi>IP</mi></msub><mo>&#x2192;</mo><msub><mi>S</mi> <mi>IP</mi></msub></mrow><annotation encoding='application/x-tex'>source: S_{IP} \rightarrow S_{IP}</annotation></semantics></math> <br />
+<math xmlns="http://www.w3.org/1998/Math/MathML" display='block'><semantics><mrow><mi>jumpbox</mi><mo>:</mo><msub><mi>S</mi> <mi>IP</mi></msub><mo>&#x2192;</mo><msub><mi>S</mi> <mi>IP</mi></msub></mrow><annotation encoding='application/x-tex'>jumpbox: S_{IP} \rightarrow S_{IP}</annotation></semantics></math> <br />
+<math xmlns="http://www.w3.org/1998/Math/MathML" display='block'><semantics><mrow><mi>target</mi><mo>:</mo><msub><mi>S</mi> <mi>IP</mi></msub><mo>&#x2192;</mo><msub><mi>S</mi> <mi>IP</mi></msub></mrow><annotation encoding='application/x-tex'>target: S_{IP} \rightarrow S_{IP}</annotation></semantics></math></p>
+
+<p>The decoration functor <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>F</mi><mo>:</mo><mi>FinSet</mi><mo>&#x2192;</mo><mi>Dgr</mi></mrow><annotation encoding='application/x-tex'>F: FinSet \rightarrow Dgr</annotation></semantics></math> takes a set of IPs to a digraph according to the respective log entries. This provides us with the following maps:</p>
+
+<p><math xmlns="http://www.w3.org/1998/Math/MathML" display='block'><semantics><mrow><mi>F</mi><mo stretchy='false'>(</mo><mi>A</mi><mo stretchy='false'>)</mo><mo>:</mo><mi>FinSet</mi><mo stretchy='false'>(</mo><mi>A</mi><mo stretchy='false'>)</mo><mo>&#x21a6;</mo><mi>Dgr</mi><mo stretchy='false'>(</mo><mi>A</mi><mo stretchy='false'>)</mo></mrow><annotation encoding='application/x-tex'>F(A): FinSet(A) \mapsto Dgr(A)</annotation></semantics></math>
+<math xmlns="http://www.w3.org/1998/Math/MathML" display='block'><semantics><mrow><mi>F</mi><mo stretchy='false'>(</mo><mi>B</mi><mo stretchy='false'>)</mo><mo>:</mo><mi>FinSet</mi><mo stretchy='false'>(</mo><mi>B</mi><mo stretchy='false'>)</mo><mo>&#x21a6;</mo><mi>Dgr</mi><mo stretchy='false'>(</mo><mi>B</mi><mo stretchy='false'>)</mo></mrow><annotation encoding='application/x-tex'>F(B): FinSet(B) \mapsto Dgr(B)</annotation></semantics></math></p>
+
+<p>We understand our functor, <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>F</mi></mrow><annotation encoding='application/x-tex'>F</annotation></semantics></math>, to be a left adjoint and, therefore, can construct the corresponding finite sets for each dataset from it&#x2019;s connection log representation using a right adjoint. The right adjoint functor is defined by <code>get_IP(dataset, fields)</code> below:</p>
+
+<pre><code># Julia
+function get_IP(dataset::Array, fields::Array{String})
+    global ip = []
+    for entry in dataset
+        for field in fields
+            global ip
+            push!(ip, entry[field])
+        end
+    end
+    return unique(ip)
+end
+
+# Get uniq IPs in each dataset
+ip_A = get_IP(datasetA, ["id.org_h", "id.resp_h"])
+ip_B = get_IP(datasetB, ["id.org_h", "id.resp_h"])
+</code></pre>
+
+<p>As aforementioned, we can loop through connection logs for each dataset to construct two digraphs which will serve as the decoration upon the cospan apexes. Using the Catlab library, we can instantiate two structured cospans shown below:</p>
+
+<pre><code># Julia
+using Catlab
+using Catlab, Catlab.Theories, Catlab.Graphs,
+Catlab.CategoricalAlgebra, Catlab.CategoricalAlgebra.FinSets, Catlab.Graphics
+
+const OpenGraphOb, OpenGraph = OpenCSetTypes(Graph, :V);  #  (StructuredCospanOb{L}, StructuredMulticospan{L})
+
+function build_cospan_security(ip_list::Array{Any,1}, conn_log::Array{Any,1}, input_ip::String, output_ip::String)
+    # get index of desired IPs
+    input_index = findall(x-&gt;x==input_ip, ip_list) 
+    output_index = findall(x-&gt;x==output_ip, ip_list) 
+
+    num_nodes = size(ip_list)[1]
+    graph = Graph(num_nodes)
+
+    # For each entry, record edge between IPs
+    for entry in conn_log
+        s = entry["id.org_h"] # source IP of SSH connection
+        t = entry["id.resp_h"] # target IP of SSH connection
+
+        s_index = findall(x-&gt;x==s, ip_list)[1] # there should only be 1
+        t_index = findall(x-&gt;x==t, ip_list)[1] # there should only be 1
+
+        add_edge!(graph, s_index, t_index)
+    end
+
+    # Create structured multicospan (L-form), i.e. structured cospan
+    cospan = OpenGraph(graph, FinFunction(input_index, num_nodes), FinFunction(output_index, num_nodes))  # (apex, leg, leg)
+end
+
+cospan_A = build_cospan_security(ip_A, datasetA, source_ip, jumpbox_ip);
+cospan_B = build_cospan_security(ip_B, datasetB, jumpbox_ip, target_ip);
+</code></pre>
+
+<p>This gives us structured cospans that look like&#x2013;</p>
+
+<p><img width='700' src='https://github.com/appliedcategorytheory/act2021_adjoint-school/blob/main/images/group_1-1/decorated_cospan_construction.png?raw=true' alt='img' /></p>
+
+<p>An important thing to note is that, in the Julia code, the IPs have been indexed such that we can refer to them as integers when constructing our graph. This is required by the current implementation of <code>Graph</code> in Catlab.</p>
+
+<p>Now that we have our cospans set-up we can consider a few approaches to answering the question of whether the two computers can communicate.</p>
+
+<h4>Approach 1: Using non-disjoint union</h4>
+
+<p>The most common approach to evaluating connectivity in computer networks is to vertically stack the connection logs (i.e. take the non-disjoint union), generate a graph, and check if two IPs are one connected component. This requires the additional step of checking all the paths from <code>computer A</code> to <code>computer B</code> to see if any of them pass through the node for <code>computer C</code>. This computation would scale proportionally to the size of the graph, which is not ideal. The resulting graph would look like this.</p>
+
+<p><img width='700' src='https://github.com/appliedcategorytheory/act2021_adjoint-school/blob/main/images/group_1-1/nondisjoint_union.png?raw=true' alt='img' /></p>
+
+<p>Note: This is just the same as taking the pushout where the span is the intersection of the finite sets of IPs in both networks.</p>
+
+<h4>Approach 2: Using structured cospan</h4>
+
+<p>Alternatively, because we have chosen a structured cospan formulation, this allows us to choose what to identify as our common leg, or our span for our pushout. For our example, this would just be the jump box <abbr>IP</abbr> address.</p>
+
+<p>In order for this to work another map needs to be defined to finish up structured cospan construction. Namely,</p>
+
+<p><math xmlns="http://www.w3.org/1998/Math/MathML" display='block'><semantics><mrow><mi>F</mi><mo stretchy='false'>(</mo><mi>A</mi><msub><mo>+</mo> <mi>j</mi></msub><mi>B</mi><mo stretchy='false'>)</mo><mo>:</mo><mi>FinSet</mi><mo stretchy='false'>(</mo><mi>A</mi><msub><mo>+</mo> <mi>j</mi></msub><mi>B</mi><mo stretchy='false'>)</mo><mo>&#x21a6;</mo><mi>Dgr</mi><mo stretchy='false'>(</mo><mi>A</mi><msub><mo>+</mo> <mi>j</mi></msub><mi>B</mi><mo stretchy='false'>)</mo></mrow><annotation encoding='application/x-tex'>F(A +_{j} B): FinSet(A +_{j} B) \mapsto Dgr(A +_{j} B)</annotation></semantics></math></p>
+
+<p>To ensure that F(A +{j} B) adheres to the coherence maps, we can add suffixes to the <abbr>IP</abbr> names according to the dataset they belong to, i.e. <code>_A</code> and <code>_B</code>, but ignore this step for <abbr>IP</abbr> names belonging to the jump box. Taking the union of these data entries will exactly provide the pushout, F_{A +{j} B}.</p>
+
+<p>Luckily for us, the logic to take care of the pushout for graphs is implemented in Catlab. We can simply compose the two cospans and the apex of the new cospan will be the pushout of the two apex digraphs.</p>
+
+<pre><code># Julia
+pushout = compose(cospan_A, cospan_B);
+</code></pre>
+
+<p><img width='700' src='https://github.com/appliedcategorytheory/act2021_adjoint-school/blob/main/images/group_1-1/network_pushout.png?raw=true' alt='img' /></p>
+
+<h4>Connectivity via coequalizers</h4>
+
+<p>The last step is to figure out if the source <abbr>IP</abbr> and target <abbr>IP</abbr> are connected via our jump box <abbr>IP</abbr>. We can do this by computing a coequalizer on the apex of the pushout. </p>
+
+<p><strong>Definition (coequalizer)</strong> A <em>coequalizer</em> in category <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>&#x2102;</mi></mrow><annotation encoding='application/x-tex'>\mathbb{C}</annotation></semantics></math> is a colimit of parallel morphisms <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>f</mi><mo>,</mo><mi>g</mi></mrow><annotation encoding='application/x-tex'>f, g</annotation></semantics></math> in <math xmlns="http://www.w3.org/1998/Math/MathML" display='inline'><semantics><mrow><mi>&#x2102;</mi></mrow><annotation encoding='application/x-tex'>\mathbb{C}</annotation></semantics></math>.</p>
+
+<p>In Catlab, the coequalizer for graphs is implemented underneath <code>connected_components</code></p>
+
+<pre><code># Julia
+components = connected_components(apex(pushout));
+</code></pre>
+
+<p>To complete the analysis, we simply need to look at our connected components and check if our source and target IPs are connected. Due to the definition of the pushout, we guarantee that the only way those machines can be connected is via our jump box <abbr>IP</abbr>. An example implementation for checking for this is shown here:</p>
+
+<pre><code># Julia
+# Derive our source and target IP indices in apex graph
+source_index = findall(x-&gt;x==source_ip, ip_A)[1]
+jumpbox_index = findall(x-&gt;x==source_ip, ip_A) 
+target_index = size(ip_A)[1] + findall(x-&gt;x==target_ip, ip_B)[1] - size(jumpbox_index)[1]
+
+# Check connectivity between source and target IP
+for c in components
+    if (source_index in c) &amp; (target_index in c)
+        print(source_ip, " is connected to ", target_ip, " via jumpbox IP ", jumpbox_ip)
+    end
+end
+</code></pre>
+
+<hr />
+
+<pre><code>192.168.25.253 is connected to 192.168.202.68 via jumpbox IP 192.168.202.108
+</code></pre>
+
+<p>We have successfully used structured cospans to solve the problem. We can now shut down that jump box and save the hospital!</p>
+
+<h2>Conclusion</h2>
+
+<p>In conclusion, we have walked through an example in which composing commonly used open systems, namely computer networks, can be described using structured cospans. What we found to be the most powerful feature of structured cospans is the ability to choose the span in which we want to quotient over in our composition. </p>
+
+<p>This was nicely put in Seven Sketches of Compositionality, Chapter 6.2.3:</p>
+
+<blockquote>
+  <p>&#x201c;The pushout construction, however, is much more general [as opposed to nondisjoint union]; it allows (and requires) the user to specify exactly which elements will be identified.&#x201d;</p>
+</blockquote>
+
+<p>It gives us the power to decide what to glue, instead of gluing the whole thing! There are many other examples in engineering and data science where fine-tuning the composition of combinatorial objects would save a lot of time in computation, such as in computing reachability in robot motion configuration spaces and computing connectivity of social media networks. We hope that many more examples applying the structured cospan method can be brought to the fore. </p>
+
+</div>
+
+
+<span class='posted'>Posted at August 23, 2021  9:41 PM UTC
+</span>
+</div>
+
+<p class='trackback-url'>TrackBack URL for this Entry:&#xa0;&#xa0; https://golem.ph.utexas.edu/cgi-bin/MT-3.0/dxy-tb.fcgi/3344</p>
+
+
+<h2 class='comments-head' id='related'>Some Related Entries</h2>
+
+<div id='pane'>
+
+<form method='get' action='/cgi-bin/MT-3.0/mt-search.cgi'>
+<fieldset class='search'>
+  <input type='hidden' name='IncludeBlogs' value='3' />
+  <input type='hidden' name='Template' value='category' />
+  <label for='search' accesskey='4'>Search for other entries:</label><br />
+  <input id='search' name='search' size='25' /><br />
+  <input type='submit' value='Search' />
+</fieldset>
+</form>
+
+
+
+</div>
+
+</div>
+
+<h2 class="comments-head" id="comments">1 Comment &amp; 0 Trackbacks</h2>
+
+<div class="blogbody">
+
+<div class="comments-body" id="c060527">
+<h3 class="title">Authentication graphs</h3>
+
+<div><div><a href="http://golem.ph.utexas.edu/~distler/blog/mathml.html"><img class='mathlogo' src='https://golem.ph.utexas.edu/~distler/blog/images/MathML.png' alt='MathML-enabled post (click for more details).' title='MathML-enabled post (click for details).' /></a></div>
+
+<p>You may find the data at https://csr.lanl.gov/data/auth/ and the paper at https://doi.org/10.1016/j.cose.2014.09.001 interesting. </p>
+
+<p>It would also be natural to consider the relation between hosts and users, and do Dowker/nerve-style simplicial stuff. Time (perhaps with windowing) gives a filtration that may also be useful.</p>
+</div>
+<div class="comments-post">Posted by:
+Steve Huntsman on August 24, 2021  1:25 PM | <a href="/category/2021/08/cospans_and_computation_part_2.html#c060527" title="URL for comment by Steve Huntsman [August 24, 2021  1:25 PM]">Permalink</a>
+
+| <a href="/cgi-bin/MT-3.0/sxp-comments.fcgi?entry_id=3345;parent_id=60527" onclick="OpenComments(this.href); this.blur(); return false;" onkeypress="if(window.event.keyCode == 13){OpenComments(this.href); this.blur(); return false;}" title="Respond to comment by Steve Huntsman [August 24, 2021  1:25 PM]">Reply to this</a>
+</div>
+</div>
+
+
+
+
+</div>
+<p class="newpost"><a class="comments-post" href="/cgi-bin/MT-3.0/sxp-comments.fcgi?entry_id=3345" onclick="OpenComments(this.href); this.blur(); return false;" onkeypress="if(window.event.keyCode == 13){OpenComments(this.href); this.blur(); return false;}">Post a New Comment</a></p>
+
+</div>
+
+<div id="footer">   
+<h2>Access Keys:</h2>
+
+<dl id="AccessKeyList">
+<dt>0</dt><dd><a href="/category/accessibility.html" accesskey="0">Accessibility Statement</a></dd>
+<dt>1</dt><dd>Main Page</dd>
+<dt>2</dt><dd>Skip to Content</dd>
+<dt>3</dt><dd>List of Posts</dd>
+<dt>4</dt><dd>Search</dd>
+<dt>p</dt><dd>Previous (individual/monthly archive page)</dd>
+<dt>n</dt><dd>Next (individual/monthly archive page)</dd>
+</dl>
+<a href="/category/archives.html" accesskey="3"></a>
+</div>
+
+
+</div>
+
+</body>
+</html>
