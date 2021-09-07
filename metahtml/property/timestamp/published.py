@@ -39,6 +39,7 @@ class Extractor(TimestampExtractor):
         ( 'aftenposten.no',                 '(//time[@itemprop="datePublished"]/@datetime)[1]'),
         ( 'afsa.org',                       '//div[@class="breadcrumb"]/a'), # format is july/august 2017, and so doesn't parse
         ( 'akamai.com',                     '//p[@class="cmp-blog-author__date"]'),
+        ( 'algemeiner.com',                 '//div[@class="date"]'),
         ( 'aljazeera.com',                  '//div[@class="article-duration"]/time/@datetime'),
         ( 'allgov.com',                     '//div[@style="clear: both"]'),
         ( 'allgov.com',                     '//span[@class="blog-date"]'),
