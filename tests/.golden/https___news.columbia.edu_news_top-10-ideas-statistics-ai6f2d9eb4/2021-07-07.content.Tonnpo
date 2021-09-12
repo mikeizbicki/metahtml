@@ -1,0 +1,213 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script>
+function toggleSelectedText(e) {
+    if (e.shiftKey) {
+        var selection = window.getSelection();
+        var range = selection.getRangeAt(0);
+        var tags = "p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,table,tr,td,th,article,main,section,figure,figcaption,aside,section,address,blockquote,code";
+        if (range.commonAncestorContainer.getElementsByTagName) {
+            var allWithinRangeParent = range.commonAncestorContainer.querySelectorAll(tags);
+        }
+        else {
+            //var allWithinRangeParent = [range.commonAncestorContainer.closest(tags)];
+            var allWithinRangeParent = [range.commonAncestorContainer.parentNode.closest(tags)];
+        }
+
+        for (var i=0, el; el = allWithinRangeParent[i]; i++) {
+          // The second parameter says to include the element
+          // even if it's not fully selected
+          if (selection.containsNode(el, true) ) {
+              el.classList.toggle('rm-manual');
+          }
+        }
+        window.getSelection().removeAllRanges();
+    }
+};
+
+//var article = document.body.querySelector('article');
+document.onmouseup = toggleSelectedText;
+document.captureEvents(Event.MOUSEUP);
+</script>
+
+<style>
+.rm-manual {
+    text-decoration: line-through;
+    background-color: #faa;
+}
+</style>
+        </head><body><article><p class="rm-manual"> <a> <span>Columbia News</span> </a> </p>
+<h2 class="rm-manual">You are here:</h2>
+<ol class="rm-manual"> <li class="rm-manual"> <a href="file:///">Home</a> </li> <li class="rm-manual"> <a href="file:///content/news-archive">News Archive</a> </li> <li class="rm-manual"> <span>Top 10 Ideas in Statistics That Have Powered the AI Revolution </span> </li> </ol>
+<p class="rm-manual"><a href="file:///recommended-reading">Recommended Reading</a></p>
+<h1 class="rm-manual">
+<span>Top 10 Ideas in Statistics That Have Powered the AI Revolution </span> </h1>
+<p class="rm-manual"><span>By</span> </p>
+<p class="rm-manual">Kim Martineau</p>
+<p class="rm-manual">July 06, 2021</p>
+<p>In this map of white voters in the 2012 presidential election, the 
+green circles represent counties with higher gender gaps than the U.S. 
+average, and the purple circles, gender gaps lower than the average. The
+ brighter the color, the larger the deviation from the average. 
+Estimates are based on a model fit to survey data. This data 
+visualization follows the principles of exploratory data analysis but is
+ based on a fitted model, rather than raw data, using computer-intensive
+ methods. Credit: Yair Ghitza and Andrew Gelman.</p>
+<p>If you’ve ever called on Siri or Alexa for help, or generated a 
+self-portrait in the style of a Renaissance painter, you have interacted
+ with deep learning, a form of artificial intelligence that extracts 
+patterns from mountains of data to make predictions. Though deep 
+learning and AI have become household terms, the breakthroughs in 
+statistics that have fueled this revolution are less known. In a recent 
+paper, <a href="http://www.stat.columbia.edu/~gelman/">Andrew Gelman</a>, a statistics professor at Columbia, and <a href="https://users.aalto.fi/~ave/">Aki Vehtari</a>, a computer science professor at Finland’s Aalto University, <a href="https://www.tandfonline.com/doi/full/10.1080/01621459.2021.1938081">published a list</a> of the most important statistical ideas in the last 50 years.</p>
+<p>Below, Gelman and Vehtari break down the list for those who may have 
+snoozed through Statistics 101. Each idea can be viewed as a stand-in 
+for an entire subfield, they say, with a few caveats: science is 
+incremental; by singling out these works, they do not mean to diminish 
+the importance of similar, related work. They have also chosen to focus 
+on methods in statistics and machine learning, rather than equally 
+important breakthroughs in statistical computing, and computer science 
+and engineering, which have provided the tools and computing power for 
+data analysis and visualization to become everyday practical tools. 
+Finally, they have focused on methods, while recognizing that 
+developments in theory and methods are often motivated by specific 
+applications. </p>
+<p>See something important that’s missing? Tweet it at @columbiascience and Gelman and Vehtari will consider adding it to the list.</p>
+<p>The 10 articles and books below all were published in the last 50 years and are listed in chronological order.</p>
+<p> 1. Hirotugu Akaike (1973). <a href="https://link.springer.com/chapter/10.1007/978-1-4612-1694-0_15">Information Theory and an Extension of the Maximum Likelihood Principle</a>. Proceedings of the Second International Symposium on Information Theory.</p>
+<p> This is the paper that introduced the term AIC (originally called An
+ Information Criterion but now known as Akaike Information Criterion), 
+for evaluating a model’s fit based on its estimated predictive accuracy.
+ AIC was instantly recognized as a useful tool, and this paper was one 
+of several published in the mid-1970s placing statistical inference 
+within a predictive framework. We now recognize predictive validation as
+ a fundamental principle in statistics and machine learning. Akaike was 
+an applied statistician, who in the 1960s, tried to measure the 
+roughness of airport runways, in the same way that Benoit Mandelbrot's 
+early papers on taxonomy and Pareto distributions led to his later work 
+on the mathematics of fractals.</p>
+<p> 2. John Tukey (1977). <a href="https://www.amazon.com/Exploratory-Data-Analysis-John-Tukey/dp/0201076160">Exploratory Data Analysis</a>.</p>
+<p> This book has been hugely influential and is a fun read that can be 
+digested in one sitting. Traditionally, data visualization and 
+exploration were considered low-grade aspects of practical statistics; 
+the glamour was in fitting models, proving theorems, and developing the 
+theoretical properties of statistical procedures under various 
+mathematical assumptions or constraints. Tukey flipped this notion on 
+its head. He wrote about statistical tools not for confirming what we 
+already knew (or thought we knew), and not for rejecting hypotheses that
+ we never, or should never have, believed, but for discovering new and 
+unexpected insights from data. His work motivated advances in network 
+analysis, software, and theoretical perspectives that integrate 
+confirmation, criticism, and discovery. </p>
+<p> 3. Grace Wahba (1978). <a href="http://pages.stat.wisc.edu/~wahba/ftp1/oldie/wahba.improperpriors1978x.pdf">Improper Priors, Spline Smoothing and the Problem of Guarding Against Model Errors in Regression</a>. Journal of the Royal Statistical Society.</p>
+<p> Spline smoothing is an approach for fitting nonparametric curves. 
+Another of Wahba's papers from this period is called "An automatic 
+French curve," referring to a class of algorithms that can fit arbitrary
+ smooth curves through data without overfitting to noise, or outliers. 
+The idea may seem obvious now, but it was a major step forward in an era
+ when the starting points for curve fitting were polynomials, 
+exponentials, and other fixed forms. In addition to the direct 
+applicability of splines, this paper was important theoretically. It 
+served as a foundation for later work in nonparametric Bayesian 
+inference by unifying ideas of regularization of high-dimensional 
+models.</p>
+<p> 4. Bradley Efron (1979). <a href="https://projecteuclid.org/journals/annals-of-statistics/volume-7/issue-1/Bootstrap-Methods-Another-Look-at-the-Jackknife/10.1214/aos/1176344552.full">Bootstrap Methods: Another Look at the Jackknife</a>. Annals of Statistics.</p>
+<p> Bootstrapping is a method for performing statistical inference 
+without assumptions. The data pull themselves up by their bootstraps, as
+ it were. But you can't make inference without assumptions; what made 
+the bootstrap so useful and influential is that the assumptions came 
+implicitly with the computational procedure: the audaciously simple idea
+ of resampling the data. Each time you repeat the statistical procedure 
+performed on the original data. As with many statistical methods of the 
+past 50 years, this one became widely useful because of an explosion in 
+computing power that allowed simulations to replace mathematical 
+analysis.</p>
+<p> 5. Alan Gelfand and Adrian Smith (1990). <a href="https://www.tandfonline.com/doi/abs/10.1080/01621459.1990.10476213">Sampling-based Approaches to Calculating Marginal Densities</a>. Journal of the American Statistical Association.</p>
+<p> Another way that fast computing has revolutionized statistics and 
+machine learning is through open-ended Bayesian models. Traditional 
+statistical models are static: fit distribution A to data of type B. But
+ modern statistical modeling has a more Tinkertoy quality that lets you 
+flexibly solve problems as they arise by calling on libraries of 
+distributions and transformations. We just need computational tools to 
+fit these snapped-together models. In their influential paper, Gelfand 
+and Smith did not develop any new tools; they demonstrated how Gibbs 
+sampling could be used to fit a large class of statistical models. In 
+recent decades, the Gibbs sampler has been replaced by Hamiltonian Monte
+ Carlo, particle filtering, variational Bayes, and more elaborate 
+algorithms, but the general principle of modular model-building has 
+remained.</p>
+<p> 6. Guido Imbens and Joshua Angrist (1994). <a href="https://www.jstor.org/stable/2951620">Identification and Estimation of Local Average Treatment Effects. </a>Econometrica.</p>
+<p> Causal inference is central to any problem in which the question 
+isn’t just a description (How have things been?) or prediction (What 
+will happen next?), but a counterfactual (If we do X, what would happen 
+to Y?). Causal methods have evolved with the rest of statistics and 
+machine learning through exploration, modeling, and computation. But 
+causal reasoning has the added challenge of asking about data that are 
+impossible to measure (you can't both do X and not-X to the same 
+person). As a result, a key idea in this field is identifying what 
+questions can be reliably answered from a given experiment. Imbens and 
+Angrist are economists who wrote an influential paper on what can be 
+estimated when causal effects vary, and their ideas form the basis for 
+much of the later work on this topic.</p>
+<p> 7. Robert Tibshirani (1996). <a href="https://www.jstor.org/stable/2346178">Regression Shrinkage and Selection Via the Lasso</a>. Journal of the Royal Statistical Society.</p>
+<p> In regression, or predicting an outcome variable from a set of 
+inputs or features, the challenge lies in including lots of inputs along
+ with their interactions; the resulting estimation problem becomes 
+statistically unstable because of the many different ways of combining 
+these inputs to get reasonable predictions. Classical least squares or 
+maximum likelihood estimates will be noisy and might not perform well on
+ future data, and so various methods have been developed to constrain or
+ “regularize” the fit to gain stability. In this paper, Tibshirani 
+introduced lasso, a computationally efficient and now widely used 
+approach to regularization, which has become a template for data-based 
+regularization in more complicated models.</p>
+<p> 8. Leland Wilkinson (1999). <a href="https://books.google.com/books/about/The_Grammar_of_Graphics.html?id=_kRX4LoFfGQC">The Grammar of Graphics</a>.</p>
+<p> In this book, Wilkinson, a statistician who's worked on several 
+influential commercial software projects including SPSS and Tableau, 
+lays out a framework for statistical graphics that goes beyond the usual
+ focus on pie charts versus histograms, how to draw a scatterplot, and 
+data ink and chartjunk, to abstractly explore how data and 
+visualizations relate. This work has influenced statistics through many 
+pathways, most notably through ggplot2 and the tidyverse family of 
+packages in the computing language R. It’s an important step toward 
+integrating exploratory data and model analysis into data science 
+workflow.</p>
+<p> 9. Ian Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David 
+Warde-Farley, Sherjil Ozair, Aaron Courville, and Yoshua Bengio (2014). <a href="https://papers.nips.cc/paper/2014/file/5ca3e9b122f61f8f06494c97b1afccf3-Paper.pdf">Generative Adversarial Networks</a>. Proceedings of the International Conference on Neural Information Processing Systems.</p>
+<p> One of machine learning’s stunning achievements in recent years is 
+in real-time decision making through prediction and inference feedbacks.
+ Famous examples include self-driving cars and DeepMind’s AlphaGo, which
+ trained itself to become the best Go player on Earth. Generalized 
+adversarial networks, or GANs, are a conceptual advance that allow 
+reinforcement learning problems to be solved automatically. They mark a 
+step toward the longstanding goal of artificial general intelligence 
+while also harnessing the power of parallel processing so that a program
+ can train itself by playing millions of games against itself. At a 
+conceptual level, GANs link prediction with generative models.</p>
+<p> 10. Yoshua Bengio, Yann LeCun, and Geoffrey Hinton (2015). <a href="https://www.nature.com/articles/nature14539">Deep Learning</a>. Nature.</p>
+<p> Deep learning is a class of artificial neural network models that 
+can be used to make flexible nonlinear predictions using a large number 
+of features. Its building blocks—logistic regression, multilevel 
+structure, and Bayesian inference—are hardly new. What makes this line 
+of research so influential is the recognition that these models can be 
+tuned to solve a variety of prediction problems, from consumer behavior 
+to image analysis. As with other developments in statistics and machine 
+learning, the tuning process was made possible only with the advent of 
+fast parallel computing and statistical algorithms to harness this power
+ to fit large models in real time. Conceptually, we’re still catching up
+ with the power of these methods, which is why there’s so much interest 
+in interpretable machine learning.</p>
+<p class="rm-manual"> Get Columbia News In Your Inbox </p>
+<p class="rm-manual">Tags</p>
+<p class="rm-manual"> <a href="file:///statistics">Statistics</a> <a href="file:///computer-science-0">Computer Science</a> <a href="file:///data-science">Data Science</a> <a href="file:///artificial-intelligence">Artificial Intelligence</a> </p>
+<h2 class="rm-manual">News</h2>
+<p class="rm-manual">July 06, 2021 </p>
+<h2 class="rm-manual"><a href="file:///news/top-10-ideas-statistics-ai">Top 10 Ideas in Statistics That Have Powered the AI Revolution </a></h2>
+<p class="rm-manual">July 06, 2021 </p>
+<h2 class="rm-manual"><a href="file:///news/here-are-all-olympics-bound-columbia-athletes-we-know-so-far">Here Are All the Olympics-Bound Columbia Athletes That We Know so Far</a></h2>
+<p class="rm-manual">July 01, 2021 </p>
+<h2 class="rm-manual"><a href="file:///news/bacteria-employed-living-hard-drives">Bacteria Employed as "Living Hard Drives"</a></h2>
+<p class="rm-manual">July 01, 2021 </p>
+<h2 class="rm-manual"><a href="file:///news/what-critical-race-theory-and-why-everyone-talking-about-it-0">What Is Critical Race Theory, and Why Is Everyone Talking About It?</a></h2>
+<p class="rm-manual">July 01, 2021 </p>
+<h2 class="rm-manual"><a href="file:///news/want-dive-deeper-critical-race-theory">Want to Dive Deeper Into Critical Race Theory? </a></h2></article>
+</body></html>
