@@ -13,6 +13,8 @@ class Extractor(TimestampExtractor):
         ( 'onenewspage.us',                 '$.datePublished' ),
         ( 'onenewspage.us',                 '$."@graph"[*].datePublished' ),
 
+        ( 'realcleardefense.com',           '$.disabled' ), # disabled due to large number of documents with incorrect timestamps in the LD+JSON
+
         ( None, '$.datePublished'),
         ( None, '$.uploadDate'),
         ( None, '$.dateCreated'),
@@ -584,6 +586,7 @@ class Extractor(TimestampExtractor):
         ( 'ruhrnachrichten.de',             '//meta[@itemprop="datePublished"]/@content'),
         ( 'russiamatters.org',              '//div[@class="node__published"]'),
         ( 'russian.news.cn',                '//div[@class="info"]/text()'),
+        ( 'russiancouncil.ru',              '//div[@class="date"]'),
         ( 'russland.news',                  '//abbr[@itemprop="datePublished"]/@title'),
         ( 'ruthfullyyours.com',             '//div/p[@id="single-byline"]'),
         ( 'ruthinstitute.org',              '//h4'),
