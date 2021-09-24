@@ -1,0 +1,83 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script>
+function toggleSelectedText(e) {
+    if (e.shiftKey) {
+        var selection = window.getSelection();
+        var range = selection.getRangeAt(0);
+        var tags = "p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,table,tr,td,th,article,main,section,figure,figcaption,aside,section,address,blockquote,code";
+        if (range.commonAncestorContainer.getElementsByTagName) {
+            var allWithinRangeParent = range.commonAncestorContainer.querySelectorAll(tags);
+        }
+        else {
+            //var allWithinRangeParent = [range.commonAncestorContainer.closest(tags)];
+            var allWithinRangeParent = [range.commonAncestorContainer.parentNode.closest(tags)];
+        }
+
+        for (var i=0, el; el = allWithinRangeParent[i]; i++) {
+          // The second parameter says to include the element
+          // even if it's not fully selected
+          if (selection.containsNode(el, true) ) {
+              el.classList.toggle('rm-manual');
+          }
+        }
+        window.getSelection().removeAllRanges();
+    }
+};
+
+//var article = document.body.querySelector('article');
+document.onmouseup = toggleSelectedText;
+document.captureEvents(Event.MOUSEUP);
+</script>
+
+<style>
+.rm-manual {
+    text-decoration: line-through;
+    background-color: #faa;
+}
+</style>
+        </head><body><article><h1 class="rm-manual">7-Zip 21.0 alpha introduces native Linux support</h1>
+<p class="rm-manual"> by <a href="https://www.ghacks.net/author/martin/">Martin Brinkmann</a> on March 11, 2021 in <a href="https://www.ghacks.net/category/linux/" rel="category tag">Linux</a>, <a href="https://www.ghacks.net/category/software/" rel="category tag">Software</a> - <a href="#snhb-snhb_ghacks_bottom-0"> 17 comments </a></p>
+<p>Each year, the free archiver 7-Zip gets updated to a new version. The
+ developer of the application has released two alpha previews of this 
+year's 7-Zip 21 version. Reason enough to take a look at the new version
+ of 7-Zip and the changes and improvements compared to the previous 
+versions of the file archiver.</p>
+<p>The latest alpha release is available on the 7-Zip project site. Just <a href="https://www.7-zip.org/download.html" rel="external noopener noreferrer">download</a> the 32-bit, 64-bit or 64-bit ARM64 version of the program from the site and run the installer after the download.</p>
+<p>One of the main changes, introduced in the second alpha release, 
+7-Zip 21.01, is that a command line version of 7-Zip for Linux has been 
+released. The release is not included in the main packages for Windows; 
+the download site lists two downloads for the command line version for 
+Linux that are for 32-bit/64-bit and 64-bit ARM Linux devices.</p>
+<p>A readme file is included that explains core functionality of the 
+command line version. The Linux version includes all changes from the 
+latest 7-Zip version for Windows.</p>
+<p>The <a href="https://www.7-zip.org/history.txt" rel="external noopener noreferrer">full changelog</a>
+ is relatively short. The first alpha version, released in January 2021,
+ made internal code changes, fixed several unspecified bugs, and added 
+Tajik and Uzbek localizations.</p>
+<p>The latest release, 7-Zip 21.01 alpha, released on March 9, 2021, 
+includes several improvements. Next to the Linux command line version, 
+it is addressing a long-standing bug in 7-Zip that dates back to version
+ 18.02.</p>
+<p>Previous versions of 7-Zip had sometimes issue extracting ZIP 
+archives with xz compression; this bug is fixed in the latest alpha 
+release of 7-Zip and will find its way into the next stable release of 
+the application as well.</p>
+<p>Speed of the ARM64 version of 7-Zip has been improved in the release 
+according to the release notes. Last but not least, several bugs were 
+fixed that were not mentioned specifically.</p>
+<p>The alpha version ran stable and without issues on the test system; 
+most users may want to wait until the final version is released. Those 
+on Linux may give the new command line version a go on the other hand.</p>
+<p>Now You: which file archiver do you use? (via <a href="https://www.deskmodder.de/blog/2021/03/10/7-zip-21-01-behebt-unter-anderem-ein-problem-aus-der-version-18-02-bis-21-00/" rel="external noopener noreferrer">Deskmodder</a>)</p>
+<p class="">Summary</p>
+<p class="">Article Name</p>
+<p class=""><span>7-Zip 21.0 alpha introduces native Linux support</span></p>
+<p class="">Description</p>
+<p class=""><span>The latest alpha release of the free file archiver 7-Zip introduced support for running the program on the Linux command line-</span></p>
+<p class="">Author</p>
+<p class=""> <span>Martin Brinkmann</span></p>
+<p>Publisher</p>
+<p> <span>Ghacks Technology News</span></p>
+<p class="rm-manual"> Advertisement</p></article>
+</body></html>
