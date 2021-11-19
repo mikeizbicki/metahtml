@@ -239,13 +239,19 @@ def clean_metahtml_0(raw_html):
     extractor_config = metahtml.content.ExtractorConfig()
     return clean_metahtml(raw_html, extractor_config)
 
-def clean_metahtml_1(raw_html):
+def clean_metahtml_all_true(raw_html):
+    '''
+    Set all to true
+    '''
     extractor_config = metahtml.content.ExtractorConfig()
     extractor_config.filter_section = True
     extractor_config.rm_form = True
     return clean_metahtml(raw_html, extractor_config)
 
-def clean_metahtml_2(raw_html):
+def clean_metahtml_all_false(raw_html):
+    '''
+    Set all to false
+    '''
     extractor_config = metahtml.content.ExtractorConfig()
     extractor_config.filter_main = False
     extractor_config.article = False
@@ -258,18 +264,22 @@ def clean_metahtml_2(raw_html):
     extractor_config.rm_footer_lists = False
     return clean_metahtml(raw_html, extractor_config)
 
-def clean_metahtml_3(raw_html):
+'''
+Below have to do with header_lists and footer_lists
+'''
+
+def clean_metahtml_hf_false(raw_html):
     extractor_config = metahtml.content.ExtractorConfig()
     extractor_config.rm_header_lists = False
     extractor_config.rm_footer_lists = False
     return clean_metahtml(raw_html, extractor_config)
 
-def clean_metahtml_4(raw_html):
+def clean_metahtml_f_false(raw_html):
     extractor_config = metahtml.content.ExtractorConfig()
     extractor_config.rm_footer_lists = False
     return clean_metahtml(raw_html, extractor_config)
 
-def clean_metahtml_5(raw_html):
+def clean_metahtml_h_false(raw_html):
     extractor_config = metahtml.content.ExtractorConfig()
     extractor_config.rm_header_lists = False
     return clean_metahtml(raw_html, extractor_config)
@@ -628,4 +638,4 @@ if __name__ == '__main__':
     common_dataset = load_metahtml_common()
     dataset = load_metahtml_annotated()
     evaluation_inner_agreement(common_dataset, 'paper/fig/annotator.tex')
-    evaluation(dataset, [ clean_none, clean_metahtml, clean_trafilatura_no_fallback, clean_trafilatura_with_fallback, clean_newspaper3k ], do_cleaneval, latex_file='paper/fig/results.tex')
+    evaluation(dataset, [ clean_metahtml, clean_metahtml_all_true, clean_metahtml_all_false, clean_metahtml_hf_false, clean_metahtml_f_false, clean_metahtml_h_false ], do_jaccard, latex_file='paper/fig/results_jaccard_best.tex')

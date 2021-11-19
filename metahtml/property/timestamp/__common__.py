@@ -291,7 +291,7 @@ class TimestampExtractor(BaseExtractor):
             timestamp_lo = dateparser.parse(
                 timestamp_str,
                 settings = {
-                    'PARSERS' : ['timestamp','base-formats','absolute-time'],
+                    'PARSERS' : ['timestamp','absolute-time'],
                     'DATE_ORDER' : date_order,
                     'PREFER_DAY_OF_MONTH' : 'first',
                     }
@@ -308,7 +308,7 @@ class TimestampExtractor(BaseExtractor):
             timestamp_hi = dateparser.parse(
                 timestamp_str,
                 settings = {
-                    'PARSERS' : ['timestamp','base-formats','absolute-time'],
+                    'PARSERS' : ['timestamp','absolute-time'],
                     'DATE_ORDER' : date_order,
                     'PREFER_DAY_OF_MONTH' : 'last',
                     }
