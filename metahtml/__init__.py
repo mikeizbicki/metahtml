@@ -49,7 +49,7 @@ logger.info("version="+str(__version__))
 cxpath_ldjson = lxml.etree.XPath('//script[@type="application/ld+json"]')
 
             
-def parse(html, url, property_filter=None, fast=False, extractor_config=metahtml.content.ExtractorConfig()):
+def parse(html, url, property_filter=None, fast=False, extractor_config=metahtml.content.ExtractorConfig(), force_parsing=False):
     '''
     return the dictionary of meta information for a given html/url combination
     '''
@@ -128,7 +128,7 @@ def parse(html, url, property_filter=None, fast=False, extractor_config=metahtml
     calculate_property('type')
     calculate_property('links','links.all')
 
-    if parser.meta['type']['best']['value'] == 'article':
+    if parser.meta['type']['best']['value'] == 'article' or force_parsing:
         calculate_property('language')
         calculate_property('timestamp.modified')
 
