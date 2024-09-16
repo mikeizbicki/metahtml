@@ -34,7 +34,7 @@ Instead, I recommend using the following procedure for performing a partial clon
 $ git clone --filter=blob:none --no-checkout https://github.com/mikeizbicki/metahtml
 $ cd metahtml
 $ git sparse-checkout init
-$ git sparse-checkout set '!/tests/.cache' '/*'
+$ git sparse-checkout set --no-cone '!/tests/.cache' '/*'
 $ git checkout master
 ```
 
